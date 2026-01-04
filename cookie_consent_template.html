@@ -1,0 +1,46 @@
+<!-- Cookie Consent Banner - Django Template Integration -->
+<!-- Fügen Sie diesen Code in Ihre base.html oder main.html ein (vor </body>) -->
+
+<!-- CSS einbinden -->
+<link rel="stylesheet" href="{% static 'css/cookie_consent.css' %}">
+
+<!-- JavaScript Übersetzungen einbinden -->
+<script src="{% static 'js/cookie_consent_translations.js' %}"></script>
+
+<!-- JavaScript Logik einbinden -->
+<script src="{% static 'js/cookie_consent.js' %}"></script>
+
+<!-- Optional: Sprach-Synchronisation mit Django -->
+<script>
+    // Sprache aus Django Session synchronisieren
+    (function() {
+        // Diese Variable wird von Django gesetzt
+        const djangoLanguage = '{{ request.session.site_language|default:"hr" }}';
+        
+        // Cookie Consent Sprache setzen wenn verfügbar
+        if (window.cookieConsent && djangoLanguage) {
+            // Warte bis Consent Manager initialisiert ist
+            setTimeout(() => {
+                if (window.cookieConsent.currentLanguage !== djangoLanguage) {
+                    window.cookieConsent.changeLanguage(djangoLanguage);
+                }
+            }, 100);
+        }
+    })();
+</script>
+
+<!-- 
+ALTERNATIVE: Inline-Integration (wenn Sie die Dateien nicht als separate Files haben möchten)
+
+<style>
+    /* Kopieren Sie hier den Inhalt von cookie_consent.css */
+</style>
+
+<script>
+    // Kopieren Sie hier den Inhalt von cookie_consent_translations.js
+</script>
+
+<script>
+    // Kopieren Sie hier den Inhalt von cookie_consent.js
+</script>
+-->
