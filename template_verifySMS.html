@@ -1,0 +1,114 @@
+<!-- templates/account/verifySMS.html -->
+<!-- NEU: Template für SMS-OTP-Verifizierung -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">
+                        📱 SMS-Verifizierung
+                    </h2>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        Ein Verifizierungscode wurde an <strong>{{ mobile }}</strong> gesendet.
+                    </div>
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST" action="{% url 'account:verify_sms' %}">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="otp">SMS-Code eingeben:</label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg text-center" 
+                                id="otp" 
+                                name="otp" 
+                                maxlength="6" 
+                                placeholder="000000" 
+                                required
+                                autofocus
+                                pattern="[0-9]{6}"
+                                style="letter-spacing: 10px; font-size: 24px;"
+                            >
+                            <small class="form-text text-muted">
+                                Bitte geben Sie den 6-stelligen Code ein
+                            </small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" data-testid="verify-sms-btn">
+                            <i class="fas fa-check"></i> Verifizieren
+                        </button>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-center">
+                        <p class="text-muted mb-2">Code nicht erhalten?</p>
+                        
+                        {% if resend_button %}
+                            <p class="text-warning">
+                                <i class="fas fa-clock"></i>
+                                Bitte warten Sie 2 Minuten bevor Sie einen neuen Code anfordern
+                            </p>
+                        {% else %}
+                            <a href="{% url 'account:verify_sms' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-redo"></i> Neuen Code anfordern
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="alert alert-warning mt-4">
+                        <small>
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>Hinweis:</strong> Der Code ist 5 Minuten gültig. 
+                            Nach 5 fehlerhaften Versuchen wird ein neuer Code benötigt.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Auto-Tab beim Eingeben (optional) */
+    #otp:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+    }
+</style>
+
+<script>
+    // Auto-Submit beim vollständigen Code (optional)
+    document.getElementById('otp').addEventListener('input', function(e) {
+        if (this.value.length === 6) {
+            // Automatisch absenden wenn 6 Ziffern eingegeben
+            // this.form.submit();
+        }
+    });
+    
+    // Nur Zahlen erlauben
+    document.getElementById('otp').addEventListener('keypress', function(e) {
+        if (!/[0-9]/.test(String.fromCharCode(e.which))) {
+            e.preventDefault();
+        }
+    });
+</script>
+{% endblock %}
