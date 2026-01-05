@@ -166,13 +166,13 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a href="{% url 'main:add_property' %}" class="btn btn-danger text-capitalize">
-                                <i class="fa fa-plus-circle mr-1"></i> {{Add_Listing}}
+                                <i class="fa fa-plus-circle mr-1"></i> {{ nav_add_listing }}
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
-                                <li align="left"><a class="dropdown-item" href="{% url 'main:real-estate-agent' %}">IMMOBILIENMAKLER</a></li>
-                                <li align="left"><a class="dropdown-item" href="{% url 'main:building-contractor' %}">BAUUNTERNEHMER</a></li>
-                                <li align="left"><a class="dropdown-item" href="{% url 'main:owner' %}">EIGENTÜMER</a></li>
+                                <li align="left"><a class="dropdown-item" href="{% url 'main:real-estate-agent' %}">{{ dropdown_realtor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="{% url 'main:building-contractor' %}">{{ dropdown_contractor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="{% url 'main:owner' %}">{{ dropdown_owner }}</a></li>
                             </ul>
                         </li>
                     </ul>
