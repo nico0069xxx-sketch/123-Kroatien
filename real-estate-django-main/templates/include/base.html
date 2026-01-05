@@ -68,11 +68,11 @@
                                 {% if user.is_authenticated %}
                                 
                                 <li><a {% if user.agent %}href="{% url "main:agent" user.agent.id %}"{% else %}href="#"{% endif %}>{{user.username}}</a></li>
-                                <li><a href="{% url 'account:logout' %}" title="">Abmelden</a></li>
+                                <li><a href="{% url 'account:logout' %}" title="">{{ nav_logout }}</a></li>
 
                                 {% else %}
-                                <li><a href="{% url 'account:login' %}" title="">Anmelden</a></li>
-                                <li><a href="{% url 'account:signup' %}" title="">Registrieren</a></li>
+                                <li><a href="{% url 'account:login' %}" title="">{{ nav_login }}</a></li>
+                                <li><a href="{% url 'account:signup' %}" title="">{{ nav_register }}</a></li>
                                 {% endif %}
                                 <li>
                                     <select class="lang-drop" onchange="changelanguage(this.value);">
