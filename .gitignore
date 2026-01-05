@@ -82,3 +82,9 @@ android-sdk/ -e
 *.env
 *.env.*
 real-estate-django-main.zip
+-e 
+# Environment files
+*.env
+*.env.*
+frontend/public/real-estate-updated.zip
+real-estate-updated.zip
