@@ -1,0 +1,904 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+    <!-- CAROUSEL HOMEPAGE -->
+    <div class="homepage__property bg-light">
+        <div class="homepage__property-carousel owl-carousel owl-theme">
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/1.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_1_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_1_h2}}</h2>
+                            <p>{{carousel_1_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/2.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_2_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_2_h2}}</h2>
+                            <p>{{carousel_2_p}}</p> {% endcomment %}
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/6.png' %}" alt="img1">
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/3.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_3_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_3_h2}}</h2>
+                            <p>{{carousel_3_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/4.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="  uppercase text-white">{{carousel_4_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_4_h2}}</h2>
+                            <p>{{carousel_4_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/5.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_5_h6 }}</h6>
+                            <h2 class="text-capitalize">{{carousel_5_h2}}</h2>
+                            <p>
+                                {{carousel_5_p}}
+                            </p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/7.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_6_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_6_h2}}</h2>
+                            <p>{{carousel_6_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/8.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_6_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_6_h2}}</h2>
+                            <p>{{carousel_6_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/9.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_6_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_6_h2}}</h2>
+                            <p>{{carousel_6_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/10.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_6_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_6_h2}}</h2>
+                            <p>{{carousel_6_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <div class="tc-image-caption4">
+                        <img src="{% static 'images/11.png' %}" alt="img1">
+                        <div class="caption">
+                            {% comment %} <h6 class="text-uppercase text-white">{{carousel_6_h6}}</h6>
+                            <h2 class="text-capitalize">{{carousel_6_h2}}</h2>
+                            <p>{{carousel_6_p}}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- END CAROUSEL HOMEPAGE -->
+    <div class="clearfix"></div>
+
+    <!-- FILTER SEARCH -->
+    <form class="search__area bg-light" action="{% url 'main:listing' %}" method="GET">
+        <div class="container">
+            <div class="search__area-inner">
+                <div class="row">
+                    <div class="col-6 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <select name="property_type" class="wide select_option">
+                                <option value="">{{Property_Type}}</option>
+                                <option value="House"
+                                {% if request.GET.property_type == 'House' %}
+                                    selected
+                                {% endif %}
+                                >{{House_f}}</option>
+                                <option value="Appartment"
+                                {% if request.GET.property_type == 'Appartment' %}
+                                    selected
+                                {% endif %}
+                                >{{Appartment}}</option>
+                                <option value="New Building"
+                                {% if request.GET.property_type == 'New Building' %}
+                                    selected
+                                {% endif %}
+                                >{{New_Building}}</option>
+                                <option value="Property"
+                                {% if request.GET.property_type == 'Property' %}
+                                    selected
+                                {% endif %}
+                                >{{Property}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <select name="property_status" class="wide select_option">
+                                <option value="">{{filter_property_status}}</option>
+                                <option value="Sale"
+                                {% if request.GET.property_status == 'Sale' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_for_sale}}</option>
+                                <option value="Rent"
+                                {% if request.GET.property_status == 'Rent' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_For_Rent}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <select class="wide select_option" name="area_from">
+                                <option value="">{{filter_Area_From}}</option>
+                                <option value="1500"
+                                {% if request.GET.area_from == '1500' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1500}}</option>
+                                <option value="1200"
+                                {% if request.GET.area_from == '1200' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1200}}</option>
+                                <option value="900"
+                                {% if request.GET.area_from == '900' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_900}}</option>
+                                <option value="600"
+                                {% if request.GET.area_from == '600' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_600}}</option>
+                                <option value="300"
+                                {% if request.GET.area_from == '300' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_300}}</option>
+                                <option value="100"
+                                {% if request.GET.area_from == '100' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_100}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <select class="wide select_option" name="location">
+                                <option value="">{{Locations}}</option>
+                                <option value="Istrien">Istrien</option>
+                                <option value="Primorje">Primorje</option>
+                                <option value="Lika-Senj">Lika-Senj</option>
+                                <option value="Zadar">Zadar</option>
+                                <option value="Šibenik-Knin">Šibenik-Knin</option>
+                                <option value="Split-Dalmatien">Split-Dalmatien</option>
+                                <option value="Dubrovnik-Neretva">Dubrovnik-Neretva</option>
+                                <option value="Karlovac">Karlovac</option>
+                                <option value="Gespanschaft Zagreb">Gespanschaft Zagreb</option>
+                                <option value="Stadt Zagreb">Stadt Zagreb</option>
+                                <option value="Krapina-Zagorje">Krapina-Zagorje</option>
+                                <option value="Varaždin">Varaždin</option>
+                                <option value="Koprivnica-Križevci">Koprivnica-Križevci</option>
+                                <option value="Bjelovar-Bilogora">Bjelovar-Bilogora</option>
+                                <option value="Virovitica-Podravina">Virovitica-Podravina</option>
+                                <option value="Požega-Slawonien">Požega-Slawonien</option>
+                                <option value="Brod-Posavina">Brod-Posavina</option>
+                                <option value="Osijek-Baranja">Osijek-Baranja</option>
+                                <option value="Vukovar-Syrmien">Vukovar-Syrmien</option>
+                                <option value="Međimurje">Međimurje</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <select class="wide select_option" name="bedrooms">
+                                <option value="">{{filter_Bedrooms}}</option>
+                                <option value="1"
+                                {% if request.GET.bedrooms == '1' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1}}</option>
+                                <option value="2"
+                                {% if request.GET.bedrooms == '2' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_2}}</option>
+                                <option value="3"
+                                {% if request.GET.bedrooms == '3' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_3}}</option>
+                                <option value="4"
+                                {% if request.GET.bedrooms == '4' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_4}}</option>
+                                <option value="5"
+                                {% if request.GET.bedrooms == '5' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_5}}</option>
+                                <option value="6"
+                                {% if request.GET.bedrooms == '6' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_6}}</option>
+                                <option value="7"
+                                {% if request.GET.bedrooms == '7' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_7}}</option>
+                                <option value="8"
+                                {% if request.GET.bedrooms == '8' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_8}}</option>
+                                <option value="9"
+                                {% if request.GET.bedrooms == '9' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_9}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <select class="wide select_option" name="bathrooms">
+                                <option value="">{{filter_Bathrooms}}</option>
+                                <option value="1"
+                                {% if request.GET.bathrooms == '1' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1_1}}</option>
+                                <option value="2"
+                                {% if request.GET.bathrooms == '2' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1_2}}</option>
+                                <option value="3"
+                                {% if request.GET.bathrooms == '3' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1_3}}</option>
+                                <option value="4"
+                                {% if request.GET.bathrooms == '4' %}
+                                    selected
+                                {% endif %}
+                                >{{filter_1_4}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <div class="filter__price">
+                                <input class="price-range" type="text" name="my_range" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-outline-blue text-uppercase btn-block"> {{filter_search}} <i
+                                    class="fa fa-search ml-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <!-- POPULAR CITY -->
+    <section class="popular__city-large">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 mx-auto">
+                    <div class="title__head">
+                        <h2 class="text-center text-danger">
+                            {% trans 'We for you'   %}
+                        </h2>
+                        {% comment %} <p class="text-center text-capitalize">{% trans 'Choose your best need in your city.' %}</p> {% endcomment %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <!-- CARD IMAGE -->
+                    <div class="myCard">
+                        <div class="iconDiv">
+                            <i class="fa fa-comments-o myIcon" aria-hidden="true"></i>
+                        </div>
+                        <h6 class="mb-4">{% trans 'Register now for free' %}</h6>
+                        <p class="">An alle Immobilienmakler und Bauunternehmen aus Kroatien: Jetzt kostenfrei registrieren und gratis inserieren! Ohne Aufwand können Sie dank unserer modernen Schnittstellentechnik alle Projekte in Europa in wenigen Minuten erfolgreich inserieren.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <!-- CARD IMAGE -->
+                    <div class="myCard">
+                        <div class="iconDiv">
+                            <i class="fa fa-building-o myIcon" aria-hidden="true"></i>
+                        </div>
+                        <h6 class="mb-4">{% trans 'Personal advice' %}</h6>
+                        <p class="">Profitieren Sie von unserer unverbindlichen Beratung vor Ort, unterstützt von verifizierten kroatischen Immobilienmaklern, die Ihnen kompetent zur Seite stehen – besonders, wenn es um Ihr Haus am Meer geht. Jetzt anfragen und den ersten Schritt zu Ihrer Traumimmobilie machen!</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <!-- CARD IMAGE -->
+                    <div class="myCard">
+                        <div class="iconDiv">
+                            <i class="fa fa-handshake-o myIcon" aria-hidden="true"></i>
+                        </div>
+                        <h6 class="mb-4">{% trans 'Renting & Selling' %}</h6>
+                        <p class="">Möchten Sie Ihre Immobilie in Kroatien verkaufen oder langfristig vermieten? Nutzen Sie unsere unverbindliche Beratung vor Ort. Unsere erfahrenen kroatischen Immobilienmakler stehen Ihnen kompetent zur Seite und ermitteln gerne den Wert Ihrer Immobilie. Jetzt anfragen!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END POPULAR CITY -->
+
+    <!-- FEATURED PROPERTIES -->
+    <section class="featured__property bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 mx-auto">
+                    <div class="title__head">
+                        <h2 class="text-center text-danger">
+                            {% trans 'Your personal selection' %}
+                        </h2>
+                        {% comment %} <p class="text-center text-capitalize">{% trans 'handpicked exclusive properties by our team.' %}</p> {% endcomment %}
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="featured__property-carousel owl-carousel owl-theme">
+                        {% for listing in latest_8_listings %}
+                        <div class="item">
+                            <div class="card__image card__box">
+                                <a href="{% url 'main:property_details' listing.id %}">
+                                    <div class="card__image-header h-250">
+                                        {% comment %} <div class="bg-mycolor ribbon text-capitalize">{% trans 'featured' %}</div> {% endcomment %}
+                                        <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.png' %}{% endif %}" alt=""
+                                            class="img-fluid w100 img-transition">
+                                        <div class="info" style="background-color: #db0000;"> {{listing.json_content.property_status}}
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card__image-body">
+                                    <span class="badge bg-logo2 text-capitalize mb-2">{{listing.json_content.property_type}}</span>
+                                    <h6 class="text-capitalize" style="min-height: 54px;">
+                                        <a href="{% url 'main:property_details' listing.id %}">{{listing.json_content.property_title|truncatechars:60}}</a>
+                                    </h6>
+
+                                    <p class="text-capitalize">
+                                        <i class="fa fa-map-marker"></i>
+                                        {{listing.json_content.address}}
+                                    </p>
+                                    <ul class="list-inline card__content">
+                                        <li class="list-inline-item">
+                        
+                                            <span style="color: #db0000;">
+                                                {{baths}} <br>
+                                                <i class="fa fa-bath" style="color: #db0000;"></i> {{listing.json_content.bathrooms|floatformat:0|add:"0"}}
+                                            </span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span style="color: #db0000;">
+                                                {{beds}} <br>
+                                                <i class="fa fa-bed" style="color: #db0000;"></i> {{listing.json_content.bedrooms}}
+                                            </span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span style="color: #db0000;">
+                                                {{floors}} <br>
+                                                <i class="fa fa-inbox" style="color: #db0000;"></i> {{listing.json_content.floors}}
+                                            </span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span style="color: #db0000;">
+                                                {{area}} <br>
+                                                <i class="fa fa-map" style="color: #db0000;"></i> {{listing.json_content.area}}
+                                                sq ft
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card__image-footer">
+                                    <figure>
+                                        <img onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'" src="{% if listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
+                                            class="img-fluid rounded-circle">
+                                    </figure>
+                                    <ul class="list-inline my-auto">
+                                        <li class="list-inline-item ">
+                                            <a href="{% url "main:agent" listing.realtor.id %}">
+                                                {{listing.realtor.first_name}}
+                                                {{listing.realtor.last_name}}
+                                            </a>
+                        
+                                        </li>
+                        
+                                    </ul>
+                                    <ul class="list-inline my-auto ml-auto">
+                                        <li class="list-inline-item">
+                        
+                                            <h6>$
+                                                {{listing.json_content.property_price}}
+                                            </h6>
+                                        </li>
+                        
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div> 
+                        {% endfor %}
+                        
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- END FEATURED PROPERTIES -->
+
+
+
+    <!-- ABOUT -->
+    <section class="home__about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="title__leading">
+                        <!-- <h6 class="text-uppercase">trusted By thousands</h6> -->
+                        <h2 class="text-danger">{{WhyChooseUs}}</h2>
+                        <p>Sorgenfreie Immobilienerfahrung:</p>
+                        <p>Bei 123-Kroatien.eu steht Ihre Sorgenfreiheit an erster Stelle. Vertrauen Sie darauf, dass
+                            Sie mit
+                            verifizierten Immobilienmaklern zusammenarbeiten, die Ihre Interessen schützen.</p>
+                        <p>Immobilien Makler und Bauunternehmer aus Kroatien:</p>
+                        <p>Vertrauen und Sicherheit bei 123-Kroatien.eu – Professionelle Immobilienmakler und
+                            Bauunternehmen für ein Sorgenfreies Immobilienerlebnis!</p>
+                        <p>Bei 123-Kroatien.eu arbeiten wir ausschließlich mit verifizierten Immobilienmaklern und
+                            Bauunternehmen zusammen, die deutschsprachig oder mehrsprachig agieren. Dies gewährleistet
+                            eine reibungslose Kommunikation und ein tiefes Verständnis für Ihre Bedürfnisse.</p>
+                        <p>Warum deutschsprachige oder mehrsprachige Partner?</p>
+                        <p>Klare Kommunikation,die Partner auf 123-Kroatien.eu sind darauf ausgerichtet, klar und
+                            effektiv in
+                            Deutsch oder anderen relevanten Sprachen zu kommunizieren.</p>
+                        <p>Kulturelles Verständnis: </p>
+                        <p>Durch die mehrsprachige Ausrichtung wird ein tiefes kulturelles Verständnis gewährleistet.
+                        </p>
+                        <p>123-Kroatien.eu wir für Sie</p>
+                        <a href="{% url 'main:about' %}" class="btn btn-primary btn-outline-blue mt-3 text-capitalize"> {% trans 'read more' %}
+                            <i class="fa fa-angle-right ml-3 "></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about__image">
+                        <div class="about__image-top">
+                            <div class="about__image-top-hover">
+                                <img src="{% static 'images/home-image-small.jpg' %}" alt="" class="img-fluid">
+                            </div>
+
+                        </div>
+                        <div class="about__image-bottom">
+                            <div class="about__image-bottom-hover">
+                                <img src="{% static 'images/home-image-smal2.jpg' %}" alt=""
+                                    class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END ABOUT -->
+
+    <section class="projects__partner bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="title__head">
+                        <h2 class="text-center text-capitalize text-danger">{{our_partners}}</h2>
+                        {% comment %} <p class="text-center text-capitalize">{{BrandPartnersSuccessful}}</p> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="projects__partner-logo">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <img src="{% static 'images/anlage-logo-domus.png' %}" alt="" class="img-fluid">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="{% static 'images/anlage-logo-hausbau-kroatien.png' %}" alt="" class="img-fluid">
+                            </li>
+                            {% comment %} <li class="list-inline-item">
+                                <img src="{% static 'images/partner-logo6.png' %}" alt="" class="img-fluid">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="{% static 'images/partner-logo7.png' %}" alt="" class="img-fluid">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="{% static 'images/partner-logo8.png' %}" alt="" class="img-fluid">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="{% static 'images/partner-logo1.png' %}" alt="" class="img-fluid">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="{% static 'images/partner-logo5.png' %}" alt="" class="img-fluid">
+                            </li> {% endcomment %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {% comment %} <!-- TESTIMONIAL -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 mx-auto">
+                    <div class="title__head">
+                        <h2 class="text-center text-capitalize text-danger">
+                            {{whatpeoplesays}}
+                        </h2>
+                        <!--  <p class="text-center text-capitalize">{{peoplesaysabout}}</p> -->
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="testimonial owl-carousel owl-theme">
+                <!-- TESTIMONIAL -->
+                <div class="item testimonial__block">
+                    <div class="testimonial__block-card bg-reviews">
+                        <p>
+                            {{Thankyouwalls}}
+                        </p>
+                    </div>
+                    <div class="testimonial__block-users">
+                        <div class="testimonial__block-users-img">
+                            <img src="{% static 'images/p1.png' %}" alt="" class="img-fluid">
+                        </div>
+                        <div class="testimonial__block-users-name" style="color: #013565;">
+                            jhon doe <br>
+                            <span>owner, digital agency</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TESTIMONIAL -->
+                <!-- TESTIMONIAL -->
+                <div class="item testimonial__block">
+                    <div class="testimonial__block-card bg-reviews">
+                        <p>
+                            {{Thankyouwalls}}
+                        </p>
+                    </div>
+                    <div class="testimonial__block-users">
+                        <div class="testimonial__block-users-img">
+                            <img src="{% static 'images/p2.png' %}" alt="" class="img-fluid">
+                        </div>
+                        <div class="testimonial__block-users-name" style="color: #013565;">
+                            jhon doe <br>
+                            <span>owner, digital agency</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TESTIMONIAL -->
+                <!-- TESTIMONIAL -->
+                <div class="item testimonial__block">
+                    <div class="testimonial__block-card bg-reviews">
+                        <p>
+                            {{Thankyouwalls}}
+                        </p>
+                    </div>
+                    <div class="testimonial__block-users">
+                        <div class="testimonial__block-users-img">
+                            <img src="{% static 'images/p3.png' %}" alt="" class="img-fluid">
+                        </div>
+                        <div class="testimonial__block-users-name" style="color: #013565;">
+                            jhon doe <br>
+                            <span>owner, digital agency</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TESTIMONIAL -->
+                <!-- TESTIMONIAL -->
+                <div class="item testimonial__block">
+                    <div class="testimonial__block-card bg-reviews">
+                        <p>
+                            {{Thankyouwalls}}
+                        </p>
+                    </div>
+                    <div class="testimonial__block-users">
+                        <div class="testimonial__block-users-img">
+                            <img src="{% static 'images/p4.png' %}" alt="" class="img-fluid">
+                        </div>
+                        <div class="testimonial__block-users-name" style="color: #013565;">
+                            jhon doe <br>
+                            <span>owner, digital agency</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TESTIMONIAL -->
+                <!-- TESTIMONIAL -->
+                <div class="item testimonial__block">
+                    <div class="testimonial__block-card bg-reviews">
+                        <p>
+                            {{Thankyouwalls}}
+                        </p>
+                    </div>
+                    <div class="testimonial__block-users">
+                        <div class="testimonial__block-users-img">
+                            <img src="{% static 'images/p5.png' %}" alt="" class="img-fluid">
+                        </div>
+                        <div class="testimonial__block-users-name" style="color: #013565;">
+                            jhon doe <br>
+                            <span>owner, digital agency</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END TESTIMONIAL -->
+
+            </div>
+        </div>
+    </section>
+    <!-- END TESTIMONIAL --> {% endcomment %}
+
+
+    <!-- BLOG -->
+    <section class="blog__home bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 mx-auto">
+                    <div class="title__head">
+                        <h2 class="text-center text-capitalize text-danger">
+                            {{lastestnews}}
+                        </h2>
+                        {% comment %} <p class="text-center text-capitalize">
+                            {{FindOfThe}}
+                        </p> {% endcomment %}
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- BLOG  -->
+                    <div class="card__image">
+                        <div class="card__image-header h-250">
+                            <img src="{% static 'images/news1.svg' %}" alt="" class="img-fluid w100 img-transition">
+                            <div class="info"> {% trans 'event' %}</div>
+                        </div>
+                        <div class="card__image-body">
+                            <!-- <span class="badge badge-secondary p-1 text-capitalize mb-3">May 08, 2019 </span> -->
+                            <h6 class="">
+                                <a href="{% url 'main:blog-single-1' %}">{% trans 'News title 1' %}</a>
+                            </h6>
+                            <p class=" mb-0">
+                                {% trans 'News body 1' %}
+                            </p>
+                        </div>
+                        <div class="card__image-footer">
+                            <ul class="list-inline my-auto ml-auto">
+                                <li class="list-inline-item ">
+                                    <a href="{% url 'main:blog-single-1' %}" class="btn btn-sm btn-primary bg-logo2"><small
+                                            class="text-white ">{% trans 'read more' %} <i
+                                                class="fa fa-angle-right ml-1"></i></small></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END BLOG -->
+                </div>
+                <div class="col-md-4">
+                    <!-- BLOG  -->
+                    <div class="card__image">
+                        <div class="card__image-header h-250">
+                            <img src="{% static 'images/news2.svg' %}" alt="" class="img-fluid w100 img-transition">
+                            <div class="info"> {% trans 'Top News' %}</div>
+                        </div>
+                        <div class="card__image-body">
+                            <!-- <span class="badge badge-secondary p-1 text-capitalize mb-3">May 08, 2019 </span> -->
+                            <h6 class="">
+                                <a href="{% url 'main:blog-single-2' %}">{% trans 'News title 2' %}</a>
+                            </h6>
+                            <p class=" mb-0">
+                                {% trans 'News body 2' %}
+                            </p>
+
+
+                        </div>
+                        <div class="card__image-footer">
+                            {% comment %} <figure>
+                                <img src="{% static 'images/p4.png' %}" alt="" class="img-fluid rounded-circle">
+                            </figure>
+                            <ul class="list-inline my-auto">
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        tom wilson
+                                    </a>
+
+                                </li>
+
+                            </ul> {% endcomment %}
+                            <ul class="list-inline my-auto ml-auto">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:blog-single-2' %}" class="btn btn-sm btn-primary bg-logo2"><small class="text-white ">{% trans 'read more' %} <i
+                                                class="fa fa-angle-right ml-1"></i></small></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END BLOG -->
+                </div>
+                <div class="col-md-4">
+                    <!-- BLOG  -->
+                    <div class="card__image">
+                        <div class="card__image-header h-250">
+                            <img src="{% static 'images/news3.svg' %}" alt="" class="img-fluid w100 img-transition">
+                            <div class="info"> {% trans 'event' %}</div>
+                        </div>
+                        <div class="card__image-body">
+                            <!-- <span class="badge badge-secondary p-1 text-capitalize mb-3">May 08, 2019 </span> -->
+                            <h6 class="">
+                                <a href="{% url 'main:blog-single-3' %}">{% trans 'News title 3' %}</a>
+                            </h6>
+                            <p class="mb-0">
+                                {% trans 'News body 3' %}
+                            </p>
+                        </div>
+                        <div class="card__image-footer">
+                            {% comment %} <figure>
+                                <img src="{% static 'images/p6.png' %}" alt="" class="img-fluid rounded-circle">
+                            </figure>
+                            <ul class="list-inline  my-auto">
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        tom wilson
+                                    </a>
+                                </li>
+                            </ul> {% endcomment %}
+                            <ul class="list-inline  my-auto ml-auto">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:blog-single-3' %}" class="btn btn-sm btn-primary bg-logo2"><small class="text-white">{% trans 'read more' %} <i
+                                                class="fa fa-angle-right ml-1"></i></small></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END BLOG -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BLOG -->
+
+    <!-- CALL TO ACTION -->
+    <section class="bg-gradient py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-9">
+                    <h2 class="text-uppercase text-light">{{StartJourney}}</h2>
+                    <p class="text-capitalize text-light">{{ReliableTransparent}}
+                    </p>
+                </div>
+                {% comment %} <div class="col-lg-3">
+                    <a href="#" class="btn btn-light text-uppercase ">{{requestquote}}
+                        <i class="fa fa-angle-right ml-3 arrow-btn "></i></a>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </section>
+    <!-- END CALL TO ACTION -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <img src="{% static 'images/logo-black2.png' %}" alt="logo" style="width: 255px; padding: 20px 0;">
+            </div>
+        </div>
+    </div>
+
+    <!-- CALL TO ACTION -->
+    {% comment %} <section class="bg-gradient py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-9">
+                    <h2 class="text-uppercase text-light">{{LookingToSell}}</h2>
+                    <p class="text-capitalize text-light">{{WeWillAssist}}
+                    </p>
+                </div>
+                 <div class="col-lg-3">
+                    <a href="#" class="btn btn-light text-uppercase ">{{requestquote}}
+                        <i class="fa fa-angle-right ml-3 arrow-btn "></i></a>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <!-- END CALL TO ACTION -->
+
+    {% comment %} <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <img src="{% static 'images/logo-black2.png' %}" alt="logo" style="width: 255px; padding: 20px 0;">
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+{% endblock body %}

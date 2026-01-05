@@ -1,0 +1,167 @@
+{% extends 'include/base.html' %} {% load static %} {% block body %}
+<header>
+  <div class="registrationBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-8 text-center">
+            <h2 class="text-capitalize text-white">Service</h2>
+            {% comment %}
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="index.html" class="text-white"> {{ Home }} </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#" class="text-white"> Blog details </a>
+              </li>
+            </ul>
+            {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<section class="bg-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <h5>Nützliche Empfehlungen rund um Kroatien</h5>
+        <br />
+        <div class="image-grid">
+          <div class="image-item">
+            <a href="https://kroatien-hotels.eu/"
+              ><img
+                src="{% static '/images/kroatien-hotels.png' %}"
+                alt="Image 1"
+            /></a>
+            <div class="image-title">
+              <a href="https://kroatien-hotels.eu/">Hotels in Kroatien</a>
+            </div>
+          </div>
+          <div class="image-item">
+            <a href="https://kroatien-flug.de/"
+              ><img
+                src="{% static '/images/kroatien-flug.png' %}"
+                alt="Image 2"
+            /></a>
+            <div class="image-title">
+              <a href="https://kroatien-flug.de/">Flüge nach Kroatien</a>
+            </div>
+          </div>
+          <div class="image-item">
+            <a href="https://kroatien-mietwagen.eu/"
+              ><img
+                src="{% static '/images/kroatien-mietwagen.png' %}"
+                alt="Image 3"
+            /></a>
+            <div class="image-title">
+              <a href="https://kroatien-mietwagen.eu/">Mietwagen Kroatien</a>
+            </div>
+          </div>
+        </div>
+        <div class="image-grid">
+          <div class="image-item">
+            <a href="https://wetter-kroatien.eu/"
+              ><img
+                src="{% static '/images/wetter-kroatien.png' %}"
+                alt="Image 1"
+            /></a>
+            <div class="image-title">
+              <a href="https://wetter-kroatien.eu/">Wetter in Kroatien</a>
+            </div>
+          </div>
+          <div class="image-item">
+            <a href="https://kroatien-food.de/"
+              ><img
+                src="{% static '/images/kroatien-food.png' %}"
+                alt="Image 2"
+            /></a>
+            <div class="image-title">
+              <a href="https://kroatien-food.de/">Kulinarik Kroatien</a>
+            </div>
+          </div>
+          <div class="image-item">
+            <a href="https://inselwelt-kroatien.de/"
+              ><img
+                src="{% static '/images/inselwelt-kroatien.png' %}"
+                alt="Image 3"
+            /></a>
+            <div class="image-title">
+              <a href="https://inselwelt-kroatien.de/">Inselwelt Kroatien</a>
+            </div>
+          </div>
+        </div>
+        <div class="image-grid">
+          <div class="image-item">
+            <a href="https://kroatien-bikes.de/"
+              ><img
+                src="{% static '/images/kroatien-bikes.png' %}"
+                alt="Image 1"
+            /></a>
+            <div class="image-title">
+              <a href="https://kroatien-bikes.de/">Motorradtouren Kroatien</a>
+            </div>
+          </div>
+          <div class="image-item">
+            <a href="https://ultra-kroatien.de/"
+              ><img
+                src="{% static '/images/ultra-kroatien.png' %}"
+                alt="Image 2"
+            /></a>
+            <div class="image-title">
+              <a href="https://ultra-kroatien.de/">Festival ULTRA Split</a>
+            </div>
+          </div>
+          <div class="image-item">
+            <a href="https://kroatien-angebote.de/"
+              ><img
+              src="{% static '/images/kroatien-angebote.png' %}"
+              alt="Image 3"
+            /></a>
+            <div class="image-title">
+              <a href="https://kroatien-angebote.de/">Reise Deals Kroatien</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-gradient py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <h2 class="text-uppercase text-light">
+          Fairness durch Transparenz
+        </h2>
+        <p class="text-capitalize text-light">
+          123-Kroatien.eu liefert klare und ehrliche Informationen für Ihre Immobilieninvestitionen in Kroatien.
+        </p>
+      </div>
+      {% comment %}
+      <div class="col-lg-3">
+        <a href="#" class="btn btn-light text-uppercase"
+          >{{requestquote}} <i class="fa fa-angle-right ml-3 arrow-btn"></i
+        ></a>
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+</section>
+<!-- END CALL TO ACTION -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <img
+        src="{% static 'images/logo-black2.png' %}"
+        alt="logo"
+        style="width: 255px; padding: 20px 0"
+      />
+    </div>
+  </div>
+</div>
+{% endblock %}

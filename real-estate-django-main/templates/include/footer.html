@@ -1,0 +1,150 @@
+{% load static %}
+
+
+<footer>
+    <div class="myFooterBg wrapper__footer">
+        <div class="container">
+            <div class="row">
+                <!-- ADDRESS -->
+                <div class="col-md-4">
+                    <div class="widget__footer"><!--
+                        <figure>
+                            <img src="images/logo-white.png" alt="" width="250px;">
+                        </figure>-->
+                        {% comment %} <p class="text-light">
+                            {{KROATIEN_123}}
+
+                        </p>
+                        <br><br> {% endcomment %}
+                        <h4 class="footer-title">{{follow_us}} </h4>
+                        <p>
+                            <a href="https://facebook.com" target="_blank"><img
+                                src="{% static '/images/facebook_icon.png' %}" alt="Facebook"
+                                style="width: 46px; height: 46px; margin: 0;"></a>
+                            <a href="https://whatsapp.com" target="_blank"><img
+                                src="{% static '/images/whatsapp_icon.png' %}" alt="WhatsApp"
+                                style="width: 40px; height: 40px; margin: 0;"></a>
+                            <a href="https://instagram.com" target="_blank"><img
+                                src="{% static '/images/instagram_icon.png' %}" alt="Instagram"
+                                style="width: 40px; height: 40px; margin: 0;"></a>
+                            <a href="https://tiktok.com" target="_blank"><img
+                                src="{% static '/images/tiktok_icon.png' %}" alt="TikTok"
+                                style="width: 40px; height: 40px; margin: 0;"></a>
+                        </p>
+                    </div>
+
+                </div>
+                <!-- END ADDRESS -->
+
+                <!-- QUICK LINKS -->
+                <div class="col-md-4">
+                    <div class="widget__footer">
+                        <h4 class="footer-title">{{Quick_Links}}</h4>
+                        <div class="link__category-two-column">
+                            <ul class="list-unstyled ">
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:imprint' %}" class="text-white">{{Imprint}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:data-protection' %}" class="text-white">{{PrivacyPolicy}}</a>
+                                </li>
+                                {% comment %} <li class="list-inline-item">
+                                    <a href="#" class="text-white">{{CookiePrivacy}}
+                                </li> {% endcomment %}
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:agb' %}" class="text-white">{{TermsConditions}}
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:cancellation-policy' %}" class="text-white">{{Withdrawal}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:contact' %}" class="text-white">{{Contact}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:faq' %}" class="text-white">F.A.Q</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    {% comment %} <a href="{% url 'main:sitemap' %}" class="text-white">{{Sitemap}}</a> {% endcomment %}
+                                    <a href="#" class="text-white">{{Sitemap}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:service' %}" class="text-white">{{Service}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'account:login' %}" class="text-white">{{Login}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'main:blog-single-1' %}" class="text-white">{{Press}}</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="{% url 'account:signup' %}" class="text-white">{{FreeRegistration}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- END QUICK LINKS -->
+
+
+                <!-- NEWSLETTERS -->
+                <div class="col-md-4">
+                    <div class="widget__footer">
+                        <!--
+                        <h4 class="footer-title">follow us </h4>
+                        <p class="mb-2 text-light">
+                            Follow us and stay in touch to get the latest news
+                        </p>
+                        <p>
+                            <a href="#" class="btn btn-social btn-social-o facebook mr-1">
+                                <i class="fa fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="btn btn-social btn-social-o twitter mr-1">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+
+                            <a href="#" class="btn btn-social btn-social-o linkedin mr-1">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="btn btn-social btn-social-o instagram mr-1">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+
+                            <a href="#" class="btn btn-social btn-social-o youtube mr-1">
+                                <i class="fa fa-youtube"></i>
+                            </a>
+                        </p>
+                        <br>-->
+                        <h4 class="footer-title">{{newsletter}}</h4>
+                        <!-- Form Newsletter -->
+                        <div class="widget__form-newsletter ">
+                            <p class="text-light">
+                                Verpassen Sie nichts! Newsletter abonnieren.
+                            </p>
+                            <div class="mt-3">
+                                <input type="text" class="form-control mb-2" placeholder="{{Your_email_address}}">
+
+                                <button class="btn btn-light btn-block text-capitalize" type="button">Abonnieren</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END NEWSLETTER -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="bg__footer-bottom-v1">
+        <div class="container">
+            <div class="row flex-column-reverse flex-md-row" align="center">
+                <div class="col-md-12">
+                    <span>
+                        <a href="#" class="comCopy" style="color: #E41F0E;">123-Kroatien.eu</a> - All right reserved | copywrite © 2024
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer  -->
+</footer>
