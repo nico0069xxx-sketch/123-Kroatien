@@ -1,142 +1,104 @@
 <analysis>**original_problem_statement:**
-The user has an existing Django-based real estate marketplace for Croatia. The project was left unfinished by a previous developer, and the user, a self-proclaimed layperson, needs help completing it.
+The user has an existing Django-based real estate marketplace for Croatia, left unfinished by a previous developer. The user is non-technical and needs help completing it on their local Apple M1 computer.
 
-Initial requests included:
-1.  Implement an XML interface for real estate listings (e.g., OpenImmo format).
-2.  Add a multi-language GDPR-compliant data privacy banner.
-3.  General security improvements.
+Initial high-priority requests are:
+1.  Fix the broken core application (homepage, listings, etc.).
+2.  Implement an AI Chatbot.
+3.  Implement AI-powered translations for listings and static content into 12 languages.
+4.  Implement AI-generated property descriptions.
+5.  Implement AI-powered smart search.
+6.  Implement mandatory SMS OTP verification (Twilio) for new realtors.
+7.  Implement an XML interface for real estate listings.
+8.  Add a multi-language GDPR banner.
 
-During the conversation, the user added new, higher-priority requirements:
-4.  Implement mandatory SMS OTP verification via Twilio for every new realtor registration.
-5.  Integrate AI features into the platform:
-    *   An AI Chatbot to answer customer questions.
-    *   AI-generated property descriptions.
-    *   AI-powered translations into 12 languages.
-    *   An AI-powered smart search that understands natural language.
+The main focus of this session was to fix the broken site and implement the AI Chatbot and AI Translation features.
 
-The immediate goal became setting up the user's local development environment and implementing the AI Chatbot as the first feature to build momentum.
-
-**User's preferred language**: German. The user communicates exclusively in German (ja gerne, ich habe den account angelegt, es funktioniert prima danke sehr). The next agent **MUST** continue the conversation in German.
+**User's preferred language**: German. The user communicates exclusively in German. The next agent **MUST** continue the conversation in German.
 
 **what currently exists?**
-The user has a complete Django project on their local Apple M1 computer. The agent successfully guided the user to get the local development server running using . The project is a well-structured real estate platform with apps for , , , and multi-language support. A mock version of the AI chatbot has been implemented and is working on a dedicated test page. The core functionality of the main website (homepage, listings, etc.) is currently broken due to incorrect file modifications during the chatbot implementation.
+The agent is working directly on the user's local Apple M1 Mac by providing copy-pasteable terminal commands. The project is a Django real estate platform.
+
+Key achievements in this session:
+1.  **Site Repaired**: The main application, which was previously broken (404 errors on homepage), has been fixed. The homepage, listings page, and detail pages are now accessible. This was done by fixing broken URL configurations and adding placeholder views for missing functions.
+2.  **Live AI Chatbot**: The mock chatbot from the previous session has been replaced with a real, functioning AI chatbot powered by the user's own OpenAI API key (using GPT-3.5-Turbo).
+3.  **FAQ-Powered Chatbot**: The agent successfully extracted 62 questions and answers from a backup file and fed them to the chatbot. The chatbot now uses this data as a knowledge base to answer user questions accurately.
+4.  **AI Listing Translation**: A service was created to translate property listings (titles and descriptions) into all 12 supported languages using the OpenAI API.
+5.  **Multi-language Static Content Framework**: A new database model () and a supporting architecture have been created to manage and translate static text (like buttons, labels, and FAQ content) across the site. The FAQ page has been successfully migrated to this new system.
 
 **Last working item**:
-*   **Last item agent was working**: Implementing an AI-powered Chatbot. After discovering that the provided Emergent LLM key was incompatible with the OpenAI SDK and the user was temporarily locked out of their OpenAI account, the agent pivoted to creating a **mock chatbot**. This mock chatbot simulates conversation using predefined, keyword-based responses, allowing the user to see and interact with the feature's UI.
-*   **Status**: COMPLETED (The mock version is complete and verified by the user).
-*   **Agent Testing Done**: Y
-*   **Which testing method agent to use?**: manual testing by curl/ python -c
-*   **User Testing Done**: Y
+- **Last item agent was working**: Diagnosing and fixing mixed-language content on the website. The user reported that when they select Croatian, the page displays a mix of Croatian, German, and English text. The agent confirmed the issue and determined that while database content (like property titles) is being translated correctly, hardcoded static text within the HTML templates (like navigation links, buttons, and labels) is not. The agent was preparing to systematically migrate this static text to the new  database model for translation.
+- **Status**: IN PROGRESS
+- **Agent Testing Done**: N
+- **Which testing method agent to use?**: manual testing by curl/ python -c
+- **User Testing Done**: Y
 
 **All Pending/In progress Issue list**:
-*   **Issue 1**: Core application functionality is broken. (Priority: P0)
-*   **Issue 2**: AI Chatbot uses mock data instead of a real AI. (Priority: P1)
+- **Issue 1**: Multi-language support is incomplete and inconsistent. (Priority: P0)
 
 **Issues Detail**:
-*   **Issue 1**:
-    *   **Description**: While attempting to add the chatbot feature, the agent inadvertently overwrote or incorrectly modified  and . This resulted in  exceptions, making the main site (homepage, listings page, etc.) inaccessible. To get the chatbot test page working, the main app's URL inclusion in  was commented out.
-    *   **Attempted fixes**: The agent tried to rewrite  from memory but used incorrect view names, leading to more errors. The final fix was to disable the app.
-    *   **Next debug checklist**:
-        1.  Guide the user to restore the original, working versions of  and . Since a usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
-           <command> [<args>]
-
-These are common Git commands used in various situations:
-
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
-
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
-
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
-
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
-
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
-
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system. backup might not be available, this may involve recreating the files based on the project's structure and previously uploaded file content.
-        2.  Once restored, correctly add the  and its URL includes without breaking existing paths. The chatbot should be on a separate, non-conflicting path like .
-        3.  Un-comment the  line in .
-        4.  Verify that both the main website and the chatbot test page are accessible.
-    *   **Why fix this issue and what will be achieved with the fix?**: This is critical. Fixing it will restore all the original website features and allow the new chatbot widget to be integrated into the live site, not just a test page.
-    *   **Status**: NOT STARTED
-    *   **Is recurring issue?**: Y (The agent made several attempts to fix URL/view issues, indicating a persistent problem with file modifications).
-    *   **Should Test frontend/backend/both after fix?**: Both.
-    *   **Blocked on other issue**: None.
-
-*   **Issue 2**:
-    *   **Description**: The current chatbot is a mock implementation. It does not connect to an AI service and only provides hardcoded answers. This was a temporary solution because the user's API key was not available.
-    *   **Attempted fixes**: N/A (This is the intended temporary state).
-    *   **Next debug checklist**:
-        1.  Guide the user to get a valid API key from their OpenAI account at .
-        2.  Instruct the user to add this key to their local  file (e.g., ).
-        3.  Replace the mock logic in  with the Python code that calls the OpenAI API using the key from the environment variable.
-        4.  Thoroughly test the live chatbot functionality.
-    *   **Why fix this issue and what will be achieved with the fix?**: To fulfill the user's request for a real, intelligent AI chatbot.
-    *   **Status**: BLOCKED (Waiting for user to provide a valid OpenAI API key).
-    *   **Is recurring issue?**: N
-    *   **Should Test frontend/backend/both after fix?**: Both.
-    *   **Blocked on other issue**: None.
+- **Issue 1**:
+  - **Description**: When a user switches the language (e.g., to Croatian), many static UI elements remain in German or English. This includes navigation menu items (KAUFEN, VERKAUFEN), form labels (Beschreibung, Anzahlung), and other hardcoded text (For Sale, Sq Ft).
+  - **Attempted fixes**: The agent has successfully implemented a  model and context processor to serve translated text from the database. This was proven to work for the FAQ page. The issue is that most other pages still have hardcoded German/English text. The agent also fixed the currency symbol (), removed /mo from prices, and translated some labels on the  page.
+  - **Next debug checklist**:
+    1.  Continue the process started with the FAQ page for all other static pages and forms.
+    2.  For each page identified by the user (, , , , etc.), systematically identify all hardcoded German/English text.
+    3.  Create a script to extract this text and populate the  database table with a unique  for each string.
+    4.  Run the  to translate all new  entries into the 12 languages.
+    5.  Replace the hardcoded text in the HTML templates with the corresponding template variables (e.g., ).
+    6.  Guide the user to test each page in multiple languages to confirm the fix.
+  - **Why fix this issue and what will be achieved with the fix?**: This will provide a fully immersive, professional multi-language experience for users, which is a core requirement.
+  - **Status**: IN PROGRESS
+  - **Is recurring issue?**: N
+  - **Should Test frontend/backend/both after fix?**: Frontend.
+  - **Blocked on other issue**: None.
 
 **In progress Task List**:
-None.
+- **Task 1**: Migrate all static pages to the new database-driven translation system. (Priority: P0)
+  - **Where to resume**: The framework ( model, services, context processor) is in place. The agent needs to apply this pattern to the remaining pages identified by the user. Start with  and  since the user mentioned them last.
+  - **What will be achieved with this?**: A fully translated website, fulfilling a major user requirement.
+  - **Status**: IN PROGRESS
+  - **Should Test frontend/backend/both after fix?**: Frontend
+  - **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
-*   **Upcoming Tasks (AI Features requested by user):**
-    *   **(P2) AI Auto-Descriptions**: Create a feature where users can click a button on a property page to automatically generate a compelling description for it. This will involve creating a new view, API endpoint, and frontend integration.
-    *   **(P3) AI Auto-Translations**: Implement a mechanism to translate property details and other content into the 12 languages supported by the platform using an AI model.
-    *   **(P4) AI Smart-Search**: Enhance the existing search functionality to accept natural language queries (e.g., show me houses with a pool near the sea in Split).
+*   **Upcoming Tasks:**
+    *   **(P1) AI Auto-Descriptions**: Create a feature to automatically generate property descriptions.
+    *   **(P2) AI Smart-Search**: Enhance search to understand natural language queries.
+    *   **(P3) Finish placeholder pages**: Many pages (, , etc.) were created with placeholder content to fix the site. They need to be populated with real content and then translated using the new static content system.
 
-*   **Future Tasks (Original requests, to be implemented after AI features):**
-    *   **(P5) Mandatory SMS OTP on Registration**: Integrate Twilio to send an OTP to a user's mobile number during registration, making it a required step. (Files like  were conceptualized but not implemented).
-    *   **(P6) XML Interface (OpenImmo)**: Implement an XML export endpoint () that provides property data in the OpenImmo format for other real estate portals.
-    *   **(P7) GDPR Cookie Banner**: Add a GDPR-compliant cookie consent banner with multi-language support.
-    *   **(P8) Security Enhancements**: Refactor  to use environment variables for sensitive data like , database credentials, and email passwords, instead of having them hardcoded.
+*   **Future Tasks:**
+    *   **(P4) Mandatory SMS OTP on Registration**: Integrate Twilio for SMS verification.
+    *   **(P5) XML Interface (OpenImmo)**: Implement an XML export endpoint.
+    *   **(P6) GDPR Cookie Banner**: Add a multi-language GDPR banner.
+    *   **(P7) Security Enhancements**: Move all secrets from  (like email passwords) to the  file.
 
 **Completed work in this session**
-*   **Local Environment Setup**: Successfully guided a non-technical user to set up and run the existing Django project on their local Apple M1 Mac, including troubleshooting Python/pip version issues.
-*   **Mock AI Chatbot Implementation**:
-    *   Created a floating chatbot widget ().
-    *   Created a backend view with mock logic ().
-    *   Created a dedicated test page () and URL () to demonstrate the feature while the main site was broken.
-    *   User has confirmed the mock chatbot is working on their local machine.
-*   **Problem Identification**: Diagnosed that the Emergent LLM key is incompatible with the standard OpenAI SDK, preventing a critical blocker and finding a viable path forward (user's own key).
+- **Core Application Repaired**: Fixed broken  and , restoring homepage and navigation functionality.
+- **Live AI Chatbot**: Replaced the mock chatbot with a functioning one using the user's OpenAI API key.
+- **FAQ-Powered Chatbot**: Extracted 62 FAQs from a backup and integrated them into the chatbot's knowledge base. The chatbot now successfully answers questions based on this FAQ data.
+- **AI Auto-Translation for Listings**: Implemented a service () that translates new property listings into all 12 supported languages.
+- **Static Content Translation System**: Created a  model, migrations, translation service (), and context processor to enable database-driven translations for static text. Successfully migrated the FAQ page to this new system.
+- **Bug Fixes**:
+  - Corrected an invalid API key that was hardcoded in the existing .
+  - Resolved  errors on multiple pages by fixing template URL tags.
+  - Resolved  errors by pointing views to correct template files.
+  - Fixed  on detail page for listings without photos.
+  - Corrected currency symbols from  to  and removed incorrect  text from prices.
+  - Fixed a bug in the language switcher redirect logic.
+- **User Environment Management**: Successfully guided the user to work with multiple terminal windows and debug environment-specific issues (e.g., hanging commands, finding file paths).
+
+**Earlier issues found/mentioned but not fixed**
+- **Issue 1**: The root  file is corrupted and contains only two lines. The agent correctly identified the real base template at  and used that instead. The corrupted file should be removed to avoid future confusion.
+- **Issue 2**: There are now two separate AI translation systems: the pre-existing one in  (which seems to trigger automatically on model save) and the new, manually-triggered one in . This is redundant and should be consolidated.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-*   **Backend**: Django 4.2.1
-*   **Database**: SQLite ()
-*   **Frontend**: Django Template Language, HTML, vanilla JavaScript, CSS.
-*   **Local Environment**: User's Apple M1 Mac, interacting via Terminal using  and 
+- **Backend**: Django 4.2.1
+- **Database**: SQLite
+- **Frontend**: Django Template Language, HTML, CSS, vanilla JavaScript
+- **Local Environment**: User's Apple M1 Mac, interacting via Terminal using  and 
 Usage:   
   pip3 <command> [options]
 
@@ -213,222 +175,79 @@ General Options:
   --resume-retries <resume_retries>
                               Maximum attempts to resume or restart an
                               incomplete download. (default: 5).
-*   **AI Integration**:  Python library.
+- **AI Integration**:  Python library (GPT-3.5-Turbo & GPT-3.5-Turbo-16k) for chatbot and translations.
 
 **key DB schema**
-*   **listings.Listing**: , , , , ,  (ForeignKey to ).
-*   **accounts.Agent**: Profile information for real estate agents, linked to a standard Django . Includes fields like , , .
+- **listings.Listing**: , , , plus fields for translated content (, , etc.).
+- **main.StaticContent**:  (str),  (str),  (text),  (text), and fields for all 10 other languages.
 
 **changes in tech stack**
-*   The  and  Python packages were added to the local environment via 
-Usage:   
-  pip3 <command> [options]
-
-Commands:
-  install                     Install packages.
-  lock                        Generate a lock file.
-  download                    Download packages.
-  uninstall                   Uninstall packages.
-  freeze                      Output installed packages in requirements format.
-  inspect                     Inspect the python environment.
-  list                        List installed packages.
-  show                        Show information about installed packages.
-  check                       Verify installed packages have compatible dependencies.
-  config                      Manage local and global configuration.
-  search                      Search PyPI for packages.
-  cache                       Inspect and manage pip's wheel cache.
-  index                       Inspect information available from package indexes.
-  wheel                       Build wheels from your requirements.
-  hash                        Compute hashes of package archives.
-  completion                  A helper command used for command completion.
-  debug                       Show information useful for debugging.
-  help                        Show help for commands.
-
-General Options:
-  -h, --help                  Show help.
-  --debug                     Let unhandled exceptions propagate outside the
-                              main subroutine, instead of logging them to
-                              stderr.
-  --isolated                  Run pip in an isolated mode, ignoring
-                              environment variables and user configuration.
-  --require-virtualenv        Allow pip to only run in a virtual environment;
-                              exit with an error otherwise.
-  --python <python>           Run pip with the specified Python interpreter.
-  -v, --verbose               Give more output. Option is additive, and can be
-                              used up to 3 times.
-  -V, --version               Show version and exit.
-  -q, --quiet                 Give less output. Option is additive, and can be
-                              used up to 3 times (corresponding to WARNING,
-                              ERROR, and CRITICAL logging levels).
-  --log <path>                Path to a verbose appending log.
-  --no-input                  Disable prompting for input.
-  --keyring-provider <keyring_provider>
-                              Enable the credential lookup via the keyring
-                              library if user input is allowed. Specify which
-                              mechanism to use [auto, disabled, import,
-                              subprocess]. (default: auto)
-  --proxy <proxy>             Specify a proxy in the form
-                              scheme://[user:passwd@]proxy.server:port.
-  --retries <retries>         Maximum attempts to establish a new HTTP
-                              connection. (default: 5)
-  --timeout <sec>             Set the socket timeout (default 15 seconds).
-  --exists-action <action>    Default action when a path already exists:
-                              (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.
-  --trusted-host <hostname>   Mark this host or host:port pair as trusted,
-                              even though it does not have valid or any HTTPS.
-  --cert <path>               Path to PEM-encoded CA certificate bundle. If
-                              provided, overrides the default. See 'SSL
-                              Certificate Verification' in pip documentation
-                              for more information.
-  --client-cert <path>        Path to SSL client certificate, a single file
-                              containing the private key and the certificate
-                              in PEM format.
-  --cache-dir <dir>           Store the cache data in <dir>.
-  --no-cache-dir              Disable the cache.
-  --disable-pip-version-check
-                              Don't periodically check PyPI to determine
-                              whether a new version of pip is available for
-                              download. Implied with --no-index.
-  --no-color                  Suppress colored output.
-  --use-feature <feature>     Enable new functionality, that may be backward
-                              incompatible.
-  --use-deprecated <feature>  Enable deprecated functionality, that will be
-                              removed in the future.
-  --resume-retries <resume_retries>
-                              Maximum attempts to resume or restart an
-                              incomplete download. (default: 5).
+-  package was installed and is used by the new AI services.
 
 **All files of reference**
-*   **Modified/Created on User's Local Machine:**
-    *   : Created in the project root to store API keys.
-    *   : Created to house the chatbot API logic (currently mock) and test page view.
-    *   : Created to define URL patterns for the chatbot feature.
-    *   : Created. Contains the HTML/CSS/JS for the chat widget.
-    *   : Created. A simple page to test the widget in isolation.
-    *   : Heavily modified. The include for  is commented out. An include for  has been added.
-    *   : Corrupted/Broken. Needs to be restored to its original state.
-    *   : Modified to include the .
+*   **New/Heavily Modified Files**:
+    *   : Central file for views; heavily modified to fix the site, add placeholder views, and add endpoints for new features.
+    *   : Fixed and expanded to include all necessary URLs for the site to function.
+    *   : Contains the new, intelligent chatbot logic that uses FAQ data.
+    *   : Updated to correctly call the new chatbot logic.
+    *   , : Created for the new static content translation system.
+    *   , : Modified to integrate the static translation system into all templates.
+    *   , : New services for AI translations.
+    *   : The knowledge base for the chatbot.
+    *   : Modified to replace a hardcoded invalid API key with the user's new key.
+    *   : The true base template, modified to fix filter links and add the chatbot.
+    *   : Rewritten to be dynamically populated from the  model.
+    *   : Updated with the user's valid OpenAI API key.
 
 **Areas that need refactoring**
-*   **CRITICAL**:  and  must be restored. The agent's attempts to modify them have broken the main website's functionality. The next agent's first task should be to fix this by carefully reconstructing the original files and then correctly adding the new chatbot URL without conflicts.
+*   ****: This file in the root  directory is corrupted and should be deleted to prevent confusion.
+*   **Translation Logic**: The translation logic is split between  (the old system) and  (the new system). This should be consolidated into a single, robust service.
+*   **Placeholder Views**:  contains many placeholder functions that just render a template. These pages (, , etc.) need to be implemented with real content, which should then be moved to the  model for translation.
 
 **key api endpoints**
-*   : Endpoint for the chatbot.
-*   : Temporary test page for viewing the chatbot widget.
+- : API for the AI chatbot.
+- : Endpoint to trigger AI translation for a specific listing (created by the agent, but the old system in  might be doing this automatically).
 
 **Critical Info for New Agent**
-*   **User Interaction Model**: The user is a layperson with a disability. They find it easiest to work by copy-pasting complete, tested commands into the terminal. Avoid instructions that require manual file editing or complex navigation. Be patient, clear, and provide one step at a time.
-*   **Broken State**: The main website is currently down on the user's local machine because of broken  and  files. This **must** be fixed first.
-*   **API Key**: Do not try to use the  with the OpenAI library. It will fail. The plan is to guide the user to obtain their own key from OpenAI. The current chatbot is a **mock** and the user is aware of this.
-*   **Local Environment**: Remember all commands must use  and 
-Usage:   
-  pip3 <command> [options]
-
-Commands:
-  install                     Install packages.
-  lock                        Generate a lock file.
-  download                    Download packages.
-  uninstall                   Uninstall packages.
-  freeze                      Output installed packages in requirements format.
-  inspect                     Inspect the python environment.
-  list                        List installed packages.
-  show                        Show information about installed packages.
-  check                       Verify installed packages have compatible dependencies.
-  config                      Manage local and global configuration.
-  search                      Search PyPI for packages.
-  cache                       Inspect and manage pip's wheel cache.
-  index                       Inspect information available from package indexes.
-  wheel                       Build wheels from your requirements.
-  hash                        Compute hashes of package archives.
-  completion                  A helper command used for command completion.
-  debug                       Show information useful for debugging.
-  help                        Show help for commands.
-
-General Options:
-  -h, --help                  Show help.
-  --debug                     Let unhandled exceptions propagate outside the
-                              main subroutine, instead of logging them to
-                              stderr.
-  --isolated                  Run pip in an isolated mode, ignoring
-                              environment variables and user configuration.
-  --require-virtualenv        Allow pip to only run in a virtual environment;
-                              exit with an error otherwise.
-  --python <python>           Run pip with the specified Python interpreter.
-  -v, --verbose               Give more output. Option is additive, and can be
-                              used up to 3 times.
-  -V, --version               Show version and exit.
-  -q, --quiet                 Give less output. Option is additive, and can be
-                              used up to 3 times (corresponding to WARNING,
-                              ERROR, and CRITICAL logging levels).
-  --log <path>                Path to a verbose appending log.
-  --no-input                  Disable prompting for input.
-  --keyring-provider <keyring_provider>
-                              Enable the credential lookup via the keyring
-                              library if user input is allowed. Specify which
-                              mechanism to use [auto, disabled, import,
-                              subprocess]. (default: auto)
-  --proxy <proxy>             Specify a proxy in the form
-                              scheme://[user:passwd@]proxy.server:port.
-  --retries <retries>         Maximum attempts to establish a new HTTP
-                              connection. (default: 5)
-  --timeout <sec>             Set the socket timeout (default 15 seconds).
-  --exists-action <action>    Default action when a path already exists:
-                              (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.
-  --trusted-host <hostname>   Mark this host or host:port pair as trusted,
-                              even though it does not have valid or any HTTPS.
-  --cert <path>               Path to PEM-encoded CA certificate bundle. If
-                              provided, overrides the default. See 'SSL
-                              Certificate Verification' in pip documentation
-                              for more information.
-  --client-cert <path>        Path to SSL client certificate, a single file
-                              containing the private key and the certificate
-                              in PEM format.
-  --cache-dir <dir>           Store the cache data in <dir>.
-  --no-cache-dir              Disable the cache.
-  --disable-pip-version-check
-                              Don't periodically check PyPI to determine
-                              whether a new version of pip is available for
-                              download. Implied with --no-index.
-  --no-color                  Suppress colored output.
-  --use-feature <feature>     Enable new functionality, that may be backward
-                              incompatible.
-  --use-deprecated <feature>  Enable deprecated functionality, that will be
-                              removed in the future.
-  --resume-retries <resume_retries>
-                              Maximum attempts to resume or restart an
-                              incomplete download. (default: 5) for the user's Mac M1 environment.
+*   **Work on User's Local Machine**: You are NOT working in the Emergent cloud environment. You are guiding a non-technical user to run commands on their **local Apple M1 Mac**. Provide simple, complete, copy-pasteable commands.
+*   **Two Terminals**: The user is comfortable using two separate terminal windows: one to keep the  command active and another to execute other commands like shell scripts.
+*   **OpenAI API Key**: The user's valid OpenAI key is in  and has also been manually patched into . The user has previously run into quota/billing issues (). If any AI feature fails, checking their OpenAI account billing status is a good first step.
+*   **Static vs. Dynamic Content**: The core of the remaining translation work is distinguishing between dynamic content (from the DB, like listings) and static content (hardcoded in templates, like labels/buttons). The path forward is to move all static text into the  model and replace it in templates with .
 
 **documents and test reports created in this job**
-None applicable. All work was done directly on the user's local machine, and no formal reports were generated.
+*   : JSON file containing 62 FAQ entries.
+*   : A zip file of the original project, uploaded by the user.
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. **User**: Confirms the mock chatbot is working: jaa es funktioniert prima danke sehr (yes it works great thank you very much).
-9.  **User**: Asks for clarification: ist das richtig, dass ich den chatbot nicht testen kann? (is it right that I can't test the chatbot?).
-8.  **User**: Posts the text from the test page, showing confusion about *how* to test.
-7.  **User**: Clarifies the issue: ich stelle fragen aber es kommt keine Antwort (I ask questions but no answer comes).
-6.  **User**: Provides terminal output showing .
-5.  **User**: Confirms the chatbot now gives a response, but it's undefined: ok, es kam folgende Antwort: 🤖 undefined (ok, the following answer came: 🤖 undefined).
-4.  **User**: Provides terminal output showing .
-3.  **User**: Provides the full content of .
-2.  **User**: Provides terminal output showing a  error from a direct OpenAI test script.
-1.  **User**: In response to the API key issue, confirms they have a chatgpt plus account.
+10. **User**: Confirms the Croatian page has a mix of German, Croatian, and English words.
+9.  **User**: States that Test 1 (language switcher) doesn't work for all languages, but Test 2 (multilingual chatbot) works perfectly.
+8.  **User**: Confirms the agent's summary and asks to proceed with fixing the mixed-language issues.
+7.  **User**: Shows screenshots confirming the mixed language issue on the property detail page when Croatian is selected.
+6.  **User**: Asks what to do after the agent finished a task.
+5.  **User**: Confirms that the property details page is now working, but notes that the price is shown in  instead of , and the label description is in English.
+4.  **User**: Provides the  error for .
+3.  **User**: Confirms all property titles on the homepage are now translated to English when English is selected, but asks why they can't open the detail pages.
+2.  **User**: Reports that after running the translation script, the command output says Fertig! (Done!).
+1.  **User**: States it's strange that one property title is in English while others are in German.
 
 **Project Health Check:**
-*   **Broken**: The core  application's routes and views are non-functional.
-*   **Mocked**: The AI Chatbot's backend logic is a mock implementation.
+*   **Broken**: Multi-language display for static text (menus, labels, buttons) is inconsistent across pages.
+*   **Mocked**: None.
 
 **3rd Party Integrations**
-*   **Twilio**: Package installed, but not yet integrated into the application code. Requires a user API key.
-*   **OpenAI**: Package installed. Integrated with a mock backend. Requires a user API key for real functionality.
+*   **OpenAI**: Used for the chatbot () and for translations (). Requires a user-provided API key, which is currently configured.
+*   **Twilio**: Package is installed locally but not yet integrated into the application.
 
 **Testing status**
-*   **Testing agent used after significant changes**: NO
-*   **Troubleshoot agent used after agent stuck in loop**: NO
-*   **Test files created**: []
-*   **Known regressions**: The main website's functionality (homepage, listings, etc.) is not working due to broken  and .
+- **Testing agent used after significant changes**: NO
+- **Troubleshoot agent used after agent stuck in loop**: NO
+- **Test files created**: []
+- **Known regressions**: None. The agent successfully fixed the major regression from the previous session (broken homepage).
 
 **Credentials to test flow:**
-*   A valid **OpenAI API Key** from the user is required to transition the chatbot from mock to live. The user should be guided to create one at .
+*   The OpenAI API Key is stored in the user's local  file. The user needs to ensure their OpenAI account has sufficient funds.
+*   A test user/agent  was created to associate with listings.
 
 **What agent forgot to execute**
-The agent failed to properly restore the  and  files after breaking them. The attempts to fix them created more errors, leading to the decision to disable the entire main application to test the chatbot in isolation. The immediate priority for the next agent is to fix this regression.</analysis>
+- The agent created a new translation service () instead of refactoring or extending the one that already existed (). This has created technical debt and two separate systems for AI translation.
+- The agent did not address the corrupted  file, which could cause confusion later.</analysis>
