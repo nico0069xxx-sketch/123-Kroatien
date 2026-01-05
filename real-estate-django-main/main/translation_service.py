@@ -5,6 +5,7 @@ Verwendet Emergent LLM Integration für automatische Übersetzungen in 12 Sprach
 import os
 import sys
 import asyncio
+from asgiref.sync import sync_to_async
 
 # Emergent LLM Key
 EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"
@@ -35,7 +36,7 @@ async def translate_text(text, target_language):
     try:
         chat = LlmChat(
             api_key=EMERGENT_LLM_KEY,
-            session_id=f"translate-{target_language}",
+            session_id=f"translate-{target_language}-{hash(text)}",
             system_message=f"You are a professional translator. Translate the following text to {target_language}. Return ONLY the translated text, nothing else. Keep the same tone and style. Do not add any explanations."
         ).with_model("openai", "gpt-4o-mini")
         
@@ -183,8 +184,8 @@ async def populate_translations():
     
     from pages.models import Translation
     
-    # Erste alle bestehenden löschen
-    Translation.objects.all().delete()
+    # Erste alle bestehenden löschen (sync)
+    await sync_to_async(Translation.objects.all().delete)()
     print("Bestehende Übersetzungen gelöscht.")
     
     total = len(STATIC_TEXTS)
@@ -197,24 +198,28 @@ async def populate_translations():
         # Übersetze in alle Sprachen
         translations = await translate_all_languages(data['german'])
         
-        # In Datenbank speichern
-        translation = Translation(
-            name=name,
-            page=data['page'],
-            german_content=translations.get('ge', data['german']),
-            english_content=translations.get('en', ''),
-            french_content=translations.get('fr', ''),
-            greek_content=translations.get('gr', ''),
-            croatian_content=translations.get('hr', ''),
-            polish_content=translations.get('pl', ''),
-            czech_content=translations.get('cz', ''),
-            russian_content=translations.get('ru', ''),
-            swedish_content=translations.get('sw', ''),
-            norway_content=translations.get('no', ''),
-            slovak_content=translations.get('sk', ''),
-            dutch_content=translations.get('nl', '')
-        )
-        translation.save()
+        # In Datenbank speichern (sync)
+        @sync_to_async
+        def save_translation():
+            translation = Translation(
+                name=name,
+                page=data['page'],
+                german_content=translations.get('ge', data['german']),
+                english_content=translations.get('en', ''),
+                french_content=translations.get('fr', ''),
+                greek_content=translations.get('gr', ''),
+                croatian_content=translations.get('hr', ''),
+                polish_content=translations.get('pl', ''),
+                czech_content=translations.get('cz', ''),
+                russian_content=translations.get('ru', ''),
+                swedish_content=translations.get('sw', ''),
+                norway_content=translations.get('no', ''),
+                slovak_content=translations.get('sk', ''),
+                dutch_content=translations.get('nl', '')
+            )
+            translation.save()
+        
+        await save_translation()
         print(f"  ✓ Gespeichert!")
     
     print(f"\n\n=== FERTIG! {total} Übersetzungen erstellt ===")
