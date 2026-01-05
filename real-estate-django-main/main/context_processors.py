@@ -28,11 +28,13 @@ def get_my_translations(request):
     elif '/blog/single/' in current_path: page = 'blog details'
     elif '/agent/' in current_path: page = 'profile'
     elif '/edit-agent/' in current_path: page = 'signup'
+    elif '/faq/' in current_path: page = 'faq'
 
-    user_language = request.session.get('site_language', 'en')
+    user_language = request.session.get('site_language', 'ge')
 
     context = {}
-    translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer')
+    # Lade alle Übersetzungen für die aktuelle Seite, navbar und footer
+    translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details')
     for t in translations:
         if user_language == 'en': context[t.name] = t.english_content
         elif user_language == 'ge': context[t.name] = t.german_content
@@ -46,5 +48,6 @@ def get_my_translations(request):
         elif user_language == 'no': context[t.name] = t.norway_content
         elif user_language == 'sk': context[t.name] = t.slovak_content
         elif user_language == 'nl': context[t.name] = t.dutch_content
+        else: context[t.name] = t.german_content  # Fallback zu Deutsch
 
     return context
