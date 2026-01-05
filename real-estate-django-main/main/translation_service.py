@@ -1,15 +1,13 @@
 """
 Translation Service für statische Texte
-Verwendet OpenAI GPT für automatische Übersetzungen in 12 Sprachen
+Verwendet Emergent LLM Integration für automatische Übersetzungen in 12 Sprachen
 """
 import os
-import json
-from openai import OpenAI
+import sys
+import asyncio
 
 # Emergent LLM Key
-OPENAI_API_KEY = "sk-emergent-113674f2aA7337d756"
-
-client = OpenAI(api_key=OPENAI_API_KEY)
+EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"
 
 # Alle unterstützten Sprachen
 LANGUAGES = {
@@ -27,40 +25,37 @@ LANGUAGES = {
     'nl': 'Dutch'
 }
 
-def translate_text(text, target_language):
-    """Übersetzt einen Text in die Zielsprache"""
+async def translate_text(text, target_language):
+    """Übersetzt einen Text in die Zielsprache mit Emergent Integration"""
+    from emergentintegrations.llm.chat import LlmChat, UserMessage
+    
     if not text or text.strip() == '':
         return text
     
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"You are a professional translator. Translate the following text to {target_language}. Return ONLY the translated text, nothing else. Keep the same tone and style."
-                },
-                {
-                    "role": "user", 
-                    "content": text
-                }
-            ],
-            temperature=0.3
-        )
-        return response.choices[0].message.content.strip()
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=f"translate-{target_language}",
+            system_message=f"You are a professional translator. Translate the following text to {target_language}. Return ONLY the translated text, nothing else. Keep the same tone and style. Do not add any explanations."
+        ).with_model("openai", "gpt-4o-mini")
+        
+        user_message = UserMessage(text=text)
+        response = await chat.send_message(user_message)
+        return response.strip()
     except Exception as e:
         print(f"Fehler bei Übersetzung von '{text}' nach {target_language}: {e}")
         return text
 
-def translate_all_languages(german_text):
+async def translate_all_languages(german_text):
     """Übersetzt einen deutschen Text in alle 12 Sprachen"""
     translations = {'ge': german_text}
     
     for lang_code, lang_name in LANGUAGES.items():
         if lang_code == 'ge':
             continue
-        translations[lang_code] = translate_text(german_text, lang_name)
-        print(f"  {lang_code}: {translations[lang_code]}")
+        result = await translate_text(german_text, lang_name)
+        translations[lang_code] = result
+        print(f"  {lang_code}: {result}")
     
     return translations
 
@@ -179,14 +174,18 @@ STATIC_TEXTS = {
     'msg_error': {'page': 'contact', 'german': 'Ein Fehler ist aufgetreten'},
 }
 
-def populate_translations():
+async def populate_translations():
     """Fügt alle Übersetzungen in die Datenbank ein"""
     import django
-    import os
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'realstate.settings')
+    sys.path.insert(0, '/app/real-estate-django-main')
     django.setup()
     
     from pages.models import Translation
+    
+    # Erste alle bestehenden löschen
+    Translation.objects.all().delete()
+    print("Bestehende Übersetzungen gelöscht.")
     
     total = len(STATIC_TEXTS)
     current = 0
@@ -195,14 +194,8 @@ def populate_translations():
         current += 1
         print(f"\n[{current}/{total}] Übersetze: {name} ({data['german']})")
         
-        # Prüfen ob bereits existiert
-        existing = Translation.objects.filter(name=name).first()
-        if existing:
-            print(f"  → Bereits vorhanden, überspringe...")
-            continue
-        
         # Übersetze in alle Sprachen
-        translations = translate_all_languages(data['german'])
+        translations = await translate_all_languages(data['german'])
         
         # In Datenbank speichern
         translation = Translation(
@@ -227,4 +220,4 @@ def populate_translations():
     print(f"\n\n=== FERTIG! {total} Übersetzungen erstellt ===")
 
 if __name__ == '__main__':
-    populate_translations()
+    asyncio.run(populate_translations())
