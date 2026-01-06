@@ -88,3 +88,7 @@ real-estate-django-main.zip
 *.env.*
 frontend/public/real-estate-updated.zip
 real-estate-updated.zip
+-e 
+# Environment files
+*.env
+*.env.*
