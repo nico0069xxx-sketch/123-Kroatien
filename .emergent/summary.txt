@@ -1,8 +1,8 @@
 <analysis>**original_problem_statement:**
-The user has an existing Django-based real estate marketplace for Croatia, left unfinished by a previous developer. The user is non-technical and needs help completing it on their local Apple M1 computer.
+The user, a non-technical individual named Nik, has an existing Django-based real estate marketplace for Croatia. The project was left unfinished by a previous developer and is running on the user's local Apple M1 computer.
 
 Initial high-priority requests are:
-1.  Fix the broken core application (homepage, listings, etc.).
+1.  Fix the broken core application.
 2.  Implement an AI Chatbot.
 3.  Implement AI-powered translations for listings and static content into 12 languages.
 4.  Implement AI-generated property descriptions.
@@ -11,243 +11,220 @@ Initial high-priority requests are:
 7.  Implement an XML interface for real estate listings.
 8.  Add a multi-language GDPR banner.
 
-The main focus of this session was to fix the broken site and implement the AI Chatbot and AI Translation features.
+The main focus of this session was to fix the broken site and implement the AI Chatbot and AI Translation features by guiding the user through terminal commands on their local machine.
 
-**User's preferred language**: German. The user communicates exclusively in German. The next agent **MUST** continue the conversation in German.
+**User's preferred language**: German. The user communicates exclusively in German and prefers to be addressed as Nik. The next agent **MUST** continue the conversation in German and provide simple, step-by-step instructions.
 
 **what currently exists?**
-The agent is working directly on the user's local Apple M1 Mac by providing copy-pasteable terminal commands. The project is a Django real estate platform.
+The agent is guiding the user (Nik) to run commands on his local Apple M1 Mac. The project is a Django real estate platform. After an unsuccessful attempt to set up a new version of the project, the agent reverted to using the user's existing, functional local project folder ().
 
 Key achievements in this session:
-1.  **Site Repaired**: The main application, which was previously broken (404 errors on homepage), has been fixed. The homepage, listings page, and detail pages are now accessible. This was done by fixing broken URL configurations and adding placeholder views for missing functions.
-2.  **Live AI Chatbot**: The mock chatbot from the previous session has been replaced with a real, functioning AI chatbot powered by the user's own OpenAI API key (using GPT-3.5-Turbo).
-3.  **FAQ-Powered Chatbot**: The agent successfully extracted 62 questions and answers from a backup file and fed them to the chatbot. The chatbot now uses this data as a knowledge base to answer user questions accurately.
-4.  **AI Listing Translation**: A service was created to translate property listings (titles and descriptions) into all 12 supported languages using the OpenAI API.
-5.  **Multi-language Static Content Framework**: A new database model () and a supporting architecture have been created to manage and translate static text (like buttons, labels, and FAQ content) across the site. The FAQ page has been successfully migrated to this new system.
+- **Static Translations (DE, EN, HR):** Successfully translated the Navigation Bar, Footer, Contact Page, Login Page, and Registration Page by adding entries to the database and updating the Django templates.
+- **Chatbot Restoration & Customization:**
+    - Re-integrated the missing chatbot widget into the base template.
+    - Customized the chatbot's color to dark blue and the icon to a user-selected silhouette (👤).
+    - Fixed a positioning issue where the chatbot overlapped with the scroll to top button.
+    - Made the chatbot UI (title, greeting) and its backend API calls fully multilingual for German, English, and Croatian.
+- **User Guidance:** Successfully guided a non-technical user through complex command-line operations, troubleshooting path errors, and managing terminal sessions on their local Mac.
 
 **Last working item**:
-- **Last item agent was working**: Diagnosing and fixing mixed-language content on the website. The user reported that when they select Croatian, the page displays a mix of Croatian, German, and English text. The agent confirmed the issue and determined that while database content (like property titles) is being translated correctly, hardcoded static text within the HTML templates (like navigation links, buttons, and labels) is not. The agent was preparing to systematically migrate this static text to the new  database model for translation.
-- **Status**: IN PROGRESS
+- **Last item agent was working**: Translating the property details page (). The agent had viewed the template file, identified the remaining hardcoded German text, and the user opted to continue this task in the next session.
+- **Status**: NOT STARTED
 - **Agent Testing Done**: N
-- **Which testing method agent to use?**: manual testing by curl/ python -c
-- **User Testing Done**: Y
+- **Which testing method agent to use?**: manual testing by curl/ python -c. The agent must provide copy-pasteable terminal commands for the user to execute on their local machine. This will involve using  to add translations and  to update template files.
+- **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-- **Issue 1**: Multi-language support is incomplete and inconsistent. (Priority: P0)
+- **Issue 1**: Multi-language support is incomplete. (Priority: P0)
 
 **Issues Detail**:
-- **Issue 1**:
-  - **Description**: When a user switches the language (e.g., to Croatian), many static UI elements remain in German or English. This includes navigation menu items (KAUFEN, VERKAUFEN), form labels (Beschreibung, Anzahlung), and other hardcoded text (For Sale, Sq Ft).
-  - **Attempted fixes**: The agent has successfully implemented a  model and context processor to serve translated text from the database. This was proven to work for the FAQ page. The issue is that most other pages still have hardcoded German/English text. The agent also fixed the currency symbol (), removed /mo from prices, and translated some labels on the  page.
+- **Issue 1**: 
+  - **Description**: While major parts of the site are translated, key pages like the property details () still contain hardcoded German text. This includes labels in the description section (Beschreibung), the property details table (PropertyID, Price), and the sidebars (filter and mortgage calculator).
+  - **Attempted fixes**: The agent has successfully established a workflow: add translation strings to the  table via the Django shell, then update the corresponding template to use the new context variables. This needs to be applied to the remaining pages.
   - **Next debug checklist**:
-    1.  Continue the process started with the FAQ page for all other static pages and forms.
-    2.  For each page identified by the user (, , , , etc.), systematically identify all hardcoded German/English text.
-    3.  Create a script to extract this text and populate the  database table with a unique  for each string.
-    4.  Run the  to translate all new  entries into the 12 languages.
-    5.  Replace the hardcoded text in the HTML templates with the corresponding template variables (e.g., ).
-    6.  Guide the user to test each page in multiple languages to confirm the fix.
-  - **Why fix this issue and what will be achieved with the fix?**: This will provide a fully immersive, professional multi-language experience for users, which is a core requirement.
+    1.  Guide Nik to start the Django shell ().
+    2.  Provide a series of  commands to add all hardcoded text from  into the database for German, English, and Croatian.
+    3.  Guide Nik to exit the shell.
+    4.  Provide a  command to overwrite the template file, replacing all hardcoded text with the new translation variables (e.g.,  becomes ).
+    5.  Guide Nik to restart the server and test a property detail page, switching between German and Croatian to verify the translations.
+  - **Why fix this issue and what will be achieved with the fix?**: To complete the core user requirement of a fully translated, professional-looking website.
   - **Status**: IN PROGRESS
   - **Is recurring issue?**: N
-  - **Should Test frontend/backend/both after fix?**: Frontend.
+  - **Should Test frontend/backend/both after fix?**: Frontend (User-guided testing).
   - **Blocked on other issue**: None.
 
 **In progress Task List**:
-- **Task 1**: Migrate all static pages to the new database-driven translation system. (Priority: P0)
-  - **Where to resume**: The framework ( model, services, context processor) is in place. The agent needs to apply this pattern to the remaining pages identified by the user. Start with  and  since the user mentioned them last.
-  - **What will be achieved with this?**: A fully translated website, fulfilling a major user requirement.
+- **Task 1**: Migrate all remaining static pages to the new database-driven translation system. (Priority: P0)
+  - **Where to resume**: The agent needs to start the process for .
+  - **What will be achieved with this?**: A fully translated website for the key user-facing pages.
   - **Status**: IN PROGRESS
   - **Should Test frontend/backend/both after fix?**: Frontend
   - **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P1) AI Auto-Descriptions**: Create a feature to automatically generate property descriptions.
-    *   **(P2) AI Smart-Search**: Enhance search to understand natural language queries.
-    *   **(P3) Finish placeholder pages**: Many pages (, , etc.) were created with placeholder content to fix the site. They need to be populated with real content and then translated using the new static content system.
+    *   **(P1) Translate into remaining 9 languages**: The backend supports all 12 languages, but the database and context processor only handle DE, EN, and HR. This needs to be expanded.
+    *   **(P2) AI Auto-Descriptions**: Create a feature to automatically generate property descriptions.
+    *   **(P3) AI Smart-Search**: Enhance search to understand natural language queries.
+    *   **(P4) Implement placeholder pages**: Populate pages like , , etc., with real content and translate them.
 
 *   **Future Tasks:**
-    *   **(P4) Mandatory SMS OTP on Registration**: Integrate Twilio for SMS verification.
-    *   **(P5) XML Interface (OpenImmo)**: Implement an XML export endpoint.
-    *   **(P6) GDPR Cookie Banner**: Add a multi-language GDPR banner.
-    *   **(P7) Security Enhancements**: Move all secrets from  (like email passwords) to the  file.
+    *   **(P5) Mandatory SMS OTP on Registration**: Integrate Twilio for SMS verification.
+    *   **(P6) XML Interface (OpenImmo)**: Implement an XML export endpoint.
+    *   **(P7) GDPR Cookie Banner**: Add a multi-language GDPR banner.
+    *   **(P8) Security Enhancements**: Move secrets from  to the  file.
 
 **Completed work in this session**
-- **Core Application Repaired**: Fixed broken  and , restoring homepage and navigation functionality.
-- **Live AI Chatbot**: Replaced the mock chatbot with a functioning one using the user's OpenAI API key.
-- **FAQ-Powered Chatbot**: Extracted 62 FAQs from a backup and integrated them into the chatbot's knowledge base. The chatbot now successfully answers questions based on this FAQ data.
-- **AI Auto-Translation for Listings**: Implemented a service () that translates new property listings into all 12 supported languages.
-- **Static Content Translation System**: Created a  model, migrations, translation service (), and context processor to enable database-driven translations for static text. Successfully migrated the FAQ page to this new system.
-- **Bug Fixes**:
-  - Corrected an invalid API key that was hardcoded in the existing .
-  - Resolved  errors on multiple pages by fixing template URL tags.
-  - Resolved  errors by pointing views to correct template files.
-  - Fixed  on detail page for listings without photos.
-  - Corrected currency symbols from  to  and removed incorrect  text from prices.
-  - Fixed a bug in the language switcher redirect logic.
-- **User Environment Management**: Successfully guided the user to work with multiple terminal windows and debug environment-specific issues (e.g., hanging commands, finding file paths).
+- **Multilingual Translations (DE, EN, HR) for:**
+  - Navigation Bar ()
+  - Footer ()
+  - Contact Page ()
+  - Login Page ()
+  - Registration Page ()
+- **Chatbot Overhaul:**
+  - Restored the missing chatbot widget.
+  - Customized the color to dark blue and icon to a silhouette (👤).
+  - Fixed positioning to avoid overlap with the scroll to top button.
+  - Implemented full multilingual support (DE, EN, HR) for the chatbot's UI and backend communication.
+- **Project Recovery:** Abandoned a problematic new project setup and successfully reverted to guiding the user on their stable, older local project ().
 
 **Earlier issues found/mentioned but not fixed**
-- **Issue 1**: The root  file is corrupted and contains only two lines. The agent correctly identified the real base template at  and used that instead. The corrupted file should be removed to avoid future confusion.
-- **Issue 2**: There are now two separate AI translation systems: the pre-existing one in  (which seems to trigger automatically on model save) and the new, manually-triggered one in . This is redundant and should be consolidated.
+- **Issue 1**: The project structure on the user's machine is confusing, with multiple project folders (, , ). This should be cleaned up to avoid errors.
+- **Issue 2**: The project contains multiple, redundant translation systems. The work in this session used the  model, but older systems exist. This should be consolidated.
+- **Issue 3**: The contact form contains hardcoded links to an external site () for AGB/Datenschutz. These should be updated to use internal links.
+
+**Known issue recurrence from previous fork**
+- None.
 
 **Code Architecture**
-
+The agent is not working in a standard cloud environment. It is interacting with a local Django project on the user's Apple M1 Mac.
+- **Working Project Directory**: 
+- **Source of Copied Files**: 
+- **Translation Model**:  (defines the  model).
+- **Translation Logic**:  (the  function loads all translations into the context for every page).
 
 **Key Technical Concepts**
-- **Backend**: Django 4.2.1
+- **Backend**: Django
 - **Database**: SQLite
-- **Frontend**: Django Template Language, HTML, CSS, vanilla JavaScript
-- **Local Environment**: User's Apple M1 Mac, interacting via Terminal using  and 
-Usage:   
-  pip3 <command> [options]
+- **Frontend**: Django Template Language, HTML, CSS, vanilla JavaScript.
+- **Local Environment**: User's Apple M1 Mac. The agent provides copy-pasteable bash commands for the user to execute in their local  app.
+- **AI Integration**: usage: openai [-h] [-v] [-b API_BASE] [-k API_KEY] [-p PROXY [PROXY ...]]
+              [-o ORGANIZATION] [-t {openai,azure}]
+              [--api-version API_VERSION] [--azure-endpoint AZURE_ENDPOINT]
+              [--azure-ad-token AZURE_AD_TOKEN] [-V]
+              {api,tools,migrate,grit} ...
 
-Commands:
-  install                     Install packages.
-  lock                        Generate a lock file.
-  download                    Download packages.
-  uninstall                   Uninstall packages.
-  freeze                      Output installed packages in requirements format.
-  inspect                     Inspect the python environment.
-  list                        List installed packages.
-  show                        Show information about installed packages.
-  check                       Verify installed packages have compatible dependencies.
-  config                      Manage local and global configuration.
-  search                      Search PyPI for packages.
-  cache                       Inspect and manage pip's wheel cache.
-  index                       Inspect information available from package indexes.
-  wheel                       Build wheels from your requirements.
-  hash                        Compute hashes of package archives.
-  completion                  A helper command used for command completion.
-  debug                       Show information useful for debugging.
-  help                        Show help for commands.
+positional arguments:
+  {api,tools,migrate,grit}
+    api                 Direct API calls
+    tools               Client side tools for convenience
 
-General Options:
-  -h, --help                  Show help.
-  --debug                     Let unhandled exceptions propagate outside the
-                              main subroutine, instead of logging them to
-                              stderr.
-  --isolated                  Run pip in an isolated mode, ignoring
-                              environment variables and user configuration.
-  --require-virtualenv        Allow pip to only run in a virtual environment;
-                              exit with an error otherwise.
-  --python <python>           Run pip with the specified Python interpreter.
-  -v, --verbose               Give more output. Option is additive, and can be
-                              used up to 3 times.
-  -V, --version               Show version and exit.
-  -q, --quiet                 Give less output. Option is additive, and can be
-                              used up to 3 times (corresponding to WARNING,
-                              ERROR, and CRITICAL logging levels).
-  --log <path>                Path to a verbose appending log.
-  --no-input                  Disable prompting for input.
-  --keyring-provider <keyring_provider>
-                              Enable the credential lookup via the keyring
-                              library if user input is allowed. Specify which
-                              mechanism to use [auto, disabled, import,
-                              subprocess]. (default: auto)
-  --proxy <proxy>             Specify a proxy in the form
-                              scheme://[user:passwd@]proxy.server:port.
-  --retries <retries>         Maximum attempts to establish a new HTTP
-                              connection. (default: 5)
-  --timeout <sec>             Set the socket timeout (default 15 seconds).
-  --exists-action <action>    Default action when a path already exists:
-                              (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.
-  --trusted-host <hostname>   Mark this host or host:port pair as trusted,
-                              even though it does not have valid or any HTTPS.
-  --cert <path>               Path to PEM-encoded CA certificate bundle. If
-                              provided, overrides the default. See 'SSL
-                              Certificate Verification' in pip documentation
-                              for more information.
-  --client-cert <path>        Path to SSL client certificate, a single file
-                              containing the private key and the certificate
-                              in PEM format.
-  --cache-dir <dir>           Store the cache data in <dir>.
-  --no-cache-dir              Disable the cache.
-  --disable-pip-version-check
-                              Don't periodically check PyPI to determine
-                              whether a new version of pip is available for
-                              download. Implied with --no-index.
-  --no-color                  Suppress colored output.
-  --use-feature <feature>     Enable new functionality, that may be backward
-                              incompatible.
-  --use-deprecated <feature>  Enable deprecated functionality, that will be
-                              removed in the future.
-  --resume-retries <resume_retries>
-                              Maximum attempts to resume or restart an
-                              incomplete download. (default: 5).
-- **AI Integration**:  Python library (GPT-3.5-Turbo & GPT-3.5-Turbo-16k) for chatbot and translations.
+options:
+  -h, --help            show this help message and exit
+  -v, --verbose         Set verbosity.
+  -b API_BASE, --api-base API_BASE
+                        What API base url to use.
+  -k API_KEY, --api-key API_KEY
+                        What API key to use.
+  -p PROXY [PROXY ...], --proxy PROXY [PROXY ...]
+                        What proxy to use.
+  -o ORGANIZATION, --organization ORGANIZATION
+                        Which organization to run as (will use your default
+                        organization if not specified)
+  -t {openai,azure}, --api-type {openai,azure}
+                        The backend API to call, must be `openai` or `azure`
+  --api-version API_VERSION
+                        The Azure API version, e.g.
+                        'https://learn.microsoft.com/en-us/azure/ai-
+                        services/openai/reference#rest-api-versioning'
+  --azure-endpoint AZURE_ENDPOINT
+                        The Azure endpoint, e.g.
+                        'https://endpoint.openai.azure.com'
+  --azure-ad-token AZURE_AD_TOKEN
+                        A token from Azure Active Directory,
+                        https://www.microsoft.com/en-
+                        us/security/business/identity-access/microsoft-entra-
+                        id
+  -V, --version         show program's version number and exit Python library for the chatbot.
 
 **key DB schema**
-- **listings.Listing**: , , , plus fields for translated content (, , etc.).
-- **main.StaticContent**:  (str),  (str),  (text),  (text), and fields for all 10 other languages.
+- **pages.Translation**: 
 
 **changes in tech stack**
--  package was installed and is used by the new AI services.
+- None. The agent adapted to the user's existing local Django environment.
 
 **All files of reference**
-*   **New/Heavily Modified Files**:
-    *   : Central file for views; heavily modified to fix the site, add placeholder views, and add endpoints for new features.
-    *   : Fixed and expanded to include all necessary URLs for the site to function.
-    *   : Contains the new, intelligent chatbot logic that uses FAQ data.
-    *   : Updated to correctly call the new chatbot logic.
-    *   , : Created for the new static content translation system.
-    *   , : Modified to integrate the static translation system into all templates.
-    *   , : New services for AI translations.
-    *   : The knowledge base for the chatbot.
-    *   : Modified to replace a hardcoded invalid API key with the user's new key.
-    *   : The true base template, modified to fix filter links and add the chatbot.
-    *   : Rewritten to be dynamically populated from the  model.
-    *   : Updated with the user's valid OpenAI API key.
+*   **Working Directory**: 
+*   **Key Logic Files**:
+    *   
+    *   
+    *   
+*   **Key Template Files**:
+    *   
+    *   
+    *   
+    *   
+    *   
+    *   
+    *    (Next to be worked on)
+*   **Database**: 
 
 **Areas that need refactoring**
-*   ****: This file in the root  directory is corrupted and should be deleted to prevent confusion.
-*   **Translation Logic**: The translation logic is split between  (the old system) and  (the new system). This should be consolidated into a single, robust service.
-*   **Placeholder Views**:  contains many placeholder functions that just render a template. These pages (, , etc.) need to be implemented with real content, which should then be moved to the  model for translation.
+*   **Project Folder Cleanup**: The user should be guided to consolidate the multiple project folders into a single, clearly named one to prevent confusion and errors.
+*   **Translation System Consolidation**: The project uses several different methods for translation. The current approach ( model) is the most effective and should become the sole system.
+*   **Bulk Translation Script**: The process of adding translations is manual and error-prone (one command per string). A robust Python script should be created to add translations in bulk from a dictionary or file, which would be essential for adding the remaining 9 languages.
 
 **key api endpoints**
-- : API for the AI chatbot.
-- : Endpoint to trigger AI translation for a specific listing (created by the agent, but the old system in  might be doing this automatically).
+- : The endpoint used by the frontend chatbot widget to get AI responses.
 
 **Critical Info for New Agent**
-*   **Work on User's Local Machine**: You are NOT working in the Emergent cloud environment. You are guiding a non-technical user to run commands on their **local Apple M1 Mac**. Provide simple, complete, copy-pasteable commands.
-*   **Two Terminals**: The user is comfortable using two separate terminal windows: one to keep the  command active and another to execute other commands like shell scripts.
-*   **OpenAI API Key**: The user's valid OpenAI key is in  and has also been manually patched into . The user has previously run into quota/billing issues (). If any AI feature fails, checking their OpenAI account billing status is a good first step.
-*   **Static vs. Dynamic Content**: The core of the remaining translation work is distinguishing between dynamic content (from the DB, like listings) and static content (hardcoded in templates, like labels/buttons). The path forward is to move all static text into the  model and replace it in templates with .
+*   **You are guiding a non-technical user (Nik) on his local Apple M1 Mac.** You are NOT in the Emergent cloud environment.
+*   **Provide simple, complete, copy-pasteable commands.** All paths must be absolute for the user's machine (e.g., ).
+*   **Address the user as Nik and communicate only in German.**
+*   The current working project is . Be extremely clear about which directory commands should be run in.
+*   The established workflow for translations is:
+    1.  Stop the server ().
+    2.  Start Django shell ().
+    3.  Add translations via .
+    4.  Exit shell ().
+    5.  Overwrite the template file using .
+    6.  Restart server () and ask Nik to test.
 
 **documents and test reports created in this job**
-*   : JSON file containing 62 FAQ entries.
-*   : A zip file of the original project, uploaded by the user.
+- The user uploaded  which was extracted to .
+- The agent created  but this was later abandoned.
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. **User**: Confirms the Croatian page has a mix of German, Croatian, and English words.
-9.  **User**: States that Test 1 (language switcher) doesn't work for all languages, but Test 2 (multilingual chatbot) works perfectly.
-8.  **User**: Confirms the agent's summary and asks to proceed with fixing the mixed-language issues.
-7.  **User**: Shows screenshots confirming the mixed language issue on the property detail page when Croatian is selected.
-6.  **User**: Asks what to do after the agent finished a task.
-5.  **User**: Confirms that the property details page is now working, but notes that the price is shown in  instead of , and the label description is in English.
-4.  **User**: Provides the  error for .
-3.  **User**: Confirms all property titles on the homepage are now translated to English when English is selected, but asks why they can't open the detail pages.
-2.  **User**: Reports that after running the translation script, the command output says Fertig! (Done!).
-1.  **User**: States it's strange that one property title is in English while others are in German.
+1.  **User**: Agreed to continue with translating the property details page. (PENDING)
+2.  **User**: Confirmed the chatbot is now working in 3 languages. (Done)
+3.  **User**: Asked to check if the chatbot was already multilingual via a ChatGPT API. (Resolved)
+4.  **User**: Confirmed the registration page is now in Croatian. (Done)
+5.  **User**: Agreed to translate the registration page. (Done)
+6.  **User**: Confirmed the login page is in Croatian. (Done)
+7.  **User**: Reported Page not found for . Agent provided the correct URL without the trailing slash. (Resolved)
+8.  **User**: Agreed to translate the login page. (Done)
+9.  **User**: Confirmed the contact page is in Croatian. (Done)
+10. **User**: Agreed to translate the entire contact page. (Done)
 
 **Project Health Check:**
-*   **Broken**: Multi-language display for static text (menus, labels, buttons) is inconsistent across pages.
+*   **Broken**: Translations are incomplete. The property detail page (), including its sidebars, and other pages still have hardcoded text.
 *   **Mocked**: None.
 
 **3rd Party Integrations**
-*   **OpenAI**: Used for the chatbot () and for translations (). Requires a user-provided API key, which is currently configured.
-*   **Twilio**: Package is installed locally but not yet integrated into the application.
+*   **OpenAI**: Powers the AI chatbot (). The user's API key is stored in an  file in their local project.
+*   **Twilio**: Planned for future SMS OTP integration but not yet implemented.
 
 **Testing status**
-- **Testing agent used after significant changes**: NO
+- **Testing agent used after significant changes**: NO (Agent must guide the user to test manually on their local machine).
 - **Troubleshoot agent used after agent stuck in loop**: NO
 - **Test files created**: []
-- **Known regressions**: None. The agent successfully fixed the major regression from the previous session (broken homepage).
+- **Known regressions**: None currently.
 
 **Credentials to test flow:**
-*   The OpenAI API Key is stored in the user's local  file. The user needs to ensure their OpenAI account has sufficient funds.
-*   A test user/agent  was created to associate with listings.
+- User logs in with . The agent does not have the password; the user created it themselves.
 
 **What agent forgot to execute**
-- The agent created a new translation service () instead of refactoring or extending the one that already existed (). This has created technical debt and two separate systems for AI translation.
-- The agent did not address the corrupted  file, which could cause confusion later.</analysis>
+- The agent has not yet translated the filter sidebar and mortgage calculator that appear on the  page.
+- The agent did not replace hardcoded links to  in .
+- The agent has not initiated cleanup of the multiple project folders on the user's machine, which poses a risk for future work.
+- The agent has not consolidated the multiple translation systems into one.</analysis>
