@@ -703,3 +703,15 @@ def edit_agent(request, id):
         'agent': agent,
     }
     return render(request, 'main/edit-agent.html', context)
+
+
+# Professional Registration View (Bilingual: German & Croatian)
+def professional_registration(request, lang='ge'):
+    """
+    View for the bilingual professional registration form.
+    Supports German (ge) and Croatian (hr).
+    """
+    context = {
+        'lang': lang,
+    }
+    return render(request, 'main/professional_registration.html', context)
