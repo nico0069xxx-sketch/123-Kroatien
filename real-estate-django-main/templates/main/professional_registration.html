@@ -1,0 +1,280 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+
+<div style="background-position: center 0%" class="registrationBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white">
+            {% if lang == "hr" %}
+              Registracija profesionalaca
+            {% else %}
+              Professional-Registrierung
+            {% endif %}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <h5>
+          {% if lang == "hr" %}
+            Registrirajte se sada i ekskluzivno predstavite svoju tvrtku na 123-Kroatien.eu:
+          {% else %}
+            Registrieren Sie sich jetzt und präsentieren Sie Ihr Unternehmen exklusiv auf 123-Kroatien.eu:
+          {% endif %}
+        </h5>
+
+        <form id="professionalRegistrationForm" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <!-- Professional Type -->
+          <div class="mb-4">
+            <label class="font-weight-bold">
+              {% if lang == "hr" %}Vrsta profesionalca:{% else %}Art des Professionals:{% endif %}
+            </label><br/>
+            <select name="professional_type" class="form-control" required style="max-width: 400px;">
+              {% if lang == "hr" %}
+                <option value="">-- Molimo odaberite --</option>
+                <option value="realtor">Agencija za nekretnine</option>
+                <option value="construction">Građevinska tvrtka</option>
+                <option value="lawyer">Odvjetnik</option>
+                <option value="tax_advisor">Porezni savjetnik</option>
+                <option value="architect">Arhitekt</option>
+              {% else %}
+                <option value="">-- Bitte wählen --</option>
+                <option value="realtor">Immobilienmakler</option>
+                <option value="construction">Bauunternehmen</option>
+                <option value="lawyer">Rechtsanwalt</option>
+                <option value="tax_advisor">Steuerberater</option>
+                <option value="architect">Architekt</option>
+              {% endif %}
+            </select>
+          </div>
+
+          <!-- Company Name -->
+          <div class="mb-3">
+            <label for="company_name">
+              {% if lang == "hr" %}Naziv tvrtke:{% else %}Firmenname:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="company_name" name="company_name" required />
+          </div>
+
+          <!-- Address -->
+          <div class="mb-3">
+            <label for="postcode">
+              {% if lang == "hr" %}Poštanski broj:{% else %}Postleitzahl:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="postcode" name="postcode" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="street">
+              {% if lang == "hr" %}Ulica:{% else %}Straße:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="street" name="street" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="housenumber">
+              {% if lang == "hr" %}Kućni broj:{% else %}Hausnummer:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="housenumber" name="housenumber" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="city">
+              {% if lang == "hr" %}Grad:{% else %}Ort:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="city" name="city" required />
+          </div>
+
+          <!-- Contact -->
+          <div class="mb-3">
+            <label for="telephone">
+              {% if lang == "hr" %}Telefonski broj:{% else %}Telefonnummer:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="tel" id="telephone" name="telephone" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="mobile">
+              {% if lang == "hr" %}Mobilni broj:{% else %}Mobilnummer:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="tel" id="mobile" name="mobile" />
+          </div>
+
+          <div class="mb-3">
+            <label for="email">
+              {% if lang == "hr" %}E-mail adresa:{% else %}E-Mail Adresse:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="email" id="email" name="email" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="website">
+              {% if lang == "hr" %}Web stranica:{% else %}Webadresse:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="url" id="website" name="website" placeholder="https://" />
+          </div>
+
+          <br/>
+          <h5>
+            {% if lang == "hr" %}
+              Podaci o kontakt osobi:
+            {% else %}
+              Angaben zum Ansprechpartner:
+            {% endif %}
+          </h5>
+          <br/>
+
+          <!-- Contact Person -->
+          <div class="mb-3">
+            <input type="radio" id="contact_male" name="contact_gender" value="male" required />
+            <label for="contact_male">{% if lang == "hr" %}Gospodin{% else %}Herr{% endif %}</label>
+            <input type="radio" id="contact_female" name="contact_gender" value="female" required />
+            <label for="contact_female">{% if lang == "hr" %}Gospođa{% else %}Frau{% endif %}</label>
+          </div>
+
+          <div class="mb-3">
+            <label for="contact_firstname">
+              {% if lang == "hr" %}Ime kontakt osobe:{% else %}Vorname des Ansprechpartners:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="contact_firstname" name="contact_firstname" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="contact_lastname">
+              {% if lang == "hr" %}Prezime kontakt osobe:{% else %}Nachname des Ansprechpartners:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="contact_lastname" name="contact_lastname" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="contact_email">
+              {% if lang == "hr" %}E-mail kontakt osobe:{% else %}E-Mail Adresse des Ansprechpartners:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="email" id="contact_email" name="contact_email" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="contact_telephone">
+              {% if lang == "hr" %}Telefon kontakt osobe:{% else %}Telefonnummer des Ansprechpartners:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="tel" id="contact_telephone" name="contact_telephone" required />
+          </div>
+
+          <br/>
+          <h5>
+            {% if lang == "hr" %}
+              Dokumenti:
+            {% else %}
+              Dokumente:
+            {% endif %}
+          </h5>
+          <br/>
+
+          <!-- Documents -->
+          <div class="mb-3">
+            <label for="business_license">
+              {% if lang == "hr" %}Poslovni registar (PDF):{% else %}Gewerbeanmeldung (als PDF hochladen):{% endif %}
+            </label><br/>
+            <input type="file" id="business_license" name="business_license" accept=".pdf" />
+          </div>
+
+          <div class="mb-3">
+            <label for="oib">
+              {% if lang == "hr" %}OIB broj:{% else %}OIB Nummer:{% endif %}
+            </label><br/>
+            <input style="width: 100%;" type="text" id="oib" name="oib" />
+          </div>
+
+          <br/>
+
+          <!-- Privacy -->
+          <div class="mb-3">
+            <input type="checkbox" id="privacy" name="privacy" value="privacy" required />
+            <label for="privacy">
+              {% if lang == "hr" %}
+                Slažem se da se moji osobni podaci mogu obrađivati u skladu s politikom zaštite podataka 123-kroatien.eu.
+              {% else %}
+                Ich stimme zu, dass meine persönlichen Daten gemäß den Datenschutzbestimmungen von 123-kroatien.eu verarbeitet werden dürfen.
+              {% endif %}
+            </label>
+          </div>
+
+          <!-- Captcha -->
+          <div class="mb-3">
+            <div class="captcha_wrapper">
+              <canvas id="canvas" width="200" height="60"></canvas>
+              <button type="button" id="captcha_reload_btn">
+                <img src="{% static 'images/reload.svg' %}" alt="Reload" />
+              </button>
+            </div>
+            <input style="width: 200px;" type="text" id="captcha_user_input" placeholder="{% if lang == 'hr' %}Unesite Captcha{% else %}Captcha eingeben{% endif %}" required />
+          </div>
+
+          <br/>
+
+          <!-- Submit -->
+          <button type="submit" style="border-radius: 0px; color: white; background-color: #003167; padding: 10px 90px;">
+            {% if lang == "hr" %}
+              Registrirajte svoju tvrtku
+            {% else %}
+              Registrieren Sie Ihr Unternehmen
+            {% endif %}
+          </button>
+        </form>
+
+        <br/><br/>
+        <p>
+          {% if lang == "hr" %}
+            Nakon uspješne registracije, odmah ćemo vas kontaktirati kako bismo razgovarali o daljnjim koracima i maksimizirali vašu prisutnost na 123-Kroatien.eu. Ne propustite priliku učinkovito predstaviti svoj portfelj i impresionirati potencijalne klijente!
+          {% else %}
+            Nach erfolgreicher Registrierung setzen wir uns umgehend mit Ihnen in Verbindung, um die weiteren Schritte zu besprechen und Ihre Präsenz auf 123-Kroatien.eu zu maximieren. Verpassen Sie nicht die Chance, Ihr Portfolio effektiv zu präsentieren und potenzielle Kunden zu beeindrucken!
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-gradient py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <h2 class="text-uppercase text-light">
+          {% if lang == "hr" %}
+            JAMČIMO VAM NAJVIŠU POVJERLJIVOST I TRANSPARENTNOST.
+          {% else %}
+            WIR GARANTIEREN IHNEN HÖCHSTE VERTRAULICHKEIT UND TRANSPARENZ.
+          {% endif %}
+        </h2>
+        <p class="text-capitalize text-light">
+          {% if lang == "hr" %}
+            Rado ćemo vas diskretno informirati o trenutnoj vrijednosti vaše nekretnine i pomoći vam u pronalaženju odgovarajućeg kupca.
+          {% else %}
+            Gerne informieren wir Sie diskret über den aktuellen Wert Ihrer Immobilie und unterstützen Sie bei der Suche nach einem passenden Käufer.
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <img src="{% static 'images/logo-black2.png' %}" alt="logo" style="width: 255px; padding: 20px 0" />
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
