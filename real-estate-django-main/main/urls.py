@@ -40,4 +40,8 @@ urlpatterns = [
     
     path('agent/<str:id>/', views.agent, name='agent'),
     path('edit-agent/<str:id>/', views.edit_agent, name='edit_agent'),
+    
+    # Professional Registration URLs (Bilingual: German & Croatian)
+    path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
+    path('hr/hrvatska/registracija-profesionalaca/', views.professional_registration, {'lang': 'hr'}, name='professional-registration-hr'),
 ]
