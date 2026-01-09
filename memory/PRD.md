@@ -260,9 +260,31 @@ Ctrl+C
 
 ## Offene Tasks
 
-- [ ] KI-Auto-Beschreibungen für Immobilien-Inserate (Listings)
+### 🔴 P0 - Kritisch
+- [ ] Font Awesome Icons auf Homepage fixen (zwei `static/` Ordner verursachen Pfad-Probleme)
+
+### 🟠 P1 - Wichtig  
+- [ ] Language Switcher Bug: Leitet auf Homepage statt aktuelle Seite um
+
+### 🟡 P2 - Blockiert
+- [ ] Email-Benachrichtigungen fixen (Gmail Credentials benötigt)
+
+### 📌 Zukünftig
 - [ ] KI Smart-Search Feature
-- [ ] Email-Benachrichtigungen fixen (Gmail Credentials)
+- [ ] Übersetzungssysteme im Code refactoren
+
+---
+
+## Bekannte Bugs (Stand: Juni 2025)
+
+### Bug 1: Font Awesome Icons fehlen
+- **Problem:** Icons wie `fa-comments-o` werden auf Homepage nicht angezeigt
+- **Ursache:** Zwei separate `static/` Ordner (`static/` und `realstate/static/`) mit falschen Pfaden
+- **Fix:** `STATICFILES_DIRS` in `settings.py` korrigieren + `collectstatic` ausführen
+
+### Bug 2: Language Switcher Redirect
+- **Problem:** Von `/de/property-details/2/` wird man bei Sprachwechsel auf `/hr/` statt `/hr/property-details/2/` geleitet
+- **Fix:** Regex in `set_language_from_url` View in `main/views.py` anpassen
 
 ---
 
