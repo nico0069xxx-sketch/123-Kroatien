@@ -2,7 +2,8 @@
 AI Content Generator for Agent Profiles
 Generates professional descriptions in 12 languages using OpenAI GPT-4o
 """
-from emergentintegrations.llm.openai import OpenAILLM
+import asyncio
+from emergentintegrations.llm.openai import LlmChat, UserMessage
 
 # Emergent LLM Key
 EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"
@@ -23,10 +24,48 @@ LANGUAGES = {
     'nl': 'Dutch',
 }
 
+
+async def _generate_description_async(agent_context, language_code, language_name, session_id):
+    """
+    Internal async function to generate a description.
+    """
+    prompt = f"""Write a professional, SEO-optimized description for a real estate agent/company profile in {language_name}.
+
+Agent Information:
+{agent_context}
+
+Requirements:
+- Write 2-3 paragraphs (150-250 words)
+- Professional and trustworthy tone
+- Include keywords relevant to real estate services
+- Highlight expertise and local market knowledge
+- Make it engaging and personal
+- Write ONLY in {language_name}, no other languages
+- Do not include any markdown formatting, just plain text
+
+Return ONLY the description text, nothing else."""
+
+    try:
+        system_message = f"You are a professional copywriter specializing in real estate marketing. Write only in {language_name}."
+        
+        llm = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=session_id,
+            system_message=system_message
+        ).with_model("openai", "gpt-4o").with_params(temperature=0.7, max_tokens=500)
+        
+        user_msg = UserMessage(text=prompt)
+        response = await llm.send_message(user_msg)
+        return response.strip()
+    except Exception as e:
+        print(f"Error generating {language_name} description: {e}")
+        return None
+
+
 def generate_agent_description(agent, language_code):
     """
     Generate a professional description for an agent in a specific language.
-    Uses synchronous API call.
+    Wraps the async function for synchronous Django context.
     """
     language_name = LANGUAGES.get(language_code, 'English')
     
@@ -46,43 +85,30 @@ def generate_agent_description(agent, language_code):
     
     agent_context = "\n".join(agent_info) if agent_info else "Real estate professional"
     
-    prompt = f"""Write a professional, SEO-optimized description for a real estate agent/company profile in {language_name}.
-
-Agent Information:
-{agent_context}
-
-Requirements:
-- Write 2-3 paragraphs (150-250 words)
-- Professional and trustworthy tone
-- Include keywords relevant to real estate services
-- Highlight expertise and local market knowledge
-- Make it engaging and personal
-- Write ONLY in {language_name}, no other languages
-- Do not include any markdown formatting, just plain text
-
-Return ONLY the description text, nothing else."""
-
+    # Generate unique session ID for this request
+    import uuid
+    session_id = f"agent_{agent.id}_{language_code}_{uuid.uuid4().hex[:8]}"
+    
+    # Run async function in new event loop (safe for Django's sync context)
     try:
-        llm = OpenAILLM(api_key=EMERGENT_LLM_KEY)
-        response = llm.chat_completion(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": f"You are a professional copywriter specializing in real estate marketing. Write only in {language_name}."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=500
-        )
-        return response.strip()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            result = loop.run_until_complete(
+                _generate_description_async(agent_context, language_code, language_name, session_id)
+            )
+            return result
+        finally:
+            loop.close()
     except Exception as e:
-        print(f"Error generating {language_name} description: {e}")
+        print(f"Event loop error for {language_name}: {e}")
         return None
 
 
 def generate_all_descriptions(agent):
     """
     Generate descriptions in all 12 languages for an agent.
-    Returns dict with language_code: description pairs.
+    Returns dict with language_code: description pairs and success count.
     """
     results = {}
     success_count = 0
@@ -93,7 +119,7 @@ def generate_all_descriptions(agent):
         if description:
             results[lang_code] = description
             success_count += 1
-            print(f"  ✓ {LANGUAGES[lang_code]} done")
+            print(f"  ✓ {LANGUAGES[lang_code]} done ({len(description)} chars)")
         else:
             print(f"  ✗ {LANGUAGES[lang_code]} failed")
     
