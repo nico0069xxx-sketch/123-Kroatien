@@ -17,6 +17,20 @@ class Agent(models.Model):
     city = models.CharField(max_length=200, blank=True, null=True)
     country = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    
+    # AI-generated descriptions in 12 languages
+    description_en = models.TextField(blank=True, null=True, verbose_name="Description (English)")
+    description_de = models.TextField(blank=True, null=True, verbose_name="Description (German)")
+    description_fr = models.TextField(blank=True, null=True, verbose_name="Description (French)")
+    description_gr = models.TextField(blank=True, null=True, verbose_name="Description (Greek)")
+    description_hr = models.TextField(blank=True, null=True, verbose_name="Description (Croatian)")
+    description_pl = models.TextField(blank=True, null=True, verbose_name="Description (Polish)")
+    description_cz = models.TextField(blank=True, null=True, verbose_name="Description (Czech)")
+    description_ru = models.TextField(blank=True, null=True, verbose_name="Description (Russian)")
+    description_sw = models.TextField(blank=True, null=True, verbose_name="Description (Swedish)")
+    description_no = models.TextField(blank=True, null=True, verbose_name="Description (Norwegian)")
+    description_sk = models.TextField(blank=True, null=True, verbose_name="Description (Slovak)")
+    description_nl = models.TextField(blank=True, null=True, verbose_name="Description (Dutch)")
     profile_image = models.ImageField(upload_to='agents/', blank=True, null=True)
     # company data, logo, portrait photo of the contact person, Croatian OIB number, email address, and domain
     company_name = models.CharField(max_length=200, blank=True, null=True)
