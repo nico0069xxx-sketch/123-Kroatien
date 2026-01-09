@@ -253,6 +253,8 @@ Ctrl+C
 - [x] SEO-optimierte URLs
 - [x] KI-Content für Agents (12 Sprachen)
 - [x] KI-Content für Professionals/Registrierungen (12 Sprachen)
+- [x] Automatische Sprachanzeige auf Professional-Profilseiten (URL-basiert)
+- [x] Übersetzte Überschriften auf Professional-Detailseiten (alle 12 Sprachen)
 
 ---
 
