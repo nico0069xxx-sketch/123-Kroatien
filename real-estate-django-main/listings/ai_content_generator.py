@@ -1,6 +1,7 @@
 """
-AI Content Generator for Property Listings
-Generates SEO-optimized descriptions in 12 languages using OpenAI GPT-4o
+AI Content Generator for Property Listings - ON-DEMAND VERSION
+Generates SEO-optimized JSON descriptions for single languages on-the-fly
+Uses GPT-4o-mini for fast, cost-effective generation
 """
 import asyncio
 import json
@@ -12,7 +13,7 @@ EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"
 LANGUAGE_FIELDS = {
     'en': 'english_content',
     'ge': 'german_content',
-    'de': 'german_content',  # alias
+    'de': 'german_content',
     'fr': 'french_content',
     'gr': 'greek_content',
     'hr': 'croatian_content',
@@ -21,111 +22,100 @@ LANGUAGE_FIELDS = {
     'ru': 'russian_content',
     'sw': 'swedish_content',
     'nb': 'norway_content',
-    'no': 'norway_content',  # alias
+    'no': 'norway_content',
     'sl': 'slovak_content',
-    'sk': 'slovak_content',  # alias
+    'sk': 'slovak_content',
     'nl': 'dutch_content',
 }
 
 LANGUAGE_NAMES = {
-    'en': 'English',
-    'ge': 'German',
-    'de': 'German',
-    'fr': 'French',
-    'gr': 'Greek',
-    'hr': 'Croatian',
-    'pl': 'Polish',
-    'cz': 'Czech',
-    'ru': 'Russian',
-    'sw': 'Swedish',
-    'nb': 'Norwegian',
-    'no': 'Norwegian',
-    'sl': 'Slovak',
-    'sk': 'Slovak',
-    'nl': 'Dutch',
+    'en': 'English', 'ge': 'German', 'de': 'German', 'fr': 'French',
+    'gr': 'Greek', 'hr': 'Croatian', 'pl': 'Polish', 'cz': 'Czech',
+    'ru': 'Russian', 'sw': 'Swedish', 'nb': 'Norwegian', 'no': 'Norwegian',
+    'sl': 'Slovak', 'sk': 'Slovak', 'nl': 'Dutch',
 }
 
 
-async def _generate_single_async(listing_context, language_name, session_id):
-    """Generate listing content in a specific language - FAST version."""
+async def _generate_json_async(listing, language_name, session_id):
+    """Generate listing JSON content in a specific language - FAST version."""
     
-    prompt = f"""Write a compelling real estate listing description in {language_name}.
+    prompt = f"""Create a JSON object for a real estate listing in {language_name}.
 
-Property:
-{listing_context}
+Original Property Data:
+- Title: {listing.property_title or 'Property'}
+- Description: {listing.property_description or 'Real estate property'}
+- Type: {listing.property_type or 'Property'}
+- City: {listing.city or ''}
+- Country: {listing.country or 'Croatia'}
+- Bedrooms: {listing.bedrooms or 0}
+- Bathrooms: {listing.bathrooms or 0}
+- Area: {listing.area or 0} sqm
+- Price: {listing.property_price or 0} EUR
 
-Write 2-3 paragraphs (100-150 words) that:
-- Highlight key features
-- Are emotionally engaging
-- Use real estate keywords
+Generate this exact JSON structure with ALL values translated/written in {language_name}:
+{{
+    "property_title": "translated attractive title",
+    "property_description": "compelling 2-3 paragraph description (150-200 words)",
+    "property_type": "translated property type",
+    "property_price": {listing.property_price or 0}
+}}
 
-Write ONLY in {language_name}. Return ONLY the description text, no titles or formatting."""
+Requirements:
+- Write property_title, property_description, and property_type in {language_name}
+- Make the description engaging and SEO-friendly
+- Keep property_price as a number
+- Return ONLY valid JSON, no markdown, no explanation"""
 
     try:
         llm = LlmChat(
             api_key=EMERGENT_LLM_KEY,
             session_id=session_id,
-            system_message=f"You are a real estate copywriter. Write only in {language_name}."
-        ).with_model("openai", "gpt-4o-mini").with_params(temperature=0.7, max_tokens=400)
+            system_message=f"You are a real estate copywriter. Return only valid JSON. Write text in {language_name}."
+        ).with_model("openai", "gpt-4o-mini").with_params(temperature=0.7, max_tokens=600)
         
         response = await llm.send_message(UserMessage(text=prompt))
-        return response.strip()
+        
+        # Clean up response
+        content = response.strip()
+        if content.startswith("```"):
+            lines = content.split("\n")
+            content = "\n".join(lines[1:-1] if lines[-1] == "```" else lines[1:])
+            if content.startswith("json"):
+                content = content[4:].strip()
+        
+        # Validate JSON
+        json.loads(content)
+        return content
     except Exception as e:
         print(f"Error generating {language_name}: {e}")
         return None
 
 
-def get_content_field(lang_code):
+def get_field_for_language(lang_code):
     """Get the model field name for a language code."""
     return LANGUAGE_FIELDS.get(lang_code, 'english_content')
 
 
-def has_content(listing, lang_code):
+def has_content_for_language(listing, lang_code):
     """Check if listing has content for the given language."""
-    field = get_content_field(lang_code)
+    field = get_field_for_language(lang_code)
     content = getattr(listing, field, None)
     return bool(content and content.strip())
 
 
-def get_content(listing, lang_code):
-    """Get content for the given language."""
-    field = get_content_field(lang_code)
-    return getattr(listing, field, None)
-
-
-def generate_single_language(listing, lang_code):
+def generate_on_demand(listing, lang_code):
     """
     Generate content for a single language ON-DEMAND.
     Fast version using GPT-4o-mini (~3-5 seconds).
-    Returns the generated content.
+    Saves to database and returns the JSON string.
     """
     import uuid
     
-    field = get_content_field(lang_code)
+    field = get_field_for_language(lang_code)
     lang_name = LANGUAGE_NAMES.get(lang_code, 'English')
     
-    # Build context
-    context_parts = []
-    if listing.property_title:
-        context_parts.append(f"Title: {listing.property_title}")
-    if listing.property_description:
-        context_parts.append(f"Description: {listing.property_description[:500]}")
-    if listing.property_type:
-        context_parts.append(f"Type: {listing.property_type}")
-    if listing.city:
-        context_parts.append(f"City: {listing.city}")
-    if listing.country:
-        context_parts.append(f"Country: {listing.country}")
-    if listing.bedrooms:
-        context_parts.append(f"Bedrooms: {listing.bedrooms}")
-    if listing.bathrooms:
-        context_parts.append(f"Bathrooms: {listing.bathrooms}")
-    if listing.area:
-        context_parts.append(f"Area: {listing.area} sqm")
-    if listing.property_price:
-        context_parts.append(f"Price: €{listing.property_price:,}")
+    print(f"[AI] Generating {lang_name} content for listing {listing.id}...")
     
-    listing_context = "\n".join(context_parts)
     session_id = f"listing_{listing.id}_{lang_code}_{uuid.uuid4().hex[:8]}"
     
     try:
@@ -133,114 +123,73 @@ def generate_single_language(listing, lang_code):
         asyncio.set_event_loop(loop)
         try:
             content = loop.run_until_complete(
-                _generate_single_async(listing_context, lang_name, session_id)
+                _generate_json_async(listing, lang_name, session_id)
             )
             
             if content:
                 # Save to database
                 setattr(listing, field, content)
                 listing.save(update_fields=[field])
-                print(f"✓ Generated {lang_name} for listing {listing.id}")
+                print(f"[AI] ✓ Generated and saved {lang_name} content")
                 return content
         finally:
             loop.close()
     except Exception as e:
-        print(f"Error generating {lang_name}: {e}")
+        print(f"[AI] ✗ Error generating {lang_name}: {e}")
     
     return None
 
 
-def get_or_generate_content(listing, lang_code):
+def get_or_generate_json(listing, lang_code):
     """
-    Get existing content or generate on-demand.
-    This is the main function to call from views.
+    Get existing JSON content or generate on-demand.
+    Returns parsed JSON dict or None.
     """
-    # Check if content exists
-    if has_content(listing, lang_code):
-        return get_content(listing, lang_code)
+    field = get_field_for_language(lang_code)
+    existing_content = getattr(listing, field, None)
+    
+    # If content exists, parse and return it
+    if existing_content and existing_content.strip():
+        try:
+            return json.loads(existing_content)
+        except json.JSONDecodeError:
+            print(f"[AI] Invalid JSON in {field}, regenerating...")
     
     # Generate on-demand
-    print(f"Generating on-demand content for listing {listing.id} in {lang_code}...")
-    return generate_single_language(listing, lang_code)
-
-
-# ============= ADMIN BULK GENERATION (for manual batch generation) =============
-
-LANGUAGES_ALL = {
-    'en': ('English', 'english_content'),
-    'de': ('German', 'german_content'),
-    'fr': ('French', 'french_content'),
-    'gr': ('Greek', 'greek_content'),
-    'hr': ('Croatian', 'croatian_content'),
-    'pl': ('Polish', 'polish_content'),
-    'cz': ('Czech', 'czech_content'),
-    'ru': ('Russian', 'russian_content'),
-    'sw': ('Swedish', 'swedish_content'),
-    'no': ('Norwegian', 'norway_content'),
-    'sk': ('Slovak', 'slovak_content'),
-    'nl': ('Dutch', 'dutch_content'),
-}
-
-
-async def _generate_listing_content_async(listing_context, language_name, session_id):
-    """Generate listing content - FULL version for batch."""
+    new_content = generate_on_demand(listing, lang_code)
+    if new_content:
+        try:
+            return json.loads(new_content)
+        except json.JSONDecodeError:
+            pass
     
-    prompt = f"""Write a compelling real estate listing description in {language_name}.
+    # Fallback to original data
+    return None
 
-Property:
-{listing_context}
 
-Write 2-3 paragraphs (150-200 words) that:
-- Highlight the best features
-- Are emotionally engaging for buyers
-- Include relevant real estate keywords for SEO
-- Sound professional and trustworthy
-
-Write ONLY in {language_name}. Return ONLY the description text."""
-
-    try:
-        llm = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=session_id,
-            system_message=f"You are a real estate copywriter. Write only in {language_name}."
-        ).with_model("openai", "gpt-4o-mini").with_params(temperature=0.7, max_tokens=500)
-        
-        response = await llm.send_message(UserMessage(text=prompt))
-        return response.strip()
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-
+# ============= ADMIN BULK GENERATION =============
 
 def generate_all_listing_content(listing):
-    """Generate content in all 12 languages for a listing (batch mode)."""
+    """Generate content in all 12 languages for a listing (batch mode for admin)."""
     import uuid
     success_count = 0
     
-    # Build context once
-    context_parts = []
-    if listing.property_title:
-        context_parts.append(f"Title: {listing.property_title}")
-    if listing.property_description:
-        context_parts.append(f"Description: {listing.property_description[:500]}")
-    if listing.property_type:
-        context_parts.append(f"Type: {listing.property_type}")
-    if listing.city:
-        context_parts.append(f"City: {listing.city}")
-    if listing.country:
-        context_parts.append(f"Country: {listing.country}")
-    if listing.bedrooms:
-        context_parts.append(f"Bedrooms: {listing.bedrooms}")
-    if listing.bathrooms:
-        context_parts.append(f"Bathrooms: {listing.bathrooms}")
-    if listing.area:
-        context_parts.append(f"Area: {listing.area} sqm")
-    if listing.property_price:
-        context_parts.append(f"Price: €{listing.property_price:,}")
+    all_languages = {
+        'en': ('English', 'english_content'),
+        'de': ('German', 'german_content'),
+        'fr': ('French', 'french_content'),
+        'gr': ('Greek', 'greek_content'),
+        'hr': ('Croatian', 'croatian_content'),
+        'pl': ('Polish', 'polish_content'),
+        'cz': ('Czech', 'czech_content'),
+        'ru': ('Russian', 'russian_content'),
+        'sw': ('Swedish', 'swedish_content'),
+        'no': ('Norwegian', 'norway_content'),
+        'sk': ('Slovak', 'slovak_content'),
+        'nl': ('Dutch', 'dutch_content'),
+    }
     
-    listing_context = "\n".join(context_parts)
-    
-    for lang_code, (lang_name, field_name) in LANGUAGES_ALL.items():
+    for lang_code, (lang_name, field_name) in all_languages.items():
         print(f"Generating {lang_name}...")
         session_id = f"listing_{listing.id}_{lang_code}_{uuid.uuid4().hex[:8]}"
         
@@ -249,7 +198,7 @@ def generate_all_listing_content(listing):
             asyncio.set_event_loop(loop)
             try:
                 content = loop.run_until_complete(
-                    _generate_listing_content_async(listing_context, lang_name, session_id)
+                    _generate_json_async(listing, lang_name, session_id)
                 )
                 if content:
                     setattr(listing, field_name, content)
