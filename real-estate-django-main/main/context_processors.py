@@ -1,8 +1,48 @@
 from django.utils.translation import activate
 from pages.models import Translation
 
+# URL-Pfade für Dienstleister in allen Sprachen
+CATEGORY_URLS = {
+    "real_estate_agent": {
+        "ge": "immobilienmakler", "en": "real-estate-agents", "hr": "agencije-za-nekretnine",
+        "fr": "agents-immobiliers", "nl": "makelaars", "pl": "agenci-nieruchomosci",
+        "cz": "realitni-makleri", "sk": "realitni-makleri", "ru": "agenty-nedvizhimosti",
+        "gr": "mesites-akiniton", "sw": "fastighetsmaklare", "no": "eiendomsmeglere",
+    },
+    "construction_company": {
+        "ge": "bauunternehmen", "en": "construction-companies", "hr": "gradevinske-tvrtke",
+        "fr": "entreprises-construction", "nl": "bouwbedrijven", "pl": "firmy-budowlane",
+        "cz": "stavebni-firmy", "sk": "stavebne-firmy", "ru": "stroitelnye-kompanii",
+        "gr": "kataskevestikes-etaireies", "sw": "byggforetag", "no": "byggefirmaer",
+    },
+    "lawyer": {
+        "ge": "rechtsanwaelte", "en": "lawyers", "hr": "odvjetnici",
+        "fr": "avocats", "nl": "advocaten", "pl": "prawnicy",
+        "cz": "pravnici", "sk": "pravnici", "ru": "advokaty",
+        "gr": "dikigoroi", "sw": "advokater", "no": "advokater",
+    },
+    "tax_advisor": {
+        "ge": "steuerberater", "en": "tax-advisors", "hr": "porezni-savjetnici",
+        "fr": "conseillers-fiscaux", "nl": "belastingadviseurs", "pl": "doradcy-podatkowi",
+        "cz": "danovi-poradci", "sk": "danovi-poradcovia", "ru": "nalogovye-konsultanty",
+        "gr": "forologikoi-symvouloi", "sw": "skatteradgivare", "no": "skatteradgivere",
+    },
+    "architect": {
+        "ge": "architekten", "en": "architects", "hr": "arhitekti",
+        "fr": "architectes", "nl": "architecten", "pl": "architekci",
+        "cz": "architekti", "sk": "architekti", "ru": "arhitektory",
+        "gr": "architektons", "sw": "arkitekter", "no": "arkitekter",
+    },
+}
+
+COUNTRY_NAMES = {
+    "ge": "kroatien", "en": "croatia", "hr": "hrvatska", "fr": "croatie",
+    "nl": "kroatie", "pl": "chorwacja", "cz": "chorvatsko", "sk": "chorvatsko",
+    "ru": "horvatiya", "gr": "kroatia", "sw": "kroatien", "no": "kroatia",
+}
+
 def set_language(request):
-    lang = request.session.get('site_language', 'en')
+    lang = request.session.get('site_language', 'ge')
     activate(lang)
     return {'language': lang}
 
