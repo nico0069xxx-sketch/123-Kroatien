@@ -190,7 +190,8 @@ LANGUAGES = [
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')   ## location/address of the static folder
+    os.path.join(BASE_DIR, 'static'),           ## Haupt-Static-Ordner (CSS, Images, JS)
+    os.path.join(BASE_DIR, 'realstate/static'), ## Zweiter Static-Ordner (webfonts für Font Awesome 5)
 ]
 ## after this apply on gitbash - python manage.py collectstatic, it will create the static folder in root directory
 
