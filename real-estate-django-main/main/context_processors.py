@@ -9,26 +9,31 @@ def set_language(request):
 
 def get_my_translations(request):
     current_path = request.path
+    
+    # Sprachcode aus Pfad entfernen (z.B. /ge/about/ -> /about/)
+    import re
+    clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
+    if clean_path == '':
+        clean_path = '/'
+    
     page = 'home'
-    if current_path == '/': page = 'home'
-    elif current_path == '/about/': page = 'about'
-    elif '/listing/' in current_path: page = 'listings'
-    elif '/profile/' in current_path: page = 'profile'
-    elif '/blog/' in current_path: page = 'blog'
-    elif '/contact/' in current_path: page = 'contact'
-    elif '/login' in current_path: page = 'login'
-    elif '/register' in current_path: page = 'signup'
-    elif '/property-details/' in current_path: page = 'property details'
-    elif '/profile' in current_path: page = 'profile'
-    elif '/add-property/' in current_path: page = 'add-property'
-    elif '/privacy/' in current_path: page = 'privacy'
-    elif '/blog/' in current_path: page = 'blog'
-    elif '/forget-password/' in current_path: page = 'forget-password'
-    elif '/verify-otp/' in current_path: page = 'reset-password'
-    elif '/blog/single/' in current_path: page = 'blog details'
-    elif '/agent/' in current_path: page = 'profile'
-    elif '/edit-agent/' in current_path: page = 'signup'
-    elif '/faq/' in current_path: page = 'faq'
+    if clean_path == '/': page = 'home'
+    elif '/about/' in clean_path: page = 'about'
+    elif '/listing/' in clean_path: page = 'listings'
+    elif '/profile/' in clean_path: page = 'profile'
+    elif '/blog-single' in clean_path: page = 'blog details'
+    elif '/blog/' in clean_path: page = 'blog'
+    elif '/contact/' in clean_path: page = 'contact'
+    elif '/login' in clean_path: page = 'login'
+    elif '/register' in clean_path: page = 'signup'
+    elif '/property-details/' in clean_path: page = 'property details'
+    elif '/add-property/' in clean_path: page = 'add-property'
+    elif '/privacy/' in clean_path: page = 'privacy'
+    elif '/forget-password/' in clean_path: page = 'forget-password'
+    elif '/verify-otp/' in clean_path: page = 'reset-password'
+    elif '/agent/' in clean_path: page = 'profile'
+    elif '/edit-agent/' in clean_path: page = 'signup'
+    elif '/faq/' in clean_path: page = 'faq'
 
     user_language = request.session.get('site_language', 'ge')
 
