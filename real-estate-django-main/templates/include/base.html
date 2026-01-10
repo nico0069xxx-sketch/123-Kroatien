@@ -178,14 +178,17 @@
                     <!-- Search bar.// -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a href="{% url 'main:add_property' %}" class="btn btn-danger text-capitalize">
-                                <i class="fa fa-plus-circle mr-1"></i> {{ nav_add_listing }}
+                            <a href="#" class="btn btn-danger text-capitalize dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-plus-circle mr-1"></i> {{ nav_register_service }}
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
                                 <li align="left"><a class="dropdown-item" href="{% url 'main:real-estate-agent' %}">{{ dropdown_realtor }}</a></li>
                                 <li align="left"><a class="dropdown-item" href="{% url 'main:building-contractor' %}">{{ dropdown_contractor }}</a></li>
                                 <li align="left"><a class="dropdown-item" href="{% url 'main:owner' %}">{{ dropdown_owner }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/professional-registrierung/">{{ dropdown_lawyer }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/professional-registrierung/">{{ dropdown_tax_advisor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/professional-registrierung/">{{ dropdown_architect }}</a></li>
                             </ul>
                         </li>
                     </ul>
