@@ -95,4 +95,12 @@ def get_my_translations(request):
         elif user_language == 'nl': context[t.name] = t.dutch_content
         else: context[t.name] = t.german_content  # Fallback zu Deutsch
 
+    # URL-Variablen für Dienstleister hinzufügen
+    context['country_name'] = COUNTRY_NAMES.get(user_language, 'kroatien')
+    context['url_realtor'] = CATEGORY_URLS['real_estate_agent'].get(user_language, 'immobilienmakler')
+    context['url_contractor'] = CATEGORY_URLS['construction_company'].get(user_language, 'bauunternehmen')
+    context['url_lawyer'] = CATEGORY_URLS['lawyer'].get(user_language, 'rechtsanwaelte')
+    context['url_tax_advisor'] = CATEGORY_URLS['tax_advisor'].get(user_language, 'steuerberater')
+    context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
+
     return context
