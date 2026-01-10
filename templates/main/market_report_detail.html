@@ -1,0 +1,40 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="faqHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white" style="font-weight: bold; font-size: 2rem">
+            {{ report.region_name }} {{ trans.report_label }} {{ report.year }}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white py-5">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" style="color: #003167;">Home</a></li>
+        <li class="breadcrumb-item"><a href="/{{ lang }}/{{ country_name }}/{{ url_paths.reports }}/" style="color: #003167;">{{ trans.back }}</a></li>
+        <li class="breadcrumb-item active" style="color: #c41e3a;">{{ report.region_name }}</li>
+      </ol>
+    </nav>
+    
+    <article class="market-report" style="color: #003167;">
+      <div class="report-content">
+        {{ report.content_html|safe }}
+      </div>
+    </article>
+    
+    <div class="mt-5">
+      <a href="/{{ lang }}/{{ country_name }}/{{ url_paths.reports }}/" class="btn" style="border-color: #003167; color: #003167;">&larr; {{ trans.back }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

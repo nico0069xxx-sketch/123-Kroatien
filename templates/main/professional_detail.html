@@ -1,0 +1,135 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="faqHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white" style="font-weight: bold; font-size: 2rem">
+            {{ professional.name }} – {{ singular }}
+          </h1>
+          <p class="text-white">{{ professional.city }}, {{ professional.get_region_display }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white py-5">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" style="color: #003167;">Home</a></li>
+        <li class="breadcrumb-item"><a href="/{{ lang }}/{{ country_name }}/{{ url_path }}/" style="color: #003167;">{{ trans.back_to_list }}</a></li>
+        <li class="breadcrumb-item active" style="color: #c41e3a;">{{ professional.name }}</li>
+      </ol>
+    </nav>
+    
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card" style="border-color: #003167;">
+          {% if professional.logo %}
+          <img src="{{ professional.logo.url }}" class="card-img-top p-3" alt="{{ professional.name }}">
+          {% endif %}
+          {% if professional.portrait %}
+          <img src="{{ professional.portrait.url }}" class="card-img-top p-3" alt="{{ professional.name }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 style="color: #003167;">{{ trans.contact }}</h5>
+            {% if professional.email %}
+            <p><i class="fa fa-envelope"></i> <a href="mailto:{{ professional.email }}">{{ professional.email }}</a></p>
+            {% endif %}
+            {% if professional.phone %}
+            <p><i class="fa fa-phone"></i> <a href="tel:{{ professional.phone }}">{{ professional.phone }}</a></p>
+            {% endif %}
+            {% if professional.website %}
+            <p><i class="fa fa-globe"></i> <a href="{{ professional.website }}" target="_blank">Website</a></p>
+            {% endif %}
+            
+            {% if professional.is_verified %}
+            <div class="mt-3">
+              <span class="badge" style="background-color: #28a745; color: white; padding: 10px;">✓ {{ trans.verified }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-8">
+        {% if content %}
+        <div class="profile-content" style="color: #003167;">
+          {% if content.profile_summary %}
+          <h2 style="color: #003167;">{{ trans.profile }}</h2>
+          <p>{{ content.profile_summary }}</p>
+          {% endif %}
+          
+          {% if professional.company_name %}
+          <h3 style="color: #003167;">{{ trans.company }}</h3>
+          <p>{{ professional.company_name }}</p>
+          {% endif %}
+          
+          {% if content.areas_of_activity %}
+          <h3 style="color: #003167;">{{ trans.areas_of_activity }}</h3>
+          <p>{{ content.areas_of_activity|linebreaks }}</p>
+          {% endif %}
+          
+          <h3 style="color: #003167;">{{ trans.languages }}</h3>
+          <p>{{ professional.languages_spoken }}</p>
+          
+          {% if professional.service_regions %}
+          <h3 style="color: #003167;">{{ trans.regions }}</h3>
+          <p>{{ professional.service_regions }}</p>
+          {% endif %}
+          
+          {% if professional.registration_number %}
+          <h3 style="color: #003167;">{{ trans.registration }}</h3>
+          <p>{{ professional.registration_number }}</p>
+          {% endif %}
+          
+          {% if content.working_approach %}
+          <h3 style="color: #003167;">{{ trans.working_approach }}</h3>
+          <p>{{ content.working_approach }}</p>
+          {% endif %}
+          
+          {% if content.faq_content %}
+          <h3 style="color: #003167;">{{ trans.faq }}</h3>
+          <p>{{ content.faq_content|linebreaks }}</p>
+          {% endif %}
+          
+          {% if content.verification_statement %}
+          <div class="mt-4 p-3" style="background-color: #f8f9fa; border-left: 4px solid #003167;">
+            <p class="mb-0"><small>{{ content.verification_statement }}</small></p>
+          </div>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="profile-content" style="color: #003167;">
+          <h2>{{ professional.name }}</h2>
+          <p><strong>{{ trans.languages }}:</strong> {{ professional.languages_spoken }}</p>
+          {% if professional.service_regions %}
+          <p><strong>{{ trans.regions }}:</strong> {{ professional.service_regions }}</p>
+          {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="mt-4">
+          <a href="/{{ lang }}/{{ country_name }}/{{ url_path }}/" class="btn" style="border-color: #003167; color: #003167;">
+            ← {{ trans.back_to_list }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-4" style="background-color: #f8f9fa;">
+  <div class="container">
+    <p class="small text-muted mb-0">
+      <strong>Disclaimer:</strong> {{ trans.disclaimer }}
+      <br>{{ trans.last_updated }}: Januar 2026
+    </p>
+  </div>
+</section>
+{% endblock %}

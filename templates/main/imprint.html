@@ -1,0 +1,74 @@
+{% extends 'include/base.html' %} {% load static %} {% block body %}
+<header>
+  <div class="imprintBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-8 text-center">
+            <h2 class="text-capitalize text-white">{{ imprint_title }}</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<section class="bg-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <title>{{ imprint_legal_obligations }}</title>
+        <h5>{{ imprint_legal_obligations }}</h5>
+        <p>123-kroatien.eu - ein Projekt von Brandoz.eu</p>
+        <p>{{ imprint_legal_form }}</p>
+        <p>{{ imprint_owner }} Jörg Allmannsberger</p>
+        <p>Südstr. 116</p>
+        <p>53175 Bonn</p>
+        <p>{{ imprint_germany }}</p>
+        <p>{{ imprint_phone }} +49 228 61967990</p>
+        <p>
+          {{ imprint_email }}
+          <a href="mailto:office@123-kroatien.eu">office@123-kroatien.eu</a>
+        </p>
+        <p>
+          {{ imprint_eu_platform }}
+          <a href="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a>
+        </p>
+        <p>{{ imprint_dispute_resolution }}</p>
+        <p>{{ imprint_responsible_person }}</p>
+        <p>Jörg Allmannsberger</p>
+        <p>Südstr. 116</p>
+        <p>{{ imprint_germany }}- 53175 Bonn</p>
+        <p>{{ imprint_image_source }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-gradient py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <h2 class="text-uppercase text-light">
+          {{ imprint_guarantee_title }}
+        </h2>
+        <p class="text-capitalize text-light">
+          {{ imprint_guarantee_text }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <img
+        src="{% static 'images/logo-black2.png' %}"
+        alt="logo"
+        style="width: 255px; padding: 20px 0"
+      />
+    </div>
+  </div>
+</div>
+{% endblock %}

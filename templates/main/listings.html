@@ -1,0 +1,429 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+{% load i18n %}
+
+<div class="clearfix"></div>
+
+<!-- LISTING LIST -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- FORM FILTER -->
+                <form class="products__filter mb-30" action="{% url 'main:listings' %}" method="GET">
+                    <div class="products__filter__group">
+                        <div class="products__filter__header">
+
+                            <h5 class="text-center text-capitalize">{{property_filter}}</h5>
+                        </div>
+                        <div class="products__filter__body">
+                            <div class="form-group">
+
+                                <select name="property_status" class="wide select_option">
+                                    <option value="">{{filter_property_status}}</option>
+                                    <option value="Sale"
+                                    {% if request.GET.property_status == 'Sale' %}
+                                        selected
+                                    {% endif %}
+                                    >{{filter_for_sale}}</option>
+                                    <option value="Rent"
+                                    {% if request.GET.property_status == 'Rent' %}
+                                        selected
+                                    {% endif %}
+                                    >{{filter_For_Rent}}</option>
+    
+                                </select>
+                            </div>
+                            <div class="form-group">
+                            <select name="property_type" class="wide select_option">
+                                    <option value="">{{Property_Type}}</option>
+                                    <option value="Haus" {% if request.GET.property_type == "Haus" %}selected{% endif %}>{{House_f}}</option>
+                                    <option value="Wohnung" {% if request.GET.property_type == "Wohnung" %}selected{% endif %}>{{Appartment}}</option>
+                                    <option value="Neubau" {% if request.GET.property_type == "Neubau" %}selected{% endif %}>{{Neubau}}</option>
+                                    <option value="Grundstueck" {% if request.GET.property_type == "Grundstueck" %}selected{% endif %}>{{Grundstueck}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="wide select_option" name="area_from">
+                                    <option value="">{{filter_Grundstuecksflaeche}}</option>
+                                    <option value="1500"
+                                    {% if request.GET.area_from == '1500' %}
+                                        selected
+                                    {% endif %}
+                                    >1500+ m²</option>
+                                    <option value="1200"
+                                    {% if request.GET.area_from == '1200' %}
+                                        selected
+                                    {% endif %}
+                                    >1200+ m²</option>
+                                    <option value="900"
+                                    {% if request.GET.area_from == '900' %}
+                                        selected
+                                    {% endif %}
+                                    >900+ m²</option>
+                                    <option value="600"
+                                    {% if request.GET.area_from == '600' %}
+                                        selected
+                                    {% endif %}
+                                    >600+ m²</option>
+                                    <option value="300"
+                                    {% if request.GET.area_from == '300' %}
+                                        selected
+                                    {% endif %}
+                                    >300+ m²</option>
+                                    <option value="100"
+                                    {% if request.GET.area_from == '100' %}
+                                        selected
+                                    {% endif %}
+                                    >100+ m²</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="wide select_option" name="living_area">
+                                    <option value="">{{filter_Wohnflaeche}}</option>
+                                    <option value="200" {% if request.GET.living_area == "200" %}selected{% endif %}>200+ m²</option>
+                                    <option value="150" {% if request.GET.living_area == "150" %}selected{% endif %}>150+ m²</option>
+                                    <option value="100" {% if request.GET.living_area == "100" %}selected{% endif %}>100+ m²</option>
+                                    <option value="75" {% if request.GET.living_area == "75" %}selected{% endif %}>75+ m²</option>
+                                    <option value="50" {% if request.GET.living_area == "50" %}selected{% endif %}>50+ m²</option>
+                                    <option value="30" {% if request.GET.living_area == "30" %}selected{% endif %}>30+ m²</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="wide select_option" name="bedrooms">
+                                    <option value="">{{filter_Bedrooms}}</option>
+                                    <option value="1"
+                                    {% if request.GET.bedrooms == '1' %}
+                                        selected
+                                    {% endif %}
+                                    >1</option>
+                                    <option value="2"
+                                    {% if request.GET.bedrooms == '2' %}
+                                        selected
+                                    {% endif %}
+                                    >{{filter_2}}</option>
+                                    <option value="3"
+                                    {% if request.GET.bedrooms == '3' %}
+                                        selected
+                                    {% endif %}
+                                    >3</option>
+                                    <option value="4"
+                                    {% if request.GET.bedrooms == '4' %}
+                                        selected
+                                    {% endif %}
+                                    >4</option>
+                                    <option value="5"
+                                    {% if request.GET.bedrooms == '5' %}
+                                        selected
+                                    {% endif %}
+                                    >5</option>
+                                    <option value="6"
+                                    {% if request.GET.bedrooms == '6' %}
+                                        selected
+                                    {% endif %}
+                                    >6</option>
+                                    <option value="7"
+                                    {% if request.GET.bedrooms == '7' %}
+                                        selected
+                                    {% endif %}
+                                    >7</option>
+                                    <option value="8"
+                                    {% if request.GET.bedrooms == '8' %}
+                                        selected
+                                    {% endif %}
+                                    >8</option>
+                                    <option value="9"
+                                    {% if request.GET.bedrooms == '9' %}
+                                        selected
+                                    {% endif %}
+                                    >9</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select class="wide select_option" name="bathrooms">
+                                        <option value="">{{filter_Bathrooms}}</option>
+                                        <option value="1"
+                                        {% if request.GET.bathrooms == '1' %}
+                                            selected
+                                        {% endif %}
+                                        >1</option>
+                                        <option value="2"
+                                        {% if request.GET.bathrooms == '2' %}
+                                            selected
+                                        {% endif %}
+                                        >2</option>
+                                        <option value="3"
+                                        {% if request.GET.bathrooms == '3' %}
+                                            selected
+                                        {% endif %}
+                                        >3</option>
+                                        <option value="4"
+                                        {% if request.GET.bathrooms == '4' %}
+                                            selected
+                                        {% endif %}
+                                        >4</option>
+        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="mb-3">{{Price_range}}</label>
+                                <div class="filter__price">
+                                    <input class="price-range" type="text" name="my_range" 
+                                    {% if request.GET.my_range %}
+                                        value="{{request.GET.my_range}}"
+                                    {% else %}
+                                        value=""
+                                    {% endif %}
+                                    
+                                    >
+                                </div>
+                            </div>
+
+                            {% comment %} <div class="form-group mb-0 mt-2">
+
+                                <a class="btn btn-outline-primary btn-outline-white text-mycolor btn-block text-capitalize advanced-filter"
+                                    data-toggle="collapse" href="#multiCollapseExample1"
+                                    aria-controls="multiCollapseExample1"><i class="fa fa-plus-circle"></i> advanced
+                                    filter
+                                </a>
+
+                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                    <div class="advancedfilter">
+                                        <div class="checkbox checkbox-primary">
+                                            <input name="air_conditioning" id="checkbox2" type="checkbox">
+                                            <label for="checkbox2" class="label-brand text-capitalize">
+                                                Air Conditioning
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox3" type="checkbox" name="swimming_pool">
+                                            <label for="checkbox3" class="label-brand text-capitalize">
+                                                Swiming Pool
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox4" type="checkbox" name="central_heating">
+                                            <label for="checkbox4" class="label-brand text-capitalize">
+                                                Central Heating
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox5" type="checkbox" name="spa_message">
+                                            <label for="checkbox5" class="label-brand text-capitalize">
+                                                Spa & Massage
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox6" type="checkbox" name="pets_allow">
+                                            <label for="checkbox6" class="label-brand text-capitalize">
+                                                Pets Allow
+                                            </label>
+
+                                        </div>
+
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox8" type="checkbox" name="gym">
+                                            <label for="checkbox8" class="label-brand text-capitalize">
+                                                Gym
+                                            </label>
+
+                                        </div>
+
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox9" type="checkbox" name="alarm">
+                                            <label for="checkbox9" class="label-brand text-capitalize">
+                                                Alarm
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox10" type="checkbox" name="window_covering">
+                                            <label for="checkbox10" class="label-brand text-capitalize">
+                                                Window Covering
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox11" type="checkbox" name="free_wifi">
+                                            <label for="checkbox11" class="label-brand text-capitalize">
+                                                Free WiFi
+                                            </label>
+
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox12" type="checkbox" name="car_parking">
+                                            <label for="checkbox12" class="label-brand text-capitalize">
+                                                Car Parking
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> {% endcomment %}
+                        </div>
+                        <div class="products__filter__footer">
+                            <div class="form-group mb-0">
+                                <button class="btn btn-primary btn-outline-blue text-capitalize btn-block"><i
+                                        class="fa fa-search ml-1"></i> {{filter_search}} </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END FORM FILTER -->
+                <!-- ARCHIVE CATEGORY -->
+                <div class=" wrapper__list__category">
+                    <!-- CATEGORY -->
+                    <div class="widget widget__archive">
+                        <div class="widget__title">
+                            <h5 class="text-dark mb-0 text-center">{{categories_property}}</h5>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="text-capitalize" href="/listing/?property_type=Haus">
+                                    {{House_f}}
+                                    <span class="badge badge-primary bg-mycolor">{{house}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-capitalize" href="/listing/?property_type=Wohnung">
+                                    {{Appartment}}
+                                    <span class="badge badge-primary bg-mycolor">{{apartment}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-capitalize" href="/listing/?property_type=Neubau">
+                                    {{Neubau}}
+                                    <span class="badge badge-primary bg-mycolor">{{neubau_count}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-capitalize" href="/listing/?property_type=Grundstueck">
+                                    {{Grundstueck}}
+                                    <span class="badge badge-primary bg-mycolor">{{grundstueck_count}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END CATEGORY -->
+                </div>
+                <!-- End ARCHIVE CATEGORY -->
+                {% comment %} <div class="download mb-0">
+                    <h5 class="text-center text-capitalize">Property Attachments</h5>
+                    <div class="download__item">
+                        <a href="#" target="_blank"><i class="fa fa-file-pdf-o mr-3" aria-hidden="true"></i>Download
+                            Document.Pdf</a>
+                    </div>
+                    <div class="download__item">
+                        <a href="#" target="_blank"><i class="fa fa-file-word-o mr-3" aria-hidden="true"></i>Presentation
+                            2016-17.Doc</a>
+                    </div>
+                </div> {% endcomment %}
+
+            </div>
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tabs__custom-v2 ">
+                            <!-- FILTER VERTICAL -->
+                            <ul class="nav nav-pills myTab" role="tablist">
+                                <li class="list-inline-item mr-auto" style="display: flex;">
+                                    <span class="title-text" style="color: #013565; min-width: 60px;">{{Sort_by}}</span>
+                                    {% comment %} <div class="btn-group">
+                                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            {% trans 'Based Properties' %}
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="javascript:void(0)">{% trans 'Low to High Price' %}</a>
+                                            <a class="dropdown-item" href="javascript:void(0)">{% trans 'High to Low Price' %}
+                                            </a>
+                                            <a class="dropdown-item" href="javascript:void(0)">{% trans 'Sell Properties' %}</a>
+
+                                            <a class="dropdown-item" href="javascript:void(0)">{% trans 'Rent Properties' %}</a>
+                                        </div>
+                                    </div> {% endcomment %}
+                                    <select name="sort_by" style='border: none; height: 28px; font-family: "Open Sans",sans-serif; font-size: 14px;'>
+                                        <option value="">{{Based_Properties}}</option>
+                                        <option value="price_low_to_high"
+                                        {% if request.GET.sort_by == 'price_low_to_high' %}
+                                            selected
+                                        {% endif %}
+                                        >{{Low_High}}</option>
+                                        <option value="price_high_to_low"
+                                        {% if request.GET.sort_by == 'price_high_to_low' %}
+                                            selected
+                                        {% endif %}
+                                        >{{High_Low}}</option>
+                                        <option value="sell_properties"
+                                        {% if request.GET.sort_by == 'sell_properties' %}
+                                            selected
+                                        {% endif %}
+                                        >{{Sell_Properties}}</option>
+                                        <option value="rent_properties"
+                                        {% if request.GET.sort_by == 'rent_properties' %}
+                                            selected
+                                        {% endif %}
+                                        >{{Rent_Properties}}</option>
+                                    </select>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link bgColor" data-toggle="pill" href="#pills-tab-one" role="tab"
+                                        aria-controls="pills-tab-one" aria-selected="true">
+                                        <span class="fa fa-th-list"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active bgColor" data-toggle="pill" href="#pills-tab-two"
+                                        role="tab" aria-controls="pills-tab-two" aria-selected="false">
+                                        <span class="fa fa-th-large"></span></a>
+                                </li>
+                            </ul>
+
+                            {% if not listings %}
+                                <h3 class="text-center text-capitalize mt-5 mb-5">No Property Found</h3>
+                            {% endif %}
+
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade" id="pills-tab-one" role="tabpanel"
+                                    aria-labelledby="pills-tab-one">
+                                    {% for listing in listings %}
+                                        <div class="row">
+                                            {% include "include/card_x.html" %}
+
+                                        </div>
+                                    {% endfor %}
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="tab-pane fade show active" id="pills-tab-two" role="tabpanel"
+                                    aria-labelledby="pills-tab-two">
+                                    {% for ltd in listings_two_dimensional %}
+                                        <div class="row">
+                                            {% for listing in ltd %}
+                                                {% include "include/card_y.html" %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="cleafix"></div>
+                                </div>
+
+
+                            </div>
+                            <!-- END FILTER VERTICAL -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END LISTING LIST -->
+{% endblock body %}

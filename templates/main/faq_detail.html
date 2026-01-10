@@ -1,0 +1,114 @@
+{% extends 'include/base.html' %} 
+{% load static %} 
+
+{% block body %}
+<div class="faqHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <nav aria-label="breadcrumb">
+            <ol style="list-style: none; display: flex; justify-content: center; padding: 0;">
+              <li><a href="{% url 'main:home' %}" class="text-white">Home</a></li>
+              <li style="margin: 0 10px; color: white;">›</li>
+              <li><a href="{% url 'main:faq' %}" class="text-white">FAQ</a></li>
+              <li style="margin: 0 10px; color: white;">›</li>
+              <li class="text-white">{{ faq.q|truncatechars:30 }}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <article class="faq-article" style="padding: 30px 0;">
+          <h1 style="color: #003167; font-size: 1.8rem; margin-bottom: 30px;">{{ faq.q }}</h1>
+          
+          <div class="faq-answer" style="color: #333; line-height: 1.8; font-size: 1.05rem;">
+            {% if faq.a_html %}
+              {{ faq.a_html|safe }}
+            {% else %}
+              <p>{{ faq.a }}</p>
+            {% endif %}
+          </div>
+          
+          <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+            <a href="{% url 'main:faq' %}" class="btn btn-primary btn-outline-blue">
+              {{faq_show_all}}
+            </a>
+          </div>
+        </article>
+      </div>
+      
+      <div class="col-lg-4">
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; position: sticky; top: 100px;">
+          <h5 style="color: #003167; margin-bottom: 15px;">{{faq_more_questions}}</h5>
+          <ul style="list-style: none; padding: 0;">
+            {% for f in faqs|slice:":10" %}
+            <li style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+              <a href="{% url 'main:faq_detail' country=country slug=f.slug %}" style="color: #666; text-decoration: none; font-size: 0.9rem;">
+                {{ f.q|truncatechars:50 }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <a href="{% url 'main:faq' %}" style="color: #003167; font-weight: bold;">{{faq_show_all}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "{{ faq.q|escapejs }}",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "{{ faq.a|escapejs }}"
+    }
+  }]
+}
+</script>
+
+<script>
+// Übersetzungen für FAQ-Überschriften
+const translations = {
+  'ge': {'Kurzantwort:': 'Kurzantwort:', 'Details': 'Details', 'Wichtige Fakten': 'Wichtige Fakten', 'Praktischer Rat': 'Praktischer Rat'},
+  'en': {'Kurzantwort:': 'Short Answer:', 'Details': 'Details', 'Wichtige Fakten': 'Key Facts', 'Praktischer Rat': 'Practical Advice'},
+  'hr': {'Kurzantwort:': 'Kratak odgovor:', 'Details': 'Detalji', 'Wichtige Fakten': 'Važne činjenice', 'Praktischer Rat': 'Praktični savjet'},
+  'fr': {'Kurzantwort:': 'Réponse courte:', 'Details': 'Détails', 'Wichtige Fakten': 'Faits importants', 'Praktischer Rat': 'Conseil pratique'},
+  'gr': {'Kurzantwort:': 'Σύντομη απάντηση:', 'Details': 'Λεπτομέρειες', 'Wichtige Fakten': 'Σημαντικά στοιχεία', 'Praktischer Rat': 'Πρακτική συμβουλή'},
+  'pl': {'Kurzantwort:': 'Krótka odpowiedź:', 'Details': 'Szczegóły', 'Wichtige Fakten': 'Ważne fakty', 'Praktischer Rat': 'Praktyczna rada'},
+  'cz': {'Kurzantwort:': 'Stručná odpověď:', 'Details': 'Podrobnosti', 'Wichtige Fakten': 'Důležitá fakta', 'Praktischer Rat': 'Praktická rada'},
+  'ru': {'Kurzantwort:': 'Краткий ответ:', 'Details': 'Подробности', 'Wichtige Fakten': 'Важные факты', 'Praktischer Rat': 'Практический совет'},
+  'sw': {'Kurzantwort:': 'Kort svar:', 'Details': 'Detaljer', 'Wichtige Fakten': 'Viktiga fakta', 'Praktischer Rat': 'Praktiskt råd'},
+  'no': {'Kurzantwort:': 'Kort svar:', 'Details': 'Detaljer', 'Wichtige Fakten': 'Viktige fakta', 'Praktischer Rat': 'Praktisk råd'},
+  'sk': {'Kurzantwort:': 'Stručná odpoveď:', 'Details': 'Podrobnosti', 'Wichtige Fakten': 'Dôležité fakty', 'Praktischer Rat': 'Praktická rada'},
+  'nl': {'Kurzantwort:': 'Kort antwoord:', 'Details': 'Details', 'Wichtige Fakten': 'Belangrijke feiten', 'Praktischer Rat': 'Praktisch advies'}
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  const lang = document.documentElement.lang || 'ge';
+  const trans = translations[lang] || translations['ge'];
+  
+  const faqAnswer = document.querySelector('.faq-answer');
+  if (faqAnswer && trans) {
+    let html = faqAnswer.innerHTML;
+    for (const [de, local] of Object.entries(trans)) {
+      html = html.split(de).join(local);
+    }
+    faqAnswer.innerHTML = html;
+  }
+});
+</script>
+
+{% endblock %}

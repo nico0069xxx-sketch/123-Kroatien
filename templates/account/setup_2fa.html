@@ -1,0 +1,28 @@
+{% extends "include/base.html" %}
+{% load static %}
+{% block body %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4>2FA Aktivieren</h4>
+        </div>
+        <div class="card-body text-center">
+          <p>Scanne diesen QR-Code mit deiner Authenticator-App:</p>
+          <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" class="mb-3">
+          <p class="small text-muted">Oder gib diesen Code manuell ein:</p>
+          <code class="d-block mb-4">{{ secret }}</code>
+          <form method="post" action="{% url 'account:verify_2fa_setup' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" name="code" class="form-control text-center" placeholder="6-stelliger Code" maxlength="6" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Aktivieren</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

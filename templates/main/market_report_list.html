@@ -1,0 +1,42 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="faqHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white" style="font-weight: bold; font-size: 2rem">
+            {{ trans.title }}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white py-5">
+  <div class="container">
+    <p class="lead mb-5" style="color: #003167;">{{ trans.subtitle }}</p>
+    
+    <div class="row">
+      {% for report in reports %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" style="border-color: #003167;">
+          <div class="card-body">
+            <h5 class="card-title" style="color: #003167;">{{ report.region_name }}</h5>
+            <p class="card-text text-muted">{{ trans.report_label }} {{ report.year }}</p>
+            <a href="/{{ lang }}/{{ country_name }}/{{ url_paths.report }}/{{ report.region }}-{{ report.year }}/" class="btn" style="background-color: #c41e3a; color: white;">
+              {{ trans.read_more }}
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p>Keine Berichte verfügbar.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

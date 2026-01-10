@@ -1,0 +1,79 @@
+{% extends 'include/base.html' %} {% load static %} {% block body %}
+<div class="myHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a style="font-weight: bold; font-size: 2rem" href="{% url 'main:about' %}" class="text-white">
+                {{About}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="clearfix"></div>
+
+<div class="container mt-5">
+  <h5>
+    <span style="font-weight: normal">{{about_title1}}</span>
+  </h5>
+  <p>{{about_text1}}</p>
+
+  <h5>
+    <span style="font-weight: normal">{{about_title2}}</span>
+  </h5>
+  <ol>
+    <li>{{about_list1}}</li>
+    <li>{{about_list2}}</li>
+    <li>{{about_list3}}</li>
+    <li>{{about_list4}}</li>
+    <li>{{about_list5}}</li>
+  </ol>
+
+  <h5>
+    <span style="font-weight: normal">{{about_title3}}</span>
+  </h5>
+  <p>{{about_text3}}</p>
+
+  <h5>
+    <span style="font-weight: normal">{{about_title4}}</span>
+  </h5>
+  <p>{{about_text4}}</p>
+
+  <h5>
+    <span style="font-weight: normal">{{about_title5}}</span>
+  </h5>
+  <p>{{about_text5}}</p>
+
+  <p>{{about_text6}}</p>
+
+  <video class="w-100" controls="" loop="" autoplay="" muted>
+    <source src="{% static '/images/kroatien.mp4' %}" type="video/mp4" />
+  </video>
+</div>
+
+<section class="bg-gradient py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <h2 class="text-uppercase text-light">123-KROATIEN.EU</h2>
+        <p class="text-capitalize text-light">{{about_cta}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <img src="{% static 'images/logo-black2.png' %}" alt="logo" style="width: 255px; padding: 20px 0" />
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

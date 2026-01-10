@@ -1,0 +1,70 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="faqHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white" style="font-weight: bold; font-size: 2rem">
+            {{ title }}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white py-5">
+  <div class="container">
+    <p class="lead mb-5" style="color: #003167;">{{ subtitle }}</p>
+    
+    <div class="row">
+      {% for professional in professionals %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" style="border-color: #003167;">
+          {% if professional.logo %}
+          <img src="{{ professional.logo.url }}" class="card-img-top p-3" alt="{{ professional.name }}" style="max-height: 150px; object-fit: contain;">
+          {% else %}
+          <div class="card-img-top p-3 d-flex align-items-center justify-content-center" style="height: 150px; background-color: #f0f0f0;">
+            <span style="font-size: 3rem; color: #003167;">{{ professional.name|slice:":1" }}</span>
+          </div>
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title" style="color: #003167;">{{ professional.name }}</h5>
+            <p class="card-text text-muted">
+              <i class="fa fa-map-marker"></i> {{ professional.city }}, {{ professional.get_region_display }}
+            </p>
+            <p class="card-text">
+              <small><strong>{{ trans.languages }}:</strong> {{ professional.languages_spoken }}</small>
+            </p>
+            {% if professional.is_verified %}
+            <span class="badge" style="background-color: #28a745; color: white;">✓ {{ trans.verified }}</span>
+            {% endif %}
+            <div class="mt-3">
+              <a href="/{{ lang }}/{{ country_name }}/{{ url_path }}/{{ professional.slug }}/" class="btn" style="background-color: #c41e3a; color: white;">
+                {{ trans.view_profile }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <p class="text-center" style="color: #003167;">{{ trans.no_entries }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="py-4" style="background-color: #f8f9fa;">
+  <div class="container">
+    <p class="small text-muted mb-0">
+      <strong>Disclaimer:</strong> {{ trans.disclaimer }}
+      <br>{{ trans.last_updated }}: Januar 2025
+    </p>
+  </div>
+</section>
+{% endblock %}

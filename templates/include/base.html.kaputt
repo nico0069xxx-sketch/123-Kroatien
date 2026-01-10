@@ -1,0 +1,52 @@
+
+{% load static %} {% load i18n %} {% block style %}{% endblock style %} {% if user.is_authenticated %} {% if messages %} {% for message in messages %}
+{{ message }} ×
+{% endfor %} {% endif %} {% endif %}
+
+{% if user.is_authenticated %}
+{{user.username}}
+Abmelden
+{% else %}
+Anmelden
+Registrieren
+{% endif %}
+                                        English
+                                        German
+                                        French
+                                        Greek
+                                        Croatian
+                                        Polish
+                                        Czech
+                                        Russian
+                                        Swedish
+                                        Norway
+                                        Slovak
+                                        Dutch
+                                    
+
+{% comment %} {% trans 'Home' %}
+{% trans 'Login' %}
+{% trans 'Register' %}
+{% endcomment %} Kaufen
+Haus
+Wohnung
+Neubau
+Grundstück
+{% comment %}
+{{Listings}}
+{{Blog}}
+{% endcomment %}
+Verkaufen
+{{Contact}}
+{{About}}
+{% comment %}
+{{Profile}}
+{% endcomment %}
+F.A.Q
+{{Add_Listing}}
+IMMOBILIENMAKLER
+BAUUNTERNEHMER
+EIGENTÜMER
+
+
+{% block body %} {% endblock body%} {% include 'include/footer.html' %} {% block js %}{% endblock js %}

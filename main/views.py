@@ -1,0 +1,953 @@
+from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.decorators import login_required
+from listings.models import Listing
+from django.contrib import messages
+from django.utils import translation
+from django.http import HttpResponseRedirect
+from accounts.models import Agent
+from pages.models import Translation
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.core.mail import EmailMessage
+import json
+import os
+
+# Create your views here.
+
+# FAQ-Überschriften Übersetzungen
+FAQ_HEADINGS = {
+    'ge': {'short': 'Kurzantwort:', 'details': 'Details', 'facts': 'Wichtige Fakten', 'advice': 'Praktischer Rat'},
+    'en': {'short': 'Short Answer:', 'details': 'Details', 'facts': 'Key Facts', 'advice': 'Practical Advice'},
+    'hr': {'short': 'Kratak odgovor:', 'details': 'Detalji', 'facts': 'Važne činjenice', 'advice': 'Praktični savjet'},
+    'fr': {'short': 'Réponse courte:', 'details': 'Détails', 'facts': 'Faits importants', 'advice': 'Conseil pratique'},
+    'nl': {'short': 'Kort antwoord:', 'details': 'Details', 'facts': 'Belangrijke feiten', 'advice': 'Praktisch advies'},
+    'pl': {'short': 'Krótka odpowiedź:', 'details': 'Szczegóły', 'facts': 'Ważne fakty', 'advice': 'Praktyczna rada'},
+    'cz': {'short': 'Stručná odpověď:', 'details': 'Podrobnosti', 'facts': 'Důležitá fakta', 'advice': 'Praktická rada'},
+    'sk': {'short': 'Stručná odpoveď:', 'details': 'Podrobnosti', 'facts': 'Dôležité fakty', 'advice': 'Praktická rada'},
+    'ru': {'short': 'Краткий ответ:', 'details': 'Подробности', 'facts': 'Важные факты', 'advice': 'Практический совет'},
+    'gr': {'short': 'Σύντομη απάντηση:', 'details': 'Λεπτομέρειες', 'facts': 'Σημαντικά στοιχεία', 'advice': 'Πρακτική συμβουλή'},
+    'sw': {'short': 'Kort svar:', 'details': 'Detaljer', 'facts': 'Viktiga fakta', 'advice': 'Praktiskt råd'},
+    'no': {'short': 'Kort svar:', 'details': 'Detaljer', 'facts': 'Viktige fakta', 'advice': 'Praktisk råd'},
+}
+
+def translate_faq_headings(html, lang):
+    if lang == 'ge' or lang not in FAQ_HEADINGS:
+        return html
+    h = FAQ_HEADINGS[lang]
+    de = FAQ_HEADINGS['ge']
+    html = html.replace(de['short'], h['short'])
+    html = html.replace('>'+de['details']+'<', '>'+h['details']+'<')
+    html = html.replace('>'+de['facts']+'<', '>'+h['facts']+'<')
+    html = html.replace('>'+de['advice']+'<', '>'+h['advice']+'<')
+    return html
+
+
+@login_required(login_url='account:login')
+def home(request):
+    site_language = request.session.get('site_language')
+    if not site_language:
+        request.session['site_language'] = 'ge'
+    latest_8_listings = Listing.objects.filter(is_published=True).order_by('-list_date')[:8]
+    user_language = request.session.get('site_language', 'en')
+    for listing in latest_8_listings:
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+
+    context = {
+        'latest_8_listings': latest_8_listings,
+    }
+    return render(request, 'main/home.html', context)
+
+@login_required(login_url='main:login_required')
+def about(request):
+    return render(request, 'main/about-us.html')
+
+@login_required(login_url='main:login_required')
+def contact(request):
+    return render(request, 'main/contact.html')
+
+@login_required(login_url='main:login_required')
+def add_property(request):
+    if request.method == 'POST':
+        agent = Agent.objects.get(user=request.user)
+        listing = Listing()
+        listing.company_name = agent.company_name
+        listing.company_logo = agent.company_logo
+        listing.portrait_photo = agent.portrait_photo
+        listing.oib_number = agent.oib_number
+        listing.email = agent.user.email
+        listing.domain = agent.domain
+        listing.realtor = Agent.objects.get(user=request.user)
+        listing.property_title = request.POST['property-title']
+        listing.property_description = request.POST['property-description']
+        listing.property_type = request.POST['property-type']
+        listing.property_status = request.POST['property-status']
+        listing.location = request.POST['location']
+        listing.bedrooms = request.POST['bedrooms']
+        listing.bathrooms = request.POST['bathrooms']
+        listing.floors = request.POST['floors']
+        listing.garage = request.POST['garages']
+        listing.area = request.POST['area']
+        listing.size = request.POST['size']
+        listing.property_price = request.POST['property_price']
+        listing.property_id = request.POST['Property-ID']
+        listing.video_url = request.POST['Video-URL']
+        listing.photo_main = request.FILES.get('photo-main')
+        listing.photo_1 = request.FILES.get('photo-1')
+        listing.photo_2 = request.FILES.get('photo-2')
+        listing.photo_3 = request.FILES.get('photo-3')
+        listing.photo_4 = request.FILES.get('photo-4')
+        listing.photo_5 = request.FILES.get('photo-5')
+        listing.photo_6 = request.FILES.get('photo-6')
+        listing.address = request.POST['address']
+        listing.country = request.POST['country']
+        listing.city = request.POST['city']
+        listing.state = request.POST['state']
+        listing.zipcode = request.POST['zip-code']
+        listing.neighborhood = request.POST['neighborhood']
+        listing.save()
+        messages.success(request, "Property added sucsessfully")
+        return redirect('main:add_property')
+
+    return render(request, 'main/add-property.html')
+
+
+@login_required(login_url='main:login_required')
+def agency_details(request):
+    agent = Agent.objects.get(user=request.user)
+    listings = Listing.objects.filter(realtor=agent)
+    user_language = request.session.get('site_language', 'en')
+    for listing in listings:
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+    
+    context = {
+        'listings': listings,
+        'agent': agent,
+    }
+    return render(request, 'main/agency-detail.html', context)
+
+@login_required(login_url='main:login_required')
+def blog(request):
+    return render(request, 'main/blog.html')
+
+@login_required(login_url='main:login_required')
+def blog_single(request):
+    return render(request, 'main/blog-single.html')
+
+@login_required(login_url='main:login_required')
+def blog_single_1(request):
+    return render(request, 'main/blog-single-1.html')
+
+@login_required(login_url='main:login_required')
+def blog_single_2(request):
+    return render(request, 'main/blog-single-2.html')
+
+@login_required(login_url='main:login_required')
+def blog_single_3(request):
+    return render(request, 'main/blog-single-3.html')
+
+@login_required(login_url='main:login_required')
+def imprint(request):
+    return render(request, 'main/imprint.html')
+
+@login_required(login_url='main:login_required')
+def data_protection(request):
+    return render(request, 'main/data-protection.html')
+
+@login_required(login_url='main:login_required')
+def agb(request):
+    return render(request, 'main/agb.html')
+
+@login_required(login_url='main:login_required')
+def cancellation_policy(request):
+    return render(request, 'main/cancellation-policy.html')
+
+@login_required(login_url='main:login_required')
+def sitemap(request):
+    return render(request, 'main/sitemap.html')
+
+@login_required(login_url='main:login_required')
+def service(request):
+    return render(request, 'main/service.html')
+
+@login_required(login_url='main:login_required')
+def listings(request): 
+    listings = Listing.objects.filter(is_published=True)
+
+    property_status = request.GET.get('property_status', None)
+    if property_status:
+        listings = listings.filter(property_status=property_status)
+
+    property_type = request.GET.get('property_type', None)
+    if property_type:
+        listings = listings.filter(property_type=property_type)
+
+    area_from = request.GET.get('area_from', None)
+    if area_from:
+        listings = listings.filter(area__gte=area_from)
+
+    location = request.GET.get('location', None)
+    if location:
+        listings = listings.filter(location=location)
+
+    bedrooms = request.GET.get('bedrooms', None)
+    if bedrooms:
+        listings = listings.filter(bedrooms=bedrooms)
+
+    bathrooms = request.GET.get('bathrooms', None)
+    if bathrooms:
+        listings = listings.filter(bathrooms=bathrooms)
+
+    my_range = request.GET.get('my_range', None)
+    if my_range:
+        min_price, max_price = my_range.split(';')
+        if min_price and max_price:
+            listings = listings.filter(property_price__gte=int(min_price), property_price__lte=int(max_price))
+
+
+    air_conditioning = request.GET.get('air_conditioning', None) 
+    if air_conditioning: 
+        listings = listings.filter(property_description__icontains='air conditioning')
+    
+    swimming_pool = request.GET.get('swimming_pool', None)
+    if swimming_pool:
+        listings = listings.filter(property_description__icontains='swimming pool')
+
+    central_heating = request.GET.get('central_heating', None)
+    if central_heating:
+        listings = listings.filter(property_description__icontains='central heating')
+
+    spa_message = request.GET.get('spa_message', None)
+    if spa_message:
+        listings = listings.filter(property_description__icontains='spa')
+
+    pets_allow = request.GET.get('pets_allow', None)
+    if pets_allow:
+        listings = listings.filter(property_description__icontains='pets allow')
+
+    gym = request.GET.get('gym', None)
+    if gym:
+        listings = listings.filter(property_description__icontains='gym')
+
+    alarm = request.GET.get('alarm', None)
+    if alarm:
+        listings = listings.filter(property_description__icontains='alarm')
+
+    window_covering = request.GET.get('window_covering', None)
+    if window_covering:
+        listings = listings.filter(property_description__icontains='window covering')
+
+    free_wifi = request.GET.get('free_wifi', None)
+    if free_wifi:
+        listings = listings.filter(property_description__icontains='free wifi')
+
+    car_parking = request.GET.get('car_parking', None)
+    if car_parking:
+        listings = listings.filter(property_description__icontains='car parking')
+
+
+    sort_by = request.GET.get('sort_by', None)
+    if sort_by:
+        if sort_by == 'price_low_to_high':
+            listings = listings.order_by('property_price')
+        elif sort_by == 'price_high_to_low':
+            listings = listings.order_by('-property_price')
+        elif sort_by == 'sell_properties':
+            # order the properties whose status is 'For Sale' first
+            listings = listings.order_by('-property_status')
+        elif sort_by == 'rent_properties':
+            # order the properties whose status is 'For Rent' first
+            listings = listings.order_by('property_status')
+        
+
+    house = Listing.objects.filter(property_type='House', is_published=True).count()
+    apartment = Listing.objects.filter(property_type='Apartment', is_published=True).count()
+    office = Listing.objects.filter(property_type='Office', is_published=True).count()
+    villa = Listing.objects.filter(property_type='Villa', is_published=True).count()
+    family_house = Listing.objects.filter(property_type='Family House', is_published=True).count()
+    modern_house = Listing.objects.filter(property_type='Modern Villa', is_published=True).count()
+    town_house = Listing.objects.filter(property_type='Town House', is_published=True).count()
+
+    page = request.GET.get('page', 1)
+    max_listings_per_page = 12
+    #listings = listings[(int(page) - 1) * max_listings_per_page : int(page) * max_listings_per_page]
+
+    user_language = request.session.get('site_language', 'en')
+    listings_two_dimensional = []
+    num = 1
+    for listing in listings:
+        if num % 2 != 0:
+            listings_two_dimensional.append([listing])
+        else:
+            listings_two_dimensional[len(listings_two_dimensional) - 1].append(listing)
+        num += 1
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+    context = {
+        'listings': listings,
+        'listings_two_dimensional': listings_two_dimensional,
+        'apartment': apartment if apartment else 0,
+        'house': house if house else 0,
+        'office': office if office else 0,
+        'villa': villa if villa else 0,
+        'family_house': family_house if family_house else 0,
+        'modern_villa': modern_house if modern_house else 0,
+        'town_house': town_house if town_house else 0,
+    }
+    return render(request, 'main/listings.html', context)
+
+
+
+@login_required(login_url='main:login_required')
+def single_details(request, id):
+    from main.ai_listing_helper import get_listing_content_with_ai
+    user_language = request.session.get('site_language', 'en')
+    listing = Listing.objects.get(id=id)
+    listing.json_content = get_listing_content_with_ai(listing, user_language)
+    context = {
+        'listing': listing,
+    }
+    return render(request, 'main/single-detail.html', context)
+
+
+@login_required(login_url='main:login_required')
+def edit_property(request, id):
+    listing = Listing.objects.get(id=id)
+    if request.method == 'POST':
+        listing.property_title = request.POST['property-title']
+        listing.property_description = request.POST['property-description']
+        listing.property_type = request.POST['property-type'] if request.POST['property-type'] else listing.property_type
+        listing.property_status = request.POST['property-status'] if request.POST['property-status'] else listing.property_status
+        listing.location = request.POST['location']
+        listing.bedrooms = request.POST['bedrooms']
+        listing.bathrooms = request.POST['bathrooms']
+        listing.floors = request.POST['floors']
+        listing.garage = request.POST['garages']
+        listing.area = request.POST['area']
+        listing.size = request.POST['size']
+        listing.property_price = request.POST['property_price']
+        listing.property_id = request.POST['Property-ID']
+        listing.video_url = request.POST['Video-URL']
+        listing.photo_main = request.FILES.get('photo-main') if request.FILES.get('photo-main') else listing.photo_main
+        listing.photo_1 = request.FILES.get('photo-1') if request.FILES.get('photo-1') else listing.photo_1
+        listing.photo_2 = request.FILES.get('photo-2') if request.FILES.get('photo-2') else listing.photo_2
+        listing.photo_3 = request.FILES.get('photo-3') if request.FILES.get('photo-3') else listing.photo_3
+        listing.photo_4 = request.FILES.get('photo-4') if request.FILES.get('photo-4') else listing.photo_4
+        listing.photo_5 = request.FILES.get('photo-5') if request.FILES.get('photo-5') else listing.photo_5
+        listing.photo_6 = request.FILES.get('photo-6') if request.FILES.get('photo-6') else listing.photo_6
+        listing.address = request.POST['address']
+        listing.country = request.POST['country'] if request.POST['country'] else listing.country
+        listing.city = request.POST['city']
+        listing.state = request.POST['state']
+        listing.zipcode = request.POST['zip-code']
+        listing.neighborhood = request.POST['neighborhood']
+        listing.save()
+        messages.success(request, "Property edit sucsessfully")
+        return redirect('main:profile')
+
+    context = {
+        'listing': listing,
+    }
+    return render(request, 'main/edit-property.html', context)
+
+
+@login_required(login_url='main:login_required')
+def delete_property(request, id):
+    listing = Listing.objects.get(id=id)
+    if listing.realtor.user != request.user:
+        messages.error(request, "You are not allowed to delete this property.")
+        return redirect('main:profile')
+    listing.delete()
+    messages.success(request, "Property delete sucsessfully")
+    return redirect('main:profile')
+
+@login_required(login_url='main:login_required')
+def faq(request):
+    return render(request, 'main/faq.html')
+
+@login_required(login_url='main:login_required')
+def owner(request):
+    return render(request, 'main/owner.html')
+
+@login_required(login_url='main:login_required')
+def real_estate_agent(request):
+    return render(request, 'main/real-estate-agent.html')
+
+@login_required(login_url='main:login_required')
+def building_contractor(request):
+    return render(request, 'main/building-contractor.html')
+
+@login_required(login_url='main:login_required')
+def realestate_contractor_registration(request):
+    return render(request, 'main/realestate-contractor-registration.html')
+
+@login_required(login_url='main:login_required')
+def owner_form(request):
+    return render(request, 'main/owner-form.html')
+
+@login_required(login_url='main:login_required')
+def send_owner_form(request):
+    if request.method == 'POST':
+        try:
+            # Get form data
+            salutation = request.POST.get('salutation', '').strip()
+            firstname = request.POST.get('firstname', '').strip()
+            lastname = request.POST.get('lastname', '').strip()
+            city = request.POST.get('city', '').strip()
+            zipcode = request.POST.get('zipcode', '').strip()
+            street = request.POST.get('street', '').strip()
+            housenumber = request.POST.get('housenumber', '').strip()
+            telephone = request.POST.get('telephone', '').strip()
+            mobile = request.POST.get('mobile', '').strip()
+            email = request.POST.get('email', '').strip()
+            location = request.POST.get('location', '').strip()
+            property_type = request.POST.get('property_type', '').strip()
+            other_specify = request.POST.get('other_specify', '').strip()
+            property_condition = request.POST.get('property_condition', '').strip()
+            year_built = request.POST.get('year_built', '').strip()
+            living_area = request.POST.get('living_area', '').strip()
+            land_area = request.POST.get('land_area', '').strip()
+            rooms = request.POST.get('rooms', '').strip()
+            bathrooms = request.POST.get('bathrooms', '').strip()
+            heating = request.POST.get('heating', '').strip()
+            heating_specify = request.POST.get('heating_specify', '').strip()
+            energy_certificate = request.POST.get('energy_certificate', '').strip()
+            price = request.POST.get('price', '').strip()
+            description = request.POST.get('description', '').strip()
+            special_features = request.POST.get('special_features', '').strip()
+            amenities = request.POST.get('amenities', '').strip()
+            renovations = request.POST.get('renovations', '').strip()
+            reason_for_sale = request.POST.get('reason_for_sale', '').strip()
+            
+            # Handle file uploads
+            images = request.FILES.getlist('images[]')
+            image_files = []
+            for image in images:
+                if image.content_type not in ['image/jpeg', 'image/png']:
+                    return JsonResponse({'status': 'error', 'message': 'Please upload only JPEG or PNG images.'})
+                file_name = default_storage.save(image.name, ContentFile(image.read()))
+                image_files.append(default_storage.path(file_name))
+            
+            # Create the email
+            email_subject = 'Owner Form Submission'
+            email_body_lines = []
+            if salutation: email_body_lines.append(f"Anrede: {salutation}")
+            if firstname: email_body_lines.append(f"Vorname: {firstname}")
+            if lastname: email_body_lines.append(f"Nachname: {lastname}")
+            if city: email_body_lines.append(f"Wohnort: {city}")
+            if zipcode: email_body_lines.append(f"Postleitzahl: {zipcode}")
+            if street: email_body_lines.append(f"Straße: {street}")
+            if housenumber: email_body_lines.append(f"Hausnummer: {housenumber}")
+            if telephone: email_body_lines.append(f"Telefonnummer: {telephone}")
+            if mobile: email_body_lines.append(f"Mobilnummer: {mobile}")
+            if email: email_body_lines.append(f"E-Mail Adresse: {email}")
+            if location: email_body_lines.append(f"Ort der Immobilie: {location}")
+            if property_type: email_body_lines.append(f"Art der Immobilie: {property_type}")
+            if other_specify: email_body_lines.append(f"Andere (Bitte spezifizieren): {other_specify}")
+            if property_condition: email_body_lines.append(f"Objekttyp: {property_condition}")
+            if year_built: email_body_lines.append(f"Baujahr: {year_built}")
+            if living_area: email_body_lines.append(f"Wohnfläche: {living_area}")
+            if land_area: email_body_lines.append(f"Grundstücksfläche: {land_area}")
+            if rooms: email_body_lines.append(f"Anzahl der Zimmer: {rooms}")
+            if bathrooms: email_body_lines.append(f"Anzahl der Badezimmer: {bathrooms}")
+            if heating: email_body_lines.append(f"Heizungsart: {heating}")
+            if heating_specify: email_body_lines.append(f"Andere Heizungsart (Bitte spezifizieren): {heating_specify}")
+            if energy_certificate: email_body_lines.append(f"Energieausweis vorhanden: {energy_certificate}")
+            if price: email_body_lines.append(f"Verkaufspreis: `{price}€`")
+            if description: email_body_lines.append(f"Beschreibung der Immobilie: {description}")
+            if special_features: email_body_lines.append(f"Besondere Merkmale oder Ausstattungen: {special_features}")
+            if amenities: email_body_lines.append(f"Annehmlichkeiten in der Nähe: {amenities}")
+            if renovations: email_body_lines.append(f"Renovierungen oder Modernisierungen in den letzten Jahren: {renovations}")
+            if reason_for_sale: email_body_lines.append(f"Grund für den Verkauf: {reason_for_sale}")
+            email_body = "\n".join(email_body_lines)
+            
+            email = EmailMessage(
+                subject=email_subject,
+                body=email_body,
+                from_email='service.mahamudh472@gmail.com',
+                to=['office@123-kroatien.eu'],  # Add the recipient email(s) here
+            )
+
+            for file_path in image_files:
+                email.attach_file(file_path)
+                os.remove(file_path)  # Clean up the file after attaching it
+
+            email.send()
+
+            return JsonResponse({'status': 'success', 'message': 'Form submitted successfully!'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
+@login_required(login_url='main:login_required')
+def send_registration_email(request):
+    if request.method == 'POST':
+        try:
+            # Get form data
+            firstname = request.POST.get('firstname')
+            postcode = request.POST.get('postcode')
+            street = request.POST.get('street')
+            housenumber = request.POST.get('housenumber')
+            ort = request.POST.get('ort')
+            telephone = request.POST.get('telephone')
+            mobile = request.POST.get('mobile')
+            email = request.POST.get('email')
+            realtor = request.POST.get('realtor')
+            construction = request.POST.get('construction')
+            office = request.POST.get('office')
+            oib = request.POST.get('oib')
+            website = request.POST.get('website')
+            contact_firstname = request.POST.get('contact_firstname')
+            contact_lastname = request.POST.get('contact_lastname')
+            contact_telephone = request.POST.get('contact_telephone')
+            contact_mobile = request.POST.get('contact_mobile')
+            contact_email = request.POST.get('contact_email')
+            
+            # Handle file upload
+            business_license = request.FILES.get('business_license')
+            if business_license:
+                if business_license.content_type != 'application/pdf':
+                    return JsonResponse({'status': 'error', 'message': 'Please upload a valid PDF file.'})
+                
+                # Save the uploaded file
+                file_name = default_storage.save(business_license.name, ContentFile(business_license.read()))
+                file_path = default_storage.path(file_name)
+            else:
+                file_path = None
+
+            # Create the email
+            email_subject = 'New Registration Form Submission'
+            email_body = f"""
+                Firmenname: {firstname}
+                Postleitzahl: {postcode}
+                Straße: {street}
+                Hausnummer: {housenumber}
+                Ort: {ort}
+                Telefonnummer: {telephone}
+                Mobilnummer: {mobile}
+                E-Mail Adresse: {email}
+                Immobilienmakler: {realtor}
+                Bauunternehmen: {construction}
+                Büroadresse: {office}
+                OIB Nummer: {oib}
+                Webadresse: {website}
+                Ansprechpartner Vorname: {contact_firstname}
+                Ansprechpartner Nachname: {contact_lastname}
+                Ansprechpartner Telefonnummer: {contact_telephone}
+                Ansprechpartner Mobilnummer: {contact_mobile}
+                Ansprechpartner E-Mail Adresse: {contact_email}
+            """
+
+            email = EmailMessage(
+                subject=email_subject,
+                body=email_body,
+                from_email='service.mahamudh472@gmail.com',
+                to=['office@123-kroatien.eu'],  # Add the recipient email(s) here
+            )
+
+            if file_path:
+                email.attach_file(file_path)
+                os.remove(file_path)  # Clean up the file after attaching it
+
+            email.send()
+
+            return JsonResponse({'status': 'success', 'message': 'Form submitted successfully!'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+@login_required(login_url='main:login_required')
+def send_email(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Prepare the email
+            subject = 'Contact Form Submission'
+            message = f"""
+            Salutation: {data.get('salutation')}
+            Company: {data.get('company')}
+            First Name: {data.get('first_name')}
+            Last Name: {data.get('last_name')}
+            Street: {data.get('street')}
+            ZIP: {data.get('zip')}
+            City: {data.get('city')}
+            Phone: {data.get('phone')}
+            Fax: {data.get('fax')}
+            Mobile: {data.get('mobile')}
+            Email: {data.get('email')}
+            Homepage: {data.get('homepage')}
+            Message: {data.get('message')}
+            """
+
+            send_mail(
+                subject,
+                message,
+                'service.mahamudh472@gmail.com',  
+                ['office@123-kroatien.eu'],
+                fail_silently=False,
+            )
+
+            return JsonResponse({'status': 'success'})
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'})
+        
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
+# temporary
+def loginRequired(request):
+    return HttpResponse("Only logged in users can view this page.")
+
+
+def set_language_from_url(request, user_language):
+    request.session['site_language'] = user_language
+    translation.activate(user_language)
+    referer = request.META.get('HTTP_REFERER', '/')
+    # Replace language prefix in URL
+    import re
+    new_url = re.sub(r'^(https?://[^/]+)?/(ge|en|hr|fr|gr|pl|cz|ru|sw|nb|sl|nl)/', f'/{user_language}/', referer)
+    if new_url == referer:
+        new_url = f'/{user_language}/'
+    return HttpResponseRedirect(new_url)
+
+
+def agent(request, id):
+    agent = Agent.objects.get(id=id)
+    listings = Listing.objects.filter(realtor=agent)
+    user_language = request.session.get('site_language', 'en')
+    for listing in listings:
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+    context = {
+        'listings': listings,
+        'agent': agent,
+    }
+    return render(request, 'main/agent.html', context)
+
+
+def edit_agent(request, id):
+    agent = Agent.objects.get(id=id)
+    if request.method == 'POST':
+        # same is signup
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        gender = request.POST['gender']
+        city = request.POST['city']
+        country = request.POST['country']
+        company_name = request.POST['company_name']
+        company_logo = request.FILES.get('company_logo') if request.FILES.get('company_logo') else agent.company_logo
+        portrait_photo = request.FILES.get('portrait_photo') if request.FILES.get('portrait_photo') else agent.profile_image
+        oib_number = request.POST['oib_number']
+        domain = request.POST['domain']
+        facebook = request.POST['facebook']
+        instagram = request.POST['instagram']
+        linkedin = request.POST['linkedin']
+        youtube = request.POST['youtube']
+        twitter = request.POST['twitter']
+        description = request.POST['description']
+        mobile = request.POST['mobile']
+        fax = request.POST['fax']
+
+        user = agent.user
+        user.first_name = first_name
+        user.last_name = last_name
+        agent.first_name = first_name
+        agent.last_name = last_name
+        agent.gender = gender   
+        agent.city = city
+        agent.country = country
+        agent.company_name = company_name
+        agent.company_logo = company_logo
+        agent.profile_image = portrait_photo
+        agent.oib_number = oib_number
+        agent.domain = domain
+        agent.facebook = facebook
+        agent.instagram = instagram
+        agent.linkedin = linkedin
+        agent.youtube = youtube
+        agent.twitter = twitter
+        agent.description = description
+        agent.mobile = mobile
+        agent.fax = fax
+        user.save()
+        agent.save()
+        messages.success(request, "Agent edit sucsessfully")
+        return redirect('main:agent', id=id)
+
+    context = {
+        'agent': agent,
+    }
+    return render(request, 'main/edit-agent.html', context)
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .chatbot import get_chatbot_response
+
+@csrf_exempt
+def chatbot_api(request):
+    from .chatbot import get_chatbot_response
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        message = data.get('message', '')
+        language = request.session.get('site_language', 'ge')
+        response = get_chatbot_response(message, language)
+        return JsonResponse({'response': response})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+# Platzhalter für owner
+def owner(request):
+    return render(request, 'main/owner.html')
+
+# === PLATZHALTER VIEWS ===
+
+def owner(request):
+    return render(request, 'main/owner.html')
+
+def faq(request):
+    import json
+    import os
+    lang = request.session.get('site_language', 'ge')
+    url_lang = getattr(request, 'LANGUAGE_CODE', None)
+    if url_lang:
+        lang = url_lang
+    
+    # Ländernamen für SEO-URLs
+    country_names = {
+        'ge': 'kroatien',
+        'en': 'croatia',
+        'hr': 'hrvatska',
+        'fr': 'croatie',
+        'gr': 'kroatia',
+        'pl': 'chorwacja',
+        'cz': 'chorvatsko',
+        'ru': 'horvatija',
+        'sw': 'kroatien',
+        'no': 'kroatia',
+        'sk': 'chorvatsko',
+        'nl': 'kroatie'
+    }
+    country = country_names.get(lang, 'kroatien')
+    
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    if lang == 'ge':
+        faq_path = os.path.join(base_path, 'faq_data.json')
+    else:
+        faq_path = os.path.join(base_path, f'faq_data_{lang}.json')
+        if not os.path.exists(faq_path):
+            faq_path = os.path.join(base_path, 'faq_data.json')
+    with open(faq_path, 'r', encoding='utf-8') as f:
+        faq_data = json.load(f)
+    return render(request, 'main/faq.html', {'faqs': faq_data, 'country': country})
+
+def agb(request):
+    return render(request, 'main/agb.html')
+
+def imprint(request):
+    return render(request, 'main/imprint.html')
+
+def data_protection(request):
+    return render(request, 'main/data-protection.html')
+
+def cancellation_policy(request):
+    return render(request, 'main/cancellation-policy.html')
+
+def service(request):
+    return render(request, 'main/service.html')
+
+def sitemap(request):
+    return render(request, 'main/sitemap.html')
+
+def profile(request):
+    return render(request, 'main/profile.html')
+
+def edit_property(request, id):
+    return render(request, 'main/edit-property.html')
+
+def property_details(request, id):
+    from main.ai_listing_helper import get_listing_content_with_ai
+    listing = Listing.objects.get(id=id)
+    user_language = request.session.get('site_language', 'en')
+    listing.json_content = get_listing_content_with_ai(listing, user_language)
+    return render(request, 'main/single-detail.html', {'listing': listing})
+
+def real_estate_agent(request):
+    return render(request, 'main/real-estate-agent.html')
+
+def building_contractor(request):
+    return render(request, 'main/building-contractor.html')
+
+def realestate_contractor_registration(request):
+    return render(request, 'main/realestate-contractor-registration.html')
+
+def listing(request, id):
+    listing_obj = Listing.objects.get(id=id)
+    context = {'listing': listing_obj}
+    return render(request, 'main/listing.html', context)
+
+# === KI-ÜBERSETZUNG ===
+from .translation_service import translate_listing_to_all_languages
+
+@login_required(login_url='account:login')
+def translate_listing(request, id):
+    """Übersetzt eine Immobilie in alle 12 Sprachen"""
+    if request.method == 'POST':
+        try:
+            listing = Listing.objects.get(id=id)
+            source_text = listing.property_description
+            
+            results = translate_listing_to_all_languages(listing, source_text)
+            
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Übersetzung abgeschlossen!',
+                'results': results
+            })
+        except Listing.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Immobilie nicht gefunden'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Nur POST erlaubt'})
+
+def faq_detail(request, country, slug):
+    import json
+    import os
+    
+    lang = request.session.get('site_language', 'ge')
+    url_lang = getattr(request, 'LANGUAGE_CODE', None)
+    if url_lang:
+        lang = url_lang
+    
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    
+    # Deutsche FAQ laden (für Slug-zu-ID Mapping)
+    german_faq_path = os.path.join(base_path, 'faq_data.json')
+    with open(german_faq_path, 'r', encoding='utf-8') as f:
+        german_faq_data = json.load(f)
+    
+    # Finde die FAQ-ID anhand des Slugs (aus allen Sprachen)
+    faq_id = None
+    for item in german_faq_data:
+        if item.get('slug') == slug:
+            faq_id = item.get('id')
+            break
+    
+    # Lade die sprachspezifische FAQ-Datei
+    if lang == 'ge':
+        faq_path = german_faq_path
+        faq_data = german_faq_data
+    else:
+        faq_path = os.path.join(base_path, f'faq_data_{lang}.json')
+        if not os.path.exists(faq_path):
+            faq_path = german_faq_path
+        with open(faq_path, 'r', encoding='utf-8') as f:
+            faq_data = json.load(f)
+    
+    # Finde die FAQ: erst nach Slug, dann nach ID
+    faq = None
+    for item in faq_data:
+        if item.get('slug') == slug:
+            faq = item
+            break
+    
+    if not faq and faq_id:
+        for item in faq_data:
+            if item.get('id') == faq_id:
+                faq = item
+                break
+    
+    if not faq:
+        from django.http import Http404
+        raise Http404("FAQ nicht gefunden")
+    
+    # Übersetze Überschriften
+    if faq.get('a_html'):
+        faq['a_html'] = translate_faq_headings(faq['a_html'], lang)
+    return render(request, 'main/faq_detail.html', {'faq': faq, 'faqs': faq_data, 'country': country})
+
+
+
+
+# Professional Registration View (Bilingual: German & Croatian)
+def professional_registration(request, lang='ge'):
+    success = True
+    if request.method == 'POST':
+        try:
+            data = request.POST
+            prof_types = {'realtor':'Immobilienmakler','construction':'Bauunternehmen','lawyer':'Rechtsanwalt','tax_advisor':'Steuerberater','architect':'Architekt'}
+            body = f"""
+NEUE PROFESSIONAL-REGISTRIERUNG
+
+Typ: {prof_types.get(data.get('professional_type',''), data.get('professional_type',''))}
+Firmenname: {data.get('company_name','')}
+PLZ: {data.get('postcode','')}
+Strasse: {data.get('street','')} {data.get('housenumber','')}
+Ort: {data.get('city','')}
+Telefon: {data.get('telephone','')}
+Mobil: {data.get('mobile','')}
+E-Mail: {data.get('email','')}
+Website: {data.get('website','')}
+OIB: {data.get('oib','')}
+
+ANSPRECHPARTNER:
+Anrede: {data.get('contact_gender','')}
+Name: {data.get('contact_firstname','')} {data.get('contact_lastname','')}
+E-Mail: {data.get('contact_email','')}
+Telefon: {data.get('contact_telephone','')}
+"""
+            send_mail('Neue Professional-Registrierung', body, 'service.mahamudh472@gmail.com', ['office@123-kroatien.eu'], fail_silently=False)
+            success = True; print("=== SUCCESS IST TRUE ===")
+        except Exception as e:
+            print(f'Email error: {e}')
+    context = {'lang': lang, 'success': success}
+    if success: return redirect('main:registration-success')
+    return render(request, 'main/professional_registration.html', context)

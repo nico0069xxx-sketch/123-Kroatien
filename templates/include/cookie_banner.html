@@ -1,0 +1,384 @@
+<!-- GDPR Cookie Banner - Professional -->
+<div id="cookieBanner" class="cookie-banner" style="display: none;">
+  <div class="cookie-overlay"></div>
+  <div class="cookie-modal">
+    <div class="cookie-header">
+      <h3>{{ cookie_title }}</h3>
+    </div>
+    <div class="cookie-body">
+      <p>{{ cookie_text }}</p>
+      
+      <div id="cookieSettings" class="cookie-settings" style="display: none;">
+        <div class="cookie-option">
+          <div class="cookie-option-header">
+            <label class="cookie-switch">
+              <input type="checkbox" id="cookieNecessary" checked disabled>
+              <span class="cookie-slider"></span>
+            </label>
+            <span class="cookie-option-title">{{ cookie_necessary }}</span>
+          </div>
+          <p class="cookie-option-desc">{{ cookie_necessary_desc }}</p>
+        </div>
+        
+        <div class="cookie-option">
+          <div class="cookie-option-header">
+            <label class="cookie-switch">
+              <input type="checkbox" id="cookieAnalytics">
+              <span class="cookie-slider"></span>
+            </label>
+            <span class="cookie-option-title">{{ cookie_analytics }}</span>
+          </div>
+          <p class="cookie-option-desc">{{ cookie_analytics_desc }}</p>
+        </div>
+        
+        <div class="cookie-option">
+          <div class="cookie-option-header">
+            <label class="cookie-switch">
+              <input type="checkbox" id="cookieMarketing">
+              <span class="cookie-slider"></span>
+            </label>
+            <span class="cookie-option-title">{{ cookie_marketing }}</span>
+          </div>
+          <p class="cookie-option-desc">{{ cookie_marketing_desc }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cookie-footer">
+      <div class="cookie-buttons-main" id="cookieButtonsMain">
+        <button class="cookie-btn cookie-btn-settings" onclick="toggleCookieSettings()">{{ cookie_settings }}</button>
+        <button class="cookie-btn cookie-btn-reject" onclick="rejectCookies()">{{ cookie_reject }}</button>
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptAllCookies()">{{ cookie_accept }}</button>
+      </div>
+      <div class="cookie-buttons-settings" id="cookieButtonsSettings" style="display: none;">
+        <a href="{% url 'main:data-protection' %}" class="cookie-link">{{ cookie_privacy }}</a>
+        <button class="cookie-btn cookie-btn-save" onclick="saveCookieSettings()">{{ cookie_save }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.cookie-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+}
+
+.cookie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cookie-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  max-width: 480px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.cookie-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cookie-header h3 {
+  color: #003167;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cookie-body {
+  padding: 20px 24px;
+}
+
+.cookie-body p {
+  color: #444;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cookie-settings {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.cookie-option {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cookie-option:last-child {
+  border-bottom: none;
+}
+
+.cookie-option-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cookie-option-title {
+  font-weight: 500;
+  color: #003167;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cookie-option-desc {
+  color: #666;
+  font-size: 0.8rem;
+  margin: 6px 0 0 48px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cookie-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.cookie-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cookie-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+.cookie-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+
+.cookie-switch input:checked + .cookie-slider {
+  background-color: #003167;
+}
+
+.cookie-switch input:checked + .cookie-slider:before {
+  transform: translateX(16px);
+}
+
+.cookie-switch input:disabled + .cookie-slider {
+  background-color: #003167;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cookie-footer {
+  padding: 16px 24px 20px;
+  background: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+}
+
+.cookie-buttons-main,
+.cookie-buttons-settings {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cookie-btn {
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cookie-btn-accept {
+  background: #003167;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.cookie-btn-accept:hover {
+  background: #002244;
+}
+
+.cookie-btn-reject {
+  background: #fff;
+  color: #003167;
+  border: 1px solid #003167;
+}
+
+.cookie-btn-reject:hover {
+  background: #f0f0f0;
+}
+
+.cookie-btn-settings {
+  background: transparent;
+  color: #666;
+  border: 1px solid #ccc;
+}
+
+.cookie-btn-settings:hover {
+  background: #f0f0f0;
+}
+
+.cookie-btn-save {
+  background: #003167;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.cookie-btn-save:hover {
+  background: #002244;
+}
+
+.cookie-link {
+  color: #003167;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cookie-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .cookie-modal {
+    width: 95%;
+  }
+  
+  .cookie-header, .cookie-body, .cookie-footer {
+    padding: 16px;
+  }
+  
+  .cookie-btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+  
+  .cookie-buttons-main {
+    flex-wrap: wrap;
+  }
+  
+  .cookie-btn-accept {
+    order: -1;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
+</style>
+
+<script>
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/;SameSite=Lax`;
+}
+
+function showCookieBanner() {
+  document.getElementById('cookieBanner').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function hideCookieBanner() {
+  document.getElementById('cookieBanner').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function toggleCookieSettings() {
+  const settings = document.getElementById('cookieSettings');
+  const mainButtons = document.getElementById('cookieButtonsMain');
+  const settingsButtons = document.getElementById('cookieButtonsSettings');
+  
+  if (settings.style.display === 'none') {
+    settings.style.display = 'block';
+    mainButtons.style.display = 'none';
+    settingsButtons.style.display = 'flex';
+  } else {
+    settings.style.display = 'none';
+    mainButtons.style.display = 'flex';
+    settingsButtons.style.display = 'none';
+  }
+}
+
+function acceptAllCookies() {
+  const consent = {
+    necessary: true,
+    analytics: true,
+    marketing: true,
+    timestamp: new Date().toISOString()
+  };
+  setCookie('cookie_consent', JSON.stringify(consent), 365);
+  hideCookieBanner();
+}
+
+function rejectCookies() {
+  const consent = {
+    necessary: true,
+    analytics: false,
+    marketing: false,
+    timestamp: new Date().toISOString()
+  };
+  setCookie('cookie_consent', JSON.stringify(consent), 365);
+  hideCookieBanner();
+}
+
+function saveCookieSettings() {
+  const consent = {
+    necessary: true,
+    analytics: document.getElementById('cookieAnalytics').checked,
+    marketing: document.getElementById('cookieMarketing').checked,
+    timestamp: new Date().toISOString()
+  };
+  setCookie('cookie_consent', JSON.stringify(consent), 365);
+  hideCookieBanner();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const consent = getCookie('cookie_consent');
+  if (!consent) {
+    setTimeout(showCookieBanner, 300);
+  }
+});
+</script>

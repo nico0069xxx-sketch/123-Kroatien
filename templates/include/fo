@@ -1,0 +1,12 @@
+    <div class="bg__footer-bottom-v1">
+        <div class="container">
+            <div class="row flex-column-reverse flex-md-row" align="center">
+                <div class="col-md-12">
+                    <span>
+                        <a href="#" class="comCopy" style="color: #E41F0E;">123-Kroatien.eu</a> - {{all_rights_reserved}} | © 2024
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

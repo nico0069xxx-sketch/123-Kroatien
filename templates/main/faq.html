@@ -1,0 +1,49 @@
+{% extends 'include/base.html' %} 
+{% load static %} 
+
+{% block body %}
+<div class="faqHeaderBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a style="font-weight: bold; font-size: 2rem" href="#" class="text-white">
+                {{faq_title}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <div class="title__leading">
+          <h2 class="text-capitalize text-danger">{{faq_title}}</h2>
+          
+          {% for faq in faqs %}
+          <details {% if forloop.first %}open{% endif %} style="margin-bottom: 20px;">
+            <summary style="font-weight: bold; color: #003167; cursor: pointer;">
+              <a href="{% url 'main:faq_detail' country=country slug=faq.slug %}" style="color: #003167; text-decoration: none;">
+                {{ faq.q }}
+              </a>
+            </summary>
+            <div class="faq__content" style="color: #003167; padding: 15px;">
+              <p>{{ faq.a }}</p>
+              <a href="{% url 'main:faq_detail' country=country slug=faq.slug %}" style="color: #c41e3a;">Mehr erfahren →</a>
+            </div>
+          </details>
+          {% endfor %}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
