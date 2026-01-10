@@ -160,6 +160,18 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link active" href="{% url 'main:faq' %}"> {{ nav_faq }} </a>
                         </li>
+                        
+                        <!-- Dienstleister Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown"> {{ nav_services }} </a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a></li>
+                            </ul>
+                        </li>
                     </ul>
 
 
