@@ -38,8 +38,8 @@ def get_my_translations(request):
     user_language = request.session.get('site_language', 'ge')
 
     context = {}
-    # Lade alle Übersetzungen für die aktuelle Seite, navbar und footer
-    translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details')
+    # Lade alle Übersetzungen für die aktuelle Seite, navbar, footer und home
+    translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details') | Translation.objects.filter(page='home')
     for t in translations:
         if user_language == 'en': context[t.name] = t.english_content
         elif user_language == 'ge': context[t.name] = t.german_content
