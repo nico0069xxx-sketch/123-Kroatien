@@ -193,11 +193,21 @@ def listings(request):
     if bathrooms:
         listings = listings.filter(bathrooms=bathrooms)
 
+    # Support for old slider format (my_range) and new dropdown format (price_from/price_to)
     my_range = request.GET.get('my_range', None)
     if my_range:
         min_price, max_price = my_range.split(';')
         if min_price and max_price:
             listings = listings.filter(property_price__gte=int(min_price), property_price__lte=int(max_price))
+    
+    # New price dropdown filters
+    price_from = request.GET.get('price_from', None)
+    if price_from:
+        listings = listings.filter(property_price__gte=int(price_from))
+    
+    price_to = request.GET.get('price_to', None)
+    if price_to:
+        listings = listings.filter(property_price__lte=int(price_to))
 
 
     air_conditioning = request.GET.get('air_conditioning', None) 
