@@ -337,32 +337,34 @@
                     </div>
                     <div class="col-6 col-lg-3 col-md-3">
                         <div class="form-group">
-                            <select class="wide select_option" name="price_from">
+                            <select class="wide select_option" name="price_from" id="price_from">
                                 <option value="">{{filter_Price_From}}</option>
-                                <option value="50000" {% if request.GET.price_from == '50000' %}selected{% endif %}>50.000 €</option>
-                                <option value="100000" {% if request.GET.price_from == '100000' %}selected{% endif %}>100.000 €</option>
-                                <option value="150000" {% if request.GET.price_from == '150000' %}selected{% endif %}>150.000 €</option>
-                                <option value="200000" {% if request.GET.price_from == '200000' %}selected{% endif %}>200.000 €</option>
-                                <option value="300000" {% if request.GET.price_from == '300000' %}selected{% endif %}>300.000 €</option>
-                                <option value="500000" {% if request.GET.price_from == '500000' %}selected{% endif %}>500.000 €</option>
-                                <option value="750000" {% if request.GET.price_from == '750000' %}selected{% endif %}>750.000 €</option>
-                                <option value="1000000" {% if request.GET.price_from == '1000000' %}selected{% endif %}>1.000.000 €</option>
+                                <!-- Kaufpreise (Standard) -->
+                                <option value="50000">50.000 €</option>
+                                <option value="100000">100.000 €</option>
+                                <option value="150000">150.000 €</option>
+                                <option value="200000">200.000 €</option>
+                                <option value="300000">300.000 €</option>
+                                <option value="500000">500.000 €</option>
+                                <option value="750000">750.000 €</option>
+                                <option value="1000000">1.000.000 €</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-6 col-lg-3 col-md-3">
                         <div class="form-group">
-                            <select class="wide select_option" name="price_to">
+                            <select class="wide select_option" name="price_to" id="price_to">
                                 <option value="">{{filter_Price_To}}</option>
-                                <option value="100000" {% if request.GET.price_to == '100000' %}selected{% endif %}>100.000 €</option>
-                                <option value="200000" {% if request.GET.price_to == '200000' %}selected{% endif %}>200.000 €</option>
-                                <option value="300000" {% if request.GET.price_to == '300000' %}selected{% endif %}>300.000 €</option>
-                                <option value="500000" {% if request.GET.price_to == '500000' %}selected{% endif %}>500.000 €</option>
-                                <option value="750000" {% if request.GET.price_to == '750000' %}selected{% endif %}>750.000 €</option>
-                                <option value="1000000" {% if request.GET.price_to == '1000000' %}selected{% endif %}>1.000.000 €</option>
-                                <option value="1500000" {% if request.GET.price_to == '1500000' %}selected{% endif %}>1.500.000 €</option>
-                                <option value="2000000" {% if request.GET.price_to == '2000000' %}selected{% endif %}>2.000.000 €</option>
-                                <option value="5000000" {% if request.GET.price_to == '5000000' %}selected{% endif %}>5.000.000 €+</option>
+                                <!-- Kaufpreise (Standard) -->
+                                <option value="100000">100.000 €</option>
+                                <option value="200000">200.000 €</option>
+                                <option value="300000">300.000 €</option>
+                                <option value="500000">500.000 €</option>
+                                <option value="750000">750.000 €</option>
+                                <option value="1000000">1.000.000 €</option>
+                                <option value="1500000">1.500.000 €</option>
+                                <option value="2000000">2.000.000 €</option>
+                                <option value="5000000">5.000.000 €+</option>
                             </select>
                         </div>
                     </div>
