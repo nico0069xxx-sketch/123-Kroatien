@@ -102,6 +102,15 @@ def get_my_translations(request):
     context['url_lawyer'] = CATEGORY_URLS['lawyer'].get(user_language, 'rechtsanwaelte')
     context['url_tax_advisor'] = CATEGORY_URLS['tax_advisor'].get(user_language, 'steuerberater')
     context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
+    
+    # URL für Marktberichte
+    MARKET_URLS = {
+        'ge': 'marktberichte', 'en': 'market-reports', 'hr': 'trzisna-izvjesca',
+        'fr': 'rapports-immobiliers', 'nl': 'marktrapporten', 'pl': 'raporty-rynkowe',
+        'cz': 'trzni-zpravy', 'sk': 'trhove-spravy', 'ru': 'rynochnye-otchety',
+        'gr': 'anafores-agoras', 'sw': 'marknadsrapporter', 'no': 'markedsrapporter'
+    }
+    context['url_market_reports'] = MARKET_URLS.get(user_language, 'marktberichte')
 
     # Chatbot-Übersetzungen immer laden (für alle Seiten)
     chatbot_translations = Translation.objects.filter(page='chatbot')
