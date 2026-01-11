@@ -175,7 +175,7 @@
                     </div>
                     <div class="col-6 col-lg-3 col-md-3">
                         <div class="form-group">
-                            <select name="property_status" class="wide select_option">
+                            <select name="property_status" id="property_status" class="wide select_option" onchange="updatePriceOptions()">
                                 <option value="">{{filter_property_status}}</option>
                                 <option value="Sale"
                                 {% if request.GET.property_status == 'Sale' %}
