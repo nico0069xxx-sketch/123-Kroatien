@@ -1,4 +1,4 @@
-{% extends "include/base.html" %}
+template = '''{% extends "include/base.html" %}
 {% load static %}
 {% block body %}
 <div class="container py-5">
@@ -51,4 +51,8 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock %}'''
+
+with open('templates/account/setup_2fa.html', 'w') as f:
+    f.write(template)
+print('Template aktualisiert!')
