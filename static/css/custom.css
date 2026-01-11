@@ -433,3 +433,9 @@ canvas {
 body, html, * {
     font-family: "Montserrat", sans-serif !important;
 }
+
+/* Font Awesome Fix */
+.fa, .fa::before {
+    font-family: FontAwesome !important;
+}
+
