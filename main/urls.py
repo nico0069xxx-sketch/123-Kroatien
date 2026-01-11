@@ -210,3 +210,9 @@ urlpatterns += [
     path('<str:country>/professional-registrierung/', professional_registration, name='professional_registration_ge'),
     path('<str:country>/registracija-profesionalaca/', professional_registration, name='professional_registration_hr'),
 ]
+
+# Chatbot API
+from main.views import chatbot_api
+urlpatterns += [
+    path('api/chatbot/', chatbot_api, name='chatbot_api'),
+]
