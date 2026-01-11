@@ -439,3 +439,173 @@ body, html, * {
     font-family: FontAwesome !important;
 }
 
+
+/* Karussell responsive - Panorama Format */
+.homepage__property {
+    max-height: 350px;
+    overflow: hidden;
+}
+
+.homepage__property .owl-carousel .item img {
+    height: 350px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .homepage__property {
+        max-height: 280px;
+    }
+    .homepage__property .owl-carousel .item img {
+        height: 280px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .homepage__property {
+        max-height: 200px;
+    }
+    .homepage__property .owl-carousel .item img {
+        height: 200px;
+    }
+}
+
+/* Suchmaske Dunkelblau Hintergrund */
+.search__area {
+    background-color: #1e3a5f !important;
+    padding: 30px 0;
+}
+
+.search__area .form-group label,
+.search__area .form-control,
+.search__area select {
+    color: #fff;
+}
+
+.search__area .select_option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Such-Button in Rot */
+.search__area .btn-search,
+.search__area button[type="submit"],
+.search__area .btn {
+    background-color: #c02333 !important;
+    border-color: #c02333 !important;
+    color: #fff !important;
+}
+
+.search__area .btn-search:hover,
+.search__area button[type="submit"]:hover,
+.search__area .btn:hover {
+    background-color: #a01d2b !important;
+    border-color: #a01d2b !important;
+}
+
+/* KÖNIGSKLASSE CTA Banner für Dienstleister */
+.cta-professionals {
+    background: linear-gradient(135deg, #1e3a5f 0%, #c02333 100%);
+    padding: 40px 0;
+    margin: 30px 0;
+}
+
+.cta-professionals .cta-box {
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 30px 40px;
+    backdrop-filter: blur(10px);
+}
+
+.cta-professionals h2 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.cta-professionals p {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    margin: 0;
+}
+
+.cta-professionals .btn-cta {
+    background: #fff;
+    color: #c02333;
+    padding: 15px 35px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.cta-professionals .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    background: #fff;
+    color: #1e3a5f;
+}
+
+.cta-professionals .btn-cta i {
+    margin-right: 8px;
+}
+
+/* Pulsing Animation */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cta-professionals h2 { font-size: 22px; }
+    .cta-professionals p { font-size: 16px; }
+    .cta-professionals .btn-cta { margin-top: 20px; }
+}
+
+/* CTA Banner dezenter */
+.cta-professionals {
+    background: #1e3a5f !important;
+    padding: 25px 0 !important;
+    margin: 20px 0 !important;
+}
+
+.cta-professionals .cta-box {
+    background: transparent !important;
+    padding: 15px 20px !important;
+}
+
+.cta-professionals h2 {
+    font-size: 22px !important;
+    margin-bottom: 5px !important;
+}
+
+.cta-professionals p {
+    font-size: 15px !important;
+}
+
+.cta-professionals .btn-cta {
+    padding: 12px 25px !important;
+    font-size: 14px !important;
+    box-shadow: none !important;
+}
+
+.pulse {
+    animation: none !important;
+}
+
+/* Alte Topbar ausblenden */
+.topbar {
+    display: none !important;
+}

@@ -107,68 +107,58 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="main_nav99">
-                    <ul class="navbar-nav  mx-auto">
-                        <!-- <li class="nav-item dropdown">
-                            {% comment %} <a class="nav-link active dropdown-toggle" href="/" data-toggle="dropdown"> {% trans 'Home' %} </a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="{% url 'account:login' %}">{% trans 'Login' %}</a>
-                                </li>
-                                <li><a class="dropdown-item"
-                                        href="{% url 'account:signup' %}">{% trans 'Register' %}</a></li>
-                            </ul> {% endcomment %}
-                            
-                            <a class="nav-link active" href="/"> {{Home}}</a>
-                        </li> -->
-
+                    <ul class="navbar-nav mx-auto">
+                        <!-- KAUFEN -->
                         <li class="nav-item dropdown">
-                            {% comment %} <a class="nav-link active dropdown-toggle" href="/" data-toggle="dropdown"> {% trans 'Home' %} </a>
+                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown">{{ nav_buy }}</a>
                             <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="{% url 'account:login' %}">{% trans 'Login' %}</a>
-                                </li>
-                                <li><a class="dropdown-item"
-                                        href="{% url 'account:signup' %}">{% trans 'Register' %}</a></li>
-                            </ul> {% endcomment %}
-                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown"> {{ nav_buy }} </a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
-                                <li align="left"><a class="dropdown-item" href="#">{{ dropdown_house }}</a>
-                                </li>
-                                <li align="left"><a class="dropdown-item" href="#">{{ dropdown_apartment }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="#">{{ dropdown_new_building }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="#">{{ dropdown_land }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale">{{ dropdown_house }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=apartment">{{ dropdown_apartment }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=new">{{ dropdown_new_building }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=land">{{ dropdown_land }}</a></li>
                             </ul>
                         </li>
-
-                        {% comment %} <li class="nav-item dropdown">
-                            <a class="nav-link active" href="{% url 'main:listing' %}"> {{Listings}} </a>
-                        </li>
-
+                        <!-- MIETEN -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link active" href="{% url 'main:blog' %}"> {{Blog}} </a>
-                        </li> {% endcomment %}
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active" href="{% url 'main:owner' %}"> {{ nav_sell }} </a>
+                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown">{{ nav_rent }}</a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=rent">{{ dropdown_house }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=rent&type=apartment">{{ dropdown_apartment }}</a></li>
+                            </ul>
                         </li>
-
-                        <li class="nav-item"><a class="nav-link" href="{% url 'main:contact' %}"> {{ nav_contact }}
-                            </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'main:about' %}"> {{ nav_about }} </a>
+                        <!-- VERKAUFEN -->
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'main:owner' %}">{{ nav_sell }}</a>
                         </li>
-                        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'main:profile' %}"> {{Profile}}
-                            </a></li> {% endcomment %}
+                        <!-- DIENSTLEISTER -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link active" href="{% url 'main:faq' %}"> {{ nav_faq }} </a>
+                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">{{ nav_services }}</a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a></li>
+                            </ul>
                         </li>
-                        
-                        <!-- Dienstleister Dropdown -->
+                        <!-- SPRACHE -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown"> {{ nav_services }} </a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a></li>
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                <i class="fa fa-globe"></i> {% if language == 'ge' %}DE{% elif language == 'en' %}EN{% elif language == 'hr' %}HR{% else %}DE{% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ge')">🇩🇪 Deutsch</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('en')">🇬🇧 English</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('hr')">🇭🇷 Hrvatski</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('fr')">🇫🇷 Français</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('nl')">🇳🇱 Nederlands</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('pl')">🇵🇱 Polski</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('cz')">🇨🇿 Čeština</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('sk')">🇸🇰 Slovenčina</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ru')">🇷🇺 Русский</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('gr')">🇬🇷 Ελληνικά</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('sw')">🇸🇪 Svenska</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('no')">🇳🇴 Norsk</a></li>
                             </ul>
                         </li>
                     </ul>
