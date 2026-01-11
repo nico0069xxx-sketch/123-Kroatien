@@ -216,3 +216,20 @@ from main.views import chatbot_api
 urlpatterns += [
     path('api/chatbot/', chatbot_api, name='chatbot_api'),
 ]
+
+# Wichtige Adressen (12 Sprachen)
+from main.address_views import important_addresses
+urlpatterns += [
+    path('<str:country>/wichtige-adressen/', important_addresses, name='important_addresses_ge'),
+    path('<str:country>/important-addresses/', important_addresses, name='important_addresses_en'),
+    path('<str:country>/vazne-adrese/', important_addresses, name='important_addresses_hr'),
+    path('<str:country>/adresses-importantes/', important_addresses, name='important_addresses_fr'),
+    path('<str:country>/belangrijke-adressen/', important_addresses, name='important_addresses_nl'),
+    path('<str:country>/wazne-adresy/', important_addresses, name='important_addresses_pl'),
+    path('<str:country>/dulezite-adresy/', important_addresses, name='important_addresses_cz'),
+    path('<str:country>/dolezite-adresy/', important_addresses, name='important_addresses_sk'),
+    path('<str:country>/vazhnye-adresa/', important_addresses, name='important_addresses_ru'),
+    path('<str:country>/simantikes-diefthinseis/', important_addresses, name='important_addresses_gr'),
+    path('<str:country>/viktiga-adresser/', important_addresses, name='important_addresses_sw'),
+    path('<str:country>/viktige-adresser/', important_addresses, name='important_addresses_no'),
+]

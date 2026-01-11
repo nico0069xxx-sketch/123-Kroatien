@@ -111,6 +111,15 @@ def get_my_translations(request):
         'gr': 'anafores-agoras', 'sw': 'marknadsrapporter', 'no': 'markedsrapporter'
     }
     context['url_market_reports'] = MARKET_URLS.get(user_language, 'marktberichte')
+    
+    # URL für Wichtige Adressen
+    ADDRESS_URLS = {
+        'ge': 'wichtige-adressen', 'en': 'important-addresses', 'hr': 'vazne-adrese',
+        'fr': 'adresses-importantes', 'nl': 'belangrijke-adressen', 'pl': 'wazne-adresy',
+        'cz': 'dulezite-adresy', 'sk': 'dolezite-adresy', 'ru': 'vazhnye-adresa',
+        'gr': 'simantikes-diefthinseis', 'sw': 'viktiga-adresser', 'no': 'viktige-adresser'
+    }
+    context['url_addresses'] = ADDRESS_URLS.get(user_language, 'wichtige-adressen')
 
     # Chatbot-Übersetzungen immer laden (für alle Seiten)
     chatbot_translations = Translation.objects.filter(page='chatbot')

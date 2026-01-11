@@ -1,0 +1,244 @@
+{
+  "categories": [
+    {
+      "id": "embassies",
+      "icon": "fa-university",
+      "addresses": [
+        {
+          "name": {
+            "de": "Deutsche Botschaft Zagreb", "en": "German Embassy Zagreb", "hr": "Njemačko veleposlanstvo Zagreb",
+            "fr": "Ambassade d'Allemagne Zagreb", "nl": "Duitse ambassade Zagreb", "pl": "Ambasada Niemiec Zagrzeb",
+            "cz": "Německé velvyslanectví Záhřeb", "sk": "Nemecké veľvyslanectvo Záhreb", "ru": "Посольство Германии Загреб",
+            "gr": "Γερμανική Πρεσβεία Ζάγκρεμπ", "sw": "Tyska ambassaden Zagreb", "no": "Den tyske ambassaden Zagreb"
+          },
+          "address": "Ulica grada Vukovara 64, 10000 Zagreb",
+          "phone": "+385 1 6300 100",
+          "url": "https://zagreb.diplo.de"
+        },
+        {
+          "name": {
+            "de": "Österreichische Botschaft Zagreb", "en": "Austrian Embassy Zagreb", "hr": "Austrijsko veleposlanstvo Zagreb",
+            "fr": "Ambassade d'Autriche Zagreb", "nl": "Oostenrijkse ambassade Zagreb", "pl": "Ambasada Austrii Zagrzeb",
+            "cz": "Rakouské velvyslanectví Záhřeb", "sk": "Rakúske veľvyslanectvo Záhreb", "ru": "Посольство Австрии Загреб",
+            "gr": "Αυστριακή Πρεσβεία Ζάγκρεμπ", "sw": "Österrikiska ambassaden Zagreb", "no": "Den østerrikske ambassaden Zagreb"
+          },
+          "address": "Radnička cesta 80, 10000 Zagreb",
+          "phone": "+385 1 4881 050",
+          "url": "https://www.bmeia.gv.at/oeb-zagreb"
+        },
+        {
+          "name": {
+            "de": "Schweizer Botschaft Zagreb", "en": "Swiss Embassy Zagreb", "hr": "Švicarsko veleposlanstvo Zagreb",
+            "fr": "Ambassade de Suisse Zagreb", "nl": "Zwitserse ambassade Zagreb", "pl": "Ambasada Szwajcarii Zagrzeb",
+            "cz": "Švýcarské velvyslanectví Záhřeb", "sk": "Švajčiarske veľvyslanectvo Záhreb", "ru": "Посольство Швейцарии Загреб",
+            "gr": "Ελβετική Πρεσβεία Ζάγκρεμπ", "sw": "Schweiziska ambassaden Zagreb", "no": "Den sveitsiske ambassaden Zagreb"
+          },
+          "address": "Bogovićeva 3, 10000 Zagreb",
+          "phone": "+385 1 4878 800",
+          "url": "https://www.eda.admin.ch/zagreb"
+        }
+      ]
+    },
+    {
+      "id": "emergency",
+      "icon": "fa-exclamation-triangle",
+      "addresses": [
+        {
+          "name": {
+            "de": "Euronotruf", "en": "Euro Emergency", "hr": "Europski hitni broj",
+            "fr": "Numéro d'urgence européen", "nl": "Europees alarmnummer", "pl": "Europejski numer alarmowy",
+            "cz": "Evropská tísňová linka", "sk": "Európske tiesňové číslo", "ru": "Европейский экстренный номер",
+            "gr": "Ευρωπαϊκός αριθμός έκτακτης ανάγκης", "sw": "Europeiskt nödnummer", "no": "Europeisk nødnummer"
+          },
+          "phone": "112",
+          "description": {
+            "de": "Allgemeiner Notruf (EU-weit)", "en": "General emergency (EU-wide)", "hr": "Opći hitni broj (EU)",
+            "fr": "Urgence générale (UE)", "nl": "Algemeen noodnummer (EU)", "pl": "Ogólny numer alarmowy (UE)",
+            "cz": "Obecná tísňová linka (EU)", "sk": "Všeobecné tiesňové číslo (EÚ)", "ru": "Общий экстренный номер (ЕС)",
+            "gr": "Γενικός αριθμός έκτακτης ανάγκης (ΕΕ)", "sw": "Allmänt nödnummer (EU)", "no": "Generelt nødnummer (EU)"
+          }
+        },
+        {
+          "name": {
+            "de": "Polizei", "en": "Police", "hr": "Policija",
+            "fr": "Police", "nl": "Politie", "pl": "Policja",
+            "cz": "Policie", "sk": "Polícia", "ru": "Полиция",
+            "gr": "Αστυνομία", "sw": "Polis", "no": "Politi"
+          },
+          "phone": "192"
+        },
+        {
+          "name": {
+            "de": "Feuerwehr", "en": "Fire Department", "hr": "Vatrogasci",
+            "fr": "Pompiers", "nl": "Brandweer", "pl": "Straż pożarna",
+            "cz": "Hasiči", "sk": "Hasiči", "ru": "Пожарная служба",
+            "gr": "Πυροσβεστική", "sw": "Brandkår", "no": "Brannvesen"
+          },
+          "phone": "193"
+        },
+        {
+          "name": {
+            "de": "Rettungsdienst", "en": "Ambulance", "hr": "Hitna pomoć",
+            "fr": "Ambulance", "nl": "Ambulance", "pl": "Pogotowie ratunkowe",
+            "cz": "Záchranná služba", "sk": "Záchranná služba", "ru": "Скорая помощь",
+            "gr": "Ασθενοφόρο", "sw": "Ambulans", "no": "Ambulanse"
+          },
+          "phone": "194"
+        }
+      ]
+    },
+    {
+      "id": "authorities",
+      "icon": "fa-building",
+      "addresses": [
+        {
+          "name": {
+            "de": "Finanzamt (Porezna uprava)", "en": "Tax Office (Porezna uprava)", "hr": "Porezna uprava",
+            "fr": "Bureau des impôts (Porezna uprava)", "nl": "Belastingdienst (Porezna uprava)", "pl": "Urząd skarbowy (Porezna uprava)",
+            "cz": "Finanční úřad (Porezna uprava)", "sk": "Daňový úrad (Porezna uprava)", "ru": "Налоговая служба (Porezna uprava)",
+            "gr": "Εφορία (Porezna uprava)", "sw": "Skattemyndigheten (Porezna uprava)", "no": "Skatteetaten (Porezna uprava)"
+          },
+          "address": "Boškovićeva 5, 10000 Zagreb",
+          "phone": "+385 1 4809 000",
+          "url": "https://www.porezna-uprava.hr"
+        },
+        {
+          "name": {
+            "de": "Grundbuchamt Zagreb", "en": "Land Registry Zagreb", "hr": "Zemljišnoknjižni odjel Zagreb",
+            "fr": "Registre foncier Zagreb", "nl": "Kadaster Zagreb", "pl": "Urząd ksiąg wieczystych Zagrzeb",
+            "cz": "Katastrální úřad Záhřeb", "sk": "Katastrálny úrad Záhreb", "ru": "Земельный кадастр Загреб",
+            "gr": "Κτηματολόγιο Ζάγκρεμπ", "sw": "Lantmäteriet Zagreb", "no": "Grunnbokskontoret Zagreb"
+          },
+          "address": "Ulica grada Vukovara 84, 10000 Zagreb",
+          "phone": "+385 1 6040 444",
+          "url": "https://e-izvadak.pravosudje.hr"
+        },
+        {
+          "name": {
+            "de": "Katasteramt", "en": "Cadastre Office", "hr": "Državna geodetska uprava",
+            "fr": "Bureau du cadastre", "nl": "Kadasterkantoor", "pl": "Urząd katastralny",
+            "cz": "Katastrální úřad", "sk": "Katastrálny úrad", "ru": "Кадастровая служба",
+            "gr": "Κτηματολογικό γραφείο", "sw": "Lantmäterikontor", "no": "Kartverket"
+          },
+          "address": "Gruška 20, 10000 Zagreb",
+          "phone": "+385 1 6165 404",
+          "url": "https://www.dgu.gov.hr"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "icon": "fa-hospital-o",
+      "addresses": [
+        {
+          "name": {
+            "de": "KBC Zagreb (Universitätsklinikum)", "en": "KBC Zagreb (University Hospital)", "hr": "KBC Zagreb",
+            "fr": "KBC Zagreb (Hôpital universitaire)", "nl": "KBC Zagreb (Universitair ziekenhuis)", "pl": "KBC Zagrzeb (Szpital uniwersytecki)",
+            "cz": "KBC Záhřeb (Univerzitní nemocnice)", "sk": "KBC Záhreb (Univerzitná nemocnica)", "ru": "KBC Загреб (Университетская больница)",
+            "gr": "KBC Ζάγκρεμπ (Πανεπιστημιακό Νοσοκομείο)", "sw": "KBC Zagreb (Universitetssjukhus)", "no": "KBC Zagreb (Universitetssykehus)"
+          },
+          "address": "Kišpatićeva 12, 10000 Zagreb",
+          "phone": "+385 1 2388 888",
+          "url": "https://www.kbc-zagreb.hr"
+        },
+        {
+          "name": {
+            "de": "KBC Split", "en": "KBC Split", "hr": "KBC Split",
+            "fr": "KBC Split", "nl": "KBC Split", "pl": "KBC Split",
+            "cz": "KBC Split", "sk": "KBC Split", "ru": "KBC Сплит",
+            "gr": "KBC Σπλιτ", "sw": "KBC Split", "no": "KBC Split"
+          },
+          "address": "Spinčićeva 1, 21000 Split",
+          "phone": "+385 21 556 111",
+          "url": "https://www.kbsplit.hr"
+        },
+        {
+          "name": {
+            "de": "KBC Rijeka", "en": "KBC Rijeka", "hr": "KBC Rijeka",
+            "fr": "KBC Rijeka", "nl": "KBC Rijeka", "pl": "KBC Rijeka",
+            "cz": "KBC Rijeka", "sk": "KBC Rijeka", "ru": "KBC Риека",
+            "gr": "KBC Ριέκα", "sw": "KBC Rijeka", "no": "KBC Rijeka"
+          },
+          "address": "Krešimirova 42, 51000 Rijeka",
+          "phone": "+385 51 658 111",
+          "url": "https://kbc-rijeka.hr"
+        }
+      ]
+    },
+    {
+      "id": "utilities",
+      "icon": "fa-bolt",
+      "addresses": [
+        {
+          "name": {
+            "de": "HEP (Stromversorger)", "en": "HEP (Electricity Provider)", "hr": "HEP (Hrvatska elektroprivreda)",
+            "fr": "HEP (Fournisseur d'électricité)", "nl": "HEP (Elektriciteitsleverancier)", "pl": "HEP (Dostawca energii)",
+            "cz": "HEP (Dodavatel elektřiny)", "sk": "HEP (Dodávateľ elektriny)", "ru": "HEP (Поставщик электроэнергии)",
+            "gr": "HEP (Πάροχος ηλεκτρικής ενέργειας)", "sw": "HEP (Elleverantör)", "no": "HEP (Strømleverandør)"
+          },
+          "address": "Ulica grada Vukovara 37, 10000 Zagreb",
+          "phone": "+385 1 6322 111",
+          "url": "https://www.hep.hr"
+        }
+      ]
+    }
+  ],
+  "translations": {
+    "page_title": {
+      "de": "Wichtige Adressen", "en": "Important Addresses", "hr": "Važne adrese",
+      "fr": "Adresses importantes", "nl": "Belangrijke adressen", "pl": "Ważne adresy",
+      "cz": "Důležité adresy", "sk": "Dôležité adresy", "ru": "Важные адреса",
+      "gr": "Σημαντικές διευθύνσεις", "sw": "Viktiga adresser", "no": "Viktige adresser"
+    },
+    "page_subtitle": {
+      "de": "Nützliche Kontakte für Auswanderer, Immobilienkäufer und Urlauber in Kroatien",
+      "en": "Useful contacts for emigrants, property buyers and tourists in Croatia",
+      "hr": "Korisni kontakti za iseljenike, kupce nekretnina i turiste u Hrvatskoj",
+      "fr": "Contacts utiles pour les émigrants, acheteurs immobiliers et touristes en Croatie",
+      "nl": "Nuttige contacten voor emigranten, vastgoedkopers en toeristen in Kroatië",
+      "pl": "Przydatne kontakty dla emigrantów, nabywców nieruchomości i turystów w Chorwacji",
+      "cz": "Užitečné kontakty pro emigranty, kupce nemovitostí a turisty v Chorvatsku",
+      "sk": "Užitočné kontakty pre emigrantov, kupujúcich nehnuteľností a turistov v Chorvátsku",
+      "ru": "Полезные контакты для эмигрантов, покупателей недвижимости и туристов в Хорватии",
+      "gr": "Χρήσιμες επαφές για μετανάστες, αγοραστές ακινήτων και τουρίστες στην Κροατία",
+      "sw": "Användbara kontakter för emigranter, fastighetsköpare och turister i Kroatien",
+      "no": "Nyttige kontakter for emigranter, eiendomskjøpere og turister i Kroatia"
+    },
+    "category_embassies": {
+      "de": "Botschaften & Konsulate", "en": "Embassies & Consulates", "hr": "Veleposlanstva i konzulati",
+      "fr": "Ambassades et consulats", "nl": "Ambassades en consulaten", "pl": "Ambasady i konsulaty",
+      "cz": "Velvyslanectví a konzuláty", "sk": "Veľvyslanectvá a konzuláty", "ru": "Посольства и консульства",
+      "gr": "Πρεσβείες και προξενεία", "sw": "Ambassader och konsulat", "no": "Ambassader og konsulater"
+    },
+    "category_emergency": {
+      "de": "Notfallnummern", "en": "Emergency Numbers", "hr": "Brojevi za hitne slučajeve",
+      "fr": "Numéros d'urgence", "nl": "Noodnummers", "pl": "Numery alarmowe",
+      "cz": "Tísňová čísla", "sk": "Tiesňové čísla", "ru": "Экстренные номера",
+      "gr": "Αριθμοί έκτακτης ανάγκης", "sw": "Nödnummer", "no": "Nødnumre"
+    },
+    "category_authorities": {
+      "de": "Behörden", "en": "Authorities", "hr": "Institucije",
+      "fr": "Autorités", "nl": "Autoriteiten", "pl": "Urzędy",
+      "cz": "Úřady", "sk": "Úrady", "ru": "Органы власти",
+      "gr": "Αρχές", "sw": "Myndigheter", "no": "Myndigheter"
+    },
+    "category_health": {
+      "de": "Krankenhäuser", "en": "Hospitals", "hr": "Bolnice",
+      "fr": "Hôpitaux", "nl": "Ziekenhuizen", "pl": "Szpitale",
+      "cz": "Nemocnice", "sk": "Nemocnice", "ru": "Больницы",
+      "gr": "Νοσοκομεία", "sw": "Sjukhus", "no": "Sykehus"
+    },
+    "category_utilities": {
+      "de": "Versorger", "en": "Utilities", "hr": "Komunalne službe",
+      "fr": "Services publics", "nl": "Nutsbedrijven", "pl": "Dostawcy usług",
+      "cz": "Dodavatelé", "sk": "Dodávatelia", "ru": "Коммунальные службы",
+      "gr": "Υπηρεσίες κοινής ωφέλειας", "sw": "Försörjningsföretag", "no": "Forsyningsselskaper"
+    },
+    "visit_website": {
+      "de": "Website besuchen", "en": "Visit website", "hr": "Posjetite web stranicu",
+      "fr": "Visiter le site", "nl": "Website bezoeken", "pl": "Odwiedź stronę",
+      "cz": "Navštívit web", "sk": "Navštíviť web", "ru": "Посетить сайт",
+      "gr": "Επισκεφθείτε τον ιστότοπο", "sw": "Besök webbplatsen", "no": "Besøk nettstedet"
+    }
+  }
+}
