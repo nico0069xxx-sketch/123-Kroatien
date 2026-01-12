@@ -1283,9 +1283,14 @@ def rss_listings(request, lang='ge'):
         ET.SubElement(item, 'link').text = f"{base_url}/{lang}/property-details/{listing.id}/"
         ET.SubElement(item, 'guid').text = f"{base_url}/{lang}/property-details/{listing.id}/"
         
-        description = content.get('property_description', listing.property_description)
-        if description:
-            ET.SubElement(item, 'description').text = description[:500]
+        # Nur Teaser - kein voller Content (Schutz vor Kopieren)
+        teaser_texts = {
+            'ge': f"{listing.property_type} in {listing.location} - {listing.bedrooms} Schlafzimmer, {listing.bathrooms} Bäder, {listing.area} m² - Mehr Details auf 123-kroatien.eu",
+            'en': f"{listing.property_type} in {listing.location} - {listing.bedrooms} bedrooms, {listing.bathrooms} baths, {listing.area} m² - More details at 123-kroatien.eu",
+            'hr': f"{listing.property_type} u {listing.location} - {listing.bedrooms} spavaće sobe, {listing.bathrooms} kupaonice, {listing.area} m² - Više detalja na 123-kroatien.eu",
+        }
+        teaser = teaser_texts.get(lang, teaser_texts['ge'])
+        ET.SubElement(item, 'description').text = teaser
         
         ET.SubElement(item, 'pubDate').text = listing.list_date.strftime('%a, %d %b %Y %H:%M:%S %z') if listing.list_date else ''
         ET.SubElement(item, 'dc:creator').text = '123-Kroatien.eu'
