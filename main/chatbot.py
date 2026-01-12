@@ -412,3 +412,157 @@ def get_chatbot_response_with_search(message, language='ge', listings_callback=N
         'search_results': [],
         'response': response
     }
+
+
+# =============================================================================
+# DIENSTLEISTER-SUCHE: Makler, Bauunternehmer, Anwälte, Steuerberater, Architekten
+# =============================================================================
+
+PROFESSIONAL_SEARCH_PROMPT = """Extrahiere Suchkriterien für Dienstleister aus dieser Anfrage.
+
+Anfrage: "{query}"
+
+Antworte NUR mit JSON (keine Erklärung):
+{{
+    "professional_type": "real_estate_agent|construction_company|lawyer|tax_advisor|architect|null",
+    "region": "<Region oder null>",
+    "languages": ["de", "en", "hr", ...],
+    "verified_only": true/false
+}}
+
+Kategorien-Mapping:
+- Makler, Immobilienmakler, Agent = real_estate_agent
+- Bauunternehmen, Baufirma, Bauunternehmer = construction_company
+- Anwalt, Rechtsanwalt, Advokat = lawyer
+- Steuerberater, Steuerbüro = tax_advisor
+- Architekt, Architektur = architect
+
+Regionen in Kroatien:
+- istrien, kvarner, dalmatien-nord, dalmatien-mitte, dalmatien-sued, zagreb, slavonien, lika-gorski-kotar
+
+Sprachen:
+- de=Deutsch, en=Englisch, hr=Kroatisch, it=Italienisch, fr=Französisch, sl=Slowenisch, hu=Ungarisch
+
+Regeln:
+- Nur explizit genannte Kriterien extrahieren
+- "Makler in Istrien" = type=real_estate_agent, region=istrien
+- "deutschsprachiger Anwalt" = type=lawyer, languages=["de"]
+- "verifiziert" oder "geprüft" = verified_only=true"""
+
+
+def is_professional_search(message):
+    """
+    Erkennt ob eine Nachricht eine Dienstleister-Suche ist.
+    KOSTENLOS - kein API-Call!
+    """
+    professional_keywords = [
+        # Makler
+        'makler', 'immobilienmakler', 'agent', 'agentur', 'real estate agent',
+        'agencija', 'nekretnine',
+        # Bauunternehmen
+        'bauunternehmen', 'baufirma', 'bauunternehmer', 'construction', 'builder',
+        'gradnja', 'građevinska',
+        # Anwalt
+        'anwalt', 'rechtsanwalt', 'advokat', 'lawyer', 'attorney', 'odvjetnik',
+        'kanzlei', 'jurist',
+        # Steuerberater
+        'steuerberater', 'steuerbüro', 'tax advisor', 'buchhalter', 'porezni',
+        # Architekt
+        'architekt', 'architect', 'arhitekt', 'planer',
+        # Allgemein
+        'dienstleister', 'experte', 'berater', 'fachmann', 'professional',
+        'finde mir', 'suche einen', 'wer kann', 'brauche einen', 'empfehlung',
+        'gibt es', 'kennt jemand'
+    ]
+    
+    message_lower = message.lower()
+    matches = sum(1 for kw in professional_keywords if kw in message_lower)
+    
+    return matches >= 1
+
+
+def extract_professional_criteria(query, language='ge'):
+    """
+    Extrahiert Dienstleister-Suchkriterien aus natürlicher Sprache.
+    """
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": PROFESSIONAL_SEARCH_PROMPT.format(query=query)},
+                {"role": "user", "content": query}
+            ],
+            max_tokens=150,
+            temperature=0.1
+        )
+        
+        result = response.choices[0].message.content.strip()
+        
+        # JSON parsen
+        if result.startswith("```"):
+            result = result.split("```")[1]
+            if result.startswith("json"):
+                result = result[4:]
+        
+        criteria = json.loads(result)
+        return criteria
+        
+    except Exception as e:
+        print(f"Professional-Search Fehler: {e}")
+        return {}
+
+
+def professional_search_response(count, professional_type, language='ge'):
+    """
+    Generiert eine freundliche Antwort für Dienstleister-Suchergebnisse.
+    """
+    type_names = {
+        'ge': {
+            'real_estate_agent': 'Immobilienmakler',
+            'construction_company': 'Bauunternehmen',
+            'lawyer': 'Rechtsanwälte',
+            'tax_advisor': 'Steuerberater',
+            'architect': 'Architekten',
+            None: 'Dienstleister'
+        },
+        'en': {
+            'real_estate_agent': 'real estate agents',
+            'construction_company': 'construction companies',
+            'lawyer': 'lawyers',
+            'tax_advisor': 'tax advisors',
+            'architect': 'architects',
+            None: 'professionals'
+        },
+        'hr': {
+            'real_estate_agent': 'agencije za nekretnine',
+            'construction_company': 'građevinske tvrtke',
+            'lawyer': 'odvjetnici',
+            'tax_advisor': 'porezni savjetnici',
+            'architect': 'arhitekti',
+            None: 'stručnjaci'
+        }
+    }
+    
+    names = type_names.get(language, type_names['ge'])
+    type_name = names.get(professional_type, names[None])
+    
+    responses = {
+        'ge': {
+            'found': f"Ich habe {count} {type_name} für dich gefunden:",
+            'none': f"Leider habe ich keine passenden {type_name} gefunden. Versuche es mit anderen Kriterien."
+        },
+        'en': {
+            'found': f"I found {count} {type_name} for you:",
+            'none': f"Unfortunately, I couldn't find any matching {type_name}. Try different criteria."
+        },
+        'hr': {
+            'found': f"Pronašao sam {count} {type_name} za vas:",
+            'none': f"Nažalost, nisam pronašao odgovarajuće {type_name}."
+        }
+    }
+    
+    lang_responses = responses.get(language, responses['ge'])
+    
+    if count > 0:
+        return lang_responses['found']
+    return lang_responses['none']

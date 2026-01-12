@@ -175,6 +175,27 @@
     text-decoration: none;
     font-size: 14px;
 }
+
+/* Dienstleister-Karten */
+.professional-card .no-logo {
+    width: 50px;
+    height: 50px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.verified-badge {
+    background: #28a745;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+}
 </style>
 
 <script>
@@ -213,19 +234,44 @@ function sendMessage() {
         // Suchergebnisse anzeigen wenn vorhanden
         if (data.is_search && data.results && data.results.length > 0) {
             var resultsHtml = '<div class="message bot-message search-results">';
-            data.results.forEach(function(item) {
-                resultsHtml += '<div class="search-result-card">';
-                if (item.image) {
-                    resultsHtml += '<img src="' + item.image + '" alt="' + item.title + '">';
-                }
-                resultsHtml += '<div class="search-result-info">';
-                resultsHtml += '<strong>' + item.title + '</strong><br>';
-                resultsHtml += '<small>📍 ' + item.location + '</small><br>';
-                resultsHtml += '<span class="search-result-price">€ ' + item.price.toLocaleString() + '</span>';
-                resultsHtml += '</div>';
-                resultsHtml += '<a href="/ge/property-details/' + item.id + '/" class="search-result-btn">→</a>';
-                resultsHtml += '</div>';
-            });
+            
+            // Unterscheide zwischen Immobilien und Dienstleistern
+            if (data.search_type === 'professional') {
+                // DIENSTLEISTER-KARTEN
+                data.results.forEach(function(item) {
+                    resultsHtml += '<div class="search-result-card professional-card">';
+                    if (item.logo) {
+                        resultsHtml += '<img src="' + item.logo + '" alt="' + item.name + '">';
+                    } else {
+                        resultsHtml += '<div class="no-logo">👤</div>';
+                    }
+                    resultsHtml += '<div class="search-result-info">';
+                    resultsHtml += '<strong>' + item.name + '</strong><br>';
+                    resultsHtml += '<small>📍 ' + item.city + ', ' + item.region + '</small><br>';
+                    resultsHtml += '<small>🗣️ ' + item.languages + '</small>';
+                    if (item.is_verified) {
+                        resultsHtml += '<br><span class="verified-badge">✓ Verifiziert</span>';
+                    }
+                    resultsHtml += '</div>';
+                    resultsHtml += '<a href="' + item.url + '" class="search-result-btn">→</a>';
+                    resultsHtml += '</div>';
+                });
+            } else {
+                // IMMOBILIEN-KARTEN
+                data.results.forEach(function(item) {
+                    resultsHtml += '<div class="search-result-card">';
+                    if (item.image) {
+                        resultsHtml += '<img src="' + item.image + '" alt="' + item.title + '">';
+                    }
+                    resultsHtml += '<div class="search-result-info">';
+                    resultsHtml += '<strong>' + item.title + '</strong><br>';
+                    resultsHtml += '<small>📍 ' + item.location + '</small><br>';
+                    resultsHtml += '<span class="search-result-price">€ ' + item.price.toLocaleString() + '</span>';
+                    resultsHtml += '</div>';
+                    resultsHtml += '<a href="/ge/property-details/' + item.id + '/" class="search-result-btn">→</a>';
+                    resultsHtml += '</div>';
+                });
+            }
             resultsHtml += '</div>';
             messagesDiv.innerHTML += resultsHtml;
         }

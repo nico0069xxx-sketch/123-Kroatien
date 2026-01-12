@@ -737,12 +737,68 @@ from .chatbot import get_chatbot_response
 @csrf_exempt
 def chatbot_api(request):
     from .chatbot import get_chatbot_response, is_property_search, extract_search_criteria
+    from .chatbot import is_professional_search, extract_professional_criteria, professional_search_response
+    from .professional_models import Professional
+    from .professional_views import translate_region, translate_languages, CATEGORY_URLS, COUNTRY_NAMES
+    
     if request.method == 'POST':
         data = json.loads(request.body)
         message = data.get('message', '')
         language = request.session.get('site_language', 'ge')
         
-        # Prüfen ob es eine Immobiliensuche ist
+        # ===== DIENSTLEISTER-SUCHE =====
+        if is_professional_search(message):
+            criteria = extract_professional_criteria(message, language)
+            
+            # Dienstleister filtern
+            professionals = Professional.objects.filter(is_active=True)
+            
+            if criteria.get('professional_type'):
+                professionals = professionals.filter(professional_type=criteria['professional_type'])
+            if criteria.get('region'):
+                professionals = professionals.filter(region__icontains=criteria['region'])
+            if criteria.get('verified_only'):
+                professionals = professionals.filter(is_verified=True)
+            if criteria.get('languages'):
+                for lang_code in criteria['languages']:
+                    professionals = professionals.filter(languages_spoken__icontains=lang_code)
+            
+            # Ergebnisse formatieren
+            results = []
+            for prof in professionals[:6]:
+                # URL erstellen
+                prof_type = prof.professional_type
+                url_paths = CATEGORY_URLS.get(prof_type, {})
+                url_path = url_paths.get(language, url_paths.get('ge', ''))
+                country_name = COUNTRY_NAMES.get(language, 'kroatien')
+                
+                results.append({
+                    'id': str(prof.id),
+                    'name': prof.company_name or prof.name,
+                    'type': prof.get_professional_type_display(),
+                    'city': prof.city,
+                    'region': translate_region(prof.region, language),
+                    'languages': translate_languages(prof.languages_spoken, language),
+                    'is_verified': prof.is_verified,
+                    'logo': prof.logo.url if prof.logo else None,
+                    'url': f"/{country_name}/{url_path}/{prof.slug}/",
+                })
+            
+            # Antwort generieren
+            response_text = professional_search_response(
+                len(results), 
+                criteria.get('professional_type'), 
+                language
+            )
+            
+            return JsonResponse({
+                'response': response_text,
+                'is_search': True,
+                'search_type': 'professional',
+                'results': results
+            })
+        
+        # ===== IMMOBILIEN-SUCHE =====
         if is_property_search(message):
             criteria = extract_search_criteria(message, language)
             
@@ -803,6 +859,7 @@ def chatbot_api(request):
             return JsonResponse({
                 'response': response_text,
                 'is_search': True,
+                'search_type': 'property',
                 'results': results
             })
         
