@@ -203,13 +203,12 @@ urlpatterns += [
     path('<str:country>/arkitekter/<slug:slug>/', professional_detail, {'category': 'arkitekter'}, name='professional_architect_detail_sw'),
 ]
 
-from main.professional_views import professional_registration
-
-# Registration URLs (nur DE und HR)
-urlpatterns += [
-    path('<str:country>/professional-registrierung/', professional_registration, name='professional_registration_ge'),
-    path('<str:country>/registracija-profesionalaca/', professional_registration, name='professional_registration_hr'),
-]
+# ALTE REGISTRIERUNG DEAKTIVIERT - ersetzt durch mehrstufiges Formular
+# from main.professional_views import professional_registration
+# urlpatterns += [
+#     path('<str:country>/professional-registrierung/', professional_registration, name='professional_registration_ge'),
+#     path('<str:country>/registracija-profesionalaca/', professional_registration, name='professional_registration_hr'),
+# ]
 
 # Chatbot API
 from main.views import chatbot_api
@@ -278,4 +277,45 @@ urlpatterns += [
     path('chorvatsko/zpravy/', views.news_page, name='news_cz'),
     path('horvatiya/novosti/', views.news_page, name='news_ru'),
     path('kroatia/nea/', views.news_page, name='news_gr'),
+]
+
+# =============================================================================
+# MEHRSTUFIGE PROFESSIONAL-REGISTRIERUNG
+# =============================================================================
+from main.registration_views import (
+    registration_step1, registration_step2, registration_step3,
+    ajax_check_spelling, ajax_improve_text, ajax_regenerate_suggestions, ajax_validate_oib
+)
+
+urlpatterns += [
+    # Registrierung Schritt 1 (ersetzt alte Registrierung)
+    path('<str:country>/professional-registrierung/', registration_step1, name='registration_step1'),
+    path('<str:country>/professional-registration/', registration_step1, name='registration_step1_en'),
+    path('<str:country>/registracija-profesionalaca/', registration_step1, name='registration_step1_hr'),
+    
+    # Registrierung Schritt 2
+    path('<str:country>/professional-registrierung-schritt2/', registration_step2, name='registration_step2'),
+    path('<str:country>/professional-registration-step2/', registration_step2, name='registration_step2_en'),
+    path('<str:country>/registracija-korak2/', registration_step2, name='registration_step2_hr'),
+    
+    # Registrierung Schritt 3
+    path('<str:country>/professional-registrierung-schritt3/', registration_step3, name='registration_step3'),
+    path('<str:country>/professional-registration-step3/', registration_step3, name='registration_step3_en'),
+    path('<str:country>/registracija-korak3/', registration_step3, name='registration_step3_hr'),
+    
+    # AJAX Endpoints
+    path('api/validate-oib/', ajax_validate_oib, name='ajax_validate_oib'),
+    path('api/check-spelling/', ajax_check_spelling, name='ajax_check_spelling'),
+    path('api/improve-text/', ajax_improve_text, name='ajax_improve_text'),
+    path('api/regenerate-suggestions/', ajax_regenerate_suggestions, name='ajax_regenerate_suggestions'),
+]
+
+# Datenschutz Verifizierung
+from django.shortcuts import render as _render
+
+def privacy_verification(request, country):
+    return _render(request, 'main/registration/privacy_verification.html', {})
+
+urlpatterns += [
+    path('<str:country>/datenschutz-verifizierung/', privacy_verification, name='privacy_verification'),
 ]

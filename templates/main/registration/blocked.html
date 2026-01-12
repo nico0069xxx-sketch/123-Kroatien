@@ -1,0 +1,69 @@
+{% extends 'include/base.html' %}
+
+{% block body %}
+<div style="background: linear-gradient(135deg, #c41e3a, #8b0000); padding: 60px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="blocked-icon mb-4">
+                    <span style="font-size: 80px;">⏳</span>
+                </div>
+                <h1 class="text-white mb-3">Zugang vorübergehend gesperrt</h1>
+                <p class="text-white-50 lead">
+                    Zu viele Fehlversuche. Bitte warten Sie.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-5 text-center">
+                        <h4 class="mb-4" style="color: #003167;">Bitte warten Sie</h4>
+                        
+                        <div class="countdown mb-4">
+                            <span id="countdown" style="font-size: 48px; font-weight: bold; color: #c41e3a;">
+                                {{ remaining_minutes }}:00
+                            </span>
+                            <p class="text-muted">Minuten verbleibend</p>
+                        </div>
+                        
+                        <p class="text-muted">
+                            Aus Sicherheitsgründen wurde Ihr Zugang nach mehreren fehlgeschlagenen 
+                            Versuchen vorübergehend gesperrt. Dies dient dem Schutz vor Spam und Missbrauch.
+                        </p>
+                        
+                        <hr class="my-4">
+                        
+                        <p class="mb-0">
+                            <strong>Probleme?</strong> Kontaktieren Sie uns: 
+                            <a href="mailto:support@123-kroatien.eu">support@123-kroatien.eu</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+var remaining = {{ remaining_minutes }} * 60;
+var countdownEl = document.getElementById('countdown');
+
+var timer = setInterval(function() {
+    remaining--;
+    var mins = Math.floor(remaining / 60);
+    var secs = remaining % 60;
+    countdownEl.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+    
+    if (remaining <= 0) {
+        clearInterval(timer);
+        location.reload();
+    }
+}, 1000);
+</script>
+{% endblock %}

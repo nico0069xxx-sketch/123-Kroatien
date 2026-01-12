@@ -66,6 +66,28 @@ class Professional(models.Model):
     logo = models.ImageField(upload_to='professionals/logos/', blank=True, null=True)
     portrait = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
     
+    # Verifizierungsdokumente (DSGVO-konform gespeichert)
+    id_document = models.FileField(upload_to='professionals/verification/id/', blank=True, null=True, 
+                                   help_text='Personalausweis oder Reisepass (PDF/JPG)')
+    business_document = models.FileField(upload_to='professionals/verification/business/', blank=True, null=True,
+                                         help_text='Handelsregisterauszug, Kammerbescheinigung, etc.')
+    verification_notes = models.TextField(blank=True, null=True, 
+                                          help_text='Interne Notizen zur Verifizierung')
+    verified_by = models.CharField(max_length=100, blank=True, null=True,
+                                   help_text='Name des Mitarbeiters der verifiziert hat')
+    verification_date = models.DateTimeField(blank=True, null=True)
+    
+    # Profiltext (vom User gewählt oder selbst geschrieben)
+    profile_text_style = models.CharField(max_length=50, blank=True, null=True,
+                                          help_text='Stil des gewählten Profiltextes')
+    profile_text_original = models.TextField(blank=True, null=True,
+                                             help_text='Originaltext in der Eingabesprache')
+    
+    # Spam-Schutz
+    failed_attempts = models.IntegerField(default=0)
+    blocked_until = models.DateTimeField(blank=True, null=True)
+    registration_ip = models.GenericIPAddressField(blank=True, null=True)
+    
     # Registrierung/Lizenz
     registration_number = models.CharField(max_length=100, blank=True, null=True)
     oib_number = models.CharField(max_length=20, blank=True, null=True)  # Kroatische Steuernummer

@@ -1,0 +1,188 @@
+{% extends 'include/base.html' %}
+
+{% block body %}
+<div style="background: linear-gradient(135deg, #003167, #0a4a8a); padding: 80px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="success-checkmark mb-4">
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#28a745" stroke-width="5"/>
+                        <path d="M30 50 L45 65 L70 35" fill="none" stroke="#28a745" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="text-white mb-3" style="font-size: 2.5rem; font-weight: 700;">
+                    {% if lang == 'hr' %}Registracija uspješna!{% else %}Registrierung erfolgreich!{% endif %}
+                </h1>
+                <p class="text-white-50 lead">
+                    {% if lang == 'hr' %}
+                    Hvala vam na registraciji na 123-Kroatien.eu
+                    {% else %}
+                    Vielen Dank für Ihre Registrierung auf 123-Kroatien.eu
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5" style="background: #f8f9fa;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow border-0" style="border-radius: 16px; overflow: hidden;">
+                    <div class="card-body p-5">
+                        
+                        <h4 class="mb-4" style="color: #003167; font-weight: 600;">
+                            {% if lang == 'hr' %}Što slijedi?{% else %}Was passiert als Nächstes?{% endif %}
+                        </h4>
+                        
+                        <!-- Verbesserte Timeline -->
+                        <div class="next-steps">
+                            <div class="step-item">
+                                <div class="step-icon">
+                                    <span>📋</span>
+                                </div>
+                                <div class="step-content">
+                                    <h6>{% if lang == 'hr' %}Dokumenti se provjeravaju{% else %}Dokumente werden geprüft{% endif %}</h6>
+                                    <p>{% if lang == 'hr' %}Naš tim provjerava vaše dokumente unutar 1-2 radna dana.{% else %}Unser Team prüft Ihre Unterlagen innerhalb von 1-2 Werktagen.{% endif %}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step-item">
+                                <div class="step-icon">
+                                    <span>✉️</span>
+                                </div>
+                                <div class="step-content">
+                                    <h6>{% if lang == 'hr' %}E-mail potvrda{% else %}E-Mail-Bestätigung{% endif %}</h6>
+                                    <p>{% if lang == 'hr' %}Primit ćete e-mail na{% else %}Sie erhalten eine E-Mail an{% endif %} <strong>{{ professional.email }}</strong> {% if lang == 'hr' %}čim vaš profil bude verificiran.{% else %}sobald Ihr Profil verifiziert wurde.{% endif %}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step-item">
+                                <div class="step-icon">
+                                    <span>🌍</span>
+                                </div>
+                                <div class="step-content">
+                                    <h6>{% if lang == 'hr' %}Profil aktiviran{% else %}Profil wird freigeschaltet{% endif %}</h6>
+                                    <p>{% if lang == 'hr' %}Nakon uspješne verifikacije, vaš profil je vidljiv na svih 12 jezika.{% else %}Nach erfolgreicher Verifizierung ist Ihr Profil in allen 12 Sprachen sichtbar.{% endif %}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <!-- Registrierungsdaten -->
+                        <div style="background: #f0f4f8; padding: 20px; border-radius: 12px;">
+                            <h6 class="mb-3" style="color: #003167;">
+                                {% if lang == 'hr' %}Vaši registracijski podaci:{% else %}Ihre Registrierungsdaten:{% endif %}
+                            </h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="mb-2"><span class="text-muted">{% if lang == 'hr' %}Ime:{% else %}Name:{% endif %}</span><br><strong>{{ professional.name }}</strong></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-2"><span class="text-muted">{% if lang == 'hr' %}Tvrtka:{% else %}Firma:{% endif %}</span><br><strong>{{ professional.company_name|default:"-" }}</strong></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-2"><span class="text-muted">E-Mail:</span><br><strong>{{ professional.email }}</strong></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-0"><span class="text-muted">ID:</span><br><code style="font-size: 11px; background: #e9ecef; padding: 3px 6px; border-radius: 4px;">{{ professional.id }}</code></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Button -->
+                        <div class="text-center mt-5">
+                            <a href="/" class="btn btn-lg" style="background: #003167; color: white; padding: 14px 40px; border-radius: 8px; font-weight: 600;">
+                                {% if lang == 'hr' %}Na početnu stranicu{% else %}Zur Startseite{% endif %} →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kontakt-Hinweis -->
+                <p class="text-center text-muted mt-4" style="font-size: 14px;">
+                    {% if lang == 'hr' %}
+                    Pitanja? Kontaktirajte nas: <a href="mailto:service@123-kroatien.eu">service@123-kroatien.eu</a>
+                    {% else %}
+                    Fragen? Kontaktieren Sie uns: <a href="mailto:service@123-kroatien.eu">service@123-kroatien.eu</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.success-checkmark svg {
+    animation: checkmark 0.8s ease-in-out;
+}
+@keyframes checkmark {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Neue Timeline Styles */
+.next-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-left: 3px solid #e0e0e0;
+    margin-left: 20px;
+    padding-left: 25px;
+    position: relative;
+}
+.step-item:first-child {
+    padding-top: 0;
+}
+.step-item:last-child {
+    border-left-color: transparent;
+    padding-bottom: 0;
+}
+.step-icon {
+    position: absolute;
+    left: -22px;
+    top: 16px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 3px solid #003167;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.step-item:first-child .step-icon {
+    top: 0;
+    background: #003167;
+    border-color: #003167;
+}
+.step-item:first-child .step-icon span {
+    filter: brightness(0) invert(1);
+}
+.step-content {
+    flex: 1;
+}
+.step-content h6 {
+    color: #003167;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+.step-content p {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+</style>
+{% endblock %}

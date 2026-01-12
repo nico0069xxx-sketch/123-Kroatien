@@ -1,0 +1,150 @@
+{% extends 'main/registration/base_registration.html' %}
+
+{% block registration_content %}
+<h2 class="mb-4" style="color: #003167;">{{ trans.step3_title }}</h2>
+
+<!-- Zusammenfassung der bisherigen Eingaben -->
+<div class="card mb-4" style="border-left: 4px solid #003167;">
+    <div class="card-body">
+        <h6 class="text-muted mb-3">Ihre Angaben:</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Name:</strong> {{ step1_data.name }}</p>
+                <p><strong>Firma:</strong> {{ step1_data.company_name|default:"-" }}</p>
+                <p><strong>E-Mail:</strong> {{ step1_data.email }}</p>
+                <p><strong>Telefon:</strong> {{ step1_data.phone }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Stadt:</strong> {{ step1_data.city }}</p>
+                <p><strong>Region:</strong> {{ step1_data.region }}</p>
+                <p><strong>OIB:</strong> {{ step1_data.oib_number }}</p>
+            </div>
+        </div>
+        <hr>
+        <h6 class="text-muted mb-2">Ihr Profiltext:</h6>
+        <p class="bg-light p-3 rounded" style="font-size: 14px;">{{ step2_data.text|truncatewords:50 }}</p>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" id="step3Form">
+    {% csrf_token %}
+    
+    <h5 class="mb-3" style="color: #003167;">📄 Verifizierungsdokumente</h5>
+    
+    <div class="alert alert-info mb-4">
+        <strong>Warum benötigen wir diese Dokumente?</strong><br>
+        Um die Qualität und Vertrauenswürdigkeit unserer Plattform zu gewährleisten, 
+        verifizieren wir alle Dienstleister. Ihre Dokumente werden sicher gespeichert 
+        und nur zur Verifizierung verwendet.
+        <a href="/{{ country_name }}/datenschutz-verifizierung/" target="_blank">Mehr erfahren →</a>
+    </div>
+    
+    <div class="row">
+        <!-- Ausweisdokument -->
+        <div class="col-md-6 mb-4">
+            <label class="form-label">
+                {{ trans.id_document|default:"Personalausweis / Reisepass" }} 
+                <span class="required-star">*</span>
+            </label>
+            <input type="file" name="id_document" 
+                   class="form-control {% if form.id_document.errors %}is-invalid{% endif %}" 
+                   accept=".pdf,.jpg,.jpeg,.png" required>
+            <div class="help-text">PDF, JPG oder PNG (max. 10 MB)</div>
+            {% if form.id_document.errors %}
+            <div class="error-text">{{ form.id_document.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Geschäftsdokument -->
+        <div class="col-md-6 mb-4">
+            <label class="form-label">
+                {{ trans.business_document|default:"Geschäftsdokument" }}
+                {% if step1_data.professional_type in 'lawyer,architect,real_estate_agent' %}
+                <span class="required-star">*</span>
+                {% endif %}
+            </label>
+            <input type="file" name="business_document" 
+                   class="form-control {% if form.business_document.errors %}is-invalid{% endif %}" 
+                   accept=".pdf,.jpg,.jpeg,.png"
+                   {% if step1_data.professional_type in 'lawyer,architect,real_estate_agent' %}required{% endif %}>
+            <div class="help-text">
+                {% if step1_data.professional_type == 'lawyer' %}
+                Anwaltskammer-Bescheinigung
+                {% elif step1_data.professional_type == 'architect' %}
+                Architektenkammer-Mitgliedschaft
+                {% elif step1_data.professional_type == 'real_estate_agent' %}
+                Gewerbeanmeldung / Maklerlizenz
+                {% else %}
+                Handelsregisterauszug (optional)
+                {% endif %}
+            </div>
+            {% if form.business_document.errors %}
+            <div class="error-text">{{ form.business_document.errors.0 }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <hr class="my-4">
+    
+    <h5 class="mb-3" style="color: #003167;">✅ Zustimmungen</h5>
+    
+    <!-- Datenschutz -->
+    <div class="form-check mb-3">
+        <input type="checkbox" name="privacy_consent" 
+               class="form-check-input {% if form.privacy_consent.errors %}is-invalid{% endif %}" 
+               id="privacyConsent" required>
+        <label class="form-check-label" for="privacyConsent">
+            {{ trans.privacy_consent|default:"Ich stimme der Verarbeitung meiner Daten zu" }} <span class="required-star">*</span>
+            <br><small class="text-muted">
+                Ich habe die <a href="/{{ country_name }}/datenschutz-verifizierung/" target="_blank">Datenschutzerklärung zur Verifizierung</a> gelesen und stimme der Verarbeitung meiner personenbezogenen Daten zum Zweck der Identitätsprüfung zu.
+            </small>
+        </label>
+        {% if form.privacy_consent.errors %}
+        <div class="error-text">{{ form.privacy_consent.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- AGB -->
+    <div class="form-check mb-4">
+        <input type="checkbox" name="terms_consent" 
+               class="form-check-input {% if form.terms_consent.errors %}is-invalid{% endif %}" 
+               id="termsConsent" required>
+        <label class="form-check-label" for="termsConsent">
+            {{ trans.terms_consent|default:"Ich akzeptiere die AGB" }} <span class="required-star">*</span>
+            <br><small class="text-muted">
+                Ich habe die <a href="/{{ country_name }}/agb/" target="_blank">Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere diese.
+            </small>
+        </label>
+        {% if form.terms_consent.errors %}
+        <div class="error-text">{{ form.terms_consent.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="/{{ country_name }}/professional-registrierung-schritt2/" class="btn btn-secondary">
+            ← {{ trans.back|default:"Zurück" }}
+        </a>
+        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+            {{ trans.submit|default:"Registrierung abschließen" }} ✓
+        </button>
+    </div>
+</form>
+
+<script>
+// Formular-Submit mit Ladeanimation
+document.getElementById('step3Form').addEventListener('submit', function() {
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Wird verarbeitet... (Übersetzungen werden generiert)';
+});
+</script>
+{% endblock %}

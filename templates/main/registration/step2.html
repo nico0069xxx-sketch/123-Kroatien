@@ -1,0 +1,288 @@
+{% extends 'main/registration/base_registration.html' %}
+
+{% block registration_content %}
+<h2 class="mb-4" style="color: #003167;">{{ trans.step2_title }}</h2>
+
+<p class="text-muted mb-4">
+    Wählen Sie einen der 8 KI-generierten Vorschläge oder schreiben Sie Ihren eigenen Text.
+</p>
+
+<form method="post" id="step2Form">
+    {% csrf_token %}
+    
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#kiTab">
+                🤖 {{ trans.ki_suggestions|default:"KI-Vorschläge" }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#ownTab">
+                ✏️ {{ trans.own_text|default:"Eigener Text" }}
+            </a>
+        </li>
+    </ul>
+    
+    <div class="tab-content">
+        <!-- KI-Vorschläge Tab -->
+        <div class="tab-pane fade show active" id="kiTab">
+            <div class="row">
+                {% for style_key, suggestion in suggestions.items %}
+                <div class="col-md-6 mb-4">
+                    <div class="card suggestion-card h-100" data-style="{{ style_key }}">
+                        <div class="card-header" style="background: #f8f9fa;">
+                            <div class="form-check">
+                                <input type="radio" name="text_choice" value="ki_{{ forloop.counter }}" 
+                                       class="form-check-input" id="ki_{{ forloop.counter }}"
+                                       {% if forloop.first %}checked{% endif %}>
+                                <label class="form-check-label fw-bold" for="ki_{{ forloop.counter }}">
+                                    {{ suggestion.style_name }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text suggestion-text" style="font-size: 14px; line-height: 1.6;">
+                                {{ suggestion.text }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <button type="button" class="btn btn-sm btn-outline-primary select-btn" 
+                                    onclick="selectSuggestion('ki_{{ forloop.counter }}')">
+                                {{ trans.select_this|default:"Diesen Text wählen" }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-outline-secondary" onclick="regenerateSuggestions()" id="regenerateBtn">
+                    🔄 Neue Vorschläge generieren
+                </button>
+            </div>
+        </div>
+        
+        <!-- Eigener Text Tab -->
+        <div class="tab-pane fade" id="ownTab">
+            <div class="mb-3">
+                <input type="radio" name="text_choice" value="own" class="form-check-input" id="ownChoice">
+                <label class="form-check-label fw-bold" for="ownChoice">
+                    {{ trans.own_text|default:"Eigenen Text verwenden" }}
+                </label>
+            </div>
+            
+            <div class="mb-3">
+                <textarea name="own_text" id="ownTextArea" class="form-control" rows="8" 
+                          placeholder="Schreiben Sie hier Ihren eigenen Profiltext...">{{ form.own_text.value|default:'' }}</textarea>
+                <div class="d-flex justify-content-between mt-2">
+                    <span class="help-text" id="charCount">0 Zeichen</span>
+                    <span class="help-text">Empfohlen: 100-300 Zeichen</span>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2 mb-4">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="checkSpelling()">
+                    📝 {{ trans.check_spelling|default:"Rechtschreibung prüfen" }}
+                </button>
+                <button type="button" class="btn btn-outline-success btn-sm" onclick="improveText()">
+                    ✨ {{ trans.improve_text|default:"Text verbessern" }}
+                </button>
+            </div>
+            
+            <!-- Korrektur-Ergebnisse -->
+            <div id="correctionResults" style="display: none;">
+                <div class="alert alert-info">
+                    <h6>Korrekturvorschläge:</h6>
+                    <div id="correctionContent"></div>
+                    <button type="button" class="btn btn-sm btn-primary mt-2" onclick="applyCorrection()">
+                        Korrektur übernehmen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if form.errors %}
+    <div class="alert alert-danger mt-3">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="/{{ country_name }}/professional-registrierung/" class="btn btn-secondary">
+            ← {{ trans.back|default:"Zurück" }}
+        </a>
+        <button type="submit" class="btn btn-primary">
+            {{ trans.next|default:"Weiter" }} →
+        </button>
+    </div>
+</form>
+
+<style>
+.suggestion-card {
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid #e0e0e0;
+}
+.suggestion-card:hover {
+    border-color: #003167;
+    box-shadow: 0 4px 12px rgba(0,49,103,0.15);
+}
+.suggestion-card.selected {
+    border-color: #003167;
+    background: #f0f7ff;
+}
+.suggestion-text {
+    max-height: 150px;
+    overflow-y: auto;
+}
+.nav-tabs .nav-link {
+    color: #003167;
+    font-weight: 600;
+}
+.nav-tabs .nav-link.active {
+    color: #c41e3a;
+    border-color: #c41e3a #c41e3a #fff;
+}
+</style>
+
+<script>
+var correctedText = '';
+
+// Karte klicken = Radio auswählen
+document.querySelectorAll('.suggestion-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+        if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+            var radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            updateSelectedCard();
+        }
+    });
+});
+
+function selectSuggestion(id) {
+    document.getElementById(id).checked = true;
+    updateSelectedCard();
+}
+
+function updateSelectedCard() {
+    document.querySelectorAll('.suggestion-card').forEach(function(card) {
+        card.classList.remove('selected');
+    });
+    var checked = document.querySelector('input[name="text_choice"]:checked');
+    if (checked && checked.id.startsWith('ki_')) {
+        checked.closest('.suggestion-card').classList.add('selected');
+    }
+}
+
+// Eigener Text Tab = automatisch Radio wählen
+document.getElementById('ownTextArea').addEventListener('focus', function() {
+    document.getElementById('ownChoice').checked = true;
+});
+
+// Zeichen zählen
+document.getElementById('ownTextArea').addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length + ' Zeichen';
+});
+
+// Rechtschreibprüfung
+function checkSpelling() {
+    var text = document.getElementById('ownTextArea').value;
+    if (!text) {
+        alert('Bitte zuerst einen Text eingeben.');
+        return;
+    }
+    
+    fetch('/api/check-spelling/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+        body: JSON.stringify({text: text})
+    })
+    .then(r => r.json())
+    .then(data => {
+        var results = document.getElementById('correctionResults');
+        var content = document.getElementById('correctionContent');
+        
+        if (data.has_errors) {
+            correctedText = data.corrected_text;
+            content.innerHTML = '<p><strong>Fehler gefunden:</strong></p><ul>' + 
+                data.errors.map(e => '<li>' + e + '</li>').join('') + '</ul>' +
+                '<p><strong>Korrigierter Text:</strong></p><p class="bg-light p-2">' + correctedText + '</p>';
+            results.style.display = 'block';
+        } else {
+            content.innerHTML = '<p class="text-success">✓ Keine Fehler gefunden!</p>';
+            results.style.display = 'block';
+        }
+    });
+}
+
+// Text verbessern
+function improveText() {
+    var text = document.getElementById('ownTextArea').value;
+    if (!text) {
+        alert('Bitte zuerst einen Text eingeben.');
+        return;
+    }
+    
+    var btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Verbessere...';
+    
+    fetch('/api/improve-text/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+        body: JSON.stringify({text: text})
+    })
+    .then(r => r.json())
+    .then(data => {
+        correctedText = data.improved_text;
+        var results = document.getElementById('correctionResults');
+        var content = document.getElementById('correctionContent');
+        content.innerHTML = '<p><strong>Verbesserter Text:</strong></p><p class="bg-light p-2">' + correctedText + '</p>';
+        results.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = '✨ Text verbessern';
+    });
+}
+
+// Korrektur übernehmen
+function applyCorrection() {
+    if (correctedText) {
+        document.getElementById('ownTextArea').value = correctedText;
+        document.getElementById('correctionResults').style.display = 'none';
+        document.getElementById('charCount').textContent = correctedText.length + ' Zeichen';
+    }
+}
+
+// Neue Vorschläge generieren
+function regenerateSuggestions() {
+    var btn = document.getElementById('regenerateBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Generiere neue Vorschläge...';
+    
+    fetch('/api/regenerate-suggestions/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+        body: JSON.stringify({})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.suggestions) {
+            location.reload();
+        } else {
+            alert('Fehler: ' + (data.error || 'Unbekannter Fehler'));
+            btn.disabled = false;
+            btn.innerHTML = '🔄 Neue Vorschläge generieren';
+        }
+    });
+}
+
+// Initial
+updateSelectedCard();
+</script>
+{% endblock %}

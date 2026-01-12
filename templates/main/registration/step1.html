@@ -1,0 +1,223 @@
+{% extends 'main/registration/base_registration.html' %}
+
+{% block registration_content %}
+<h2 class="mb-4" style="color: #003167;">{{ trans.step1_title }}</h2>
+
+<form method="post" enctype="multipart/form-data" id="step1Form">
+    {% csrf_token %}
+    
+    {% if form.errors %}
+    <div class="alert alert-danger mb-4">
+        <strong>Bitte korrigieren Sie folgende Fehler:</strong>
+        <ul class="mb-0 mt-2">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    <!-- Berufsgruppe -->
+    <div class="mb-4">
+        <label class="form-label">{{ trans.professional_type }} <span class="required-star">*</span></label>
+        <select name="professional_type" class="form-select {% if form.professional_type.errors %}is-invalid{% endif %}" required>
+            {% for value, label in form.professional_type.field.choices %}
+            <option value="{{ value }}" {% if form.professional_type.value == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        {% if form.professional_type.errors %}
+        <div class="error-text">{{ form.professional_type.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="row">
+        <!-- Name -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.name }} <span class="required-star">*</span></label>
+            <input type="text" name="name" class="form-control {% if form.name.errors %}is-invalid{% endif %}" 
+                   value="{{ form.name.value|default:'' }}" required>
+            {% if form.name.errors %}
+            <div class="error-text">{{ form.name.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Firmenname -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.company_name }}</label>
+            <input type="text" name="company_name" class="form-control" 
+                   value="{{ form.company_name.value|default:'' }}">
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- E-Mail -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.email }} <span class="required-star">*</span></label>
+            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                   value="{{ form.email.value|default:'' }}" required>
+            {% if form.email.errors %}
+            <div class="error-text">{{ form.email.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Telefon -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.phone }} <span class="required-star">*</span></label>
+            <input type="tel" name="phone" class="form-control {% if form.phone.errors %}is-invalid{% endif %}" 
+                   value="{{ form.phone.value|default:'' }}" placeholder="+385 XX XXX XXXX" required>
+            {% if form.phone.errors %}
+            <div class="error-text">{{ form.phone.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Format: +385 XX XXX XXXX</div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Stadt -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.city }} <span class="required-star">*</span></label>
+            <input type="text" name="city" class="form-control {% if form.city.errors %}is-invalid{% endif %}" 
+                   value="{{ form.city.value|default:'' }}" required>
+            {% if form.city.errors %}
+            <div class="error-text">{{ form.city.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Region -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.region }} <span class="required-star">*</span></label>
+            <select name="region" class="form-select {% if form.region.errors %}is-invalid{% endif %}" required>
+                {% for value, label in form.region.field.choices %}
+                <option value="{{ value }}" {% if form.region.value == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+            {% if form.region.errors %}
+            <div class="error-text">{{ form.region.errors.0 }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Tätigkeitsregionen -->
+    <div class="mb-4">
+        <label class="form-label">{{ trans.service_regions }}</label>
+        <div class="row">
+            {% for value, label in form.service_regions.field.choices %}
+            <div class="col-md-4 col-6">
+                <div class="form-check">
+                    <input type="checkbox" name="service_regions" value="{{ value }}" 
+                           class="form-check-input" id="sr_{{ value }}">
+                    <label class="form-check-label" for="sr_{{ value }}">{{ label }}</label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Sprachen -->
+    <div class="mb-3">
+        <label class="form-label">{{ trans.languages_spoken }} <span class="required-star">*</span></label>
+        <input type="text" name="languages_spoken" class="form-control {% if form.languages_spoken.errors %}is-invalid{% endif %}" 
+               value="{{ form.languages_spoken.value|default:'' }}" placeholder="z.B. Deutsch, Englisch, Kroatisch" required>
+        {% if form.languages_spoken.errors %}
+        <div class="error-text">{{ form.languages_spoken.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Website -->
+    <div class="mb-4">
+        <label class="form-label">{{ trans.website }}</label>
+        <input type="url" name="website" class="form-control" 
+               value="{{ form.website.value|default:'' }}" placeholder="https://www.beispiel.com">
+    </div>
+    
+    <hr class="my-4">
+    <h5 class="mb-3" style="color: #003167;">Identifikation & Registrierung</h5>
+    
+    <div class="row">
+        <!-- OIB -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.oib_number }} <span class="required-star">*</span></label>
+            <input type="text" name="oib_number" id="oibInput" 
+                   class="form-control {% if form.oib_number.errors %}is-invalid{% endif %}" 
+                   value="{{ form.oib_number.value|default:'' }}" 
+                   maxlength="11" pattern="[0-9]{11}" required>
+            <div id="oibFeedback" class="help-text">11-stellige kroatische OIB-Nummer</div>
+            {% if form.oib_number.errors %}
+            <div class="error-text">{{ form.oib_number.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Registrierungsnummer -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.registration_number }} <span class="required-star" id="regRequired" style="display:none;">*</span></label>
+            <input type="text" name="registration_number" class="form-control {% if form.registration_number.errors %}is-invalid{% endif %}" 
+                   value="{{ form.registration_number.value|default:'' }}">
+            {% if form.registration_number.errors %}
+            <div class="error-text">{{ form.registration_number.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Erforderlich für Anwälte, Architekten, Makler</div>
+        </div>
+    </div>
+    
+    <hr class="my-4">
+    <h5 class="mb-3" style="color: #003167;">Bilder (optional)</h5>
+    
+    <div class="row">
+        <!-- Logo -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.logo }}</label>
+            <input type="file" name="logo" class="form-control" accept="image/*">
+            <div class="help-text">Firmenlogo (JPG, PNG)</div>
+        </div>
+        
+        <!-- Portrait -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ trans.portrait }}</label>
+            <input type="file" name="portrait" class="form-control" accept="image/*">
+            <div class="help-text">Profilbild (JPG, PNG)</div>
+        </div>
+    </div>
+    
+    <!-- Buttons -->
+    <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary">
+            {{ trans.next }} →
+        </button>
+    </div>
+</form>
+
+<script>
+// OIB Live-Validierung
+document.getElementById('oibInput').addEventListener('input', function() {
+    var oib = this.value.replace(/[^0-9]/g, '');
+    this.value = oib; // Nur Ziffern erlauben
+    var feedback = document.getElementById('oibFeedback');
+    
+    if (oib.length === 0) {
+        feedback.innerHTML = '11-stellige kroatische OIB-Nummer';
+        feedback.style.color = '#6c757d';
+        this.classList.remove('is-valid', 'is-invalid');
+    } else if (oib.length < 11) {
+        feedback.innerHTML = 'Noch ' + (11 - oib.length) + ' Ziffern eingeben';
+        feedback.style.color = '#6c757d';
+        this.classList.remove('is-valid', 'is-invalid');
+    } else if (oib.length === 11) {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+        feedback.innerHTML = '✓ OIB Format korrekt (11 Ziffern)';
+        feedback.style.color = '#28a745';
+    } else {
+        this.value = oib.substring(0, 11); // Max 11 Ziffern
+    }
+});
+
+// Registrierungsnummer Pflicht basierend auf Berufsgruppe
+document.querySelector('select[name="professional_type"]').addEventListener('change', function() {
+    var regRequired = document.getElementById('regRequired');
+    var needsReg = ['lawyer', 'architect', 'real_estate_agent'];
+    regRequired.style.display = needsReg.includes(this.value) ? 'inline' : 'none';
+});
+</script>
+{% endblock %}
