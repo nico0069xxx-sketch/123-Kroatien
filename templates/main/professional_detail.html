@@ -10,7 +10,7 @@
           <h1 class="text-white" style="font-weight: bold; font-size: 2rem">
             {{ professional.name }} – {{ singular }}
           </h1>
-          <p class="text-white">{{ professional.city }}, {{ professional.get_region_display }}</p>
+          <p class="text-white">{{ professional.city }}, {{ translated_region }}</p>
         </div>
       </div>
     </div>
@@ -76,11 +76,11 @@
           {% endif %}
           
           <h3 style="color: #003167;">{{ trans.languages }}</h3>
-          <p>{{ professional.languages_spoken }}</p>
+          <p>{{ translated_languages }}</p>
           
           {% if professional.service_regions %}
           <h3 style="color: #003167;">{{ trans.regions }}</h3>
-          <p>{{ professional.service_regions }}</p>
+          <p>{{ translated_service_regions }}</p>
           {% endif %}
           
           {% if professional.registration_number %}
@@ -107,9 +107,9 @@
         {% else %}
         <div class="profile-content" style="color: #003167;">
           <h2>{{ professional.name }}</h2>
-          <p><strong>{{ trans.languages }}:</strong> {{ professional.languages_spoken }}</p>
+          <p><strong>{{ trans.languages }}:</strong> {{ translated_languages }}</p>
           {% if professional.service_regions %}
-          <p><strong>{{ trans.regions }}:</strong> {{ professional.service_regions }}</p>
+          <p><strong>{{ trans.regions }}:</strong> {{ translated_service_regions }}</p>
           {% endif %}
         </div>
         {% endif %}
@@ -128,7 +128,7 @@
   <div class="container">
     <p class="small text-muted mb-0">
       <strong>Disclaimer:</strong> {{ trans.disclaimer }}
-      <br>{{ trans.last_updated }}: Januar 2026
+      <br>{{ trans.last_updated }}: {{ current_month }} 2025
     </p>
   </div>
 </section>

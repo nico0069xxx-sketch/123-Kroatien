@@ -4,6 +4,91 @@ from django.http import Http404
 from django.core.mail import send_mail
 from main.professional_models import Professional, ProfessionalContent
 
+# Übersetzungen für Regionen
+REGION_TRANSLATIONS = {
+    "ge": {"istrien": "Istrien", "kvarner": "Kvarner", "dalmatien-nord": "Nord-Dalmatien", "dalmatien-mitte": "Mittel-Dalmatien", "dalmatien-sued": "Süd-Dalmatien", "zagreb": "Zagreb", "slavonien": "Slawonien", "lika-gorski-kotar": "Lika & Gorski Kotar"},
+    "en": {"istrien": "Istria", "kvarner": "Kvarner", "dalmatien-nord": "North Dalmatia", "dalmatien-mitte": "Central Dalmatia", "dalmatien-sued": "South Dalmatia", "zagreb": "Zagreb", "slavonien": "Slavonia", "lika-gorski-kotar": "Lika & Gorski Kotar"},
+    "hr": {"istrien": "Istra", "kvarner": "Kvarner", "dalmatien-nord": "Sjeverna Dalmacija", "dalmatien-mitte": "Srednja Dalmacija", "dalmatien-sued": "Južna Dalmacija", "zagreb": "Zagreb", "slavonien": "Slavonija", "lika-gorski-kotar": "Lika i Gorski Kotar"},
+    "fr": {"istrien": "Istrie", "kvarner": "Kvarner", "dalmatien-nord": "Dalmatie du Nord", "dalmatien-mitte": "Dalmatie centrale", "dalmatien-sued": "Dalmatie du Sud", "zagreb": "Zagreb", "slavonien": "Slavonie", "lika-gorski-kotar": "Lika et Gorski Kotar"},
+    "nl": {"istrien": "Istrië", "kvarner": "Kvarner", "dalmatien-nord": "Noord-Dalmatië", "dalmatien-mitte": "Midden-Dalmatië", "dalmatien-sued": "Zuid-Dalmatië", "zagreb": "Zagreb", "slavonien": "Slavonië", "lika-gorski-kotar": "Lika & Gorski Kotar"},
+    "pl": {"istrien": "Istria", "kvarner": "Kvarner", "dalmatien-nord": "Północna Dalmacja", "dalmatien-mitte": "Środkowa Dalmacja", "dalmatien-sued": "Południowa Dalmacja", "zagreb": "Zagrzeb", "slavonien": "Slawonia", "lika-gorski-kotar": "Lika i Gorski Kotar"},
+    "cz": {"istrien": "Istrie", "kvarner": "Kvarner", "dalmatien-nord": "Severní Dalmácie", "dalmatien-mitte": "Střední Dalmácie", "dalmatien-sued": "Jižní Dalmácie", "zagreb": "Záhřeb", "slavonien": "Slavonie", "lika-gorski-kotar": "Lika a Gorski Kotar"},
+    "sk": {"istrien": "Istria", "kvarner": "Kvarner", "dalmatien-nord": "Severná Dalmácia", "dalmatien-mitte": "Stredná Dalmácia", "dalmatien-sued": "Južná Dalmácia", "zagreb": "Záhreb", "slavonien": "Slavónia", "lika-gorski-kotar": "Lika a Gorski Kotar"},
+    "ru": {"istrien": "Истрия", "kvarner": "Кварнер", "dalmatien-nord": "Северная Далмация", "dalmatien-mitte": "Центральная Далмация", "dalmatien-sued": "Южная Далмация", "zagreb": "Загреб", "slavonien": "Славония", "lika-gorski-kotar": "Лика и Горски Котар"},
+    "gr": {"istrien": "Ίστρια", "kvarner": "Κβάρνερ", "dalmatien-nord": "Βόρεια Δαλματία", "dalmatien-mitte": "Κεντρική Δαλματία", "dalmatien-sued": "Νότια Δαλματία", "zagreb": "Ζάγκρεμπ", "slavonien": "Σλαβονία", "lika-gorski-kotar": "Λίκα & Γκόρσκι Κοτάρ"},
+    "sw": {"istrien": "Istrien", "kvarner": "Kvarner", "dalmatien-nord": "Norra Dalmatien", "dalmatien-mitte": "Mellersta Dalmatien", "dalmatien-sued": "Södra Dalmatien", "zagreb": "Zagreb", "slavonien": "Slavonien", "lika-gorski-kotar": "Lika & Gorski Kotar"},
+    "no": {"istrien": "Istria", "kvarner": "Kvarner", "dalmatien-nord": "Nord-Dalmatia", "dalmatien-mitte": "Midt-Dalmatia", "dalmatien-sued": "Sør-Dalmatia", "zagreb": "Zagreb", "slavonien": "Slavonia", "lika-gorski-kotar": "Lika & Gorski Kotar"},
+}
+
+# Übersetzungen für Sprachen
+LANGUAGE_TRANSLATIONS = {
+    "ge": {"de": "Deutsch", "en": "Englisch", "hr": "Kroatisch", "it": "Italienisch", "fr": "Französisch", "sl": "Slowenisch", "hu": "Ungarisch"},
+    "en": {"de": "German", "en": "English", "hr": "Croatian", "it": "Italian", "fr": "French", "sl": "Slovenian", "hu": "Hungarian"},
+    "hr": {"de": "Njemački", "en": "Engleski", "hr": "Hrvatski", "it": "Talijanski", "fr": "Francuski", "sl": "Slovenski", "hu": "Mađarski"},
+    "fr": {"de": "Allemand", "en": "Anglais", "hr": "Croate", "it": "Italien", "fr": "Français", "sl": "Slovène", "hu": "Hongrois"},
+    "nl": {"de": "Duits", "en": "Engels", "hr": "Kroatisch", "it": "Italiaans", "fr": "Frans", "sl": "Sloveens", "hu": "Hongaars"},
+    "pl": {"de": "Niemiecki", "en": "Angielski", "hr": "Chorwacki", "it": "Włoski", "fr": "Francuski", "sl": "Słoweński", "hu": "Węgierski"},
+    "cz": {"de": "Němčina", "en": "Angličtina", "hr": "Chorvatština", "it": "Italština", "fr": "Francouzština", "sl": "Slovinština", "hu": "Maďarština"},
+    "sk": {"de": "Nemčina", "en": "Angličtina", "hr": "Chorvátčina", "it": "Taliančina", "fr": "Francúzština", "sl": "Slovinčina", "hu": "Maďarčina"},
+    "ru": {"de": "Немецкий", "en": "Английский", "hr": "Хорватский", "it": "Итальянский", "fr": "Французский", "sl": "Словенский", "hu": "Венгерский"},
+    "gr": {"de": "Γερμανικά", "en": "Αγγλικά", "hr": "Κροατικά", "it": "Ιταλικά", "fr": "Γαλλικά", "sl": "Σλοβενικά", "hu": "Ουγγρικά"},
+    "sw": {"de": "Tyska", "en": "Engelska", "hr": "Kroatiska", "it": "Italienska", "fr": "Franska", "sl": "Slovenska", "hu": "Ungerska"},
+    "no": {"de": "Tysk", "en": "Engelsk", "hr": "Kroatisk", "it": "Italiensk", "fr": "Fransk", "sl": "Slovensk", "hu": "Ungarsk"},
+}
+
+# Hilfsfunktionen
+
+# Monatsübersetzungen
+MONTH_TRANSLATIONS = {
+    "ge": "Januar", "en": "January", "hr": "Siječanj", "fr": "Janvier",
+    "nl": "Januari", "pl": "Styczeń", "cz": "Leden", "sk": "Január",
+    "ru": "Январь", "gr": "Ιανουάριος", "sw": "Januari", "no": "Januar",
+}
+
+def translate_region(region_key, lang):
+    """Übersetzt einen Region-Schlüssel oder deutschen Namen in die gewählte Sprache"""
+    # Mapping von deutschen Namen zu Schlüsseln
+    de_to_key = {
+        "Istrien": "istrien", "Kvarner": "kvarner", 
+        "Nord-Dalmatien": "dalmatien-nord", "Mittel-Dalmatien": "dalmatien-mitte",
+        "Sued-Dalmatien": "dalmatien-sued", "Süd-Dalmatien": "dalmatien-sued",
+        "Zagreb": "zagreb", "Slavonien": "slavonien", "Slawonien": "slavonien",
+        "Lika & Gorski Kotar": "lika-gorski-kotar",
+        "ganz Kroatien": "ganz-kroatien",
+    }
+    
+    # Konvertiere deutschen Namen zu Schlüssel falls nötig
+    key = de_to_key.get(region_key, region_key.lower() if region_key else region_key)
+    
+    # Spezialfall: "ganz Kroatien"
+    ganz_kroatien = {
+        "ge": "ganz Kroatien", "en": "all of Croatia", "hr": "cijela Hrvatska",
+        "fr": "toute la Croatie", "nl": "heel Kroatië", "pl": "cała Chorwacja",
+        "cz": "celé Chorvatsko", "sk": "celé Chorvátsko", "ru": "вся Хорватия",
+        "gr": "όλη η Κροατία", "sw": "hela Kroatien", "no": "hele Kroatia",
+    }
+    if key == "ganz-kroatien" or region_key == "ganz Kroatien":
+        return ganz_kroatien.get(lang, "ganz Kroatien")
+    
+    regions = REGION_TRANSLATIONS.get(lang, REGION_TRANSLATIONS["ge"])
+    return regions.get(key, region_key)
+
+def translate_languages(languages_str, lang):
+    """Übersetzt eine kommagetrennte Sprachliste"""
+    if not languages_str:
+        return ""
+    lang_trans = LANGUAGE_TRANSLATIONS.get(lang, LANGUAGE_TRANSLATIONS["ge"])
+    # Versuche die gespeicherten Sprachen zu übersetzen
+    parts = [p.strip() for p in languages_str.split(",")]
+    translated = []
+    # Mapping von deutschen Namen zu Codes
+    de_to_code = {"Deutsch": "de", "Englisch": "en", "Kroatisch": "hr", "Italienisch": "it", "Französisch": "fr", "Slowenisch": "sl", "Ungarisch": "hu"}
+    for p in parts:
+        code = de_to_code.get(p, p.lower()[:2])
+        translated.append(lang_trans.get(code, p))
+    return ", ".join(translated)
+
+
 # Länder-Namen in allen Sprachen
 COUNTRY_NAMES = {
     "ge": "kroatien", "en": "croatia", "hr": "hrvatska", "fr": "croatie",
@@ -383,6 +468,19 @@ def professional_detail(request, country, category, slug):
     url_paths = CATEGORY_URLS.get(professional.professional_type, {})
     country_name = COUNTRY_NAMES.get(lang, "kroatien")
     
+    # Übersetzte Felder
+    translated_region = translate_region(professional.region, lang)
+    translated_languages = translate_languages(professional.languages_spoken, lang)
+    
+    # Service-Regionen übersetzen (kommagetrennt)
+    translated_service_regions = ""
+    if professional.service_regions:
+        regions = [r.strip() for r in professional.service_regions.split(",")]
+        translated_service_regions = ", ".join([translate_region(r, lang) for r in regions])
+    
+    # Monat übersetzen
+    current_month = MONTH_TRANSLATIONS.get(lang, "Januar")
+    
     return render(request, "main/professional_detail.html", {
         "professional": professional,
         "content": content,
@@ -391,6 +489,10 @@ def professional_detail(request, country, category, slug):
         "lang": lang,
         "country_name": country_name,
         "url_path": url_paths.get(lang, category),
+        "translated_region": translated_region,
+        "translated_languages": translated_languages,
+        "translated_service_regions": translated_service_regions,
+        "current_month": current_month,
     })
 
 
