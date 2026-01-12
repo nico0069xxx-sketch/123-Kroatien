@@ -281,7 +281,9 @@
             }
 
             function changelanguage(value) {
-                window.location.href = "/set-language/" + value + "/";
+                // Aktuelle URL als Parameter übergeben, um auf der gleichen Seite zu bleiben
+                var currentPath = window.location.pathname + window.location.search;
+                window.location.href = "/set-language/" + value + "/?next=" + encodeURIComponent(currentPath);
             }
 
         </script>
