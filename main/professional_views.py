@@ -440,8 +440,15 @@ def professional_list(request, country, category):
     url_paths = CATEGORY_URLS.get(professional_type, {})
     country_name = COUNTRY_NAMES.get(lang, "kroatien")
     
+    # Übersetze Regionen und Sprachen für jedes Profil
+    professionals_with_translations = []
+    for prof in professionals:
+        prof.translated_region = translate_region(prof.region, lang)
+        prof.translated_languages = translate_languages(prof.languages_spoken, lang)
+        professionals_with_translations.append(prof)
+    
     return render(request, "main/professional_list.html", {
-        "professionals": professionals,
+        "professionals": professionals_with_translations,
         "professional_type": professional_type,
         "title": cat_trans.get("title", ""),
         "subtitle": cat_trans.get("subtitle", ""),
