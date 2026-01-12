@@ -137,4 +137,39 @@ def get_my_translations(request):
         elif user_language == 'nl': context[t.name] = t.dutch_content
         else: context[t.name] = t.german_content
 
+
+    # News URLs
+    news_urls = {
+        'ge': '/ge/kroatien/nachrichten/',
+        'en': '/en/croatia/news/',
+        'hr': '/hr/hrvatska/vijesti/',
+        'fr': '/fr/croatie/actualites/',
+        'nl': '/nl/kroatie/nieuws/',
+        'pl': '/pl/chorwacja/wiadomosci/',
+        'cz': '/cz/chorvatsko/zpravy/',
+        'sk': '/sk/chorvatsko/spravy/',
+        'ru': '/ru/horvatiya/novosti/',
+        'gr': '/gr/kroatia/nea/',
+        'sw': '/sw/kroatien/nyheter/',
+        'no': '/no/kroatia/nyheter/',
+    }
+    context['news_url'] = news_urls.get(user_language, '/ge/kroatien/nachrichten/')
+    
+    # News Label
+    news_labels = {
+        'ge': 'Nachrichten',
+        'en': 'News',
+        'hr': 'Vijesti',
+        'fr': 'Actualités',
+        'nl': 'Nieuws',
+        'pl': 'Wiadomości',
+        'cz': 'Zprávy',
+        'sk': 'Správy',
+        'ru': 'Новости',
+        'gr': 'Νέα',
+        'sw': 'Nyheter',
+        'no': 'Nyheter',
+    }
+    context['news_label'] = news_labels.get(user_language, 'Nachrichten')
+
     return context

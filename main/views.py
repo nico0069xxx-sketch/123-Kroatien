@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from listings.models import Listing
 from django.contrib import messages
 from django.utils import translation
+from django.http import HttpResponse
+import feedparser
 from django.http import HttpResponseRedirect
 from accounts.models import Agent
 from pages.models import Translation
@@ -1121,6 +1123,7 @@ def smart_search(request):
 # RSS FEEDS - SEO & AI OPTIMIERT (12 Sprachen)
 # =============================================================================
 from django.http import HttpResponse
+import feedparser
 from django.utils import timezone
 from datetime import datetime
 import xml.etree.ElementTree as ET
@@ -1424,3 +1427,322 @@ Crawl-delay: 1
 """
     
     return HttpResponse(robots_content, content_type='text/plain; charset=utf-8')
+
+
+# =============================================================================
+# NEWS BEREICH - Kroatien Immobilien & Wirtschaft
+# =============================================================================
+import feedparser
+from datetime import datetime, timedelta
+from django.core.cache import cache
+
+# RSS Feed Quellen - Kroatien & Immobilien fokussiert
+NEWS_FEEDS = {
+    'croatia_week': {
+        'url': 'https://www.croatiaweek.com/feed/',
+        'name': 'Croatia Week',
+        'category': 'general',
+    },
+    'total_croatia': {
+        'url': 'https://www.total-croatia-news.com/feed/',
+        'name': 'Total Croatia News',
+        'category': 'general',
+    },
+    'croatia_gems': {
+        'url': 'https://croatiagems.com/feed/',
+        'name': 'Croatia Gems',
+        'category': 'tourism',
+    },
+}
+
+# Übersetzungen für News-Bereich
+NEWS_TRANSLATIONS = {
+    'ge': {
+        'title': 'Nachrichten aus Kroatien',
+        'subtitle': 'Aktuelle News zu Immobilien, Wirtschaft und Leben in Kroatien',
+        'read_more': 'Weiterlesen',
+        'source': 'Quelle',
+        'no_news': 'Aktuell keine Nachrichten verfügbar.',
+        'categories': {
+            'all': 'Alle',
+            'real_estate': 'Immobilien',
+            'economy': 'Wirtschaft',
+            'tourism': 'Tourismus',
+            'living': 'Leben in Kroatien',
+        },
+        'meta_title': 'Kroatien News - Immobilien, Wirtschaft & Tourismus | 123-Kroatien.eu',
+        'meta_description': 'Aktuelle Nachrichten aus Kroatien: Immobilienmarkt, Wirtschaft, Tourismus und Leben an der Adria. Ihr Immobilienmarktplatz für Kroatien.',
+    },
+    'en': {
+        'title': 'News from Croatia',
+        'subtitle': 'Latest news on real estate, economy and living in Croatia',
+        'read_more': 'Read more',
+        'source': 'Source',
+        'no_news': 'No news currently available.',
+        'categories': {
+            'all': 'All',
+            'real_estate': 'Real Estate',
+            'economy': 'Economy',
+            'tourism': 'Tourism',
+            'living': 'Living in Croatia',
+        },
+        'meta_title': 'Croatia News - Real Estate, Economy & Tourism | 123-Kroatien.eu',
+        'meta_description': 'Latest news from Croatia: real estate market, economy, tourism and life on the Adriatic. Your real estate marketplace for Croatia.',
+    },
+    'hr': {
+        'title': 'Vijesti iz Hrvatske',
+        'subtitle': 'Najnovije vijesti o nekretninama, gospodarstvu i životu u Hrvatskoj',
+        'read_more': 'Pročitaj više',
+        'source': 'Izvor',
+        'no_news': 'Trenutno nema dostupnih vijesti.',
+        'categories': {
+            'all': 'Sve',
+            'real_estate': 'Nekretnine',
+            'economy': 'Gospodarstvo',
+            'tourism': 'Turizam',
+            'living': 'Život u Hrvatskoj',
+        },
+        'meta_title': 'Vijesti iz Hrvatske - Nekretnine, Gospodarstvo & Turizam | 123-Kroatien.eu',
+        'meta_description': 'Najnovije vijesti iz Hrvatske: tržište nekretnina, gospodarstvo, turizam i život na Jadranu. Vaše tržište nekretnina za Hrvatsku.',
+    },
+    'fr': {
+        'title': 'Actualités de Croatie',
+        'subtitle': 'Dernières nouvelles sur immobilier, économie et vie en Croatie',
+        'read_more': 'Lire la suite',
+        'source': 'Source',
+        'no_news': 'Aucune actualité disponible.',
+        'categories': {
+            'all': 'Tout',
+            'real_estate': 'Immobilier',
+            'economy': 'Économie',
+            'tourism': 'Tourisme',
+            'living': 'Vivre en Croatie',
+        },
+        'meta_title': 'Actualités Croatie - Immobilier, Économie & Tourisme | 123-Kroatien.eu',
+        'meta_description': 'Dernières nouvelles de Croatie: marché immobilier, économie, tourisme et vie sur Adriatique.',
+    },
+    'nl': {
+        'title': 'Nieuws uit Kroatië',
+        'subtitle': 'Laatste nieuws over vastgoed, economie en leven in Kroatië',
+        'read_more': 'Lees meer',
+        'source': 'Bron',
+        'no_news': 'Momenteel geen nieuws beschikbaar.',
+        'categories': {
+            'all': 'Alles',
+            'real_estate': 'Vastgoed',
+            'economy': 'Economie',
+            'tourism': 'Toerisme',
+            'living': 'Wonen in Kroatië',
+        },
+        'meta_title': 'Kroatië Nieuws - Vastgoed, Economie & Toerisme | 123-Kroatien.eu',
+        'meta_description': 'Laatste nieuws uit Kroatië: vastgoedmarkt, economie, toerisme en leven aan de Adriatische kust.',
+    },
+    'pl': {
+        'title': 'Wiadomości z Chorwacji',
+        'subtitle': 'Najnowsze wiadomości o nieruchomościach, gospodarce i życiu w Chorwacji',
+        'read_more': 'Czytaj więcej',
+        'source': 'Źródło',
+        'no_news': 'Brak dostępnych wiadomości.',
+        'categories': {
+            'all': 'Wszystko',
+            'real_estate': 'Nieruchomości',
+            'economy': 'Gospodarka',
+            'tourism': 'Turystyka',
+            'living': 'Życie w Chorwacji',
+        },
+        'meta_title': 'Wiadomości Chorwacja - Nieruchomości, Gospodarka & Turystyka | 123-Kroatien.eu',
+        'meta_description': 'Najnowsze wiadomości z Chorwacji: rynek nieruchomości, gospodarka, turystyka i życie nad Adriatykiem.',
+    },
+    'cz': {
+        'title': 'Zprávy z Chorvatska',
+        'subtitle': 'Nejnovější zprávy o nemovitostech, ekonomice a životě v Chorvatsku',
+        'read_more': 'Číst dále',
+        'source': 'Zdroj',
+        'no_news': 'Žádné zprávy nejsou k dispozici.',
+        'categories': {
+            'all': 'Vše',
+            'real_estate': 'Nemovitosti',
+            'economy': 'Ekonomika',
+            'tourism': 'Turismus',
+            'living': 'Život v Chorvatsku',
+        },
+        'meta_title': 'Zprávy Chorvatsko - Nemovitosti, Ekonomika & Turismus | 123-Kroatien.eu',
+        'meta_description': 'Nejnovější zprávy z Chorvatska: trh nemovitostí, ekonomika, turismus a život na Jadranu.',
+    },
+    'sk': {
+        'title': 'Správy z Chorvátska',
+        'subtitle': 'Najnovšie správy o nehnuteľnostiach, ekonomike a živote v Chorvátsku',
+        'read_more': 'Čítať ďalej',
+        'source': 'Zdroj',
+        'no_news': 'Žiadne správy nie sú k dispozícii.',
+        'categories': {
+            'all': 'Všetko',
+            'real_estate': 'Nehnuteľnosti',
+            'economy': 'Ekonomika',
+            'tourism': 'Turizmus',
+            'living': 'Život v Chorvátsku',
+        },
+        'meta_title': 'Správy Chorvátsko - Nehnuteľnosti, Ekonomika & Turizmus | 123-Kroatien.eu',
+        'meta_description': 'Najnovšie správy z Chorvátska: trh nehnuteľností, ekonomika, turizmus a život na Jadrane.',
+    },
+    'ru': {
+        'title': 'Новости Хорватии',
+        'subtitle': 'Последние новости о недвижимости, экономике и жизни в Хорватии',
+        'read_more': 'Читать далее',
+        'source': 'Источник',
+        'no_news': 'Новости недоступны.',
+        'categories': {
+            'all': 'Все',
+            'real_estate': 'Недвижимость',
+            'economy': 'Экономика',
+            'tourism': 'Туризм',
+            'living': 'Жизнь в Хорватии',
+        },
+        'meta_title': 'Новости Хорватии - Недвижимость, Экономика & Туризм | 123-Kroatien.eu',
+        'meta_description': 'Последние новости из Хорватии: рынок недвижимости, экономика, туризм и жизнь на Адриатике.',
+    },
+    'gr': {
+        'title': 'Νέα από την Κροατία',
+        'subtitle': 'Τελευταία νέα για ακίνητα, οικονομία και ζωή στην Κροατία',
+        'read_more': 'Διαβάστε περισσότερα',
+        'source': 'Πηγή',
+        'no_news': 'Δεν υπάρχουν διαθέσιμα νέα.',
+        'categories': {
+            'all': 'Όλα',
+            'real_estate': 'Ακίνητα',
+            'economy': 'Οικονομία',
+            'tourism': 'Τουρισμός',
+            'living': 'Ζωή στην Κροατία',
+        },
+        'meta_title': 'Νέα Κροατίας - Ακίνητα, Οικονομία & Τουρισμός | 123-Kroatien.eu',
+        'meta_description': 'Τελευταία νέα από την Κροατία: αγορά ακινήτων, οικονομία, τουρισμός και ζωή στην Αδριατική.',
+    },
+    'sw': {
+        'title': 'Nyheter från Kroatien',
+        'subtitle': 'Senaste nytt om fastigheter, ekonomi och livet i Kroatien',
+        'read_more': 'Läs mer',
+        'source': 'Källa',
+        'no_news': 'Inga nyheter tillgängliga.',
+        'categories': {
+            'all': 'Alla',
+            'real_estate': 'Fastigheter',
+            'economy': 'Ekonomi',
+            'tourism': 'Turism',
+            'living': 'Livet i Kroatien',
+        },
+        'meta_title': 'Kroatien Nyheter - Fastigheter, Ekonomi & Turism | 123-Kroatien.eu',
+        'meta_description': 'Senaste nytt från Kroatien: fastighetsmarknad, ekonomi, turism och livet vid Adriatiska havet.',
+    },
+    'no': {
+        'title': 'Nyheter fra Kroatia',
+        'subtitle': 'Siste nytt om eiendom, økonomi og livet i Kroatia',
+        'read_more': 'Les mer',
+        'source': 'Kilde',
+        'no_news': 'Ingen nyheter tilgjengelig.',
+        'categories': {
+            'all': 'Alle',
+            'real_estate': 'Eiendom',
+            'economy': 'Økonomi',
+            'tourism': 'Turisme',
+            'living': 'Livet i Kroatia',
+        },
+        'meta_title': 'Kroatia Nyheter - Eiendom, Økonomi & Turisme | 123-Kroatien.eu',
+        'meta_description': 'Siste nytt fra Kroatia: eiendomsmarked, økonomi, turisme og livet ved Adriaterhavet.',
+    },
+}
+
+
+def fetch_news_feeds():
+    """
+    Holt News von externen RSS-Feeds
+    Mit Caching für Performance
+    """
+    cache_key = 'croatia_news_feeds'
+    cached_news = cache.get(cache_key)
+    
+    if cached_news:
+        return cached_news
+    
+    all_news = []
+    
+    for feed_id, feed_info in NEWS_FEEDS.items():
+        try:
+            feed = feedparser.parse(feed_info['url'])
+            
+            for entry in feed.entries[:10]:  # Max 10 pro Quelle
+                # Datum parsen
+                published = None
+                if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                    published = datetime(*entry.published_parsed[:6])
+                elif hasattr(entry, 'updated_parsed') and entry.updated_parsed:
+                    published = datetime(*entry.updated_parsed[:6])
+                else:
+                    published = datetime.now()
+                
+                # Bild extrahieren (wenn vorhanden)
+                image = None
+                if hasattr(entry, 'media_content') and entry.media_content:
+                    image = entry.media_content[0].get('url')
+                elif hasattr(entry, 'enclosures') and entry.enclosures:
+                    for enc in entry.enclosures:
+                        if 'image' in enc.get('type', ''):
+                            image = enc.get('href')
+                            break
+                
+                news_item = {
+                    'title': entry.get('title', ''),
+                    'link': entry.get('link', ''),
+                    'description': entry.get('summary', '')[:300] if entry.get('summary') else '',
+                    'published': published,
+                    'source': feed_info['name'],
+                    'category': feed_info['category'],
+                    'image': image,
+                }
+                all_news.append(news_item)
+                
+        except Exception as e:
+            print(f"Feed Error ({feed_id}): {e}")
+            continue
+    
+    # Nach Datum sortieren (neueste zuerst)
+    all_news.sort(key=lambda x: x['published'] if x['published'] else datetime.min, reverse=True)
+    
+    # Cache für 30 Minuten
+    cache.set(cache_key, all_news, 1800)
+    
+    return all_news
+
+
+def news_page(request, country=None, lang=None):
+    # Lang aus country ermitteln falls nicht direkt übergeben
+    if lang is None and country:
+        country_to_lang = {
+            'kroatien': 'ge', 'croatia': 'en', 'hrvatska': 'hr', 'croatie': 'fr',
+            'kroatie': 'nl', 'chorwacja': 'pl', 'chorvatsko': 'cz',
+            'horvatiya': 'ru', 'kroatia': 'gr',
+        }
+        lang = country_to_lang.get(country, 'ge')
+    if lang is None:
+        lang = request.session.get('site_language', 'ge')
+    """
+    News-Seite mit Kroatien-Nachrichten
+    SEO & AI optimiert
+    """
+    trans = NEWS_TRANSLATIONS.get(lang, NEWS_TRANSLATIONS['ge'])
+    news_items = fetch_news_feeds()
+    
+    # Filter by category if provided
+    category = request.GET.get('category', 'all')
+    if category != 'all':
+        news_items = [n for n in news_items if n['category'] == category]
+    
+    context = {
+        'news_items': news_items[:30],  # Max 30 Artikel
+        'trans': trans,
+        'lang': lang,
+        'current_category': category,
+        'meta_title': trans['meta_title'],
+        'meta_description': trans['meta_description'],
+    }
+    
+    return render(request, 'main/news.html', context)

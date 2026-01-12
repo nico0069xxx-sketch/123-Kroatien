@@ -1,0 +1,253 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}{{ meta_title }}{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+
+{% block body %}
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "{{ trans.title }}",
+    "description": "{{ trans.subtitle }}",
+    "publisher": {
+        "@type": "Organization",
+        "name": "123-Kroatien.eu"
+    }
+}
+</script>
+
+<style>
+.news-header {
+    background: linear-gradient(135deg, #003167 0%, #004a99 100%);
+    padding: 40px 0;
+    margin-bottom: 30px;
+}
+.news-header h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.news-header p {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+    margin: 0;
+}
+.filter-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+.filter-pill {
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.filter-pill.active {
+    background: #003167;
+    color: white;
+}
+.filter-pill:not(.active) {
+    background: #f5f5f5;
+    color: #666;
+}
+.filter-pill:hover:not(.active) {
+    background: #e8e8e8;
+    color: #333;
+}
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+.news-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+.news-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+}
+.news-card-image {
+    height: 160px;
+    background: linear-gradient(135deg, #003167 0%, #0056b3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.news-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.news-card-image .flag-placeholder {
+    font-size: 2.5rem;
+    opacity: 0.8;
+}
+.news-card-body {
+    padding: 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.news-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #003167;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.news-card-excerpt {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.news-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+.news-card-meta {
+    font-size: 0.75rem;
+    color: #999;
+}
+.news-card-meta .source {
+    color: #003167;
+    font-weight: 500;
+}
+.news-card-link {
+    font-size: 0.8rem;
+    color: #c41e3a;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.news-card-link:hover {
+    color: #a01830;
+}
+.seo-footer {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 40px;
+}
+.seo-footer h2 {
+    font-size: 1.1rem;
+    color: #003167;
+    margin-bottom: 10px;
+}
+.seo-footer p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+.no-news {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+</style>
+
+<div class="news-header">
+    <div class="container">
+        <h1>{{ trans.title }}</h1>
+        <p>{{ trans.subtitle }}</p>
+    </div>
+</div>
+
+<section class="container pb-5">
+    <!-- Filter -->
+    <div class="filter-pills">
+        <a href="?category=all" class="filter-pill {% if current_category == 'all' %}active{% endif %}">
+            {{ trans.categories.all }}
+        </a>
+        <a href="?category=general" class="filter-pill {% if current_category == 'general' %}active{% endif %}">
+            {{ trans.categories.economy }}
+        </a>
+        <a href="?category=tourism" class="filter-pill {% if current_category == 'tourism' %}active{% endif %}">
+            {{ trans.categories.tourism }}
+        </a>
+    </div>
+    
+    <!-- News Grid -->
+    {% if news_items %}
+    <div class="news-grid">
+        {% for news in news_items %}
+        <article class="news-card">
+            <div class="news-card-image">
+                {% if news.image %}
+                <img src="{{ news.image }}" alt="{{ news.title|truncatechars:50 }}" loading="lazy">
+                {% else %}
+                <span class="flag-placeholder">🇭🇷</span>
+                {% endif %}
+            </div>
+            <div class="news-card-body">
+                <h3 class="news-card-title">{{ news.title|truncatechars:80 }}</h3>
+                {% if news.description %}
+                <p class="news-card-excerpt">{{ news.description|striptags|truncatechars:120 }}</p>
+                {% endif %}
+                <div class="news-card-footer">
+                    <div class="news-card-meta">
+                        <span class="source">{{ news.source }}</span><br>
+                        <span>{{ news.published|date:"d.m.Y" }}</span>
+                    </div>
+                    <a href="{{ news.link }}" target="_blank" rel="noopener" class="news-card-link">
+                        {{ trans.read_more }} →
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-news">
+        <p>{{ trans.no_news }}</p>
+    </div>
+    {% endif %}
+    
+    <!-- SEO Footer -->
+    <div class="seo-footer">
+        <h2>123-Kroatien.eu – {{ trans.title }}</h2>
+        <p>
+            {% if lang == 'ge' %}
+            Als führender Immobilienmarktplatz für Kroatien informieren wir Sie über aktuelle Entwicklungen am Immobilienmarkt, Wirtschaftsnachrichten und Tipps für das Leben an der Adria.
+            {% elif lang == 'en' %}
+            As the leading real estate marketplace for Croatia, we keep you informed about current developments in the property market, economic news and tips for life on the Adriatic.
+            {% elif lang == 'hr' %}
+            Kao vodeće tržište nekretnina za Hrvatsku, informiramo vas o aktualnim zbivanjima na tržištu nekretnina, ekonomskim vijestima i savjetima za život na Jadranu.
+            {% else %}
+            123-Kroatien.eu - Your real estate marketplace for Croatia.
+            {% endif %}
+        </p>
+    </div>
+</section>
+{% endblock %}

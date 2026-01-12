@@ -251,4 +251,31 @@ urlpatterns += [
     # SEO: Sitemap & robots.txt
     path('sitemap.xml', views.xml_sitemap, name='xml_sitemap'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+
+    # News-Bereich (SEO + AI optimiert)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    # News-Bereich
+    path('<str:country>/nachrichten/', views.news_page, name='news'),
+
+    # News-Bereich (alle Sprachen)
+    path('croatia/news/', views.news_page, name='news_en'),
+    path('hrvatska/vijesti/', views.news_page, name='news_hr'),
+    path('croatie/actualites/', views.news_page, name='news_fr'),
+    path('kroatie/nieuws/', views.news_page, name='news_nl'),
+    path('chorwacja/wiadomosci/', views.news_page, name='news_pl'),
+    path('chorvatsko/zpravy/', views.news_page, name='news_cz'),
+    path('horvatiya/novosti/', views.news_page, name='news_ru'),
+    path('kroatia/nea/', views.news_page, name='news_gr'),
 ]
