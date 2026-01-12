@@ -265,3 +265,265 @@ def makler_objekt_aktivieren(request, listing_id):
     listing.save()
     
     return JsonResponse({'success': True, 'message': 'Zur Pruefung eingereicht / Poslano na provjeru'})
+
+
+# =============================================================================
+# XML-IMPORT
+# =============================================================================
+import xml.etree.ElementTree as ET
+from django.core.files.base import ContentFile
+import requests
+
+@login_required
+def makler_xml_import(request):
+    """XML-Datei hochladen und importieren"""
+    professional = get_makler_professional(request.user)
+    if not professional:
+        return redirect('main:home')
+    
+    lang = request.session.get('site_language', 'ge')
+    results = None
+    
+    if request.method == 'POST' and 'xml_file' in request.FILES:
+        xml_file = request.FILES['xml_file']
+        
+        try:
+            # XML parsen
+            tree = ET.parse(xml_file)
+            root = tree.getroot()
+            
+            results = {
+                'total': 0,
+                'success': 0,
+                'errors': [],
+                'imported': []
+            }
+            
+            # Verschiedene XML-Formate unterstuetzen
+            # Format 1: OpenImmo
+            immobilien = root.findall('.//immobilie')
+            
+            # Format 2: Einfaches Format
+            if not immobilien:
+                immobilien = root.findall('.//nekretnina')
+            
+            # Format 3: property-Tags
+            if not immobilien:
+                immobilien = root.findall('.//property')
+            
+            # Format 4: listing-Tags
+            if not immobilien:
+                immobilien = root.findall('.//listing')
+            
+            for immo in immobilien:
+                results['total'] += 1
+                
+                try:
+                    # Daten extrahieren (flexibel fuer verschiedene Formate)
+                    listing_data = extract_listing_data(immo)
+                    
+                    # Listing erstellen
+                    listing = Listing(
+                        property_title=listing_data.get('title', 'Ohne Titel'),
+                        property_description=listing_data.get('description', ''),
+                        property_type=listing_data.get('type', 'House'),
+                        property_status=listing_data.get('status', 'Sale'),
+                        property_price=int(listing_data.get('price', 0) or 0),
+                        location=listing_data.get('location', ''),
+                        city=listing_data.get('city', ''),
+                        address=listing_data.get('address', ''),
+                        zipcode=listing_data.get('zipcode', ''),
+                        country='Kroatien',
+                        bedrooms=int(listing_data.get('bedrooms', 0) or 0),
+                        bathrooms=int(listing_data.get('bathrooms', 0) or 0),
+                        area=int(listing_data.get('area', 0) or 0),
+                        size=float(listing_data.get('size', 0) or 0),
+                        floors=int(listing_data.get('floors', 1) or 1),
+                        garage=int(listing_data.get('garage', 0) or 0),
+                        # Makler-Daten
+                        oib_number=professional.oib_number,
+                        email=professional.email,
+                        company_name=professional.company_name or professional.name,
+                        # Status
+                        listing_status='pruefung',
+                        is_published=False,
+                    )
+                    
+                    listing.save()
+                    
+                    # Validierung
+                    fehler = validate_listing(listing)
+                    if fehler:
+                        listing.pruefung_fehler = "\n".join(fehler)
+                        listing.save()
+                    
+                    results['success'] += 1
+                    results['imported'].append({
+                        'title': listing.property_title,
+                        'id': listing.id,
+                        'errors': fehler
+                    })
+                    
+                except Exception as e:
+                    results['errors'].append(f"Objekt {results['total']}: {str(e)}")
+            
+            if lang == 'hr':
+                messages.success(request, f"Uvezeno {results['success']} od {results['total']} nekretnina.")
+            else:
+                messages.success(request, f"{results['success']} von {results['total']} Objekten importiert.")
+                
+        except ET.ParseError as e:
+            if lang == 'hr':
+                messages.error(request, f"XML greska: {str(e)}")
+            else:
+                messages.error(request, f"XML-Fehler: {str(e)}")
+        except Exception as e:
+            messages.error(request, f"Fehler: {str(e)}")
+    
+    return render(request, 'makler_portal/xml_import.html', {
+        'professional': professional,
+        'lang': lang,
+        'results': results,
+    })
+
+
+def extract_listing_data(element):
+    """Extrahiert Daten aus verschiedenen XML-Formaten"""
+    data = {}
+    
+    # Titel
+    for tag in ['objekttitel', 'naslov', 'title', 'name', 'property_title']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            data['title'] = el.text.strip()
+            break
+    
+    # Beschreibung
+    for tag in ['objektbeschreibung', 'opis', 'description', 'property_description']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            data['description'] = el.text.strip()
+            break
+    
+    # Preis
+    for tag in ['kaufpreis', 'cijena', 'price', 'property_price']:
+        el = element.find(f'.//{tag}')
+        if el is not None:
+            try:
+                price_text = el.text or el.get('value', '0')
+                data['price'] = int(float(price_text.replace('.', '').replace(',', '.').replace(' ', '')))
+            except:
+                data['price'] = 0
+            break
+    
+    # Typ
+    for tag in ['objektart', 'tip', 'type', 'property_type']:
+        el = element.find(f'.//{tag}')
+        if el is not None:
+            typ = el.text or ''
+            # Mapping
+            type_map = {
+                'kuca': 'House', 'haus': 'House', 'house': 'House',
+                'stan': 'Appartment', 'wohnung': 'Appartment', 'apartment': 'Appartment',
+                'vila': 'Villa', 'villa': 'Villa',
+                'zemljiste': 'Property', 'grundstueck': 'Property', 'land': 'Property',
+                'novogradnja': 'New Building', 'neubau': 'New Building',
+            }
+            data['type'] = type_map.get(typ.lower(), typ)
+            break
+    
+    # Status (Verkauf/Miete)
+    for tag in ['vermarktungsart', 'status', 'property_status']:
+        el = element.find(f'.//{tag}')
+        if el is not None:
+            status = el.text or el.get('KAUF', '') or el.get('MIETE_PACHT', '')
+            if 'prodaja' in status.lower() or 'kauf' in status.lower() or 'sale' in status.lower() or el.get('KAUF') == 'true':
+                data['status'] = 'Sale'
+            elif 'najam' in status.lower() or 'miete' in status.lower() or 'rent' in status.lower():
+                data['status'] = 'Rent'
+            break
+    
+    # Stadt
+    for tag in ['ort', 'grad', 'city']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            data['city'] = el.text.strip()
+            break
+    
+    # Region/Location
+    for tag in ['region', 'lokacija', 'location', 'zupanija']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            data['location'] = el.text.strip()
+            break
+    
+    # PLZ
+    for tag in ['plz', 'postanski_broj', 'zipcode', 'zip']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            data['zipcode'] = el.text.strip()
+            break
+    
+    # Adresse
+    for tag in ['strasse', 'adresa', 'address']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            data['address'] = el.text.strip()
+            break
+    
+    # Schlafzimmer
+    for tag in ['anzahl_zimmer', 'spavace_sobe', 'bedrooms', 'rooms']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            try:
+                data['bedrooms'] = int(float(el.text))
+            except:
+                pass
+            break
+    
+    # Badezimmer
+    for tag in ['anzahl_badezimmer', 'kupaonice', 'bathrooms']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            try:
+                data['bathrooms'] = int(float(el.text))
+            except:
+                pass
+            break
+    
+    # Flaeche
+    for tag in ['grundstuecksflaeche', 'povrsina_zemljista', 'area', 'plot_area']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            try:
+                data['area'] = int(float(el.text))
+            except:
+                pass
+            break
+    
+    # Wohnflaeche
+    for tag in ['wohnflaeche', 'stambena_povrsina', 'size', 'living_area']:
+        el = element.find(f'.//{tag}')
+        if el is not None and el.text:
+            try:
+                data['size'] = float(el.text)
+            except:
+                pass
+            break
+    
+    return data
+
+
+@login_required
+def makler_xml_dokumentation(request):
+    """XML-Schnittstellen Dokumentation"""
+    professional = get_makler_professional(request.user)
+    if not professional:
+        return redirect('main:home')
+    
+    lang = request.session.get('site_language', 'ge')
+    
+    return render(request, 'makler_portal/xml_dokumentation.html', {
+        'professional': professional,
+        'lang': lang,
+    })

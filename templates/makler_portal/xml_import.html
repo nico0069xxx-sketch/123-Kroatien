@@ -1,0 +1,164 @@
+{% extends 'makler_portal/base_portal.html' %}
+{% load static %}
+
+{% block portal_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        
+        <!-- Upload-Bereich -->
+        <div class="card mb-4" style="border-radius:10px;">
+            <div class="card-header" style="background:#003167;color:white;border-radius:10px 10px 0 0;">
+                <h5 class="mb-0">
+                    <i class="fa fa-file-code"></i>
+                    {% if lang == 'hr' %}XML Uvoz{% else %}XML-Import{% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i>
+                    {% if lang == 'hr' %}
+                        Podržani formati: OpenImmo, jednostavni XML. Svi objekti idu na provjeru prije objave.
+                    {% else %}
+                        Unterstuetzte Formate: OpenImmo, einfaches XML. Alle Objekte gehen zur Pruefung vor Veroeffentlichung.
+                    {% endif %}
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label><strong>{% if lang == 'hr' %}XML Datoteka{% else %}XML-Datei{% endif %}</strong></label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="xml_file" name="xml_file" accept=".xml" required>
+                            <label class="custom-file-label" for="xml_file">
+                                {% if lang == 'hr' %}Odaberi datoteku...{% else %}Datei auswaehlen...{% endif %}
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-lg mt-3">
+                        <i class="fa fa-upload"></i>
+                        {% if lang == 'hr' %}Uvezi objekte{% else %}Objekte importieren{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Ergebnisse -->
+        {% if results %}
+        <div class="card" style="border-radius:10px;">
+            <div class="card-header" style="background:#1a5c1a;color:white;border-radius:10px 10px 0 0;">
+                <h5 class="mb-0">
+                    <i class="fa fa-check-circle"></i>
+                    {% if lang == 'hr' %}Rezultati uvoza{% else %}Import-Ergebnis{% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="text-center p-3" style="background:#f8f9fa;border-radius:10px;">
+                            <h3 style="color:#003167;">{{ results.total }}</h3>
+                            <small>{% if lang == 'hr' %}Ukupno u datoteci{% else %}Gesamt in Datei{% endif %}</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center p-3" style="background:#d4edda;border-radius:10px;">
+                            <h3 style="color:#1a5c1a;">{{ results.success }}</h3>
+                            <small>{% if lang == 'hr' %}Uspješno uvezeno{% else %}Erfolgreich importiert{% endif %}</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center p-3" style="background:#f8d7da;border-radius:10px;">
+                            <h3 style="color:#8b0000;">{{ results.errors|length }}</h3>
+                            <small>{% if lang == 'hr' %}Greške{% else %}Fehler{% endif %}</small>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if results.errors %}
+                <div class="alert alert-danger">
+                    <strong>{% if lang == 'hr' %}Greške:{% else %}Fehler:{% endif %}</strong>
+                    <ul class="mb-0 mt-2">
+                        {% for error in results.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if results.imported %}
+                <h6 class="mt-4">{% if lang == 'hr' %}Uvezeni objekti:{% else %}Importierte Objekte:{% endif %}</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>{% if lang == 'hr' %}Naslov{% else %}Titel{% endif %}</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in results.imported %}
+                            <tr>
+                                <td>{{ item.title }}</td>
+                                <td>
+                                    {% if item.errors %}
+                                    <span class="text-warning"><i class="fa fa-exclamation-triangle"></i> {{ item.errors|length }} {% if lang == 'hr' %}greške{% else %}Fehler{% endif %}</span>
+                                    {% else %}
+                                    <span class="text-success"><i class="fa fa-check"></i> OK</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+                
+                <a href="{% url 'main:makler_dashboard' %}" class="btn btn-primary mt-3">
+                    <i class="fa fa-arrow-left"></i>
+                    {% if lang == 'hr' %}Natrag na Dashboard{% else %}Zurueck zum Dashboard{% endif %}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Beispiel-XML -->
+        <div class="card mt-4" style="border-radius:10px;">
+            <div class="card-header" style="background:#6c757d;color:white;border-radius:10px 10px 0 0;">
+                <h6 class="mb-0">
+                    <i class="fa fa-code"></i>
+                    {% if lang == 'hr' %}Primjer XML formata{% else %}Beispiel XML-Format{% endif %}
+                </h6>
+            </div>
+            <div class="card-body">
+                <pre style="background:#f8f9fa;padding:15px;border-radius:5px;font-size:12px;overflow-x:auto;"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;nekretnine&gt;
+  &lt;nekretnina&gt;
+    &lt;naslov&gt;Vila s bazenom u Istri&lt;/naslov&gt;
+    &lt;opis&gt;Prekrasna vila s pogledom na more...&lt;/opis&gt;
+    &lt;tip&gt;vila&lt;/tip&gt;
+    &lt;status&gt;prodaja&lt;/status&gt;
+    &lt;cijena&gt;450000&lt;/cijena&gt;
+    &lt;grad&gt;Rovinj&lt;/grad&gt;
+    &lt;lokacija&gt;Istrien&lt;/lokacija&gt;
+    &lt;spavace_sobe&gt;4&lt;/spavace_sobe&gt;
+    &lt;kupaonice&gt;3&lt;/kupaonice&gt;
+    &lt;povrsina_zemljista&gt;800&lt;/povrsina_zemljista&gt;
+    &lt;stambena_povrsina&gt;250&lt;/stambena_povrsina&gt;
+  &lt;/nekretnina&gt;
+&lt;/nekretnine&gt;</code></pre>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+// Dateiname anzeigen
+document.getElementById('xml_file').addEventListener('change', function(e) {
+    var fileName = e.target.files[0].name;
+    var label = document.querySelector('.custom-file-label');
+    label.textContent = fileName;
+});
+</script>
+{% endblock %}
