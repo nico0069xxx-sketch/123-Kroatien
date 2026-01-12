@@ -1,40 +1,45 @@
 # -*- coding: utf-8 -*-
-"""Automatska provjera podataka o nekretninama / Automatische Pruefung"""
+"""Automatska provjera podataka o nekretninama"""
 
-# Gueltige kroatische Regionen
+# Gueltige Regionen (erweitert)
 VALID_LOCATIONS = [
+    # Deutsche Namen
     'Istrien', 'Primorje', 'Lika-Senj', 'Zadar', 'Sibenik-Knin',
     'Split-Dalmatien', 'Dubrovnik-Neretva', 'Karlovac', 
     'Gespanschaft Zagreb', 'Stadt Zagreb', 'Krapina-Zagorje',
     'Varazdin', 'Koprivnica-Krizevci', 'Bjelovar-Bilogora',
     'Virovitica-Podravina', 'Pozega-Slawonien', 'Brod-Posavina',
     'Osijek-Baranja', 'Vukovar-Syrmien', 'Medimurje',
-    # Mit Sonderzeichen
-    'Sibenik-Knin', 'Pozega-Slawonien', 'Medimurje', 'Varazdin',
-    'Koprivnica-Krizevci',
-    # Kroatische Namen
-    'Istra', 'Primorsko-goranska', 'Licko-senjska', 'Zadarska',
-    'Sibensko-kninska', 'Splitsko-dalmatinska', 'Dubrovacko-neretvanska',
-    'Karlovacka', 'Zagrebacka', 'Grad Zagreb', 'Krapinsko-zagorska',
-    'Varazdinska', 'Koprivnicko-krizevacka', 'Bjelovarsko-bilogorska',
-    'Viroviticko-podravska', 'Pozesko-slavonska', 'Brodsko-posavska',
-    'Osjecko-baranjska', 'Vukovarsko-srijemska', 'Medimurska',
+    # Staedte (wichtig!)
+    'Split', 'Dubrovnik', 'Zagreb', 'Rijeka', 'Pula', 'Zadar',
+    'Opatija', 'Rovinj', 'Porec', 'Umag', 'Sibenik', 'Trogir',
+    'Makarska', 'Hvar', 'Korcula', 'Brac', 'Vis', 'Krk', 'Cres',
+    'Losinj', 'Rab', 'Pag', 'Vodice', 'Primosten', 'Cavtat',
+    'Mlini', 'Slano', 'Ston', 'Novalja', 'Nin', 'Biograd',
+    # Kroatische Regionsnamen
+    'Istra', 'Dalmacija', 'Slavonija', 'Hrvatsko Zagorje',
+    'Kvarner', 'Lika', 'Gorski Kotar', 'Medimurje',
 ]
 
-VALID_PROPERTY_TYPES = ['House', 'Appartment', 'New Building', 'Property', 
-                        'Haus', 'Wohnung', 'Neubau', 'Grundstueck', 'Villa',
-                        'Kuca', 'Stan', 'Novogradnja', 'Zemljiste']
+VALID_PROPERTY_TYPES = [
+    'House', 'Appartment', 'New Building', 'Property', 'Villa',
+    'Haus', 'Wohnung', 'Neubau', 'Grundstueck', 'Grundstück',
+    'Kuca', 'Stan', 'Novogradnja', 'Zemljiste', 'Vila',
+    'Apartment', 'Land', 'Office', 'Commercial',
+]
 
-VALID_STATUS = ['Sale', 'Rent', 'Verkauf', 'Miete', 'Prodaja', 'Najam']
+VALID_STATUS = [
+    'Sale', 'Rent', 'For Sale', 'For Rent',
+    'Verkauf', 'Miete', 'Zu verkaufen', 'Zu vermieten',
+    'Prodaja', 'Najam', 'Na prodaju', 'Za najam',
+]
 
 
 def validate_listing(listing):
-    """
-    Provjerava nekretninu. Vraca listu gresaka (prazna = sve OK).
-    """
+    """Provjerava nekretninu. Vraca listu gresaka."""
     fehler = []
     
-    # 1. Tip nekretnine / Immobilientyp
+    # 1. Tip nekretnine
     if not listing.property_type:
         fehler.append("Nedostaje tip nekretnine (kuca, stan, zemljiste...)")
     elif listing.property_type not in VALID_PROPERTY_TYPES:
@@ -46,47 +51,51 @@ def validate_listing(listing):
     elif listing.property_status not in VALID_STATUS:
         fehler.append(f"Nepoznat status: {listing.property_status}")
     
-    # 3. Lokacija / Region
+    # 3. Lokacija (flexibel)
     if not listing.location:
         fehler.append("Nedostaje lokacija/regija")
     else:
-        location_lower = listing.location.lower().replace('š', 's').replace('ć', 'c').replace('č', 'c').replace('ž', 'z').replace('đ', 'd')
-        valid_lower = [loc.lower().replace('š', 's').replace('ć', 'c').replace('č', 'c').replace('ž', 'z').replace('đ', 'd') for loc in VALID_LOCATIONS]
-        if location_lower not in valid_lower:
-            fehler.append(f"Nepoznata regija: {listing.location}")
+        # Sehr flexible Pruefung
+        loc = listing.location.lower().strip()
+        valid = [v.lower() for v in VALID_LOCATIONS]
+        if loc not in valid:
+            # Pruefe ob Teil einer gueltigen Region
+            gefunden = False
+            for v in valid:
+                if loc in v or v in loc:
+                    gefunden = True
+                    break
+            if not gefunden and len(loc) < 3:
+                fehler.append(f"Nepoznata lokacija: {listing.location}")
     
-    # 4. Povrsina / Flaeche
+    # 4. Povrsina
     if not listing.area or listing.area <= 0:
-        fehler.append("Nedostaje povrsina zemljista (m2)")
+        fehler.append("Nedostaje povrsina (m2)")
     
-    # 5. Spavace sobe / Schlafzimmer
+    # 5. Spavace sobe
     if listing.bedrooms is None:
         fehler.append("Nedostaje broj spavacih soba")
-    elif listing.bedrooms < 0 or listing.bedrooms > 20:
-        fehler.append(f"Neispravan broj spavacih soba: {listing.bedrooms}")
     
-    # 6. Kupaonice / Badezimmer
+    # 6. Kupaonice
     if listing.bathrooms is None:
         fehler.append("Nedostaje broj kupaonica")
-    elif listing.bathrooms < 0 or listing.bathrooms > 10:
-        fehler.append(f"Neispravan broj kupaonica: {listing.bathrooms}")
     
-    # 7. Cijena / Preis
+    # 7. Cijena
     if not listing.property_price or listing.property_price <= 0:
         fehler.append("Nedostaje cijena")
     
-    # 8. Fotografija / Foto
+    # 8. Fotografija
     if not listing.photo_main:
         fehler.append("Nedostaje glavna fotografija")
     
-    # 9. Opis / Beschreibung (min 80 znakova ILI 3 recenice)
+    # 9. Opis (min 80 Zeichen ODER 3 Saetze)
     opis = listing.property_description or ""
     if len(opis) < 80:
         recenice = len([s for s in opis.replace('!', '.').replace('?', '.').split('.') if s.strip()])
         if recenice < 3:
-            fehler.append(f"Opis prekratak ({len(opis)} znakova, {recenice} recenica) - potrebno min. 80 znakova ili 3 recenice")
+            fehler.append(f"Opis prekratak ({len(opis)} znakova) - potrebno min. 80 znakova ili 3 recenice")
     
-    # 10. Naslov / Titel
+    # 10. Naslov
     if not listing.property_title or len(listing.property_title) < 5:
         fehler.append("Nedostaje naslov ili je prekratak")
     
