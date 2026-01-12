@@ -79,6 +79,8 @@
                                 <tr><td><code>adresa</code></td><td>Ulica i kucni broj</td><td>Obala 15</td></tr>
                                 <tr><td><code>postanski_broj</code></td><td>Postanski broj</td><td>52210</td></tr>
                                 <tr><td><code>stambena_povrsina</code></td><td>Stambena povrsina u m2</td><td>250</td></tr>
+                                <tr><td><code>slika</code></td><td>URL fotografije (max. 7x)</td><td>https://example.com/slika1.jpg</td></tr>
+                                <tr><td><code>foto</code></td><td>URL fotografije (njemacki)</td><td>https://example.com/foto1.jpg</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -135,6 +137,8 @@
                                 <tr><td><code>adresa</code></td><td>Strasse und Hausnummer</td><td>Obala 15</td></tr>
                                 <tr><td><code>postanski_broj</code></td><td>PLZ</td><td>52210</td></tr>
                                 <tr><td><code>stambena_povrsina</code></td><td>Wohnflaeche in m2</td><td>250</td></tr>
+                                <tr><td><code>foto</code></td><td>Bild-URL (max. 7x)</td><td>https://example.com/bild1.jpg</td></tr>
+                                <tr><td><code>slika</code></td><td>Bild-URL (kroatisch)</td><td>https://example.com/slika1.jpg</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -166,6 +170,10 @@
     <span style="color:#4ec9b0;">&lt;kupaonice&gt;</span>3<span style="color:#4ec9b0;">&lt;/kupaonice&gt;</span>
     <span style="color:#4ec9b0;">&lt;povrsina_zemljista&gt;</span>1200<span style="color:#4ec9b0;">&lt;/povrsina_zemljista&gt;</span>
     <span style="color:#4ec9b0;">&lt;stambena_povrsina&gt;</span>320<span style="color:#4ec9b0;">&lt;/stambena_povrsina&gt;</span>
+    <span style="color:#808080;">&lt;!-- Fotografije (max. 7) --&gt;</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>https://example.com/vila-rovinj-1.jpg<span style="color:#ce9178;">&lt;/slika&gt;</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>https://example.com/vila-rovinj-2.jpg<span style="color:#ce9178;">&lt;/slika&gt;</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>https://example.com/vila-rovinj-3.jpg<span style="color:#ce9178;">&lt;/slika&gt;</span>
   <span style="color:#569cd6;">&lt;/nekretnina&gt;</span>
 <span style="color:#569cd6;">&lt;/nekretnine&gt;</span></code></pre>
                         
@@ -298,6 +306,11 @@
     <span style="color:#6a9955;">&lt;adresa&gt;</span>String<span style="color:#6a9955;">&lt;/adresa&gt;</span>
     <span style="color:#6a9955;">&lt;postanski_broj&gt;</span>String<span style="color:#6a9955;">&lt;/postanski_broj&gt;</span>
     <span style="color:#6a9955;">&lt;stambena_povrsina&gt;</span>Float (m2)<span style="color:#6a9955;">&lt;/stambena_povrsina&gt;</span>
+    
+    <span style="color:#808080;">// {% if lang == 'hr' %}Fotografije (max. 7){% else %}Fotos (max. 7){% endif %}</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>URL (https://...)<span style="color:#ce9178;">&lt;/slika&gt;</span>
+    <span style="color:#ce9178;">&lt;foto&gt;</span>URL (https://...)<span style="color:#ce9178;">&lt;/foto&gt;</span>
+    <span style="color:#ce9178;">&lt;image&gt;</span>URL (https://...)<span style="color:#ce9178;">&lt;/image&gt;</span>
   <span style="color:#569cd6;">&lt;/nekretnina&gt;</span>
 <span style="color:#569cd6;">&lt;/nekretnine&gt;</span></code></pre>
                     </div>
@@ -402,13 +415,13 @@
                             </tbody>
                         </table>
                         
-                        <div class="alert alert-warning mt-3">
+                        <div class="alert alert-success mt-3">
                             <i class="fa fa-camera"></i>
-                            <strong>{% if lang == 'hr' %}Napomena{% else %}Hinweis{% endif %}:</strong> 
+                            <strong>{% if lang == 'hr' %}Fotografije{% else %}Fotos{% endif %}:</strong> 
                             {% if lang == 'hr' %}
-                            Fotografije se ne mogu uvesti putem XML-a. Nakon uvoza, fotografije se moraju rucno ucitati u Dashboardu.
+                            Fotografije se MOGU uvesti putem XML-a! Dodajte URL-ove slika u &lt;slika&gt; tagove (max. 7 slika).
                             {% else %}
-                            Fotos koennen nicht per XML importiert werden. Nach dem Import muessen Fotos manuell im Dashboard hochgeladen werden.
+                            Fotos KOENNEN per XML importiert werden! Fuegen Sie Bild-URLs in &lt;foto&gt; Tags ein (max. 7 Bilder).
                             {% endif %}
                         </div>
                     </div>
@@ -458,6 +471,9 @@ function downloadTemplate(type) {
     <kupaonice>0</kupaonice>
     <povrsina_zemljista>0</povrsina_zemljista>
     <stambena_povrsina>0</stambena_povrsina>
+    <!-- Fotografije / Fotos (max. 7) -->
+    <slika>https://example.com/foto1.jpg</slika>
+    <slika>https://example.com/foto2.jpg</slika>
   </nekretnina>
 </nekretnine>`;
     }

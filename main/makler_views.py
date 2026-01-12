@@ -351,6 +351,22 @@ def makler_xml_import(request):
                     
                     listing.save()
                     
+                    # Bilder herunterladen
+                    bilder_urls = listing_data.get('images', [])
+                    bilder_geladen = 0
+                    if bilder_urls:
+                        # Erstes Bild als Hauptbild
+                        if len(bilder_urls) > 0 and download_image_from_url(bilder_urls[0], listing, 'photo_main'):
+                            bilder_geladen += 1
+                        
+                        # Weitere Bilder
+                        for i, url in enumerate(bilder_urls[1:7], 1):
+                            if download_image_from_url(url, listing, f'photo_{i}'):
+                                bilder_geladen += 1
+                        
+                        if bilder_geladen > 0:
+                            listing.save()
+                    
                     # Validierung
                     fehler = validate_listing(listing)
                     if fehler:
@@ -385,6 +401,39 @@ def makler_xml_import(request):
         'lang': lang,
         'results': results,
     })
+
+
+
+def download_image_from_url(url, listing, field_name):
+    """Laedt ein Bild von einer URL herunter und speichert es"""
+    try:
+        import requests
+        from django.core.files.base import ContentFile
+        import os
+        from urllib.parse import urlparse
+        
+        # Timeout und Headers setzen
+        headers = {'User-Agent': 'Mozilla/5.0 (compatible; RealEstateBot/1.0)'}
+        response = requests.get(url, timeout=30, headers=headers)
+        
+        if response.status_code == 200:
+            # Dateiname aus URL extrahieren
+            parsed = urlparse(url)
+            filename = os.path.basename(parsed.path)
+            if not filename or '.' not in filename:
+                # Fallback-Name
+                filename = f"{listing.id}_{field_name}.jpg"
+            
+            # Content-Type pruefen
+            content_type = response.headers.get('Content-Type', '')
+            if 'image' in content_type or filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
+                # Bild speichern
+                getattr(listing, field_name).save(filename, ContentFile(response.content), save=False)
+                return True
+        return False
+    except Exception as e:
+        print(f"Bild-Download Fehler ({url}): {e}")
+        return False
 
 
 def extract_listing_data(element):
@@ -510,6 +559,33 @@ def extract_listing_data(element):
             except:
                 pass
             break
+    
+    # Bilder-URLs extrahieren
+    data['images'] = []
+    
+    # OpenImmo Format: <anhang><daten><pfad>URL</pfad></daten></anhang>
+    for anhang in element.findall('.//anhang'):
+        pfad = anhang.find('.//pfad')
+        if pfad is not None and pfad.text:
+            url = pfad.text.strip()
+            if url.startswith('http'):
+                data['images'].append(url)
+    
+    # Einfaches Format: <foto>URL</foto>, <bild>URL</bild>, <image>URL</image>
+    for tag in ['foto', 'bild', 'image', 'photo', 'slika', 'photo_main', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5', 'photo_6']:
+        for el in element.findall(f'.//{tag}'):
+            url = el.text if el.text else el.get('url', '') or el.get('src', '')
+            if url and url.strip().startswith('http'):
+                data['images'].append(url.strip())
+    
+    # Format mit URLs in Attributen
+    for el in element.findall('.//*[@url]'):
+        url = el.get('url', '')
+        if url.startswith('http') and any(ext in url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp']):
+            data['images'].append(url)
+    
+    # Maximal 7 Bilder (photo_main + photo_1 bis photo_6)
+    data['images'] = data['images'][:7]
     
     return data
 

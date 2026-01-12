@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>{% if lang == 'hr' %}Cijena (EUR){% else %}Preis (EUR){% endif %} *</label>
-                            <input type="number" name="property_price" class="form-control" value="{{ listing.property_price|default:'' }}" required>
+                            <input type="text" name="property_price" class="form-control" id="preis-input" value="{{ listing.property_price|default:'' }}" required>
                         </div>
                     </div>
                     
@@ -172,4 +172,23 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var preis = document.getElementById('preis-input');
+    if (preis) {
+        preis.addEventListener('blur', function() {
+            var wert = this.value;
+            var nur_zahlen = wert.replace(/[^0-9]/g, '');
+            if (nur_zahlen) {
+                this.value = nur_zahlen;
+            }
+        });
+        preis.addEventListener('input', function() {
+            // Zeige Hinweis wenn nicht-Zahlen eingegeben werden
+        });
+    }
+});
+</script>
+
 {% endblock %}

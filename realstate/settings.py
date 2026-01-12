@@ -221,3 +221,4 @@ EMAIL_HOST_PASSWORD = 'pmjv woji jdsx kvns'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = '/ge/accounts/login/'
