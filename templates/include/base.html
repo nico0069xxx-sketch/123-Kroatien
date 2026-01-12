@@ -86,7 +86,7 @@
                                         <option value="ru" {% if language == 'ru' %}selected{% endif %}>Russian</option>
                                         <option value="sw" {% if language == 'sw' %}selected{% endif %}>Swedish</option>
                                         <option value="no" {% if language == 'no' %}selected{% endif %}>Norway</option>
-                                        <option value="sl" {% if language == 'sl' %}selected{% endif %}>Slovak</option>
+                                        <option value="sk" {% if language == 'sk' %}selected{% endif %}>Slovak</option>
                                         <option value="nl" {% if language == 'nl' %}selected{% endif %}>Dutch</option>
                                     </select>
                                 </li>
@@ -152,7 +152,7 @@
                         <!-- SPRACHE -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                <i class="fa fa-globe"></i> {% if language == 'ge' %}DE{% elif language == 'en' %}EN{% elif language == 'hr' %}HR{% else %}DE{% endif %}
+                                <i class="fa fa-globe"></i> {% if language == 'ge' %}DE{% elif language == 'en' %}EN{% elif language == 'hr' %}HR{% elif language == 'fr' %}FR{% elif language == 'pl' %}PL{% elif language == 'cz' %}CZ{% elif language == 'ru' %}RU{% elif language == 'gr' %}GR{% elif language == 'sw' %}SW{% elif language == 'no' %}NO{% elif language == 'sk' %}SK{% elif language == 'nl' %}NL{% else %}DE{% endif %}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left animate fade-up">
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ge')">🇩🇪 Deutsch</a></li>
@@ -278,7 +278,9 @@
             }
 
             function changelanguage(value) {
-                window.location.href = "/set-language/" + value + "/";
+                // Aktuelle URL als Parameter übergeben, um auf der gleichen Seite zu bleiben
+                var currentPath = window.location.pathname + window.location.search;
+                window.location.href = "/set-language/" + value + "/?next=" + encodeURIComponent(currentPath);
             }
 
         </script>
