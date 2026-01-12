@@ -1116,3 +1116,306 @@ def smart_search(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+# =============================================================================
+# RSS FEEDS - SEO & AI OPTIMIERT (12 Sprachen)
+# =============================================================================
+from django.http import HttpResponse
+from django.utils import timezone
+from datetime import datetime
+import xml.etree.ElementTree as ET
+
+# Sprach-spezifische Texte für RSS
+RSS_TRANSLATIONS = {
+    'ge': {
+        'site_title': '123-Kroatien.eu - Immobilienmarktplatz Kroatien',
+        'site_description': 'Der führende Immobilienmarktplatz für Kroatien. Finden Sie Häuser, Wohnungen und Grundstücke an der Adria.',
+        'listings_title': 'Neue Immobilien in Kroatien',
+        'listings_description': 'Aktuelle Immobilienangebote aus Kroatien - Häuser, Wohnungen, Villen und Grundstücke',
+    },
+    'en': {
+        'site_title': '123-Kroatien.eu - Croatia Real Estate Marketplace',
+        'site_description': 'The leading real estate marketplace for Croatia. Find houses, apartments and land on the Adriatic coast.',
+        'listings_title': 'New Properties in Croatia',
+        'listings_description': 'Current real estate offers from Croatia - houses, apartments, villas and land',
+    },
+    'hr': {
+        'site_title': '123-Kroatien.eu - Tržište nekretnina u Hrvatskoj',
+        'site_description': 'Vodeće tržište nekretnina za Hrvatsku. Pronađite kuće, stanove i zemljišta na Jadranu.',
+        'listings_title': 'Nove nekretnine u Hrvatskoj',
+        'listings_description': 'Aktualne ponude nekretnina iz Hrvatske - kuće, stanovi, vile i zemljišta',
+    },
+    'fr': {
+        'site_title': '123-Kroatien.eu - Marché immobilier Croatie',
+        'site_description': 'Le premier marché immobilier pour la Croatie. Trouvez maisons, appartements et terrains sur la côte Adriatique.',
+        'listings_title': 'Nouvelles propriétés en Croatie',
+        'listings_description': 'Offres immobilières actuelles de Croatie - maisons, appartements, villas et terrains',
+    },
+    'nl': {
+        'site_title': '123-Kroatien.eu - Vastgoedmarkt Kroatië',
+        'site_description': 'De toonaangevende vastgoedmarkt voor Kroatië. Vind huizen, appartementen en grond aan de Adriatische kust.',
+        'listings_title': 'Nieuwe woningen in Kroatië',
+        'listings_description': 'Actuele vastgoedaanbiedingen uit Kroatië - huizen, appartementen, villa\'s en grond',
+    },
+    'pl': {
+        'site_title': '123-Kroatien.eu - Rynek nieruchomości Chorwacja',
+        'site_description': 'Wiodący rynek nieruchomości w Chorwacji. Znajdź domy, mieszkania i działki nad Adriatykiem.',
+        'listings_title': 'Nowe nieruchomości w Chorwacji',
+        'listings_description': 'Aktualne oferty nieruchomości z Chorwacji - domy, mieszkania, wille i działki',
+    },
+    'cz': {
+        'site_title': '123-Kroatien.eu - Realitní trh Chorvatsko',
+        'site_description': 'Přední realitní trh pro Chorvatsko. Najděte domy, byty a pozemky na Jadranu.',
+        'listings_title': 'Nové nemovitosti v Chorvatsku',
+        'listings_description': 'Aktuální nabídky nemovitostí z Chorvatska - domy, byty, vily a pozemky',
+    },
+    'sk': {
+        'site_title': '123-Kroatien.eu - Realitný trh Chorvátsko',
+        'site_description': 'Popredný realitný trh pre Chorvátsko. Nájdite domy, byty a pozemky na Jadrane.',
+        'listings_title': 'Nové nehnuteľnosti v Chorvátsku',
+        'listings_description': 'Aktuálne ponuky nehnuteľností z Chorvátska - domy, byty, vily a pozemky',
+    },
+    'ru': {
+        'site_title': '123-Kroatien.eu - Рынок недвижимости Хорватии',
+        'site_description': 'Ведущий рынок недвижимости Хорватии. Найдите дома, квартиры и участки на Адриатике.',
+        'listings_title': 'Новая недвижимость в Хорватии',
+        'listings_description': 'Актуальные предложения недвижимости из Хорватии - дома, квартиры, виллы и участки',
+    },
+    'gr': {
+        'site_title': '123-Kroatien.eu - Αγορά ακινήτων Κροατία',
+        'site_description': 'Η κορυφαία αγορά ακινήτων για την Κροατία. Βρείτε σπίτια, διαμερίσματα και οικόπεδα στην Αδριατική.',
+        'listings_title': 'Νέα ακίνητα στην Κροατία',
+        'listings_description': 'Τρέχουσες προσφορές ακινήτων από την Κροατία - σπίτια, διαμερίσματα, βίλες και οικόπεδα',
+    },
+    'sw': {
+        'site_title': '123-Kroatien.eu - Fastighetsmarknad Kroatien',
+        'site_description': 'Den ledande fastighetsmarknaden för Kroatien. Hitta hus, lägenheter och mark vid Adriatiska havet.',
+        'listings_title': 'Nya fastigheter i Kroatien',
+        'listings_description': 'Aktuella fastighetserbjudanden från Kroatien - hus, lägenheter, villor och mark',
+    },
+    'no': {
+        'site_title': '123-Kroatien.eu - Eiendomsmarked Kroatia',
+        'site_description': 'Det ledende eiendomsmarkedet for Kroatia. Finn hus, leiligheter og tomter ved Adriaterhavet.',
+        'listings_title': 'Nye eiendommer i Kroatia',
+        'listings_description': 'Aktuelle eiendomstilbud fra Kroatia - hus, leiligheter, villaer og tomter',
+    },
+}
+
+COUNTRY_NAMES = {
+    'ge': 'kroatien', 'en': 'croatia', 'hr': 'hrvatska', 'fr': 'croatie',
+    'nl': 'kroatie', 'pl': 'chorwacja', 'cz': 'chorvatsko', 'sk': 'chorvatsko',
+    'ru': 'horvatiya', 'gr': 'kroatia', 'sw': 'kroatien', 'no': 'kroatia',
+}
+
+
+def rss_listings(request, lang='ge'):
+    """
+    RSS Feed für Immobilien-Listings
+    SEO + AI optimiert
+    """
+    trans = RSS_TRANSLATIONS.get(lang, RSS_TRANSLATIONS['ge'])
+    country = COUNTRY_NAMES.get(lang, 'kroatien')
+    base_url = request.build_absolute_uri('/').rstrip('/')
+    
+    # XML erstellen
+    rss = ET.Element('rss', version='2.0')
+    rss.set('xmlns:atom', 'http://www.w3.org/2005/Atom')
+    rss.set('xmlns:dc', 'http://purl.org/dc/elements/1.1/')
+    
+    channel = ET.SubElement(rss, 'channel')
+    
+    # Channel Info
+    ET.SubElement(channel, 'title').text = trans['listings_title']
+    ET.SubElement(channel, 'description').text = trans['listings_description']
+    ET.SubElement(channel, 'link').text = f"{base_url}/{lang}/"
+    ET.SubElement(channel, 'language').text = lang if lang != 'ge' else 'de'
+    ET.SubElement(channel, 'lastBuildDate').text = timezone.now().strftime('%a, %d %b %Y %H:%M:%S %z')
+    ET.SubElement(channel, 'generator').text = '123-Kroatien.eu RSS Generator'
+    
+    # Atom self link
+    atom_link = ET.SubElement(channel, 'atom:link')
+    atom_link.set('href', f"{base_url}/{lang}/rss/listings/")
+    atom_link.set('rel', 'self')
+    atom_link.set('type', 'application/rss+xml')
+    
+    # Image
+    image = ET.SubElement(channel, 'image')
+    ET.SubElement(image, 'url').text = f"{base_url}/static/images/logo-black2.png"
+    ET.SubElement(image, 'title').text = trans['site_title']
+    ET.SubElement(image, 'link').text = f"{base_url}/{lang}/"
+    
+    # Listings holen
+    listings = Listing.objects.filter(is_published=True).order_by('-list_date')[:50]
+    
+    for listing in listings:
+        # Sprachspezifischen Content laden
+        if lang == 'ge' and listing.german_content:
+            content = json.loads(listing.german_content)
+        elif lang == 'en' and listing.english_content:
+            content = json.loads(listing.english_content)
+        elif lang == 'hr' and listing.croatian_content:
+            content = json.loads(listing.croatian_content)
+        elif lang == 'fr' and listing.french_content:
+            content = json.loads(listing.french_content)
+        elif lang == 'nl' and listing.dutch_content:
+            content = json.loads(listing.dutch_content)
+        elif lang == 'pl' and listing.polish_content:
+            content = json.loads(listing.polish_content)
+        elif lang == 'cz' and listing.czech_content:
+            content = json.loads(listing.czech_content)
+        elif lang == 'sk' and listing.slovak_content:
+            content = json.loads(listing.slovak_content)
+        elif lang == 'ru' and listing.russian_content:
+            content = json.loads(listing.russian_content)
+        elif lang == 'gr' and listing.greek_content:
+            content = json.loads(listing.greek_content)
+        elif lang == 'sw' and listing.swedish_content:
+            content = json.loads(listing.swedish_content)
+        elif lang == 'no' and listing.norway_content:
+            content = json.loads(listing.norway_content)
+        else:
+            content = listing.get_json()
+        
+        item = ET.SubElement(channel, 'item')
+        
+        title = content.get('property_title', listing.property_title)
+        ET.SubElement(item, 'title').text = title
+        ET.SubElement(item, 'link').text = f"{base_url}/{lang}/property-details/{listing.id}/"
+        ET.SubElement(item, 'guid').text = f"{base_url}/{lang}/property-details/{listing.id}/"
+        
+        description = content.get('property_description', listing.property_description)
+        if description:
+            ET.SubElement(item, 'description').text = description[:500]
+        
+        ET.SubElement(item, 'pubDate').text = listing.list_date.strftime('%a, %d %b %Y %H:%M:%S %z') if listing.list_date else ''
+        ET.SubElement(item, 'dc:creator').text = '123-Kroatien.eu'
+        
+        # Kategorie
+        ET.SubElement(item, 'category').text = listing.property_type
+        ET.SubElement(item, 'category').text = listing.property_status
+        ET.SubElement(item, 'category').text = listing.location
+    
+    # XML Response
+    xml_str = ET.tostring(rss, encoding='unicode', method='xml')
+    xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    
+    return HttpResponse(xml_declaration + xml_str, content_type='application/rss+xml; charset=utf-8')
+
+
+# =============================================================================
+# XML SITEMAP - SEO + AI OPTIMIERT (12 Sprachen)
+# =============================================================================
+
+def xml_sitemap(request):
+    """
+    Dynamische XML Sitemap mit allen Seiten in 12 Sprachen
+    Für Suchmaschinen und AI-Crawler optimiert
+    """
+    base_url = request.build_absolute_uri('/').rstrip('/')
+    
+    LANGUAGES = ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']
+    LANG_CODES = {
+        'ge': 'de', 'en': 'en', 'hr': 'hr', 'fr': 'fr', 'nl': 'nl', 'pl': 'pl',
+        'cz': 'cs', 'sk': 'sk', 'ru': 'ru', 'gr': 'el', 'sw': 'sv', 'no': 'no'
+    }
+    COUNTRY_NAMES = {
+        'ge': 'kroatien', 'en': 'croatia', 'hr': 'hrvatska', 'fr': 'croatie',
+        'nl': 'kroatie', 'pl': 'chorwacja', 'cz': 'chorvatsko', 'sk': 'chorvatsko',
+        'ru': 'horvatiya', 'gr': 'kroatia', 'sw': 'kroatien', 'no': 'kroatia',
+    }
+    
+    # XML erstellen
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+    xml_content += 'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+    
+    # Statische Seiten
+    static_pages = ['', 'about/', 'contact/', 'listings/', 'faq/', 'blog/']
+    
+    for page in static_pages:
+        for lang in LANGUAGES:
+            xml_content += '  <url>\n'
+            xml_content += f'    <loc>{base_url}/{lang}/{page}</loc>\n'
+            xml_content += '    <changefreq>weekly</changefreq>\n'
+            xml_content += '    <priority>0.8</priority>\n'
+            # Hreflang für alle Sprachen
+            for alt_lang in LANGUAGES:
+                xml_content += f'    <xhtml:link rel="alternate" hreflang="{LANG_CODES[alt_lang]}" href="{base_url}/{alt_lang}/{page}"/>\n'
+            xml_content += '  </url>\n'
+    
+    # Immobilien-Listings
+    listings = Listing.objects.filter(is_published=True)
+    for listing in listings:
+        for lang in LANGUAGES:
+            xml_content += '  <url>\n'
+            xml_content += f'    <loc>{base_url}/{lang}/property-details/{listing.id}/</loc>\n'
+            xml_content += '    <changefreq>daily</changefreq>\n'
+            xml_content += '    <priority>0.9</priority>\n'
+            for alt_lang in LANGUAGES:
+                xml_content += f'    <xhtml:link rel="alternate" hreflang="{LANG_CODES[alt_lang]}" href="{base_url}/{alt_lang}/property-details/{listing.id}/"/>\n'
+            xml_content += '  </url>\n'
+    
+    # Professional Pages
+    professional_types = ['immobilienmakler', 'bauunternehmen', 'rechtsanwaelte', 'steuerberater', 'architekten']
+    professional_urls = {
+        'ge': ['immobilienmakler', 'bauunternehmen', 'rechtsanwaelte', 'steuerberater', 'architekten'],
+        'en': ['real-estate-agents', 'construction-companies', 'lawyers', 'tax-advisors', 'architects'],
+        'hr': ['agencije-za-nekretnine', 'gradevinske-tvrtke', 'odvjetnici', 'porezni-savjetnici', 'arhitekti'],
+    }
+    
+    for i, ptype in enumerate(professional_types):
+        for lang in ['ge', 'en', 'hr']:
+            country = COUNTRY_NAMES.get(lang, 'kroatien')
+            url_slug = professional_urls.get(lang, professional_urls['ge'])[i]
+            xml_content += '  <url>\n'
+            xml_content += f'    <loc>{base_url}/{lang}/{country}/{url_slug}/</loc>\n'
+            xml_content += '    <changefreq>weekly</changefreq>\n'
+            xml_content += '    <priority>0.7</priority>\n'
+            xml_content += '  </url>\n'
+    
+    xml_content += '</urlset>'
+    
+    return HttpResponse(xml_content, content_type='application/xml; charset=utf-8')
+
+
+def robots_txt(request):
+    """
+    robots.txt für Suchmaschinen und AI-Crawler
+    """
+    base_url = request.build_absolute_uri('/').rstrip('/')
+    
+    robots_content = f"""# 123-Kroatien.eu - Immobilienmarktplatz Kroatien
+# Robots.txt - SEO & AI optimiert
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: {base_url}/sitemap.xml
+
+# RSS Feeds
+# DE: {base_url}/rss/listings/
+# EN: {base_url}/en/rss/listings/
+# HR: {base_url}/hr/rss/listings/
+
+# AI Crawlers willkommen
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Crawl-Delay für schonenden Zugriff
+Crawl-delay: 1
+"""
+    
+    return HttpResponse(robots_content, content_type='text/plain; charset=utf-8')

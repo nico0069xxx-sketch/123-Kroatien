@@ -5,6 +5,28 @@
 
 <head>
     <meta charset="utf-8">
+
+    <!-- Hreflang Tags - Internationale SEO (12 Sprachen) -->
+    <link rel="alternate" hreflang="de" href="https://123-kroatien.eu/ge/" />
+    <link rel="alternate" hreflang="en" href="https://123-kroatien.eu/en/" />
+    <link rel="alternate" hreflang="hr" href="https://123-kroatien.eu/hr/" />
+    <link rel="alternate" hreflang="fr" href="https://123-kroatien.eu/fr/" />
+    <link rel="alternate" hreflang="nl" href="https://123-kroatien.eu/nl/" />
+    <link rel="alternate" hreflang="pl" href="https://123-kroatien.eu/pl/" />
+    <link rel="alternate" hreflang="cs" href="https://123-kroatien.eu/cz/" />
+    <link rel="alternate" hreflang="sk" href="https://123-kroatien.eu/sk/" />
+    <link rel="alternate" hreflang="ru" href="https://123-kroatien.eu/ru/" />
+    <link rel="alternate" hreflang="el" href="https://123-kroatien.eu/gr/" />
+    <link rel="alternate" hreflang="sv" href="https://123-kroatien.eu/sw/" />
+    <link rel="alternate" hreflang="no" href="https://123-kroatien.eu/no/" />
+    <link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu/ge/" />
+    
+    <!-- RSS Feed Discovery -->
+    <link rel="alternate" type="application/rss+xml" title="123-Kroatien.eu - Immobilien RSS" href="/rss/listings/" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://123-kroatien.eu{{ request.path }}" />
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Rethouse - Real Estate HTML Template">
@@ -34,6 +56,67 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
     
     {% block style %}{% endblock style %}
+
+    <!-- Schema.org - Organization (AI + SEO optimiert) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "123-Kroatien.eu",
+        "alternateName": "Immobilienmarktplatz Kroatien",
+        "description": "Der führende Immobilienmarktplatz für Kroatien. Finden Sie Häuser, Wohnungen, Villen und Grundstücke an der Adria. Spezialisiert auf Immobilien in Kroatien seit 2020.",
+        "url": "https://123-kroatien.eu",
+        "logo": "https://123-kroatien.eu/static/images/logo-black2.png",
+        "image": "https://123-kroatien.eu/static/images/logo-black2.png",
+        "telephone": "+49-XXX-XXXXXXX",
+        "email": "info@123-kroatien.eu",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Croatia",
+            "alternateName": ["Kroatien", "Hrvatska", "Croatie"]
+        },
+        "serviceType": ["Real Estate Sales", "Property Rentals", "Real Estate Consulting"],
+        "priceRange": "€€€",
+        "knowsLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+        "slogan": "Ihr Immobilienmarktplatz für Kroatien",
+        "foundingDate": "2020",
+        "sameAs": [
+            "https://www.facebook.com/123kroatien",
+            "https://www.instagram.com/123kroatien"
+        ],
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://123-kroatien.eu/ge/listings/?search={search_term}",
+            "query-input": "required name=search_term"
+        }
+    }
+    </script>
+    
+    <!-- Schema.org - WebSite (für Sitelinks Search Box) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "123-Kroatien.eu - Immobilienmarktplatz Kroatien",
+        "alternateName": "123 Kroatien",
+        "url": "https://123-kroatien.eu",
+        "description": "Der führende Immobilienmarktplatz für Kroatien. Häuser, Wohnungen, Villen und Grundstücke an der Adria.",
+        "inLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "123-Kroatien.eu"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://123-kroatien.eu/ge/listings/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
 </head>
 
 <body>

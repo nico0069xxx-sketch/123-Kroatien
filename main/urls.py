@@ -233,4 +233,22 @@ urlpatterns += [
     path('<str:country>/viktiga-adresser/', important_addresses, name='important_addresses_sw'),
     path('<str:country>/viktige-adresser/', important_addresses, name='important_addresses_no'),
     path('api/smart-search/', views.smart_search, name='smart_search'),
+
+    # RSS Feeds (SEO + AI optimiert)
+    path('rss/listings/', views.rss_listings, {'lang': 'ge'}, name='rss_listings_ge'),
+    path('en/rss/listings/', views.rss_listings, {'lang': 'en'}, name='rss_listings_en'),
+    path('hr/rss/listings/', views.rss_listings, {'lang': 'hr'}, name='rss_listings_hr'),
+    path('fr/rss/listings/', views.rss_listings, {'lang': 'fr'}, name='rss_listings_fr'),
+    path('nl/rss/listings/', views.rss_listings, {'lang': 'nl'}, name='rss_listings_nl'),
+    path('pl/rss/listings/', views.rss_listings, {'lang': 'pl'}, name='rss_listings_pl'),
+    path('cz/rss/listings/', views.rss_listings, {'lang': 'cz'}, name='rss_listings_cz'),
+    path('sk/rss/listings/', views.rss_listings, {'lang': 'sk'}, name='rss_listings_sk'),
+    path('ru/rss/listings/', views.rss_listings, {'lang': 'ru'}, name='rss_listings_ru'),
+    path('gr/rss/listings/', views.rss_listings, {'lang': 'gr'}, name='rss_listings_gr'),
+    path('sw/rss/listings/', views.rss_listings, {'lang': 'sw'}, name='rss_listings_sw'),
+    path('no/rss/listings/', views.rss_listings, {'lang': 'no'}, name='rss_listings_no'),
+
+    # SEO: Sitemap & robots.txt
+    path('sitemap.xml', views.xml_sitemap, name='xml_sitemap'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
 ]
