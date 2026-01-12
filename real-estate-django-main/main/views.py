@@ -633,7 +633,14 @@ def loginRequired(request):
 def set_language_from_url(request, user_language):
     request.session['site_language'] = user_language
     translation.activate(user_language)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # Prüfe ob ein 'next' Parameter übergeben wurde, sonst HTTP_REFERER, sonst Homepage
+    next_url = request.GET.get('next')
+    if next_url:
+        return HttpResponseRedirect(next_url)
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return HttpResponseRedirect(referer)
+    return HttpResponseRedirect('/')
 
 
 def agent(request, id):
