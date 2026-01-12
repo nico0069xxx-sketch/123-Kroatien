@@ -14,6 +14,10 @@ from .registration_forms import Step1Form, Step2Form, Step3Form, FORM_TRANSLATIO
 from .registration_utils import get_client_ip, check_spam_block, validate_oib
 from .professional_models import Professional, ProfessionalContent
 from .profile_generator import generate_profile_texts, check_spelling, improve_text, translate_profile, generate_seo_slug
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+import random
+import string
 
 # Sprach-Mapping
 COUNTRY_NAMES = {
@@ -201,6 +205,40 @@ def registration_step3(request, country):
                     professional.business_document = request.FILES['business_document']
                 professional.save()
                 
+                # User-Account erstellen (nur für Makler & Bauunternehmen)
+                if step1_data['professional_type'] in ['real_estate_agent', 'construction_company']:
+                    # Passwort generieren
+                    temp_password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+                    
+                    # Username aus Email
+                    email = step1_data['email']
+                    username = email.split('@')[0]
+                    
+                    # Eindeutigen Username sicherstellen
+                    base_username = username
+                    counter = 1
+                    while User.objects.filter(username=username).exists():
+                        username = f"{base_username}{counter}"
+                        counter += 1
+                    
+                    # User erstellen
+                    user = User.objects.create_user(
+                        username=username,
+                        email=email,
+                        password=temp_password
+                    )
+                    user.first_name = step1_data['name']
+                    user.save()
+                    
+                    # Mit Professional verknüpfen
+                    professional.user = user
+                    professional.has_portal_access = True
+                    professional.save()
+                    
+                    # Temporäres Passwort in Session für Erfolgsseite
+                    request.session['temp_password'] = temp_password
+                    request.session['temp_username'] = username
+                
                 # Übersetzungen generieren
                 all_languages = ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']
                 translations = translate_profile(step2_data['text'], all_languages)
@@ -219,12 +257,19 @@ def registration_step3(request, country):
                         del request.session[key]
                 
                 # Erfolgsseite
-                return render(request, 'main/registration/success.html', {
-                    'professional': professional,
-                    'lang': lang,
-                    'trans': trans,
-                    'country_name': COUNTRY_NAMES.get(lang, 'kroatien'),
-                })
+                # Login-Daten aus Session holen
+                    temp_password = request.session.pop('temp_password', None)
+                    temp_username = request.session.pop('temp_username', None)
+                    
+                    return render(request, 'main/registration/success.html', {
+                        'professional': professional,
+                        'lang': lang,
+                        'trans': trans,
+                        'country_name': COUNTRY_NAMES.get(lang, 'kroatien'),
+                        'temp_password': temp_password,
+                        'temp_username': temp_username,
+                        'has_portal': professional.has_portal_access,
+                    })
                 
             except Exception as e:
                 print(f"Registrierung Fehler: {e}")

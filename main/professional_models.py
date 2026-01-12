@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import User
 
 # Kroatische Regionen
 REGIONS = [
@@ -38,6 +39,10 @@ class Professional(models.Model):
         verbose_name_plural = "Professionals (Registrierungen)"
     # Basis-Model fuer alle Berufsgruppen
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    
+    # Login-Verknuepfung (nur fuer Makler & Bauunternehmen)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='professional_profile')
+    has_portal_access = models.BooleanField(default=False, help_text='Zugang zum Makler-Portal')
     
     # Berufsgruppe
     professional_type = models.CharField(max_length=50, choices=PROFESSIONAL_TYPES)

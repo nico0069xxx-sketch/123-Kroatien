@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import makler_views
 
 app_name = 'main'
 
@@ -318,4 +319,13 @@ def privacy_verification(request, country):
 
 urlpatterns += [
     path('<str:country>/datenschutz-verifizierung/', privacy_verification, name='privacy_verification'),
+
+    # Makler-Portal
+    path('makler-portal/', makler_views.makler_dashboard, name='makler_dashboard'),
+    path('makler-portal/neu/', makler_views.makler_objekt_neu, name='makler_objekt_neu'),
+    path('makler-portal/bearbeiten/<int:listing_id>/', makler_views.makler_objekt_bearbeiten, name='makler_objekt_bearbeiten'),
+    path('api/makler/verkauft/<int:listing_id>/', makler_views.makler_objekt_verkauft, name='makler_objekt_verkauft'),
+    path('api/makler/pausieren/<int:listing_id>/', makler_views.makler_objekt_pausieren, name='makler_objekt_pausieren'),
+    path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
+
 ]
