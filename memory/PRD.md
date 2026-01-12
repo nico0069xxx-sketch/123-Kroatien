@@ -1,65 +1,95 @@
 # Real Estate Django Platform - PRD
 
 ## Original Problem Statement
-Transform a local Django real estate marketplace into a "Königsklasse" (King Class) platform with AI-generated content, support for 12 languages, and superior SEO/AI discoverability.
+Transform a local Django real estate marketplace into a "Königsklasse" (King Class) platform. The primary goal is to restore lost features (chatbot, professional group profiles, 2FA) after a data incident, fix UI/UX issues, and add new content pages for SEO.
 
-## User Information
-- **User**: Nik (Jörg Allmannsberger)
-- **Preferred Language**: German (informal "du")
-- **Platform**: Apple Mac (Mac Mini)
-- **Browser**: Safari
+## User Persona
+- **Name:** Nik
+- **Technical Level:** Non-developer ("Laie")
+- **Environment:** macOS, Terminal
+- **Language:** German (informal "du")
+- **Special Note:** User's TextEdit app corrupts HTML files - always use Python scripts for file modifications
 
-## Current Status (December 2024)
-
-### ✅ Completed Features
-- GitHub backup workflow established (including db.sqlite3)
-- GDPR Cookie-Banner
-- XML-Schnittstelle (XML Interface)
-- Twilio SMS integration
-- AI Smart-Search
-- AI Chatbot
-- AI-powered property descriptions
-- AI-powered translations (partial)
-
-### 🔴 Current Blocker (P0)
-**Font Awesome Icons not rendering**
-- Icons appear as small empty boxes
-- Suspected CSS conflict between FA4 (templates) and FA5 (static files)
-- Previous attempts: CDN changes, file deletion - not successful
-- **Next step**: Use Safari Developer Tools to inspect computed styles
-
-### 🟡 Pending Tasks (P1)
-- Re-implement lost features (Professional groups: Lawyers, Architects, Tax Advisors in navigation/footer)
-- Fix language switcher (redirects to homepage instead of current page)
-
-### 🟢 Backlog (P2/P3)
-- Email notifications fix (BadCredentials issue)
-- Refactor translation system
-- Clean up bundled styles.css
-
-## Technical Architecture
-- **Backend**: Django
-- **Database**: SQLite3 (db.sqlite3)
-- **Frontend**: Django Templates, Bootstrap, CSS, JavaScript
-- **Version Control**: Git + GitHub
-
-## Key Files
-- `templates/include/base.html` - Main template, Font Awesome CDN links
-- `staticfiles/css/styles.css` - Suspected CSS conflict source
-- `db.sqlite3` - Database (backed up on GitHub)
-
-## 3rd Party Integrations
-- OpenAI GPT-4o (via emergentintegrations)
-- Gmail SMTP (credentials issue)
-- Twilio SMS
-- Font Awesome 4.7.0 CDN
-
-## Debug Checklist for Icon Issue
-1. Open Safari Developer Tools (Option+Cmd+I)
-2. Inspect element with broken icon
-3. Check `font-family` in computed styles
-4. Check Network tab for .woff2 font file loading
-5. Identify which CSS rule overrides FontAwesome
+## Tech Stack
+- **Backend:** Django
+- **Frontend:** Django Templates, JavaScript, jQuery (nice-select plugin)
+- **Database:** SQLite3
+- **AI Integration:** OpenAI GPT-3.5-turbo
 
 ---
-*Last updated: December 2024*
+
+## Completed Features ✅
+
+### Session 1 (Completed)
+- [x] **Dynamic Price Filter** - Homepage price dropdowns switch between Sale/Rent ranges
+- [x] **AI Chatbot** - Fully restored, 12 languages, GPT-3.5-turbo integration
+- [x] **2FA/TOTP Login** - Reactivated, setup page redesigned (DE/EN/HR)
+- [x] **Important Addresses Page** - New page with categorized contacts, 12 languages
+- [x] **Navigation Update** - "MARKT" dropdown with Market Reports & Addresses
+- [x] **XML Interfaces** - OpenImmo and Croatian XML exports verified
+
+---
+
+## Pending Issues 🔴
+
+### P0 - High Priority
+1. **Homepage Search Filter Incomplete**
+   - Missing: Wohnfläche, Grundstücksgröße, Zimmeranzahl, Bäder
+   - Files: `templates/main/home.html`, `main/views.py`
+
+### P1 - Medium Priority
+2. **Language Switcher Bug**
+   - Redirects to homepage instead of current page
+   - Files: `templates/include/base.html`, Django `set-language` view
+
+3. **Professional Groups Not Working**
+   - Navigation links lead to 404s
+   - Files: `main/professional_models.py`, `main/professional_views.py`
+
+### P2 - Low Priority
+4. **Email Notifications Broken**
+   - BadCredentials error - needs Google App Password
+   - Status: BLOCKED (waiting for user action)
+
+---
+
+## Future Tasks 🔵
+
+- [ ] AI Smart-Search feature
+- [ ] RSS Feed for Croatian news
+- [ ] Refactor `get_my_translations` function in `context_processors.py`
+
+---
+
+## Key Files Reference
+
+| File | Purpose |
+|------|---------|
+| `templates/main/home.html` | Homepage with search filter |
+| `templates/include/base.html` | Main navigation, chatbot include |
+| `main/context_processors.py` | Translations and URLs |
+| `main/views.py` | Main listings view, search processing |
+| `main/chatbot.py` | AI chatbot backend |
+| `accounts/totp_views.py` | 2FA logic |
+| `main/address_views.py` | Important Addresses page |
+
+---
+
+## API Endpoints
+
+- `/api/chatbot/` - AI chatbot backend
+- `/api/xml/openimmo/` - German property portal XML
+- `/api/xml/croatia/` - Croatian partner XML
+
+---
+
+## Critical Workflow Notes
+
+⚠️ **DO NOT ask user to edit files directly** - TextEdit corrupts HTML
+✅ **Use Python scripts** (`cat > script.py`) for all file modifications
+✅ **Communicate in German** (informal "du")
+✅ **Provide simple, copy-paste Terminal commands**
+
+---
+
+*Last Updated: December 2025*
