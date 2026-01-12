@@ -152,9 +152,6 @@
                                 
                                 <li><a {% if user.agent %}href="{% url "main:agent" user.agent.id %}"{% else %}href="#"{% endif %}>{{user.username}}</a></li>
                                 <li><a href="{% url 'account:logout' %}" title="">{{ nav_logout }}</a></li>
-                                {% if user.professional and user.professional.has_portal_access %}
-                                <li><a href="{% url 'main:makler_dashboard' %}" title="Makler-Portal" style="color:#c9a227;font-weight:bold;"><i class="fa fa-building"></i> Portal</a></li>
-                                {% endif %}
 
                                 {% else %}
                                 <li><a href="{% url 'account:login' %}" title="">{{ nav_login }}</a></li>
