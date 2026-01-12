@@ -1,314 +1,204 @@
 <analysis>**original_problem_statement:**
-The user, Nik, aims to transform his local Django real estate marketplace into a Königsklasse (King Class) platform. Key requirements include restoring lost features like a chatbot and professional group profiles, fixing UI/UX issues, and adding new content pages for SEO. The primary goal is to re-implement and enhance features that were lost after a previous data incident, building on a now-stable, automatically backed-up codebase.
+The user, Nik, aims to transform his local Django real estate marketplace into a Königsklasse (King Class) platform. Key requirements include restoring lost features like a chatbot and professional group profiles, fixing UI/UX issues, and adding new content pages for SEO. The primary goal is to re-implement and enhance features that were lost after a previous data incident, building on a now-stable, automatically backed-up codebase. The user has requested major new features: a sophisticated, multi-step registration process for professionals, an admin verification UI, a property validation workflow, and a full-featured Makler-Portal for real-estate agents and construction companies to manage their own property listings, including bulk XML import.
 
 PRODUCT REQUIREMENTS:
 1.  **Core Application:** Restore and enhance the application's UI and functionality.
 2.  **UI/UX Overhaul:** Refine UI elements and add new content pages to improve user experience and SEO.
-3.  **AI Features:** Re-implement the AI Chatbot with multi-language support and add a new AI Smart Search.
-4.  **Integrations:** Re-implement secure login (TOTP 2FA) and XML interfaces for property listings. Implement RSS feeds for SEO and AI visibility.
+3.  **AI Features:**
+    *   Re-implement the AI Chatbot with multi-language support.
+    *   Add a new AI Smart Search for properties.
+    *   Extend the chatbot to search for professionals.
+    *   Implement an AI-powered profile text generator for the new professional registration flow.
+    *   **NEW**: Implement AI to generate descriptive texts for new property listings added by Maklers/Bauunternehmers.
+4.  **Integrations:**
+    *   Re-implement secure login (TOTP 2FA).
+    *   **NEW**: Implement XML interfaces for property listings (both import and export).
 5.  **Lost Features & New Content:**
-    *   Re-implement full support for professional groups (Lawyers, Architects, etc.).
-    *   Re-implement the AI Chatbot.
-    *   Add a News section that aggregates content from external RSS feeds.
-    *   Add dummy data to professional profiles for design validation.
+    *   Re-implement full support for professional groups.
+    *   Add a News section.
+6.  **New Registration & Verification System:**
+    *   Create a multi-step registration form for professionals.
+    *   **NEW**: Implement an admin backend UI to review uploaded documents and verify/activate profiles.
+7.  **Makler-Portal (Broker Portal):**
+    *   **NEW**: Create a dedicated, login-protected portal for Real Estate Agents and Construction Companies.
+    *   **NEW**: The portal must allow brokers to view, create, edit, and manage their own property listings.
+    *   **NEW**: Implement a feature for brokers to upload listings in bulk via an XML file.
+    *   **NEW**: Provide clear documentation on how to use the XML import feature.
 
-**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du) and provide simple, copy-pasteable commands for his Apple Mac. The user is not a developer and requires very detailed, step-by-step guidance. The entire development process happens on the user's local machine; the agent's role is to provide instructions and Python scripts for the user to execute.
+**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du) and provide simple, copy-pasteable commands for his Apple Mac. The user is not a developer and requires very detailed, step-by-step guidance. All development happens on the user's local machine; the agent provides instructions and Python scripts for the user to execute.
 
 **what currently exists?**
-The Django-based real estate platform has been significantly enhanced. All fixes and new features are implemented via Python scripts that the user executes locally.
-- **Language Switcher:** A bug was fixed where changing the language would redirect to the homepage; it now correctly stays on the current page. The language display in the navigation now also correctly shows the selected language from all 12 options.
-- **Professional Groups:** These pages are now functional and display content correctly across multiple languages. The agent fixed a bug where translations were not being applied correctly.
-- **AI Smart Search:** A new, major feature was implemented. A search bar now exists on the homepage allowing users to search for properties using natural language (e.g., Haus am Meer mit Pool unter 500.000€). This feature is integrated with the existing OpenAI API key.
-- **Chatbot with Smart Search:** The existing AI chatbot has been upgraded to recognize property search queries. When a search is detected, it now displays matching property listings directly in the chat window as interactive cards.
-- **Full SEO & AI Visibility Suite:** A comprehensive suite of SEO features was implemented from scratch:
-    - **Outgoing RSS Feeds:** RSS feeds for property listings are available for all 12 languages. The content is protected, providing only a teaser with a link back to the site to prevent content scraping.
-    - **XML Sitemap:** A dynamic  is generated, including all pages and listings in all 12 languages with correct  tags.
-    - **robots.txt:** A  file has been created to explicitly allow AI crawlers like GPTBot, PerplexityBot, and ClaudeBot, and to point to the sitemap.
-    - **Schema.org Markup:** Rich JSON-LD schema (, ) has been added to the base template to improve search engine understanding.
-- **News Section:** A new, fully-functional News section has been created. It aggregates articles from external English-language RSS feeds (e.g., Croatia Week), caches them, and displays them in a new, elegant design. The UI is translated into all 12 languages, while the article content remains in the original English.
-- **Dummy Data:** 25 detailed dummy profiles (5 for each of the 5 professional categories) have been created and populated in the database to allow for design and functionality checks.
+The platform features a complete multi-step registration for professionals and a corresponding admin verification UI with custom status badges and document previews. A robust property validation system is in place, ensuring that all new listings from brokers are checked against required fields (type, location, price, photos, description) before they can be published.
+
+A significant new feature, the Makler-Portal (Broker Portal), has been fully implemented for real estate agents and construction companies. This portal includes:
+- A dedicated login system connecting the  model to a Django .
+- A dashboard with property statistics.
+- The ability for brokers to create, edit, and manage their own listings.
+- A bulk import feature for listings via XML file upload.
+- A comprehensive, bilingual (German/Croatian) documentation page explaining the XML import process for both brokers and developers.
+All work has been successfully committed to the user's GitHub repository.
 
 **Last working item**:
--   **Last item agent was working**: The agent was fulfilling the user's request to add dummy images (logos and portraits) to the 25 professional profiles that were just created. After the image selection tool failed to find logos, the agent was about to try again or use a different method.
--   **Status**: IN PROGRESS
--   **Agent Testing Done**: N
--   **Which testing method agent to use?**: Manual testing by user. The agent needs to provide instructions for the user to add the dummy image files to the correct directory and update the database entries via a script.
--   **User Testing Done**: N
+-   **Last item agent was working**: Creating a comprehensive, bilingual documentation page for the new XML import feature within the Makler-Portal. The agent refined the design based on user feedback (colors, translations) and then guided the user to save all the recent work to GitHub.
+-   **Status**: NONE (The task is complete, and the agent has presented the user with the next possible steps.)
+-   **Agent Testing Done**: N/A
+-   **Which testing method agent to use?**: N/A
+-   **User Testing Done**: Y (User approved the final documentation page and the successful push to GitHub.)
 
 **All Pending/In progress Issue list**:
--   Issue 1: Add dummy images to professional profiles (P0)
--   Issue 2: Email notifications for new registrations are not working (P1)
+-   Issue 1: Email notifications are not working (P1)
+-   Issue 2: Price field in the Makler-Portal does not accept formatted numbers (P2)
 
 **Issues Detail**:
--   **Issue 1: Add dummy images (logos and portraits) to professional profiles.**
-    -   **Attempted fixes**: The agent used the  to find portraits but it failed when searching for logos.
+-   **Issue 1: Email notifications not working ().**
+    -   **Description**: This is a high-priority, carry-over issue. Emails fail due to a  error, likely because the user's standard Gmail password is used instead of a dedicated App Password.
+    -   **Attempted fixes**: None in this session.
     -   **Next debug checklist**:
-        1.  Try the  again to find suitable generic logos for different professional types (e.g., a scale for a lawyer, a building for an architect).
-        2.  If the tool fails again, use  to find license-free dummy logos and portraits.
-        3.  Prepare a Python script for the user that will:
-            a. Download these images into the correct  and  directories on the user's machine.
-            b. Update the  and  fields on the 25 dummy  objects in the database.
-    -   **Why fix this issue and what will be achieved with the fix?**: To complete the user's request for fully populated dummy profiles, enabling a complete design and layout review.
-    -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Frontend (visual verification by user).
-    -   **Blocked on other issue**: None.
-
--   **Issue 2: Email notifications not working ().**
-    -   **Description**: This is a carry-over issue. Emails fail due to a  error, likely because the user's standard Gmail password is used instead of a dedicated App Password.
-    -   **Next debug checklist**:
-        1.  This task has not been started in this session.
-        2.  Review  for  settings.
-        3.  Provide clear, step-by-step instructions in German for the user on how to generate a Google App Password for their Gmail account.
-        4.  Guide the user to update the  in their local  file.
-    -   **Why fix this issue and what will be achieved with the fix?**: Essential for user registration confirmation and platform communication.
+        1.  Review  for  settings.
+        2.  Provide clear, step-by-step instructions in German for the user on how to generate a Google App Password.
+        3.  Guide the user to update the  in their local  file.
+        4.  Trigger a registration or contact form to test if emails are sent successfully.
+    -   **Why fix this issue and what will be achieved with the fix?**: Essential for user registration confirmation, password resets, and all platform communication.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Backend (by triggering a registration or contact form).
+    -   **Should Test frontend/backend/both after fix?**: Backend (by triggering a registration).
     -   **Blocked on other issue**: User action (generating the App Password).
+
+-   **Issue 2: Price field in Makler-Portal does not accept formatted numbers.**
+    -   **Description**: When creating a new property in the Makler-Portal, the user entered 320.000.- € in the price field, which caused the form submission to fail silently (page scrolled to top). The field currently only accepts raw numbers (e.g., ).
+    -   **Attempted fixes**: None. The agent identified the problem and instructed the user on the correct format as a workaround.
+    -   **Next debug checklist**:
+        1.  Add JavaScript to the  template.
+        2.  The script should attach an event listener to the price input field.
+        3.  On form submission or on blur, the script should automatically strip out dots, commas, currency symbols, and whitespace, leaving only digits.
+    -   **Why fix this issue and what will be achieved with the fix?**: Improves user experience for brokers and prevents confusion and submission errors.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: Frontend (Manual testing by creating/editing a property in the Makler-Portal).
+    -   **Blocked on other issue**: None.
 
 **In progress Task List**:
 -   None.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   (P0) **Add News Link to Navigation**: The agent implemented the News section but forgot to add the link to the main navigation menu. It created a script () but the user has not confirmed testing it. The next agent should verify this and ensure the link appears under the MARKT dropdown.
-
+    -   (P1) **KI-Immobilien-Beschreibungen**: Implement AI to generate descriptive texts for new property listings.
 -   **Future Tasks:**
-    -   **Refactor **: The function in  still uses a long  chain and could be refactored for efficiency.
-    -   **Data Maintenance**: The user will need to eventually replace the dummy data and images with real content.
+    -   **Bilder per XML-Import**: Currently, photos cannot be imported via XML. The documentation states they must be added manually. This feature would allow brokers to include image URLs in their XML files for automatic download and linking.
+    -   **KI-Matching**: Implement an AI feature to suggest suitable professionals based on customer inquiries.
+    -   **Refactor **: The function in  still uses a long  chain and could be refactored.
+    -   **Cleanup inactive code**: An old, duplicate  view in , the  model, and old registration forms are likely now obsolete and should be reviewed for removal to avoid confusion.
 
 **Completed work in this session**
--   **Language Switcher Bug Fix (DONE):** Fixed the redirect issue, ensuring users stay on the current page after changing languages. Also fixed the display logic in the navigation to show the correct language abbreviation for all 12 languages. (, )
--   **Professional Groups Translation Fix (DONE):** Resolved an issue where professional group pages did not translate correctly upon language change by prioritizing session language over URL-derived language. ()
--   **AI Smart Search (DONE):** Implemented a new AI-powered natural language search bar on the homepage, complete with a new API endpoint and frontend UI. The UI for this feature is translated into all 12 languages. (, , , )
--   **Chatbot Search Integration (DONE):** Upgraded the chatbot to recognize search queries and display matching properties as interactive cards directly within the chat widget. (, )
--   **Full SEO Suite Implementation (DONE):**
-    -   **RSS Feeds:** Created outgoing, content-protected (teaser-only) RSS feeds for new listings in 12 languages. (, )
-    -   **XML Sitemap:** Created a dynamic  with all pages and  tags for all 12 languages. (, )
-    -   **robots.txt:** Created a  file permitting AI crawlers. (, )
-    -   **Schema.org & Hreflang:** Added  and  schemas, plus  tags, to . ()
--   **News Section (DONE):** Built a new page that fetches, caches, and displays news from external RSS feeds, with a new elegant design and multi-language UI. (, , )
--   **Dummy Professional Profiles (DONE):** Created and populated 25 detailed dummy profiles (5 per category) with text content using a Python script. ()
+-   **Admin Verification UI (DONE):** Built and refined the Django admin interface for  verification. It's now in German, simplified, and uses custom colors per user request.
+-   **Property Listing Validation System (DONE):**
+    -   Created a  module to check new property listings for mandatory fields (, , price, photos, description).
+    -   Fehlermeldungen werden für Makler auf Kroatisch generiert.
+    -   The  model was updated with a  field (, , ).
+    -   The  was overhauled to display the new status, show validation errors, and provide actions for  (approve) and  (reject).
+-   **Makler-Portal (Königsklasse) (DONE):**
+    -   **User-Model Integration:** Linked the  model to Django's  model, enabling a login system.
+    -   **Registration Update:** The registration process now creates a  account for Real Estate Agents and Construction Companies.
+    -   **Dashboard:** Created a portal dashboard () showing property stats and a list of the broker's own listings.
+    -   **CRUD Operations:** Implemented views and templates for brokers to create and edit their properties.
+    -   **Status Management:** Brokers can mark their properties as sold or paused via the dashboard.
+    -   **XML Bulk Import:** Implemented a feature for brokers to upload an XML file containing multiple properties. The system is flexible and attempts to parse OpenImmo and a simpler custom format.
+-   **XML Documentation (DONE):** Created a detailed, bilingual (DE/HR) documentation page explaining the XML import, with separate guides for brokers and developers.
 
 **Earlier issues found/mentioned but not fixed**
--   All are captured in the All Pending/In progress Issue list.
+-   The two issues listed in **All Pending/In progress Issue list** cover everything identified but not yet fixed in this session.
 
 **Known issue recurrence from previous fork**
--   **User's TextEdit app corrupts HTML files.** The agent correctly adhered to the critical workaround of providing all file modifications via Python scripts (), which the user executes. This workflow must be strictly followed.
--   **Accidental deletion of **: During a cleanup of temporary scripts, the command  also deleted the critical  file. The previous agent successfully guided the user to restore it with . The next agent must be extremely careful with file deletion commands and use more specific  commands.
+-   **User's TextEdit app corrupts HTML files**: The agent correctly adhered to the critical workaround of providing all file modifications via Python scripts. This workflow must be strictly followed.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Backend**: Django
--   **Frontend**: Django Templates, JavaScript
--   **Local Development Workflow**: The agent does not have direct access. It must provide clear, step-by-step instructions and Python scripts for the non-technical user to execute on his local macOS machine. This is the most critical concept to follow.
--   **External Data**:  library is used to fetch and parse external RSS news feeds.
--   **AI Integration**: OpenAI's  is used for both the general chatbot and the new smart search feature to extract structured JSON from natural language.
+-   **Local Development Workflow**: The agent provides instructions and Python scripts for the non-technical user to execute on his local macOS machine. This is the most critical concept to follow.
+-   **Django Admin Customization**: Extensive use of , , custom , and  methods to create a user-friendly admin experience.
+-   **Django Model & View Integration**: Connecting models (, ) with user authentication () and creating a dedicated,  portal area.
+-   **Complex Form Handling**: Building forms for creating/editing objects with file uploads ().
+-   **XML Parsing**: Using Python's  to flexibly parse different XML structures for the bulk import feature.
 
 **key DB schema**
--   **Professional, ProfessionalContent, etc**: These tables were populated with 25 new dummy entries.
--   **pages.Translation**: New translation keys for the Smart Search UI were added.
+-   :
+    -   :  to  (new, enables login)
+    -   :  (new, flags eligibility for Makler-Portal)
+-   :
+    -   :  with choices (, , , etc.) - replaces the old  logic.
+    -   :  now defaults to  and is controlled by the admin/workflow.
+    -   :  to store validation errors for the broker.
+    -   :  for admin's internal notes.
 
 **changes in tech stack**
--   The  library was added to 
-Usage:   
-  pip <command> [options]
-
-Commands:
-  install                     Install packages.
-  lock                        Generate a lock file.
-  download                    Download packages.
-  uninstall                   Uninstall packages.
-  freeze                      Output installed packages in requirements format.
-  inspect                     Inspect the python environment.
-  list                        List installed packages.
-  show                        Show information about installed packages.
-  check                       Verify installed packages have compatible dependencies.
-  config                      Manage local and global configuration.
-  search                      Search PyPI for packages.
-  cache                       Inspect and manage pip's wheel cache.
-  index                       Inspect information available from package indexes.
-  wheel                       Build wheels from your requirements.
-  hash                        Compute hashes of package archives.
-  completion                  A helper command used for command completion.
-  debug                       Show information useful for debugging.
-  help                        Show help for commands.
-
-General Options:
-  -h, --help                  Show help.
-  --debug                     Let unhandled exceptions propagate outside the
-                              main subroutine, instead of logging them to
-                              stderr.
-  --isolated                  Run pip in an isolated mode, ignoring
-                              environment variables and user configuration.
-  --require-virtualenv        Allow pip to only run in a virtual environment;
-                              exit with an error otherwise.
-  --python <python>           Run pip with the specified Python interpreter.
-  -v, --verbose               Give more output. Option is additive, and can be
-                              used up to 3 times.
-  -V, --version               Show version and exit.
-  -q, --quiet                 Give less output. Option is additive, and can be
-                              used up to 3 times (corresponding to WARNING,
-                              ERROR, and CRITICAL logging levels).
-  --log <path>                Path to a verbose appending log.
-  --no-input                  Disable prompting for input.
-  --keyring-provider <keyring_provider>
-                              Enable the credential lookup via the keyring
-                              library if user input is allowed. Specify which
-                              mechanism to use [auto, disabled, import,
-                              subprocess]. (default: auto)
-  --proxy <proxy>             Specify a proxy in the form
-                              scheme://[user:passwd@]proxy.server:port.
-  --retries <retries>         Maximum attempts to establish a new HTTP
-                              connection. (default: 5)
-  --timeout <sec>             Set the socket timeout (default 15 seconds).
-  --exists-action <action>    Default action when a path already exists:
-                              (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.
-  --trusted-host <hostname>   Mark this host or host:port pair as trusted,
-                              even though it does not have valid or any HTTPS.
-  --cert <path>               Path to PEM-encoded CA certificate bundle. If
-                              provided, overrides the default. See 'SSL
-                              Certificate Verification' in pip documentation
-                              for more information.
-  --client-cert <path>        Path to SSL client certificate, a single file
-                              containing the private key and the certificate
-                              in PEM format.
-  --cache-dir <dir>           Store the cache data in <dir>.
-  --no-cache-dir              Disable the cache.
-  --disable-pip-version-check
-                              Don't periodically check PyPI to determine
-                              whether a new version of pip is available for
-                              download. Implied with --no-index.
-  --no-color                  Suppress colored output.
-  --use-feature <feature>     Enable new functionality, that may be backward
-                              incompatible.
-  --use-deprecated <feature>  Enable deprecated functionality, that will be
-                              removed in the future.
-  --resume-retries <resume_retries>
-                              Maximum attempts to resume or restart an
-                              incomplete download. (default: 5) dependencies. The agent must remember to guide the user to add this to  if it hasn't been done already.
+-   None.
 
 **All files of reference**
--   : Contains a large amount of new logic for language switching, smart search, RSS feeds, and the news page.
--   : Contains the core navigation logic, language switcher JS, and new SEO tags (Schema.org, hreflang).
--   : Contains the new Smart Search UI and its associated JavaScript.
--   : Contains the core AI logic for both the chatbot and the search query interpretation.
--   : Contains the UI and JS for the chatbot, now updated to render search results.
--   : The new template for the news section.
--   : Contains the root-level, public URLs for SEO endpoints.
--   : Contains the app-level URLs, including new ones for the news section.
+-   : Contains all the logic for the new Makler-Portal (dashboard, create/edit, XML import).
+-   : Contains the validation logic for all property listings.
+-   : Shows how the new validation workflow is integrated into the admin panel.
+-    & : Show how the login capability was added to new professionals.
+-   : This new directory contains all frontend templates for the broker portal.
+-   : The user-facing documentation for the XML feature.
 
 **Areas that need refactoring**:
--   The  function in  uses a long  chain.
--   There is a duplicate, inactive  view in  which could cause future confusion and should be deleted.
+-   The old  model and its related views/templates are likely redundant now that  is the primary model for all service providers and has login capabilities. A future task should be to consolidate everything into the  model and remove the  app.
 
 **key api endpoints**
--   : Backend endpoint for the new AI Smart Search feature.
--   : Existing endpoint for the AI chatbot, now enhanced to handle search queries.
--   : New public endpoint for the XML sitemap.
--   : New public endpoint for .
--   : New public endpoint for the property listings RSS feed.
--    etc.: Language-specific RSS feed endpoints.
+-   : The main dashboard for logged-in brokers.
+-   : The page for bulk-uploading properties via XML.
+-   : The documentation page for the XML feature.
+-   : AJAX endpoint for a broker to mark their own property as sold.
+-   : The correct URL for the login page (uses language prefix).
 
 **Critical Info for New Agent**
--   **USER INTERACTION MODEL IS PARAMOUNT**: The user is non-technical. You **MUST** provide very simple, explicit, step-by-step commands in informal German (du). All file changes must be delivered via Python scripts that the user can copy, paste, and execute. Do not assume any technical knowledge.
--   **LOCAL DEVELOPMENT**: You are not in the execution environment. The project runs on the user's local Mac. You cannot run =1.0.0
-INSTALLATIONS_ANLEITUNG_COOKIE_BANNER.md
-INSTALLATIONS_ANLEITUNG_SICHERHEIT.md
-INSTALLATIONS_ANLEITUNG_SMS_OTP.md
-INSTALLATIONS_ANLEITUNG_XML.md
-PROJEKT_UEBERSICHT_KOMPLETT.md
-QUICK_REFERENCE_COOKIE_BANNER.md
-QUICK_REFERENCE_XML.md
-README.md
-TWILIO_SETUP_ANLEITUNG.md
-XML_BEISPIELE.md
-ZUSAMMENFASSUNG_COOKIE_BANNER.md
-ZUSAMMENFASSUNG_SICHERHEIT.md
-ZUSAMMENFASSUNG_XML.md
-accounts_upload
-ai_content_update.zip
-backend
-base_fix.zip
-base_fix2.zip
-complete_fix.zip
-context_fix.zip
-cookie_consent.css
-cookie_consent.js
-cookie_consent_template.html
-cookie_consent_translations.js
-dienstleister_fix.zip
-env_example.txt
-file
-file.html
-final_fix.zip
-frontend
-gitignore_example.txt
-headings_update.zip
-icon_fix.zip
-listings_ai.zip
-memory
-nik_code_fix.zip
-ondemand_update.zip
-professional_ai_update.zip
-real-estate-django-main
-real-estate-django-main.zip
-real-estate-updated.zip
-security_checklist.md
-template_verifySMS.html
-test_result.md
-tests
-yarn.lock, , or  yourself. You must guide the user to do it and provide you with the output.
--   **BE CAREFUL WITH **: The agent accidentally guided the user to delete . Be extremely specific when cleaning up scripts (e.g.,  instead of ).
--   **RSS/SAFARI BEHAVIOR**: Safari will try to open RSS links in an app. This is normal. Guide the user to test these endpoints with  in the terminal to see the raw XML output.
+-   **USER INTERACTION MODEL IS PARAMOUNT**: The user is non-technical. You **MUST** provide very simple, explicit, step-by-step commands in informal German (du). All file changes must be delivered via Python scripts ().
+-   **User Directory**: The project is located at  on the user's Mac.
+-   **Python Environment**: The user runs  and does not use a virtual environment ().
+-   **Login URL Structure**: All user-facing URLs, including login, are prefixed with a language code (e.g., , ). The main login page is at .
 
 **documents and test reports created in this job**
--   Numerous temporary Python scripts were created to apply changes (e.g., , , ). These were all deleted after use.
+-   Multiple temporary Python scripts were created to apply changes (e.g., , ). These have all been used and deleted.
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  - User requested 5 dummy data entries for each professional service to check the design. (DONE, text only)
-9.  - User chose to work on data maintenance next. (IN PROGRESS)
-8.  ->  ->  - User decided against ending the day and wanted to continue with data maintenance.
-7.  - User confirms the save.
-6.  - User successfully pushed the News feature to GitHub.
-5.  - User confirms the News link in the navigation works.
-4.  - User asks for clarification on what to test for the new navigation link. (RESOLVED)
-3.  - User reports the server is not running. (RESOLVED)
-2.  - User ran the script to add the news link to the nav.
-1.  - User chose option C: add news to navigation, then save. (DONE)
+10. ja genau - User agrees with the agent's summary of open tasks. (DONE)
+9. ich habe soweit alles ausgefüllt und Fotos aber er speichert nicht und zeigt auch keine Fehlermeldung an - User reports form submission is not working in the new Makler-Portal. (RESOLVED - It was a price format issue).
+8. ja bitte, Kein Zugang zum Makler-Portal. / Nemate pristup portalu. - User confirms they get an access error and requests a test account. (DONE)
+7. nein alles ok danke - User is fine with the error message in the admin panel not being a direct link. (DONE)
+6. ja es wird nur ein Fehler angezeigt aber ich kann den roten Fehler nicht mehr anklicken um zu schauen was es ist - User has an issue with viewing validation errors in the admin. (RESOLVED - Agent clarified to click the title, not the error text).
+5. nein ok es läuft aber es ist ja schon so gewesen - User is confused about what the validation fix changed. (RESOLVED - Agent explained the fix).
+4. also ich habe die Änderung vorgenommen, aber das war doch schon aktiv? und jetzt funktioniert es nicht - User is having trouble after applying a fix. (RESOLVED).
+3. Moment, für ein eigenen admin Bereich wird nur für Immobilien Makler und Bauunternehmen benötigt. - User clarifies the scope of the Makler-Portal. (DONE)
+2. nein, wir haben zwei Schnittstellen und ich möchte gern eine Anleitung für die Immobilienmakler wo klar erklärt wird wie es funktioniert. - User requests documentation for the XML import feature. (DONE)
+1. sehr gut, bei der entwicklerversion wird noch nicht alles und kroatische übersetzt... - User provides feedback on the XML documentation page, requesting UI/translation fixes. (RESOLVED).
 
 **Project Health Check:**
 -   **Broken**:
-    -   Email notification system () is still pending.
+    -   Email notification system ().
 -   **Mocked**:
-    -   None. The professional profiles now have dummy text data.
+    -   None.
 -   **Fixed / Implemented**:
-    -   Language switcher redirect bug.
-    -   Language display in navigation.
-    -   Professional group translations.
-    -   AI Smart Search on homepage (12 languages).
-    -   Chatbot integration with Smart Search.
-    -   Full SEO suite (RSS, Sitemap, robots.txt, Schema.org).
-    -   News section with external RSS aggregation.
-    -   Dummy text data for 25 professional profiles.
+    -   Admin verification UI for professionals.
+    -   Property listing validation workflow.
+    -   A complete Makler-Portal for brokers with a dashboard, CRUD for listings, and status management.
+    -   XML bulk import feature for brokers.
+    -   Comprehensive, bilingual documentation for the XML import feature.
 
 **3rd Party Integrations**
--   **OpenAI GPT-3.5-turbo**: Used for the chatbot and AI Smart Search.
--   **Gmail SMTP**: Configured but non-functional (). Blocked on user action.
--   **feedparser**: Python library used to fetch and parse external RSS feeds for the new News section.
--   **RSS Sources**: , , .
+-   **OpenAI GPT-3.5-turbo**: Used for chatbot, smart search, and profile registration text generation.
+-   **Gmail SMTP**: Configured but non-functional due to a  error.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: []
+-   **Test files created**: A script  was created to add a test user. It has since been deleted.
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
--   The user logs in with their own credentials. The username is Nik.
+-   **Username:** 
+-   **Password:** 
+-   **Login URL:** 
 
 **What agent forgot to execute**
--   The agent performed exceptionally well, keeping track of a multitude of tasks and complex user interactions. It did not forget to execute any tasks; the pending email issue was correctly identified as blocked. It successfully implemented several large, unplanned features (AI Search, News Section, SEO Suite) based on user requests.</analysis>
+-   The agent did not implement the fix for the price field to automatically clean user input (e.g., remove ., €). This is listed as a pending issue.</analysis>
