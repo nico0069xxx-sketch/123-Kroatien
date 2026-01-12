@@ -232,4 +232,5 @@ urlpatterns += [
     path('<str:country>/simantikes-diefthinseis/', important_addresses, name='important_addresses_gr'),
     path('<str:country>/viktiga-adresser/', important_addresses, name='important_addresses_sw'),
     path('<str:country>/viktige-adresser/', important_addresses, name='important_addresses_no'),
+    path('api/smart-search/', views.smart_search, name='smart_search'),
 ]

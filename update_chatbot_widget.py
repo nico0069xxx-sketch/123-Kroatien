@@ -1,0 +1,259 @@
+#!/usr/bin/env python3
+"""
+Erweitert das Chatbot-Widget für Suchergebnisse
+"""
+
+new_script = '''<script>
+var currentLanguage = '{{language}}' || 'ge';
+
+function toggleChatbot() {
+    var window = document.getElementById('chatbot-window');
+    window.style.display = window.style.display === 'none' ? 'flex' : 'none';
+}
+
+function sendMessage() {
+    var input = document.getElementById('chatbot-input');
+    var message = input.value.trim();
+    if (!message) return;
+    
+    var messagesDiv = document.getElementById('chatbot-messages');
+    messagesDiv.innerHTML += '<div class="message user-message">' + message + '</div>';
+    input.value = '';
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+    messagesDiv.innerHTML += '<div class="message bot-message" id="typing">⏳</div>';
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+    fetch('/ge/api/chatbot/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: message, language: currentLanguage})
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('typing').remove();
+        
+        // Normale Antwort
+        messagesDiv.innerHTML += '<div class="message bot-message">👤 ' + data.response + '</div>';
+        
+        // Suchergebnisse anzeigen wenn vorhanden
+        if (data.is_search && data.results && data.results.length > 0) {
+            var resultsHtml = '<div class="message bot-message search-results">';
+            data.results.forEach(function(item) {
+                resultsHtml += '<div class="search-result-card">';
+                if (item.image) {
+                    resultsHtml += '<img src="' + item.image + '" alt="' + item.title + '">';
+                }
+                resultsHtml += '<div class="search-result-info">';
+                resultsHtml += '<strong>' + item.title + '</strong><br>';
+                resultsHtml += '<small>📍 ' + item.location + '</small><br>';
+                resultsHtml += '<span class="search-result-price">€ ' + item.price.toLocaleString() + '</span>';
+                resultsHtml += '</div>';
+                resultsHtml += '<a href="/ge/property-details/' + item.id + '/" class="search-result-btn">→</a>';
+                resultsHtml += '</div>';
+            });
+            resultsHtml += '</div>';
+            messagesDiv.innerHTML += resultsHtml;
+        }
+        
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    })
+    .catch(error => {
+        document.getElementById('typing').remove();
+        messagesDiv.innerHTML += '<div class="message bot-message" style="color:red;">❌ Error</div>';
+    });
+}
+
+document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
+});
+</script>'''
+
+new_style = '''<style>
+#chatbot-toggle {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0D47A1, #0A3A7E);
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 9999;
+    transition: transform 0.3s;
+}
+
+#chatbot-toggle:hover {
+    transform: scale(1.1);
+}
+
+#chatbot-window {
+    position: fixed;
+    bottom: 160px;
+    right: 20px;
+    width: 350px;
+    height: 450px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatbot-header {
+    background: linear-gradient(135deg, #0D47A1, #0A3A7E);
+    color: white;
+    padding: 15px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chatbot-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+}
+
+#chatbot-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: #f5f5f5;
+}
+
+#chatbot-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: white;
+    border-radius: 0 0 15px 15px;
+}
+
+#chatbot-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+#chatbot-input-area button {
+    background: #0D47A1;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    margin-left: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background: #0D47A1;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.bot-message {
+    background: white;
+    color: #333;
+    border: 1px solid #e0e0e0;
+}
+
+/* Search Results in Chatbot */
+.search-results {
+    max-width: 100% !important;
+    padding: 5px !important;
+}
+
+.search-result-card {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+.search-result-card img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-result-info {
+    flex: 1;
+    font-size: 12px;
+}
+
+.search-result-info strong {
+    color: #003167;
+    font-size: 11px;
+}
+
+.search-result-price {
+    color: #c41e3a;
+    font-weight: bold;
+}
+
+.search-result-btn {
+    background: #003167;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+</style>'''
+
+# Neues komplettes Widget
+new_widget = '''<div id="chatbot-widget">
+    <button id="chatbot-toggle" onclick="toggleChatbot()">👤</button>
+    <div id="chatbot-window" style="display:none;">
+        <div id="chatbot-header">
+            <h3>{{chatbot_title}}</h3>
+            <button onclick="toggleChatbot()">✖</button>
+        </div>
+        <div id="chatbot-messages">
+            <div class="message bot-message">👋 {{chatbot_greeting}}</div>
+        </div>
+        <div id="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="{{chatbot_placeholder}}">
+            <button onclick="sendMessage()">📤</button>
+        </div>
+    </div>
+</div>
+
+''' + new_style + '''
+
+''' + new_script
+
+with open("templates/chatbot_widget.html", "w", encoding="utf-8") as f:
+    f.write(new_widget)
+
+print("✅ Chatbot-Widget erweitert mit Suchergebnissen!")

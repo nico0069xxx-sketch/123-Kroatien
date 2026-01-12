@@ -734,13 +734,79 @@ from .chatbot import get_chatbot_response
 
 @csrf_exempt
 def chatbot_api(request):
-    from .chatbot import get_chatbot_response
+    from .chatbot import get_chatbot_response, is_property_search, extract_search_criteria
     if request.method == 'POST':
         data = json.loads(request.body)
         message = data.get('message', '')
         language = request.session.get('site_language', 'ge')
+        
+        # Prüfen ob es eine Immobiliensuche ist
+        if is_property_search(message):
+            criteria = extract_search_criteria(message, language)
+            
+            # Immobilien filtern
+            listings = Listing.objects.filter(is_published=True)
+            
+            if criteria.get('property_type'):
+                listings = listings.filter(property_type=criteria['property_type'])
+            if criteria.get('property_status'):
+                listings = listings.filter(property_status=criteria['property_status'])
+            if criteria.get('price_max'):
+                listings = listings.filter(property_price__lte=criteria['price_max'])
+            if criteria.get('price_min'):
+                listings = listings.filter(property_price__gte=criteria['price_min'])
+            if criteria.get('bedrooms_min'):
+                listings = listings.filter(bedrooms__gte=criteria['bedrooms_min'])
+            if criteria.get('location'):
+                listings = listings.filter(location__icontains=criteria['location'])
+            
+            # Ergebnisse formatieren
+            results = []
+            for listing in listings[:6]:
+                # Sprachspezifischer Content
+                if language == 'ge' and listing.german_content:
+                    content = json.loads(listing.german_content)
+                elif language == 'en' and listing.english_content:
+                    content = json.loads(listing.english_content)
+                elif language == 'hr' and listing.croatian_content:
+                    content = json.loads(listing.croatian_content)
+                else:
+                    content = listing.get_json()
+                
+                results.append({
+                    'id': listing.id,
+                    'title': content.get('property_title', listing.property_title),
+                    'price': listing.property_price,
+                    'location': listing.location,
+                    'bedrooms': listing.bedrooms,
+                    'image': listing.photo_main.url if listing.photo_main else None,
+                })
+            
+            # Antwort mit Suchergebnissen
+            search_responses = {
+                'ge': f"Ich habe {len(results)} passende Immobilien gefunden!",
+                'en': f"I found {len(results)} matching properties!",
+                'hr': f"Pronašao sam {len(results)} odgovarajućih nekretnina!",
+            }
+            response_text = search_responses.get(language, search_responses['ge'])
+            
+            if len(results) == 0:
+                no_results = {
+                    'ge': "Leider keine passenden Immobilien gefunden. Versuche andere Kriterien.",
+                    'en': "No matching properties found. Try different criteria.",
+                    'hr': "Nažalost, nisu pronađene odgovarajuće nekretnine.",
+                }
+                response_text = no_results.get(language, no_results['ge'])
+            
+            return JsonResponse({
+                'response': response_text,
+                'is_search': True,
+                'results': results
+            })
+        
+        # Normale Chatbot-Antwort
         response = get_chatbot_response(message, language)
-        return JsonResponse({'response': response})
+        return JsonResponse({'response': response, 'is_search': False})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 # Platzhalter für owner
@@ -951,3 +1017,102 @@ Telefon: {data.get('contact_telephone','')}
     context = {'lang': lang, 'success': success}
     if success: return redirect('main:registration-success')
     return render(request, 'main/professional_registration.html', context)
+
+
+# =============================================================================
+# AI SMART-SEARCH VIEW
+# =============================================================================
+from main.chatbot import extract_search_criteria, is_property_search, smart_search_response, get_chatbot_response_with_search
+
+@login_required(login_url='main:login_required')
+def smart_search(request):
+    """
+    AI Smart-Search: Natürliche Sprache -> Immobiliensuche
+    """
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            query = data.get('query', '')
+            language = request.session.get('site_language', 'ge')
+            
+            if not query:
+                return JsonResponse({'status': 'error', 'message': 'Keine Suchanfrage'})
+            
+            # AI extrahiert Suchkriterien
+            criteria = extract_search_criteria(query, language)
+            
+            # Immobilien filtern
+            listings = Listing.objects.filter(is_published=True)
+            
+            if criteria.get('property_type'):
+                listings = listings.filter(property_type=criteria['property_type'])
+            
+            if criteria.get('property_status'):
+                listings = listings.filter(property_status=criteria['property_status'])
+            
+            if criteria.get('price_min'):
+                listings = listings.filter(property_price__gte=criteria['price_min'])
+            
+            if criteria.get('price_max'):
+                listings = listings.filter(property_price__lte=criteria['price_max'])
+            
+            if criteria.get('bedrooms_min'):
+                listings = listings.filter(bedrooms__gte=criteria['bedrooms_min'])
+            
+            if criteria.get('bathrooms_min'):
+                listings = listings.filter(bathrooms__gte=criteria['bathrooms_min'])
+            
+            if criteria.get('area_min'):
+                listings = listings.filter(area__gte=criteria['area_min'])
+            
+            if criteria.get('location'):
+                listings = listings.filter(location__icontains=criteria['location'])
+            
+            # Features in Beschreibung suchen
+            features = criteria.get('features', [])
+            for feature in features:
+                listings = listings.filter(property_description__icontains=feature)
+            
+            # Ergebnisse formatieren
+            results = []
+            user_language = request.session.get('site_language', 'ge')
+            
+            for listing in listings[:12]:  # Max 12 Ergebnisse
+                # Sprachspezifischen Content laden
+                if user_language == 'ge' and listing.german_content:
+                    content = json.loads(listing.german_content)
+                elif user_language == 'en' and listing.english_content:
+                    content = json.loads(listing.english_content)
+                elif user_language == 'hr' and listing.croatian_content:
+                    content = json.loads(listing.croatian_content)
+                else:
+                    content = listing.get_json()
+                
+                results.append({
+                    'id': listing.id,
+                    'title': content.get('property_title', listing.property_title),
+                    'price': listing.property_price,
+                    'location': listing.location,
+                    'bedrooms': listing.bedrooms,
+                    'bathrooms': listing.bathrooms,
+                    'area': listing.area,
+                    'image': listing.photo_main.url if listing.photo_main else None,
+                    'type': listing.property_type,
+                    'status': listing.property_status,
+                })
+            
+            response_text = smart_search_response(query, len(results), language)
+            
+            return JsonResponse({
+                'status': 'success',
+                'message': response_text,
+                'criteria': criteria,
+                'results': results,
+                'count': len(results)
+            })
+            
+        except Exception as e:
+            print(f"Smart-Search Error: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
