@@ -33,7 +33,22 @@ class Listing(models.Model):
     photo_4 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_5 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_6 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
-    is_published = models.BooleanField(default=True)
+    # Status-System
+    LISTING_STATUS = [
+        ('pruefung', 'Zur Pruefung'),
+        ('aktiv', 'Aktiv (Online)'),
+        ('verkauft', 'Verkauft'),
+        ('pausiert', 'Pausiert'),
+        ('abgelehnt', 'Abgelehnt'),
+    ]
+    
+    listing_status = models.CharField(max_length=20, choices=LISTING_STATUS, default='pruefung')
+    is_published = models.BooleanField(default=False)
+    
+    # Pruefungs-Infos
+    pruefung_fehler = models.TextField(blank=True, null=True)
+    pruefung_notizen = models.TextField(blank=True, null=True)
+    geprueft_am = models.DateTimeField(blank=True, null=True)
     list_date = models.DateTimeField(default=datetime.now, blank=True)
     address = models.CharField(max_length=200, blank=True)
     country = models.CharField(max_length=100, blank=True)
