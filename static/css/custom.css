@@ -705,3 +705,184 @@ body, html, * {
 .footer-links a {
     font-size: 14px;
 }
+
+
+
+
+
+/* =============================================================================
+   TYPOGRAFIE - ImmobilienScout24 Stil (verbessert)
+   ============================================================================= */
+
+/* Basis */
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #5f5f5f;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Überschriften - DEUTLICH größer als Fließtext */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    color: #2d2d2d;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.6em;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 26px; }
+h3 { font-size: 22px; }
+h4 { font-size: 18px; }
+h5 { font-size: 17px; }
+h6 { font-size: 16px; }
+
+/* Paragraphen - kleiner als Überschriften */
+p {
+    color: #5f5f5f;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 1em;
+}
+
+/* Card-Titel - deutlich größer als Card-Text */
+.card .card-title,
+.card-title {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin-bottom: 10px !important;
+}
+
+.card-body p,
+.card-body {
+    font-size: 14px;
+    color: #5f5f5f;
+}
+
+/* Navigation - passende Schrift */
+.navbar-nav .nav-link {
+    font-family: 'Nunito Sans', -apple-system, sans-serif !important;
+    font-family: 'Nunito Sans', -apple-system, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #000000 !important;
+    letter-spacing: 0.2px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #003167 !important;
+}
+
+.dropdown-item {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #000000 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+    color: #003167 !important;
+}
+
+/* Property/Listing Karten */
+.property__card .card-title,
+.listing-card h5,
+.property-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #000000 !important;
+    margin-bottom: 8px !important;
+}
+
+/* Preise */
+.property-price,
+.listing-price,
+.price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #003167;
+}
+
+/* Buttons */
+.btn {
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 10px 20px;
+}
+
+/* Lead-Text */
+.lead {
+    font-size: 17px;
+    font-weight: 400;
+    color: #5f5f5f;
+}
+
+/* Labels */
+label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3a3a3a;
+}
+
+/* Tabellen */
+.table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.table td {
+    font-size: 14px;
+    color: #5f5f5f;
+}
+
+/* Badges */
+.badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+/* Text-Muted */
+.text-muted {
+    color: #8a8a8a !important;
+    font-size: 13px;
+}
+
+/* Links */
+a {
+    color: #003167;
+}
+
+/* Footer */
+.footer-title {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Small Text */
+small, .small {
+    font-size: 13px;
+    color: #8a8a8a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 { font-size: 26px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+    h4 { font-size: 16px; }
+    .card .card-title { font-size: 16px !important; }
+    .navbar-nav .nav-link {
+    font-family: 'Nunito Sans', -apple-system, sans-serif !important; font-size: 14px !important; }
+}
