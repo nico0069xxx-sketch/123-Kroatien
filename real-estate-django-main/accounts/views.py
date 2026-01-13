@@ -159,9 +159,14 @@ def login_view(request):
             auth.login(request, user)
             messages.success(request, 'You are successfully logged in')
             
-            agent = Agent.objects.filter(user=user).first()
-            if agent:
-                return redirect('main:agent', id=agent.id)
+            # Try Professional first, then Agent
+            try:
+                professional = Professional.objects.get(user=user)
+                return redirect('main:agent', id=professional.id)
+            except Professional.DoesNotExist:
+                agent = Agent.objects.filter(user=user).first()
+                if agent:
+                    return redirect('main:agent', id=agent.id)
             return redirect('main:home')
         else:
             messages.error(request, 'Invalid credentials')
