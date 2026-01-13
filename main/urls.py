@@ -329,5 +329,7 @@ urlpatterns += [
     path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
     path('makler-portal/xml-import/', makler_views.makler_xml_import, name='makler_xml_import'),
     path('makler-portal/xml-dokumentation/', makler_views.makler_xml_dokumentation, name='makler_xml_dokumentation'),
+    path('api/makler/ki-beschreibung/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
+    path('api/makler/ki-beschreibung/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
 
 ]

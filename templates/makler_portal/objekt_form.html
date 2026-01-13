@@ -67,7 +67,13 @@
                     
                     <div class="mb-3">
                         <label>{% if lang == 'hr' %}Opis{% else %}Beschreibung{% endif %} * (min. 80 {% if lang == 'hr' %}znakova{% else %}Zeichen{% endif %})</label>
-                        <textarea name="property_description" class="form-control" rows="5" required>{{ listing.property_description|default:'' }}</textarea>
+                        <div class="input-group mb-2">
+                            <button type="button" id="ki-btn" class="btn btn-outline-primary" onclick="generiereKIText()">
+                                <i class="fa fa-magic"></i> {% if lang == 'hr' %}Generiraj KI tekst{% else %}KI-Text generieren{% endif %}
+                            </button>
+                            <span id="ki-status" class="ml-2 text-muted" style="line-height:38px;"></span>
+                        </div>
+                        <textarea name="property_description" id="beschreibung-feld" class="form-control" rows="5" required>{{ listing.property_description|default:'' }}</textarea>
                     </div>
                     
                     <hr>
@@ -184,11 +190,77 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.value = nur_zahlen;
             }
         });
-        preis.addEventListener('input', function() {
-            // Zeige Hinweis wenn nicht-Zahlen eingegeben werden
-        });
     }
 });
+
+function generiereKIText() {
+    var btn = document.getElementById('ki-btn');
+    var status = document.getElementById('ki-status');
+    var feld = document.getElementById('beschreibung-feld');
+    
+    var typ = document.querySelector('[name="property_type"]').value;
+    var preis = document.getElementById('preis-input').value.replace(/[^0-9]/g, '');
+    var region = document.querySelector('[name="location"]').value;
+    var ort = document.querySelector('[name="city"]').value;
+    var wohnflaeche = document.querySelector('[name="size"]').value;
+    var grundstueck = document.querySelector('[name="area"]').value;
+    var schlafzimmer = document.querySelector('[name="bedrooms"]').value;
+    var badezimmer = document.querySelector('[name="bathrooms"]').value;
+    var etagen = document.querySelector('[name="floors"]').value;
+    var garage = document.querySelector('[name="garage"]').value;
+    
+    var typMap = {
+        'House': 'Haus',
+        'Appartment': 'Wohnung', 
+        'Villa': 'Villa',
+        'Property': 'Grundstueck',
+        'New Building': 'Neubau'
+    };
+    
+    if (!typ || !region) {
+        alert('Bitte zuerst Typ und Region auswaehlen!');
+        return;
+    }
+    
+    btn.disabled = true;
+    status.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Generiere...';
+    
+    fetch('/ge/api/makler/ki-beschreibung/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({
+            typ: typMap[typ] || typ,
+            preis: preis,
+            region: region,
+            ort: ort,
+            wohnflaeche: wohnflaeche,
+            grundstueck: grundstueck,
+            schlafzimmer: schlafzimmer,
+            badezimmer: badezimmer,
+            etagen: etagen,
+            garage: garage
+        })
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        btn.disabled = false;
+        if (data.success) {
+            feld.value = data.beschreibung;
+            status.innerHTML = '<i class="fa fa-check" style="color:green;"></i> Fertig!';
+            setTimeout(function() { status.innerHTML = ''; }, 3000);
+        } else {
+            status.innerHTML = '<i class="fa fa-times" style="color:red;"></i> ' + (data.error || 'Fehler');
+        }
+    })
+    .catch(function(error) {
+        btn.disabled = false;
+        status.innerHTML = '<i class="fa fa-times" style="color:red;"></i> Verbindungsfehler';
+        console.error(error);
+    });
+}
 </script>
 
 {% endblock %}

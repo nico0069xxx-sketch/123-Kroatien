@@ -109,6 +109,9 @@
                                 <a href="{% url 'main:makler_objekt_bearbeiten' listing.id %}" class="btn btn-outline-primary" title="{% if lang == 'hr' %}Uredi{% else %}Bearbeiten{% endif %}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                <button onclick="generiereKI({{ listing.id }})" class="btn btn-outline-info" title="{% if lang == 'hr' %}KI tekst{% else %}KI-Text{% endif %}" id="ki-btn-{{ listing.id }}">
+                                    <i class="fa fa-magic"></i>
+                                </button>
                                 {% if listing.listing_status != 'verkauft' %}
                                 <button onclick="markiereVerkauft({{ listing.id }})" class="btn btn-outline-secondary" title="{% if lang == 'hr' %}Prodano{% else %}Verkauft{% endif %}">
                                     <i class="fa fa-check"></i>
@@ -185,6 +188,35 @@ function aktivieren(id) {
     fetch('/api/makler/aktivieren/' + id + '/', {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
     .then(r => r.json())
     .then(d => { if(d.success) location.reload(); else alert(d.error); });
+}
+
+function generiereKI(id) {
+    var btn = document.getElementById('ki-btn-' + id);
+    var originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    
+    fetch('/ge/api/makler/ki-beschreibung/' + id + '/', {
+        method: 'POST', 
+        headers: {'X-CSRFToken': '{{ csrf_token }}'}
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+        btn.disabled = false;
+        if(d.success) {
+            btn.innerHTML = '<i class="fa fa-check" style="color:green;"></i>';
+            setTimeout(function() { btn.innerHTML = originalHtml; }, 2000);
+            alert('KI-Text generiert und gespeichert!');
+        } else {
+            btn.innerHTML = originalHtml;
+            alert(d.error || 'Fehler');
+        }
+    })
+    .catch(function(e) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        alert('Verbindungsfehler');
+    });
 }
 </script>
 {% endblock %}

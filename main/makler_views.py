@@ -13,6 +13,7 @@ from listings.models import Listing
 from listings.validation import validate_listing
 from .professional_models import Professional
 import json
+from .listing_description_ai import generate_listing_description
 
 
 def get_makler_professional(user):
@@ -589,6 +590,74 @@ def extract_listing_data(element):
     
     return data
 
+
+
+
+@login_required
+@require_POST
+def makler_ki_beschreibung(request):
+    """Generiert KI-Beschreibung für eine Immobilie"""
+    professional = get_makler_professional(request.user)
+    if not professional:
+        return JsonResponse({'error': 'Kein Zugang'}, status=403)
+    
+    try:
+        data = json.loads(request.body)
+        lang = request.session.get('site_language', 'ge')
+        
+        listing_data = {
+            'typ': data.get('typ', 'Immobilie'),
+            'preis': int(data.get('preis', 0) or 0),
+            'ort': data.get('ort', ''),
+            'region': data.get('region', ''),
+            'wohnflaeche': float(data.get('wohnflaeche', 0) or 0),
+            'grundstueck': int(data.get('grundstueck', 0) or 0),
+            'schlafzimmer': int(data.get('schlafzimmer', 0) or 0),
+            'badezimmer': int(data.get('badezimmer', 0) or 0),
+            'etagen': int(data.get('etagen', 1) or 1),
+            'garage': int(data.get('garage', 0) or 0),
+            'extras': data.get('extras', ''),
+        }
+        
+        beschreibung = generate_listing_description(listing_data, lang)
+        
+        if beschreibung:
+            return JsonResponse({'success': True, 'beschreibung': beschreibung})
+        else:
+            return JsonResponse({'error': 'KI konnte keine Beschreibung generieren'}, status=500)
+            
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@login_required
+@require_POST
+def makler_ki_beschreibung_listing(request, listing_id):
+    """Generiert KI-Beschreibung für bestehendes Listing (Dashboard)"""
+    from .listing_description_ai import generate_description_from_listing
+    
+    professional = get_makler_professional(request.user)
+    if not professional:
+        return JsonResponse({'error': 'Kein Zugang'}, status=403)
+    
+    listing = get_object_or_404(
+        Listing,
+        Q(id=listing_id) & (Q(oib_number=professional.oib_number) | Q(email=professional.email))
+    )
+    
+    lang = request.session.get('site_language', 'ge')
+    
+    try:
+        beschreibung = generate_description_from_listing(listing, lang)
+        
+        if beschreibung:
+            listing.property_description = beschreibung
+            listing.save()
+            return JsonResponse({'success': True, 'beschreibung': beschreibung})
+        else:
+            return JsonResponse({'error': 'KI konnte keine Beschreibung generieren'}, status=500)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def makler_xml_dokumentation(request):
