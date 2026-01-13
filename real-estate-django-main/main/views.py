@@ -831,7 +831,40 @@ def professional_registration(request, lang='ge'):
     View for the bilingual professional registration form.
     Supports German (ge) and Croatian (hr).
     """
+    from main.professional_forms import ProfessionalRegistrationForm, FORM_LABELS
+    from django.core.mail import send_mail
+    
+    # Only DE and HR allowed
+    if lang not in ["ge", "hr"]:
+        lang = "ge"
+    
+    labels = FORM_LABELS.get(lang, FORM_LABELS["ge"])
+    success = False
+    
+    if request.method == "POST":
+        form = ProfessionalRegistrationForm(request.POST, request.FILES, lang=lang)
+        if form.is_valid():
+            professional = form.save()
+            # Send email notification
+            try:
+                email_body = f"Neue Professional-Registrierung:\n\nName: {professional.name}\nTyp: {professional.get_professional_type_display()}\nE-Mail: {professional.email}\nTelefon: {professional.phone}\nStadt: {professional.city}\nRegion: {professional.get_region_display() if professional.region else '-'}"
+                send_mail(
+                    "Neue Professional-Registrierung",
+                    email_body,
+                    "service.mahamudh472@gmail.com",
+                    ["ja@brandoz.de"],
+                    fail_silently=True
+                )
+            except Exception as e:
+                print(f"E-Mail Fehler: {e}")
+            success = True
+    else:
+        form = ProfessionalRegistrationForm(lang=lang)
+    
     context = {
+        'form': form,
+        'labels': labels,
         'lang': lang,
+        'success': success,
     }
     return render(request, 'main/professional_registration.html', context)
