@@ -3,6 +3,7 @@ from django.contrib import messages, auth ## For message
 from django.contrib.auth.models import User  ## Django User model (Built in)
 from contacts.models import Contact
 from .models import Agent, OTPVerification
+from main.professional_models import Professional
 from django.contrib.auth import logout, login, authenticate
 from pages.models import Topbar
 import re, random
