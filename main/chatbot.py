@@ -5,6 +5,13 @@ from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
+# KI-Matching Integration
+try:
+    from .ki_matching import get_professional_matches
+    KI_MATCHING_AVAILABLE = True
+except ImportError:
+    KI_MATCHING_AVAILABLE = False
+
 load_dotenv()
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
@@ -160,7 +167,60 @@ def get_chatbot_response(message, language='ge'):
     """
     KI-Chatbot für Immobilien-Plattform - KÖNIGSKLASSE Edition
     Mit Kosten-Optimierung durch Caching und Smart FAQ-Matching
+    + KI-Matching fuer Experten-Empfehlungen
     """
+    
+    # SCHRITT 0: Professional-Suche prüfen (KI-Matching)
+    if KI_MATCHING_AVAILABLE and is_professional_search(message):
+        try:
+            result = get_professional_matches(message, language)
+            if result.get('success') and result.get('professionals'):
+                # Formatierte Antwort erstellen
+                profs = result['professionals']
+                zusammenfassung = result.get('zusammenfassung', '')
+                
+                # Antwort-Texte je nach Sprache
+                intro_texts = {
+                    'ge': f"Ich habe {len(profs)} passende Experten für dich gefunden:",
+                    'en': f"I found {len(profs)} matching experts for you:",
+                    'hr': f"Pronašao sam {len(profs)} odgovarajućih stručnjaka:",
+                    'fr': f"J'ai trouvé {len(profs)} experts correspondants:",
+                    'nl': f"Ik heb {len(profs)} passende experts gevonden:",
+                    'pl': f"Znalazłem {len(profs)} pasujących ekspertów:",
+                    'cz': f"Našel jsem {len(profs)} odpovídajících odborníků:",
+                    'sk': f"Našiel som {len(profs)} zodpovedajúcich odborníkov:",
+                    'ru': f"Я нашёл {len(profs)} подходящих экспертов:",
+                    'gr': f"Βρήκα {len(profs)} αντίστοιχους ειδικούς:",
+                    'sw': f"Jag hittade {len(profs)} matchande experter:",
+                    'no': f"Jeg fant {len(profs)} matchende eksperter:",
+                }
+                
+                response = intro_texts.get(language, intro_texts['ge']) + "\n\n"
+                
+                for p in profs[:3]:  # Max 3 anzeigen im Chat
+                    response += f"**{p['name']}**"
+                    if p.get('company'):
+                        response += f" ({p['company']})"
+                    response += f"\n"
+                    response += f"📍 {p['city']}, {p['region']} | 🏷️ {p['type']}\n"
+                    if p.get('phone'):
+                        response += f"📞 {p['phone']}\n"
+                    if p.get('email'):
+                        response += f"✉️ {p['email']}\n"
+                    response += "\n"
+                
+                # Link zur vollständigen Seite
+                link_texts = {
+                    'ge': "👉 Mehr Experten findest du unter: /ge/experten-finder/",
+                    'en': "👉 Find more experts at: /en/expert-finder/",
+                    'hr': "👉 Više stručnjaka: /hr/pronalazac-strucnjaka/",
+                }
+                response += link_texts.get(language, link_texts['ge'])
+                
+                return response
+        except Exception as e:
+            print(f"KI-Matching im Chatbot fehlgeschlagen: {e}")
+            # Weiter mit normaler Chatbot-Logik
     
     # SCHRITT 1: Cache prüfen (KOSTENLOS)
     cached = get_cached_response(message, language)
