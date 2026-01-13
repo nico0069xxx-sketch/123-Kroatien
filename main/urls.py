@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import makler_views
+from . import matching_views
 
 app_name = 'main'
 
@@ -329,6 +330,12 @@ urlpatterns += [
     path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
     path('makler-portal/xml-import/', makler_views.makler_xml_import, name='makler_xml_import'),
     path('makler-portal/xml-dokumentation/', makler_views.makler_xml_dokumentation, name='makler_xml_dokumentation'),
+    # KI-Matching (Experten-Finder)
+    path('experten-finder/', matching_views.matching_page, name='experten_finder'),
+    path('expert-finder/', matching_views.matching_page, name='expert_finder_en'),
+    path('pronalazac-strucnjaka/', matching_views.matching_page, name='experten_finder_hr'),
+    path('api/experten-matching/', matching_views.matching_api, name='matching_api'),
+
     path('api/makler/ki-beschreibung/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
     path('api/makler/ki-beschreibung/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
 

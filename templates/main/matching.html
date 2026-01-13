@@ -1,0 +1,152 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 style="color:#003167;"><i class="fa fa-magic"></i> {{ texte.title }}</h1>
+                <p class="lead text-muted">{{ texte.subtitle }}</p>
+            </div>
+            
+            <!-- Suchformular -->
+            <div class="card mb-4" style="border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                <div class="card-body p-4">
+                    <textarea id="anfrage-text" class="form-control mb-3" rows="4" 
+                              placeholder="{{ texte.placeholder }}" 
+                              style="border-radius:10px;font-size:16px;"></textarea>
+                    <button id="suche-btn" class="btn btn-lg w-100" 
+                            style="background:#003167;color:white;border-radius:10px;"
+                            onclick="sucheExperten()">
+                        <i class="fa fa-search"></i> {{ texte.button }}
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Loading -->
+            <div id="loading" class="text-center py-4" style="display:none;">
+                <i class="fa fa-spinner fa-spin fa-3x" style="color:#003167;"></i>
+                <p class="mt-3 text-muted">{{ texte.loading }}</p>
+            </div>
+            
+            <!-- Zusammenfassung -->
+            <div id="zusammenfassung" class="alert alert-info" style="display:none;border-radius:10px;">
+                <i class="fa fa-lightbulb-o"></i> <span id="zusammenfassung-text"></span>
+            </div>
+            
+            <!-- Ergebnisse -->
+            <div id="ergebnisse" style="display:none;">
+                <h4 class="mb-4"><i class="fa fa-users"></i> {{ texte.results_title }}</h4>
+                <div id="experten-liste"></div>
+            </div>
+            
+            <!-- Keine Ergebnisse -->
+            <div id="keine-ergebnisse" class="text-center py-5" style="display:none;">
+                <i class="fa fa-search fa-3x text-muted mb-3"></i>
+                <p class="text-muted">{{ texte.no_results }}</p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+function sucheExperten() {
+    var anfrage = document.getElementById('anfrage-text').value;
+    var btn = document.getElementById('suche-btn');
+    var loading = document.getElementById('loading');
+    var ergebnisse = document.getElementById('ergebnisse');
+    var keineErgebnisse = document.getElementById('keine-ergebnisse');
+    var zusammenfassung = document.getElementById('zusammenfassung');
+    
+    if (!anfrage || anfrage.length < 10) {
+        alert('Bitte beschreiben Sie Ihr Anliegen ausfuehrlicher.');
+        return;
+    }
+    
+    // UI zuruecksetzen
+    btn.disabled = true;
+    loading.style.display = 'block';
+    ergebnisse.style.display = 'none';
+    keineErgebnisse.style.display = 'none';
+    zusammenfassung.style.display = 'none';
+    
+    fetch('/ge/api/experten-matching/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({anfrage: anfrage})
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        btn.disabled = false;
+        loading.style.display = 'none';
+        
+        if (data.success && data.professionals && data.professionals.length > 0) {
+            // Zusammenfassung anzeigen
+            if (data.zusammenfassung) {
+                document.getElementById('zusammenfassung-text').textContent = data.zusammenfassung;
+                zusammenfassung.style.display = 'block';
+            }
+            
+            // Experten anzeigen
+            var html = '';
+            data.professionals.forEach(function(p) {
+                html += '<div class="card mb-3" style="border-radius:10px;">';
+                html += '<div class="card-body">';
+                html += '<div class="d-flex align-items-start">';
+                
+                // Logo/Bild
+                if (p.logo_url) {
+                    html += '<img src="' + p.logo_url + '" style="width:60px;height:60px;object-fit:cover;border-radius:10px;margin-right:15px;">';
+                } else {
+                    html += '<div style="width:60px;height:60px;background:#003167;border-radius:10px;margin-right:15px;display:flex;align-items:center;justify-content:center;">';
+                    html += '<i class="fa fa-user fa-2x" style="color:white;"></i></div>';
+                }
+                
+                html += '<div class="flex-grow-1">';
+                html += '<h5 class="mb-1">' + p.name + '</h5>';
+                if (p.company) {
+                    html += '<p class="text-muted mb-1">' + p.company + '</p>';
+                }
+                html += '<p class="mb-2">';
+                html += '<span class="badge" style="background:#c9a227;color:white;">' + p.type + '</span> ';
+                html += '<small class="text-muted"><i class="fa fa-map-marker"></i> ' + p.city + ', ' + p.region + '</small>';
+                html += '</p>';
+                
+                // Kontakt-Buttons
+                html += '<div class="btn-group btn-group-sm">';
+                if (p.email) {
+                    html += '<a href="mailto:' + p.email + '" class="btn btn-outline-primary"><i class="fa fa-envelope"></i> {{ texte.contact }}</a>';
+                }
+                if (p.phone) {
+                    html += '<a href="tel:' + p.phone + '" class="btn btn-outline-secondary"><i class="fa fa-phone"></i> ' + p.phone + '</a>';
+                }
+                if (p.website) {
+                    html += '<a href="' + p.website + '" target="_blank" class="btn btn-outline-info"><i class="fa fa-globe"></i> {{ texte.website }}</a>';
+                }
+                html += '</div>';
+                
+                html += '</div></div></div></div>';
+            });
+            
+            document.getElementById('experten-liste').innerHTML = html;
+            ergebnisse.style.display = 'block';
+            
+        } else {
+            keineErgebnisse.style.display = 'block';
+        }
+    })
+    .catch(function(e) {
+        btn.disabled = false;
+        loading.style.display = 'none';
+        alert('Verbindungsfehler: ' + e);
+    });
+}
+</script>
+{% endblock %}
