@@ -103,6 +103,24 @@ def get_my_translations(request):
     context['url_tax_advisor'] = CATEGORY_URLS['tax_advisor'].get(user_language, 'steuerberater')
     context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
     
+    # URL für Experten-Finder (12 Sprachen)
+    EXPERTEN_FINDER_URLS = {
+        'ge': 'experten-finder', 'en': 'expert-finder', 'hr': 'pronalazac-strucnjaka',
+        'fr': 'recherche-experts', 'nl': 'expert-zoeken', 'pl': 'wyszukiwarka-ekspertow',
+        'cz': 'vyhledavac-expertu', 'sk': 'vyhladavac-expertov', 'ru': 'poisk-ekspertov',
+        'gr': 'anazhthsh-eidikwn', 'sw': 'expertsokare', 'no': 'ekspertsoker'
+    }
+    context['url_experten_finder'] = EXPERTEN_FINDER_URLS.get(user_language, 'experten-finder')
+    
+    # Label für Experten-Finder (12 Sprachen)
+    EXPERTEN_FINDER_LABELS = {
+        'ge': 'Experten-Finder', 'en': 'Expert Finder', 'hr': 'Pronalazac strucnjaka',
+        'fr': 'Recherche experts', 'nl': 'Expert zoeken', 'pl': 'Wyszukiwarka ekspertow',
+        'cz': 'Vyhledavac expertu', 'sk': 'Vyhladavac expertov', 'ru': 'Poisk ekspertov',
+        'gr': 'Anazhthsh eidikwn', 'sw': 'Expertsokare', 'no': 'Ekspertsoker'
+    }
+    context['experten_finder_label'] = EXPERTEN_FINDER_LABELS.get(user_language, 'Experten-Finder')
+    
     # URL für Marktberichte
     MARKET_URLS = {
         'ge': 'marktberichte', 'en': 'market-reports', 'hr': 'trzisna-izvjesca',
