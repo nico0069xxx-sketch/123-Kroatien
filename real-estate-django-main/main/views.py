@@ -697,8 +697,20 @@ def set_language_from_url(request, user_language):
 
 
 def agent(request, id):
-    agent = Agent.objects.get(id=id)
-    listings = Listing.objects.filter(realtor=agent)
+    # Try to find Professional first, fallback to Agent
+    professional = None
+    agent = None
+    
+    try:
+        professional = Professional.objects.get(id=id)
+        listings = Listing.objects.filter(professional=professional)
+    except (Professional.DoesNotExist, ValueError):
+        try:
+            agent = Agent.objects.get(id=id)
+            listings = Listing.objects.filter(realtor=agent)
+        except Agent.DoesNotExist:
+            listings = Listing.objects.none()
+    
     user_language = request.session.get('site_language', 'en')
     for listing in listings:
         if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
@@ -716,61 +728,99 @@ def agent(request, id):
     context = {
         'listings': listings,
         'agent': agent,
+        'professional': professional,
     }
     return render(request, 'main/agent.html', context)
 
 
 def edit_agent(request, id):
-    agent = Agent.objects.get(id=id)
+    # Try to find Professional first, fallback to Agent
+    professional = None
+    agent = None
+    
+    try:
+        professional = Professional.objects.get(id=id)
+    except (Professional.DoesNotExist, ValueError):
+        try:
+            agent = Agent.objects.get(id=id)
+        except Agent.DoesNotExist:
+            messages.error(request, "Profil nicht gefunden.")
+            return redirect('main:home')
+    
     if request.method == 'POST':
-        # same is signup
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        gender = request.POST['gender']
-        city = request.POST['city']
-        country = request.POST['country']
-        company_name = request.POST['company_name']
-        company_logo = request.FILES.get('company_logo') if request.FILES.get('company_logo') else agent.company_logo
-        portrait_photo = request.FILES.get('portrait_photo') if request.FILES.get('portrait_photo') else agent.profile_image
-        oib_number = request.POST['oib_number']
-        domain = request.POST['domain']
-        facebook = request.POST['facebook']
-        instagram = request.POST['instagram']
-        linkedin = request.POST['linkedin']
-        youtube = request.POST['youtube']
-        twitter = request.POST['twitter']
-        description = request.POST['description']
-        mobile = request.POST['mobile']
-        fax = request.POST['fax']
+        if professional:
+            # Update Professional
+            professional.name = request.POST.get('name', professional.name)
+            professional.city = request.POST.get('city', professional.city)
+            professional.region = request.POST.get('region', professional.region)
+            professional.company_name = request.POST.get('company_name', professional.company_name)
+            if request.FILES.get('company_logo'):
+                professional.company_logo = request.FILES.get('company_logo')
+            if request.FILES.get('portrait_photo'):
+                professional.portrait_photo = request.FILES.get('portrait_photo')
+            professional.oib_number = request.POST.get('oib_number', professional.oib_number)
+            professional.website = request.POST.get('domain', professional.website)
+            professional.facebook = request.POST.get('facebook', professional.facebook)
+            professional.instagram = request.POST.get('instagram', professional.instagram)
+            professional.linkedin = request.POST.get('linkedin', professional.linkedin)
+            professional.youtube = request.POST.get('youtube', professional.youtube)
+            professional.twitter = request.POST.get('twitter', professional.twitter)
+            professional.description = request.POST.get('description', professional.description)
+            professional.mobile = request.POST.get('mobile', professional.mobile)
+            professional.fax = request.POST.get('fax', professional.fax)
+            professional.save()
+            messages.success(request, "Profil erfolgreich aktualisiert")
+            return redirect('main:agent', id=id)
+        else:
+            # Update Agent (legacy)
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            gender = request.POST['gender']
+            city = request.POST['city']
+            country = request.POST['country']
+            company_name = request.POST['company_name']
+            company_logo = request.FILES.get('company_logo') if request.FILES.get('company_logo') else agent.company_logo
+            portrait_photo = request.FILES.get('portrait_photo') if request.FILES.get('portrait_photo') else agent.profile_image
+            oib_number = request.POST['oib_number']
+            domain = request.POST['domain']
+            facebook = request.POST['facebook']
+            instagram = request.POST['instagram']
+            linkedin = request.POST['linkedin']
+            youtube = request.POST['youtube']
+            twitter = request.POST['twitter']
+            description = request.POST['description']
+            mobile = request.POST['mobile']
+            fax = request.POST['fax']
 
-        user = agent.user
-        user.first_name = first_name
-        user.last_name = last_name
-        agent.first_name = first_name
-        agent.last_name = last_name
-        agent.gender = gender   
-        agent.city = city
-        agent.country = country
-        agent.company_name = company_name
-        agent.company_logo = company_logo
-        agent.profile_image = portrait_photo
-        agent.oib_number = oib_number
-        agent.domain = domain
-        agent.facebook = facebook
-        agent.instagram = instagram
-        agent.linkedin = linkedin
-        agent.youtube = youtube
-        agent.twitter = twitter
-        agent.description = description
-        agent.mobile = mobile
-        agent.fax = fax
-        user.save()
-        agent.save()
-        messages.success(request, "Agent edit sucsessfully")
-        return redirect('main:agent', id=id)
+            user = agent.user
+            user.first_name = first_name
+            user.last_name = last_name
+            agent.first_name = first_name
+            agent.last_name = last_name
+            agent.gender = gender   
+            agent.city = city
+            agent.country = country
+            agent.company_name = company_name
+            agent.company_logo = company_logo
+            agent.profile_image = portrait_photo
+            agent.oib_number = oib_number
+            agent.domain = domain
+            agent.facebook = facebook
+            agent.instagram = instagram
+            agent.linkedin = linkedin
+            agent.youtube = youtube
+            agent.twitter = twitter
+            agent.description = description
+            agent.mobile = mobile
+            agent.fax = fax
+            user.save()
+            agent.save()
+            messages.success(request, "Profil erfolgreich aktualisiert")
+            return redirect('main:agent', id=id)
 
     context = {
         'agent': agent,
+        'professional': professional,
     }
     return render(request, 'main/edit-agent.html', context)
 
