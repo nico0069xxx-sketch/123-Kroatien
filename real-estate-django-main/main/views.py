@@ -73,16 +73,39 @@ def contact(request):
 
 @login_required(login_url='main:login_required')
 def add_property(request):
+    # Get professional or agent for current user
+    professional, agent = get_professional_or_agent(request.user)
+    
+    # Check if user can post properties
+    if professional and not professional.can_post_properties():
+        messages.error(request, "Sie haben keine Berechtigung, Objekte zu veröffentlichen.")
+        return redirect('main:home')
+    
+    if not professional and not agent:
+        messages.error(request, "Bitte vervollständigen Sie zuerst Ihr Profil.")
+        return redirect('main:home')
+    
     if request.method == 'POST':
-        agent = Agent.objects.get(user=request.user)
         listing = Listing()
-        listing.company_name = agent.company_name
-        listing.company_logo = agent.company_logo
-        listing.portrait_photo = agent.portrait_photo
-        listing.oib_number = agent.oib_number
-        listing.email = agent.user.email
-        listing.domain = agent.domain
-        listing.realtor = Agent.objects.get(user=request.user)
+        
+        # Use Professional data if available, otherwise fallback to Agent
+        if professional:
+            listing.company_name = professional.company_name
+            listing.company_logo = professional.company_logo
+            listing.portrait_photo = professional.portrait_photo
+            listing.oib_number = professional.oib_number
+            listing.email = professional.email
+            listing.domain = professional.website
+            listing.professional = professional
+        else:
+            listing.company_name = agent.company_name
+            listing.company_logo = agent.company_logo
+            listing.portrait_photo = agent.portrait_photo
+            listing.oib_number = agent.oib_number
+            listing.email = agent.user.email
+            listing.domain = agent.domain
+            listing.realtor = agent
+        
         listing.property_title = request.POST['property-title']
         listing.property_description = request.POST['property-description']
         listing.property_type = request.POST['property-type']
