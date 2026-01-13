@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import professional_views
 from pages.views import translate_all
 
 app_name = 'main'
@@ -24,7 +25,7 @@ urlpatterns = [
     path('send-owner-form/', views.send_owner_form, name='send-owner-form'),
     path('faq/', views.faq, name='faq'),
     path('owner/', views.owner, name='owner'),
-    path('real-estate-agent/', views.real_estate_agent, name='real-estate-agent'),\
+    path('real-estate-agent/', views.real_estate_agent, name='real-estate-agent'),
     path('building-contractor/', views.building_contractor, name='building-contractor'),
     path('realestate-contractor-registration', views.realestate_contractor_registration, name='realestate-contractor-registration'),
     path('owner-form/', views.owner_form, name='owner-form'),
@@ -44,4 +45,15 @@ urlpatterns = [
     # Professional Registration URLs (Bilingual: German & Croatian)
     path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
     path('hr/hrvatska/registracija-profesionalaca/', views.professional_registration, {'lang': 'hr'}, name='professional-registration-hr'),
+    
+    # Professional Directory URLs (DE & HR)
+    # German URLs
+    path('ge/kroatien/<str:category>/', professional_views.professional_list, {'country': 'kroatien'}, name='professional-list-ge'),
+    path('ge/kroatien/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'kroatien'}, name='professional-detail-ge'),
+    path('ge/kroatien/registrierung/', professional_views.professional_registration, {'country': 'kroatien'}, name='professional-reg-ge'),
+    
+    # Croatian URLs
+    path('hr/hrvatska/<str:category>/', professional_views.professional_list, {'country': 'hrvatska'}, name='professional-list-hr'),
+    path('hr/hrvatska/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'hrvatska'}, name='professional-detail-hr'),
+    path('hr/hrvatska/registracija/', professional_views.professional_registration, {'country': 'hrvatska'}, name='professional-reg-hr'),
 ]
