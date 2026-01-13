@@ -1,0 +1,120 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="professional-list-section py-5">
+    <div class="container">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="text-center mb-3">{{ title }}</h1>
+                <p class="text-center text-muted">{{ subtitle }}</p>
+            </div>
+        </div>
+
+        <!-- Professional Cards -->
+        <div class="row">
+            {% if professionals %}
+                {% for professional in professionals %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card professional-card h-100 shadow-sm">
+                        <!-- Logo/Image -->
+                        <div class="card-img-top text-center p-4 bg-light">
+                            {% if professional.company_logo %}
+                                <img src="{{ professional.company_logo.url }}" alt="{{ professional.name }}" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+                            {% elif professional.profile_image %}
+                                <img src="{{ professional.profile_image.url }}" alt="{{ professional.name }}" class="img-fluid rounded-circle" style="max-height: 120px; width: 120px; object-fit: cover;">
+                            {% else %}
+                                <div class="placeholder-icon">
+                                    <i class="fas fa-building fa-4x text-secondary"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ professional.name }}</h5>
+                            
+                            {% if professional.company_name and professional.company_name != professional.name %}
+                                <p class="text-muted small mb-2">{{ professional.company_name }}</p>
+                            {% endif %}
+                            
+                            <p class="card-text small">
+                                {% if professional.city %}
+                                    <i class="fas fa-map-marker-alt text-primary me-1"></i> {{ professional.city }}
+                                    {% if professional.region %}, {{ professional.get_region_display }}{% endif %}
+                                {% endif %}
+                            </p>
+                            
+                            {% if professional.is_verified %}
+                                <span class="badge bg-success mb-2">
+                                    <i class="fas fa-check-circle me-1"></i> {{ trans.verified }}
+                                </span>
+                            {% endif %}
+                            
+                            {% if professional.languages %}
+                                <p class="card-text small">
+                                    <i class="fas fa-globe text-info me-1"></i> {{ professional.languages }}
+                                </p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="card-footer bg-white border-0">
+                            <a href="{% url 'main:professional-detail-ge' country_name url_path professional.slug %}" class="btn btn-primary w-100">
+                                {{ trans.view_profile }} <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle me-2"></i> {{ trans.no_entries }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Registration CTA -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card bg-light border-0">
+                    <div class="card-body text-center py-4">
+                        {% if lang == 'hr' %}
+                            <h4>Želite biti uvršteni u naš imenik?</h4>
+                            <p class="text-muted">Registrirajte se kao pružatelj usluga i budite pronađeni od potencijalnih klijenata.</p>
+                            <a href="{% url 'main:professional-reg-hr' %}" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i> Registrirajte se sada
+                            </a>
+                        {% else %}
+                            <h4>Sie möchten in unser Verzeichnis aufgenommen werden?</h4>
+                            <p class="text-muted">Registrieren Sie sich als Dienstleister und werden Sie von potenziellen Kunden gefunden.</p>
+                            <a href="{% url 'main:professional-reg-ge' %}" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i> Jetzt registrieren
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.professional-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.professional-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+.placeholder-icon {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+{% endblock %}
