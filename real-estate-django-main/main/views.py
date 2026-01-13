@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.utils import translation
 from django.http import HttpResponseRedirect
 from accounts.models import Agent
+from main.professional_models import Professional
 from pages.models import Translation
 from django.core.mail import send_mail
 from django.http import JsonResponse
@@ -13,6 +14,26 @@ from django.core.files.base import ContentFile
 from django.core.mail import EmailMessage
 import json
 import os
+
+
+def get_professional_or_agent(user):
+    """
+    Get Professional for user, fallback to Agent for backwards compatibility.
+    Returns (professional, agent) tuple - one will be None.
+    """
+    try:
+        professional = Professional.objects.get(user=user)
+        return professional, None
+    except Professional.DoesNotExist:
+        pass
+    
+    try:
+        agent = Agent.objects.get(user=user)
+        return None, agent
+    except Agent.DoesNotExist:
+        pass
+    
+    return None, None
 
 # Create your views here.
 
