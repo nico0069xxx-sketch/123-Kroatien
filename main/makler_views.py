@@ -33,6 +33,10 @@ def makler_dashboard(request):
         messages.error(request, 'Kein Zugang zum Makler-Portal. / Nemate pristup portalu.')
         return redirect('main:home')
     
+    # 2FA-Check: Falls noch nicht eingerichtet, weiterleiten
+    if professional.must_setup_2fa and not professional.totp_enabled:
+        return redirect('main:professional_setup_2fa')
+    
     # Sprache
     lang = request.session.get('site_language', 'ge')
     

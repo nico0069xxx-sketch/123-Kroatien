@@ -20,6 +20,23 @@ urlpatterns = [
     path('api/', include('realstate.chatbot_urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+# Makler-Portal (ohne Sprachpraefix)
+from main.professional_totp import (
+    professional_login, professional_setup_2fa,
+    professional_verify_2fa_setup, professional_verify_2fa_login
+)
+
+urlpatterns += [
+    path('makler-portal/login/', professional_login, name='professional_login'),
+    path('makler-portal/2fa-einrichten/', professional_setup_2fa, name='professional_setup_2fa'),
+    path('makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup'),
+    path('makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa'),
+    path('ge/makler-portal/2fa-einrichten/', professional_setup_2fa, name='professional_setup_2fa_ge'),
+    path('ge/makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup_ge'),
+    path('ge/makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa_ge'),
+
+]
+
 urlpatterns += i18n_patterns(
     path('accounts/', include('accounts.urls')),
     path('', include('main.urls')),

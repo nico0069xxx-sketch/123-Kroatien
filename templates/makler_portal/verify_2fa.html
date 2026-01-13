@@ -1,0 +1,60 @@
+{% extends "makler_portal/base_portal.html" %}
+{% load static %}
+
+{% block title %}2FA Verifizierung{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-header text-center" style="background: linear-gradient(135deg, #003167 0%, #004a99 100%);">
+                    <h4 class="text-white mb-0">
+                        <i class="fa fa-lock"></i>
+                        {% if lang == "hr" %}Dvofaktorska provjera{% elif lang == "en" %}Two-Factor Authentication{% else %}Zwei-Faktor-Authentifizierung{% endif %}
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <p class="text-center mb-4">
+                        {% if lang == "hr" %}
+                            Unesite kod iz vase Authenticator aplikacije
+                        {% elif lang == "en" %}
+                            Enter the code from your Authenticator app
+                        {% else %}
+                            Geben Sie den Code aus Ihrer Authenticator-App ein
+                        {% endif %}
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="code" id="code" class="form-control form-control-lg text-center" 
+                                   maxlength="6" pattern="[0-9]{6}" placeholder="000000"
+                                   style="font-size: 1.8em; letter-spacing: 10px;" required autofocus>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block text-white mt-3" style="background-color: #c41e3a;">
+                            <i class="fa fa-sign-in"></i>
+                            {% if lang == "hr" %}Potvrdi{% elif lang == "en" %}Verify{% else %}Bestaetigen{% endif %}
+                        </button>
+                    </form>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'main:professional_login' %}" class="text-muted">
+                            <i class="fa fa-arrow-left"></i>
+                            {% if lang == "hr" %}Natrag na prijavu{% elif lang == "en" %}Back to login{% else %}Zurueck zum Login{% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

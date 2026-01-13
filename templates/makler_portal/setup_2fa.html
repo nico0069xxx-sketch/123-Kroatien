@@ -1,0 +1,71 @@
+{% extends "makler_portal/base_portal.html" %}
+{% load static %}
+
+{% block title %}2FA Einrichten{% endblock title %}
+
+{% block portal_content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header text-center" style="background: linear-gradient(135deg, #003167 0%, #004a99 100%);">
+                <h4 class="text-white mb-0">
+                    <i class="fa fa-shield"></i>
+                    {% if lang == "hr" %}Postavljanje 2FA{% elif lang == "en" %}Setup 2FA{% else %}2FA Einrichten{% endif %}
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <div class="text-center mb-4">
+                    <p class="lead">
+                        {% if lang == "hr" %}
+                            Skenirajte QR kod sa svojom Authenticator aplikacijom
+                        {% elif lang == "en" %}
+                            Scan this QR code with your Authenticator app
+                        {% else %}
+                            Scannen Sie diesen QR-Code mit Ihrer Authenticator-App
+                        {% endif %}
+                    </p>
+                    
+                    <div class="my-4 p-3 bg-white d-inline-block rounded shadow-sm">
+                        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" style="width: 200px; height: 200px;">
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            {% if lang == "hr" %}Ili unesite ovaj kod rucno:{% elif lang == "en" %}Or enter this code manually:{% else %}Oder geben Sie diesen Code manuell ein:{% endif %}
+                        </small>
+                        <div class="mt-2">
+                            <code class="bg-light p-2 rounded" style="font-size: 1.1em; letter-spacing: 2px;">{{ secret }}</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <form method="post" action="{% url 'main:professional_verify_2fa_setup' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="code">
+                            {% if lang == "hr" %}Unesite 6-znamenkasti kod{% elif lang == "en" %}Enter 6-digit code{% else %}6-stelligen Code eingeben{% endif %}
+                        </label>
+                        <input type="text" name="code" id="code" class="form-control form-control-lg text-center" 
+                               maxlength="6" pattern="[0-9]{6}" placeholder="000000" 
+                               style="font-size: 1.5em; letter-spacing: 8px;" required autofocus>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-block text-white mt-3" style="background-color: #1a5c1a;">
+                        <i class="fa fa-check"></i>
+                        {% if lang == "hr" %}Aktiviraj 2FA{% elif lang == "en" %}Activate 2FA{% else %}2FA Aktivieren{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock portal_content %}

@@ -141,8 +141,24 @@ def login_view(request):
             if agent and agent.totp_enabled:
                 request.session['2fa_user_id'] = user.id
                 return redirect('account:verify_2fa')
+            
+            # Check fuer Professional 2FA
+            from main.professional_models import Professional
+            professional = Professional.objects.filter(user=user, has_portal_access=True).first()
+            if professional and professional.must_setup_2fa and not professional.totp_enabled:
+                auth.login(request, user)
+                return redirect('main:professional_setup_2fa')
+            if professional and professional.totp_enabled:
+                request.session['professional_2fa_user_id'] = user.id
+                return redirect('main:professional_verify_2fa')
+            
             auth.login(request, user)
             messages.success(request, 'You are successfully logged in')
+            
+            # Wenn Professional mit Portal-Zugang, zum Dashboard
+            if professional and professional.has_portal_access:
+                return redirect('main:makler_dashboard')
+            
             if agent:
                 return redirect('main:agent', id=agent.id)
             return redirect('main:home')

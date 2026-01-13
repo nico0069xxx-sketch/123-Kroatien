@@ -105,6 +105,12 @@ class Professional(models.Model):
     is_verified = models.BooleanField(default=False)
     verified_at = models.DateTimeField(blank=True, null=True)
     
+    # TOTP 2FA Felder
+    totp_secret = models.CharField(max_length=32, blank=True, null=True)
+    totp_enabled = models.BooleanField(default=False)
+    totp_verified = models.BooleanField(default=False)
+    must_setup_2fa = models.BooleanField(default=True, help_text='Muss 2FA bei erstem Login einrichten')
+    
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

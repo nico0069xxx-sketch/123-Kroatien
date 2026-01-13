@@ -349,3 +349,39 @@ urlpatterns += [
     path('api/makler/ki-beschreibung/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
 
 ]
+
+# =============================================================================
+# PROFESSIONAL LOGIN & 2FA
+# =============================================================================
+from main.professional_totp import (
+    professional_login, professional_setup_2fa, 
+    professional_verify_2fa_setup, professional_verify_2fa_login
+)
+
+urlpatterns += [
+    # Professional Login (DE/EN/HR)
+    path('makler-portal/login/', professional_login, name='professional_login'),
+    path('broker-portal/login/', professional_login, name='professional_login_en'),
+    path('portal-posrednika/prijava/', professional_login, name='professional_login_hr'),
+    
+    # 2FA Setup
+    path('makler-portal/2fa-einrichten/', professional_setup_2fa, name='professional_setup_2fa'),
+    path('broker-portal/setup-2fa/', professional_setup_2fa, name='professional_setup_2fa_en'),
+    path('portal-posrednika/postavi-2fa/', professional_setup_2fa, name='professional_setup_2fa_hr'),
+    
+    # 2FA Setup Verify
+    path('makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup'),
+    
+    # 2FA Login Verify
+    path('makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa'),
+]
+
+# Professional Login mit Sprachpräfix
+urlpatterns += [
+    path('ge/makler-portal/login/', professional_login, name='professional_login_ge'),
+    path('en/broker-portal/login/', professional_login, name='professional_login_en2'),
+    path('hr/portal-posrednika/prijava/', professional_login, name='professional_login_hr2'),
+    path('ge/makler-portal/2fa-einrichten/', professional_setup_2fa, name='professional_setup_2fa_ge'),
+    path('ge/makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup_ge'),
+    path('ge/makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa_ge'),
+]

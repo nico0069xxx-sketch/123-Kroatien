@@ -1,0 +1,55 @@
+{% extends "makler_portal/base_portal.html" %}
+{% load static %}
+
+{% block title %}Makler Login{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-header text-center" style="background: linear-gradient(135deg, #003167 0%, #004a99 100%);">
+                    <h4 class="text-white mb-0">
+                        {% if lang == "hr" %}Portal za posrednike{% elif lang == "en" %}Broker Portal{% else %}Makler-Portal{% endif %}
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="username">
+                                {% if lang == "hr" %}Email ili korisnicko ime{% elif lang == "en" %}Email or Username{% else %}E-Mail oder Benutzername{% endif %}
+                            </label>
+                            <input type="text" name="username" id="username" class="form-control form-control-lg" required autofocus>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="password">
+                                {% if lang == "hr" %}Lozinka{% elif lang == "en" %}Password{% else %}Passwort{% endif %}
+                            </label>
+                            <input type="password" name="password" id="password" class="form-control form-control-lg" required>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block text-white" style="background-color: #c41e3a;">
+                            <i class="fa fa-sign-in"></i>
+                            {% if lang == "hr" %}Prijava{% elif lang == "en" %}Login{% else %}Anmelden{% endif %}
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>
+                        {% if lang == "hr" %}Sigurna prijava sa 2FA{% elif lang == "en" %}Secure login with 2FA{% else %}Sichere Anmeldung mit 2FA{% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
