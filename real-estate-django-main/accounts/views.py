@@ -66,7 +66,25 @@ def register(request):
         
         user.save()
 
-        userProfile = Agent.objects.create(
+        # Create Professional (new system) instead of Agent
+        userProfile = Professional.objects.create(
+            user=user,
+            name=f"{first_name} {last_name}".strip(),
+            professional_type='real_estate_agent',  # Default to Makler
+            email=email,
+            city=city,
+            country=country or 'Kroatien',
+            company_name=company_name,
+            company_logo=company_logo,
+            profile_image=portrait_photo,
+            oib_number=oib_number,
+            website=domain,
+            is_active=False,  # Needs verification
+        )
+        userProfile.save()
+        
+        # Also create legacy Agent for backwards compatibility
+        agentProfile = Agent.objects.create(
             user=user,
             first_name=first_name,
             last_name=last_name,
@@ -80,7 +98,7 @@ def register(request):
             domain=domain,
             email=email,
         )
-        userProfile.save()
+        agentProfile.save()
 
         # login user
         user = authenticate(request, username=username, password=password)
