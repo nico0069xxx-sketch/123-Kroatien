@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from accounts.models import Agent
+from main.professional_models import Professional
 import json
 # Create your models here.
 
@@ -11,7 +12,10 @@ class Listing(models.Model):
     oib_number = models.CharField(max_length=200, blank=True, null=True)
     email = models.EmailField(max_length=500, blank=True, null=True)
     domain = models.CharField(max_length=200, blank=True, null=True)
-    realtor = models.ForeignKey(Agent, on_delete=models.DO_NOTHING, blank=True, null=True)
+    # Legacy field - will be migrated to professional
+    realtor = models.ForeignKey(Agent, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='listings_old')
+    # New field - primary relationship
+    professional = models.ForeignKey(Professional, on_delete=models.SET_NULL, blank=True, null=True, related_name='listings')
     property_title = models.CharField(max_length=200, blank=True)
     property_description = models.TextField(blank=True)
     property_type = models.CharField(max_length=200, blank=True)
