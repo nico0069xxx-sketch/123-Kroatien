@@ -142,8 +142,16 @@ def add_property(request):
 
 @login_required(login_url='main:login_required')
 def agency_details(request):
-    agent = Agent.objects.get(user=request.user)
-    listings = Listing.objects.filter(realtor=agent)
+    professional, agent = get_professional_or_agent(request.user)
+    
+    # Get listings for professional or agent
+    if professional:
+        listings = Listing.objects.filter(professional=professional)
+    elif agent:
+        listings = Listing.objects.filter(realtor=agent)
+    else:
+        listings = Listing.objects.none()
+    
     user_language = request.session.get('site_language', 'en')
     for listing in listings:
         if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
@@ -162,6 +170,7 @@ def agency_details(request):
     context = {
         'listings': listings,
         'agent': agent,
+        'professional': professional,
     }
     return render(request, 'main/agency-detail.html', context)
 
