@@ -84,6 +84,17 @@ class Professional(models.Model):
     is_active = models.BooleanField(default=False, verbose_name="Aktiv")
     is_verified = models.BooleanField(default=False, verbose_name="Verifiziert")
     
+    # 2FA - Authenticator App (TOTP)
+    totp_secret = models.CharField(max_length=32, blank=True, null=True)
+    totp_enabled = models.BooleanField(default=False)
+    totp_verified = models.BooleanField(default=False)
+    must_setup_2fa = models.BooleanField(default=True)
+    
+    # 2FA - Email Code
+    email_2fa_enabled = models.BooleanField(default=False)
+    email_2fa_code = models.CharField(max_length=6, blank=True, null=True)
+    email_2fa_code_created = models.DateTimeField(blank=True, null=True)
+    
     # Timestamps
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
