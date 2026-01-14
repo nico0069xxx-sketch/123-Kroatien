@@ -5,14 +5,19 @@
 <style>
 .dashboard-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 .dashboard-header { background: linear-gradient(135deg, #1e3a5f, #2d5a87); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; }
-.dashboard-header h1 { font-size: 2rem; margin-bottom: 10px; }
+.dashboard-header h1 { font-size: 2rem; margin-bottom: 10px; color: #ffffff !important; }
+.dashboard-header p { color: #ffffff !important; opacity: 0.9; }
 .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
 .dashboard-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-.card-title { font-size: 1.25rem; font-weight: 600; color: #1e3a5f; margin-bottom: 15px; }
-.btn-dashboard { display: inline-flex; align-items: center; gap: 8px; background: #1e3a5f; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; }
+.card-title { font-size: 1.25rem; font-weight: 600; color: #1e3a5f; margin-bottom: 20px; }
+.btn-dashboard { display: inline-flex; align-items: center; gap: 8px; background: #1e3a5f; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 15px; }
+.btn-dashboard:hover { background: #2d5a87; color: white; }
 .status-badge { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; }
 .status-active { background: #d4edda; color: #155724; }
 .status-pending { background: #fff3cd; color: #856404; }
+.info-row { margin-bottom: 12px; }
+.info-label { color: #666; }
+.profile-link { color: #1e3a5f; word-break: break-all; }
 </style>
 <div class="dashboard-container">
 <div class="dashboard-header">
@@ -22,16 +27,38 @@
 <div class="dashboard-grid">
 <div class="dashboard-card">
 <h3 class="card-title">Profil-Status</h3>
-<p>Status: {% if professional.is_active %}<span class="status-badge status-active">Aktiv</span>{% else %}<span class="status-badge status-pending">In Pruefung</span>{% endif %}</p>
+<div class="info-row">
+<span class="info-label">Status:</span>
+{% if professional.is_active %}<span class="status-badge status-active">Aktiv</span>{% else %}<span class="status-badge status-pending">In Pruefung</span>{% endif %}
+</div>
+<div class="info-row">
+<span class="info-label">Typ:</span> {{ professional.get_professional_type_display }}
+</div>
+{% if professional.slug %}
+<div class="info-row">
+<span class="info-label">Profil-URL:</span><br>
+<a href="/ge/kroatien/architekten/{{ professional.slug }}/" class="profile-link" target="_blank">/architekten/{{ professional.slug }}/</a>
+</div>
+{% endif %}
 <a href="{% url 'professional_portal:edit_profile' %}" class="btn-dashboard">Profil bearbeiten</a>
 </div>
 <div class="dashboard-card">
 <h3 class="card-title">Kontaktdaten</h3>
-<p>E-Mail: {{ professional.email }}</p>
-<p>Telefon: {{ professional.phone|default:"-" }}</p>
+<div class="info-row"><span class="info-label">E-Mail:</span> {{ professional.email }}</div>
+<div class="info-row"><span class="info-label">Telefon:</span> {{ professional.phone|default:"-" }}</div>
+<div class="info-row"><span class="info-label">Stadt:</span> {{ professional.city|default:"-" }}</div>
+{% if professional.website %}
+<div class="info-row"><span class="info-label">Website:</span> <a href="{{ professional.website }}" target="_blank">{{ professional.website }}</a></div>
+{% endif %}
 </div>
 <div class="dashboard-card">
 <h3 class="card-title">Sicherheit</h3>
+<div class="info-row">
+<span class="info-label">2FA:</span>
+{% if professional.totp_enabled %}<span class="status-badge status-active">Authenticator aktiv</span>
+{% elif professional.email_2fa_enabled %}<span class="status-badge status-active">E-Mail aktiv</span>
+{% else %}<span class="status-badge status-pending">Nicht eingerichtet</span>{% endif %}
+</div>
 <a href="{% url 'professional_portal:change_password' %}" class="btn-dashboard">Passwort aendern</a>
 </div>
 </div>

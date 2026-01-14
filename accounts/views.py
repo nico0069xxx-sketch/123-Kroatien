@@ -157,8 +157,12 @@ def login_view(request):
             
             # Wenn Professional mit Portal-Zugang, zum Dashboard
             if professional and professional.has_portal_access:
+                # Gruppe B (Architekten, Anwaelte, Steuerberater) zum eigenen Dashboard
+                if professional.professional_type in ['lawyer', 'tax_advisor', 'architect']:
+                    return redirect('professional_portal:dashboard')
+                # Gruppe A (Makler, Bauunternehmen) zum Makler-Portal
                 return redirect('main:makler_dashboard')
-            
+
             if agent:
                 return redirect('main:agent', id=agent.id)
             return redirect('main:home')

@@ -1,0 +1,33 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block title %}E-Mail Code eingeben{% endblock %}
+{% block body %}
+<style>
+.email-container { max-width: 450px; margin: 60px auto; padding: 20px; }
+.email-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+.email-card h2 { color: #1e3a5f; margin-bottom: 10px; }
+.email-card p { color: #666; margin-bottom: 25px; }
+.email-icon { font-size: 3rem; color: #28a745; margin-bottom: 20px; }
+.form-group { margin: 20px 0; }
+.form-group input { width: 100%; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 1.5rem; text-align: center; letter-spacing: 8px; }
+.btn-verify { background: #28a745; color: white; padding: 14px 30px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; width: 100%; }
+.btn-resend { color: #1e3a5f; text-decoration: none; display: block; margin-top: 20px; }
+.btn-back { color: #666; text-decoration: none; display: block; margin-top: 10px; }
+</style>
+<div class="email-container">
+<div class="email-card">
+<div class="email-icon"><i class="fa fa-envelope"></i></div>
+<h2>Code eingeben</h2>
+<p>Wir haben einen 6-stelligen Code an<br><strong>{{ email }}</strong><br>gesendet.</p>
+<form method="post">
+{% csrf_token %}
+<div class="form-group">
+<input type="text" name="code" maxlength="6" placeholder="000000" required autofocus>
+</div>
+<button type="submit" class="btn-verify">Bestaetigen</button>
+</form>
+<a href="{% url 'professional_portal:resend_email_code' %}" class="btn-resend">Code erneut senden</a>
+<a href="{% url 'professional_portal:2fa_auswahl' %}" class="btn-back">← Andere Methode</a>
+</div>
+</div>
+{% endblock body %}

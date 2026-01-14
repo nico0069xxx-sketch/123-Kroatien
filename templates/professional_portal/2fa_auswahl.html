@@ -1,0 +1,41 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block title %}2FA Methode waehlen{% endblock %}
+{% block body %}
+<style>
+.twofa-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+.twofa-header { text-align: center; margin-bottom: 30px; }
+.twofa-header h1 { color: #1e3a5f; font-size: 1.8rem; }
+.twofa-options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.twofa-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; border: 2px solid #e9ecef; transition: border-color 0.3s; }
+.twofa-card:hover { border-color: #1e3a5f; }
+.twofa-card i { font-size: 3rem; margin-bottom: 15px; }
+.twofa-card.app i { color: #1e3a5f; }
+.twofa-card.email i { color: #28a745; }
+.twofa-card h3 { font-size: 1.3rem; color: #333; margin-bottom: 10px; }
+.twofa-card p { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+.btn-app { background: #1e3a5f; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; }
+.btn-email { background: #28a745; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; }
+@media (max-width: 600px) { .twofa-options { grid-template-columns: 1fr; } }
+</style>
+<div class="twofa-container">
+<div class="twofa-header">
+<h1><i class="fa fa-shield"></i> Sicherheit einrichten</h1>
+<p>Waehlen Sie Ihre bevorzugte Methode fuer die Zwei-Faktor-Authentifizierung:</p>
+</div>
+<div class="twofa-options">
+<div class="twofa-card app">
+<i class="fa fa-mobile"></i>
+<h3>Authenticator App</h3>
+<p>Nutzen Sie Google Authenticator oder eine aehnliche App. Sehr sicher, Code wird lokal generiert.</p>
+<a href="{% url 'professional_portal:setup_2fa' %}" class="btn-app"><i class="fa fa-qrcode"></i> QR-Code scannen</a>
+</div>
+<div class="twofa-card email">
+<i class="fa fa-envelope"></i>
+<h3>E-Mail Code</h3>
+<p>Sie erhalten bei jedem Login einen Code per E-Mail. Einfach und ohne zusaetzliche App.</p>
+<a href="{% url 'professional_portal:setup_email_2fa' %}" class="btn-email"><i class="fa fa-envelope"></i> E-Mail nutzen</a>
+</div>
+</div>
+</div>
+{% endblock body %}

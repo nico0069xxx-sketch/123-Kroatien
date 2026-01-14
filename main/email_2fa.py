@@ -141,7 +141,7 @@ def email_2fa_verify(request):
                 if professional.professional_type in ["real_estate_agent", "construction_company"]:
                     return redirect("main:makler_dashboard")
                 else:
-                    return redirect("main:home")
+                    return redirect("professional_portal:dashboard")
             else:
                 messages.error(request, "Falscher Code. / Pogresan kod.")
                 
@@ -185,7 +185,7 @@ def choose_2fa_method(request):
     try:
         professional = Professional.objects.get(user=request.user)
     except:
-        return redirect('main:home')
+        return redirect('professional_portal:dashboard')
     
     lang = request.session.get('site_language', 'ge')
     

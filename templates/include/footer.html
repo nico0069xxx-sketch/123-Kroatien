@@ -29,7 +29,7 @@
                             {% if user.is_authenticated %}
                             <li><a href="#" class="text-white"><i class="fa fa-user"></i> {{ user.username }}</a></li>
                             {% if user.is_authenticated %}
-                            <li><a href="{% url 'main:makler_dashboard' %}" class="text-white"><i class="fa fa-building"></i> Makler-Portal</a></li>
+                            {% if user.professional.professional_type == 'real_estate_agent' or user.professional.professional_type == 'construction_company' %}<li><a href="{% url 'main:makler_dashboard' %}" class="text-white"><i class="fa fa-building"></i> Makler-Portal</a></li>{% elif user.professional %}<li><a href="{% url 'professional_portal:dashboard' %}" class="text-white"><i class="fa fa-briefcase"></i> Mein Portal</a></li>{% endif %}
                             {% endif %}
                             <li><a href="{% url 'account:logout' %}" class="text-white">{{ nav_logout }}</a></li>
                             {% else %}
