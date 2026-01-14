@@ -45,6 +45,7 @@ urlpatterns += [
 
 urlpatterns += i18n_patterns(
     path('accounts/', include('accounts.urls')),
+path('portal/', include('main.professional_portal_urls')),
     path('', include('main.urls')),
     prefix_default_language=True,
 )
