@@ -1,0 +1,17 @@
+{% extends "makler_portal/base_portal.html" %}
+{% load static %}
+{% block title %}Login-Code{% endblock title %}
+{% block portal_content %}
+<div class="row justify-content-center"><div class="col-md-5"><div class="card shadow">
+<div class="card-header text-center" style="background: linear-gradient(135deg, #003167 0%, #004a99 100%);">
+<h4 class="text-white mb-0"><i class="fa fa-envelope"></i> Code eingeben</h4></div>
+<div class="card-body p-4">
+{% if messages %}{% for message in messages %}<div class="alert alert-info">{{ message }}</div>{% endfor %}{% endif %}
+<p class="text-center mb-4">Wir haben einen 6-stelligen Code an <strong>{{ professional.email }}</strong> gesendet</p>
+<form method="post" action="/makler-portal/email-code/verify/">{% csrf_token %}
+<div class="form-group"><input type="text" name="code" id="code" class="form-control form-control-lg text-center" maxlength="6" pattern="[0-9]{6}" placeholder="000000" style="font-size: 1.8em; letter-spacing: 10px;" required autofocus></div>
+<button type="submit" class="btn btn-lg btn-block text-white mt-3" style="background-color: #1a5c1a;"><i class="fa fa-check"></i> Bestaetigen</button>
+</form><hr class="my-4"><div class="text-center"><p class="text-muted small mb-2">Code nicht erhalten?</p>
+<a href="/makler-portal/email-code/resend/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-refresh"></i> Erneut senden</a></div>
+</div></div></div></div>
+{% endblock portal_content %}

@@ -34,8 +34,7 @@ def makler_dashboard(request):
         return redirect('main:home')
     
     # 2FA-Check: Falls noch nicht eingerichtet, weiterleiten
-    if professional.must_setup_2fa and not professional.totp_enabled:
-        return redirect('main:professional_setup_2fa')
+    # 2FA deaktiviert
     
     # Sprache
     lang = request.session.get('site_language', 'ge')

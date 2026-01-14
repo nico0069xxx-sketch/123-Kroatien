@@ -21,6 +21,7 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Makler-Portal (ohne Sprachpraefix)
+from main.email_2fa import email_2fa_send, email_2fa_verify, email_2fa_resend
 from main.professional_totp import (
     professional_login, professional_setup_2fa,
     professional_verify_2fa_setup, professional_verify_2fa_login
@@ -30,6 +31,9 @@ urlpatterns += [
     path('makler-portal/login/', professional_login, name='professional_login'),
     path('makler-portal/2fa-einrichten/', professional_setup_2fa, name='professional_setup_2fa'),
     path('makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup'),
+        path('makler-portal/email-code/', email_2fa_send, name='email_2fa_send'),
+    path('makler-portal/email-code/verify/', email_2fa_verify, name='email_2fa_verify'),
+    path('makler-portal/email-code/resend/', email_2fa_resend, name='email_2fa_resend'),
     path('makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa'),
     path('ge/makler-portal/2fa-einrichten/', professional_setup_2fa, name='professional_setup_2fa_ge'),
     path('ge/makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup_ge'),
