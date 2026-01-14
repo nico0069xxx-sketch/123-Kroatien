@@ -37,9 +37,20 @@ def edit_profile(request):
         professional.name = request.POST.get('name', professional.name)
         professional.email = request.POST.get('email', professional.email)
         professional.phone = request.POST.get('phone', '')
+        professional.mobile = request.POST.get('mobile', '')
         professional.city = request.POST.get('city', '')
+        professional.region = request.POST.get('region', '')
+        professional.address = request.POST.get('address', '')
+        professional.website = request.POST.get('website', '')
+        professional.facebook = request.POST.get('facebook', '')
+        professional.instagram = request.POST.get('instagram', '')
+        professional.linkedin = request.POST.get('linkedin', '')
+        professional.description_de = request.POST.get('description_de', '')
+        professional.description_hr = request.POST.get('description_hr', '')
+        professional.description_en = request.POST.get('description_en', '')
+        professional.languages_spoken = request.POST.get('languages', '')
         professional.save()
-        messages.success(request, 'Profil aktualisiert!')
+        messages.success(request, 'Profil erfolgreich aktualisiert!')
         return redirect('professional_portal:dashboard')
     return render(request, 'professional_portal/edit_profile.html', {'professional': professional})
 
@@ -50,8 +61,10 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Passwort geaendert!')
+            messages.success(request, 'Passwort erfolgreich geaendert!')
             return redirect('professional_portal:dashboard')
+        else:
+            messages.error(request, 'Bitte korrigiere die Fehler.')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'professional_portal/change_password.html', {'form': form})
@@ -137,3 +150,33 @@ def resend_email_code(request):
     except:
         messages.error(request, 'E-Mail konnte nicht gesendet werden.')
     return redirect('professional_portal:verify_email_2fa')
+
+
+from django.http import JsonResponse
+from .profile_generator import generate_profile_texts
+
+@login_required(login_url='account:login')
+def generate_description(request):
+    """KI-Textgenerierung fuer Profilbeschreibung"""
+    try:
+        professional = Professional.objects.get(user=request.user)
+    except Professional.DoesNotExist:
+        return JsonResponse({'error': 'Kein Profil gefunden'}, status=404)
+    
+    lang = request.GET.get('lang', 'ge')
+    
+    data = {
+        'name': professional.name,
+        'company_name': professional.company_name or '',
+        'professional_type': professional.professional_type,
+        'region': professional.region or '',
+        'city': professional.city or '',
+        'languages_spoken': professional.languages_spoken or '',
+        'website': professional.website or '',
+    }
+    
+    try:
+        suggestions = generate_profile_texts(data, lang)
+        return JsonResponse({'success': True, 'suggestions': suggestions})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
