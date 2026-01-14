@@ -1,0 +1,344 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}2FA Einstellungen{% endblock %}
+
+{% block content %}
+<style>
+    .twofa-container {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+    .twofa-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .twofa-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+    .twofa-icon i {
+        font-size: 2rem;
+        color: white;
+    }
+    .twofa-header h1 {
+        font-size: 1.8rem;
+        color: #1e3a5f;
+        margin-bottom: 10px;
+    }
+    .twofa-header p {
+        color: #666;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .current-status {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+    }
+    .status-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .status-row:last-child {
+        border-bottom: none;
+    }
+    .status-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .status-label i {
+        font-size: 1.3rem;
+        color: #2d5a87;
+    }
+    .status-label span {
+        font-weight: 500;
+        color: #333;
+    }
+    .status-badge {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    .status-active {
+        background: #d4edda;
+        color: #155724;
+    }
+    .status-inactive {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    .twofa-options {
+        display: grid;
+        gap: 20px;
+    }
+    .twofa-option {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .twofa-option:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    .option-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .option-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .option-icon.app {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .option-icon.email {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    .option-icon i {
+        font-size: 1.5rem;
+        color: white;
+    }
+    .option-content h3 {
+        font-size: 1.2rem;
+        color: #1e3a5f;
+        margin-bottom: 8px;
+    }
+    .option-content p {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    .option-features {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+    }
+    .option-features h4 {
+        font-size: 0.9rem;
+        color: #1e3a5f;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 0;
+        font-size: 0.9rem;
+        color: #555;
+    }
+    .feature-list li i.fa-check {
+        color: #28a745;
+    }
+    .feature-list li i.fa-times {
+        color: #dc3545;
+    }
+    .btn-setup {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 14px 24px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .btn-setup.primary {
+        background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+        color: white;
+    }
+    .btn-setup.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 58, 95, 0.4);
+    }
+    .btn-setup.secondary {
+        background: #e9ecef;
+        color: #495057;
+    }
+    .btn-setup.secondary:hover {
+        background: #dee2e6;
+    }
+    .btn-setup.danger {
+        background: #dc3545;
+        color: white;
+    }
+    .btn-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #666;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 15px;
+        margin-top: 30px;
+    }
+    .btn-back:hover {
+        color: #1e3a5f;
+    }
+    .info-box {
+        background: #e7f3ff;
+        border-left: 4px solid #2d5a87;
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+        margin-top: 30px;
+    }
+    .info-box h4 {
+        color: #1e3a5f;
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+    .info-box p {
+        color: #555;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+</style>
+
+<div class="twofa-container">
+    <div class="twofa-header">
+        <div class="twofa-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h1>Zwei-Faktor-Authentifizierung</h1>
+        <p>Schütze dein Konto mit einer zusätzlichen Sicherheitsebene beim Login</p>
+    </div>
+
+    <!-- Aktueller Status -->
+    <div class="current-status">
+        <div class="status-row">
+            <div class="status-label">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Authenticator App</span>
+            </div>
+            {% if professional.totp_enabled %}
+            <span class="status-badge status-active"><i class="fas fa-check"></i> Aktiv</span>
+            {% else %}
+            <span class="status-badge status-inactive">Nicht eingerichtet</span>
+            {% endif %}
+        </div>
+        <div class="status-row">
+            <div class="status-label">
+                <i class="fas fa-envelope"></i>
+                <span>E-Mail Code</span>
+            </div>
+            {% if professional.email_2fa_enabled %}
+            <span class="status-badge status-active"><i class="fas fa-check"></i> Aktiv</span>
+            {% else %}
+            <span class="status-badge status-inactive">Nicht eingerichtet</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Optionen -->
+    <div class="twofa-options">
+        <!-- Authenticator App -->
+        <div class="twofa-option">
+            <div class="option-header">
+                <div class="option-icon app">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="option-content">
+                    <h3>Authenticator App</h3>
+                    <p>Verwende eine App wie Google Authenticator, Authy oder Microsoft Authenticator um Codes zu generieren.</p>
+                </div>
+            </div>
+            
+            <div class="option-features">
+                <h4>Vorteile & Eigenschaften</h4>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Höchste Sicherheitsstufe</li>
+                    <li><i class="fas fa-check"></i> Funktioniert offline</li>
+                    <li><i class="fas fa-check"></i> Codes wechseln alle 30 Sekunden</li>
+                    <li><i class="fas fa-times"></i> Erfordert eine zusätzliche App</li>
+                </ul>
+            </div>
+
+            {% if professional.totp_enabled %}
+            <a href="#" class="btn-setup danger">
+                <i class="fas fa-times"></i> Deaktivieren
+            </a>
+            {% else %}
+            <a href="#" class="btn-setup primary">
+                <i class="fas fa-qrcode"></i> Jetzt einrichten
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- E-Mail Code -->
+        <div class="twofa-option">
+            <div class="option-header">
+                <div class="option-icon email">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="option-content">
+                    <h3>E-Mail Code</h3>
+                    <p>Erhalte bei jedem Login einen einmaligen Code an deine E-Mail-Adresse {{ professional.email }}.</p>
+                </div>
+            </div>
+            
+            <div class="option-features">
+                <h4>Vorteile & Eigenschaften</h4>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Einfache Einrichtung</li>
+                    <li><i class="fas fa-check"></i> Keine zusätzliche App nötig</li>
+                    <li><i class="fas fa-check"></i> Funktioniert mit jeder E-Mail</li>
+                    <li><i class="fas fa-times"></i> Erfordert Internetzugang</li>
+                </ul>
+            </div>
+
+            {% if professional.email_2fa_enabled %}
+            <a href="#" class="btn-setup danger">
+                <i class="fas fa-times"></i> Deaktivieren
+            </a>
+            {% else %}
+            <a href="#" class="btn-setup primary">
+                <i class="fas fa-envelope"></i> Jetzt aktivieren
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4><i class="fas fa-info-circle"></i> Warum 2FA?</h4>
+        <p>Zwei-Faktor-Authentifizierung schützt dein Konto, selbst wenn dein Passwort kompromittiert wird. Ein Angreifer benötigt zusätzlich Zugang zu deinem Smartphone oder E-Mail-Postfach.</p>
+    </div>
+
+    <a href="{% url 'professional_portal:dashboard' %}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Zurück zum Dashboard
+    </a>
+</div>
+{% endblock %}

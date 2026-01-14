@@ -1,0 +1,339 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}Profil bearbeiten - {{ professional.name }}{% endblock %}
+
+{% block content %}
+<style>
+    .edit-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    .edit-header {
+        margin-bottom: 30px;
+    }
+    .edit-header h1 {
+        font-size: 2rem;
+        color: #1e3a5f;
+        margin-bottom: 10px;
+    }
+    .edit-header .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #666;
+    }
+    .edit-header .breadcrumb a {
+        color: #2d5a87;
+        text-decoration: none;
+    }
+    .edit-header .breadcrumb a:hover {
+        text-decoration: underline;
+    }
+    .edit-form {
+        background: white;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .form-section {
+        margin-bottom: 35px;
+        padding-bottom: 35px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title i {
+        color: #2d5a87;
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 0;
+    }
+    .form-group label {
+        display: block;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #2d5a87;
+    }
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    .form-hint {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 6px;
+    }
+    .image-upload {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .image-preview {
+        width: 100px;
+        height: 100px;
+        border-radius: 12px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 2px dashed #dee2e6;
+    }
+    .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .image-preview i {
+        font-size: 2rem;
+        color: #dee2e6;
+    }
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 1px solid #e9ecef;
+    }
+    .btn-save {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+        color: white;
+        padding: 14px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 58, 95, 0.4);
+    }
+    .btn-cancel {
+        color: #666;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .btn-cancel:hover {
+        color: #1e3a5f;
+    }
+    @media (max-width: 768px) {
+        .edit-form {
+            padding: 25px;
+        }
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .btn-container {
+            flex-direction: column-reverse;
+            gap: 15px;
+        }
+        .btn-save {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="edit-container">
+    <div class="edit-header">
+        <div class="breadcrumb">
+            <a href="{% url 'professional_portal:dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+            <span>/</span>
+            <span>Profil bearbeiten</span>
+        </div>
+        <h1>Profil bearbeiten</h1>
+    </div>
+
+    {% if messages %}
+    <div style="margin-bottom: 20px;">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}" style="padding: 15px; border-radius: 8px; background: {% if message.tags == 'success' %}#d4edda{% else %}#fff3cd{% endif %}; margin-bottom: 10px;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+        
+        <!-- Grunddaten -->
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-user"></i> Grunddaten</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Name / Firmenname *</label>
+                    <input type="text" id="name" name="name" value="{{ professional.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-Mail *</label>
+                    <input type="email" id="email" name="email" value="{{ professional.email }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Telefon</label>
+                    <input type="tel" id="phone" name="phone" value="{{ professional.phone|default:'' }}">
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobil</label>
+                    <input type="tel" id="mobile" name="mobile" value="{{ professional.mobile|default:'' }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input type="url" id="website" name="website" value="{{ professional.website|default:'' }}" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="languages">Gesprochene Sprachen</label>
+                    <input type="text" id="languages" name="languages" value="{{ professional.languages|default:'' }}" placeholder="z.B. Deutsch, Kroatisch, Englisch">
+                </div>
+            </div>
+        </div>
+
+        <!-- Adresse -->
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-map-marker-alt"></i> Adresse</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="city">Stadt</label>
+                    <input type="text" id="city" name="city" value="{{ professional.city|default:'' }}">
+                </div>
+                <div class="form-group">
+                    <label for="region">Region</label>
+                    <select id="region" name="region">
+                        <option value="">-- Bitte wählen --</option>
+                        {% for value, label in regions %}
+                        <option value="{{ value }}" {% if professional.region == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Straße & Hausnummer</label>
+                <input type="text" id="address" name="address" value="{{ professional.address|default:'' }}">
+            </div>
+        </div>
+
+        <!-- Beschreibung -->
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-align-left"></i> Beschreibung</h3>
+            <div class="form-group">
+                <label for="description_de">Beschreibung (Deutsch)</label>
+                <textarea id="description_de" name="description_de" placeholder="Beschreibe deine Dienstleistungen und Erfahrungen...">{{ professional.description_de|default:'' }}</textarea>
+                <p class="form-hint">Diese Beschreibung wird auf deinem öffentlichen Profil angezeigt.</p>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="description_hr">Beschreibung (Kroatisch)</label>
+                <textarea id="description_hr" name="description_hr" placeholder="Opišite svoje usluge i iskustvo...">{{ professional.description_hr|default:'' }}</textarea>
+            </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-share-alt"></i> Social Media</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="facebook"><i class="fab fa-facebook" style="color: #1877f2;"></i> Facebook</label>
+                    <input type="url" id="facebook" name="facebook" value="{{ professional.facebook|default:'' }}" placeholder="https://facebook.com/...">
+                </div>
+                <div class="form-group">
+                    <label for="instagram"><i class="fab fa-instagram" style="color: #e4405f;"></i> Instagram</label>
+                    <input type="url" id="instagram" name="instagram" value="{{ professional.instagram|default:'' }}" placeholder="https://instagram.com/...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="linkedin"><i class="fab fa-linkedin" style="color: #0077b5;"></i> LinkedIn</label>
+                <input type="url" id="linkedin" name="linkedin" value="{{ professional.linkedin|default:'' }}" placeholder="https://linkedin.com/in/...">
+            </div>
+        </div>
+
+        <!-- Bilder -->
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-image"></i> Bilder</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Profilbild</label>
+                    <div class="image-upload">
+                        <div class="image-preview">
+                            {% if professional.profile_image %}
+                            <img src="{{ professional.profile_image.url }}" alt="Profilbild">
+                            {% else %}
+                            <i class="fas fa-user"></i>
+                            {% endif %}
+                        </div>
+                        <input type="file" name="profile_image" accept="image/*">
+                    </div>
+                    <p class="form-hint">Empfohlen: 400x400 Pixel, max. 2MB</p>
+                </div>
+                <div class="form-group">
+                    <label>Firmenlogo</label>
+                    <div class="image-upload">
+                        <div class="image-preview">
+                            {% if professional.company_logo %}
+                            <img src="{{ professional.company_logo.url }}" alt="Logo">
+                            {% else %}
+                            <i class="fas fa-building"></i>
+                            {% endif %}
+                        </div>
+                        <input type="file" name="company_logo" accept="image/*">
+                    </div>
+                    <p class="form-hint">Empfohlen: PNG mit transparentem Hintergrund</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="{% url 'professional_portal:dashboard' %}" class="btn-cancel">
+                <i class="fas fa-arrow-left"></i> Abbrechen
+            </a>
+            <button type="submit" class="btn-save">
+                <i class="fas fa-save"></i> Änderungen speichern
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
