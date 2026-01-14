@@ -1,0 +1,38 @@
+{% extends "makler_portal/base_portal.html" %}
+{% block title %}2FA Methode waehlen{% endblock title %}
+{% block portal_content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header text-center" style="background: linear-gradient(135deg, #003167 0%, #004a99 100%);">
+                <h4 class="text-white mb-0"><i class="fa fa-shield"></i> Sicherheit einrichten</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-center mb-4">Waehlen Sie Ihre bevorzugte Methode fuer die Zwei-Faktor-Authentifizierung:</p>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body text-center">
+                                <i class="fa fa-mobile fa-3x text-primary mb-3"></i>
+                                <h5>Authenticator App</h5>
+                                <p class="small text-muted">Nutzen Sie Google Authenticator oder eine aehnliche App. Sehr sicher, Code wird lokal generiert.</p>
+                                <a href="/makler-portal/2fa-einrichten/" class="btn btn-primary btn-block"><i class="fa fa-qrcode"></i> QR-Code scannen</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body text-center">
+                                <i class="fa fa-envelope fa-3x text-success mb-3"></i>
+                                <h5>E-Mail Code</h5>
+                                <p class="small text-muted">Sie erhalten bei jedem Login einen Code per E-Mail. Einfach und ohne zusaetzliche App.</p>
+                                <a href="/makler-portal/2fa-email-waehlen/" class="btn btn-success btn-block"><i class="fa fa-envelope"></i> E-Mail nutzen</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock portal_content %}

@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 """
 Django settings for realstate project.
 
@@ -212,11 +215,11 @@ CRISPY_TEMPLATE_PACK = 'uni_form'
 
 ## Email Config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.ethereal.email'
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.ethereal.email')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'harmon47@ethereal.email'
-EMAIL_HOST_PASSWORD = 'mgMRFHnKB3c9aTwRaw'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

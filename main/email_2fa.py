@@ -172,3 +172,45 @@ def email_2fa_resend(request):
         print(f"Resend Fehler: {e}")
     
     return redirect("main:email_2fa_send")
+
+
+def choose_2fa_method(request):
+    """Zeigt Auswahlseite fuer 2FA-Methode"""
+    from django.contrib.auth.decorators import login_required
+    
+    if not request.user.is_authenticated:
+        return redirect('account:login')
+    
+    professional = None
+    try:
+        professional = Professional.objects.get(user=request.user)
+    except:
+        return redirect('main:home')
+    
+    lang = request.session.get('site_language', 'ge')
+    
+    return render(request, 'makler_portal/2fa_auswahl.html', {
+        'professional': professional,
+        'lang': lang,
+    })
+
+
+def choose_email_2fa(request):
+    """Aktiviert E-Mail 2FA fuer den Nutzer"""
+    if not request.user.is_authenticated:
+        return redirect('account:login')
+    
+    try:
+        professional = Professional.objects.get(user=request.user)
+        professional.email_2fa_enabled = True
+        professional.totp_enabled = False
+        professional.must_setup_2fa = False
+        professional.save()
+        messages.success(request, 'E-Mail 2FA wurde aktiviert! / Email 2FA je aktiviran!')
+        
+        if professional.professional_type in ['real_estate_agent', 'construction_company']:
+            return redirect('main:makler_dashboard')
+        else:
+            return redirect('main:home')
+    except:
+        return redirect('main:home')
