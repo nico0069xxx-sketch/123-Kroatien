@@ -6,7 +6,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
+from django.http import JsonResponse
 from main.professional_models import Professional
+from .profile_generator import generate_profile_texts
 import random
 import pyotp
 import qrcode
@@ -49,6 +51,10 @@ def edit_profile(request):
         professional.description_hr = request.POST.get('description_hr', '')
         professional.description_en = request.POST.get('description_en', '')
         professional.languages_spoken = request.POST.get('languages', '')
+        if 'portrait' in request.FILES:
+            professional.portrait = request.FILES['portrait']
+        if 'logo' in request.FILES:
+            professional.logo = request.FILES['logo']
         professional.save()
         messages.success(request, 'Profil erfolgreich aktualisiert!')
         return redirect('professional_portal:dashboard')
@@ -151,20 +157,13 @@ def resend_email_code(request):
         messages.error(request, 'E-Mail konnte nicht gesendet werden.')
     return redirect('professional_portal:verify_email_2fa')
 
-
-from django.http import JsonResponse
-from .profile_generator import generate_profile_texts
-
 @login_required(login_url='account:login')
 def generate_description(request):
-    """KI-Textgenerierung fuer Profilbeschreibung"""
     try:
         professional = Professional.objects.get(user=request.user)
     except Professional.DoesNotExist:
         return JsonResponse({'error': 'Kein Profil gefunden'}, status=404)
-    
     lang = request.GET.get('lang', 'ge')
-    
     data = {
         'name': professional.name,
         'company_name': professional.company_name or '',
@@ -174,7 +173,6 @@ def generate_description(request):
         'languages_spoken': professional.languages_spoken or '',
         'website': professional.website or '',
     }
-    
     try:
         suggestions = generate_profile_texts(data, lang)
         return JsonResponse({'success': True, 'suggestions': suggestions})

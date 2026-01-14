@@ -88,6 +88,11 @@ class Professional(models.Model):
     profile_text_original = models.TextField(blank=True, null=True,
                                              help_text='Originaltext in der Eingabesprache')
     
+    # Beschreibungen (3 Sprachen)
+    description_de = models.TextField(blank=True, null=True, help_text='Beschreibung Deutsch')
+    description_hr = models.TextField(blank=True, null=True, help_text='Beschreibung Kroatisch')
+    description_en = models.TextField(blank=True, null=True, help_text='Beschreibung Englisch')
+    
     # Spam-Schutz
     failed_attempts = models.IntegerField(default=0)
     blocked_until = models.DateTimeField(blank=True, null=True)

@@ -35,7 +35,15 @@
 .lang-tab { padding: 8px 16px; border: 2px solid #e9ecef; border-radius: 8px; cursor: pointer; background: white; }
 .lang-tab.active { background: #1e3a5f; color: white; border-color: #1e3a5f; }
 .loading { text-align: center; padding: 20px; color: #666; }
-@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+.image-upload { display: flex; align-items: center; gap: 20px; }
+.image-preview { width: 120px; height: 120px; border-radius: 12px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px dashed #dee2e6; }
+.image-preview img { width: 100%; height: 100%; object-fit: cover; }
+.image-preview i { font-size: 2.5rem; color: #dee2e6; }
+.image-input { flex: 1; }
+.image-hint { font-size: 0.85rem; color: #666; margin-top: 5px; }
+.current-image { position: relative; }
+.current-image .remove-btn { position: absolute; top: -8px; right: -8px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .image-upload { flex-direction: column; align-items: flex-start; } }
 </style>
 <div class="edit-container">
 <div class="edit-header">
@@ -49,6 +57,43 @@
 {% endif %}
 <form method="post" class="edit-form" enctype="multipart/form-data">
 {% csrf_token %}
+<div class="form-section">
+<h3 class="section-title">Bilder</h3>
+<div class="form-row">
+<div class="form-group">
+<label>Portrait / Profilbild</label>
+<div class="image-upload">
+<div class="image-preview">
+{% if professional.portrait %}
+<img src="{{ professional.portrait.url }}" alt="Portrait">
+{% else %}
+<i class="fa fa-user"></i>
+{% endif %}
+</div>
+<div class="image-input">
+<input type="file" name="portrait" accept="image/*">
+<p class="image-hint">Empfohlen: 400x400 Pixel, max. 2MB</p>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label>Firmenlogo</label>
+<div class="image-upload">
+<div class="image-preview">
+{% if professional.logo %}
+<img src="{{ professional.logo.url }}" alt="Logo">
+{% else %}
+<i class="fa fa-building"></i>
+{% endif %}
+</div>
+<div class="image-input">
+<input type="file" name="logo" accept="image/*">
+<p class="image-hint">Empfohlen: PNG mit transparentem Hintergrund</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="form-section">
 <h3 class="section-title">Persoenliche Daten</h3>
 <div class="form-row">

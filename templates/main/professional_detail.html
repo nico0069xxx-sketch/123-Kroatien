@@ -60,9 +60,12 @@
       <div class="col-md-8">
         {% if content %}
         <div class="profile-content" style="color: #003167;">
-          {% if content.profile_summary %}
+          {% if content and content.profile_summary %}
           <h2 style="color: #003167;">{{ trans.profile }}</h2>
           <p>{{ content.profile_summary }}</p>
+          {% elif professional.description_de %}
+          <h2 style="color: #003167;">{{ trans.profile }}</h2>
+          <p>{{ professional.description_de }}</p>
           {% endif %}
           
           {% if professional.company_name %}
@@ -107,6 +110,10 @@
         {% else %}
         <div class="profile-content" style="color: #003167;">
           <h2>{{ professional.name }}</h2>
+          {% if professional.description_de %}
+          <h3 style="color: #003167;">Profil</h3>
+          <p>{{ professional.description_de }}</p>
+          {% endif %}
           <p><strong>{{ trans.languages }}:</strong> {{ translated_languages }}</p>
           {% if professional.service_regions %}
           <p><strong>{{ trans.regions }}:</strong> {{ translated_service_regions }}</p>
