@@ -16,6 +16,10 @@ urlpatterns = [
     # path('listings/', include('listings.urls')),   ### listings need to add before apps urls
     path('accounts/', include('accounts.urls')),   ### accounts need to add before apps urls
     # path('contacts/', include('contacts.urls')),
+    
+    # Professional Portal (Gruppe B: Architekten, Anwälte, Steuerberater)
+    path('portal/', include('main.professional_portal_urls')),
+    
     path('', include('main.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)       ## Media Folder
 
