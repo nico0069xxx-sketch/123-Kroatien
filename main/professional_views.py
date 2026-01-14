@@ -487,7 +487,10 @@ def professional_detail(request, country, category, slug):
     
     # Monat übersetzen
     current_month = MONTH_TRANSLATIONS.get(lang, "Januar")
-    
+    # Profilaufrufe zaehlen (nur Gruppe A)
+    if professional.professional_type in ['real_estate_agent', 'construction_company']:
+        professional.profile_views += 1
+        professional.save(update_fields=['profile_views'])
     return render(request, "main/professional_detail.html", {
         "professional": professional,
         "content": content,

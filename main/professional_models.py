@@ -107,6 +107,8 @@ class Professional(models.Model):
     
     # Status
     is_active = models.BooleanField(default=False)
+    # Statistiken (nur Gruppe A)
+    profile_views = models.PositiveIntegerField(default=0, help_text='Anzahl Profilaufrufe')
     is_verified = models.BooleanField(default=False)
     verified_at = models.DateTimeField(blank=True, null=True)
     

@@ -13,7 +13,8 @@ class ProfessionalAdmin(admin.ModelAdmin):
         'stadt_region',
         'status_anzeige',
         'dokumente_vorhanden',
-        'datum'
+        'datum',
+        'profile_views'
     ]
     
     list_filter = [
