@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import professional_views
+from . import xml_views
 from pages.views import translate_all
 
 app_name = 'main'
@@ -8,6 +9,7 @@ app_name = 'main'
 urlpatterns = [
     path('', views.home, name='home'),
     path('listing/', views.listings, name='listing'),
+    path('listings/', views.listings, name='listings'),  # Alias
     path('blog/', views.blog, name='blog'),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
