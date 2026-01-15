@@ -198,3 +198,51 @@ class ProfessionalDocument(models.Model):
     
     def __str__(self):
         return f"{self.professional.name} - {self.get_document_type_display()}"
+
+
+class ReferenceProject(models.Model):
+    """
+    Reference projects/portfolio for professionals.
+    Allows showcasing completed projects with images.
+    """
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
+    
+    # Project info
+    title = models.CharField(max_length=200, verbose_name="Projekttitel")
+    description = models.TextField(blank=True, null=True, verbose_name="Beschreibung")
+    year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Jahr")
+    location = models.CharField(max_length=200, blank=True, null=True, verbose_name="Standort")
+    project_type = models.CharField(max_length=100, blank=True, null=True, verbose_name="Projektart")
+    
+    # Images (up to 6)
+    image_1 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_2 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_3 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_4 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_5 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_6 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    
+    # Ordering
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Sortierreihenfolge")
+    is_featured = models.BooleanField(default=False, verbose_name="Hervorgehoben")
+    
+    # Timestamps
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = 'Referenzprojekt'
+        verbose_name_plural = 'Referenzprojekte'
+        ordering = ['sort_order', '-year', '-created']
+    
+    def __str__(self):
+        return f"{self.title} ({self.professional.name})"
+    
+    def get_images(self):
+        """Return list of all non-empty images"""
+        images = []
+        for i in range(1, 7):
+            img = getattr(self, f'image_{i}')
+            if img:
+                images.append(img)
+        return images
