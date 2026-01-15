@@ -1,0 +1,169 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+<!-- BREADCRUMB -->
+<div class="myHeaderBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="text-capitalize text-white">
+                        {% if is_edit %}Projekt bearbeiten{% else %}Neues Referenzprojekt{% endif %}
+                    </h2>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="/" class="text-white">Home</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="{% url 'main:reference_projects_list' professional.id %}" class="text-white">Referenzen</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- END BREADCRUMB -->
+</header>
+
+<div class="clearfix"></div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Messages -->
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fa fa-{% if is_edit %}edit{% else %}plus{% endif %} mr-2"></i>
+                            {% if is_edit %}Projekt bearbeiten{% else %}Neues Referenzprojekt erstellen{% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% if is_edit %}{% url 'main:reference_project_edit' professional.id project.id %}{% else %}{% url 'main:reference_project_create' professional.id %}{% endif %}" 
+                              method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <!-- Basic Info -->
+                            <h6 class="text-muted mb-3"><i class="fa fa-info-circle mr-2"></i>Projektinformationen</h6>
+                            
+                            <div class="form-group">
+                                <label>Projekttitel *</label>
+                                <input type="text" class="form-control" name="title" 
+                                       value="{% if is_edit %}{{ project.title }}{% endif %}" 
+                                       placeholder="z.B. Villa am Meer - Istrien" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Jahr</label>
+                                    <input type="number" class="form-control" name="year" 
+                                           value="{% if is_edit and project.year %}{{ project.year }}{% endif %}" 
+                                           min="1990" max="2030" placeholder="2024">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Standort</label>
+                                    <input type="text" class="form-control" name="location" 
+                                           value="{% if is_edit %}{{ project.location|default:'' }}{% endif %}" 
+                                           placeholder="z.B. Rovinj, Istrien">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Projektart</label>
+                                    <input type="text" class="form-control" name="project_type" 
+                                           value="{% if is_edit %}{{ project.project_type|default:'' }}{% endif %}" 
+                                           placeholder="z.B. Neubau, Renovierung">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Beschreibung</label>
+                                <textarea class="form-control" name="description" rows="4" 
+                                          placeholder="Beschreibe das Projekt...">{% if is_edit %}{{ project.description|default:'' }}{% endif %}</textarea>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Images Section -->
+                            <h6 class="text-muted mb-3"><i class="fa fa-images mr-2"></i>Projektbilder (max. 6)</h6>
+                            
+                            <div class="row">
+                                {% for i in "123456"|make_list %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <label class="small text-muted">Bild {{ i }}</label>
+                                            {% if is_edit %}
+                                                {% with img=project|get_attr:'image_'|add:i %}
+                                                {% if img %}
+                                                <div class="mb-2 position-relative">
+                                                    <img src="{{ img.url }}" alt="Bild {{ i }}" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                    <div class="custom-control custom-checkbox mt-1">
+                                                        <input type="checkbox" class="custom-control-input" id="delete_image_{{ i }}" name="delete_image_{{ i }}">
+                                                        <label class="custom-control-label small text-danger" for="delete_image_{{ i }}">Löschen</label>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endwith %}
+                                            {% endif %}
+                                            <input type="file" class="form-control-file small" name="image_{{ i }}" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Display Options -->
+                            <h6 class="text-muted mb-3"><i class="fa fa-cog mr-2"></i>Anzeigeoptionen</h6>
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Sortierreihenfolge</label>
+                                    <input type="number" class="form-control" name="sort_order" 
+                                           value="{% if is_edit %}{{ project.sort_order }}{% else %}0{% endif %}" 
+                                           min="0" max="999">
+                                    <small class="text-muted">Niedrigere Zahlen werden zuerst angezeigt</small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>&nbsp;</label>
+                                    <div class="custom-control custom-checkbox mt-2">
+                                        <input type="checkbox" class="custom-control-input" id="is_featured" name="is_featured" 
+                                               {% if is_edit and project.is_featured %}checked{% endif %}>
+                                        <label class="custom-control-label" for="is_featured">
+                                            <i class="fa fa-star text-warning mr-1"></i>Als hervorgehoben markieren
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                                <a href="{% url 'main:reference_projects_list' professional.id %}" class="btn btn-outline-secondary">
+                                    <i class="fa fa-arrow-left mr-2"></i>Abbrechen
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-save mr-2"></i>
+                                    {% if is_edit %}Änderungen speichern{% else %}Projekt erstellen{% endif %}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
