@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from main.views import set_language_from_url
+from main.xml_views import rss_listings, xml_sitemap, robots_txt
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -16,6 +17,11 @@ urlpatterns = [
     # path('listings/', include('listings.urls')),   ### listings need to add before apps urls
     path('accounts/', include('accounts.urls')),   ### accounts need to add before apps urls
     # path('contacts/', include('contacts.urls')),
+    
+    # XML/RSS Feeds
+    path('rss/listings/', rss_listings, name='rss_listings'),
+    path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
+    path('robots.txt', robots_txt, name='robots_txt'),
     
     # Professional Portal (Gruppe B: Architekten, Anwälte, Steuerberater)
     path('portal/', include('main.professional_portal_urls')),
