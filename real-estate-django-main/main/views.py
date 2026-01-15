@@ -749,25 +749,55 @@ def edit_agent(request, id):
     
     if request.method == 'POST':
         if professional:
-            # Update Professional
+            # Update Professional - Basic Info
             professional.name = request.POST.get('name', professional.name)
             professional.city = request.POST.get('city', professional.city)
             professional.region = request.POST.get('region', professional.region)
+            professional.address = request.POST.get('address', professional.address)
             professional.company_name = request.POST.get('company_name', professional.company_name)
+            
+            # Images
             if request.FILES.get('company_logo'):
                 professional.company_logo = request.FILES.get('company_logo')
             if request.FILES.get('portrait_photo'):
                 professional.portrait_photo = request.FILES.get('portrait_photo')
+            if request.FILES.get('profile_image'):
+                professional.profile_image = request.FILES.get('profile_image')
+            
+            # Extended company info (NEW)
+            professional.slogan = request.POST.get('slogan', professional.slogan)
+            professional.founded_year = request.POST.get('founded_year') or None
+            professional.employee_count = request.POST.get('employee_count', professional.employee_count)
+            professional.specializations = request.POST.get('specializations', professional.specializations)
+            
+            # Contact info
             professional.oib_number = request.POST.get('oib_number', professional.oib_number)
             professional.website = request.POST.get('domain', professional.website)
+            professional.mobile = request.POST.get('mobile', professional.mobile)
+            professional.fax = request.POST.get('fax', professional.fax)
+            professional.phone = request.POST.get('phone', professional.phone)
+            professional.languages = request.POST.get('languages', professional.languages)
+            
+            # Social Media
             professional.facebook = request.POST.get('facebook', professional.facebook)
             professional.instagram = request.POST.get('instagram', professional.instagram)
             professional.linkedin = request.POST.get('linkedin', professional.linkedin)
             professional.youtube = request.POST.get('youtube', professional.youtube)
             professional.twitter = request.POST.get('twitter', professional.twitter)
+            professional.tiktok = request.POST.get('tiktok', professional.tiktok)
+            
+            # Description
             professional.description = request.POST.get('description', professional.description)
-            professional.mobile = request.POST.get('mobile', professional.mobile)
-            professional.fax = request.POST.get('fax', professional.fax)
+            professional.description_de = request.POST.get('description_de', professional.description_de)
+            professional.description_hr = request.POST.get('description_hr', professional.description_hr)
+            
+            # Display toggles (checkboxes)
+            professional.show_references = 'show_references' in request.POST
+            professional.show_contact_form = 'show_contact_form' in request.POST
+            professional.show_listings = 'show_listings' in request.POST
+            professional.show_social_media = 'show_social_media' in request.POST
+            professional.show_team = 'show_team' in request.POST
+            
             professional.save()
             messages.success(request, "Profil erfolgreich aktualisiert")
             return redirect('main:agent', id=id)
@@ -821,8 +851,143 @@ def edit_agent(request, id):
     context = {
         'agent': agent,
         'professional': professional,
+        'regions': Professional.REGIONS,
     }
     return render(request, 'main/edit-agent.html', context)
+
+
+# Reference Projects Management Views
+from main.professional_models import ReferenceProject
+
+@login_required(login_url='account:login')
+def reference_projects_list(request, id):
+    """List all reference projects for a professional"""
+    try:
+        professional = Professional.objects.get(id=id)
+    except Professional.DoesNotExist:
+        messages.error(request, "Profil nicht gefunden.")
+        return redirect('main:home')
+    
+    # Security check: Only owner can manage
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    projects = ReferenceProject.objects.filter(professional=professional)
+    
+    context = {
+        'professional': professional,
+        'projects': projects,
+    }
+    return render(request, 'main/reference_projects_list.html', context)
+
+
+@login_required(login_url='account:login')
+def reference_project_create(request, id):
+    """Create a new reference project"""
+    try:
+        professional = Professional.objects.get(id=id)
+    except Professional.DoesNotExist:
+        messages.error(request, "Profil nicht gefunden.")
+        return redirect('main:home')
+    
+    # Security check
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    if request.method == 'POST':
+        project = ReferenceProject(professional=professional)
+        project.title = request.POST.get('title', '')
+        project.description = request.POST.get('description', '')
+        project.year = request.POST.get('year') or None
+        project.location = request.POST.get('location', '')
+        project.project_type = request.POST.get('project_type', '')
+        project.sort_order = request.POST.get('sort_order') or 0
+        project.is_featured = 'is_featured' in request.POST
+        
+        # Handle image uploads
+        for i in range(1, 7):
+            img_field = f'image_{i}'
+            if request.FILES.get(img_field):
+                setattr(project, img_field, request.FILES.get(img_field))
+        
+        project.save()
+        messages.success(request, "Referenzprojekt erfolgreich erstellt!")
+        return redirect('main:reference_projects_list', id=id)
+    
+    context = {
+        'professional': professional,
+        'is_edit': False,
+    }
+    return render(request, 'main/reference_project_form.html', context)
+
+
+@login_required(login_url='account:login')
+def reference_project_edit(request, id, project_id):
+    """Edit an existing reference project"""
+    try:
+        professional = Professional.objects.get(id=id)
+        project = ReferenceProject.objects.get(id=project_id, professional=professional)
+    except (Professional.DoesNotExist, ReferenceProject.DoesNotExist):
+        messages.error(request, "Projekt nicht gefunden.")
+        return redirect('main:home')
+    
+    # Security check
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    if request.method == 'POST':
+        project.title = request.POST.get('title', project.title)
+        project.description = request.POST.get('description', project.description)
+        project.year = request.POST.get('year') or None
+        project.location = request.POST.get('location', project.location)
+        project.project_type = request.POST.get('project_type', project.project_type)
+        project.sort_order = request.POST.get('sort_order') or 0
+        project.is_featured = 'is_featured' in request.POST
+        
+        # Handle image uploads
+        for i in range(1, 7):
+            img_field = f'image_{i}'
+            if request.FILES.get(img_field):
+                setattr(project, img_field, request.FILES.get(img_field))
+            # Handle image deletion
+            if request.POST.get(f'delete_image_{i}'):
+                setattr(project, img_field, None)
+        
+        project.save()
+        messages.success(request, "Referenzprojekt erfolgreich aktualisiert!")
+        return redirect('main:reference_projects_list', id=id)
+    
+    context = {
+        'professional': professional,
+        'project': project,
+        'is_edit': True,
+    }
+    return render(request, 'main/reference_project_form.html', context)
+
+
+@login_required(login_url='account:login')
+def reference_project_delete(request, id, project_id):
+    """Delete a reference project"""
+    try:
+        professional = Professional.objects.get(id=id)
+        project = ReferenceProject.objects.get(id=project_id, professional=professional)
+    except (Professional.DoesNotExist, ReferenceProject.DoesNotExist):
+        messages.error(request, "Projekt nicht gefunden.")
+        return redirect('main:home')
+    
+    # Security check
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    if request.method == 'POST':
+        project.delete()
+        messages.success(request, "Referenzprojekt erfolgreich gelöscht!")
+    
+    return redirect('main:reference_projects_list', id=id)
 
 
 # Professional Registration View (Bilingual: German & Croatian)
