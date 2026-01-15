@@ -178,23 +178,50 @@
 
 ---
 
-## 8. XML-SCHNITTSTELLEN (GEPLANT)
+## 8. XML-SCHNITTSTELLEN
 
 ### 8.1 OpenImmo Import
-**Status:** Noch nicht implementiert
+**Datei:** `main/xml_import.py` → `OpenImmoImporter`
+**URL:** `/agent/<id>/xml-import/`
 
-**Geplante Funktion:**
-- Import von Immobilien im OpenImmo-XML-Format
-- Automatische Zuordnung zu Maklern
-- Synchronisation mit externen Systemen
+**Unterstützte Felder:**
+- Geo-Daten (PLZ, Ort, Bundesland, Straße, Land)
+- Preise (Kaufpreis, Kaltmiete, Warmmiete)
+- Flächen (Wohnfläche, Grundstücksfläche, Zimmer, Badezimmer)
+- Objektart (Wohnung, Haus, Grundstück, Gewerbe, etc.)
+- Vermarktungsart (Kauf, Miete)
+- Freitexte (Titel, Beschreibung, Lage, Ausstattung)
+- Bilder (bis zu 7)
 
-### 8.2 WordPress XML Import
-**Status:** Noch nicht implementiert
+### 8.2 Einfaches XML Import
+**Datei:** `main/xml_import.py` → `SimpleXMLImporter`
+**URL:** `/agent/<id>/xml-import/`
 
-**Geplante Funktion:**
-- Import von Immobilien aus WordPress-Seiten kroatischer Makler
-- Unterstützung für gängige WordPress-Immobilien-Plugins
-- Periodische Aktualisierung
+**Flexibles Format für WordPress-Seiten kroatischer Makler**
+
+Unterstützte Tag-Namen (mehrsprachig):
+| Feld | Deutsch | Kroatisch | Englisch |
+|------|---------|-----------|----------|
+| Titel | title, objekttitel | naziv, naslov | title, name |
+| Beschreibung | beschreibung | opis | description |
+| Preis | preis | cijena | price |
+| Stadt | ort, stadt | grad, mjesto | city, location |
+| Typ | objektart | tip, vrsta | type, category |
+| Status | vermarktungsart | stanje, prodaja_najam | status |
+
+### 8.3 RSS Feed Export
+**URL:** `/rss/listings/`
+- Exportiert alle veröffentlichten Immobilien als RSS
+- Enthält Preis, Stadt, Typ, Schlafzimmer, Badezimmer, Größe
+
+### 8.4 XML Sitemap
+**URL:** `/sitemap.xml`
+- Automatisch generierte Sitemap für Suchmaschinen
+- Enthält alle Seiten, Immobilien und Profile
+
+### 8.5 Robots.txt
+**URL:** `/robots.txt`
+- Standard robots.txt mit Sitemap-Verweis
 
 ---
 
