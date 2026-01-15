@@ -61,6 +61,12 @@ class Professional(models.Model):
     profile_image = models.ImageField(upload_to='professionals/profiles/', blank=True, null=True)
     portrait_photo = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
     
+    # Extended company info (NEW)
+    slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name="Slogan/Motto")
+    founded_year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Gründungsjahr")
+    employee_count = models.CharField(max_length=50, blank=True, null=True, verbose_name="Mitarbeiterzahl")
+    specializations = models.TextField(blank=True, null=True, verbose_name="Spezialisierungen")
+    
     # Croatian specific
     oib_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="OIB-Nummer")
     website = models.URLField(max_length=500, blank=True, null=True)
@@ -73,12 +79,20 @@ class Professional(models.Model):
     # Languages spoken
     languages = models.CharField(max_length=500, blank=True, null=True, verbose_name="Gesprochene Sprachen")
     
-    # Social Media
+    # Social Media (extended)
     facebook = models.URLField(max_length=500, blank=True, null=True)
     instagram = models.URLField(max_length=500, blank=True, null=True)
     linkedin = models.URLField(max_length=500, blank=True, null=True)
     twitter = models.URLField(max_length=500, blank=True, null=True)
     youtube = models.URLField(max_length=500, blank=True, null=True)
+    tiktok = models.URLField(max_length=500, blank=True, null=True)
+    
+    # Display toggles (NEW) - control what's shown on public profile
+    show_references = models.BooleanField(default=True, verbose_name="Referenzen anzeigen")
+    show_contact_form = models.BooleanField(default=True, verbose_name="Kontaktformular anzeigen")
+    show_listings = models.BooleanField(default=True, verbose_name="Immobilien anzeigen")
+    show_social_media = models.BooleanField(default=True, verbose_name="Social Media anzeigen")
+    show_team = models.BooleanField(default=False, verbose_name="Team anzeigen")
     
     # Status
     is_active = models.BooleanField(default=False, verbose_name="Aktiv")
