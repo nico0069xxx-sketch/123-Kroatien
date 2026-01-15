@@ -264,13 +264,13 @@ OPENAI_API_KEY=... (via Emergent)
 ## 10. NÄCHSTE SCHRITTE
 
 ### Hohe Priorität
-1. [ ] OpenImmo XML-Import implementieren
-2. [ ] WordPress XML-Import implementieren
-3. [ ] Agent-Model Konsolidierung (accounts.Agent → main.Professional)
+1. [ ] Agent-Model Konsolidierung (accounts.Agent → main.Professional)
+2. [ ] Makler-Portal auf Kroatisch übersetzen
 
 ### Mittlere Priorität
-4. [ ] Kundenbewertungs-System
-5. [ ] 2FA-Logik Refactoring (Deduplizierung)
+3. [ ] Kundenbewertungs-System
+4. [ ] 2FA-Logik Refactoring (Deduplizierung)
+5. [ ] Periodischer XML-Import (Cronjob)
 
 ### Niedrige Priorität
 6. [ ] CSS-Refactoring (Font Awesome Stabilität)
