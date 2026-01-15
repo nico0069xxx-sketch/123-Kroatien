@@ -56,8 +56,23 @@ urlpatterns = [
     path('agent/<str:id>/xml-import/file/', xml_views.xml_import_file, name='xml_import_file'),
     path('agent/<str:id>/xml-import/url/', xml_views.xml_import_url, name='xml_import_url'),
     
-    # Makler Dashboard
-    path('makler-dashboard/', views.makler_dashboard, name='makler_dashboard'),
+    # ========================================
+    # MAKLER PORTAL
+    # ========================================
+    path('makler-dashboard/', makler_views.makler_dashboard, name='makler_dashboard'),
+    path('makler-portal/objekt/neu/', makler_views.makler_objekt_neu, name='makler_objekt_neu'),
+    path('makler-portal/objekt/<int:listing_id>/bearbeiten/', makler_views.makler_objekt_bearbeiten, name='makler_objekt_bearbeiten'),
+    path('makler-portal/xml-import/', makler_views.makler_xml_import, name='makler_xml_import'),
+    path('makler-portal/xml-dokumentation/', makler_views.makler_xml_dokumentation, name='makler_xml_dokumentation'),
+    
+    # Makler API Endpoints
+    path('api/makler/verkauft/<int:listing_id>/', makler_views.makler_objekt_verkauft, name='makler_objekt_verkauft'),
+    path('api/makler/pausieren/<int:listing_id>/', makler_views.makler_objekt_pausieren, name='makler_objekt_pausieren'),
+    path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
+    
+    # KI-Text Generation API
+    path('ge/api/m/gen/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
+    path('ge/api/m/gen/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
     
     # Professional Registration URLs (Bilingual: German & Croatian)
     path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
