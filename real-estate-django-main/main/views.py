@@ -853,6 +853,10 @@ def edit_agent(request, id):
         'professional': professional,
         'regions': Professional.REGIONS,
     }
+    
+    # Use extended template for Professional, legacy template for Agent
+    if professional:
+        return render(request, 'main/edit-agent-professional.html', context)
     return render(request, 'main/edit-agent.html', context)
 
 
