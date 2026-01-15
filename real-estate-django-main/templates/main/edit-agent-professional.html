@@ -1,0 +1,352 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+<!-- BREADCRUMB -->
+<div class="myHeaderBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="text-capitalize text-white">Profil bearbeiten</h2>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="/" class="text-white">Home</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="{% url 'main:agent' professional.id %}" class="text-white">Mein Profil</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- END BREADCRUMB -->
+</header>
+
+<div class="clearfix"></div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Sidebar Navigation -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0"><i class="fa fa-cog mr-2"></i>Verwaltung</h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#section-basic" class="list-group-item list-group-item-action active" data-toggle="list">
+                            <i class="fa fa-user mr-2"></i>Grunddaten
+                        </a>
+                        <a href="#section-company" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fa fa-building mr-2"></i>Unternehmen
+                        </a>
+                        <a href="#section-social" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fa fa-share-alt mr-2"></i>Social Media
+                        </a>
+                        <a href="#section-display" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fa fa-eye mr-2"></i>Anzeige-Optionen
+                        </a>
+                        <a href="{% url 'main:reference_projects_list' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-images mr-2"></i>Referenzprojekte
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <form action="{% url 'main:edit_agent' professional.id %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Messages -->
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <div class="tab-content">
+                        <!-- SECTION: Basic Data -->
+                        <div class="tab-pane fade show active" id="section-basic">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fa fa-user mr-2"></i>Grunddaten</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Name / Firmenname *</label>
+                                            <input type="text" class="form-control" name="name" value="{{ professional.name }}" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>E-Mail</label>
+                                            <input type="email" class="form-control" value="{{ professional.email }}" disabled>
+                                            <small class="text-muted">E-Mail kann nicht geändert werden</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>Telefon</label>
+                                            <input type="text" class="form-control" name="phone" value="{{ professional.phone|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Mobil</label>
+                                            <input type="text" class="form-control" name="mobile" value="{{ professional.mobile|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Fax</label>
+                                            <input type="text" class="form-control" name="fax" value="{{ professional.fax|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Stadt</label>
+                                            <input type="text" class="form-control" name="city" value="{{ professional.city|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Region</label>
+                                            <select class="form-control" name="region">
+                                                <option value="">Bitte wählen...</option>
+                                                {% for value, label in regions %}
+                                                <option value="{{ value }}" {% if professional.region == value %}selected{% endif %}>{{ label }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adresse</label>
+                                        <input type="text" class="form-control" name="address" value="{{ professional.address|default:'' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gesprochene Sprachen</label>
+                                        <input type="text" class="form-control" name="languages" value="{{ professional.languages|default:'' }}" placeholder="z.B. Deutsch, Englisch, Kroatisch">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Images Section -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fa fa-image mr-2"></i>Bilder</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>Firmenlogo</label>
+                                            {% if professional.company_logo %}
+                                            <div class="mb-2">
+                                                <img src="{{ professional.company_logo.url }}" alt="Logo" class="img-thumbnail" style="max-height: 100px;">
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file" name="company_logo" accept="image/*">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Profilbild</label>
+                                            {% if professional.profile_image %}
+                                            <div class="mb-2">
+                                                <img src="{{ professional.profile_image.url }}" alt="Profil" class="img-thumbnail" style="max-height: 100px;">
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file" name="profile_image" accept="image/*">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Portrait</label>
+                                            {% if professional.portrait_photo %}
+                                            <div class="mb-2">
+                                                <img src="{{ professional.portrait_photo.url }}" alt="Portrait" class="img-thumbnail" style="max-height: 100px;">
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file" name="portrait_photo" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION: Company Info -->
+                        <div class="tab-pane fade" id="section-company">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fa fa-building mr-2"></i>Unternehmensdetails</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Firmenname</label>
+                                            <input type="text" class="form-control" name="company_name" value="{{ professional.company_name|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>OIB-Nummer</label>
+                                            <input type="text" class="form-control" name="oib_number" value="{{ professional.oib_number|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Slogan / Motto</label>
+                                        <input type="text" class="form-control" name="slogan" value="{{ professional.slogan|default:'' }}" placeholder="z.B. 'Ihr Partner für Traumimmobilien'">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>Gründungsjahr</label>
+                                            <input type="number" class="form-control" name="founded_year" value="{{ professional.founded_year|default:'' }}" min="1900" max="2030">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Mitarbeiterzahl</label>
+                                            <input type="text" class="form-control" name="employee_count" value="{{ professional.employee_count|default:'' }}" placeholder="z.B. '5-10' oder '20+'">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Website</label>
+                                            <input type="url" class="form-control" name="domain" value="{{ professional.website|default:'' }}" placeholder="https://...">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Spezialisierungen</label>
+                                        <textarea class="form-control" name="specializations" rows="3" placeholder="z.B. Luxusimmobilien, Neubauten, Gewerbeimmobilien...">{{ professional.specializations|default:'' }}</textarea>
+                                    </div>
+                                    <hr>
+                                    <h6 class="mb-3">Beschreibungen</h6>
+                                    <div class="form-group">
+                                        <label>Beschreibung (Deutsch)</label>
+                                        <textarea class="form-control" name="description_de" rows="4">{{ professional.description_de|default:'' }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Beschreibung (Kroatisch)</label>
+                                        <textarea class="form-control" name="description_hr" rows="4">{{ professional.description_hr|default:'' }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION: Social Media -->
+                        <div class="tab-pane fade" id="section-social">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fa fa-share-alt mr-2"></i>Social Media Links</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-facebook mr-2"></i>Facebook</label>
+                                            <input type="url" class="form-control" name="facebook" value="{{ professional.facebook|default:'' }}" placeholder="https://facebook.com/...">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-instagram mr-2"></i>Instagram</label>
+                                            <input type="url" class="form-control" name="instagram" value="{{ professional.instagram|default:'' }}" placeholder="https://instagram.com/...">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-linkedin mr-2"></i>LinkedIn</label>
+                                            <input type="url" class="form-control" name="linkedin" value="{{ professional.linkedin|default:'' }}" placeholder="https://linkedin.com/...">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-youtube mr-2"></i>YouTube</label>
+                                            <input type="url" class="form-control" name="youtube" value="{{ professional.youtube|default:'' }}" placeholder="https://youtube.com/...">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-twitter mr-2"></i>Twitter/X</label>
+                                            <input type="url" class="form-control" name="twitter" value="{{ professional.twitter|default:'' }}" placeholder="https://twitter.com/...">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-music mr-2"></i>TikTok</label>
+                                            <input type="url" class="form-control" name="tiktok" value="{{ professional.tiktok|default:'' }}" placeholder="https://tiktok.com/...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION: Display Options -->
+                        <div class="tab-pane fade" id="section-display">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fa fa-eye mr-2"></i>Anzeige-Optionen</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted mb-4">Wähle aus, welche Bereiche auf deinem öffentlichen Profil angezeigt werden sollen.</p>
+                                    
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_references" name="show_references" {% if professional.show_references %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_references">
+                                            <strong>Referenzprojekte anzeigen</strong>
+                                            <br><small class="text-muted">Zeigt deine abgeschlossenen Projekte und Portfolio-Bilder</small>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_contact_form" name="show_contact_form" {% if professional.show_contact_form %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_contact_form">
+                                            <strong>Kontaktformular anzeigen</strong>
+                                            <br><small class="text-muted">Besucher können dir direkt eine Nachricht senden</small>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_listings" name="show_listings" {% if professional.show_listings %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_listings">
+                                            <strong>Immobilien anzeigen</strong>
+                                            <br><small class="text-muted">Zeigt deine aktuellen Immobilienangebote</small>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_social_media" name="show_social_media" {% if professional.show_social_media %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_social_media">
+                                            <strong>Social Media Links anzeigen</strong>
+                                            <br><small class="text-muted">Zeigt Links zu deinen Social-Media-Profilen</small>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_team" name="show_team" {% if professional.show_team %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_team">
+                                            <strong>Team anzeigen</strong>
+                                            <br><small class="text-muted">Zeigt Teammitglieder auf deinem Profil (wenn vorhanden)</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Button -->
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-between">
+                            <a href="{% url 'main:agent' professional.id %}" class="btn btn-outline-secondary">
+                                <i class="fa fa-arrow-left mr-2"></i>Zurück zum Profil
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save mr-2"></i>Änderungen speichern
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.custom-switch .custom-control-label {
+    cursor: pointer;
+}
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #003167;
+    border-color: #003167;
+}
+.list-group-item.active {
+    background-color: #003167;
+    border-color: #003167;
+}
+.card-header {
+    background-color: #f8f9fa;
+}
+</style>
+{% endblock body %}
