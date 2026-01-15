@@ -1,0 +1,448 @@
+{% extends 'makler_portal/base_portal.html' %}
+{% load static %}
+
+{% block portal_content %}
+<div class="row">
+    <div class="col-lg-12">
+        
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" id="docTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="makler-tab" data-toggle="tab" href="#makler" role="tab">
+                    <i class="fa fa-user"></i>
+                    {% if lang == 'hr' %}Za agente{% else %}Fuer Makler{% endif %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="dev-tab" data-toggle="tab" href="#developer" role="tab">
+                    <i class="fa fa-code"></i>
+                    {% if lang == 'hr' %}Za programere{% else %}Fuer Entwickler{% endif %}
+                </a>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="docTabsContent">
+            
+            <!-- TAB 1: FUER MAKLER -->
+            <div class="tab-pane fade show active" id="makler" role="tabpanel">
+                
+                {% if lang == 'hr' %}
+                <!-- KROATISCH -->
+                <div class="card mb-4" style="border-radius:10px;border-left:5px solid #003167;">
+                    <div class="card-body">
+                        <h4 style="color:#003167;"><i class="fa fa-info-circle"></i> Kako funkcionira XML uvoz?</h4>
+                        <p class="lead">XML uvoz omogucuje vam da unesete vise nekretnina odjednom umjesto da ih unosite pojedinacno.</p>
+                        
+                        <h5 class="mt-4">Korak po korak:</h5>
+                        <ol class="lead">
+                            <li><strong>Pripremite XML datoteku</strong> - Koristite nas predlozak ili OpenImmo format</li>
+                            <li><strong>Ucitajte datoteku</strong> - Kliknite na "XML" gumb i odaberite datoteku</li>
+                            <li><strong>Provjerite rezultate</strong> - Sustav ce pokazati koje nekretnine su uspjesno uvezene</li>
+                            <li><strong>Ispravite greske</strong> - Ako neka nekretnina ima greske, mozete je urediti u Dashboardu</li>
+                            <li><strong>Cekajte odobrenje</strong> - Sve nekretnine idu na provjeru prije objave</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <!-- FORMAT 1: JEDNOSTAVNI -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#003167;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-file-code"></i> Format 1: Jednostavni XML (preporuceno)</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Najjednostavniji format za uvoz nekretnina. Lako se kreira i razumije.</p>
+                        
+                        <h6 class="mt-3">Obavezna polja:</h6>
+                        <table class="table table-bordered table-sm">
+                            <thead style="background:#f8f9fa;">
+                                <tr><th>Polje</th><th>Opis</th><th>Primjer</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>naslov</code></td><td>Naziv nekretnine</td><td>Vila s bazenom</td></tr>
+                                <tr><td><code>opis</code></td><td>Opis (min. 80 znakova)</td><td>Prekrasna vila...</td></tr>
+                                <tr><td><code>tip</code></td><td>kuca, stan, vila, zemljiste, novogradnja</td><td>vila</td></tr>
+                                <tr><td><code>status</code></td><td>prodaja ili najam</td><td>prodaja</td></tr>
+                                <tr><td><code>cijena</code></td><td>Cijena u EUR (samo broj)</td><td>450000</td></tr>
+                                <tr><td><code>lokacija</code></td><td>Regija/Zupanija</td><td>Istrien</td></tr>
+                                <tr><td><code>spavace_sobe</code></td><td>Broj spavacih soba</td><td>4</td></tr>
+                                <tr><td><code>kupaonice</code></td><td>Broj kupaonica</td><td>2</td></tr>
+                                <tr><td><code>povrsina_zemljista</code></td><td>Povrsina u m2</td><td>800</td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <h6 class="mt-3">Neobavezna polja:</h6>
+                        <table class="table table-bordered table-sm">
+                            <tbody>
+                                <tr><td><code>grad</code></td><td>Grad</td><td>Rovinj</td></tr>
+                                <tr><td><code>adresa</code></td><td>Ulica i kucni broj</td><td>Obala 15</td></tr>
+                                <tr><td><code>postanski_broj</code></td><td>Postanski broj</td><td>52210</td></tr>
+                                <tr><td><code>stambena_povrsina</code></td><td>Stambena povrsina u m2</td><td>250</td></tr>
+                                <tr><td><code>slika</code></td><td>URL fotografije (max. 7x)</td><td>https://example.com/slika1.jpg</td></tr>
+                                <tr><td><code>foto</code></td><td>URL fotografije (njemacki)</td><td>https://example.com/foto1.jpg</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                {% else %}
+                <!-- DEUTSCH -->
+                <div class="card mb-4" style="border-radius:10px;border-left:5px solid #003167;">
+                    <div class="card-body">
+                        <h4 style="color:#003167;"><i class="fa fa-info-circle"></i> Wie funktioniert der XML-Import?</h4>
+                        <p class="lead">Mit dem XML-Import koennen Sie mehrere Immobilien auf einmal hochladen, anstatt sie einzeln einzugeben.</p>
+                        
+                        <h5 class="mt-4">Schritt fuer Schritt:</h5>
+                        <ol class="lead">
+                            <li><strong>XML-Datei vorbereiten</strong> - Nutzen Sie unsere Vorlage oder das OpenImmo-Format</li>
+                            <li><strong>Datei hochladen</strong> - Klicken Sie auf "XML" und waehlen Sie die Datei</li>
+                            <li><strong>Ergebnisse pruefen</strong> - Das System zeigt, welche Objekte importiert wurden</li>
+                            <li><strong>Fehler korrigieren</strong> - Objekte mit Fehlern koennen Sie im Dashboard bearbeiten</li>
+                            <li><strong>Freigabe abwarten</strong> - Alle Objekte gehen zur Pruefung vor Veroeffentlichung</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <!-- FORMAT 1: EINFACH -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#003167;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-file-code"></i> Format 1: Einfaches XML (empfohlen)</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Das einfachste Format fuer den Immobilien-Import. Leicht zu erstellen und zu verstehen.</p>
+                        
+                        <h6 class="mt-3">Pflichtfelder:</h6>
+                        <table class="table table-bordered table-sm">
+                            <thead style="background:#f8f9fa;">
+                                <tr><th>Feld</th><th>Beschreibung</th><th>Beispiel</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>naslov</code></td><td>Titel der Immobilie</td><td>Villa mit Pool</td></tr>
+                                <tr><td><code>opis</code></td><td>Beschreibung (min. 80 Zeichen)</td><td>Wunderschoene Villa...</td></tr>
+                                <tr><td><code>tip</code></td><td>kuca, stan, vila, zemljiste, novogradnja</td><td>vila</td></tr>
+                                <tr><td><code>status</code></td><td>prodaja oder najam</td><td>prodaja</td></tr>
+                                <tr><td><code>cijena</code></td><td>Preis in EUR (nur Zahl)</td><td>450000</td></tr>
+                                <tr><td><code>lokacija</code></td><td>Region</td><td>Istrien</td></tr>
+                                <tr><td><code>spavace_sobe</code></td><td>Anzahl Schlafzimmer</td><td>4</td></tr>
+                                <tr><td><code>kupaonice</code></td><td>Anzahl Badezimmer</td><td>2</td></tr>
+                                <tr><td><code>povrsina_zemljista</code></td><td>Flaeche in m2</td><td>800</td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <h6 class="mt-3">Optionale Felder:</h6>
+                        <table class="table table-bordered table-sm">
+                            <tbody>
+                                <tr><td><code>grad</code></td><td>Stadt</td><td>Rovinj</td></tr>
+                                <tr><td><code>adresa</code></td><td>Strasse und Hausnummer</td><td>Obala 15</td></tr>
+                                <tr><td><code>postanski_broj</code></td><td>PLZ</td><td>52210</td></tr>
+                                <tr><td><code>stambena_povrsina</code></td><td>Wohnflaeche in m2</td><td>250</td></tr>
+                                <tr><td><code>foto</code></td><td>Bild-URL (max. 7x)</td><td>https://example.com/bild1.jpg</td></tr>
+                                <tr><td><code>slika</code></td><td>Bild-URL (kroatisch)</td><td>https://example.com/slika1.jpg</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- BEISPIEL EINFACH -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#6c757d;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-code"></i> 
+                            {% if lang == 'hr' %}Primjer jednostavnog XML-a{% else %}Beispiel einfaches XML{% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <pre style="background:#1e1e1e;color:#d4d4d4;padding:20px;border-radius:5px;overflow-x:auto;"><code><span style="color:#808080;">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span style="color:#569cd6;">&lt;nekretnine&gt;</span>
+  <span style="color:#569cd6;">&lt;nekretnina&gt;</span>
+    <span style="color:#4ec9b0;">&lt;naslov&gt;</span>Vila s bazenom u Rovinju<span style="color:#4ec9b0;">&lt;/naslov&gt;</span>
+    <span style="color:#4ec9b0;">&lt;opis&gt;</span>Prekrasna vila s pogledom na more. Bazen, garaza, vrt. 
+    Blizina centra grada i plaza. Idealna za obitelj.<span style="color:#4ec9b0;">&lt;/opis&gt;</span>
+    <span style="color:#4ec9b0;">&lt;tip&gt;</span>vila<span style="color:#4ec9b0;">&lt;/tip&gt;</span>
+    <span style="color:#4ec9b0;">&lt;status&gt;</span>prodaja<span style="color:#4ec9b0;">&lt;/status&gt;</span>
+    <span style="color:#4ec9b0;">&lt;cijena&gt;</span>650000<span style="color:#4ec9b0;">&lt;/cijena&gt;</span>
+    <span style="color:#4ec9b0;">&lt;grad&gt;</span>Rovinj<span style="color:#4ec9b0;">&lt;/grad&gt;</span>
+    <span style="color:#4ec9b0;">&lt;lokacija&gt;</span>Istrien<span style="color:#4ec9b0;">&lt;/lokacija&gt;</span>
+    <span style="color:#4ec9b0;">&lt;postanski_broj&gt;</span>52210<span style="color:#4ec9b0;">&lt;/postanski_broj&gt;</span>
+    <span style="color:#4ec9b0;">&lt;adresa&gt;</span>Obala 15<span style="color:#4ec9b0;">&lt;/adresa&gt;</span>
+    <span style="color:#4ec9b0;">&lt;spavace_sobe&gt;</span>5<span style="color:#4ec9b0;">&lt;/spavace_sobe&gt;</span>
+    <span style="color:#4ec9b0;">&lt;kupaonice&gt;</span>3<span style="color:#4ec9b0;">&lt;/kupaonice&gt;</span>
+    <span style="color:#4ec9b0;">&lt;povrsina_zemljista&gt;</span>1200<span style="color:#4ec9b0;">&lt;/povrsina_zemljista&gt;</span>
+    <span style="color:#4ec9b0;">&lt;stambena_povrsina&gt;</span>320<span style="color:#4ec9b0;">&lt;/stambena_povrsina&gt;</span>
+    <span style="color:#808080;">&lt;!-- Fotografije (max. 7) --&gt;</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>https://example.com/vila-rovinj-1.jpg<span style="color:#ce9178;">&lt;/slika&gt;</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>https://example.com/vila-rovinj-2.jpg<span style="color:#ce9178;">&lt;/slika&gt;</span>
+    <span style="color:#ce9178;">&lt;slika&gt;</span>https://example.com/vila-rovinj-3.jpg<span style="color:#ce9178;">&lt;/slika&gt;</span>
+  <span style="color:#569cd6;">&lt;/nekretnina&gt;</span>
+<span style="color:#569cd6;">&lt;/nekretnine&gt;</span></code></pre>
+                        
+                        <a href="#" class="btn btn-outline-secondary mt-3" onclick="downloadTemplate('simple')">
+                            <i class="fa fa-download"></i>
+                            {% if lang == 'hr' %}Preuzmi predlozak{% else %}Vorlage herunterladen{% endif %}
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- FORMAT 2: OpenImmo -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#003167;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-building"></i> Format 2: OpenImmo ({% if lang == 'hr' %}njemacki standard{% else %}deutscher Standard{% endif %})</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if lang == 'hr' %}
+                        <p>OpenImmo je standardni format koji koriste njemacke i austrijske nekretninske agencije. 
+                        Ako vec koristite OpenImmo softver, mozete izvesti XML i uvesti ga ovdje.</p>
+                        {% else %}
+                        <p>OpenImmo ist das Standard-Format, das deutsche und oesterreichische Immobilienbueros verwenden. 
+                        Wenn Sie bereits OpenImmo-Software nutzen, koennen Sie den XML-Export direkt hier importieren.</p>
+                        {% endif %}
+                        
+                        <div class="alert alert-info">
+                            <i class="fa fa-info-circle"></i>
+                            {% if lang == 'hr' %}
+                            Podrzani OpenImmo elementi: objekttitel, objektbeschreibung, kaufpreis, wohnflaeche, grundstuecksflaeche, anzahl_zimmer, anzahl_badezimmer, ort, plz, strasse
+                            {% else %}
+                            Unterstuetzte OpenImmo-Elemente: objekttitel, objektbeschreibung, kaufpreis, wohnflaeche, grundstuecksflaeche, anzahl_zimmer, anzahl_badezimmer, ort, plz, strasse
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KONTAKT -->
+                <div class="card" style="border-radius:10px;border-left:5px solid #c9a227;">
+                    <div class="card-body">
+                        <h5><i class="fa fa-question-circle" style="color:#c9a227;"></i> 
+                            {% if lang == 'hr' %}Trebate pomoc?{% else %}Brauchen Sie Hilfe?{% endif %}
+                        </h5>
+                        <p>
+                            {% if lang == 'hr' %}
+                            Ako imate pitanja o XML uvozu ili trebate pomoc s formatiranjem datoteke, kontaktirajte nas:
+                            {% else %}
+                            Bei Fragen zum XML-Import oder Hilfe bei der Formatierung kontaktieren Sie uns:
+                            {% endif %}
+                        </p>
+                        <p><i class="fa fa-envelope"></i> <a href="mailto:office@123-kroatien.eu">office@123-kroatien.eu</a></p>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- TAB 2: FUER ENTWICKLER -->
+            <div class="tab-pane fade" id="developer" role="tabpanel">
+                
+                <div class="card mb-4" style="border-radius:10px;border-left:5px solid #6c757d;">
+                    <div class="card-body">
+                        <h4><i class="fa fa-code"></i> 
+                            {% if lang == 'hr' %}XML sucelja - Tehnicka dokumentacija{% else %}XML-Schnittstellen Dokumentation{% endif %}
+                        </h4>
+                        <p class="text-muted">
+                            {% if lang == 'hr' %}Tehnicka dokumentacija za programere{% else %}Technische Dokumentation fuer Software-Entwickler{% endif %}
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- API ENDPOINTS -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#003167;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-plug"></i> API Endpoints</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead style="background:#f8f9fa;">
+                                <tr>
+                                    <th>Endpoint</th>
+                                    <th>Method</th>
+                                    <th>{% if lang == 'hr' %}Opis{% else %}Beschreibung{% endif %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>/api/xml/openimmo/</code></td>
+                                    <td><span class="badge badge-success">GET</span></td>
+                                    <td>{% if lang == 'hr' %}Izvoz svih nekretnina u OpenImmo formatu{% else %}Export aller Immobilien im OpenImmo-Format{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/xml/croatia/</code></td>
+                                    <td><span class="badge badge-success">GET</span></td>
+                                    <td>{% if lang == 'hr' %}Izvoz svih nekretnina u jednostavnom XML formatu{% else %}Export aller Immobilien im einfachen XML-Format{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/makler-portal/xml-import/</code></td>
+                                    <td><span class="badge badge-primary">POST</span></td>
+                                    <td>{% if lang == 'hr' %}Uvoz nekretnina (potrebna prijava){% else %}Import von Immobilien (erfordert Login){% endif %}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- TYPE MAPPING -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#003167;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-exchange-alt"></i> 
+                            {% if lang == 'hr' %}Mapiranje tipova{% else %}Typ-Mapping{% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>{% if lang == 'hr' %}Tip nekretnine{% else %}Immobilientyp{% endif %} (tip):</h6>
+                                <table class="table table-sm table-bordered">
+                                    <thead><tr><th>Input</th><th>{% if lang == 'hr' %}Postaje{% else %}Wird zu{% endif %}</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>kuca, haus, house</td><td>House</td></tr>
+                                        <tr><td>stan, wohnung, apartment</td><td>Appartment</td></tr>
+                                        <tr><td>vila, villa</td><td>Villa</td></tr>
+                                        <tr><td>zemljiste, grundstueck, land</td><td>Property</td></tr>
+                                        <tr><td>novogradnja, neubau</td><td>New Building</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Status:</h6>
+                                <table class="table table-sm table-bordered">
+                                    <thead><tr><th>Input</th><th>{% if lang == 'hr' %}Postaje{% else %}Wird zu{% endif %}</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>prodaja, kauf, sale</td><td>Sale</td></tr>
+                                        <tr><td>najam, miete, rent</td><td>Rent</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GUELTIGE REGIONEN -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#6c757d;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-map-marker-alt"></i> 
+                            {% if lang == 'hr' %}Valjane regije{% else %}Gueltige Regionen{% endif %} (lokacija)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <ul class="list-unstyled">
+                                    <li>Istrien / Istra</li>
+                                    <li>Kvarner</li>
+                                    <li>Zadar</li>
+                                    <li>Sibenik-Knin</li>
+                                    <li>Split-Dalmatien</li>
+                                    <li>Dubrovnik-Neretva</li>
+                                    <li>Zagreb</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6>{% if lang == 'hr' %}Gradovi (takoder prihvaceni){% else %}Staedte (werden auch akzeptiert){% endif %}:</h6>
+                                <ul class="list-unstyled small text-muted">
+                                    <li>Split, Dubrovnik, Zagreb, Rijeka, Pula</li>
+                                    <li>Zadar, Opatija, Rovinj, Porec, Umag</li>
+                                    <li>Sibenik, Trogir, Makarska, Hvar...</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FEHLERBEHANDLUNG -->
+                <div class="card mb-4" style="border-radius:10px;">
+                    <div class="card-header" style="background:#8b0000;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-exclamation-triangle"></i> 
+                            {% if lang == 'hr' %}Validacija i greske{% else %}Validierung & Fehler{% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            {% if lang == 'hr' %}
+                            Svaka uvezena nekretnina se automatski validira. Poruke o greskama su na hrvatskom:
+                            {% else %}
+                            Jede importierte Immobilie wird automatisch validiert. Fehlermeldungen erscheinen auf Kroatisch:
+                            {% endif %}
+                        </p>
+                        
+                        <table class="table table-sm table-bordered">
+                            <thead><tr>
+                                <th>{% if lang == 'hr' %}Greska{% else %}Fehler{% endif %} (HR)</th>
+                                <th>{% if lang == 'hr' %}Znacenje{% else %}Bedeutung{% endif %}</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr><td>Nedostaje naslov ili je prekratak</td><td>{% if lang == 'hr' %}Naslov nedostaje ili prekratak{% else %}Titel fehlt oder zu kurz{% endif %}</td></tr>
+                                <tr><td>Opis prekratak</td><td>{% if lang == 'hr' %}Opis ispod 80 znakova{% else %}Beschreibung unter 80 Zeichen{% endif %}</td></tr>
+                                <tr><td>Nedostaje cijena</td><td>{% if lang == 'hr' %}Cijena nedostaje ili je 0{% else %}Preis fehlt oder ist 0{% endif %}</td></tr>
+                                <tr><td>Nedostaje lokacija/regija</td><td>{% if lang == 'hr' %}Regija nije navedena{% else %}Region nicht angegeben{% endif %}</td></tr>
+                                <tr><td>Nedostaje povrsina</td><td>{% if lang == 'hr' %}Povrsina nedostaje{% else %}Flaeche fehlt{% endif %}</td></tr>
+                                <tr><td>Nedostaje glavna fotografija</td><td>{% if lang == 'hr' %}Glavna slika nedostaje{% else %}Hauptfoto fehlt (nach Import hinzufuegen){% endif %}</td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="alert alert-success mt-3">
+                            <i class="fa fa-camera"></i>
+                            <strong>{% if lang == 'hr' %}Fotografije{% else %}Fotos{% endif %}:</strong> 
+                            {% if lang == 'hr' %}
+                            Fotografije se MOGU uvesti putem XML-a! Dodajte URL-ove slika u &lt;slika&gt; tagove (max. 7 slika).
+                            {% else %}
+                            Fotos KOENNEN per XML importiert werden! Fuegen Sie Bild-URLs in &lt;foto&gt; Tags ein (max. 7 Bilder).
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CURL BEISPIEL -->
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-header" style="background:#1e1e1e;color:white;">
+                        <h5 class="mb-0" style="color:white;"><i class="fa fa-terminal"></i> 
+                            {% if lang == 'hr' %}cURL primjeri{% else %}cURL Beispiele{% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Export (GET):</h6>
+                        <pre style="background:#1e1e1e;color:#98c379;padding:15px;border-radius:5px;"><code># OpenImmo Format
+curl https://123-kroatien.eu/api/xml/openimmo/
+
+# {% if lang == 'hr' %}Jednostavni format{% else %}Einfaches Format{% endif %}
+curl https://123-kroatien.eu/api/xml/croatia/</code></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+<script>
+function downloadTemplate(type) {
+    var content = '';
+    if (type === 'simple') {
+        content = `<?xml version="1.0" encoding="UTF-8"?>
+<nekretnine>
+  <nekretnina>
+    <naslov>Naziv nekretnine</naslov>
+    <opis>Opis nekretnine s najmanje 80 znakova. Ovdje dodajte sve vazne detalje o nekretnini.</opis>
+    <tip>kuca</tip>
+    <status>prodaja</status>
+    <cijena>0</cijena>
+    <grad>Grad</grad>
+    <lokacija>Regija</lokacija>
+    <postanski_broj>00000</postanski_broj>
+    <adresa>Ulica br</adresa>
+    <spavace_sobe>0</spavace_sobe>
+    <kupaonice>0</kupaonice>
+    <povrsina_zemljista>0</povrsina_zemljista>
+    <stambena_povrsina>0</stambena_povrsina>
+    <!-- Fotografije / Fotos (max. 7) -->
+    <slika>https://example.com/foto1.jpg</slika>
+    <slika>https://example.com/foto2.jpg</slika>
+  </nekretnina>
+</nekretnine>`;
+    }
+    
+    var blob = new Blob([content], {type: 'application/xml'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'predlozak_nekretnine.xml';
+    a.click();
+}
+</script>
+{% endblock %}
