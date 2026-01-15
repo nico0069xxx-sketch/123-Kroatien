@@ -219,7 +219,7 @@ function sendMessage() {
     messagesDiv.innerHTML += '<div class="message bot-message" id="typing">⏳</div>';
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
     
-    fetch('/ge/api/chatbot/', {
+    fetch('/ge/api/k-assist/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({message: message, language: currentLanguage})

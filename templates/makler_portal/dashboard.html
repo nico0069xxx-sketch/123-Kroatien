@@ -196,7 +196,7 @@ function generiereKI(id) {
     btn.disabled = true;
     btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
     
-    fetch('/ge/api/makler/ki-beschreibung/' + id + '/', {
+    fetch('/ge/api/m/gen/' + id + '/', {
         method: 'POST', 
         headers: {'X-CSRFToken': '{{ csrf_token }}'}
     })

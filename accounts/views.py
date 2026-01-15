@@ -4,6 +4,12 @@ from django.contrib.auth.models import User  ## Django User model (Built in)
 from contacts.models import Contact
 from .models import Agent, OTPVerification
 from django.contrib.auth import logout, login, authenticate
+import time
+
+# Brute-Force Schutz
+_login_attempts = {}
+MAX_LOGIN_ATTEMPTS = 5
+LOCKOUT_TIME = 300  # 5 Minuten Sperre
 from pages.models import Topbar
 import re, random
 from django.core.mail import send_mail
@@ -54,8 +60,8 @@ def register(request):
         if password != password2:
             messages.error(request, 'Passwords do not match')
             return render(request, 'account/signup.html')
-        if len(password) < 6:
-            messages.error(request, 'Password must be at least 6 characters')
+        if len(password) < 10:
+            messages.error(request, 'Passwort muss mindestens 10 Zeichen haben')
             return render(request, 'account/signup.html')
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists')
@@ -121,9 +127,27 @@ def login_view(request):
         request.session['site_language'] = 'ge'
     
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+        
+        # === BRUTE-FORCE SCHUTZ ===
+        client_ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', ''))
+        if ',' in client_ip:
+            client_ip = client_ip.split(',')[0].strip()
+        
+        cache_key = f"{client_ip}_{username}"
+        current_time = time.time()
+        
+        if cache_key in _login_attempts:
+            attempts, lockout_start = _login_attempts[cache_key]
+            if attempts >= MAX_LOGIN_ATTEMPTS:
+                if current_time - lockout_start < LOCKOUT_TIME:
+                    remaining = int(LOCKOUT_TIME - (current_time - lockout_start))
+                    messages.error(request, f'Zu viele Fehlversuche. Bitte warten Sie {remaining} Sekunden.')
+                    return render(request, 'account/login.html')
+                else:
+                    _login_attempts[cache_key] = (0, current_time)
+        
         user = auth.authenticate(username=username, password=password)
 
         if user is None:
@@ -167,7 +191,13 @@ def login_view(request):
                 return redirect('main:agent', id=agent.id)
             return redirect('main:home')
         else:
-            messages.error(request, 'Invalid credentials')
+            # Fehlversuch zaehlen
+            if cache_key in _login_attempts:
+                attempts, _ = _login_attempts[cache_key]
+                _login_attempts[cache_key] = (attempts + 1, current_time)
+            else:
+                _login_attempts[cache_key] = (1, current_time)
+            messages.error(request, 'Ungueltige Anmeldedaten')
             return redirect('account:login')
 
     else:

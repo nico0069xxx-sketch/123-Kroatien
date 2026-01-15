@@ -736,6 +736,48 @@ import re
 
 # Rate Limiting Cache (Spam-Schutz)
 _inquiry_cache = {}
+
+# === SICHERE FILE-UPLOAD VALIDIERUNG ===
+ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+ALLOWED_DOC_TYPES = ['application/pdf']
+MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
+MAX_DOC_SIZE = 10 * 1024 * 1024   # 10 MB
+
+def validate_image_upload(file):
+    """Prueft ob eine Bilddatei sicher ist"""
+    if not file:
+        return True, None
+    
+    # Groesse pruefen
+    if file.size > MAX_IMAGE_SIZE:
+        return False, 'Bild zu gross (max. 5 MB)'
+    
+    # Dateityp pruefen
+    if file.content_type not in ALLOWED_IMAGE_TYPES:
+        return False, 'Nur JPEG, PNG oder WebP erlaubt'
+    
+    # Dateiendung pruefen
+    ext = file.name.lower().split('.')[-1]
+    if ext not in ['jpg', 'jpeg', 'png', 'webp']:
+        return False, 'Ungueltige Dateiendung'
+    
+    return True, None
+
+def validate_document_upload(file):
+    """Prueft ob ein Dokument sicher ist"""
+    if not file:
+        return True, None
+    
+    if file.size > MAX_DOC_SIZE:
+        return False, 'Dokument zu gross (max. 10 MB)'
+    
+    if file.content_type not in ALLOWED_DOC_TYPES:
+        return False, 'Nur PDF-Dateien erlaubt'
+    
+    if not file.name.lower().endswith('.pdf'):
+        return False, 'Ungueltige Dateiendung'
+    
+    return True, None
 import json
 from .chatbot import get_chatbot_response
 

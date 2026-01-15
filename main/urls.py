@@ -40,8 +40,8 @@ urlpatterns = [
 from main.xml_export import openimmo_export, croatia_simple_export
 
 urlpatterns += [
-    path('api/xml/openimmo/', openimmo_export, name='openimmo_export'),
-    path('api/xml/croatia/', croatia_simple_export, name='croatia_export'),
+    path('api/x1/export/', openimmo_export, name='openimmo_export'),
+    path('api/x2/export/', croatia_simple_export, name='croatia_export'),
 ]
 
 from main.content_views import market_report_list, market_report_detail
@@ -215,7 +215,7 @@ urlpatterns += [
 # Chatbot API
 from main.views import chatbot_api
 urlpatterns += [
-    path('api/chatbot/', chatbot_api, name='chatbot_api'),
+    path('api/k-assist/', chatbot_api, name='chatbot_api'),
 ]
 
 # Wichtige Adressen (12 Sprachen)
@@ -233,7 +233,7 @@ urlpatterns += [
     path('<str:country>/simantikes-diefthinseis/', important_addresses, name='important_addresses_gr'),
     path('<str:country>/viktiga-adresser/', important_addresses, name='important_addresses_sw'),
     path('<str:country>/viktige-adresser/', important_addresses, name='important_addresses_no'),
-    path('api/smart-search/', views.smart_search, name='smart_search'),
+    path('api/suche-v2/', views.smart_search, name='smart_search'),
 
     # RSS Feeds (SEO + AI optimiert)
     path('rss/listings/', views.rss_listings, {'lang': 'ge'}, name='rss_listings_ge'),
@@ -306,10 +306,10 @@ urlpatterns += [
     path('<str:country>/registracija-korak3/', registration_step3, name='registration_step3_hr'),
     
     # AJAX Endpoints
-    path('api/validate-oib/', ajax_validate_oib, name='ajax_validate_oib'),
-    path('api/check-spelling/', ajax_check_spelling, name='ajax_check_spelling'),
-    path('api/improve-text/', ajax_improve_text, name='ajax_improve_text'),
-    path('api/regenerate-suggestions/', ajax_regenerate_suggestions, name='ajax_regenerate_suggestions'),
+    path('api/prv/oib/', ajax_validate_oib, name='ajax_validate_oib'),
+    path('api/txt/sp/', ajax_check_spelling, name='ajax_check_spelling'),
+    path('api/txt/opt/', ajax_improve_text, name='ajax_improve_text'),
+    path('api/txt/regen/', ajax_regenerate_suggestions, name='ajax_regenerate_suggestions'),
 ]
 
 # Datenschutz Verifizierung
@@ -325,9 +325,9 @@ urlpatterns += [
     path('makler-portal/', makler_views.makler_dashboard, name='makler_dashboard'),
     path('makler-portal/neu/', makler_views.makler_objekt_neu, name='makler_objekt_neu'),
     path('makler-portal/bearbeiten/<int:listing_id>/', makler_views.makler_objekt_bearbeiten, name='makler_objekt_bearbeiten'),
-    path('api/makler/verkauft/<int:listing_id>/', makler_views.makler_objekt_verkauft, name='makler_objekt_verkauft'),
-    path('api/makler/pausieren/<int:listing_id>/', makler_views.makler_objekt_pausieren, name='makler_objekt_pausieren'),
-    path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
+    path('api/m/v/<int:listing_id>/', makler_views.makler_objekt_verkauft, name='makler_objekt_verkauft'),
+    path('api/m/p/<int:listing_id>/', makler_views.makler_objekt_pausieren, name='makler_objekt_pausieren'),
+    path('api/m/a/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
     path('makler-portal/xml-import/', makler_views.makler_xml_import, name='makler_xml_import'),
     path('makler-portal/xml-dokumentation/', makler_views.makler_xml_dokumentation, name='makler_xml_dokumentation'),
     # KI-Matching (Experten-Finder) - 12 Sprachen
@@ -343,10 +343,10 @@ urlpatterns += [
     path('anazhthsh-eidikwn/', matching_views.matching_page, name='experten_finder_gr'),
     path('expertsokare/', matching_views.matching_page, name='experten_finder_sw'),
     path('ekspertsoker/', matching_views.matching_page, name='experten_finder_no'),
-    path('api/experten-matching/', matching_views.matching_api, name='matching_api'),
+    path('api/em/', matching_views.matching_api, name='matching_api'),
 
-    path('api/makler/ki-beschreibung/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
-    path('api/makler/ki-beschreibung/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
+    path('api/m/gen/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
+    path('api/m/gen/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
 
 ]
 

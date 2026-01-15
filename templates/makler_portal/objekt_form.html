@@ -225,7 +225,7 @@ function generiereKIText() {
     btn.disabled = true;
     status.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Generiere...';
     
-    fetch('/ge/api/makler/ki-beschreibung/', {
+    fetch('/ge/api/m/gen/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

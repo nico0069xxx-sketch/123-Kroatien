@@ -15,7 +15,7 @@ urlpatterns = [
     path('rss/listings/', rss_listings, {'lang': 'ge'}, name='rss_listings'),
     path('en/rss/listings/', rss_listings, {'lang': 'en'}, name='rss_en'),
     path('hr/rss/listings/', rss_listings, {'lang': 'hr'}, name='rss_hr'),
-    path('admin/', admin.site.urls),
+    path('nik-verwaltung-2026/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/', include('realstate.chatbot_urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
