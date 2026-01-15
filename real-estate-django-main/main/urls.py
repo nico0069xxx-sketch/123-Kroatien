@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from . import professional_views
 from . import xml_views
+from . import makler_views
 from pages.views import translate_all
 
 app_name = 'main'
