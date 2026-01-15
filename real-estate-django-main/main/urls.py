@@ -42,6 +42,12 @@ urlpatterns = [
     path('agent/<str:id>/', views.agent, name='agent'),
     path('edit-agent/<str:id>/', views.edit_agent, name='edit_agent'),
     
+    # Reference Projects Management
+    path('agent/<str:id>/referenzen/', views.reference_projects_list, name='reference_projects_list'),
+    path('agent/<str:id>/referenzen/neu/', views.reference_project_create, name='reference_project_create'),
+    path('agent/<str:id>/referenzen/<int:project_id>/bearbeiten/', views.reference_project_edit, name='reference_project_edit'),
+    path('agent/<str:id>/referenzen/<int:project_id>/loeschen/', views.reference_project_delete, name='reference_project_delete'),
+    
     # Professional Registration URLs (Bilingual: German & Croatian)
     path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
     path('hr/hrvatska/registracija-profesionalaca/', views.professional_registration, {'lang': 'hr'}, name='professional-registration-hr'),
