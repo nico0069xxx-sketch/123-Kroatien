@@ -430,13 +430,15 @@ canvas {
 }
 
 /* Global Font */
-body, html, * {
+body, html {
     font-family: "Montserrat", sans-serif !important;
 }
 
 /* Font Awesome Fix */
-.fa, .fa::before {
+.fa, .fa::before, i.fa, i.fa::before, .fa-globe, .fa-caret-down, .fa-user, .fa-facebook, .fa-instagram, .fa-youtube, .fa-whatsapp, .fa-envelope, .fa-magic, [class^="fa-"], [class*=" fa-"] {
     font-family: FontAwesome !important;
+    font-weight: normal !important;
+    font-style: normal !important;
 }
 
 
@@ -885,4 +887,9 @@ small, .small {
     .card .card-title { font-size: 16px !important; }
     .navbar-nav .nav-link {
     font-family: 'Nunito Sans', -apple-system, sans-serif !important; font-size: 14px !important; }
+}
+
+/* FontAwesome Icons Fix */
+.fa:before {
+    font-family: FontAwesome !important;
 }

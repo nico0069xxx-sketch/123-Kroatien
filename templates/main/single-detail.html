@@ -7,7 +7,17 @@
 
     <div class="clearfix"></div>
 
-    <!-- SINGLE DETAIL -->
+    <style>
+.single__detail-desc, .single__detail-desc *, .show__more, .show__more * {
+    color: #333 !important;
+}
+.show__more-button {
+    color: #fff !important;
+    background: #003167 !important;
+}
+</style>
+
+<!-- SINGLE DETAIL -->
     <section class="single__Detail">
         <div class="container">
             <div class="row">
@@ -253,22 +263,22 @@
                     <!-- DESCRIPTION -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="single__detail-desc">
-                                <h6 class="text-capitalize detail-heading text-mycolor">{{ label_description }}</h6>
+                            <div class="single__detail-desc" style="color: #333 !important;">
+                                <h6 class="text-capitalize detail-heading text-mycolor">Beschreibung</h6>
                                 {% if listing.property_description|length > 100 %}
-                                    <div class="show__more" style="white-space: pre-line;">
-                                        {{listing.json_content.property_description}}
-                                        <a href="javascript:void(0)" class="show__more-button ">{{readmore}}</a>
+                                    <div class="show__more" style="white-space: pre-line; color: #333 !important;">
+                                        <div style="color:#222 !important; font-weight:400 !important; opacity:1 !important; -webkit-text-fill-color:#222 !important;">{{listing.json_content.property_description}}</div>
+                                        <a href="javascript:void(0)" class="show__more-button ">Mehr lesen</a>
                                     </div>
                                 {% else %}
-                                    {{listing.json_content.property_description}}
+                                    <div style="color:#222 !important; font-weight:400 !important; opacity:1 !important; -webkit-text-fill-color:#222 !important;">{{listing.json_content.property_description}}</div>
                                 {% endif %}
                             </div>
                             <div class="clearfix"></div>
 
                             <!-- PROPERTY DETAILS SPEC -->
                             <div class="single__detail-features">
-                                <h6 class="text-capitalize detail-heading text-mycolor">{{propertydetails}}</h6>
+                                <h6 class="text-capitalize detail-heading text-mycolor">Immobiliendetails</h6>
                                 <!-- INFO PROPERTY DETAIL -->
                                 <div class="property__detail-info">
                                     <div class="row">
@@ -280,7 +290,7 @@
                                                 <li><b>{{Price}}:</b> {{listing.json_content.property_price}} €
                                                 </li>
                                                 <li><b>{{PropertySize}}:</b> 
-                                                    {{listing.json_content.size}} Sq Ft</li>
+                                                    {{listing.json_content.size}} qm</li>
                                                 <li><b>{{BedroomsP}}:</b> 
                                                     {{listing.json_content.bedrooms}}
                                                 </li>
@@ -303,7 +313,7 @@
                                                     {% translate_status listing.json_content.property_status %}
                                                 </li>
                                                 <li><b>{{FloorsP}}:</b> {{listing.json_content.floors}}</li>
-                                                <li><b>{{AreaP}}:</b> {{listing.json_content.area}} Sq Ft</li>
+                                                <li><b>{{AreaP}}:</b> {{listing.json_content.area}} qm</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -664,7 +674,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary btn-outline-blue float-right "> {{ SubmitReview}} <i
+                                    <button type="submit" class="btn btn-primary btn-outline-blue float-right "> Absenden <i
                                             class="fa fa-paper-plane ml-2"></i></button>
                                     <!-- END COMMENT -->
 
@@ -681,7 +691,7 @@
                         <div class="products__filter__group">
                             <div class="products__filter__header">
     
-                                <h5 class="text-center text-capitalize">{{property_filter}}</h5>
+                                <h5 class="text-center text-capitalize">Immobilien filtern</h5>
                             </div>
                             <div class="products__filter__body">
                                 <div class="form-group">
@@ -1032,16 +1042,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="mb-3">{{Price_range}}</label>
-                                    <div class="filter__price">
-                                        <input class="price-range" type="text" name="my_range" 
-                                        {% if request.GET.my_range %}
-                                            value="{{request.GET.my_range}}"
-                                        {% else %}
-                                            value=""
-                                        {% endif %}
-                                        
-                                        >
+                                    <label class="mb-2">Preis (€)</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="number" class="form-control" name="price_from" placeholder="Von" value="{% if request.GET.price_from %}{{request.GET.price_from}}{% endif %}">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" class="form-control" name="price_to" placeholder="Bis" value="{% if request.GET.price_to %}{{request.GET.price_to}}{% endif %}">
+                                        </div>
                                     </div>
                                 </div>
     
@@ -1133,7 +1141,7 @@
                             <div class="products__filter__footer">
                                 <div class="form-group mb-0">
                                     <button class="btn btn-primary btn-outline-blue text-capitalize btn-block"><i
-                                            class="fa fa-search ml-1"></i> {{filter_search}}y </button>
+                                            class="fa fa-search ml-1"></i> Suchen </button>
     
                                 </div>
                             </div>
@@ -1146,31 +1154,31 @@
                         <div class="products__filter__group">
                             <div class="products__filter__header">
 
-                                <h5 class="text-center text-capitalize">{{ SimulationCalculator }} </h5>
+                                <h5 class="text-center text-capitalize">Finanzierungsrechner </h5>
                             </div>
                             <div class="products__filter__body">
                                 <div class="form-group">
-                                    <label>{{ label_sale_price }}</label>
+                                    <label>Kaufpreis</label>
 
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
+                                            <span class="input-group-text">€</span>
 
                                         </div>
-                                        <input type="text" class="form-control" placeholder="$130.000">
+                                        <input type="text" class="form-control" placeholder="z.B. 100.000">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ label_down_payment }}</label>
+                                    <label>Eigenkapital</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
+                                            <span class="input-group-text">€</span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="$6.000">
+                                        <input type="text" class="form-control" placeholder="z.B. 500.000">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ label_term_years }}</label>
+                                    <label>Laufzeit (Jahre)</label>
                                     <select class="select_option wide">
 
                                         <option value="1">10</option>
@@ -1182,7 +1190,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ label_interest_rate }}</label>
+                                    <label>Zinssatz</label>
 
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -1196,7 +1204,7 @@
                             <div class="products__filter__footer">
                                 <div class="form-group mb-0">
                                     <button class="btn btn-primary btn-outline-blue text-capitalize btn-block">
-                                        {{ Calculate }}
+                                        Berechnen
                                         <i class="fa fa-calculator ml-1"></i>
                                     </button>
 
