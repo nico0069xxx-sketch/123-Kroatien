@@ -1037,3 +1037,13 @@ def professional_registration(request, lang='ge'):
         'success': success,
     }
     return render(request, 'main/professional_registration.html', context)
+
+@login_required(login_url='account:login')
+def makler_dashboard(request):
+    """Redirect to the user's professional profile"""
+    try:
+        professional = Professional.objects.get(user=request.user)
+        return redirect('main:agent', id=professional.id)
+    except Professional.DoesNotExist:
+        messages.error(request, "Kein Makler-Profil gefunden.")
+        return redirect('main:home')
