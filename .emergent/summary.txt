@@ -1,269 +1,222 @@
 <analysis>**original_problem_statement:**
-The user, Nik, is developing his Django real estate marketplace. In this session, the initial request was to implement an email notification system for Gruppe A professionals (Makler, Bauträger) when they receive an inquiry on a property listing.
+The user, Nik, is developing his Django real estate marketplace. The initial task was to continue building the backend management portal for the new, modern Gruppe A professional profile page. This included creating forms for editing profile details (slogan, founding year, etc.) and implementing a full CRUD interface for Reference Projects.
 
-After completing this, the user expressed significant concerns about security, prompting a comprehensive security audit and hardening of the application. This involved fixing critical vulnerabilities like hardcoded secrets, enabling brute-force protection, and adding various security headers.
+During the session, the user also requested the implementation of previously lost XML import functionalities (OpenImmo and a simpler format for WordPress sites), an RSS feed, and an XML sitemap.
 
-Subsequently, the user requested numerous UI fixes on the property detail page and a fix for a recurring issue with Font Awesome icons not rendering.
-
-Finally, the user decided to start a major feature: a complete redesign of the public-facing profile page for Gruppe A professionals to be more modern and feature-rich, including a gallery for reference projects and more detailed company information.
+Towards the end, the user identified several new requirements:
+1.  Add a dropdown for selecting the languages a professional speaks.
+2.  Add a voucher code field to the registration process.
+3.  Clarify where the property management interface (add/edit/view listings with statuses like active, inactive, sold) for professionals is located.
+4.  Translate the agent portal into Croatian.
 
 PRODUCT REQUIREMENTS:
-1.  **Email Notifications:** Gruppe A professionals must receive an email when a potential customer sends an inquiry through the contact form on a property listing page. (Completed)
-2.  **Security Overhaul:** The application must be hardened against common web vulnerabilities. This includes moving secrets to , preventing brute-force attacks, securing file uploads, and obfuscating sensitive URLs. (Completed)
-3.  **UI/UX Fixes:** Resolve various display issues on the property detail page (), including incorrect currency symbols, text-color/readability problems, and broken icons. (Completed)
-4.  **New Professional Profile Page (Gruppe A):** Design and implement a new, modern, and comprehensive public profile page for real estate agents and construction companies. This includes:
-    *   A modern header with company logo, name, and slogan.
-    *   Detailed company information (founding year, employee count, specializations).
-    *   Integrated social media links.
-    *   A gallery to showcase reference projects.
-    *   A list of their current property listings.
-    *   A contact form.
-    *   Backend portal functionality for professionals to manage all this new information and toggle the visibility of certain sections (e.g., show/hide reference gallery). (Partially Implemented)
+1.  **Implement Backend for New Professional Profile (P0)**: Create views, forms, and templates for Gruppe A professionals to manage their extended profile information (, , social media, etc.) and their reference project gallery (CRUD for  model).
+2.  **Re-implement XML/RSS Interfaces (P1)**:
+    *   Create an XML import function for the OpenImmo standard.
+    *   Create a generic XML import function for simpler data feeds (e.g., from WordPress).
+    *   Provide an interface/dashboard for professionals to use these import functions.
+    *   Create an RSS feed of current listings.
+    *   Create an XML sitemap.
+3.  **Create Feature Documentation (P2)**: Provide the user with a markdown document summarizing the application's features.
+4.  **UI/UX Enhancements (Upcoming)**:
+    *   Add a multi-select dropdown for languages spoken.
+    *   Add a voucher code field.
+5.  **Internationalization (Upcoming)**: Translate the agent portal into Croatian.
+6.  **Agent Dashboard (Upcoming)**: Implement a clear overview for agents to see their listings with their current status (active, inactive, sold).
 
 **User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du). The user works on an Apple Mac () using the  shell in the Terminal. All commands must be simple, complete, and copy-pasteable for his local environment at path .
 
 **what currently exists?**
-- An email notification system is now active; when a user fills out the contact form on a property detail page, the corresponding agent (Gruppe A) receives an email with the inquiry details.
-- The application's security has been significantly improved. Secrets (,  status) are loaded from an  file, the login form has brute-force protection (5 attempts then 5-min lockout), the admin URL has been obfuscated to , and several API endpoints have been renamed to be less guessable.
-- A detailed guide explaining the two 2FA methods has been added to the 2FA selection pages for both portals.
-- Numerous UI bugs on the property detail page have been fixed, including currency symbols, text readability, and broken labels.
-- A persistent and recurring issue with Font Awesome icons not rendering has been resolved by adjusting CSS load order and specificity.
-- The foundation for the new Gruppe A professional profile has been laid:
-    - The  model in  has been extended with new fields (e.g., , , , social media URLs, and display toggles).
-    - A new  model has been created to store project gallery information.
-    - A new template, , has been created with a modern design for the public profile page.
-    - The corresponding view,  in , has been updated to pass the new data to this new template.
-    - Test data has been added to showcase the new profile design.
+The backend for the new professional profile management has been fully implemented. This includes models, views, and templates for editing all new fields (slogan, founding year, etc.) and a full CRUD (Create, Read, Update, Delete) interface for managing reference projects, including image uploads.
+
+Additionally, XML and RSS functionalities have been created:
+- An XML Import dashboard is now available in the agent's portal.
+- It supports file-based and URL-based imports for both **OpenImmo** and a **Simple XML** format.
+- An RSS feed for listings () and an XML sitemap () are now available.
+- A  file has been created.
+
+The implementation was followed by an extensive and difficult debugging process, primarily involving Django migration failures on the user's local SQLite database. This was eventually resolved by recreating the database and re-populating essential data (translations, admin user).
 
 **Last working item**:
--   **Last item agent was working**: Building the new, modern public profile page for Gruppe A professionals (). The agent created the database models, the new template, updated the view to render it, added test data, and fixed several UI color/text issues based on user feedback.
--   **Status**: IN PROGRESS
--   **Agent Testing Done**: N
--   **Which testing method agent to use?**: manual testing by curl/ python -c. The next step is to build the backend management portal for this feature. Once the full CRUD functionality is implemented, the  should be used.
--   **User Testing Done**: Y (User has visually approved the new design and confirmed the UI fixes).
+-   **Last item agent was working**: Finalizing the implementation of the Professional Profile Backend and the XML/RSS interfaces. The agent successfully guided the user through a very complex debugging and database reset process to get the application running on the user's local machine. The user confirmed that the profile editing page is now working and the navigation is back.
+-   **Status**: USER VERIFICATION PENDING
+-   **Agent Testing Done**: N (Agent ran  successfully, but all functional testing was done by the user).
+-   **Which testing method agent to use?**: Manual testing by user. The user needs to verify all the new functionality:
+    1.  Editing all fields in the new profile editor.
+    2.  CRUD operations for Reference Projects, including image uploads.
+    3.  Using the XML import dashboard with both file and URL methods.
+-   **User Testing Done**: Y (User has confirmed the main page  is now loading correctly with the navigation visible).
 
 **All Pending/In progress Issue list**:
--   **Issue 1**: **Font Awesome Icon Fragility (P1)**
-    -   **Description**: Throughout the session, icons repeatedly disappeared due to CSS conflicts, specifically global  rules with  overriding the Font Awesome font.
-    -   **Attempted fixes**: The issue was resolved by removing a global  selector from a  rule in  and running . However, this indicates that the CSS is fragile. Any broad changes to typography could easily break the icons again.
+-   **Issue 1**: **SQLite Migration Fragility (P0, High-Risk)**
+    -   **Description**: The migration process on the user's local SQLite database is extremely brittle. Applying complex schema changes (renaming/altering multiple fields) consistently fails with a . The only successful workaround was to back up the database, delete it, run  to create a fresh schema, and then manually re-populate essential data (like translations).
+    -   **Attempted fixes**: The agent tried generating a new migration file after deleting the old one, but this also led to the same . The issue seems inherent to how Django handles complex schema alterations on SQLite.
     -   **Next debug checklist**:
-        1.  If icons break again, the first step is to check  for any new global  rules with .
-        2.  Ensure  is run after CSS changes.
-        3.  Consider refactoring the CSS to have a more specific, robust rule for Font Awesome icons that is less likely to be overridden.
-    -   **Why fix this issue and what will be achieved with the fix?**: Provides a stable UI and prevents wasting significant time on recurring debugging sessions for the same visual bug.
-    -   **Status**: RESOLVED (but high risk of recurrence)
+        1.  AVOID complex migrations that rename and alter many fields at once. Prefer creating new fields and migrating data over.
+        2.  If a complex migration is unavoidable, the established (but destructive) workaround is:
+            a. Back up essential data (especially ) to a script or file.
+            b. 
+            c. 
+            d. Run scripts to re-populate users, translations, etc.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a major blocker for development. A more robust migration strategy will save hours of debugging and prevent data loss.
+    -   **Status**: BLOCKED (by SQLite limitations)
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend.
+    -   **Should Test frontend/backend/both after fix?**: N/A
     -   **Blocked on other issue**: None.
+
 -   **Issue 2**: **Agent-Model Konsolidierung (P2, High-Risk)**
-    -   **Description**: This is a carry-over, high-risk refactoring task to merge the old  model into the new  model.
+    -   **Description**: Recurring task to merge the old  model into the new  model. The current code has a workaround in the  view to handle both models, which is not a long-term solution.
     -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
+
 -   **Issue 3**: **Refactor duplicated 2FA logic (P2)**
-    -   **Description**: A carry-over task to refactor duplicated 2FA logic between the  and .
+    -   **Description**: Recurring task to refactor duplicated 2FA logic.
     -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
 
 **In progress Task List**:
--   **Task 1**: **Implement Backend Management for New Professional Profile (P0)**
-    -   **Description**: The new public profile page () is visually complete, but professionals have no way to edit the new information or manage their reference projects.
-    -   **Where to resume**:
-        1.  Create a new view and template within the  for editing the profile. This form should include the new fields: , , , , and all social media URLs.
-        2.  Implement the on/off toggle switches (, , etc.) in this new edit form.
-        3.  Create a new section in the portal to manage Reference Projects. This requires views and templates for listing, creating, editing, and deleting  objects.
-        4.  Ensure file uploads for reference project images are handled securely.
-    -   **What will be achieved with this?**: This will complete the new professional profile feature, allowing Gruppe A users to fully customize their modern public-facing page.
-    -   **Status**: NOT STARTED
-    -   **Should Test frontend/backend/both after fix?**: Both.
+-   **Task 1**: **User Verification of New Features (P0)**
+    -   **Description**: The user needs to thoroughly test the newly implemented profile management and XML import features.
+    -   **Where to resume**: Ask the user to test the following on their local server:
+        1.  Go to .
+        2.  Test editing fields in all tabs: Grunddaten, Unternehmen, Social Media, Anzeige-Optionen.
+        3.  Navigate to the Referenzprojekte section and perform full CRUD (Create, Edit, Delete a project with images).
+        4.  Navigate to the XML Import section and test both file and URL import.
+    -   **What will be achieved with this?**: Confirms that the main work of the session is complete and working correctly.
+    -   **Status**: USER VERIFICATION PENDING
+    -   **Should Test frontend/backend/both after fix?**: N/A
     -   **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks**:
-    -   (P2) Implement a customer review/rating system.
+    -   **(P1)** **Implement Property Overview in Agent Dashboard**: The  template currently serves as a profile view. It needs to be expanded or a new view created to show a list of the agent's properties with their status (Aktiv, Inaktiv, Verkauft).
+    -   **(P1)** **Add Language Dropdown**: Replace the Gesprochene Sprachen free text field in  with a multi-select dropdown, populated with the 12 languages used in the site's hreflang tags.
+    -   **(P2)** **Add Voucher Code Field**: Add a field for a voucher code during the professional registration process.
+    -   **(P2)** **Translate Agent Portal**: Translate the agent dashboard/portal pages (, reference project pages, XML import dashboard) into Croatian.
 -   **Future Tasks**:
+    -   (P2) Implement a customer review/rating system.
     -   (P2) Refactor  function in .
 
 **Completed work in this session**
--   **Email Notification**: Implemented email notifications for Gruppe A professionals upon receiving a property inquiry.
--   **Comprehensive Security Hardening**:
-    -   Moved , ,  to .
-    -   Added login brute-force protection.
-    -   Enhanced password policies in .
-    -   Implemented rate-limiting and a honeypot on inquiry forms.
-    -   Obfuscated the admin URL to .
-    -   Obfuscated several API endpoint URLs for security.
--   **2FA Guide**: Added detailed instructions to the 2FA selection page.
--   **UI Fixes**:
-    -   Corrected currency (), units (), and broken labels on the property detail page ().
-    -   Fixed text color and readability issues on the property detail page.
-    -   Resolved a recurring CSS issue that was causing Font Awesome icons to disappear.
--   **New Profile Page (Phase 1)**:
-    -   Extended the  model and created a new  model.
-    -   Created a new modern template .
-    -   Populated the new page with test data for a better preview.
--   **Documentation**: Created  for better agent handoffs.
+-   **Models**: Extended  model with new company info and display toggles. Created the  model.
+-   **Views**: Implemented full CRUD views for . Overhauled the  view to handle the new  fields and render a new template.
+-   **Templates**: Created new templates for the advanced profile editor (), reference project list (), and reference project form ().
+-   **XML/RSS Implementation**:
+    -   Created  with  and  classes.
+    -   Created  to handle imports, RSS feed (), XML sitemap (), and .
+    -   Created  for the user interface.
+    -   Updated  and  with the new routes.
+-   **Database Debugging**: Successfully navigated a series of critical migration errors by resetting the SQLite database and scripting the re-import of essential  data, allowing development to continue.
+-   **Documentation**: Created  summarizing application features.
+
+**Earlier issues found/mentioned but not fixed**
+-   The Agent-Model Konsolidierung and Refactor duplicated 2FA logic tasks from the previous handoff remain unresolved.
 
 **Known issue recurrence from previous fork**
--   The Agent-Model Konsolidierung task remains a high-risk, recurring issue.
--   The Font Awesome icon rendering issue became a new recurring problem during this session, consuming significant time before being resolved. The fix is fragile.
+-   **Issue**: SQLite Migration Failures
+-   **Recurrence count**: This became a major recurring blocker during this session.
+-   **Status**: NOT RESOLVED (Workaround found, but the underlying issue persists).
 
 **Code Architecture**
--   Standard Django project.
--   A new template  now serves as the public profile for professionals. The view  has been updated to render this new template instead of the old .
--   A new model  was added to .
--   The  model was significantly extended with new fields for company details, social media, and display toggles.
--   A new API endpoint  was added to handle contact form submissions from the new profile page.
+-   Standard Django project located in .
+-   **New Profile Backend**:
+    -   Models: 
+    -   Views:  (new functions: , , etc., and updated )
+    -   Templates: , , .
+    -   URLs: 
+-   **New XML/RSS System**:
+    -   Logic: 
+    -   Views: 
+    -   Template: 
+    -   URLs:  and 
 
 **Key Technical Concepts**
--   **Django**: Models, Views (function-based), Templates, Migrations,  for scripting data updates,  hardening.
--   **Security**: Brute-force protection (in-memory dictionary cache), rate-limiting, honeypot fields, URL obfuscation, moving secrets to .
--   **Frontend**: Direct template manipulation (HTML, inline CSS), debugging CSS specificity issues (, selector chains), and clearing browser cache to apply changes.
--   **Local Development**: All work was done by guiding a non-developer user to execute commands (, , usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
-           <command> [<args>]
-
-These are common Git commands used in various situations:
-
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
-
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
-
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
-
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
-
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
-
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system., ) on his local Mac (). Python scripts were created on the fly to perform complex file edits.
+-   **Django**: Models, Views, Templates, Migrations, Forms, Context Processors.
+-   **Database**: Heavy interaction with SQLite, including manual backup/restore/re-population of data to overcome migration failures.
+-   **File I/O**: The agent had to guide the user to manually create/update multiple files on their local system using  scripts and  heredocs because the standard  workflow was unreliable.
+-   **XML Parsing**: Use of Python's built-in  for parsing OpenImmo and custom XML formats.
 
 **key DB schema**
--   ****:
-    -   Added  (PositiveIntegerField)
-    -   Added  (CharField)
-    -   Added  (TextField)
-    -   Added  (CharField)
-    -   Added , , , ,  (URLField)
-    -   Added , , ,  (BooleanField)
--   ** (New Model)**:
+-   **** (Extended):
+    -   , , , , 
+    -   , , , ,  (Booleans)
+-   **** (New):
     -    (ForeignKey to )
-    -    (CharField)
-    -    (TextField)
-    -   ,  (PositiveIntegerField)
-    -    through  (ImageField)
+    -   , , , , 
+    -    to  (ImageFields)
+    -   , 
 
 **All files of reference**
--   **Created:**
-    -   : Migration for new profile fields and  model.
-    -   : The new modern template for public professional profiles.
-    -   : A detailed handover document for future agents.
--   **Modified:**
-    -   : Added new fields to  and the new  model.
-    -   : Updated  view to render the new template and pass new context data.
-    -   : Added  and  views with security features.
-    -   : Added brute-force protection to the login view.
-    -   : Loaded secrets from  and added numerous security headers.
-    -   : Obfuscated the admin URL.
-    -   : Obfuscated several API endpoint URLs.
-    -   : Multiple UI fixes for currency, units, labels, and text color.
-    -    & : Added detailed 2FA instructions.
-    -   : Critical fixes for icon rendering and text color.
-    -   : Added , , and .
-
-**Areas that need refactoring**:
--   The duplicated 2FA logic between  and .
--   The  remains the largest pending refactoring item.
--   The two inquiry-sending views ( and ) share very similar rate-limiting and email-sending logic and could be abstracted.
-
-**key api endpoints**
--   : For inquiries on specific properties.
--   : For inquiries from the new professional profile page.
--   **Obfuscated URLs (Critical)**: Many API URLs were intentionally renamed for security. The mapping is documented in . Examples:
-    -    -> 
-    -    -> 
-    -    -> 
+-   **Created**:
+    -   : The new, complex migration file created by Django.
+    -   : Logic for OpenImmo and Simple XML parsing.
+    -   : Views for XML import dashboard, RSS feed, sitemap, and robots.txt.
+    -   : The new tabbed form for editing professional profiles.
+    -   : The page for listing and managing reference projects.
+    -   : The form for creating/editing a reference project.
+    -   : UI for importing XML files/URLs.
+    -   : A summary of application features.
+-   **Modified**:
+    -   : Added new fields to  and the  model.
+    -   : Heavily modified to add CRUD for reference projects, update , and add  view.
+    -   : Added routes for reference projects and XML import.
+    -   : Added routes for RSS, sitemap, and robots.txt.
+    -   : Fixed incorrect field names ( -> ).
 
 **Critical Info for New Agent**
--   **You are assisting a non-developer on his local Mac.** All file paths must be absolute for the user's machine (e.g., ). All commands must be for .
--   **Admin URL is now hidden:** . The default  will not work.
--   **CSS is fragile:** The Font Awesome icons are working, but be extremely cautious when modifying . Global rules, especially with , have repeatedly broken the UI. Run  after significant CSS changes.
--   **Main task is the new profile:** The highest priority is to build the backend portal for Gruppe A users to manage their new profile details and reference projects.
--    was accidentally deleted twice by cleanup scripts (). Be careful with broad  commands. Always restore  from git if this happens.
+-   **You are assisting a non-technical user on his local Mac.** Commands must be simple, copy-pasteable for , and use absolute paths like .
+-   ** is unreliable.** The established fallback is guiding the user to create/patch files manually using  scripts or  heredocs. Be prepared for this workflow.
+-   **The project is at .** The root  contains a default FastAPI app. Do not get confused by it. Your work is entirely within the Django project subdirectory.
+-   **SQLite migrations are broken for complex changes.** If you encounter an  during migration, you will likely have to reset the database. The workflow is:
+    1.  Back up critical data (especially the  table).
+    2.  
+    3.  
+    4.  Run a script to restore the backed-up data.
+    5.  Run a script to recreate the admin user and test professional.
+-   **Navigation depends on the database.** The main site navigation (, , etc.) is populated from the  table. If the database is wiped and translations aren't restored, the navigation will disappear.
 
 **documents and test reports created in this job**
 -   
+-    (user's local machine)
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. User confirms the header text color fix is working and asks to save the work.
-9.  User asks for the server command.
-8.  User reports Über Uns title is not white.
-7.  User confirms Name/Standort are now white.
-6.  User wants to continue working.
-5.  Agent provides command to fix header colors.
-4.  User points out that the header text (name, location) is too dark on the new profile page.
-3.  Agent presents the new profile page design with test data and asks for feedback.
-2.  User provides a screenshot of the newly designed profile page.
-1.  User is prompted to check the new profile page after test data was added.
+10. User confirms everything is working and thanks the agent.
+9.  User requests clarification on what has been done and asks about several missing features: XML interfaces, property management dashboard (active/inactive/sold), language dropdown, and a voucher code field.
+8.  Agent confirms XML/RSS/Sitemap are now implemented and updates the feature documentation.
+7.  User confirms translations are missing and wants to implement the XML interfaces first (Option A).
+6.  Agent confirms  contains no XML/RSS logic and asks the user for clarification.
+5.  User states that the XML interfaces were implemented at the very beginning of the project and that the agent portal also needs to work in Croatian.
+4.  Agent creates and presents the  file.
+3.  User clarifies they need an overview/documentation of existing features and that the XML interfaces already exist.
+2.  Agent misunderstands, thinking the XML interfaces need to be built.
+1.  User asks about the status of two XML interfaces (OpenImmo, and a generic one for WP) and for a general feature overview.
 
 **Project Health Check:**
--   **Broken**: The icon rendering is fragile and has a high risk of regression if CSS is changed improperly.
--   **Mocked**: Email sending uses Ethereal.email.
--   **Fixed / Implemented**: A complete email inquiry system for properties, a major security overhaul, numerous UI bug fixes, and the public-facing portion of a new modern professional profile.
+-   **Broken**: The database migration workflow on the user's local SQLite environment is critically broken and relies on a destructive workaround. This poses a high risk to development velocity and data integrity.
+-   **Mocked**: N/A
+-   **Fixed / Implemented**: Full backend for professional profile management, including CRUD for reference projects. Re-implementation of XML import (OpenImmo/Simple), RSS feed, and XML sitemap.
 
 **3rd Party Integrations**
 -   **OpenAI GPT-3.5-turbo**: Used for AI text generation. Requires  in .
 -   **Ethereal.email**: Used for SMTP testing. Credentials are in .
--   **Font Awesome 4.7.0**: Loaded via CDN. This is the source of the recurring icon issue.
+-   **Font Awesome 4.7.0**: Loaded via CDN.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: None. All testing was manual by the user.
--   **Known regressions**: The Font Awesome icon rendering broke multiple times during the session before being fixed. The CSS is fragile.
+-   **Test files created**: None.
+-   **Known regressions**: None in this session, but the database was reset, losing all non-translation data.
 
 **Credentials to test flow:**
--   **Gruppe B User (Architect):**
-    -   Username: 
-    -   Password: 
--   **Gruppe A User (Makler - with new profile data):**
-    -   Username:  (from user, seems to be the main test user)
-    -   Password: (Not specified, likely )
+*Note: The database was reset. These credentials were created on the new database.*
 -   **Admin User:**
     -   URL: 
     -   Username: 
     -   Password: 
--   **Ethereal Email Inbox**:
-    -   URL: 
-    -   Username: 
-    -   Password: 
+-   **Gruppe A User (Makler - linked to Nik's admin user):**
+    -   Professional ID:  (Use this for URL parameters)
+    -   Log in via the admin user () to have the correct session.
 
 **What agent forgot to execute**
--   The agent accidentally deleted  twice with an over-eager cleanup command (). This was immediately caught and restored from git both times, but it highlights a risk in using broad commands.
--   The agent did not test the new contact form on the  page after creating it. The user was prompted to, but it's unclear if they did. This should be verified.</analysis>
+-   The agent initially misunderstood the project's file structure, believing it was the default FastAPI app, which wasted time.
+-   The agent repeatedly struggled with the user's non-functional Save to Github workflow, eventually resorting to a manual, error-prone file-transfer process.
+-   The agent's initial code changes introduced multiple  and  bugs due to missing imports and incorrect URL lookups, requiring a lengthy, iterative debugging process with the user.
+-   The agent caused a  by creating a migration with an incorrect dependency, forcing a manual fix.</analysis>
