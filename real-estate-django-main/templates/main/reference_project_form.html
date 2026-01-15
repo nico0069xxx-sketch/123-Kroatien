@@ -99,29 +99,114 @@
                             <h6 class="text-muted mb-3"><i class="fa fa-images mr-2"></i>Projektbilder (max. 6)</h6>
                             
                             <div class="row">
-                                {% for i in "123456"|make_list %}
+                                <!-- Image 1 -->
                                 <div class="col-md-4 mb-3">
                                     <div class="card">
                                         <div class="card-body p-2">
-                                            <label class="small text-muted">Bild {{ i }}</label>
-                                            {% if is_edit %}
-                                                {% with img=project|get_attr:'image_'|add:i %}
-                                                {% if img %}
-                                                <div class="mb-2 position-relative">
-                                                    <img src="{{ img.url }}" alt="Bild {{ i }}" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
-                                                    <div class="custom-control custom-checkbox mt-1">
-                                                        <input type="checkbox" class="custom-control-input" id="delete_image_{{ i }}" name="delete_image_{{ i }}">
-                                                        <label class="custom-control-label small text-danger" for="delete_image_{{ i }}">Löschen</label>
-                                                    </div>
+                                            <label class="small text-muted">Bild 1</label>
+                                            {% if is_edit and project.image_1 %}
+                                            <div class="mb-2 position-relative">
+                                                <img src="{{ project.image_1.url }}" alt="Bild 1" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                <div class="custom-control custom-checkbox mt-1">
+                                                    <input type="checkbox" class="custom-control-input" id="delete_image_1" name="delete_image_1">
+                                                    <label class="custom-control-label small text-danger" for="delete_image_1">Löschen</label>
                                                 </div>
-                                                {% endif %}
-                                                {% endwith %}
+                                            </div>
                                             {% endif %}
-                                            <input type="file" class="form-control-file small" name="image_{{ i }}" accept="image/*">
+                                            <input type="file" class="form-control-file small" name="image_1" accept="image/*">
                                         </div>
                                     </div>
                                 </div>
-                                {% endfor %}
+                                <!-- Image 2 -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <label class="small text-muted">Bild 2</label>
+                                            {% if is_edit and project.image_2 %}
+                                            <div class="mb-2 position-relative">
+                                                <img src="{{ project.image_2.url }}" alt="Bild 2" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                <div class="custom-control custom-checkbox mt-1">
+                                                    <input type="checkbox" class="custom-control-input" id="delete_image_2" name="delete_image_2">
+                                                    <label class="custom-control-label small text-danger" for="delete_image_2">Löschen</label>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file small" name="image_2" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Image 3 -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <label class="small text-muted">Bild 3</label>
+                                            {% if is_edit and project.image_3 %}
+                                            <div class="mb-2 position-relative">
+                                                <img src="{{ project.image_3.url }}" alt="Bild 3" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                <div class="custom-control custom-checkbox mt-1">
+                                                    <input type="checkbox" class="custom-control-input" id="delete_image_3" name="delete_image_3">
+                                                    <label class="custom-control-label small text-danger" for="delete_image_3">Löschen</label>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file small" name="image_3" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Image 4 -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <label class="small text-muted">Bild 4</label>
+                                            {% if is_edit and project.image_4 %}
+                                            <div class="mb-2 position-relative">
+                                                <img src="{{ project.image_4.url }}" alt="Bild 4" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                <div class="custom-control custom-checkbox mt-1">
+                                                    <input type="checkbox" class="custom-control-input" id="delete_image_4" name="delete_image_4">
+                                                    <label class="custom-control-label small text-danger" for="delete_image_4">Löschen</label>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file small" name="image_4" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Image 5 -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <label class="small text-muted">Bild 5</label>
+                                            {% if is_edit and project.image_5 %}
+                                            <div class="mb-2 position-relative">
+                                                <img src="{{ project.image_5.url }}" alt="Bild 5" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                <div class="custom-control custom-checkbox mt-1">
+                                                    <input type="checkbox" class="custom-control-input" id="delete_image_5" name="delete_image_5">
+                                                    <label class="custom-control-label small text-danger" for="delete_image_5">Löschen</label>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file small" name="image_5" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Image 6 -->
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <label class="small text-muted">Bild 6</label>
+                                            {% if is_edit and project.image_6 %}
+                                            <div class="mb-2 position-relative">
+                                                <img src="{{ project.image_6.url }}" alt="Bild 6" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                                                <div class="custom-control custom-checkbox mt-1">
+                                                    <input type="checkbox" class="custom-control-input" id="delete_image_6" name="delete_image_6">
+                                                    <label class="custom-control-label small text-danger" for="delete_image_6">Löschen</label>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            <input type="file" class="form-control-file small" name="image_6" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <hr class="my-4">
