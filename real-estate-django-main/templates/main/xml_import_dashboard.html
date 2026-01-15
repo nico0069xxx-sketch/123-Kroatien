@@ -1,0 +1,294 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+<div class="myHeaderBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="text-capitalize text-white">XML Import</h2>
+                    <p class="text-white-50">Importiere Immobilien aus XML-Dateien</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</header>
+<div class="clearfix"></div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0"><i class="fa fa-cog mr-2"></i>Verwaltung</h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'main:edit_agent' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-user mr-2"></i>Profil
+                        </a>
+                        <a href="{% url 'main:reference_projects_list' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-images mr-2"></i>Referenzen
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            <i class="fa fa-upload mr-2"></i>XML Import
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <!-- Info Alert -->
+                <div class="alert alert-info mb-4">
+                    <h5><i class="fa fa-info-circle mr-2"></i>XML Import Schnittstellen</h5>
+                    <p class="mb-0">Importiere Immobilien aus externen Quellen:</p>
+                    <ul class="mb-0 mt-2">
+                        <li><strong>OpenImmo</strong> - Standard-Format fuer deutsche/oesterreichische Immobilienportale</li>
+                        <li><strong>Einfaches XML</strong> - Flexibles Format fuer WordPress-Seiten kroatischer Makler</li>
+                    </ul>
+                </div>
+
+                <!-- Import from File -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fa fa-file-code mr-2"></i>Import aus Datei</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="fileImportForm" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Import-Format</label>
+                                <select class="form-control" name="import_type" id="fileImportType">
+                                    <option value="simple">Einfaches XML (WordPress/Allgemein)</option>
+                                    <option value="openimmo">OpenImmo Standard</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>XML-Datei</label>
+                                <input type="file" class="form-control-file" name="xml_file" id="xmlFile" accept=".xml" required>
+                                <small class="text-muted">Max. 10MB, UTF-8 oder ISO-8859-1 Encoding</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="fileImportBtn">
+                                <i class="fa fa-upload mr-2"></i>Datei importieren
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Import from URL -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fa fa-link mr-2"></i>Import aus URL</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="urlImportForm">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Import-Format</label>
+                                <select class="form-control" name="import_type" id="urlImportType">
+                                    <option value="simple">Einfaches XML (WordPress/Allgemein)</option>
+                                    <option value="openimmo">OpenImmo Standard</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>XML-URL</label>
+                                <input type="url" class="form-control" name="url" id="xmlUrl" placeholder="https://makler-seite.hr/export.xml" required>
+                                <small class="text-muted">Direkte URL zur XML-Datei</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="urlImportBtn">
+                                <i class="fa fa-download mr-2"></i>Von URL importieren
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Import Results -->
+                <div class="card d-none" id="resultsCard">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fa fa-check-circle mr-2"></i>Import-Ergebnis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContent"></div>
+                    </div>
+                </div>
+
+                <!-- XML Format Examples -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fa fa-code mr-2"></i>XML Format Beispiele</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#simpleXml">Einfaches XML</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#openImmoXml">OpenImmo</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="simpleXml">
+<pre class="bg-light p-3" style="font-size: 12px; overflow-x: auto;"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;properties&gt;
+  &lt;property&gt;
+    &lt;title&gt;Villa am Meer&lt;/title&gt;
+    &lt;description&gt;Wunderschoene Villa...&lt;/description&gt;
+    &lt;price&gt;450000&lt;/price&gt;
+    &lt;city&gt;Rovinj&lt;/city&gt;
+    &lt;type&gt;villa&lt;/type&gt;
+    &lt;status&gt;sale&lt;/status&gt;
+    &lt;bedrooms&gt;4&lt;/bedrooms&gt;
+    &lt;bathrooms&gt;3&lt;/bathrooms&gt;
+    &lt;size&gt;250&lt;/size&gt;
+    &lt;image&gt;https://...&lt;/image&gt;
+  &lt;/property&gt;
+&lt;/properties&gt;</code></pre>
+                                <p class="text-muted small mt-2">
+                                    <strong>Unterstuetzte Felder:</strong> title/naziv, description/opis, price/cijena, city/grad, 
+                                    type/tip, status/stanje, bedrooms/sobe, bathrooms/kupatila, size/povrsina, image/slika
+                                </p>
+                            </div>
+                            <div class="tab-pane fade" id="openImmoXml">
+<pre class="bg-light p-3" style="font-size: 12px; overflow-x: auto;"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;openimmo&gt;
+  &lt;anbieter&gt;
+    &lt;immobilie&gt;
+      &lt;geo&gt;
+        &lt;plz&gt;52210&lt;/plz&gt;
+        &lt;ort&gt;Rovinj&lt;/ort&gt;
+      &lt;/geo&gt;
+      &lt;preise&gt;
+        &lt;kaufpreis&gt;450000&lt;/kaufpreis&gt;
+      &lt;/preise&gt;
+      &lt;flaechen&gt;
+        &lt;wohnflaeche&gt;250&lt;/wohnflaeche&gt;
+        &lt;anzahl_zimmer&gt;6&lt;/anzahl_zimmer&gt;
+      &lt;/flaechen&gt;
+      &lt;freitexte&gt;
+        &lt;objekttitel&gt;Villa am Meer&lt;/objekttitel&gt;
+        &lt;objektbeschreibung&gt;...&lt;/objektbeschreibung&gt;
+      &lt;/freitexte&gt;
+    &lt;/immobilie&gt;
+  &lt;/anbieter&gt;
+&lt;/openimmo&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div class="mt-4">
+                    <a href="{% url 'main:agent' professional.id %}" class="btn btn-outline-secondary">
+                        <i class="fa fa-arrow-left mr-2"></i>Zurueck zum Profil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // File Import
+    document.getElementById('fileImportForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var formData = new FormData(this);
+        var btn = document.getElementById('fileImportBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Importiere...';
+        
+        fetch('{% url "main:xml_import_file" professional.id %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            showResults(data);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-upload mr-2"></i>Datei importieren';
+        })
+        .catch(error => {
+            showResults({success: false, error: error.message});
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-upload mr-2"></i>Datei importieren';
+        });
+    });
+    
+    // URL Import
+    document.getElementById('urlImportForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var btn = document.getElementById('urlImportBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Importiere...';
+        
+        fetch('{% url "main:xml_import_url" professional.id %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                url: document.getElementById('xmlUrl').value,
+                import_type: document.getElementById('urlImportType').value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            showResults(data);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-download mr-2"></i>Von URL importieren';
+        })
+        .catch(error => {
+            showResults({success: false, error: error.message});
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-download mr-2"></i>Von URL importieren';
+        });
+    });
+    
+    function showResults(data) {
+        var card = document.getElementById('resultsCard');
+        var content = document.getElementById('resultsContent');
+        card.classList.remove('d-none');
+        
+        if (data.success) {
+            var html = '<div class="alert alert-success">';
+            html += '<strong><i class="fa fa-check mr-2"></i>' + data.imported + ' Immobilien importiert</strong>';
+            if (data.errors > 0) {
+                html += '<br><span class="text-warning">' + data.errors + ' Fehler</span>';
+            }
+            html += '</div>';
+            
+            if (data.error_messages && data.error_messages.length > 0) {
+                html += '<div class="alert alert-warning"><strong>Fehlermeldungen:</strong><ul>';
+                data.error_messages.forEach(function(msg) {
+                    html += '<li>' + msg + '</li>';
+                });
+                html += '</ul></div>';
+            }
+        } else {
+            html = '<div class="alert alert-danger"><i class="fa fa-times mr-2"></i>' + (data.error || 'Unbekannter Fehler') + '</div>';
+        }
+        
+        content.innerHTML = html;
+        card.scrollIntoView({behavior: 'smooth'});
+    }
+});
+</script>
+
+<style>
+.list-group-item.active {
+    background-color: #003167;
+    border-color: #003167;
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+</style>
+{% endblock body %}
