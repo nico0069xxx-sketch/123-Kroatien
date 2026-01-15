@@ -1241,28 +1241,36 @@
                                     </div>
 
                                 </div>
-                                <div class="profile__agent__body">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="{{ YourName }}">
+                                <form id="listing-inquiry-form" onsubmit="sendListingInquiry(event)">
+                                    <input type="hidden" id="listing-id" value="{{ listing.id }}">
+                                    <input type="hidden" id="listing-title" value="{{ listing.property_title }}">
+                                    <input type="hidden" id="realtor-email" value="{{ listing.realtor.user.email }}">
+                                    <div style="position:absolute;left:-9999px;"><input type="text" id="website-url" tabindex="-1" autocomplete="off"></div>
+                                    
+                                    <div class="profile__agent__body">
+                                        <div class="form-group">
+                                            <input type="text" id="inquiry-name" class="form-control" placeholder="Ihr Name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="tel" id="inquiry-phone" class="form-control" placeholder="Ihre Telefonnummer">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" id="inquiry-email" class="form-control" placeholder="Ihre E-Mail-Adresse" required>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <textarea id="inquiry-message" class="form-control required" rows="5" required
+                                                placeholder="Ich interessiere mich für diese Immobilie..."></textarea>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="{{ placeholder_phone }}">
+                                    <div class="profile__agent__footer">
+                                        <div class="form-group mb-0">
+                                            <button type="submit" id="inquiry-btn" class="btn btn-primary btn-outline-blue text-capitalize btn-block">
+                                                Nachricht senden <i class="fa fa-paper-plane ml-1"></i>
+                                            </button>
+                                            <div id="inquiry-status" class="mt-2 text-center" style="display:none;"></div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="{{ placeholder_email }}">
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <textarea class="form-control required" rows="5" required="required"
-                                            placeholder="I'm interest in [ Listing Single ]"></textarea>
-                                    </div>
-                                </div>
-                                <div class="profile__agent__footer">
-                                    <div class="form-group mb-0">
-                                        <button class="btn btn-primary btn-outline-blue text-capitalize btn-block">{{ SendMessage}} <i
-                                                class="fa fa-paper-plane ml-1"></i></button>
-
-                                    </div>
-                                </div>
+                                </form>
                             </div>
 
                         </div>
@@ -1308,4 +1316,70 @@
     !-- END CALL TO ACTION -->
 
     <!-- Footer  -->
-    {% endblock body %}
+    
+<script>
+function sendListingInquiry(event) {
+    event.preventDefault();
+    
+    const btn = document.getElementById('inquiry-btn');
+    const status = document.getElementById('inquiry-status');
+    
+    // Button deaktivieren
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Wird gesendet...';
+    
+    const data = {
+        name: document.getElementById('inquiry-name').value,
+        phone: document.getElementById('inquiry-phone').value,
+        email: document.getElementById('inquiry-email').value,
+        message: document.getElementById('inquiry-message').value,
+        listing_id: document.getElementById('listing-id').value,
+        listing_title: document.getElementById('listing-title').value,
+        realtor_email: document.getElementById('realtor-email').value
+    };
+    
+    fetch(window.location.pathname.split('/')[1] ? '/' + window.location.pathname.split('/')[1] + '/api/listing-inquiry/' : '/api/listing-inquiry/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        status.style.display = 'block';
+        if (result.status === 'success') {
+            status.innerHTML = '<div class="alert alert-success">✅ ' + result.message + '</div>';
+            document.getElementById('listing-inquiry-form').reset();
+        } else {
+            status.innerHTML = '<div class="alert alert-danger">❌ ' + result.message + '</div>';
+        }
+        btn.disabled = false;
+        btn.innerHTML = 'Nachricht senden <i class="fa fa-paper-plane ml-1"></i>';
+    })
+    .catch(error => {
+        status.style.display = 'block';
+        status.innerHTML = '<div class="alert alert-danger">❌ Fehler beim Senden</div>';
+        btn.disabled = false;
+        btn.innerHTML = 'Nachricht senden <i class="fa fa-paper-plane ml-1"></i>';
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% endblock body %}

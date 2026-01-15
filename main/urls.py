@@ -385,3 +385,8 @@ urlpatterns += [
     path('ge/makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup_ge'),
     path('ge/makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa_ge'),
 ]
+
+# Anfrage an Makler (E-Mail)
+urlpatterns += [
+    path('api/listing-inquiry/', views.send_listing_inquiry, name='send_listing_inquiry'),
+]

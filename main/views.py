@@ -731,6 +731,11 @@ def edit_agent(request, id):
     return render(request, 'main/edit-agent.html', context)
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import time
+import re
+
+# Rate Limiting Cache (Spam-Schutz)
+_inquiry_cache = {}
 import json
 from .chatbot import get_chatbot_response
 
@@ -1803,3 +1808,92 @@ def news_page(request, country=None, lang=None):
     }
     
     return render(request, 'main/news.html', context)
+
+
+# === ANFRAGE AN MAKLER (E-Mail Benachrichtigung) ===
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
+import json
+
+@csrf_exempt
+def send_listing_inquiry(request):
+    """Sendet eine Anfrage zu einer Immobilie an den Makler (mit Spam-Schutz)"""
+    if request.method == 'POST':
+        try:
+            # === RATE LIMITING (max 3 Anfragen pro Minute pro IP) ===
+            client_ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', ''))
+            if ',' in client_ip:
+                client_ip = client_ip.split(',')[0].strip()
+            
+            current_time = time.time()
+            if client_ip in _inquiry_cache:
+                last_request, count = _inquiry_cache[client_ip]
+                if current_time - last_request < 60:
+                    if count >= 3:
+                        return JsonResponse({'status': 'error', 'message': 'Zu viele Anfragen. Bitte warten Sie eine Minute.'})
+                    _inquiry_cache[client_ip] = (last_request, count + 1)
+                else:
+                    _inquiry_cache[client_ip] = (current_time, 1)
+            else:
+                _inquiry_cache[client_ip] = (current_time, 1)
+            
+            data = json.loads(request.body)
+            
+            # === INPUT VALIDIERUNG ===
+            name = data.get('name', '').strip()[:100]
+            phone = data.get('phone', '').strip()[:30]
+            email = data.get('email', '').strip()[:100]
+            message = data.get('message', '').strip()[:2000]
+            listing_id = str(data.get('listing_id', '')).strip()[:20]
+            listing_title = data.get('listing_title', '').strip()[:200]
+            realtor_email = data.get('realtor_email', '').strip()
+            
+            # Pflichtfelder pruefen
+            if not name or not email or not message:
+                return JsonResponse({'status': 'error', 'message': 'Bitte fuellen Sie alle Pflichtfelder aus.'})
+            
+            # E-Mail Format pruefen
+            if not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
+                return JsonResponse({'status': 'error', 'message': 'Bitte geben Sie eine gueltige E-Mail-Adresse ein.'})
+            
+            if not realtor_email:
+                return JsonResponse({'status': 'error', 'message': 'Makler E-Mail nicht gefunden'})
+            
+            # E-Mail an den Makler senden
+            subject = f'Neue Anfrage zu Ihrer Immobilie: {listing_title}'
+            email_body = f"""
+Guten Tag,
+
+Sie haben eine neue Anfrage zu Ihrer Immobilie erhalten:
+
+=== IMMOBILIE ===
+Titel: {listing_title}
+ID: {listing_id}
+
+=== INTERESSENT ===
+Name: {name}
+Telefon: {phone}
+E-Mail: {email}
+
+=== NACHRICHT ===
+{message}
+
+---
+Diese E-Mail wurde automatisch von 123-Kroatien.eu gesendet.
+            """
+            
+            send_mail(
+                subject=subject,
+                message=email_body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[realtor_email],
+                fail_silently=False,
+            )
+            
+            return JsonResponse({'status': 'success', 'message': 'Anfrage erfolgreich gesendet!'})
+            
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Nur POST erlaubt'})
