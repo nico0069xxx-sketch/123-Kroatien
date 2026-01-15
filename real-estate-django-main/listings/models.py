@@ -38,6 +38,17 @@ class Listing(models.Model):
     photo_5 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_6 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     is_published = models.BooleanField(default=True)
+    
+    # Listing Status for Makler Portal
+    LISTING_STATUS_CHOICES = [
+        ('aktiv', 'Aktiv / Online'),
+        ('pruefung', 'In Prüfung'),
+        ('verkauft', 'Verkauft'),
+        ('pausiert', 'Pausiert'),
+    ]
+    listing_status = models.CharField(max_length=20, choices=LISTING_STATUS_CHOICES, default='aktiv', blank=True)
+    pruefung_fehler = models.TextField(blank=True, null=True, help_text="Fehlermeldungen bei Prüfung")
+    
     list_date = models.DateTimeField(default=datetime.now, blank=True)
     address = models.CharField(max_length=200, blank=True)
     country = models.CharField(max_length=100, blank=True)
