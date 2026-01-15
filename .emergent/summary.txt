@@ -1,188 +1,269 @@
 <analysis>**original_problem_statement:**
-The user, Nik, aims to transform his local Django real estate marketplace into a Königsklasse (King Class) platform. Key requirements include restoring lost features, fixing UI/UX issues, and adding new content pages for SEO. The primary goal is to re-implement and enhance features that were lost after a previous data incident.
+The user, Nik, is developing his Django real estate marketplace. In this session, the initial request was to implement an email notification system for Gruppe A professionals (Makler, Bauträger) when they receive an inquiry on a property listing.
 
-In this session, the user requested to perfect the processes for professional service providers. This includes a robust registration, a secure login with 2FA (OTP), and distinct dashboards for different professional groups.
+After completing this, the user expressed significant concerns about security, prompting a comprehensive security audit and hardening of the application. This involved fixing critical vulnerabilities like hardcoded secrets, enabling brute-force protection, and adding various security headers.
+
+Subsequently, the user requested numerous UI fixes on the property detail page and a fix for a recurring issue with Font Awesome icons not rendering.
+
+Finally, the user decided to start a major feature: a complete redesign of the public-facing profile page for Gruppe A professionals to be more modern and feature-rich, including a gallery for reference projects and more detailed company information.
 
 PRODUCT REQUIREMENTS:
-1.  **Core Application:** Restore and enhance the application's UI and functionality.
-2.  **UI/UX Overhaul:** Refine UI elements and add new content pages to improve user experience and SEO.
-3.  **AI Features:**
-    *   Re-implement AI Chatbot, AI Smart Search, AI profile text generator.
-    *   Implement AI to generate descriptive texts for new property listings.
-    *   Implement AI-Matching to find suitable professionals for customer inquiries.
-4.  **Integrations:**
-    *   Implement secure login (TOTP 2FA).
-    *   Implement XML interfaces for property listings (import/export).
-5.  **New Registration & Verification System:**
-    *   Create a multi-step registration form for professionals.
-    *   Implement an admin backend UI to review uploaded documents and verify/activate profiles.
-6.  **Makler-Portal (Broker Portal):**
-    *   Create a dedicated, login-protected portal for Real Estate Agents and Construction Companies.
-    *   The portal must allow brokers to manage their own property listings, including bulk XML import.
-7.  **Differentiated Dashboards:**
-    *   **Gruppe A (Makler, Bauunternehmen):** Full-featured portal for property management.
-    *   **Gruppe B (Architekten, Anwälte, Steuerberater):** Simpler business directory style profile management dashboard.
+1.  **Email Notifications:** Gruppe A professionals must receive an email when a potential customer sends an inquiry through the contact form on a property listing page. (Completed)
+2.  **Security Overhaul:** The application must be hardened against common web vulnerabilities. This includes moving secrets to , preventing brute-force attacks, securing file uploads, and obfuscating sensitive URLs. (Completed)
+3.  **UI/UX Fixes:** Resolve various display issues on the property detail page (), including incorrect currency symbols, text-color/readability problems, and broken icons. (Completed)
+4.  **New Professional Profile Page (Gruppe A):** Design and implement a new, modern, and comprehensive public profile page for real estate agents and construction companies. This includes:
+    *   A modern header with company logo, name, and slogan.
+    *   Detailed company information (founding year, employee count, specializations).
+    *   Integrated social media links.
+    *   A gallery to showcase reference projects.
+    *   A list of their current property listings.
+    *   A contact form.
+    *   Backend portal functionality for professionals to manage all this new information and toggle the visibility of certain sections (e.g., show/hide reference gallery). (Partially Implemented)
 
-**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du) and provide simple, copy-pasteable commands for his Apple Mac ( shell). The user is not a developer and requires clear, step-by-step guidance.
+**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du). The user works on an Apple Mac () using the  shell in the Terminal. All commands must be simple, complete, and copy-pasteable for his local environment at path .
 
 **what currently exists?**
-The session started by successfully reverting the codebase from a catastrophic failure caused by the previous agent. The application is now in a stable state. A bug with empty dropdowns on the homepage search form has been fixed. A comprehensive two-factor authentication (2FA) system has been implemented for the new  users. This system allows users to choose between an Authenticator App (TOTP/QR-code) and receiving a one-time code via email.
-
-A major security issue (hardcoded credentials in ) was identified by GitGuardian and resolved. All sensitive credentials have been moved to a  file and are loaded using . The previously non-functional Gmail SMTP setup has been replaced with Ethereal.email for development and testing purposes, which now works reliably.
+- An email notification system is now active; when a user fills out the contact form on a property detail page, the corresponding agent (Gruppe A) receives an email with the inquiry details.
+- The application's security has been significantly improved. Secrets (,  status) are loaded from an  file, the login form has brute-force protection (5 attempts then 5-min lockout), the admin URL has been obfuscated to , and several API endpoints have been renamed to be less guessable.
+- A detailed guide explaining the two 2FA methods has been added to the 2FA selection pages for both portals.
+- Numerous UI bugs on the property detail page have been fixed, including currency symbols, text readability, and broken labels.
+- A persistent and recurring issue with Font Awesome icons not rendering has been resolved by adjusting CSS load order and specificity.
+- The foundation for the new Gruppe A professional profile has been laid:
+    - The  model in  has been extended with new fields (e.g., , , , social media URLs, and display toggles).
+    - A new  model has been created to store project gallery information.
+    - A new template, , has been created with a modern design for the public profile page.
+    - The corresponding view,  in , has been updated to pass the new data to this new template.
+    - Test data has been added to showcase the new profile design.
 
 **Last working item**:
--   **Last item agent was working**: Implementing a user choice between Authenticator App (TOTP) and Email-based 2FA for professional users, and fixing a security leak by moving credentials to a  file.
--   **Status**: USER VERIFICATION PENDING
--   **Agent Testing Done**: Y
--   **Which testing method agent to use?**: manual testing by curl/ python -c. The next agent should guide the user to test the full registration-to-login flow for a new Gruppe B professional (e.g., an architect) to verify the new dashboard logic.
--   **User Testing Done**: Y (The user confirmed the 2FA selection screen and the email code functionality work as expected.)
+-   **Last item agent was working**: Building the new, modern public profile page for Gruppe A professionals (). The agent created the database models, the new template, updated the view to render it, added test data, and fixed several UI color/text issues based on user feedback.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: manual testing by curl/ python -c. The next step is to build the backend management portal for this feature. Once the full CRUD functionality is implemented, the  should be used.
+-   **User Testing Done**: Y (User has visually approved the new design and confirmed the UI fixes).
 
 **All Pending/In progress Issue list**:
--   Issue 1: Implement a simpler dashboard for Gruppe B professionals. (P0)
--   Issue 2: Add a short guide for the two 2FA methods. (P1)
--   Issue 3: Consolidate the old  model into the newer  model. (P2, High-Risk)
-
-**Issues Detail**:
--   **Issue 1: Implement a simpler dashboard for Gruppe B professionals.**
-    -   **Description**: Professionals like architects, lawyers, and tax advisors (Gruppe B) do not manage properties. They need a simpler dashboard, likely just for managing their profile information, instead of the full Makler-Portal.
-    -   **Attempted fixes**: None. This is the next logical task.
+-   **Issue 1**: **Font Awesome Icon Fragility (P1)**
+    -   **Description**: Throughout the session, icons repeatedly disappeared due to CSS conflicts, specifically global  rules with  overriding the Font Awesome font.
+    -   **Attempted fixes**: The issue was resolved by removing a global  selector from a  rule in  and running . However, this indicates that the CSS is fragile. Any broad changes to typography could easily break the icons again.
     -   **Next debug checklist**:
-        1.  Create a new view in  for the Gruppe B dashboard.
-        2.  Create a new template (e.g., ).
-        3.  Modify the login logic in  and  to redirect Gruppe B users to their specific dashboard instead of the Makler-Portal.
-    -   **Why fix this issue and what will be achieved with the fix?**: Fulfills a core user requirement for differentiated user experiences based on professional type.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Both.
+        1.  If icons break again, the first step is to check  for any new global  rules with .
+        2.  Ensure  is run after CSS changes.
+        3.  Consider refactoring the CSS to have a more specific, robust rule for Font Awesome icons that is less likely to be overridden.
+    -   **Why fix this issue and what will be achieved with the fix?**: Provides a stable UI and prevents wasting significant time on recurring debugging sessions for the same visual bug.
+    -   **Status**: RESOLVED (but high risk of recurrence)
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Frontend.
     -   **Blocked on other issue**: None.
-
--   **Issue 2: Add a short guide for the two 2FA methods.**
-    -   **Description**: The user requested a kurze Anleitung (short guide) on the 2FA selection page to explain the two options (Authenticator App vs. Email Code).
-    -   **Attempted fixes**: None.
-    -   **Next debug checklist**:
-        1.  Edit the template .
-        2.  Add descriptive text under each option explaining the pros and cons (e.g., Highest security, works offline vs. Easy, no extra app needed).
-    -   **Why fix this issue and what will be achieved with the fix?**: Improves user experience and clarity during a critical security setup step.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Frontend (screenshot).
-    -   **Blocked on other issue**: None.
-
--   **Issue 3: Agent-Model Konsolidierung.**
-    -   **Description**: This is a carry-over, high-risk refactoring task to merge the old  model into the new  model. This failed catastrophically in a previous session.
-    -   **Attempted fixes**: Previous agent failed, leading to a HEAD is now at b9e078a auto-commit for 02c11170-1242-4142-a3f0-e064a6554d54.
-    -   **Next debug checklist**: Do not attempt without explicit user confirmation. If approved, create a detailed, step-by-step migration plan with small, testable commits.
-    -   **Why fix this issue and what will be achieved with the fix?**: Simplifies the codebase by removing a redundant user model.
+-   **Issue 2**: **Agent-Model Konsolidierung (P2, High-Risk)**
+    -   **Description**: This is a carry-over, high-risk refactoring task to merge the old  model into the new  model.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Both.
-    -   **Blocked on other issue**: User trust; higher priority features.
+-   **Issue 3**: **Refactor duplicated 2FA logic (P2)**
+    -   **Description**: A carry-over task to refactor duplicated 2FA logic between the  and .
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: N
 
 **In progress Task List**:
--   None.
+-   **Task 1**: **Implement Backend Management for New Professional Profile (P0)**
+    -   **Description**: The new public profile page () is visually complete, but professionals have no way to edit the new information or manage their reference projects.
+    -   **Where to resume**:
+        1.  Create a new view and template within the  for editing the profile. This form should include the new fields: , , , , and all social media URLs.
+        2.  Implement the on/off toggle switches (, , etc.) in this new edit form.
+        3.  Create a new section in the portal to manage Reference Projects. This requires views and templates for listing, creating, editing, and deleting  objects.
+        4.  Ensure file uploads for reference project images are handled securely.
+    -   **What will be achieved with this?**: This will complete the new professional profile feature, allowing Gruppe A users to fully customize their modern public-facing page.
+    -   **Status**: NOT STARTED
+    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
--   **Upcoming Tasks:**
-    -   (P0) Implement Dashboard for Gruppe B (Anwälte, Steuerberater, Architekten).
-    -   (P1) Add a short guide for the two 2FA methods on the selection screen ().
--   **Future Tasks:**
-    -   (P2) **Agent-Model Konsolidierung**: Consolidate  into . **WARNING**: High-risk task.
-    -   (P3) Refactor  function in  to remove the long  chain.
+-   **Upcoming Tasks**:
+    -   (P2) Implement a customer review/rating system.
+-   **Future Tasks**:
+    -   (P2) Refactor  function in .
 
 **Completed work in this session**
--   Restored project to a stable state after previous agent's failure.
--   Fixed broken search filter dropdowns on the homepage ().
--   Implemented a full 2FA system for  users, allowing a choice between Authenticator App (TOTP) and Email Code.
--   Created all necessary views (, ), templates, and URL routes for the 2FA flow.
--   Resolved a GitGuardian security alert by moving email credentials from  to  and loading them with .
--   Configured and tested a working email backend using Ethereal.email, solving the previous  error.
-
-**Earlier issues found/mentioned but not fixed**
--   None in this session. The agent successfully addressed the issues it took on.
+-   **Email Notification**: Implemented email notifications for Gruppe A professionals upon receiving a property inquiry.
+-   **Comprehensive Security Hardening**:
+    -   Moved , ,  to .
+    -   Added login brute-force protection.
+    -   Enhanced password policies in .
+    -   Implemented rate-limiting and a honeypot on inquiry forms.
+    -   Obfuscated the admin URL to .
+    -   Obfuscated several API endpoint URLs for security.
+-   **2FA Guide**: Added detailed instructions to the 2FA selection page.
+-   **UI Fixes**:
+    -   Corrected currency (), units (), and broken labels on the property detail page ().
+    -   Fixed text color and readability issues on the property detail page.
+    -   Resolved a recurring CSS issue that was causing Font Awesome icons to disappear.
+-   **New Profile Page (Phase 1)**:
+    -   Extended the  model and created a new  model.
+    -   Created a new modern template .
+    -   Populated the new page with test data for a better preview.
+-   **Documentation**: Created  for better agent handoffs.
 
 **Known issue recurrence from previous fork**
--   The previous agent's catastrophic failure on the Agent-Model Konsolidierung was the primary issue from the last fork. This agent correctly prioritized stability and user trust over re-attempting the risky task.
+-   The Agent-Model Konsolidierung task remains a high-risk, recurring issue.
+-   The Font Awesome icon rendering issue became a new recurring problem during this session, consuming significant time before being resolved. The fix is fragile.
 
 **Code Architecture**
--   Standard Django project with apps , , , etc.
--   Introduced new files for 2FA:  and .
--   Added new templates: , , , , .
--   Added migrations  and  to the  app.
+-   Standard Django project.
+-   A new template  now serves as the public profile for professionals. The view  has been updated to render this new template instead of the old .
+-   A new model  was added to .
+-   The  model was significantly extended with new fields for company details, social media, and display toggles.
+-   A new API endpoint  was added to handle contact form submissions from the new profile page.
 
 **Key Technical Concepts**
--   **Django**: Models, Views, Templates, Migrations, URL routing, .
--   **Authentication**: Implemented a custom 2FA flow combining TOTP (, ) and an email-based OTP system.
--   **Security**: Addressed a credential leak by using environment variables (, ) for sensitive data.
--   **Email**: Configured Django's SMTP backend for a test service (Ethereal.email).
+-   **Django**: Models, Views (function-based), Templates, Migrations,  for scripting data updates,  hardening.
+-   **Security**: Brute-force protection (in-memory dictionary cache), rate-limiting, honeypot fields, URL obfuscation, moving secrets to .
+-   **Frontend**: Direct template manipulation (HTML, inline CSS), debugging CSS specificity issues (, selector chains), and clearing browser cache to apply changes.
+-   **Local Development**: All work was done by guiding a non-developer user to execute commands (, , usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
+
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system., ) on his local Mac (). Python scripts were created on the fly to perform complex file edits.
 
 **key DB schema**
 -   ****:
-    -   Added , , ,  for Authenticator App 2FA.
-    -   Added , ,  for Email 2FA.
-
-**changes in tech stack**
--    was installed and integrated to manage environment variables.
--   The email backend was switched from Gmail to **Ethereal.email** for testing.
+    -   Added  (PositiveIntegerField)
+    -   Added  (CharField)
+    -   Added  (TextField)
+    -   Added  (CharField)
+    -   Added , , , ,  (URLField)
+    -   Added , , ,  (BooleanField)
+-   ** (New Model)**:
+    -    (ForeignKey to )
+    -    (CharField)
+    -    (TextField)
+    -   ,  (PositiveIntegerField)
+    -    through  (ImageField)
 
 **All files of reference**
--   **Created/Modified:** , , , , , , , , , , and all new templates in .
--   **New/Important:**  file now holds email credentials.
+-   **Created:**
+    -   : Migration for new profile fields and  model.
+    -   : The new modern template for public professional profiles.
+    -   : A detailed handover document for future agents.
+-   **Modified:**
+    -   : Added new fields to  and the new  model.
+    -   : Updated  view to render the new template and pass new context data.
+    -   : Added  and  views with security features.
+    -   : Added brute-force protection to the login view.
+    -   : Loaded secrets from  and added numerous security headers.
+    -   : Obfuscated the admin URL.
+    -   : Obfuscated several API endpoint URLs.
+    -   : Multiple UI fixes for currency, units, labels, and text color.
+    -    & : Added detailed 2FA instructions.
+    -   : Critical fixes for icon rendering and text color.
+    -   : Added , , and .
 
 **Areas that need refactoring**:
--   The Agent-Model Konsolidierung task remains the largest pending refactoring item.
+-   The duplicated 2FA logic between  and .
+-   The  remains the largest pending refactoring item.
+-   The two inquiry-sending views ( and ) share very similar rate-limiting and email-sending logic and could be abstracted.
 
 **key api endpoints**
--   No new API endpoints were created. The focus was on web views.
+-   : For inquiries on specific properties.
+-   : For inquiries from the new professional profile page.
+-   **Obfuscated URLs (Critical)**: Many API URLs were intentionally renamed for security. The mapping is documented in . Examples:
+    -    -> 
+    -    -> 
+    -    -> 
 
 **Critical Info for New Agent**
--   **User trust has been rebuilt.** Maintain this with clear communication and small, verifiable steps.
--   **Email is mocked.** The email system uses Ethereal.email. Real emails are not sent. The user must log into the Ethereal website to view test emails. This is a temporary setup for development.
--   **Dual User Systems:** The codebase has two user types: the old  and the new . The login flow in  was modified to handle both, but be mindful of this distinction. The 2FA system exists only for .
--   The user is sensitive to complex shell commands. Use simple, single-line commands or small Python scripts where possible.
+-   **You are assisting a non-developer on his local Mac.** All file paths must be absolute for the user's machine (e.g., ). All commands must be for .
+-   **Admin URL is now hidden:** . The default  will not work.
+-   **CSS is fragile:** The Font Awesome icons are working, but be extremely cautious when modifying . Global rules, especially with , have repeatedly broken the UI. Run  after significant CSS changes.
+-   **Main task is the new profile:** The highest priority is to build the backend portal for Gruppe A users to manage their new profile details and reference projects.
+-    was accidentally deleted twice by cleanup scripts (). Be careful with broad  commands. Always restore  from git if this happens.
 
 **documents and test reports created in this job**
--   None.
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. User confirmed they want to implement both 2FA versions with a short guide.
-9. User received a GitGuardian alert about an exposed password.
-8. Agent confirmed with the user that the 2FA selection screen is working.
-7. User confirmed that choosing the email option on the 2FA selection screen works as intended (direct login on first setup).
-6. User confirmed the 2FA selection screen is now visible.
-5. User created a test user () to test the 2FA choice flow.
-4. User wants to offer both QR code and email 2FA.
-3. User confirmed that email 2FA works and the code is received on Ethereal.
-2. User created a new Ethereal account to fix the security leak.
-1. User received a GitGuardian security alert and asked if it was advertising.
+10. User confirms the header text color fix is working and asks to save the work.
+9.  User asks for the server command.
+8.  User reports Über Uns title is not white.
+7.  User confirms Name/Standort are now white.
+6.  User wants to continue working.
+5.  Agent provides command to fix header colors.
+4.  User points out that the header text (name, location) is too dark on the new profile page.
+3.  Agent presents the new profile page design with test data and asks for feedback.
+2.  User provides a screenshot of the newly designed profile page.
+1.  User is prompted to check the new profile page after test data was added.
 
 **Project Health Check:**
--   **Broken**: None. The application is in a stable, working state.
--   **Mocked**: The email sending functionality is mocked using **Ethereal.email**. It does not send real-world emails.
--   **Fixed / Implemented**:
-    -   Homepage search dropdowns.
-    -   A complete 2FA system (TOTP & Email OTP) for new  users.
-    -   A security leak by moving credentials to a  file.
+-   **Broken**: The icon rendering is fragile and has a high risk of regression if CSS is changed improperly.
+-   **Mocked**: Email sending uses Ethereal.email.
+-   **Fixed / Implemented**: A complete email inquiry system for properties, a major security overhaul, numerous UI bug fixes, and the public-facing portion of a new modern professional profile.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o**: Used for AI features (inherited).
+-   **OpenAI GPT-3.5-turbo**: Used for AI text generation. Requires  in .
 -   **Ethereal.email**: Used for SMTP testing. Credentials are in .
+-   **Font Awesome 4.7.0**: Loaded via CDN. This is the source of the recurring icon issue.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: None
--   **Known regressions**: None
+-   **Test files created**: None. All testing was manual by the user.
+-   **Known regressions**: The Font Awesome icon rendering broke multiple times during the session before being fixed. The CSS is fragile.
 
 **Credentials to test flow:**
--   **User **:
-    -   **Username**: 
-    -   **Password**: 
-    -   **Purpose**: This user was created to test the 2FA choice flow. On the next login, it should present the choice between Authenticator App and Email.
+-   **Gruppe B User (Architect):**
+    -   Username: 
+    -   Password: 
+-   **Gruppe A User (Makler - with new profile data):**
+    -   Username:  (from user, seems to be the main test user)
+    -   Password: (Not specified, likely )
+-   **Admin User:**
+    -   URL: 
+    -   Username: 
+    -   Password: 
 -   **Ethereal Email Inbox**:
-    -   **URL**: 
-    -   **Username**: 
-    -   **Password**: 
-    -   **Purpose**: View test emails sent by the application, such as 2FA codes.
+    -   URL: 
+    -   Username: 
+    -   Password: 
 
 **What agent forgot to execute**
--   The agent did not explicitly add  to  when introducing . Django's default  usually includes this, but it's good practice to verify. The implementation was successful, so it was likely already present.</analysis>
+-   The agent accidentally deleted  twice with an over-eager cleanup command (). This was immediately caught and restored from git both times, but it highlights a risk in using broad commands.
+-   The agent did not test the new contact form on the  page after creating it. The user was prompted to, but it's unclear if they did. This should be verified.</analysis>
