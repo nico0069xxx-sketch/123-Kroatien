@@ -15,13 +15,18 @@ REGIONS = [
 ]
 
 LANGUAGES_SPOKEN = [
-    ('de', 'Deutsch'),
+    ('ge', 'Deutsch'),
     ('en', 'Englisch'),
     ('hr', 'Kroatisch'),
-    ('it', 'Italienisch'),
     ('fr', 'Französisch'),
-    ('sl', 'Slowenisch'),
-    ('hu', 'Ungarisch'),
+    ('nl', 'Niederländisch'),
+    ('pl', 'Polnisch'),
+    ('cz', 'Tschechisch'),
+    ('sk', 'Slowakisch'),
+    ('ru', 'Russisch'),
+    ('gr', 'Griechisch'),
+    ('sw', 'Schwedisch'),
+    ('no', 'Norwegisch'),
 ]
 
 PROFESSIONAL_TYPES = [
@@ -92,6 +97,25 @@ class Professional(models.Model):
     description_de = models.TextField(blank=True, null=True, help_text='Beschreibung Deutsch')
     description_hr = models.TextField(blank=True, null=True, help_text='Beschreibung Kroatisch')
     description_en = models.TextField(blank=True, null=True, help_text='Beschreibung Englisch')
+    
+    # === NEUE PROFIL-FELDER (Gruppe A) ===
+    founded_year = models.PositiveIntegerField(blank=True, null=True, help_text='Gruendungsjahr')
+    employee_count = models.CharField(max_length=50, blank=True, null=True, help_text='z.B. 1-5, 6-20, 21-50, 50+')
+    specializations = models.TextField(blank=True, null=True, help_text='Spezialgebiete, kommagetrennt')
+    slogan = models.CharField(max_length=300, blank=True, null=True, help_text='Firmenslogan')
+    
+    # Social Media
+    facebook_url = models.URLField(blank=True, null=True)
+    instagram_url = models.URLField(blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    youtube_url = models.URLField(blank=True, null=True)
+    tiktok_url = models.URLField(blank=True, null=True)
+    
+    # Profil-Anzeige-Optionen (Toggle)
+    show_references = models.BooleanField(default=True, help_text='Referenzprojekte anzeigen')
+    show_contact_form = models.BooleanField(default=True, help_text='Kontaktformular anzeigen')
+    show_listings = models.BooleanField(default=True, help_text='Aktuelle Immobilien anzeigen')
+    show_social_media = models.BooleanField(default=True, help_text='Social Media Links anzeigen')
     
     # Spam-Schutz
     failed_attempts = models.IntegerField(default=0)
@@ -224,3 +248,35 @@ class ProfessionalContent(models.Model):
     
     def __str__(self):
         return f"{self.professional.name} - {self.language}"
+
+
+class ReferenceProject(models.Model):
+    """Referenzprojekte fuer Makler und Bauunternehmen"""
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
+    
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    year = models.PositiveIntegerField(blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    project_type = models.CharField(max_length=100, blank=True, null=True)
+    
+    image_1 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_2 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_3 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_4 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_5 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_6 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    
+    is_active = models.BooleanField(default=True)
+    sort_order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['sort_order', '-created_at']
+        verbose_name = 'Referenzprojekt'
+        verbose_name_plural = 'Referenzprojekte'
+    
+    def __str__(self):
+        return f"{self.title} ({self.professional.name})"

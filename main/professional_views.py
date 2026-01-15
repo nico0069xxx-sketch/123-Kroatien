@@ -491,7 +491,31 @@ def professional_detail(request, country, category, slug):
     if professional.professional_type in ['real_estate_agent', 'construction_company']:
         professional.profile_views += 1
         professional.save(update_fields=['profile_views'])
-    return render(request, "main/professional_detail.html", {
+    
+    # Referenzprojekte laden
+    from main.professional_models import ReferenceProject
+    reference_projects = ReferenceProject.objects.filter(
+        professional=professional, 
+        is_active=True
+    ).order_by('sort_order', '-created_at')
+    
+    # Spezialgebiete als Liste
+    specializations_list = []
+    if professional.specializations:
+        specializations_list = [s.strip() for s in professional.specializations.split(',') if s.strip()]
+    
+    # Immobilien laden (fuer Makler/Bauunternehmen)
+    listings = []
+    if professional.professional_type in ['real_estate_agent', 'construction_company']:
+        from listings.models import Listing
+        # Versuche ueber Agent-Verknuepfung
+        if professional.user:
+            from accounts.models import Agent
+            agent = Agent.objects.filter(user=professional.user).first()
+            if agent:
+                listings = Listing.objects.filter(realtor=agent, is_published=True)[:6]
+    
+    return render(request, "main/professional_detail_new.html", {
         "professional": professional,
         "content": content,
         "singular": cat_trans.get("singular", ""),
@@ -503,6 +527,9 @@ def professional_detail(request, country, category, slug):
         "translated_languages": translated_languages,
         "translated_service_regions": translated_service_regions,
         "current_month": current_month,
+        "reference_projects": reference_projects,
+        "specializations_list": specializations_list,
+        "listings": listings,
     })
 
 

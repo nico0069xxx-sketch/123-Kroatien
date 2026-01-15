@@ -390,3 +390,8 @@ urlpatterns += [
 urlpatterns += [
     path('api/listing-inquiry/', views.send_listing_inquiry, name='send_listing_inquiry'),
 ]
+
+# Anfrage an Professional (E-Mail)
+urlpatterns += [
+    path('api/professional-inquiry/', views.send_professional_inquiry, name='send_professional_inquiry'),
+]

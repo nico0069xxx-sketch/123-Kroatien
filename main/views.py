@@ -1939,3 +1939,78 @@ Diese E-Mail wurde automatisch von 123-Kroatien.eu gesendet.
             return JsonResponse({'status': 'error', 'message': str(e)})
     
     return JsonResponse({'status': 'error', 'message': 'Nur POST erlaubt'})
+
+
+# === ANFRAGE AN PROFESSIONAL (E-Mail Benachrichtigung) ===
+@csrf_exempt
+def send_professional_inquiry(request):
+    """Sendet eine Anfrage an einen Professional"""
+    if request.method == 'POST':
+        try:
+            # Rate Limiting
+            client_ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', ''))
+            if ',' in client_ip:
+                client_ip = client_ip.split(',')[0].strip()
+            
+            current_time = time.time()
+            cache_key = f"prof_{client_ip}"
+            if cache_key in _inquiry_cache:
+                last_request, count = _inquiry_cache[cache_key]
+                if current_time - last_request < 60:
+                    if count >= 3:
+                        return JsonResponse({'status': 'error', 'message': 'Zu viele Anfragen. Bitte warten Sie eine Minute.'})
+                    _inquiry_cache[cache_key] = (last_request, count + 1)
+                else:
+                    _inquiry_cache[cache_key] = (current_time, 1)
+            else:
+                _inquiry_cache[cache_key] = (current_time, 1)
+            
+            data = json.loads(request.body)
+            
+            name = data.get('name', '').strip()[:100]
+            email = data.get('email', '').strip()[:100]
+            phone = data.get('phone', '').strip()[:30]
+            message = data.get('message', '').strip()[:2000]
+            professional_email = data.get('professional_email', '').strip()
+            
+            if not name or not email or not message:
+                return JsonResponse({'status': 'error', 'message': 'Bitte fuellen Sie alle Pflichtfelder aus.'})
+            
+            if not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
+                return JsonResponse({'status': 'error', 'message': 'Bitte geben Sie eine gueltige E-Mail-Adresse ein.'})
+            
+            if not professional_email:
+                return JsonResponse({'status': 'error', 'message': 'E-Mail-Adresse nicht gefunden'})
+            
+            subject = 'Neue Anfrage ueber 123-Kroatien.eu'
+            email_body = f"""
+Guten Tag,
+
+Sie haben eine neue Anfrage erhalten:
+
+=== INTERESSENT ===
+Name: {name}
+E-Mail: {email}
+Telefon: {phone}
+
+=== NACHRICHT ===
+{message}
+
+---
+Diese E-Mail wurde automatisch von 123-Kroatien.eu gesendet.
+            """
+            
+            send_mail(
+                subject=subject,
+                message=email_body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[professional_email],
+                fail_silently=False,
+            )
+            
+            return JsonResponse({'status': 'success', 'message': 'Anfrage erfolgreich gesendet!'})
+            
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Nur POST erlaubt'})

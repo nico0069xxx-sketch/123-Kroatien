@@ -1,0 +1,327 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block body %}
+<!-- HEADER -->
+<div class="professional-header" style="background: linear-gradient(135deg, #003167 0%, #004a99 100%); padding: 60px 0;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        {% if professional.logo %}
+        <img src="{{ professional.logo.url }}" alt="{{ professional.name }}" class="img-fluid rounded-circle shadow" style="max-width: 180px; border: 5px solid white;">
+        {% elif professional.portrait %}
+        <img src="{{ professional.portrait.url }}" alt="{{ professional.name }}" class="img-fluid rounded-circle shadow" style="max-width: 180px; border: 5px solid white;">
+        {% else %}
+        <div class="rounded-circle shadow d-flex align-items-center justify-content-center" style="width: 180px; height: 180px; background: white; margin: 0 auto;">
+          <i class="fa fa-building" style="font-size: 60px; color: #003167;"></i>
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-md-9 text-white">
+        <h1 class="mb-2" style="font-weight: 700; color: white;">{{ professional.name }}</h1>
+        {% if professional.slogan %}
+        <p class="lead mb-3" style="opacity: 0.9;">{{ professional.slogan }}</p>
+        {% endif %}
+        <p class="mb-2" style="color: white;"><i class="fa fa-map-marker"></i> {{ professional.city }}, {{ translated_region }}</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <span class="badge" style="background: rgba(255,255,255,0.2); padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-briefcase"></i> {{ singular }}
+          </span>
+          {% if professional.is_verified %}
+          <span class="badge" style="background: #28a745; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-check-circle"></i> Verifiziert
+          </span>
+          {% endif %}
+          {% if professional.founded_year %}
+          <span class="badge" style="background: rgba(255,255,255,0.2); padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-calendar"></i> Seit {{ professional.founded_year }}
+          </span>
+          {% endif %}
+        </div>
+        
+        <!-- Social Media -->
+        {% if professional.show_social_media %}
+        <div class="mt-4">
+          {% if professional.facebook_url %}
+          <a href="{{ professional.facebook_url }}" target="_blank" class="btn btn-light btn-sm mr-2"><i class="fa fa-facebook"></i></a>
+          {% endif %}
+          {% if professional.instagram_url %}
+          <a href="{{ professional.instagram_url }}" target="_blank" class="btn btn-light btn-sm mr-2"><i class="fa fa-instagram"></i></a>
+          {% endif %}
+          {% if professional.linkedin_url %}
+          <a href="{{ professional.linkedin_url }}" target="_blank" class="btn btn-light btn-sm mr-2"><i class="fa fa-linkedin"></i></a>
+          {% endif %}
+          {% if professional.youtube_url %}
+          <a href="{{ professional.youtube_url }}" target="_blank" class="btn btn-light btn-sm mr-2"><i class="fa fa-youtube"></i></a>
+          {% endif %}
+          {% if professional.tiktok_url %}
+          <a href="{{ professional.tiktok_url }}" target="_blank" class="btn btn-light btn-sm mr-2"><i class="fa fa-music"></i></a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<nav class="bg-light py-2">
+  <div class="container">
+    <ol class="breadcrumb mb-0" style="background: transparent;">
+      <li class="breadcrumb-item"><a href="/" style="color: #003167;">Home</a></li>
+      <li class="breadcrumb-item"><a href="/{{ lang }}/{{ country_name }}/{{ url_path }}/" style="color: #003167;">{{ trans.back_to_list }}</a></li>
+      <li class="breadcrumb-item active" style="color: #c41e3a;">{{ professional.name }}</li>
+    </ol>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <!-- LEFT COLUMN - Info -->
+      <div class="col-lg-8">
+        
+        <!-- UEBER UNS -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header" style="background: #003167; color: white;">
+            <h5 class="mb-0" style="color: white;"><i class="fa fa-info-circle"></i> Ueber uns</h5>
+          </div>
+          <div class="card-body">
+            {% if professional.description_de %}
+            <p style="font-size: 16px; line-height: 1.8; color: #333;">{{ professional.description_de }}</p>
+            {% elif content and content.profile_summary %}
+            <p style="font-size: 16px; line-height: 1.8; color: #333;">{{ content.profile_summary }}</p>
+            {% else %}
+            <p class="text-muted">Keine Beschreibung vorhanden.</p>
+            {% endif %}
+            
+            {% if professional.specializations %}
+            <h6 class="mt-4 mb-3" style="color: #003167;"><i class="fa fa-star"></i> Spezialgebiete</h6>
+            <div>
+              {% for spec in specializations_list %}
+              <span class="badge badge-light mr-2 mb-2" style="padding: 8px 12px; font-size: 13px; background: #f0f0f0; color: #333;">{{ spec }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="row mt-4">
+              {% if professional.employee_count %}
+              <div class="col-md-4 text-center mb-3">
+                <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                  <i class="fa fa-users" style="font-size: 30px; color: #003167;"></i>
+                  <h6 class="mt-2 mb-0">{{ professional.employee_count }} Mitarbeiter</h6>
+                </div>
+              </div>
+              {% endif %}
+              {% if professional.founded_year %}
+              <div class="col-md-4 text-center mb-3">
+                <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                  <i class="fa fa-calendar" style="font-size: 30px; color: #003167;"></i>
+                  <h6 class="mt-2 mb-0">Seit {{ professional.founded_year }}</h6>
+                </div>
+              </div>
+              {% endif %}
+              <div class="col-md-4 text-center mb-3">
+                <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                  <i class="fa fa-globe" style="font-size: 30px; color: #003167;"></i>
+                  <h6 class="mt-2 mb-0">{{ translated_languages }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- REFERENZPROJEKTE -->
+        {% if professional.show_references and reference_projects %}
+        <div class="card shadow-sm mb-4">
+          <div class="card-header" style="background: #003167; color: white;">
+            <h5 class="mb-0" style="color: white;"><i class="fa fa-images"></i> Referenzprojekte</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              {% for project in reference_projects %}
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  {% if project.image_1 %}
+                  <img src="{{ project.image_1.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                  {% else %}
+                  <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background: #f0f0f0;">
+                    <i class="fa fa-image" style="font-size: 50px; color: #ccc;"></i>
+                  </div>
+                  {% endif %}
+                  <div class="card-body">
+                    <h6 class="card-title" style="color: #003167;">{{ project.title }}</h6>
+                    {% if project.year or project.location %}
+                    <p class="small text-muted mb-2">
+                      {% if project.year %}<i class="fa fa-calendar"></i> {{ project.year }}{% endif %}
+                      {% if project.location %} <i class="fa fa-map-marker ml-2"></i> {{ project.location }}{% endif %}
+                    </p>
+                    {% endif %}
+                    {% if project.description %}
+                    <p class="small">{{ project.description|truncatewords:20 }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+        <!-- AKTUELLE IMMOBILIEN -->
+        {% if professional.show_listings and listings %}
+        <div class="card shadow-sm mb-4">
+          <div class="card-header" style="background: #003167; color: white;">
+            <h5 class="mb-0"><i class="fa fa-home"></i> Aktuelle Immobilien ({{ listings.count }})</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              {% for listing in listings %}
+              <div class="col-md-6 mb-3">
+                <a href="/ge/immobilie/{{ listing.id }}/" class="text-decoration-none">
+                  <div class="d-flex align-items-center p-3" style="background: #f8f9fa; border-radius: 10px;">
+                    {% if listing.photo_main %}
+                    <img src="{{ listing.photo_main.url }}" alt="{{ listing.property_title }}" style="width: 80px; height: 60px; object-fit: cover; border-radius: 5px;">
+                    {% endif %}
+                    <div class="ml-3">
+                      <h6 class="mb-1" style="color: #003167;">{{ listing.property_title }}</h6>
+                      <p class="mb-0 small text-muted">{{ listing.property_price }} EUR</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+      </div>
+      
+      <!-- RIGHT COLUMN - Contact -->
+      <div class="col-lg-4">
+        
+        <!-- KONTAKT-KARTE -->
+        <div class="card shadow-sm mb-4 sticky-top" style="top: 20px;">
+          <div class="card-header" style="background: #c41e3a; color: white;">
+            <h5 class="mb-0"><i class="fa fa-address-card"></i> Kontakt</h5>
+          </div>
+          <div class="card-body">
+            {% if professional.company_name %}
+            <p><strong>{{ professional.company_name }}</strong></p>
+            {% endif %}
+            
+            {% if professional.address %}
+            <p><i class="fa fa-map-marker" style="width: 20px; color: #003167;"></i> {{ professional.address }}</p>
+            {% endif %}
+            <p><i class="fa fa-map" style="width: 20px; color: #003167;"></i> {{ professional.city }}, {{ translated_region }}</p>
+            
+            {% if professional.phone %}
+            <p><i class="fa fa-phone" style="width: 20px; color: #003167;"></i> <a href="tel:{{ professional.phone }}">{{ professional.phone }}</a></p>
+            {% endif %}
+            
+            {% if professional.email %}
+            <p><i class="fa fa-envelope" style="width: 20px; color: #003167;"></i> <a href="mailto:{{ professional.email }}">{{ professional.email }}</a></p>
+            {% endif %}
+            
+            {% if professional.website %}
+            <p><i class="fa fa-globe" style="width: 20px; color: #003167;"></i> <a href="{{ professional.website }}" target="_blank">Website besuchen</a></p>
+            {% endif %}
+            
+            {% if professional.is_verified %}
+            <div class="alert alert-success mt-3 mb-0">
+              <i class="fa fa-check-circle"></i> <strong>Verifizierter Anbieter</strong>
+            </div>
+            {% endif %}
+          </div>
+          
+          <!-- KONTAKTFORMULAR -->
+          {% if professional.show_contact_form %}
+          <div class="card-footer" style="background: #f8f9fa;">
+            <h6 class="mb-3"><i class="fa fa-paper-plane"></i> Nachricht senden</h6>
+            <form id="contact-form">
+              <input type="hidden" id="professional-id" value="{{ professional.id }}">
+              <input type="hidden" id="professional-email" value="{{ professional.email }}">
+              <div class="form-group">
+                <input type="text" class="form-control" id="contact-name" placeholder="Ihr Name" required>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="contact-email" placeholder="Ihre E-Mail" required>
+              </div>
+              <div class="form-group">
+                <input type="tel" class="form-control" id="contact-phone" placeholder="Ihre Telefonnummer">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" id="contact-message" rows="3" placeholder="Ihre Nachricht" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-block" style="background: #c41e3a; color: white;">
+                <i class="fa fa-paper-plane"></i> Absenden
+              </button>
+              <div id="contact-status" class="mt-2"></div>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+        
+        <!-- SERVICE-REGIONEN -->
+        {% if professional.service_regions %}
+        <div class="card shadow-sm">
+          <div class="card-header" style="background: #003167; color: white;">
+            <h5 class="mb-0"><i class="fa fa-map"></i> Taetig in</h5>
+          </div>
+          <div class="card-body">
+            <p>{{ translated_service_regions }}</p>
+          </div>
+        </div>
+        {% endif %}
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JAVASCRIPT fuer Kontaktformular -->
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var status = document.getElementById('contact-status');
+    var btn = this.querySelector('button[type="submit"]');
+    
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Wird gesendet...';
+    
+    var data = {
+        name: document.getElementById('contact-name').value,
+        email: document.getElementById('contact-email').value,
+        phone: document.getElementById('contact-phone').value,
+        message: document.getElementById('contact-message').value,
+        professional_id: document.getElementById('professional-id').value,
+        professional_email: document.getElementById('professional-email').value
+    };
+    
+    fetch('/api/professional-inquiry/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === 'success') {
+            status.innerHTML = '<div class="alert alert-success">Nachricht gesendet!</div>';
+            document.getElementById('contact-form').reset();
+        } else {
+            status.innerHTML = '<div class="alert alert-danger">' + result.message + '</div>';
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa fa-paper-plane"></i> Absenden';
+    })
+    .catch(error => {
+        status.innerHTML = '<div class="alert alert-danger">Fehler beim Senden</div>';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa fa-paper-plane"></i> Absenden';
+    });
+});
+</script>
+{% endblock %}
