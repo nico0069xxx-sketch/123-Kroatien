@@ -50,6 +50,14 @@ urlpatterns = [
     path('agent/<str:id>/referenzen/<int:project_id>/bearbeiten/', views.reference_project_edit, name='reference_project_edit'),
     path('agent/<str:id>/referenzen/<int:project_id>/loeschen/', views.reference_project_delete, name='reference_project_delete'),
     
+    # XML Import
+    path('agent/<str:id>/xml-import/', xml_views.xml_import_dashboard, name='xml_import_dashboard'),
+    path('agent/<str:id>/xml-import/file/', xml_views.xml_import_file, name='xml_import_file'),
+    path('agent/<str:id>/xml-import/url/', xml_views.xml_import_url, name='xml_import_url'),
+    
+    # Makler Dashboard
+    path('makler-dashboard/', views.makler_dashboard, name='makler_dashboard'),
+    
     # Professional Registration URLs (Bilingual: German & Croatian)
     path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
     path('hr/hrvatska/registracija-profesionalaca/', views.professional_registration, {'lang': 'hr'}, name='professional-registration-hr'),
