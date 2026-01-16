@@ -115,7 +115,62 @@
                                     </div>
                                     <div class="form-group">
                                         <label>{% if lang == 'hr' %}Jezici{% else %}Gesprochene Sprachen{% endif %}</label>
-                                        <input type="text" class="form-control" name="languages" value="{{ professional.languages|default:'' }}">
+                                        <div class="row mt-2">
+                                            <div class="col-md-4">
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_de" name="languages" value="Deutsch" {% if 'Deutsch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_de">{% if lang == 'hr' %}Njemački{% else %}Deutsch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_en" name="languages" value="Englisch" {% if 'Englisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_en">{% if lang == 'hr' %}Engleski{% else %}Englisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_hr" name="languages" value="Kroatisch" {% if 'Kroatisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_hr">{% if lang == 'hr' %}Hrvatski{% else %}Kroatisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_fr" name="languages" value="Französisch" {% if 'Französisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_fr">{% if lang == 'hr' %}Francuski{% else %}Französisch{% endif %}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_gr" name="languages" value="Griechisch" {% if 'Griechisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_gr">{% if lang == 'hr' %}Grčki{% else %}Griechisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_pl" name="languages" value="Polnisch" {% if 'Polnisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_pl">{% if lang == 'hr' %}Poljski{% else %}Polnisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_cz" name="languages" value="Tschechisch" {% if 'Tschechisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_cz">{% if lang == 'hr' %}Češki{% else %}Tschechisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_ru" name="languages" value="Russisch" {% if 'Russisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_ru">{% if lang == 'hr' %}Ruski{% else %}Russisch{% endif %}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_sw" name="languages" value="Schwedisch" {% if 'Schwedisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_sw">{% if lang == 'hr' %}Švedski{% else %}Schwedisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_no" name="languages" value="Norwegisch" {% if 'Norwegisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_no">{% if lang == 'hr' %}Norveški{% else %}Norwegisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_sk" name="languages" value="Slowakisch" {% if 'Slowakisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_sk">{% if lang == 'hr' %}Slovački{% else %}Slowakisch{% endif %}</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="lang_nl" name="languages" value="Niederländisch" {% if 'Niederländisch' in professional.languages|default:'' %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="lang_nl">{% if lang == 'hr' %}Nizozemski{% else %}Niederländisch{% endif %}</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr>
                                     <h6>{% if lang == 'hr' %}Slike{% else %}Bilder{% endif %}</h6>

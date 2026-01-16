@@ -741,7 +741,7 @@ def edit_agent(request, id):
             professional.mobile = request.POST.get('mobile', professional.mobile)
             professional.fax = request.POST.get('fax', professional.fax)
             professional.phone = request.POST.get('phone', professional.phone)
-            professional.languages = request.POST.get('languages', professional.languages)
+            languages_list = request.POST.getlist('languages'); professional.languages = ', '.join(languages_list) if languages_list else professional.languages
             
             # Social Media
             professional.facebook = request.POST.get('facebook', professional.facebook)

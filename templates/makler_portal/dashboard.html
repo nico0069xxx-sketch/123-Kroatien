@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block portal_content %}
+<!-- Statistiken -->
 <div class="row mb-4">
     <div class="col-md-2 col-6 mb-3">
         <div class="card text-center h-100" style="border-left:4px solid #003167;">
@@ -15,7 +16,7 @@
         <div class="card text-center h-100" style="border-left:4px solid #1a5c1a;">
             <div class="card-body py-3">
                 <h3 class="mb-0" style="color:#1a5c1a;">{{ stats.aktiv }}</h3>
-                <small class="text-muted">Online</small>
+                <small class="text-muted">{% if lang == 'hr' %}Online{% else %}Online{% endif %}</small>
             </div>
         </div>
     </div>
@@ -23,7 +24,7 @@
         <div class="card text-center h-100" style="border-left:4px solid #c9a227;">
             <div class="card-body py-3">
                 <h3 class="mb-0" style="color:#c9a227;">{{ stats.pruefung }}</h3>
-                <small class="text-muted">{% if lang == 'hr' %}Provjera{% else %}Pruefung{% endif %}</small>
+                <small class="text-muted">{% if lang == 'hr' %}Na provjeri{% else %}Pruefung{% endif %}</small>
             </div>
         </div>
     </div>
@@ -45,9 +46,13 @@
     </div>
 </div>
 
+<!-- Objekte-Liste -->
 <div class="card" style="border-radius:10px;">
     <div class="card-header d-flex justify-content-between align-items-center" style="background:#fff;">
-        <h5 class="mb-0"><i class="fa fa-list"></i> {% if lang == 'hr' %}Moje nekretnine{% else %}Meine Immobilien{% endif %}</h5>
+        <h5 class="mb-0">
+            <i class="fa fa-list"></i>
+            {% if lang == 'hr' %}Moje nekretnine{% else %}Meine Immobilien{% endif %}
+        </h5>
     </div>
     <div class="card-body p-0">
         {% if listings %}
@@ -61,7 +66,7 @@
                         <th>{% if lang == 'hr' %}Lokacija{% else %}Ort{% endif %}</th>
                         <th>{% if lang == 'hr' %}Cijena{% else %}Preis{% endif %}</th>
                         <th>Status</th>
-                        <th>{% if lang == 'hr' %}Akcije{% else %}Aktionen{% endif %}</th>
+                        <th style="width:150px;">{% if lang == 'hr' %}Akcije{% else %}Aktionen{% endif %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,37 +74,57 @@
                     <tr>
                         <td>
                             {% if listing.photo_main %}
-                            <img src="{{ listing.photo_main.url }}" style="width:40px;height:40px;object-fit:cover;border-radius:5px;">
+                                <img src="{{ listing.photo_main.url }}" style="width:40px;height:40px;object-fit:cover;border-radius:5px;">
                             {% else %}
-                            <div style="width:40px;height:40px;background:#ddd;border-radius:5px;"></div>
+                                <div style="width:40px;height:40px;background:#ddd;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="fa fa-image text-muted"></i>
+                                </div>
                             {% endif %}
                         </td>
-                        <td><strong>{{ listing.property_title|truncatechars:40 }}</strong></td>
+                        <td>
+                            <strong>{{ listing.property_title|truncatechars:40 }}</strong>
+                            {% if listing.pruefung_fehler %}
+                                <br><small class="text-danger"><i class="fa fa-exclamation-circle"></i> 
+                                {% if lang == 'hr' %}Ima grešaka{% else %}Hat Fehler{% endif %}</small>
+                            {% endif %}
+                        </td>
                         <td>{{ listing.property_type }}</td>
                         <td>{{ listing.city|default:listing.location }}</td>
                         <td>{{ listing.property_price|floatformat:0 }} EUR</td>
                         <td>
                             {% if listing.listing_status == 'aktiv' %}
-                            <span class="badge" style="background:#1a5c1a;color:white;">ONLINE</span>
+                                <span class="badge" style="background:#1a5c1a;color:white;">ONLINE</span>
                             {% elif listing.listing_status == 'pruefung' %}
-                            <span class="badge" style="background:#c9a227;color:white;">PRUEFUNG</span>
+                                <span class="badge" style="background:#c9a227;color:white;">{% if lang == 'hr' %}PROVJERA{% else %}PRUEFUNG{% endif %}</span>
                             {% elif listing.listing_status == 'verkauft' %}
-                            <span class="badge" style="background:#666;color:white;">VERKAUFT</span>
+                                <span class="badge" style="background:#666;color:white;">{% if lang == 'hr' %}PRODANO{% else %}VERKAUFT{% endif %}</span>
                             {% elif listing.listing_status == 'pausiert' %}
-                            <span class="badge" style="background:#ff9800;color:white;">PAUSIERT</span>
+                                <span class="badge" style="background:#ff9800;color:white;">{% if lang == 'hr' %}PAUZ.{% else %}PAUSIERT{% endif %}</span>
+                            {% else %}
+                                <span class="badge badge-secondary">{{ listing.listing_status }}</span>
                             {% endif %}
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a href="{% url 'main:makler_objekt_bearbeiten' listing.id %}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
-                                <button onclick="generiereKI({{ listing.id }})" class="btn btn-outline-info" id="ki-btn-{{ listing.id }}"><i class="fa fa-magic"></i></button>
-                                {% if listing.listing_status == 'aktiv' %}
-                                <button onclick="pausieren({{ listing.id }})" class="btn btn-outline-warning"><i class="fa fa-pause"></i></button>
-                                {% elif listing.listing_status == 'pausiert' %}
-                                <button onclick="aktivieren({{ listing.id }})" class="btn btn-outline-success"><i class="fa fa-play"></i></button>
-                                {% endif %}
+                                <a href="{% url 'main:makler_objekt_bearbeiten' listing.id %}" class="btn btn-outline-primary" title="{% if lang == 'hr' %}Uredi{% else %}Bearbeiten{% endif %}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <button onclick="generiereKI({{ listing.id }})" class="btn btn-outline-info" title="{% if lang == 'hr' %}KI tekst{% else %}KI-Text{% endif %}" id="ki-btn-{{ listing.id }}">
+                                    <i class="fa fa-magic"></i>
+                                </button>
                                 {% if listing.listing_status != 'verkauft' %}
-                                <button onclick="markiereVerkauft({{ listing.id }})" class="btn btn-outline-secondary"><i class="fa fa-check"></i></button>
+                                <button onclick="markiereVerkauft({{ listing.id }})" class="btn btn-outline-secondary" title="{% if lang == 'hr' %}Prodano{% else %}Verkauft{% endif %}">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                {% endif %}
+                                {% if listing.listing_status == 'aktiv' %}
+                                <button onclick="pausieren({{ listing.id }})" class="btn btn-outline-warning" title="{% if lang == 'hr' %}Pauziraj{% else %}Pausieren{% endif %}">
+                                    <i class="fa fa-pause"></i>
+                                </button>
+                                {% elif listing.listing_status == 'pausiert' %}
+                                <button onclick="aktivieren({{ listing.id }})" class="btn btn-outline-success" title="{% if lang == 'hr' %}Aktiviraj{% else %}Aktivieren{% endif %}">
+                                    <i class="fa fa-play"></i>
+                                </button>
                                 {% endif %}
                             </div>
                         </td>
@@ -108,11 +133,39 @@
                 </tbody>
             </table>
         </div>
+        
+        <!-- Pagination -->
+        {% if listings.has_other_pages %}
+        <div class="card-footer">
+            <nav>
+                <ul class="pagination justify-content-center mb-0">
+                    {% if listings.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ listings.previous_page_number }}">&laquo;</a></li>
+                    {% endif %}
+                    {% for num in listings.paginator.page_range %}
+                        {% if listings.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if listings.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ listings.next_page_number }}">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+        
         {% else %}
         <div class="text-center py-5">
             <i class="fa fa-folder-open fa-3x text-muted mb-3"></i>
-            <p class="text-muted">{% if lang == 'hr' %}Nemate jos nekretnina.{% else %}Du hast noch keine Immobilien.{% endif %}</p>
-            <a href="{% url 'main:makler_objekt_neu' %}" class="btn btn-primary"><i class="fa fa-plus"></i> {% if lang == 'hr' %}Dodaj prvu{% else %}Erstes Objekt{% endif %}</a>
+            <p class="text-muted">
+                {% if lang == 'hr' %}Nemate još nekretnina.{% else %}Du hast noch keine Immobilien.{% endif %}
+            </p>
+            <a href="{% url 'main:makler_objekt_neu' %}" class="btn btn-primary">
+                <i class="fa fa-plus"></i> {% if lang == 'hr' %}Dodaj prvu nekretninu{% else %}Erstes Objekt anlegen{% endif %}
+            </a>
         </div>
         {% endif %}
     </div>
@@ -120,29 +173,49 @@
 
 <script>
 function markiereVerkauft(id) {
-    if(confirm('Als verkauft markieren?')) {
-        fetch('/api/makler/verkauft/' + id + '/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}})
-        .then(r => r.json()).then(d => { if(d.success) location.reload(); });
+    if(confirm('{% if lang == "hr" %}Označiti kao prodano?{% else %}Als verkauft markieren?{% endif %}')) {
+        fetch('/api/makler/verkauft/' + id + '/', {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+        .then(r => r.json())
+        .then(d => { if(d.success) location.reload(); else alert(d.error); });
     }
 }
 function pausieren(id) {
-    fetch('/api/makler/pausieren/' + id + '/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}})
-    .then(r => r.json()).then(d => { if(d.success) location.reload(); });
+    fetch('/api/makler/pausieren/' + id + '/', {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+    .then(r => r.json())
+    .then(d => { if(d.success) location.reload(); else alert(d.error); });
 }
 function aktivieren(id) {
-    fetch('/api/makler/aktivieren/' + id + '/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}})
-    .then(r => r.json()).then(d => { if(d.success) location.reload(); });
+    fetch('/api/makler/aktivieren/' + id + '/', {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+    .then(r => r.json())
+    .then(d => { if(d.success) location.reload(); else alert(d.error); });
 }
+
 function generiereKI(id) {
     var btn = document.getElementById('ki-btn-' + id);
+    var originalHtml = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-    fetch('/ge/api/m/gen/' + id + '/', {method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'}})
-    .then(r => r.json()).then(d => {
+    
+    fetch('/ge/api/m/gen/' + id + '/', {
+        method: 'POST', 
+        headers: {'X-CSRFToken': '{{ csrf_token }}'}
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa fa-magic"></i>';
-        if(d.success) alert('KI-Text generiert!');
-        else alert(d.error || 'Fehler');
+        if(d.success) {
+            btn.innerHTML = '<i class="fa fa-check" style="color:green;"></i>';
+            setTimeout(function() { btn.innerHTML = originalHtml; }, 2000);
+            alert('KI-Text generiert und gespeichert!');
+        } else {
+            btn.innerHTML = originalHtml;
+            alert(d.error || 'Fehler');
+        }
+    })
+    .catch(function(e) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        alert('Verbindungsfehler');
     });
 }
 </script>
