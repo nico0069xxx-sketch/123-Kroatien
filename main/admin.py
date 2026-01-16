@@ -65,21 +65,18 @@ class ProfessionalAdmin(admin.ModelAdmin):
     def status_anzeige(self, obj):
         if obj.is_verified and obj.is_active:
             return format_html('<span style="background:#1a5c1a;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">AKTIV</span>')
-        elif obj.id_document or obj.business_document:
+        elif obj.documents.exists():
             return format_html('<span style="background:#c9a227;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">PRUEFEN</span>')
         else:
             return format_html('<span style="background:#8b0000;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">NEU</span>')
     
     @admin.display(description='Dokumente')
     def dokumente_vorhanden(self, obj):
-        hat_ausweis = 'Ja' if obj.id_document else 'Nein'
-        hat_gewerbe = 'Ja' if obj.business_document else 'Nein'
-        farbe_a = '#1a5c1a' if obj.id_document else '#999'
-        farbe_g = '#1a5c1a' if obj.business_document else '#999'
-        return format_html(
-            '<span style="color:{}">Ausweis: {}</span> | <span style="color:{}">Gewerbe: {}</span>',
-            farbe_a, hat_ausweis, farbe_g, hat_gewerbe
-        )
+        count = obj.documents.count()
+        if count > 0:
+            return format_html('<span style="color:#1a5c1a">Ja ({})</span>', count)
+        return format_html('<span style="color:#999">Nein</span>')
+
     
     @admin.display(description='Registriert am')
     def datum(self, obj):
@@ -89,12 +86,11 @@ class ProfessionalAdmin(admin.ModelAdmin):
         ('STATUS', {
             'fields': (
                 ('is_verified', 'is_active'),
-                'verification_notes',
+                'professional_type',
             ),
         }),
         ('DOKUMENTE', {
             'fields': (
-                'dokumente_vorschau',
             ),
         }),
         ('KONTAKT', {
@@ -113,39 +109,8 @@ class ProfessionalAdmin(admin.ModelAdmin):
         }),
     )
     
-    readonly_fields = ['dokumente_vorschau', 'created']
+    readonly_fields = ['created']
     
-    @admin.display(description='')
-    def dokumente_vorschau(self, obj):
-        html = '<div style="display:flex;gap:30px;flex-wrap:wrap;">'
-        
-        html += '<div style="flex:1;min-width:300px;">'
-        html += '<h3 style="color:#1a5c1a;margin-bottom:10px;">Ausweis / Reisepass</h3>'
-        if obj.id_document:
-            url = obj.id_document.url
-            if url.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                html += f'<a href="{url}" target="_blank"><img src="{url}" style="max-width:350px;border:2px solid #1a5c1a;border-radius:8px;"></a>'
-            else:
-                html += f'<a href="{url}" target="_blank" style="display:inline-block;background:#1a5c1a;color:white;padding:10px 20px;border-radius:5px;text-decoration:none;">Dokument oeffnen</a>'
-        else:
-            html += '<span style="color:#8b0000;font-weight:bold;">Nicht hochgeladen</span>'
-        html += '</div>'
-        
-        html += '<div style="flex:1;min-width:300px;">'
-        html += '<h3 style="color:#1a5c1a;margin-bottom:10px;">Gewerbeschein / Lizenz</h3>'
-        if obj.business_document:
-            url = obj.business_document.url
-            if url.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                html += f'<a href="{url}" target="_blank"><img src="{url}" style="max-width:350px;border:2px solid #1a5c1a;border-radius:8px;"></a>'
-            else:
-                html += f'<a href="{url}" target="_blank" style="display:inline-block;background:#1a5c1a;color:white;padding:10px 20px;border-radius:5px;text-decoration:none;">Dokument oeffnen</a>'
-        else:
-            html += '<span style="color:#8b0000;font-weight:bold;">Nicht hochgeladen</span>'
-        html += '</div>'
-        
-        html += '</div>'
-        return format_html(html)
-
 
 @admin.register(ProfessionalContent)
 class ProfessionalContentAdmin(admin.ModelAdmin):
