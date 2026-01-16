@@ -128,7 +128,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Gesprochene Sprachen</label>
-                                        <input type="text" class="form-control" name="languages" value="{{ professional.languages|default:'' }}" placeholder="z.B. Deutsch, Englisch, Kroatisch">
+                                        <select class="form-control" name="languages" id="languages-select" multiple size="6" style="height: auto;">
+                                            <option value="Deutsch" {% if 'Deutsch' in professional.languages|default:'' %}selected{% endif %}>Deutsch</option>
+                                            <option value="Englisch" {% if 'Englisch' in professional.languages|default:'' %}selected{% endif %}>Englisch</option>
+                                            <option value="Kroatisch" {% if 'Kroatisch' in professional.languages|default:'' %}selected{% endif %}>Kroatisch</option>
+                                            <option value="Französisch" {% if 'Französisch' in professional.languages|default:'' %}selected{% endif %}>Französisch</option>
+                                            <option value="Griechisch" {% if 'Griechisch' in professional.languages|default:'' %}selected{% endif %}>Griechisch</option>
+                                            <option value="Polnisch" {% if 'Polnisch' in professional.languages|default:'' %}selected{% endif %}>Polnisch</option>
+                                            <option value="Tschechisch" {% if 'Tschechisch' in professional.languages|default:'' %}selected{% endif %}>Tschechisch</option>
+                                            <option value="Russisch" {% if 'Russisch' in professional.languages|default:'' %}selected{% endif %}>Russisch</option>
+                                            <option value="Schwedisch" {% if 'Schwedisch' in professional.languages|default:'' %}selected{% endif %}>Schwedisch</option>
+                                            <option value="Norwegisch" {% if 'Norwegisch' in professional.languages|default:'' %}selected{% endif %}>Norwegisch</option>
+                                            <option value="Slowakisch" {% if 'Slowakisch' in professional.languages|default:'' %}selected{% endif %}>Slowakisch</option>
+                                            <option value="Niederländisch" {% if 'Niederländisch' in professional.languages|default:'' %}selected{% endif %}>Niederländisch</option>
+                                        </select>
+                                        <small class="text-muted">Halte Strg/Cmd gedrückt, um mehrere Sprachen auszuwählen</small>
                                     </div>
                                 </div>
                             </div>
