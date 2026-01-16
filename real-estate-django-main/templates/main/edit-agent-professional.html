@@ -395,10 +395,12 @@
 </section>
 
 <style>
-.custom-switch .custom-control-label {
+.custom-switch .custom-control-label,
+.custom-checkbox .custom-control-label {
     cursor: pointer;
 }
-.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before,
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #003167;
     border-color: #003167;
 }
@@ -408,18 +410,6 @@
 }
 .card-header {
     background-color: #f8f9fa;
-}
-/* Multi-Select Languages Styling */
-#languages-select {
-    min-height: 180px;
-}
-#languages-select option {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-#languages-select option:checked {
-    background: linear-gradient(0deg, #003167 0%, #003167 100%);
-    color: white;
 }
 </style>
 {% endblock body %}
