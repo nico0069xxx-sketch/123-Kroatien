@@ -49,7 +49,6 @@ def translate_faq_headings(html, lang):
     return html
 
 
-@login_required(login_url='account:login')
 def home(request):
     site_language = request.session.get('site_language')
     if not site_language:

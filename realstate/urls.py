@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from main.views import set_language_from_url
+from main.views import set_language_from_url, news_page
 from main.xml_views import rss_listings, xml_sitemap, robots_txt, xml_sitemap, robots_txt, rss_listings
 
 urlpatterns = [
@@ -46,7 +46,16 @@ urlpatterns += [
 
 # Professional Detail URLs (ohne i18n prefix)
 from main import professional_views
+from main import address_views, content_views
 urlpatterns += [
+    # MARKT - muss VOR Professional URLs stehen
+    path("ge/kroatien/marktberichte/", content_views.market_report_list, {"country": "kroatien"}, name="market-reports-ge-direct"),
+    path("ge/kroatien/nachrichten/", news_page, {"country": "kroatien", "lang": "ge"}, name="news-ge-direct"),
+    path("hr/hrvatska/vijesti/", news_page, {"country": "hrvatska", "lang": "hr"}, name="news-hr-direct"),
+    path("ge/kroatien/wichtige-adressen/", address_views.important_addresses, {"country": "kroatien"}, name="important-addresses-ge-direct"),
+    path("hr/hrvatska/trzisni-izvjestaji/", content_views.market_report_list, {"country": "hrvatska"}, name="market-reports-hr-direct"),
+    path("hr/hrvatska/vazne-adrese/", address_views.important_addresses, {"country": "hrvatska"}, name="important-addresses-hr-direct"),
+    
     path("ge/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-ge-direct"),
     path("ge/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-ge-direct"),
     path("hr/hrvatska/<str:category>/", professional_views.professional_list, {"country": "hrvatska"}, name="professional-list-hr-direct"),

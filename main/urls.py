@@ -3,6 +3,8 @@ from . import views
 from . import professional_views
 from . import xml_views
 from . import makler_views
+from . import address_views
+from . import content_views
 from pages.views import translate_all
 
 app_name = 'main'
@@ -70,6 +72,13 @@ urlpatterns = [
     path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
     path('hr/hrvatska/registracija-profesionalaca/', views.professional_registration, {'lang': 'hr'}, name='professional-registration-hr'),
     
+    # MARKT - Wichtige Adressen & Marktberichte (MUSS vor Professional URLs stehen!)
+    path('kroatien/wichtige-adressen/', address_views.important_addresses, {'country': 'kroatien'}, name='important_addresses_ge'),
+    path('hrvatska/vazne-adrese/', address_views.important_addresses, {'country': 'hrvatska'}, name='important_addresses_hr'),
+    path('kroatien/marktberichte/', content_views.market_report_list, {'country': 'kroatien'}, name='market_reports_ge'),
+    path('hrvatska/trzisni-izvjestaji/', content_views.market_report_list, {'country': 'hrvatska'}, name='market_reports_hr'),
+    path('kroatien/marktberichte/<str:region_slug>/<int:year>/', content_views.market_report_detail, {'country': 'kroatien'}, name='market_report_detail_ge'),
+
     # Professional Directory URLs (DE & HR)
     path('ge/kroatien/<str:category>/', professional_views.professional_list, {'country': 'kroatien'}, name='professional-list-ge'),
     path('ge/kroatien/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'kroatien'}, name='professional-detail-ge'),

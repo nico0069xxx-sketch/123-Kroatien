@@ -224,7 +224,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/ge/accounts/login/'
+LOGIN_URL = '/accounts/login/'
 
 
 # === SICHERHEITS-EINSTELLUNGEN ===
