@@ -1,258 +1,219 @@
 <analysis>**original_problem_statement:**
-The user, Nik, is developing a Django real estate marketplace. The initial goal was to continue with user requests from the previous session, including implementing a property overview for agents, adding a language dropdown, and translating the agent portal to Croatian.
+The user's initial request was to replace a text field for spoken languages with a multi-select dropdown in the agent profile editor.
 
-However, the session quickly pivoted to a recovery operation. The user was frustrated about lost functionality, specifically a detailed property management dashboard () with KI-text generation capabilities. This functionality existed on the user's local machine but had not been synced to the server.
-
-The primary goal of this session became to recover, re-implement, and integrate this lost  into the existing application, and then debug the resulting integration issues.
-
-PRODUCT REQUIREMENTS (Updated):
-1.  **Recover and Integrate Makler-Portal (P0)**: Recreate the property management dashboard using files provided by the user from their local backup. This includes:
-    *   A dashboard view with property statistics (total, online, sold, etc.).
-    *   A full CRUD interface for managing  objects.
-    *   Functionality to change a listing's status (e.g., mark as sold, pause, activate).
-    *   An integrated KI-Text generieren feature for property descriptions.
-    *   Integration of the portal's own XML import functionality.
-2.  **Link Portals (P1)**: Add navigation links between the existing professional profile editor () and the newly recovered Makler-Portal ().
-3.  **Translate Profile Editor (P1)**: Translate the  template into Croatian.
-4.  **Add View Profile Button (P1)**: Add a button to the profile editor that links to the public-facing professional profile page.
-5.  **Debug Public Profile Page (P0)**: Fix the  that occurred when trying to view the public professional profile page.
-6.  **Add Language Dropdown (P2)**: (Carried over) Replace the Gesprochene Sprachen text field with a multi-select dropdown.
-7.  **Add Voucher Code Field (P2)**: (Carried over) Add a voucher code field to the registration process.
+This quickly evolved into a multi-stage recovery and hardening session. Key objectives that emerged were:
+1.  Fixing UI/UX issues with the language selector.
+2.  Resolving state discrepancies between the user's local version, the server, and the previous session's state, particularly concerning the Makler-Portal (agent dashboard) and Croatian translations.
+3.  Fixing multiple broken navigation links under the MARKT dropdown (Marktberichte, Wichtige Adressen, Nachrichten), which involved recovering lost code from the user's local machine.
+4.  Resolving critical 500 errors on the login and home pages caused by incorrect  decorators and  settings.
+5.  Hardening the entire project by introducing strict Git workflows, safety documentation (, , ), a robust , an  file, and a full CI/CD pipeline using GitHub Actions.
+6.  The final user request was to implement a lead/inquiry persistence layer for the existing contact form on professional profiles.
 
 **User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du). The user works on an Apple Mac () using the  shell in the Terminal. All commands must be simple, complete, and copy-pasteable for his local environment at path .
 
 **what currently exists?**
-The lost Makler-Portal has been successfully recovered and integrated. This new section at  allows professionals to manage their property listings. It features a dashboard with statistics, a table of listings, and actions to change a listing's status (verkauft, pausiert, aktivieren). It includes a form to create and edit listings, complete with a button to generate property descriptions using an AI helper ().
-
-The existing professional profile editor () and the new Makler-Portal are now linked to each other for easy navigation. The profile editor has been updated with Croatian translations and a button to view the public profile.
-
-Crucially, a series of  on the public-facing professional profile page () have been resolved. The fix involved correcting numerous field name mismatches in the views and templates and fixing a major URL routing issue in . The user has confirmed all changes have been pushed to the  branch on GitHub.
+The project is a Django monolith that has been significantly hardened.
+- **Languages Feature**: The Gesprochene Sprachen field is now a multi-column set of checkboxes with bilingual (German/Croatian) labels.
+- **Makler-Portal**: The agent dashboard at  is the correct, feature-rich version, allowing agents to manage listings with status changes (verkauft, pausiert) and use a KI-text generation feature.
+- **MARKT Navigation**: All links under the MARKT dropdown (Marktberichte, Wichtige Adressen, Nachrichten) are now fully functional, with their views and URLs having been recovered and correctly integrated.
+- **Project Hardening**: The repository now includes:
+    - A strict  file that excludes the database, secrets, and media files.
+    - An  file for environment configuration.
+    - A  with setup and run instructions.
+    - Governance documents in the  folder (, , ).
+    - A GitHub Actions CI workflow () that runs checks and tests on every push.
+    - Environment-aware settings in  (using ).
+- **Contact Form**: A contact form exists on the professional profile page () which submits via JavaScript to an API endpoint. The backend view to handle this () also exists.
 
 **Last working item**:
--   **Last item agent was working**: Committing and pushing all the recovered files and subsequent fixes to the user's GitHub repository. The user confirmed the  was successful.
--   **Status**: FINISHED (for this session). The user was satisfied and ended the session.
--   **Agent Testing Done**: Y (Agent guided the user through manual testing of all fixed and recovered components).
--   **Which testing method agent to use?**: NA
--   **User Testing Done**: Y (User confirmed all major functionalities were working at the end of the session).
+-   **Last item agent was working**: Phase 1 (Discovery) of implementing a lead/inquiry persistence system. The agent was investigating the existing contact form on the professional profile page. It was discovered that the frontend form submits to , but the URL pattern for this endpoint is missing in the Django URL configuration, rendering the form non-functional.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: Backend testing agent. After adding the URL, the agent should test the  endpoint using a  command to confirm it returns a success or error JSON response instead of a 404.
+-   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1**: **SQLite Migration Fragility (P0, High-Risk)**
-    -   **Description**: The migration process on the user's local SQLite database is extremely brittle. This is a recurring high-risk issue from previous sessions.
+-   **Issue 1**: **Implement Lead/Inquiry System (P0)**
+    -   **Description**: The contact form on the professional profile page is broken because its target API endpoint  returns a 404 Not Found error. The backend view exists, but the URL is not wired up. This is the immediate blocker for the current task. The full task involves creating a  model, saving form submissions to the database, and providing an admin view.
+    -   **Attempted fixes**: None.
+    -   **Next debug checklist**:
+        1.  Locate the correct URL configuration file to add the API endpoint. The agent has determined API URLs are included via .
+        2.  Add the path for  to , pointing to the existing  view in .
+        3.  Proceed with Phase 2 of the plan: creating the  model.
+    -   **Why fix this issue and what will be achieved with the fix?**: This will fix the broken contact form and is the first step to creating a persistent lead tracking system.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: Backend first (to confirm 404 is gone), then both.
+
+-   **Issue 2**: **SQLite Migration Fragility (P2, High-Risk)**
+    -   **Description**: The migration process on the user's local SQLite database is brittle. This is a recurring high-risk issue from previous sessions. No complex schema changes should be made without careful consideration.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
 
--   **Issue 2**: **Duplicated XML Import Logic (P1, Technical Debt)**
-    -   **Description**: The recovery of the  introduced a new set of XML import views () and templates (, ). This duplicates the functionality of the existing XML import system accessible via the profile editor (). These two systems should be consolidated.
-    -   **Attempted fixes**: None.
-    -   **Next debug checklist**:
-        1.  Analyze  and  (the  part).
-        2.  Compare  with .
-        3.  Decide on a single, unified XML import implementation and refactor the code to remove the duplicate.
-    -   **Why fix this issue and what will be achieved with the fix?**: Consolidating the logic will reduce code redundancy, simplify maintenance, and prevent confusion for the user.
+-   **Issue 3**: **Duplicated XML Import Logic (P2, Technical Debt)**
+    -   **Description**: There are two separate XML import systems ( and ). These should be consolidated into a single, unified implementation.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Both.
 
--   **Issue 3**: **Agent-Model Konsolidierung (P2, Technical Debt)**
-    -   **Description**: Recurring task to merge the old  model into the new  model. The current code has workarounds in multiple views (, ) to handle both models, which is not a long-term solution.
+-   **Issue 4**: **Agent-Model Konsolidierung (P2, Technical Debt)**
+    -   **Description**: Recurring task to merge the old  model into the new  model to remove technical debt and workarounds.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
 
 **In progress Task List**:
-- None.
+-   **Task 1**: **Implement Lead/Inquiry System (P0)**
+    -   **Where to resume**: Start of Phase 2. The immediate next action is to add the missing URL for  in  to fix the broken contact form. Then, create the  app and model.
+    -   **What will be achieved with this?**: A persistent system for capturing and viewing customer inquiries from the website.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Blocked on something**: No.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks**:
-    -   **(P1)** **Implement Language Dropdown**: Replace the Gesprochene Sprachen free text field in  with a multi-select dropdown, populated with the 12 languages used in the site's hreflang tags.
-    -   **(P2)** **Add Voucher Code Field**: Add a field for a voucher code during the professional registration process.
-    -   **(P2)** **Refactor Duplicated XML Logic**: Consolidate the two different XML import implementations into one.
+    -   **(P1)** Test Bauunternehmen (Gruppe A) functionality now that major sections have been repaired.
+    -   **(P1)** Add a voucher code field to the professional registration process.
+    -   **(P2)** Update the invalid OpenAI API Key to re-enable the KI-text generation feature.
 -   **Future Tasks**:
-    -   **(P2)** **Refactor Agent/Professional Models**: Merge the legacy  model into the  model to remove technical debt.
-    -   (P2) Implement a customer review/rating system.
-    -   (P2) Refactor  function in .
+    -   **(P2)** Consolidate the two different XML import implementations into one.
+    -   **(P2)** Merge the legacy  model into the  model.
+    -   **(P2)** Implement a customer review/rating system.
 
 **Completed work in this session**
--   **Makler-Portal Recovery**: Recovered and created the entire agent property management portal.
-    -   : Created with all backend logic for the dashboard, CRUD operations, status changes, and XML import.
-    -   : Created to handle AI text generation for listings.
-    -   : Created directory and all associated templates (, , , , ).
--   **Model & Migration**:
-    -   Added  and  fields to .
-    -   Successfully created and applied the migration ().
--   **Integration & UI**:
-    -   Added cross-navigation links between the profile editor () and the new Makler-Portal ().
-    -   Translated the  template into Croatian.
-    -   Added a Profil ansehen button linking to the correct public profile page.
-    -   Changed the VERWALTUNG header to have white text.
--   **Extensive Debugging**:
-    -   Fixed a  on the public profile page () by correcting multiple s and s in  (e.g.,  -> ,  -> ).
-    -   Fixed the public profile  view in  to correctly handle the  model.
-    -   Resolved a  error by moving the professional URL patterns out of  in .
--   **Code Push**: Guided the user to successfully commit and push all 26 changed/created files to the  branch of their GitHub repository.
-
-**Earlier issues found/mentioned but not fixed**
--   The Agent-Model Konsolidierung and Refactor duplicated 2FA logic tasks from previous handoffs remain unresolved.
-
-**Known issue recurrence from previous fork**
--   **Issue**: SQLite Migration Failures
--   **Recurrence count**: This remains a critical, unresolved risk.
--   **Status**: NOT RESOLVED (Workaround of resetting the DB is the only known fix).
+-   **Feature: Languages as Checkboxes**: Replaced the language text input with a 12-language, 3-column checkbox grid with German/Croatian translations.
+-   **Bugfix: Makler-Dashboard**: Restored the correct, full-featured version of the agent dashboard () and fixed the empty view by creating a test listing.
+-   **Bugfix: MARKT Navigation**: Repaired all broken links under the MARKT menu (Marktberichte, Wichtige Adressen, Nachrichten) by recovering lost view code and correcting URL routing order in .
+-   **Bugfix: Core App Errors**:
+    -   Removed  from the home page view to fix a public access 500 error.
+    -   Corrected the  in  to fix redirect loops.
+-   **Project Hardening & CI/CD**:
+    -   **Safety Rules**: Established and documented strict rules for Git, data safety, and branch workflows in .
+    -   **Time Machine Verification**: Performed a structured comparison of the local repo against Time Machine backups, confirming no data loss.
+    -   **CI Pipeline**: Created a GitHub Actions workflow () to run tests, migration checks, and syntax checks.
+    -   **Smoke Tests**: Added initial tests in  to enable the CI pipeline.
+    -   **Env Settings**: Made  environment-aware for  (using ), , and .
+    -   **Documentation**: Created , , , and comprehensive governance files (, , ).
 
 **Code Architecture**
--   Standard Django project in .
--   **New Makler-Portal**:
-    -   Logic: , .
-    -   Templates: .
-    -   URLs: Defined in  and imported into .
--   **Public Professional Profile**:
-    -   View:  ().
-    -   Template: .
-    -   URL:  (outside of ).
--   **Profile Editor**:
-    -   View:  ().
-    -   Template: .
+-   **Monolith**: Standard Django project structure. Frontend is rendered via Django Templates.
+-   **Settings**:  is now environment-aware. Secrets should be in a local  file.
+-   **URL Routing**: A mix of routing strategies.
+    -    contains top-level routes, including some non-i18n-prefixed routes for public profiles and the MARKT section. **Order is critical here.**
+    -   It includes  within , which automatically adds a language prefix (e.g., ).
+    -   API endpoints are routed through  under the  prefix.
+-   **CI/CD**: A GitHub Actions workflow is located at .
 
 **Key Technical Concepts**
--   **Manual File Recovery**: The agent successfully recovered lost code by guiding the user to  the contents of files from their local machine and then recreated them on the server using heredocs.
--   **Django i18n**: Debugged a complex URL routing issue where  was incorrectly prefixing already-prefixed URLs, causing 404s. The fix was to move the relevant URL patterns outside the  block.
--   **Django Views & Models**: Debugged multiple  and  exceptions by correcting field names in views to match the model definitions (e.g.,  vs. ).
--   **Legacy Code Handling**: The  and  views contain logic to handle both the old  model and the new  model, which is a temporary workaround.
+-   **Django i18n URL Resolution**: Debugged URL matching order conflicts between patterns inside and outside . The solution was to move specific, static routes (like ) before generic, variable routes (like ) in the main .
+-   **State Drift Recovery**: Successfully recovered lost files and code (, ) by guiding the user to search their local machine when the server/repo was missing data. Used  to compare versions.
+-   **Project Hardening**: A major focus of the session. Implemented CI, environment-based settings, , and extensive documentation to stabilize the project for multi-agent work.
+-   **Manual CI Workflow Creation**: Due to security constraints on the agent's token, the CI workflow file () had to be created by guiding the user through the GitHub web UI.
 
 **key DB schema**
--   **** (Extended):
-    -    (CharField with choices: 'aktiv', 'pruefung', 'verkauft', 'pausiert')
-    -    (TextField)
+-   No new schema changes were made, but the plan is to add a  model.
 
 **changes in tech stack**
--   The  library was installed via 
-Usage:   
-  pip <command> [options]
-
-Commands:
-  install                     Install packages.
-  lock                        Generate a lock file.
-  download                    Download packages.
-  uninstall                   Uninstall packages.
-  freeze                      Output installed packages in requirements format.
-  inspect                     Inspect the python environment.
-  list                        List installed packages.
-  show                        Show information about installed packages.
-  check                       Verify installed packages have compatible dependencies.
-  config                      Manage local and global configuration.
-  search                      Search PyPI for packages.
-  cache                       Inspect and manage pip's wheel cache.
-  index                       Inspect information available from package indexes.
-  wheel                       Build wheels from your requirements.
-  hash                        Compute hashes of package archives.
-  completion                  A helper command used for command completion.
-  debug                       Show information useful for debugging.
-  help                        Show help for commands.
-
-General Options:
-  -h, --help                  Show help.
-  --debug                     Let unhandled exceptions propagate outside the
-                              main subroutine, instead of logging them to
-                              stderr.
-  --isolated                  Run pip in an isolated mode, ignoring
-                              environment variables and user configuration.
-  --require-virtualenv        Allow pip to only run in a virtual environment;
-                              exit with an error otherwise.
-  --python <python>           Run pip with the specified Python interpreter.
-  -v, --verbose               Give more output. Option is additive, and can be
-                              used up to 3 times.
-  -V, --version               Show version and exit.
-  -q, --quiet                 Give less output. Option is additive, and can be
-                              used up to 3 times (corresponding to WARNING,
-                              ERROR, and CRITICAL logging levels).
-  --log <path>                Path to a verbose appending log.
-  --no-input                  Disable prompting for input.
-  --keyring-provider <keyring_provider>
-                              Enable the credential lookup via the keyring
-                              library if user input is allowed. Specify which
-                              mechanism to use [auto, disabled, import,
-                              subprocess]. (default: auto)
-  --proxy <proxy>             Specify a proxy in the form
-                              scheme://[user:passwd@]proxy.server:port.
-  --retries <retries>         Maximum attempts to establish a new HTTP
-                              connection. (default: 5)
-  --timeout <sec>             Set the socket timeout (default 15 seconds).
-  --exists-action <action>    Default action when a path already exists:
-                              (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.
-  --trusted-host <hostname>   Mark this host or host:port pair as trusted,
-                              even though it does not have valid or any HTTPS.
-  --cert <path>               Path to PEM-encoded CA certificate bundle. If
-                              provided, overrides the default. See 'SSL
-                              Certificate Verification' in pip documentation
-                              for more information.
-  --client-cert <path>        Path to SSL client certificate, a single file
-                              containing the private key and the certificate
-                              in PEM format.
-  --cache-dir <dir>           Store the cache data in <dir>.
-  --no-cache-dir              Disable the cache.
-  --disable-pip-version-check
-                              Don't periodically check PyPI to determine
-                              whether a new version of pip is available for
-                              download. Implied with --no-index.
-  --no-color                  Suppress colored output.
-  --use-feature <feature>     Enable new functionality, that may be backward
-                              incompatible.
-  --use-deprecated <feature>  Enable deprecated functionality, that will be
-                              removed in the future.
-  --resume-retries <resume_retries>
-                              Maximum attempts to resume or restart an
-                              incomplete download. (default: 5) to support the AI text generation feature.
+-   Added  to  to support environment-based database configuration.
 
 **All files of reference**
--   **Created**:
-    -   : Contains all backend logic for the new agent property portal.
-    -   : Handles AI-powered generation of property descriptions.
-    -    (directory): Contains all frontend templates for the new portal.
-        -   , , , , 
+-   **Created/Hardened**:
+    -   : The new CI pipeline.
+    -   : Project setup and run instructions.
+    -   : Hardened to exclude database, secrets, media, and temp folders.
+    -   : Template for environment variables.
+    -   , , : Governance and state-tracking documents.
+    -   : Initial smoke tests.
 -   **Modified**:
-    -   : Added  and  fields.
-    -   : Updated the  and  views to handle the  model and add the  variable to the context.
-    -   : Fixed multiple field name errors to resolve 500 errors on the public profile page.
-    -   : Added all URL patterns for the new Makler-Portal.
-    -   : Moved professional directory URLs outside of  to fix routing.
-    -   : Translated to Croatian and added navigation links to the new portal and the public profile.
+    -   : Added support for . Corrected .
+    -   : Re-ordered and added URLs for the MARKT section.
+    -   : Cleaned up and re-ordered URLs.
+    -   : Replaced language input with translated checkboxes.
+    -   : Updated language handling logic, removed  from .
+    -   : Restored the correct, full-featured version.
+    -   : Added .
 
 **Critical Info for New Agent**
--   **You are assisting a non-technical user on his local Mac.** Commands must be simple and copy-pasteable for . The user's workflow involves manual file creation () and editing (), as  is sometimes problematic for them.
--   **The codebase has two distinct agent sections now**:
-    1.  **Profile Editor** (): For managing company/personal details, social media, and reference projects. Based on .
-    2.  **Makler-Portal** (): For managing actual property listings (CRUD, status changes, KI-texts). Based on templates in .
--   **Public Profile URL is fixed but complex**: The public profile page URL structure is like  and is defined *outside* Django's  in  to work correctly.
--   **SQLite migrations are broken for complex changes.** This is a persistent, high-risk issue. Avoid complex schema changes if possible.
+-   **STRICT RULES APPLY**: You are working on a hardened baseline (). **You must not work on **. Create a feature/fix branch for any changes. Follow the documented workflow in .
+-   **CI IS ACTIVE**: Your changes will be checked by GitHub Actions. Ensure your code passes  and .
+-   **The contact form is broken**: The immediate task is to fix the 404 on  by adding the URL route in .
+-   **User is non-technical**: Provide clear, complete, copy-pasteable commands for the user's Mac Terminal (). Explicitly state when to stop/start the server.
 
 **documents and test reports created in this job**
-- None.
+-   
+-   
+-   
+-   
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. User confirms everything is pushed to GitHub and says good night.
-9.  Agent provides final summary and says good night.
-8.  User pushes changes to GitHub via terminal.
-7.  Agent instructs user on how to commit and push to GitHub.
-6.  User asks to push to GitHub, stating the Save to Github button never works.
-5.  Agent summarizes the day's work.
-4.  User confirms the new professional profile page now loads correctly ().
-3.  Agent provides the correct URL to test the public profile page.
-2.  Agent fixes the final  field error and confirms a  with a shell test.
-1.  Agent debugs and fixes a series of  and  exceptions on the public profile page.
+10. User provides a new system prompt for implementing a lead/inquiry system. (IN PROGRESS)
+9. User asks for a summary of the project structure (folder name, repo count, frontend/backend separation). (Completed)
+8. User provides a new system prompt for hardening the project baseline. (Completed)
+7. User provides a new system prompt for data safety and Git discipline. (Completed)
+6. User confirms the MARKT navigation now works and asks about testing for Bauunternehmen. (Pending)
+5. Agent provides the final command to commit and push the MARKT navigation fixes. (Completed)
+4. User reports usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
+
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system. command not found (typo). (Resolved)
+3. User confirms the news page is working again. (Completed)
+2. Agent provides instructions to add the  URL. (Completed)
+1. User reports that the Nachrichten (News) link is still not working. (Resolved)
 
 **Project Health Check:**
--   **Broken**: The database migration workflow on the user's local SQLite environment is critically broken and relies on a destructive workaround.
--   **Technical Debt**: There is now duplicated XML import functionality. The codebase still supports two different user models ( and ) via complex workarounds in the views.
--   **Fixed / Implemented**: A significant amount of lost functionality (the Makler-Portal) was recovered, integrated, and made functional. Critical  and  errors on the public profile pages were resolved.
+-   **Broken**: The professional contact form is non-functional due to a missing URL route.
+-   **Mocked**: N/A.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o**: Used for AI text generation via the  library. Requires .
--   Ethereal.email: Used for SMTP testing.
--   Font Awesome 4.7.0: Loaded via CDN.
+-   **OpenAI GPT-4o**: Used for AI text generation. The user's API key is known to be invalid, so this feature is currently non-functional.
+-   **Ethereal.email**: Used for SMTP testing.
+-   **Font Awesome 4.7.0**: Loaded via CDN.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: None.
+-   **Test files created**:
+    -    (contains smoke tests)
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
@@ -261,11 +222,9 @@ General Options:
     -   Username: 
     -   Password: 
 -   **Gruppe A User (Makler - Premium Immobilien GmbH):**
-    -   Log in via the admin user ().
     -   Profile Editor URL: 
     -   Makler-Portal URL: 
     -   Public Profile URL: 
 
 **What agent forgot to execute**
--   The agent created new technical debt by re-implementing an XML import feature without first checking if a similar one already existed, leading to duplicated functionality.
--   The debugging process for the public profile page was highly iterative. The agent could have been more efficient by checking the model definition against all fields used in the view and template at once, rather than fixing one  at a time.</analysis>
+-   The agent did not test the functionality for Bauunternehmen (Gruppe A) after making significant changes, which the user specifically asked about. This should be a priority.</analysis>
