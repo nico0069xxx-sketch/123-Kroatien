@@ -850,10 +850,18 @@ def edit_agent(request, id):
             messages.success(request, "Profil erfolgreich aktualisiert")
             return redirect('main:agent', id=id)
 
+    # Build public profile URL for Professional
+    public_profile_url = None
+    if professional:
+        from main.professional_views import CATEGORY_URLS
+        category_slug = CATEGORY_URLS.get(professional.professional_type, {}).get('ge', 'makler')
+        public_profile_url = f"/ge/kroatien/{category_slug}/{professional.slug}/"
+    
     context = {
         'agent': agent,
         'professional': professional,
         'regions': Professional.REGIONS,
+        'public_profile_url': public_profile_url,
     }
     
     # Use extended template for Professional, legacy template for Agent
