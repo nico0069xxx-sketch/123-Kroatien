@@ -97,7 +97,7 @@
                             <input type="number" name="bathrooms" class="form-control" value="{{ listing.bathrooms|default:'0' }}" min="0" required>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label>{% if lang == 'hr' %}Površina (m²){% else %}Flaeche (m²){% endif %} *</label>
+                            <label>{% if lang == 'hr' %}Zemljište (m²){% else %}Grundstueck (m²){% endif %} *</label>
                             <input type="number" name="area" class="form-control" value="{{ listing.area|default:'' }}" min="1" required>
                         </div>
                         <div class="col-md-3 mb-3">
