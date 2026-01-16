@@ -295,3 +295,40 @@ class ArchitectProfile(models.Model):
     
     def __str__(self):
         return f"Architekt-Profil: {self.professional.name}"
+
+
+class Lead(models.Model):
+    """Stores contact form submissions from professional profile pages."""
+    STATUS_CHOICES = (
+        ('new', 'Neu'),
+        ('in_progress', 'In Bearbeitung'),
+        ('completed', 'Abgeschlossen'),
+        ('spam', 'Spam'),
+    )
+    
+    professional = models.ForeignKey(
+        'Professional', 
+        on_delete=models.CASCADE, 
+        related_name='leads',
+        verbose_name="Dienstleister"
+    )
+    
+    name = models.CharField(max_length=200, verbose_name="Name")
+    email = models.EmailField(verbose_name="E-Mail")
+    phone = models.CharField(max_length=50, blank=True, null=True, verbose_name="Telefon")
+    message = models.TextField(verbose_name="Nachricht")
+    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new', verbose_name="Status")
+    source_url = models.URLField(blank=True, null=True, verbose_name="Quell-URL")
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Erstellt am")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Aktualisiert am")
+    
+    class Meta:
+        verbose_name = 'Anfrage'
+        verbose_name_plural = 'Anfragen'
+        ordering = ['-created']
+    
+    def __str__(self):
+        return f"Anfrage von {self.name} an {self.professional.name}"

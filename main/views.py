@@ -1,4 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
+import time
+import re
+_inquiry_cache = {}
 from main.professional_models import Professional
 
 from django.shortcuts import render, HttpResponse, redirect
@@ -1846,6 +1849,23 @@ def send_professional_inquiry(request):
             
             if not professional_email:
                 return JsonResponse({'status': 'error', 'message': 'E-Mail-Adresse nicht gefunden'})
+            
+            # Lead in Datenbank speichern
+            try:
+                from main.professional_models import Lead, Professional as Prof
+                prof = Prof.objects.filter(email=professional_email).first()
+                if prof:
+                    Lead.objects.create(
+                        professional=prof,
+                        name=name,
+                        email=email,
+                        phone=phone,
+                        message=message,
+                        ip_address=client_ip,
+                        source_url=request.META.get('HTTP_REFERER', '')
+                    )
+            except Exception:
+                pass  # Lead-Speicherung fehlgeschlagen, E-Mail trotzdem senden
             
             subject = 'Neue Anfrage ueber 123-Kroatien.eu'
             email_body = f"""

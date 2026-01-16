@@ -157,3 +157,16 @@ Professional._meta.verbose_name = 'Registrierung'
 Professional._meta.verbose_name_plural = 'Registrierungen'
 ProfessionalContent._meta.verbose_name = 'Uebersetzung'
 ProfessionalContent._meta.verbose_name_plural = 'Uebersetzungen'
+
+from main.professional_models import Lead
+
+@admin.register(Lead)
+class LeadAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'professional', 'status', 'created']
+    list_filter = ['status', 'created', 'professional']
+    search_fields = ['name', 'email', 'message']
+    readonly_fields = ['created', 'updated', 'ip_address', 'source_url']
+    ordering = ['-created']
+
+from main.professional_models import Lead
+
