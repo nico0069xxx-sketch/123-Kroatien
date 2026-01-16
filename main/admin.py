@@ -20,6 +20,7 @@ class ProfessionalAdmin(admin.ModelAdmin):
     list_filter = [
         'is_verified',
         'professional_type',
+                'user',
     ]
     
     search_fields = ['name', 'email', 'city']
@@ -87,6 +88,7 @@ class ProfessionalAdmin(admin.ModelAdmin):
             'fields': (
                 ('is_verified', 'is_active'),
                 'professional_type',
+                'user',
             ),
         }),
         ('DOKUMENTE', {
