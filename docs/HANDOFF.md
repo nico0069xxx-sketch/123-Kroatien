@@ -1,40 +1,43 @@
-# HANDOFF.md - Session 16. Januar 2026
+# HANDOFF.md - Session Log
 
-## Was wurde erledigt
+## Session: 16. Januar 2026
 
-### 1. Sprachen-Checkboxen
-- Textfeld → 12 Checkboxen (3 Spalten)
-- DE/HR Übersetzung
-- Dateien: `templates/main/edit-agent-professional.html`, `main/views.py`
+### Ausgangszustand
+- Commit: 283b6f9 (von vorheriger Session)
+- Issues: MARKT-Navigation kaputt, Sprachen-Dropdown fehlte
 
-### 2. Makler-Dashboard repariert
-- Vollständige Version mit Statistiken
-- Buttons: Bearbeiten, KI-Text, Verkauft, Pausieren
-- Datei: `templates/makler_portal/dashboard.html`
+### Durchgeführte Arbeiten
 
-### 3. MARKT Navigation repariert
-- URLs in `realstate/urls.py` VOR Professional URLs eingefügt
-- Marktberichte: `/ge/kroatien/marktberichte/`
-- Wichtige Adressen: `/ge/kroatien/wichtige-adressen/`
-- Nachrichten: `/ge/kroatien/nachrichten/`
+1. Sprachen-Checkboxen (Textfeld zu 12 Checkboxen, DE/HR)
+2. Makler-Dashboard repariert (Statistiken, KI-Text, Status-Buttons)
+3. MARKT Navigation repariert (Marktberichte, Adressen, Nachrichten)
+4. Login-Fehler behoben (@login_required entfernt, LOGIN_URL korrigiert)
+5. Time Machine Konsolidierung (kein Datenverlust)
+6. Baseline Hardening (.gitignore, .env.example, Governance-Docs)
 
-### 4. Login-Fehler behoben
-- `@login_required` von Home-View entfernt
-- `LOGIN_URL` korrigiert
+### Git-Historie (diese Session)
+- f749625 docs: Time Machine Pruefung abgeschlossen
+- cbe40ad docs: STATE.md, DECISIONS.md, HANDOFF.md hinzugefuegt
+- 4dd6c6a MARKT Navigation repariert
+- 25d4f01 Sprachen-Checkboxen, Makler-Dashboard
 
-## Bekannte Risiken
-
-- **SQLite Migration**: Komplex schema-Änderungen können fehlschlagen
-- **OpenAI API Key**: Aktueller Key ungültig (für KI-Text)
-- **Duplizierte XML-Import Logik**: Zwei Implementierungen
-
-## Nächste Schritte
-
-1. [ ] Gutscheincode-Feld bei Registrierung
-2. [ ] Bauunternehmen-Funktionalität testen
-3. [ ] XML-Import konsolidieren
-
-## Git Status bei Übergabe
-- Commit: `4dd6c6a`
-- Branch: `main`
+### Endzustand
+- Branch: main
 - Status: Clean, pushed
+- Time Machine: Synced
+
+### Offene Risiken
+1. SQLite Migration Fragility
+2. OpenAI API Key ungueltig
+3. Duplizierte XML-Import Logik
+
+### Naechste Schritte
+1. Bauunternehmen-Funktionalitaet testen
+2. Gutscheincode-Feld bei Registrierung
+3. OpenAI API Key aktualisieren
+4. XML-Import konsolidieren
+
+### Test-Credentials
+- Admin: Nik / Admin1234!
+- URL: http://localhost:8000/nik-verwaltung-2026/
+- Professional UUID: 88c24d8b-486f-49df-85a9-911a15db1442

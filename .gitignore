@@ -1,5 +1,62 @@
-django_env/
-.idea/
+# ===========================================
+# DJANGO MONOLITH - HARDENED .gitignore
+# ===========================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
 env/
-media/
+.venv/
+ENV/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Django ---
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+*.sqlite3-journal
+
+# --- Secrets (NEVER COMMIT) ---
 .env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+
+# --- Media & Uploads (backed up via Time Machine, not Git) ---
+media/
+uploads/
+MEDIA/
+
+# --- Static files (generated) ---
+staticfiles/
+static_collected/
+
+# --- IDE ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# --- Safety/Recovery folders (temporary) ---
+_safety_snapshots/
+_recovered_from_tm/
+_quarantine/
+*.backup/
+
+# --- OS ---
+Thumbs.db
+.DS_Store
+*.bak
