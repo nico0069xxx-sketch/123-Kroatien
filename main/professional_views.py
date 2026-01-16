@@ -432,7 +432,7 @@ def professional_list(request, country, category):
     
     professionals = Professional.objects.filter(
         professional_type=professional_type,
-        is_featured=True
+        is_active=True
     ).order_by("name")
     
     trans = TRANSLATIONS.get(lang, TRANSLATIONS["ge"])
@@ -496,7 +496,7 @@ def professional_detail(request, country, category, slug):
     from main.professional_models import ReferenceProject
     reference_projects = ReferenceProject.objects.filter(
         professional=professional, 
-        is_featured=True
+        is_active=True
     ).order_by('sort_order', '-created')
     
     # Spezialgebiete als Liste
