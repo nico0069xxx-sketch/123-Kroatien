@@ -52,8 +52,8 @@ urlpatterns = [
     path('api/makler/verkauft/<int:listing_id>/', makler_views.makler_objekt_verkauft, name='makler_objekt_verkauft'),
     path('api/makler/pausieren/<int:listing_id>/', makler_views.makler_objekt_pausieren, name='makler_objekt_pausieren'),
     path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
-    path('ge/api/m/gen/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
-    path('ge/api/m/gen/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
+    path('api/m/gen/', makler_views.makler_ki_beschreibung, name='makler_ki_beschreibung'),
+    path('api/m/gen/<int:listing_id>/', makler_views.makler_ki_beschreibung_listing, name='makler_ki_beschreibung_listing'),
     
     # XML Import
     path('agent/<str:id>/xml-import/', xml_views.xml_import_dashboard, name='xml_import_dashboard'),

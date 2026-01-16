@@ -1,4 +1,4 @@
-{% extends 'makler_portal/base_portal.html' %}
+ccccc{% extends 'makler_portal/base_portal.html' %}
 {% load static %}
 
 {% block portal_content %}
@@ -140,7 +140,7 @@ function generiereKIText() {
     var btn = event.target.closest("button");
     var originalHTML = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = '<span class="ki-loading"></span> KI generiert...';
+    btn.innerHTML = '<span class="ki-loading"></span> Generiere...';
     btn.style.cssText = "position:relative;overflow:hidden;";
     var style = document.createElement("style");
     style.innerHTML = ".ki-loading{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin-right:8px;}@keyframes spin{to{transform:rotate(360deg)}}.ki-glow{animation:glow 1.5s ease-in-out infinite;}@keyframes glow{0%,100%{box-shadow:0 0 5px #007bff,0 0 10px #007bff,0 0 15px #007bff;}50%{box-shadow:0 0 10px #007bff,0 0 20px #007bff,0 0 30px #007bff;}}";
@@ -149,13 +149,7 @@ function generiereKIText() {
 
     var typ = document.querySelector('[name="property_type"]').value;
     var region = document.querySelector('[name="location"]').value;
-    if (!typ || !region) { 
-        btn.disabled = false;
-        btn.innerHTML = originalHTML;
-        btn.classList.remove("ki-glow");
-        alert('{% if lang == "hr" %}Odaberite tip i regiju!{% else %}Bitte Typ und Region auswaehlen!{% endif %}'); 
-        return; 
-    }
+    if (!typ || !region) { alert('{% if lang == "hr" %}Odaberite tip i regiju!{% else %}Bitte Typ und Region auswaehlen!{% endif %}'); return; }
     
     var data = {
         typ: typ, region: region,
@@ -167,24 +161,15 @@ function generiereKIText() {
         badezimmer: document.querySelector('[name="bathrooms"]').value
     };
     
-    fetch('/ge/api/m/gen/', {
+    fetch('/api/m/gen/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value},
         body: JSON.stringify(data)
     })
     .then(r => r.json())
     .then(d => {
-        btn.disabled = false;
-        btn.innerHTML = originalHTML;
-        btn.classList.remove("ki-glow");
         if (d.success) document.getElementById('beschreibung-feld').value = d.beschreibung;
         else alert(d.error || 'Fehler');
-    })
-    .catch(err => {
-        btn.disabled = false;
-        btn.innerHTML = originalHTML;
-        btn.classList.remove("ki-glow");
-        alert('Fehler bei der Verbindung');
     });
 }
 </script>
