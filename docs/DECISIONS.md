@@ -69,3 +69,18 @@
 
 real-estate-django-ALTmain/ ├── accounts/ # User Auth ├── contacts/ # Kontaktformulare ├── docs/ # Governance-Dateien ├── listings/ # Immobilien-Models ├── main/ # Haupt-App (Views, etc.) ├── pages/ # Statische Seiten ├── realtors/ # Makler-Models (Legacy) ├── realstate/ # Django Settings, URLs ├── static/ # CSS, JS, Images ├── staticfiles/ # Collected Static (generated) ├── templates/ # HTML Templates ├── .env # Secrets (NICHT in Git) ├── .env.example # Template für .env ├── .gitignore # Git-Ausschlüsse ├── db.sqlite3 # SQLite (NICHT in Git) ├── manage.py # Django CLI └── requirements.txt # Python Dependencies
 
+
+## CI/CD Gates (neu hinzugefuegt)
+
+### GitHub Actions Pipeline
+Bei jedem Push/PR werden ausgefuehrt:
+1. **Syntax-Check**: `python -m compileall` - Keine Python-Syntaxfehler
+2. **Django Check**: `manage.py check` - Framework-Validierung
+3. **Migration Check**: `manage.py makemigrations --check` - Keine uncommitted Migrations
+4. **Tests**: `manage.py test` - Smoke Tests muessen bestehen
+
+### Environment-basierte Settings
+- SECRET_KEY: via `os.environ.get()` mit Fallback fuer Dev
+- DEBUG: via Environment (default: False)
+- ALLOWED_HOSTS: via Environment (default: localhost)
+- DATABASE: SQLite lokal, PostgreSQL via DATABASE_URL in Production
