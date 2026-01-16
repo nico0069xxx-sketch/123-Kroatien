@@ -76,3 +76,4 @@ whitenoise==5.2.0
 yarl==1.9.4
 dj-database-url==2.1.0
 python-dotenv
+feedparser
