@@ -3,7 +3,11 @@ AI Content Generator for Agent Profiles
 Generates professional descriptions in 12 languages using OpenAI GPT-4o
 """
 import asyncio
-from emergentintegrations.llm.openai import LlmChat, UserMessage
+try:
+    from emergentintegrations.llm.openai import LlmChat, UserMessage
+except ImportError:
+    LlmChat = None
+    UserMessage = None
 
 # Emergent LLM Key
 EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"

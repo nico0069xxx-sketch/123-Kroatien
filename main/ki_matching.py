@@ -4,7 +4,11 @@ KI-Matching: Findet passende Professionals basierend auf Kundenanfragen
 """
 import asyncio
 import uuid
-from emergentintegrations.llm.openai import LlmChat, UserMessage
+try:
+    from emergentintegrations.llm.openai import LlmChat, UserMessage
+except ImportError:
+    LlmChat = None
+    UserMessage = None
 from .professional_models import Professional, PROFESSIONAL_TYPES, REGIONS
 
 EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"

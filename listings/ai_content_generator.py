@@ -5,7 +5,11 @@ Uses GPT-4o-mini for fast, cost-effective generation
 """
 import asyncio
 import json
-from emergentintegrations.llm.openai import LlmChat, UserMessage
+try:
+    from emergentintegrations.llm.openai import LlmChat, UserMessage
+except ImportError:
+    LlmChat = None
+    UserMessage = None
 
 EMERGENT_LLM_KEY = "sk-emergent-113674f2aA7337d756"
 
