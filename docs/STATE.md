@@ -1,35 +1,36 @@
 # STATE.md - Aktueller Projektstatus
 
-## Letzte Aktualisierung: 16. Januar 2026, 13:30 Uhr
+## Letzte Aktualisierung: 16. Januar 2026
 
 ### Git Status
-- Branch: main
-- Letzter Commit: f749625
-- Status: Clean (pending governance commit)
+- Branch: feature/ci-and-settings-baseline
+- Baseline: 9b78c8c (main)
+- Status: In Arbeit
 
-### Quellen-Status
-- GitHub (origin/main): AUTORITATIV - synced
-- Lokale Arbeitskopie: synced
-- Time Machine: BACKUP - verifiziert identisch
+### Enforced Quality Gates
 
-### Baseline Hardening
-- .gitignore: gehaertet (Django, SQLite, Media, Secrets)
-- .env.example: erstellt
-- Governance-Docs: erstellt/aktualisiert
+1. **GitHub Actions CI**
+   - Syntax-Check (compileall)
+   - Django System Check
+   - Migration Check
+   - Unit Tests (Smoke Tests)
+
+2. **Environment-basierte Settings**
+   - SECRET_KEY via env
+   - DEBUG via env (default: False)
+   - DATABASE via DATABASE_URL oder SQLite
+
+3. **Gitignore Schutz**
+   - db.sqlite3 ausgeschlossen
+   - .env ausgeschlossen
+   - media/ ausgeschlossen
 
 ### Bekannte Risiken
-1. SQLite Migration Fragility (LOW) - Workaround: DB-Reset bei Bedarf
-2. OpenAI API Key ungueltig (MEDIUM) - KI-Text funktioniert nicht
-3. Duplizierte XML-Import Logik (LOW) - Technical Debt
+1. SQLite Migration Fragility (LOW)
+2. OpenAI API Key ungueltig (MEDIUM)
+3. Duplizierte XML-Import Logik (LOW)
 
 ### Naechste Schritte
-1. Bauunternehmen-Funktionalitaet testen
-2. Gutscheincode-Feld bei Registrierung
-3. OpenAI API Key aktualisieren
-
-### Session-Checkliste
-- [x] git status clean
-- [x] GitHub synced
-- [x] Time Machine verifiziert
-- [x] Governance-Docs aktuell
-- [ ] Pending: Hardening-Commit
+1. Branch mergen nach main
+2. Bauunternehmen-Funktionalitaet testen
+3. Gutscheincode-Feld bei Registrierung

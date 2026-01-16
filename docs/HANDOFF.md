@@ -41,3 +41,23 @@
 - Admin: Nik / Admin1234!
 - URL: http://localhost:8000/nik-verwaltung-2026/
 - Professional UUID: 88c24d8b-486f-49df-85a9-911a15db1442
+
+---
+
+## CI und Settings Baseline (16. Januar 2026, Nachtrag)
+
+### Hinzugefuegt
+- .github/workflows/ci.yml (GitHub Actions)
+- main/tests.py (Smoke Tests)
+- README.md (Setup-Anleitung)
+- Settings: DATABASE_URL Support fuer Production
+- requirements.txt: dj-database-url hinzugefuegt
+
+### Quality Gates aktiv
+- Syntax-Check
+- Django System Check
+- Migration Check
+- Unit Tests
+
+### Naechster Schritt
+- Branch mergen nach main
