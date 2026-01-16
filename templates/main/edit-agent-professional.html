@@ -1,0 +1,281 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+<div class="myHeaderBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="text-capitalize text-white">{% if lang == 'hr' %}Uredi profil{% else %}Profil bearbeiten{% endif %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</header>
+<div class="clearfix"></div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary">
+                        <h6 class="mb-0" style="color:white;"><i class="fa fa-cog mr-2"></i>{% if lang == 'hr' %}Upravljanje{% else %}Verwaltung{% endif %}</h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#section-basic" class="list-group-item list-group-item-action active" data-toggle="list">
+                            <i class="fa fa-user mr-2"></i>{% if lang == 'hr' %}Osnovni podaci{% else %}Grunddaten{% endif %}
+                        </a>
+                        <a href="#section-company" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fa fa-building mr-2"></i>{% if lang == 'hr' %}Tvrtka{% else %}Unternehmen{% endif %}
+                        </a>
+                        <a href="#section-social" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fa fa-share-alt mr-2"></i>{% if lang == 'hr' %}Društvene mreže{% else %}Social Media{% endif %}
+                        </a>
+                        <a href="#section-display" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fa fa-eye mr-2"></i>{% if lang == 'hr' %}Opcije prikaza{% else %}Anzeige-Optionen{% endif %}
+                        </a>
+                        <a href="{% url 'main:reference_projects_list' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-images mr-2"></i>{% if lang == 'hr' %}Referentni projekti{% else %}Referenzprojekte{% endif %}
+                        </a>
+                        <a href="{% url 'main:makler_dashboard' %}" class="list-group-item list-group-item-action" style="background:#003167;color:white;">
+                            <i class="fa fa-home mr-2"></i>{% if lang == 'hr' %}Moje nekretnine{% else %}Meine Immobilien{% endif %}
+                        </a>
+                        <a href="{% url 'main:xml_import_dashboard' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-upload mr-2"></i>XML {% if lang == 'hr' %}uvoz{% else %}Import{% endif %}
+                        </a>
+                        <a href="/{% if lang == 'hr' %}hr/hrvatska{% else %}ge/kroatien{% endif %}/{% if professional.professional_type == 'real_estate_agent' %}{% if lang == 'hr' %}agenti{% else %}makler{% endif %}{% elif professional.professional_type == 'construction_company' %}{% if lang == 'hr' %}gradjevinske-tvrtke{% else %}bauunternehmen{% endif %}{% else %}dienstleister{% endif %}/{{ professional.slug }}/" class="list-group-item list-group-item-action" style="background:#28a745;color:white;">
+                            <i class="fa fa-eye mr-2"></i>{% if lang == 'hr' %}Pogledaj profil{% else %}Profil ansehen{% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <form action="{% url 'main:edit_agent' professional.id %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="section-basic">
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="mb-0"><i class="fa fa-user mr-2"></i>{% if lang == 'hr' %}Osnovni podaci{% else %}Grunddaten{% endif %}</h5></div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>{% if lang == 'hr' %}Ime / Naziv tvrtke{% else %}Name / Firmenname{% endif %} *</label>
+                                            <input type="text" class="form-control" name="name" value="{{ professional.name }}" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{% if lang == 'hr' %}E-pošta{% else %}E-Mail{% endif %}</label>
+                                            <input type="email" class="form-control" value="{{ professional.email }}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Telefon{% else %}Telefon{% endif %}</label>
+                                            <input type="text" class="form-control" name="phone" value="{{ professional.phone|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Mobitel{% else %}Mobil{% endif %}</label>
+                                            <input type="text" class="form-control" name="mobile" value="{{ professional.mobile|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Fax</label>
+                                            <input type="text" class="form-control" name="fax" value="{{ professional.fax|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>{% if lang == 'hr' %}Grad{% else %}Stadt{% endif %}</label>
+                                            <input type="text" class="form-control" name="city" value="{{ professional.city|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{% if lang == 'hr' %}Regija{% else %}Region{% endif %}</label>
+                                            <select class="form-control" name="region">
+                                                <option value="">{% if lang == 'hr' %}Odaberite...{% else %}Bitte waehlen...{% endif %}</option>
+                                                {% for value, label in regions %}
+                                                <option value="{{ value }}" {% if professional.region == value %}selected{% endif %}>{{ label }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% if lang == 'hr' %}Adresa{% else %}Adresse{% endif %}</label>
+                                        <input type="text" class="form-control" name="address" value="{{ professional.address|default:'' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% if lang == 'hr' %}Jezici{% else %}Gesprochene Sprachen{% endif %}</label>
+                                        <input type="text" class="form-control" name="languages" value="{{ professional.languages|default:'' }}">
+                                    </div>
+                                    <hr>
+                                    <h6>{% if lang == 'hr' %}Slike{% else %}Bilder{% endif %}</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Logo tvrtke{% else %}Firmenlogo{% endif %}</label>
+                                            {% if professional.company_logo %}<div class="mb-2"><img src="{{ professional.company_logo.url }}" class="img-thumbnail" style="max-height:80px;"></div>{% endif %}
+                                            <input type="file" class="form-control-file" name="company_logo" accept="image/*">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Profilna slika{% else %}Profilbild{% endif %}</label>
+                                            {% if professional.profile_image %}<div class="mb-2"><img src="{{ professional.profile_image.url }}" class="img-thumbnail" style="max-height:80px;"></div>{% endif %}
+                                            <input type="file" class="form-control-file" name="profile_image" accept="image/*">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Portret{% else %}Portrait{% endif %}</label>
+                                            {% if professional.portrait_photo %}<div class="mb-2"><img src="{{ professional.portrait_photo.url }}" class="img-thumbnail" style="max-height:80px;"></div>{% endif %}
+                                            <input type="file" class="form-control-file" name="portrait_photo" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="section-company">
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="mb-0"><i class="fa fa-building mr-2"></i>{% if lang == 'hr' %}Detalji tvrtke{% else %}Unternehmensdetails{% endif %}</h5></div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>{% if lang == 'hr' %}Naziv tvrtke{% else %}Firmenname{% endif %}</label>
+                                            <input type="text" class="form-control" name="company_name" value="{{ professional.company_name|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{% if lang == 'hr' %}OIB broj{% else %}OIB-Nummer{% endif %}</label>
+                                            <input type="text" class="form-control" name="oib_number" value="{{ professional.oib_number|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% if lang == 'hr' %}Slogan / Moto{% else %}Slogan / Motto{% endif %}</label>
+                                        <input type="text" class="form-control" name="slogan" value="{{ professional.slogan|default:'' }}">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Godina osnivanja{% else %}Gruendungsjahr{% endif %}</label>
+                                            <input type="number" class="form-control" name="founded_year" value="{{ professional.founded_year|default:'' }}" min="1900" max="2030">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Broj zaposlenih{% else %}Mitarbeiterzahl{% endif %}</label>
+                                            <input type="text" class="form-control" name="employee_count" value="{{ professional.employee_count|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{% if lang == 'hr' %}Web stranica{% else %}Website{% endif %}</label>
+                                            <input type="url" class="form-control" name="domain" value="{{ professional.website|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% if lang == 'hr' %}Specijalizacije{% else %}Spezialisierungen{% endif %}</label>
+                                        <textarea class="form-control" name="specializations" rows="3">{{ professional.specializations|default:'' }}</textarea>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label>{% if lang == 'hr' %}Opis (njemački){% else %}Beschreibung (Deutsch){% endif %}</label>
+                                        <textarea class="form-control" name="description_de" rows="4">{{ professional.description_de|default:'' }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% if lang == 'hr' %}Opis (hrvatski){% else %}Beschreibung (Kroatisch){% endif %}</label>
+                                        <textarea class="form-control" name="description_hr" rows="4">{{ professional.description_hr|default:'' }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="section-social">
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="mb-0"><i class="fa fa-share-alt mr-2"></i>{% if lang == 'hr' %}Društvene mreže{% else %}Social Media{% endif %}</h5></div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-facebook mr-2"></i>Facebook</label>
+                                            <input type="url" class="form-control" name="facebook" value="{{ professional.facebook|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-instagram mr-2"></i>Instagram</label>
+                                            <input type="url" class="form-control" name="instagram" value="{{ professional.instagram|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-linkedin mr-2"></i>LinkedIn</label>
+                                            <input type="url" class="form-control" name="linkedin" value="{{ professional.linkedin|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-youtube mr-2"></i>YouTube</label>
+                                            <input type="url" class="form-control" name="youtube" value="{{ professional.youtube|default:'' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-twitter mr-2"></i>Twitter/X</label>
+                                            <input type="url" class="form-control" name="twitter" value="{{ professional.twitter|default:'' }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><i class="fa fa-music mr-2"></i>TikTok</label>
+                                            <input type="url" class="form-control" name="tiktok" value="{{ professional.tiktok|default:'' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="section-display">
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="mb-0"><i class="fa fa-eye mr-2"></i>{% if lang == 'hr' %}Opcije prikaza{% else %}Anzeige-Optionen{% endif %}</h5></div>
+                                <div class="card-body">
+                                    <p class="text-muted">{% if lang == 'hr' %}Odaberite što će se prikazivati na vašem javnom profilu.{% else %}Waehle aus, welche Bereiche auf deinem oeffentlichen Profil angezeigt werden.{% endif %}</p>
+                                    
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_references" name="show_references" {% if professional.show_references %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_references"><strong>{% if lang == 'hr' %}Prikaži referentne projekte{% else %}Referenzprojekte anzeigen{% endif %}</strong></label>
+                                    </div>
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_contact_form" name="show_contact_form" {% if professional.show_contact_form %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_contact_form"><strong>{% if lang == 'hr' %}Prikaži kontakt obrazac{% else %}Kontaktformular anzeigen{% endif %}</strong></label>
+                                    </div>
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_listings" name="show_listings" {% if professional.show_listings %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_listings"><strong>{% if lang == 'hr' %}Prikaži nekretnine{% else %}Immobilien anzeigen{% endif %}</strong></label>
+                                    </div>
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_social_media" name="show_social_media" {% if professional.show_social_media %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_social_media"><strong>{% if lang == 'hr' %}Prikaži društvene mreže{% else %}Social Media anzeigen{% endif %}</strong></label>
+                                    </div>
+                                    <div class="custom-control custom-switch mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="show_team" name="show_team" {% if professional.show_team %}checked{% endif %}>
+                                        <label class="custom-control-label" for="show_team"><strong>{% if lang == 'hr' %}Prikaži tim{% else %}Team anzeigen{% endif %}</strong></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-between">
+                            <a href="{% url 'main:agent' professional.id %}" class="btn btn-outline-secondary">
+                                <i class="fa fa-arrow-left mr-2"></i>{% if lang == 'hr' %}Natrag{% else %}Zurueck{% endif %}
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save mr-2"></i>{% if lang == 'hr' %}Spremi{% else %}Speichern{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before { background-color: #003167; border-color: #003167; }
+.list-group-item.active { background-color: #003167; border-color: #003167; }
+</style>
+{% endblock body %}

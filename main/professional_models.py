@@ -1,265 +1,197 @@
 from django.db import models
-import uuid
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+import uuid
 
-# Kroatische Regionen
-REGIONS = [
+# Konstanten fuer Import
+REGIONS = (
     ('istrien', 'Istrien'),
     ('kvarner', 'Kvarner'),
-    ('dalmatien-nord', 'Nord-Dalmatien'),
-    ('dalmatien-mitte', 'Mittel-Dalmatien'),
-    ('dalmatien-sued', 'Süd-Dalmatien'),
+    ('dalmatien', 'Dalmatien'),
     ('zagreb', 'Zagreb'),
     ('slavonien', 'Slavonien'),
-    ('lika-gorski-kotar', 'Lika & Gorski Kotar'),
-]
+    ('andere', 'Andere'),
+)
 
-LANGUAGES_SPOKEN = [
-    ('ge', 'Deutsch'),
-    ('en', 'Englisch'),
-    ('hr', 'Kroatisch'),
-    ('fr', 'Französisch'),
-    ('nl', 'Niederländisch'),
-    ('pl', 'Polnisch'),
-    ('cz', 'Tschechisch'),
-    ('sk', 'Slowakisch'),
-    ('ru', 'Russisch'),
-    ('gr', 'Griechisch'),
-    ('sw', 'Schwedisch'),
-    ('no', 'Norwegisch'),
-]
-
-PROFESSIONAL_TYPES = [
+PROFESSIONAL_TYPES = (
     ('real_estate_agent', 'Immobilienmakler'),
     ('construction_company', 'Bauunternehmen'),
     ('lawyer', 'Rechtsanwalt'),
     ('tax_advisor', 'Steuerberater'),
     ('architect', 'Architekt'),
-]
+)
 
 
 class Professional(models.Model):
-    class Meta:
-        verbose_name = "Registrierung"
-        verbose_name_plural = "Professionals (Registrierungen)"
-    # Basis-Model fuer alle Berufsgruppen
+    PROFESSIONAL_TYPES = (
+        ('real_estate_agent', 'Immobilienmakler'),
+        ('construction_company', 'Bauunternehmen'),
+        ('lawyer', 'Rechtsanwalt'),
+        ('tax_advisor', 'Steuerberater'),
+        ('architect', 'Architekt'),
+    )
+    
+    CAN_POST_PROPERTIES = ['real_estate_agent', 'construction_company']
+    
+    REGIONS = (
+        ('istrien', 'Istrien'),
+        ('kvarner', 'Kvarner'),
+        ('dalmatien', 'Dalmatien'),
+        ('zagreb', 'Zagreb'),
+        ('slavonien', 'Slavonien'),
+        ('andere', 'Andere'),
+    )
+    
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='professional')
     
-    # Login-Verknuepfung (nur fuer Makler & Bauunternehmen)
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='professional_profile')
-    has_portal_access = models.BooleanField(default=False, help_text='Zugang zum Makler-Portal')
-    
-    # Berufsgruppe
-    professional_type = models.CharField(max_length=50, choices=PROFESSIONAL_TYPES)
-    
-    # Basis-Daten (Pflicht)
-    name = models.CharField(max_length=200)  # Name oder Firmenname
+    professional_type = models.CharField(max_length=50, choices=PROFESSIONAL_TYPES, default='real_estate_agent')
+    name = models.CharField(max_length=200, verbose_name="Name / Firmenname")
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
     email = models.EmailField(max_length=500)
     phone = models.CharField(max_length=50, blank=True, null=True)
+    mobile = models.CharField(max_length=50, blank=True, null=True)
+    fax = models.CharField(max_length=50, blank=True, null=True)
     
-    # Standort
-    city = models.CharField(max_length=100)
-    region = models.CharField(max_length=50, choices=REGIONS)
-    address = models.CharField(max_length=300, blank=True, null=True)
+    city = models.CharField(max_length=200, blank=True, null=True)
+    region = models.CharField(max_length=50, choices=REGIONS, blank=True, null=True)
+    address = models.CharField(max_length=500, blank=True, null=True)
+    country = models.CharField(max_length=100, default='Kroatien')
     
-    # Service-Regionen (ManyToMany über separate Tabelle)
-    service_regions = models.CharField(max_length=500, blank=True, null=True)  # Komma-getrennt
+    company_name = models.CharField(max_length=200, blank=True, null=True, verbose_name="Firmenname")
+    company_logo = models.ImageField(upload_to='professionals/logos/', blank=True, null=True)
+    profile_image = models.ImageField(upload_to='professionals/profiles/', blank=True, null=True)
+    portrait_photo = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
     
-    # Sprachen (Komma-getrennt)
-    languages_spoken = models.CharField(max_length=200)
+    # Extended company info (NEW)
+    slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name="Slogan/Motto")
+    founded_year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Gründungsjahr")
+    employee_count = models.CharField(max_length=50, blank=True, null=True, verbose_name="Mitarbeiterzahl")
+    specializations = models.TextField(blank=True, null=True, verbose_name="Spezialisierungen")
     
-    # Firmen-Daten
-    company_name = models.CharField(max_length=200, blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
+    oib_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="OIB-Nummer")
+    website = models.URLField(max_length=500, blank=True, null=True)
     
-    # Bilder
-    logo = models.ImageField(upload_to='professionals/logos/', blank=True, null=True)
-    portrait = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
+    description = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Original)")
+    description_de = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Deutsch)")
+    description_hr = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Kroatisch)")
     
-    # Verifizierungsdokumente (DSGVO-konform gespeichert)
-    id_document = models.FileField(upload_to='professionals/verification/id/', blank=True, null=True, 
-                                   help_text='Personalausweis oder Reisepass (PDF/JPG)')
-    business_document = models.FileField(upload_to='professionals/verification/business/', blank=True, null=True,
-                                         help_text='Handelsregisterauszug, Kammerbescheinigung, etc.')
-    verification_notes = models.TextField(blank=True, null=True, 
-                                          help_text='Interne Notizen zur Verifizierung')
-    verified_by = models.CharField(max_length=100, blank=True, null=True,
-                                   help_text='Name des Mitarbeiters der verifiziert hat')
-    verification_date = models.DateTimeField(blank=True, null=True)
+    languages = models.CharField(max_length=500, blank=True, null=True, verbose_name="Gesprochene Sprachen")
     
-    # Profiltext (vom User gewählt oder selbst geschrieben)
-    profile_text_style = models.CharField(max_length=50, blank=True, null=True,
-                                          help_text='Stil des gewählten Profiltextes')
-    profile_text_original = models.TextField(blank=True, null=True,
-                                             help_text='Originaltext in der Eingabesprache')
+    facebook = models.URLField(max_length=500, blank=True, null=True)
+    instagram = models.URLField(max_length=500, blank=True, null=True)
+    linkedin = models.URLField(max_length=500, blank=True, null=True)
+    twitter = models.URLField(max_length=500, blank=True, null=True)
+    youtube = models.URLField(max_length=500, blank=True, null=True)
+    tiktok = models.URLField(max_length=500, blank=True, null=True)
     
-    # Beschreibungen (3 Sprachen)
-    description_de = models.TextField(blank=True, null=True, help_text='Beschreibung Deutsch')
-    description_hr = models.TextField(blank=True, null=True, help_text='Beschreibung Kroatisch')
-    description_en = models.TextField(blank=True, null=True, help_text='Beschreibung Englisch')
+    # Display toggles
+    show_references = models.BooleanField(default=True, verbose_name="Referenzen anzeigen")
+    show_contact_form = models.BooleanField(default=True, verbose_name="Kontaktformular anzeigen")
+    show_listings = models.BooleanField(default=True, verbose_name="Immobilien anzeigen")
+    show_social_media = models.BooleanField(default=True, verbose_name="Social Media anzeigen")
+    show_team = models.BooleanField(default=False, verbose_name="Team anzeigen")
     
-    # === NEUE PROFIL-FELDER (Gruppe A) ===
-    founded_year = models.PositiveIntegerField(blank=True, null=True, help_text='Gruendungsjahr')
-    employee_count = models.CharField(max_length=50, blank=True, null=True, help_text='z.B. 1-5, 6-20, 21-50, 50+')
-    specializations = models.TextField(blank=True, null=True, help_text='Spezialgebiete, kommagetrennt')
-    slogan = models.CharField(max_length=300, blank=True, null=True, help_text='Firmenslogan')
+    is_active = models.BooleanField(default=False, verbose_name="Aktiv")
+    is_verified = models.BooleanField(default=False, verbose_name="Verifiziert")
     
-    # Social Media
-    facebook_url = models.URLField(blank=True, null=True)
-    instagram_url = models.URLField(blank=True, null=True)
-    linkedin_url = models.URLField(blank=True, null=True)
-    youtube_url = models.URLField(blank=True, null=True)
-    tiktok_url = models.URLField(blank=True, null=True)
-    
-    # Profil-Anzeige-Optionen (Toggle)
-    show_references = models.BooleanField(default=True, help_text='Referenzprojekte anzeigen')
-    show_contact_form = models.BooleanField(default=True, help_text='Kontaktformular anzeigen')
-    show_listings = models.BooleanField(default=True, help_text='Aktuelle Immobilien anzeigen')
-    show_social_media = models.BooleanField(default=True, help_text='Social Media Links anzeigen')
-    
-    # Spam-Schutz
-    failed_attempts = models.IntegerField(default=0)
-    blocked_until = models.DateTimeField(blank=True, null=True)
-    registration_ip = models.GenericIPAddressField(blank=True, null=True)
-    
-    # Registrierung/Lizenz
-    registration_number = models.CharField(max_length=100, blank=True, null=True)
-    oib_number = models.CharField(max_length=20, blank=True, null=True)  # Kroatische Steuernummer
-    
-    # SEO
-    slug = models.SlugField(max_length=200, unique=True)
-    
-    # Status
-    is_active = models.BooleanField(default=False)
-    # Statistiken (nur Gruppe A)
-    profile_views = models.PositiveIntegerField(default=0, help_text='Anzahl Profilaufrufe')
-    is_verified = models.BooleanField(default=False)
-    verified_at = models.DateTimeField(blank=True, null=True)
-    
-    # TOTP 2FA Felder (optional - Authenticator App)
     totp_secret = models.CharField(max_length=32, blank=True, null=True)
     totp_enabled = models.BooleanField(default=False)
     totp_verified = models.BooleanField(default=False)
-    must_setup_2fa = models.BooleanField(default=True, help_text='Muss 2FA bei erstem Login einrichten')
+    must_setup_2fa = models.BooleanField(default=True)
     
-    # E-Mail 2FA Felder
-    email_2fa_enabled = models.BooleanField(default=True, help_text='2FA per E-Mail aktiviert')
+    email_2fa_enabled = models.BooleanField(default=False)
     email_2fa_code = models.CharField(max_length=6, blank=True, null=True)
     email_2fa_code_created = models.DateTimeField(blank=True, null=True)
     
-    # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        verbose_name = "Registrierung"
-        verbose_name_plural = "Professionals"
-        ordering = ["-created_at"]
+        verbose_name = 'Dienstleister'
+        verbose_name_plural = 'Dienstleister'
+        ordering = ['-created']
     
     def __str__(self):
         return f"{self.name} ({self.get_professional_type_display()})"
-
-
-class RealEstateAgentProfile(models.Model):
-    """Spezifische Daten für Immobilienmakler"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name="agent_profile")
     
-    license_info = models.CharField(max_length=200, blank=True, null=True)
-    property_focus = models.CharField(max_length=300, blank=True, null=True)  # z.B. "Villen, Apartments, Grundstücke"
-    years_active = models.PositiveIntegerField(blank=True, null=True)
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Professional.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
     
-    def __str__(self):
-        return f"Agent: {self.professional.name}"
-
-
-class ConstructionCompanyProfile(models.Model):
-    """Spezifische Daten für Bauunternehmen"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name="construction_profile")
+    def can_post_properties(self):
+        return self.professional_type in self.CAN_POST_PROPERTIES
     
-    trade_registration = models.CharField(max_length=200, blank=True, null=True)
-    project_types = models.CharField(max_length=500, blank=True, null=True)  # z.B. "Neubauten, Renovierungen, Erweiterungen"
-    
-    def __str__(self):
-        return f"Construction: {self.professional.name}"
-
-
-class LawyerProfile(models.Model):
-    """Spezifische Daten für Rechtsanwälte"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name="lawyer_profile")
-    
-    law_firm = models.CharField(max_length=200, blank=True, null=True)
-    bar_registration = models.CharField(max_length=200, blank=True, null=True)
-    practice_areas = models.CharField(max_length=500, blank=True, null=True)  # z.B. "Immobilienrecht, Vertragsrecht"
-    
-    def __str__(self):
-        return f"Lawyer: {self.professional.name}"
-
-
-class TaxAdvisorProfile(models.Model):
-    """Spezifische Daten für Steuerberater"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name="tax_profile")
-    
-    firm_name = models.CharField(max_length=200, blank=True, null=True)
-    professional_registration = models.CharField(max_length=200, blank=True, null=True)
-    core_services = models.CharField(max_length=500, blank=True, null=True)
-    
-    def __str__(self):
-        return f"Tax Advisor: {self.professional.name}"
-
-
-class ArchitectProfile(models.Model):
-    """Spezifische Daten für Architekten"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name="architect_profile")
-    
-    office_name = models.CharField(max_length=200, blank=True, null=True)
-    chamber_registration = models.CharField(max_length=200, blank=True, null=True)
-    planning_focus = models.CharField(max_length=500, blank=True, null=True)  # z.B. "Wohnbau, Gewerbebau, Sanierung"
-    
-    def __str__(self):
-        return f"Architect: {self.professional.name}"
+    def get_description_for_language(self, lang):
+        if lang == 'hr':
+            return self.description_hr or self.description_de or self.description
+        return self.description_de or self.description
 
 
 class ProfessionalContent(models.Model):
-    """Mehrsprachige Profil-Inhalte (generiert)"""
-    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name="contents")
-    language = models.CharField(max_length=5)  # ge, en, hr, fr, etc.
+    LANGUAGES = (
+        ('de', 'Deutsch'),
+        ('hr', 'Hrvatski'),
+    )
     
-    # Generierter Content
-    profile_summary = models.TextField(blank=True, null=True)
-    areas_of_activity = models.TextField(blank=True, null=True)  # Als JSON oder Bullet-Points
-    typical_situations = models.TextField(blank=True, null=True)
-    working_approach = models.TextField(blank=True, null=True)
-    faq_content = models.TextField(blank=True, null=True)  # FAQ als JSON
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='contents')
+    language = models.CharField(max_length=5, choices=LANGUAGES)
     
-    # SEO
-    meta_title = models.CharField(max_length=200, blank=True, null=True)
-    meta_description = models.CharField(max_length=300, blank=True, null=True)
+    about_text = models.TextField(blank=True, null=True, verbose_name="Über uns")
+    services_text = models.TextField(blank=True, null=True, verbose_name="Leistungen")
+    working_approach = models.TextField(blank=True, null=True, verbose_name="Arbeitsweise")
+    faq_text = models.TextField(blank=True, null=True, verbose_name="FAQ")
     
-    # Verifizierungs-Statement
-    verification_statement = models.TextField(blank=True, null=True)
-    
-    # Timestamps
-    generated_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        unique_together = ["professional", "language"]
-        verbose_name = "Professional Content"
-        verbose_name_plural = "Professional Contents"
+        verbose_name = 'Dienstleister-Inhalt'
+        verbose_name_plural = 'Dienstleister-Inhalte'
+        unique_together = ['professional', 'language']
     
     def __str__(self):
-        return f"{self.professional.name} - {self.language}"
+        return f"{self.professional.name} - {self.get_language_display()}"
+
+
+class ProfessionalDocument(models.Model):
+    DOCUMENT_TYPES = (
+        ('business_license', 'Gewerbeschein'),
+        ('id_document', 'Personalausweis/Reisepass'),
+        ('company_register', 'Handelsregisterauszug'),
+        ('other', 'Sonstiges'),
+    )
+    
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='documents')
+    document_type = models.CharField(max_length=50, choices=DOCUMENT_TYPES)
+    file = models.FileField(upload_to='professionals/documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
+    notes = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Dokument'
+        verbose_name_plural = 'Dokumente'
+    
+    def __str__(self):
+        return f"{self.professional.name} - {self.get_document_type_display()}"
 
 
 class ReferenceProject(models.Model):
-    """Referenzprojekte fuer Makler und Bauunternehmen"""
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
     
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    year = models.PositiveIntegerField(blank=True, null=True)
-    location = models.CharField(max_length=200, blank=True, null=True)
-    project_type = models.CharField(max_length=100, blank=True, null=True)
+    title = models.CharField(max_length=200, verbose_name="Projekttitel")
+    description = models.TextField(blank=True, null=True, verbose_name="Beschreibung")
+    year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Jahr")
+    location = models.CharField(max_length=200, blank=True, null=True, verbose_name="Standort")
+    project_type = models.CharField(max_length=100, blank=True, null=True, verbose_name="Projektart")
     
     image_1 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
     image_2 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
@@ -268,15 +200,98 @@ class ReferenceProject(models.Model):
     image_5 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
     image_6 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
     
-    is_active = models.BooleanField(default=True)
-    sort_order = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Sortierreihenfolge")
+    is_featured = models.BooleanField(default=False, verbose_name="Hervorgehoben")
+    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['sort_order', '-created_at']
         verbose_name = 'Referenzprojekt'
         verbose_name_plural = 'Referenzprojekte'
+        ordering = ['sort_order', '-year', '-created']
     
     def __str__(self):
         return f"{self.title} ({self.professional.name})"
+    
+    def get_images(self):
+        images = []
+        for i in range(1, 7):
+            img = getattr(self, f'image_{i}')
+            if img:
+                images.append(img)
+        return images
+
+
+
+class RealEstateAgentProfile(models.Model):
+    """Extended profile for real estate agents"""
+    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='agent_profile')
+    license_number = models.CharField(max_length=100, blank=True, null=True)
+    years_experience = models.PositiveIntegerField(blank=True, null=True)
+    specialties = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Makler-Profil'
+        verbose_name_plural = 'Makler-Profile'
+    
+    def __str__(self):
+        return f"Makler-Profil: {self.professional.name}"
+
+
+class ConstructionCompanyProfile(models.Model):
+    """Extended profile for construction companies"""
+    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='construction_profile')
+    company_size = models.CharField(max_length=50, blank=True, null=True)
+    founded_year = models.PositiveIntegerField(blank=True, null=True)
+    certifications = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Bauunternehmen-Profil'
+        verbose_name_plural = 'Bauunternehmen-Profile'
+    
+    def __str__(self):
+        return f"Bauunternehmen-Profil: {self.professional.name}"
+
+
+class LawyerProfile(models.Model):
+    """Extended profile for lawyers"""
+    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='lawyer_profile')
+    bar_association = models.CharField(max_length=200, blank=True, null=True)
+    practice_areas = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Anwalt-Profil'
+        verbose_name_plural = 'Anwalt-Profile'
+    
+    def __str__(self):
+        return f"Anwalt-Profil: {self.professional.name}"
+
+
+class TaxAdvisorProfile(models.Model):
+    """Extended profile for tax advisors"""
+    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='tax_advisor_profile')
+    certification = models.CharField(max_length=200, blank=True, null=True)
+    specializations = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Steuerberater-Profil'
+        verbose_name_plural = 'Steuerberater-Profile'
+    
+    def __str__(self):
+        return f"Steuerberater-Profil: {self.professional.name}"
+
+
+class ArchitectProfile(models.Model):
+    """Extended profile for architects"""
+    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='architect_profile')
+    chamber_membership = models.CharField(max_length=200, blank=True, null=True)
+    portfolio_url = models.URLField(blank=True, null=True)
+    design_style = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Architekt-Profil'
+        verbose_name_plural = 'Architekt-Profile'
+    
+    def __str__(self):
+        return f"Architekt-Profil: {self.professional.name}"

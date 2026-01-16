@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from main.views import set_language_from_url, xml_sitemap, robots_txt, rss_listings
+from main.views import set_language_from_url
+from main.xml_views import rss_listings, xml_sitemap, robots_txt, xml_sitemap, robots_txt, rss_listings
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -41,6 +42,15 @@ urlpatterns += [
     path('ge/makler-portal/2fa-verifizieren/', professional_verify_2fa_setup, name='professional_verify_2fa_setup_ge'),
     path('ge/makler-portal/2fa-login/', professional_verify_2fa_login, name='professional_verify_2fa_ge'),
 
+]
+
+# Professional Detail URLs (ohne i18n prefix)
+from main import professional_views
+urlpatterns += [
+    path("ge/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-ge-direct"),
+    path("ge/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-ge-direct"),
+    path("hr/hrvatska/<str:category>/", professional_views.professional_list, {"country": "hrvatska"}, name="professional-list-hr-direct"),
+    path("hr/hrvatska/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "hrvatska"}, name="professional-detail-hr-direct"),
 ]
 
 urlpatterns += i18n_patterns(

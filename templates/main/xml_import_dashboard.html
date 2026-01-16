@@ -1,0 +1,155 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+<div class="myHeaderBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="text-capitalize text-white">XML Import</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</header>
+<div class="clearfix"></div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0"><i class="fa fa-cog mr-2"></i>Verwaltung</h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'main:edit_agent' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-user mr-2"></i>Profil
+                        </a>
+                        <a href="{% url 'main:reference_projects_list' professional.id %}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-images mr-2"></i>Referenzen
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            <i class="fa fa-upload mr-2"></i>XML Import
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="alert alert-info mb-4">
+                    <h5><i class="fa fa-info-circle mr-2"></i>XML Import</h5>
+                    <ul class="mb-0">
+                        <li><strong>OpenImmo</strong> - Standard fuer Immobilienportale</li>
+                        <li><strong>Einfaches XML</strong> - WordPress-Seiten kroatischer Makler</li>
+                    </ul>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header"><h5 class="mb-0"><i class="fa fa-file-code mr-2"></i>Import aus Datei</h5></div>
+                    <div class="card-body">
+                        <form id="fileImportForm" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Format</label>
+                                <select class="form-control" name="import_type" id="fileImportType">
+                                    <option value="simple">Einfaches XML</option>
+                                    <option value="openimmo">OpenImmo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>XML-Datei</label>
+                                <input type="file" class="form-control-file" name="xml_file" accept=".xml" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="fileImportBtn">
+                                <i class="fa fa-upload mr-2"></i>Importieren
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header"><h5 class="mb-0"><i class="fa fa-link mr-2"></i>Import aus URL</h5></div>
+                    <div class="card-body">
+                        <form id="urlImportForm">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Format</label>
+                                <select class="form-control" name="import_type" id="urlImportType">
+                                    <option value="simple">Einfaches XML</option>
+                                    <option value="openimmo">OpenImmo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>XML-URL</label>
+                                <input type="url" class="form-control" name="url" id="xmlUrl" placeholder="https://makler.hr/export.xml" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="urlImportBtn">
+                                <i class="fa fa-download mr-2"></i>Importieren
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card d-none" id="resultsCard">
+                    <div class="card-header"><h5 class="mb-0"><i class="fa fa-check-circle mr-2"></i>Ergebnis</h5></div>
+                    <div class="card-body" id="resultsContent"></div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'main:agent' professional.id %}" class="btn btn-outline-secondary">
+                        <i class="fa fa-arrow-left mr-2"></i>Zurueck
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('fileImportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    var btn = document.getElementById('fileImportBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>...';
+    
+    fetch('{% url "main:xml_import_file" professional.id %}', {
+        method: 'POST', body: formData, headers: {'X-CSRFToken': '{{ csrf_token }}'}
+    })
+    .then(r => r.json())
+    .then(data => { showResults(data); btn.disabled = false; btn.innerHTML = '<i class="fa fa-upload mr-2"></i>Importieren'; })
+    .catch(e => { showResults({success: false, error: e.message}); btn.disabled = false; btn.innerHTML = '<i class="fa fa-upload mr-2"></i>Importieren'; });
+});
+
+document.getElementById('urlImportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('urlImportBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>...';
+    
+    fetch('{% url "main:xml_import_url" professional.id %}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+        body: JSON.stringify({url: document.getElementById('xmlUrl').value, import_type: document.getElementById('urlImportType').value})
+    })
+    .then(r => r.json())
+    .then(data => { showResults(data); btn.disabled = false; btn.innerHTML = '<i class="fa fa-download mr-2"></i>Importieren'; })
+    .catch(e => { showResults({success: false, error: e.message}); btn.disabled = false; btn.innerHTML = '<i class="fa fa-download mr-2"></i>Importieren'; });
+});
+
+function showResults(data) {
+    var card = document.getElementById('resultsCard');
+    var content = document.getElementById('resultsContent');
+    card.classList.remove('d-none');
+    if (data.success) {
+        content.innerHTML = '<div class="alert alert-success"><strong>' + data.imported + ' importiert</strong>' + (data.errors > 0 ? '<br>' + data.errors + ' Fehler' : '') + '</div>';
+    } else {
+        content.innerHTML = '<div class="alert alert-danger">' + (data.error || 'Fehler') + '</div>';
+    }
+}
+</script>
+
+<style>.list-group-item.active { background-color: #003167; border-color: #003167; }</style>
+{% endblock body %}

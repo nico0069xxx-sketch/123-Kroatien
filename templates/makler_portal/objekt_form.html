@@ -9,29 +9,16 @@
                 <h5 class="mb-0">
                     <i class="fa fa-{% if is_new %}plus{% else %}edit{% endif %}"></i>
                     {% if is_new %}
-                        {% if lang == 'hr' %}Nova nekretnina{% else %}Neues Objekt anlegen{% endif %}
+                        {% if lang == 'hr' %}Nova nekretnina{% else %}Neues Objekt{% endif %}
                     {% else %}
                         {% if lang == 'hr' %}Uredi nekretninu{% else %}Objekt bearbeiten{% endif %}
                     {% endif %}
                 </h5>
             </div>
             <div class="card-body">
-                
-                {% if listing.pruefung_fehler %}
-                <div class="alert alert-warning">
-                    <strong><i class="fa fa-exclamation-triangle"></i> {% if lang == 'hr' %}Greške:{% else %}Fehler:{% endif %}</strong>
-                    <ul class="mb-0 mt-2">
-                    {% for fehler in listing.pruefung_fehler.split %}
-                        <li>{{ fehler }}</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-                
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     
-                    <!-- Basisdaten -->
                     <h6 class="text-muted mb-3"><i class="fa fa-info-circle"></i> {% if lang == 'hr' %}Osnovni podaci{% else %}Basisdaten{% endif %}</h6>
                     <div class="row">
                         <div class="col-md-8 mb-3">
@@ -53,7 +40,7 @@
                     
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label>{% if lang == 'hr' %}Status{% else %}Verkauf/Miete{% endif %} *</label>
+                            <label>{% if lang == 'hr' %}Prodaja/Najam{% else %}Verkauf/Miete{% endif %} *</label>
                             <select name="property_status" class="form-control" required>
                                 <option value="Sale" {% if listing.property_status == 'Sale' %}selected{% endif %}>{% if lang == 'hr' %}Prodaja{% else %}Verkauf{% endif %}</option>
                                 <option value="Rent" {% if listing.property_status == 'Rent' %}selected{% endif %}>{% if lang == 'hr' %}Najam{% else %}Miete{% endif %}</option>
@@ -61,24 +48,19 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>{% if lang == 'hr' %}Cijena (EUR){% else %}Preis (EUR){% endif %} *</label>
-                            <input type="text" name="property_price" class="form-control" id="preis-input" value="{{ listing.property_price|default:'' }}" required>
+                            <input type="number" name="property_price" class="form-control" value="{{ listing.property_price|default:'' }}" required>
                         </div>
                     </div>
                     
                     <div class="mb-3">
-                        <label>{% if lang == 'hr' %}Opis{% else %}Beschreibung{% endif %} * (min. 80 {% if lang == 'hr' %}znakova{% else %}Zeichen{% endif %})</label>
-                        <div class="input-group mb-2">
-                            <button type="button" id="ki-btn" class="btn btn-outline-primary" onclick="generiereKIText()">
-                                <i class="fa fa-magic"></i> {% if lang == 'hr' %}Generiraj KI tekst{% else %}KI-Text generieren{% endif %}
-                            </button>
-                            <span id="ki-status" class="ml-2 text-muted" style="line-height:38px;"></span>
-                        </div>
+                        <label>{% if lang == 'hr' %}Opis{% else %}Beschreibung{% endif %} *</label>
+                        <button type="button" class="btn btn-outline-primary btn-sm mb-2" onclick="generiereKIText()">
+                            <i class="fa fa-magic"></i> {% if lang == 'hr' %}Generiraj KI tekst{% else %}KI-Text generieren{% endif %}
+                        </button>
                         <textarea name="property_description" id="beschreibung-feld" class="form-control" rows="5" required>{{ listing.property_description|default:'' }}</textarea>
                     </div>
                     
                     <hr>
-                    
-                    <!-- Standort -->
                     <h6 class="text-muted mb-3"><i class="fa fa-map-marker-alt"></i> {% if lang == 'hr' %}Lokacija{% else %}Standort{% endif %}</h6>
                     <div class="row">
                         <div class="col-md-4 mb-3">
@@ -88,8 +70,7 @@
                                 <option value="Istrien" {% if listing.location == 'Istrien' %}selected{% endif %}>Istrien / Istra</option>
                                 <option value="Kvarner" {% if listing.location == 'Kvarner' %}selected{% endif %}>Kvarner</option>
                                 <option value="Zadar" {% if listing.location == 'Zadar' %}selected{% endif %}>Zadar</option>
-                                <option value="Sibenik-Knin" {% if listing.location == 'Sibenik-Knin' %}selected{% endif %}>Šibenik-Knin</option>
-                                <option value="Split-Dalmatien" {% if listing.location == 'Split-Dalmatien' %}selected{% endif %}>Split-Dalmatien</option>
+                                <option value="Split-Dalmatien" {% if listing.location == 'Split-Dalmatien' %}selected{% endif %}>Split-Dalmacija</option>
                                 <option value="Dubrovnik-Neretva" {% if listing.location == 'Dubrovnik-Neretva' %}selected{% endif %}>Dubrovnik-Neretva</option>
                                 <option value="Zagreb" {% if listing.location == 'Zagreb' %}selected{% endif %}>Zagreb</option>
                             </select>
@@ -103,14 +84,8 @@
                             <input type="text" name="zipcode" class="form-control" value="{{ listing.zipcode|default:'' }}">
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label>{% if lang == 'hr' %}Adresa{% else %}Adresse{% endif %}</label>
-                        <input type="text" name="address" class="form-control" value="{{ listing.address|default:'' }}">
-                    </div>
                     
                     <hr>
-                    
-                    <!-- Details -->
                     <h6 class="text-muted mb-3"><i class="fa fa-ruler-combined"></i> {% if lang == 'hr' %}Detalji{% else %}Details{% endif %}</h6>
                     <div class="row">
                         <div class="col-md-3 mb-3">
@@ -126,53 +101,34 @@
                             <input type="number" name="area" class="form-control" value="{{ listing.area|default:'' }}" min="1" required>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label>{% if lang == 'hr' %}Wohnfl. (m²){% else %}Wohnfl. (m²){% endif %}</label>
+                            <label>{% if lang == 'hr' %}Stambena površina{% else %}Wohnfl. (m²){% endif %}</label>
                             <input type="number" step="0.1" name="size" class="form-control" value="{{ listing.size|default:'' }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label>{% if lang == 'hr' %}Etaže{% else %}Etagen{% endif %}</label>
-                            <input type="number" name="floors" class="form-control" value="{{ listing.floors|default:'1' }}" min="1">
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label>{% if lang == 'hr' %}Garaža{% else %}Garage{% endif %}</label>
-                            <input type="number" name="garage" class="form-control" value="{{ listing.garage|default:'0' }}" min="0">
                         </div>
                     </div>
                     
                     <hr>
-                    
-                    <!-- Fotos -->
                     <h6 class="text-muted mb-3"><i class="fa fa-camera"></i> {% if lang == 'hr' %}Fotografije{% else %}Fotos{% endif %}</h6>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label>{% if lang == 'hr' %}Glavna fotografija{% else %}Hauptfoto{% endif %} *</label>
-                            {% if listing.photo_main %}
-                                <div class="mb-2"><img src="{{ listing.photo_main.url }}" style="max-width:100%;max-height:150px;border-radius:5px;"></div>
-                            {% endif %}
+                            {% if listing.photo_main %}<div class="mb-2"><img src="{{ listing.photo_main.url }}" style="max-width:100%;max-height:100px;border-radius:5px;"></div>{% endif %}
                             <input type="file" name="photo_main" class="form-control" accept="image/*" {% if is_new %}required{% endif %}>
                         </div>
-                        {% for i in "123456" %}
                         <div class="col-md-4 mb-3">
-                            <label>{% if lang == 'hr' %}Foto{% else %}Foto{% endif %} {{ i }}</label>
-                            <input type="file" name="photo_{{ i }}" class="form-control" accept="image/*">
+                            <label>{% if lang == 'hr' %}Foto{% else %}Foto{% endif %} 2</label>
+                            <input type="file" name="photo_1" class="form-control" accept="image/*">
                         </div>
-                        {% endfor %}
+                        <div class="col-md-4 mb-3">
+                            <label>{% if lang == 'hr' %}Foto{% else %}Foto{% endif %} 3</label>
+                            <input type="file" name="photo_2" class="form-control" accept="image/*">
+                        </div>
                     </div>
                     
                     <hr>
-                    
-                    <!-- Buttons -->
                     <div class="d-flex justify-content-between">
-                        <a href="{% url 'main:makler_dashboard' %}" class="btn btn-outline-secondary">
-                            <i class="fa fa-arrow-left"></i> {% if lang == 'hr' %}Natrag{% else %}Zurueck{% endif %}
-                        </a>
-                        <button type="submit" class="btn btn-success btn-lg">
-                            <i class="fa fa-save"></i> {% if lang == 'hr' %}Spremi{% else %}Speichern{% endif %}
-                        </button>
+                        <a href="{% url 'main:makler_dashboard' %}" class="btn btn-outline-secondary"><i class="fa fa-arrow-left"></i> {% if lang == 'hr' %}Natrag{% else %}Zurueck{% endif %}</a>
+                        <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-save"></i> {% if lang == 'hr' %}Spremi{% else %}Speichern{% endif %}</button>
                     </div>
-                    
                 </form>
             </div>
         </div>
@@ -180,87 +136,31 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var preis = document.getElementById('preis-input');
-    if (preis) {
-        preis.addEventListener('blur', function() {
-            var wert = this.value;
-            var nur_zahlen = wert.replace(/[^0-9]/g, '');
-            if (nur_zahlen) {
-                this.value = nur_zahlen;
-            }
-        });
-    }
-});
-
 function generiereKIText() {
-    var btn = document.getElementById('ki-btn');
-    var status = document.getElementById('ki-status');
-    var feld = document.getElementById('beschreibung-feld');
-    
     var typ = document.querySelector('[name="property_type"]').value;
-    var preis = document.getElementById('preis-input').value.replace(/[^0-9]/g, '');
     var region = document.querySelector('[name="location"]').value;
-    var ort = document.querySelector('[name="city"]').value;
-    var wohnflaeche = document.querySelector('[name="size"]').value;
-    var grundstueck = document.querySelector('[name="area"]').value;
-    var schlafzimmer = document.querySelector('[name="bedrooms"]').value;
-    var badezimmer = document.querySelector('[name="bathrooms"]').value;
-    var etagen = document.querySelector('[name="floors"]').value;
-    var garage = document.querySelector('[name="garage"]').value;
+    if (!typ || !region) { alert('{% if lang == "hr" %}Odaberite tip i regiju!{% else %}Bitte Typ und Region auswaehlen!{% endif %}'); return; }
     
-    var typMap = {
-        'House': 'Haus',
-        'Appartment': 'Wohnung', 
-        'Villa': 'Villa',
-        'Property': 'Grundstueck',
-        'New Building': 'Neubau'
+    var data = {
+        typ: typ, region: region,
+        preis: document.querySelector('[name="property_price"]').value,
+        ort: document.querySelector('[name="city"]').value,
+        wohnflaeche: document.querySelector('[name="size"]').value,
+        grundstueck: document.querySelector('[name="area"]').value,
+        schlafzimmer: document.querySelector('[name="bedrooms"]').value,
+        badezimmer: document.querySelector('[name="bathrooms"]').value
     };
-    
-    if (!typ || !region) {
-        alert('Bitte zuerst Typ und Region auswaehlen!');
-        return;
-    }
-    
-    btn.disabled = true;
-    status.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Generiere...';
     
     fetch('/ge/api/m/gen/', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        },
-        body: JSON.stringify({
-            typ: typMap[typ] || typ,
-            preis: preis,
-            region: region,
-            ort: ort,
-            wohnflaeche: wohnflaeche,
-            grundstueck: grundstueck,
-            schlafzimmer: schlafzimmer,
-            badezimmer: badezimmer,
-            etagen: etagen,
-            garage: garage
-        })
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value},
+        body: JSON.stringify(data)
     })
-    .then(function(response) { return response.json(); })
-    .then(function(data) {
-        btn.disabled = false;
-        if (data.success) {
-            feld.value = data.beschreibung;
-            status.innerHTML = '<i class="fa fa-check" style="color:green;"></i> Fertig!';
-            setTimeout(function() { status.innerHTML = ''; }, 3000);
-        } else {
-            status.innerHTML = '<i class="fa fa-times" style="color:red;"></i> ' + (data.error || 'Fehler');
-        }
-    })
-    .catch(function(error) {
-        btn.disabled = false;
-        status.innerHTML = '<i class="fa fa-times" style="color:red;"></i> Verbindungsfehler';
-        console.error(error);
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) document.getElementById('beschreibung-feld').value = d.beschreibung;
+        else alert(d.error || 'Fehler');
     });
 }
 </script>
-
 {% endblock %}

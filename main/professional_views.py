@@ -432,7 +432,7 @@ def professional_list(request, country, category):
     
     professionals = Professional.objects.filter(
         professional_type=professional_type,
-        is_active=True
+        is_featured=True
     ).order_by("name")
     
     trans = TRANSLATIONS.get(lang, TRANSLATIONS["ge"])
@@ -477,27 +477,27 @@ def professional_detail(request, country, category, slug):
     
     # Übersetzte Felder
     translated_region = translate_region(professional.region, lang)
-    translated_languages = translate_languages(professional.languages_spoken, lang)
+    translated_languages = translate_languages(professional.languages, lang)
     
     # Service-Regionen übersetzen (kommagetrennt)
     translated_service_regions = ""
-    if professional.service_regions:
-        regions = [r.strip() for r in professional.service_regions.split(",")]
+    if getattr(professional, "service_regions", ""):
+        regions = [r.strip() for r in getattr(professional, "service_regions", "").split(",")]
         translated_service_regions = ", ".join([translate_region(r, lang) for r in regions])
     
     # Monat übersetzen
     current_month = MONTH_TRANSLATIONS.get(lang, "Januar")
     # Profilaufrufe zaehlen (nur Gruppe A)
     if professional.professional_type in ['real_estate_agent', 'construction_company']:
-        professional.profile_views += 1
-        professional.save(update_fields=['profile_views'])
+        pass  # profile_views nicht vorhanden
+        pass  # save übersprungen
     
     # Referenzprojekte laden
     from main.professional_models import ReferenceProject
     reference_projects = ReferenceProject.objects.filter(
         professional=professional, 
-        is_active=True
-    ).order_by('sort_order', '-created_at')
+        is_featured=True
+    ).order_by('sort_order', '-created')
     
     # Spezialgebiete als Liste
     specializations_list = []

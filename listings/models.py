@@ -96,3 +96,6 @@ class Listing(models.Model):
             "zipcode": self.zipcode,
             "neighborhood": self.neighborhood,
         }
+
+# Hinweis: Falls listing_status und pruefung_fehler noch nicht existieren,
+# fuege diese Felder zur Listing-Klasse hinzu (vor __str__)

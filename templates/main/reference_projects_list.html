@@ -1,0 +1,124 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+<div class="myHeaderBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="text-capitalize text-white">Referenzprojekte</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</header>
+<div class="clearfix"></div>
+
+<section class="py-5">
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="mb-1">Meine Referenzprojekte</h3>
+                <p class="text-muted mb-0">Verwalte deine abgeschlossenen Projekte</p>
+            </div>
+            <a href="{% url 'main:reference_project_create' professional.id %}" class="btn btn-primary">
+                <i class="fa fa-plus mr-2"></i>Neues Projekt
+            </a>
+        </div>
+
+        {% if not professional.show_references %}
+        <div class="alert alert-warning mb-4">
+            <i class="fa fa-exclamation-triangle mr-2"></i>
+            Referenzen sind auf deinem Profil deaktiviert. 
+            <a href="{% url 'main:edit_agent' professional.id %}">Einstellungen aendern</a>
+        </div>
+        {% endif %}
+
+        {% if projects %}
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if project.image_1 %}
+                    <img src="{{ project.image_1.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fa fa-image fa-3x text-white-50"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        {% if project.year or project.location %}
+                        <p class="text-muted small mb-2">
+                            {% if project.year %}<i class="fa fa-calendar mr-1"></i>{{ project.year }}{% endif %}
+                            {% if project.location %} | <i class="fa fa-map-marker mr-1"></i>{{ project.location }}{% endif %}
+                        </p>
+                        {% endif %}
+                        {% if project.description %}
+                        <p class="card-text small">{{ project.description|truncatewords:15 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white">
+                        <div class="btn-group btn-group-sm w-100">
+                            <a href="{% url 'main:reference_project_edit' professional.id project.id %}" class="btn btn-outline-primary">
+                                <i class="fa fa-edit"></i> Bearbeiten
+                            </a>
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal{{ project.id }}">
+                                <i class="fa fa-trash"></i> Loeschen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="deleteModal{{ project.id }}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Projekt loeschen</h5>
+                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Moechtest du <strong>"{{ project.title }}"</strong> wirklich loeschen?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                <form action="{% url 'main:reference_project_delete' professional.id project.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Ja, loeschen</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fa fa-folder-open fa-4x text-muted mb-3"></i>
+            <h4>Noch keine Referenzprojekte</h4>
+            <p class="text-muted">Fuege dein erstes Projekt hinzu!</p>
+            <a href="{% url 'main:reference_project_create' professional.id %}" class="btn btn-primary mt-2">
+                <i class="fa fa-plus mr-2"></i>Erstes Projekt
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{% url 'main:edit_agent' professional.id %}" class="btn btn-outline-secondary">
+                <i class="fa fa-arrow-left mr-2"></i>Zurueck zu Einstellungen
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock body %}

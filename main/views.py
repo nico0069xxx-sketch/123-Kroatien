@@ -1,3 +1,6 @@
+from django.views.decorators.csrf import csrf_exempt
+from main.professional_models import Professional
+
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from listings.models import Listing
@@ -67,6 +70,7 @@ def home(request):
         elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
         else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
 
+    lang = request.session.get('site_language', 'ge')
     context = {
         'latest_8_listings': latest_8_listings,
     }
@@ -145,6 +149,7 @@ def agency_details(request):
         elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
         else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
     
+    lang = request.session.get('site_language', 'ge')
     context = {
         'listings': listings,
         'agent': agent,
@@ -318,6 +323,7 @@ def listings(request):
         elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
         elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
         else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+    lang = request.session.get('site_language', 'ge')
     context = {
         'listings': listings,
         'listings_two_dimensional': listings_two_dimensional,
@@ -339,6 +345,7 @@ def single_details(request, id):
     user_language = request.session.get('site_language', 'en')
     listing = Listing.objects.get(id=id)
     listing.json_content = get_listing_content_with_ai(listing, user_language)
+    lang = request.session.get('site_language', 'ge')
     context = {
         'listing': listing,
     }
@@ -380,6 +387,7 @@ def edit_property(request, id):
         messages.success(request, "Property edit sucsessfully")
         return redirect('main:profile')
 
+    lang = request.session.get('site_language', 'ge')
     context = {
         'listing': listing,
     }
@@ -653,440 +661,296 @@ def set_language_from_url(request, user_language):
 
 
 def agent(request, id):
-    agent = Agent.objects.get(id=id)
-    listings = Listing.objects.filter(realtor=agent)
-    user_language = request.session.get('site_language', 'en')
+    # Try Professional first, then Agent
+    professional = None
+    agent_obj = None
+    
+    try:
+        professional = Professional.objects.get(id=id)
+    except (Professional.DoesNotExist, ValueError):
+        try:
+            agent_obj = Agent.objects.get(id=id)
+        except Agent.DoesNotExist:
+            from django.http import Http404
+            raise Http404("Profil nicht gefunden")
+    
+    user_language = request.session.get("site_language", "ge")
+    
+    if professional:
+        listings = Listing.objects.filter(email=professional.email) | Listing.objects.filter(oib_number=professional.oib_number)
+    else:
+        listings = Listing.objects.filter(realtor=agent_obj)
+    
     for listing in listings:
-        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
-        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
-        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
-        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
-        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
-        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
-        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
-        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
-        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
-        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
-        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
-        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+        if user_language == "ge": listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == "hr": listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == "fr": listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == "en": listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
+        else: listing.json_content = listing.get_json()
+    
+    lang = request.session.get('site_language', 'ge')
     context = {
-        'listings': listings,
-        'agent': agent,
+        "listings": listings,
+        "agent": professional if professional else agent_obj,
+        "professional": professional,
+        "lang": user_language,
     }
-    return render(request, 'main/agent.html', context)
+    return render(request, "main/agent.html", context)
 
 
 def edit_agent(request, id):
-    agent = Agent.objects.get(id=id)
+    # Try to find Professional first, fallback to Agent
+    professional = None
+    agent = None
+    
+    try:
+        professional = Professional.objects.get(id=id)
+    except (Professional.DoesNotExist, ValueError):
+        try:
+            agent = Agent.objects.get(id=id)
+        except Agent.DoesNotExist:
+            messages.error(request, "Profil nicht gefunden.")
+            return redirect('main:home')
+    
     if request.method == 'POST':
-        # same is signup
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        gender = request.POST['gender']
-        city = request.POST['city']
-        country = request.POST['country']
-        company_name = request.POST['company_name']
-        company_logo = request.FILES.get('company_logo') if request.FILES.get('company_logo') else agent.company_logo
-        portrait_photo = request.FILES.get('portrait_photo') if request.FILES.get('portrait_photo') else agent.profile_image
-        oib_number = request.POST['oib_number']
-        domain = request.POST['domain']
-        facebook = request.POST['facebook']
-        instagram = request.POST['instagram']
-        linkedin = request.POST['linkedin']
-        youtube = request.POST['youtube']
-        twitter = request.POST['twitter']
-        description = request.POST['description']
-        mobile = request.POST['mobile']
-        fax = request.POST['fax']
+        if professional:
+            # Update Professional - Basic Info
+            professional.name = request.POST.get('name', professional.name)
+            professional.city = request.POST.get('city', professional.city)
+            professional.region = request.POST.get('region', professional.region)
+            professional.address = request.POST.get('address', professional.address)
+            professional.company_name = request.POST.get('company_name', professional.company_name)
+            
+            # Images
+            if request.FILES.get('company_logo'):
+                professional.company_logo = request.FILES.get('company_logo')
+            if request.FILES.get('portrait_photo'):
+                professional.portrait_photo = request.FILES.get('portrait_photo')
+            if request.FILES.get('profile_image'):
+                professional.profile_image = request.FILES.get('profile_image')
+            
+            # Extended company info (NEW)
+            professional.slogan = request.POST.get('slogan', professional.slogan)
+            professional.founded_year = request.POST.get('founded_year') or None
+            professional.employee_count = request.POST.get('employee_count', professional.employee_count)
+            professional.specializations = request.POST.get('specializations', professional.specializations)
+            
+            # Contact info
+            professional.oib_number = request.POST.get('oib_number', professional.oib_number)
+            professional.website = request.POST.get('domain', professional.website)
+            professional.mobile = request.POST.get('mobile', professional.mobile)
+            professional.fax = request.POST.get('fax', professional.fax)
+            professional.phone = request.POST.get('phone', professional.phone)
+            professional.languages = request.POST.get('languages', professional.languages)
+            
+            # Social Media
+            professional.facebook = request.POST.get('facebook', professional.facebook)
+            professional.instagram = request.POST.get('instagram', professional.instagram)
+            professional.linkedin = request.POST.get('linkedin', professional.linkedin)
+            professional.youtube = request.POST.get('youtube', professional.youtube)
+            professional.twitter = request.POST.get('twitter', professional.twitter)
+            professional.tiktok = request.POST.get('tiktok', professional.tiktok)
+            
+            # Description
+            professional.description = request.POST.get('description', professional.description)
+            professional.description_de = request.POST.get('description_de', professional.description_de)
+            professional.description_hr = request.POST.get('description_hr', professional.description_hr)
+            
+            # Display toggles (checkboxes)
+            professional.show_references = 'show_references' in request.POST
+            professional.show_contact_form = 'show_contact_form' in request.POST
+            professional.show_listings = 'show_listings' in request.POST
+            professional.show_social_media = 'show_social_media' in request.POST
+            professional.show_team = 'show_team' in request.POST
+            
+            professional.save()
+            messages.success(request, "Profil erfolgreich aktualisiert")
+            return redirect('main:agent', id=id)
+        else:
+            # Update Agent (legacy)
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            gender = request.POST['gender']
+            city = request.POST['city']
+            country = request.POST['country']
+            company_name = request.POST['company_name']
+            company_logo = request.FILES.get('company_logo') if request.FILES.get('company_logo') else agent.company_logo
+            portrait_photo = request.FILES.get('portrait_photo') if request.FILES.get('portrait_photo') else agent.profile_image
+            oib_number = request.POST['oib_number']
+            domain = request.POST['domain']
+            facebook = request.POST['facebook']
+            instagram = request.POST['instagram']
+            linkedin = request.POST['linkedin']
+            youtube = request.POST['youtube']
+            twitter = request.POST['twitter']
+            description = request.POST['description']
+            mobile = request.POST['mobile']
+            fax = request.POST['fax']
 
-        user = agent.user
-        user.first_name = first_name
-        user.last_name = last_name
-        agent.first_name = first_name
-        agent.last_name = last_name
-        agent.gender = gender   
-        agent.city = city
-        agent.country = country
-        agent.company_name = company_name
-        agent.company_logo = company_logo
-        agent.profile_image = portrait_photo
-        agent.oib_number = oib_number
-        agent.domain = domain
-        agent.facebook = facebook
-        agent.instagram = instagram
-        agent.linkedin = linkedin
-        agent.youtube = youtube
-        agent.twitter = twitter
-        agent.description = description
-        agent.mobile = mobile
-        agent.fax = fax
-        user.save()
-        agent.save()
-        messages.success(request, "Agent edit sucsessfully")
-        return redirect('main:agent', id=id)
+            user = agent.user
+            user.first_name = first_name
+            user.last_name = last_name
+            agent.first_name = first_name
+            agent.last_name = last_name
+            agent.gender = gender   
+            agent.city = city
+            agent.country = country
+            agent.company_name = company_name
+            agent.company_logo = company_logo
+            agent.profile_image = portrait_photo
+            agent.oib_number = oib_number
+            agent.domain = domain
+            agent.facebook = facebook
+            agent.instagram = instagram
+            agent.linkedin = linkedin
+            agent.youtube = youtube
+            agent.twitter = twitter
+            agent.description = description
+            agent.mobile = mobile
+            agent.fax = fax
+            user.save()
+            agent.save()
+            messages.success(request, "Profil erfolgreich aktualisiert")
+            return redirect('main:agent', id=id)
 
+    lang = request.session.get('site_language', 'ge')
     context = {
         'agent': agent,
+        'professional': professional,
+        'regions': Professional.REGIONS,
+        'lang': lang,
     }
+    
+    # Use extended template for Professional, legacy template for Agent
+    if professional:
+        return render(request, 'main/edit-agent-professional.html', context)
     return render(request, 'main/edit-agent.html', context)
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import time
-import re
 
-# Rate Limiting Cache (Spam-Schutz)
-_inquiry_cache = {}
 
-# === SICHERE FILE-UPLOAD VALIDIERUNG ===
-ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
-ALLOWED_DOC_TYPES = ['application/pdf']
-MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
-MAX_DOC_SIZE = 10 * 1024 * 1024   # 10 MB
-
-def validate_image_upload(file):
-    """Prueft ob eine Bilddatei sicher ist"""
-    if not file:
-        return True, None
-    
-    # Groesse pruefen
-    if file.size > MAX_IMAGE_SIZE:
-        return False, 'Bild zu gross (max. 5 MB)'
-    
-    # Dateityp pruefen
-    if file.content_type not in ALLOWED_IMAGE_TYPES:
-        return False, 'Nur JPEG, PNG oder WebP erlaubt'
-    
-    # Dateiendung pruefen
-    ext = file.name.lower().split('.')[-1]
-    if ext not in ['jpg', 'jpeg', 'png', 'webp']:
-        return False, 'Ungueltige Dateiendung'
-    
-    return True, None
-
-def validate_document_upload(file):
-    """Prueft ob ein Dokument sicher ist"""
-    if not file:
-        return True, None
-    
-    if file.size > MAX_DOC_SIZE:
-        return False, 'Dokument zu gross (max. 10 MB)'
-    
-    if file.content_type not in ALLOWED_DOC_TYPES:
-        return False, 'Nur PDF-Dateien erlaubt'
-    
-    if not file.name.lower().endswith('.pdf'):
-        return False, 'Ungueltige Dateiendung'
-    
-    return True, None
-import json
-from .chatbot import get_chatbot_response
-
-@csrf_exempt
-def chatbot_api(request):
-    from .chatbot import get_chatbot_response, is_property_search, extract_search_criteria
-    from .chatbot import is_professional_search, extract_professional_criteria, professional_search_response
-    from .professional_models import Professional
-    from .professional_views import translate_region, translate_languages, CATEGORY_URLS, COUNTRY_NAMES
-    
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        message = data.get('message', '')
-        language = request.session.get('site_language', 'ge')
-        
-        # ===== DIENSTLEISTER-SUCHE =====
-        if is_professional_search(message):
-            criteria = extract_professional_criteria(message, language)
-            
-            # Dienstleister filtern
-            professionals = Professional.objects.filter(is_active=True)
-            
-            if criteria.get('professional_type'):
-                professionals = professionals.filter(professional_type=criteria['professional_type'])
-            if criteria.get('region'):
-                professionals = professionals.filter(region__icontains=criteria['region'])
-            if criteria.get('verified_only'):
-                professionals = professionals.filter(is_verified=True)
-            if criteria.get('languages'):
-                for lang_code in criteria['languages']:
-                    professionals = professionals.filter(languages_spoken__icontains=lang_code)
-            
-            # Ergebnisse formatieren
-            results = []
-            for prof in professionals[:6]:
-                # URL erstellen
-                prof_type = prof.professional_type
-                url_paths = CATEGORY_URLS.get(prof_type, {})
-                url_path = url_paths.get(language, url_paths.get('ge', ''))
-                country_name = COUNTRY_NAMES.get(language, 'kroatien')
-                
-                results.append({
-                    'id': str(prof.id),
-                    'name': prof.company_name or prof.name,
-                    'type': prof.get_professional_type_display(),
-                    'city': prof.city,
-                    'region': translate_region(prof.region, language),
-                    'languages': translate_languages(prof.languages_spoken, language),
-                    'is_verified': prof.is_verified,
-                    'logo': prof.logo.url if prof.logo else None,
-                    'url': f"/{country_name}/{url_path}/{prof.slug}/",
-                })
-            
-            # Antwort generieren
-            response_text = professional_search_response(
-                len(results), 
-                criteria.get('professional_type'), 
-                language
-            )
-            
-            return JsonResponse({
-                'response': response_text,
-                'is_search': True,
-                'search_type': 'professional',
-                'results': results
-            })
-        
-        # ===== IMMOBILIEN-SUCHE =====
-        if is_property_search(message):
-            criteria = extract_search_criteria(message, language)
-            
-            # Immobilien filtern
-            listings = Listing.objects.filter(is_published=True)
-            
-            if criteria.get('property_type'):
-                listings = listings.filter(property_type=criteria['property_type'])
-            if criteria.get('property_status'):
-                listings = listings.filter(property_status=criteria['property_status'])
-            if criteria.get('price_max'):
-                listings = listings.filter(property_price__lte=criteria['price_max'])
-            if criteria.get('price_min'):
-                listings = listings.filter(property_price__gte=criteria['price_min'])
-            if criteria.get('bedrooms_min'):
-                listings = listings.filter(bedrooms__gte=criteria['bedrooms_min'])
-            if criteria.get('location'):
-                listings = listings.filter(location__icontains=criteria['location'])
-            
-            # Ergebnisse formatieren
-            results = []
-            for listing in listings[:6]:
-                # Sprachspezifischer Content
-                if language == 'ge' and listing.german_content:
-                    content = json.loads(listing.german_content)
-                elif language == 'en' and listing.english_content:
-                    content = json.loads(listing.english_content)
-                elif language == 'hr' and listing.croatian_content:
-                    content = json.loads(listing.croatian_content)
-                else:
-                    content = listing.get_json()
-                
-                results.append({
-                    'id': listing.id,
-                    'title': content.get('property_title', listing.property_title),
-                    'price': listing.property_price,
-                    'location': listing.location,
-                    'bedrooms': listing.bedrooms,
-                    'image': listing.photo_main.url if listing.photo_main else None,
-                })
-            
-            # Antwort mit Suchergebnissen
-            search_responses = {
-                'ge': f"Ich habe {len(results)} passende Immobilien gefunden!",
-                'en': f"I found {len(results)} matching properties!",
-                'hr': f"Pronašao sam {len(results)} odgovarajućih nekretnina!",
-            }
-            response_text = search_responses.get(language, search_responses['ge'])
-            
-            if len(results) == 0:
-                no_results = {
-                    'ge': "Leider keine passenden Immobilien gefunden. Versuche andere Kriterien.",
-                    'en': "No matching properties found. Try different criteria.",
-                    'hr': "Nažalost, nisu pronađene odgovarajuće nekretnine.",
-                }
-                response_text = no_results.get(language, no_results['ge'])
-            
-            return JsonResponse({
-                'response': response_text,
-                'is_search': True,
-                'search_type': 'property',
-                'results': results
-            })
-        
-        # Normale Chatbot-Antwort
-        response = get_chatbot_response(message, language)
-        return JsonResponse({'response': response, 'is_search': False})
-    return JsonResponse({'error': 'Invalid request'}, status=400)
-
-# Platzhalter für owner
-def owner(request):
-    return render(request, 'main/owner.html')
-
-# === PLATZHALTER VIEWS ===
-
-def owner(request):
-    return render(request, 'main/owner.html')
-
-def faq(request):
-    import json
-    import os
-    lang = request.session.get('site_language', 'ge')
-    url_lang = getattr(request, 'LANGUAGE_CODE', None)
-    if url_lang:
-        lang = url_lang
-    
-    # Ländernamen für SEO-URLs
-    country_names = {
-        'ge': 'kroatien',
-        'en': 'croatia',
-        'hr': 'hrvatska',
-        'fr': 'croatie',
-        'gr': 'kroatia',
-        'pl': 'chorwacja',
-        'cz': 'chorvatsko',
-        'ru': 'horvatija',
-        'sw': 'kroatien',
-        'no': 'kroatia',
-        'sk': 'chorvatsko',
-        'nl': 'kroatie'
-    }
-    country = country_names.get(lang, 'kroatien')
-    
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    if lang == 'ge':
-        faq_path = os.path.join(base_path, 'faq_data.json')
-    else:
-        faq_path = os.path.join(base_path, f'faq_data_{lang}.json')
-        if not os.path.exists(faq_path):
-            faq_path = os.path.join(base_path, 'faq_data.json')
-    with open(faq_path, 'r', encoding='utf-8') as f:
-        faq_data = json.load(f)
-    return render(request, 'main/faq.html', {'faqs': faq_data, 'country': country})
-
-def agb(request):
-    return render(request, 'main/agb.html')
-
-def imprint(request):
-    return render(request, 'main/imprint.html')
-
-def data_protection(request):
-    return render(request, 'main/data-protection.html')
-
-def cancellation_policy(request):
-    return render(request, 'main/cancellation-policy.html')
-
-def service(request):
-    return render(request, 'main/service.html')
-
-def sitemap(request):
-    return render(request, 'main/sitemap.html')
-
-def profile(request):
-    return render(request, 'main/profile.html')
-
-def edit_property(request, id):
-    return render(request, 'main/edit-property.html')
-
-def property_details(request, id):
-    from main.ai_listing_helper import get_listing_content_with_ai
-    listing = Listing.objects.get(id=id)
-    user_language = request.session.get('site_language', 'en')
-    listing.json_content = get_listing_content_with_ai(listing, user_language)
-    return render(request, 'main/single-detail.html', {'listing': listing})
-
-def real_estate_agent(request):
-    return render(request, 'main/real-estate-agent.html')
-
-def building_contractor(request):
-    return render(request, 'main/building-contractor.html')
-
-def realestate_contractor_registration(request):
-    return render(request, 'main/realestate-contractor-registration.html')
-
-def listing(request, id):
-    listing_obj = Listing.objects.get(id=id)
-    context = {'listing': listing_obj}
-    return render(request, 'main/listing.html', context)
-
-# === KI-ÜBERSETZUNG ===
-from .translation_service import translate_listing_to_all_languages
+# Reference Projects Management Views
+from main.professional_models import ReferenceProject
 
 @login_required(login_url='account:login')
-def translate_listing(request, id):
-    """Übersetzt eine Immobilie in alle 12 Sprachen"""
-    if request.method == 'POST':
-        try:
-            listing = Listing.objects.get(id=id)
-            source_text = listing.property_description
-            
-            results = translate_listing_to_all_languages(listing, source_text)
-            
-            return JsonResponse({
-                'status': 'success',
-                'message': 'Übersetzung abgeschlossen!',
-                'results': results
-            })
-        except Listing.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Immobilie nicht gefunden'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
+def reference_projects_list(request, id):
+    try:
+        professional = Professional.objects.get(id=id)
+    except Professional.DoesNotExist:
+        messages.error(request, "Profil nicht gefunden.")
+        return redirect('main:home')
     
-    return JsonResponse({'status': 'error', 'message': 'Nur POST erlaubt'})
-
-def faq_detail(request, country, slug):
-    import json
-    import os
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    projects = ReferenceProject.objects.filter(professional=professional)
     
     lang = request.session.get('site_language', 'ge')
-    url_lang = getattr(request, 'LANGUAGE_CODE', None)
-    if url_lang:
-        lang = url_lang
-    
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    
-    # Deutsche FAQ laden (für Slug-zu-ID Mapping)
-    german_faq_path = os.path.join(base_path, 'faq_data.json')
-    with open(german_faq_path, 'r', encoding='utf-8') as f:
-        german_faq_data = json.load(f)
-    
-    # Finde die FAQ-ID anhand des Slugs (aus allen Sprachen)
-    faq_id = None
-    for item in german_faq_data:
-        if item.get('slug') == slug:
-            faq_id = item.get('id')
-            break
-    
-    # Lade die sprachspezifische FAQ-Datei
-    if lang == 'ge':
-        faq_path = german_faq_path
-        faq_data = german_faq_data
-    else:
-        faq_path = os.path.join(base_path, f'faq_data_{lang}.json')
-        if not os.path.exists(faq_path):
-            faq_path = german_faq_path
-        with open(faq_path, 'r', encoding='utf-8') as f:
-            faq_data = json.load(f)
-    
-    # Finde die FAQ: erst nach Slug, dann nach ID
-    faq = None
-    for item in faq_data:
-        if item.get('slug') == slug:
-            faq = item
-            break
-    
-    if not faq and faq_id:
-        for item in faq_data:
-            if item.get('id') == faq_id:
-                faq = item
-                break
-    
-    if not faq:
-        from django.http import Http404
-        raise Http404("FAQ nicht gefunden")
-    
-    # Übersetze Überschriften
-    if faq.get('a_html'):
-        faq['a_html'] = translate_faq_headings(faq['a_html'], lang)
-    return render(request, 'main/faq_detail.html', {'faq': faq, 'faqs': faq_data, 'country': country})
+    context = {
+        'professional': professional,
+        'projects': projects,
+    }
+    return render(request, 'main/reference_projects_list.html', context)
 
 
+@login_required(login_url='account:login')
+def reference_project_create(request, id):
+    try:
+        professional = Professional.objects.get(id=id)
+    except Professional.DoesNotExist:
+        messages.error(request, "Profil nicht gefunden.")
+        return redirect('main:home')
+    
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    if request.method == 'POST':
+        project = ReferenceProject(professional=professional)
+        project.title = request.POST.get('title', '')
+        project.description = request.POST.get('description', '')
+        project.year = request.POST.get('year') or None
+        project.location = request.POST.get('location', '')
+        project.project_type = request.POST.get('project_type', '')
+        project.sort_order = request.POST.get('sort_order') or 0
+        project.is_featured = 'is_featured' in request.POST
+        
+        for i in range(1, 7):
+            img_field = f'image_{i}'
+            if request.FILES.get(img_field):
+                setattr(project, img_field, request.FILES.get(img_field))
+        
+        project.save()
+        messages.success(request, "Referenzprojekt erfolgreich erstellt!")
+        return redirect('main:reference_projects_list', id=id)
+    
+    lang = request.session.get('site_language', 'ge')
+    context = {
+        'professional': professional,
+        'is_edit': False,
+    }
+    return render(request, 'main/reference_project_form.html', context)
+
+
+@login_required(login_url='account:login')
+def reference_project_edit(request, id, project_id):
+    try:
+        professional = Professional.objects.get(id=id)
+        project = ReferenceProject.objects.get(id=project_id, professional=professional)
+    except (Professional.DoesNotExist, ReferenceProject.DoesNotExist):
+        messages.error(request, "Projekt nicht gefunden.")
+        return redirect('main:home')
+    
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    if request.method == 'POST':
+        project.title = request.POST.get('title', project.title)
+        project.description = request.POST.get('description', project.description)
+        project.year = request.POST.get('year') or None
+        project.location = request.POST.get('location', project.location)
+        project.project_type = request.POST.get('project_type', project.project_type)
+        project.sort_order = request.POST.get('sort_order') or 0
+        project.is_featured = 'is_featured' in request.POST
+        
+        for i in range(1, 7):
+            img_field = f'image_{i}'
+            if request.FILES.get(img_field):
+                setattr(project, img_field, request.FILES.get(img_field))
+            if request.POST.get(f'delete_image_{i}'):
+                setattr(project, img_field, None)
+        
+        project.save()
+        messages.success(request, "Referenzprojekt erfolgreich aktualisiert!")
+        return redirect('main:reference_projects_list', id=id)
+    
+    lang = request.session.get('site_language', 'ge')
+    context = {
+        'professional': professional,
+        'project': project,
+        'is_edit': True,
+    }
+    return render(request, 'main/reference_project_form.html', context)
+
+
+@login_required(login_url='account:login')
+def reference_project_delete(request, id, project_id):
+    try:
+        professional = Professional.objects.get(id=id)
+        project = ReferenceProject.objects.get(id=project_id, professional=professional)
+    except (Professional.DoesNotExist, ReferenceProject.DoesNotExist):
+        messages.error(request, "Projekt nicht gefunden.")
+        return redirect('main:home')
+    
+    if professional.user != request.user:
+        messages.error(request, "Keine Berechtigung.")
+        return redirect('main:home')
+    
+    if request.method == 'POST':
+        project.delete()
+        messages.success(request, "Referenzprojekt erfolgreich gelöscht!")
+    
+    return redirect('main:reference_projects_list', id=id)
 
 
 # Professional Registration View (Bilingual: German & Croatian)
@@ -1120,6 +984,7 @@ Telefon: {data.get('contact_telephone','')}
             success = True; print("=== SUCCESS IST TRUE ===")
         except Exception as e:
             print(f'Email error: {e}')
+    lang = request.session.get('site_language', 'ge')
     context = {'lang': lang, 'success': success}
     if success: return redirect('main:registration-success')
     return render(request, 'main/professional_registration.html', context)
@@ -1840,6 +1705,7 @@ def news_page(request, country=None, lang=None):
     if category != 'all':
         news_items = [n for n in news_items if n['category'] == category]
     
+    lang = request.session.get('site_language', 'ge')
     context = {
         'news_items': news_items[:30],  # Max 30 Artikel
         'trans': trans,
@@ -2014,3 +1880,14 @@ Diese E-Mail wurde automatisch von 123-Kroatien.eu gesendet.
             return JsonResponse({'status': 'error', 'message': str(e)})
     
     return JsonResponse({'status': 'error', 'message': 'Nur POST erlaubt'})
+
+
+@login_required(login_url='account:login')
+def makler_dashboard(request):
+    """Redirect to the user's professional profile"""
+    try:
+        professional = Professional.objects.get(user=request.user)
+        return redirect('main:agent', id=professional.id)
+    except Professional.DoesNotExist:
+        messages.error(request, "Kein Makler-Profil gefunden.")
+        return redirect('main:home')

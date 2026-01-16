@@ -430,6 +430,466 @@ canvas {
 }
 
 /* Global Font */
-body, html, * {
+body, html {
     font-family: "Montserrat", sans-serif !important;
+}
+
+/* Font Awesome Fix */
+.fa, .fa::before, i.fa, i.fa::before, .fa-globe, .fa-caret-down, .fa-user, .fa-facebook, .fa-instagram, .fa-youtube, .fa-whatsapp, .fa-envelope, .fa-magic, [class^="fa-"], [class*=" fa-"] {
+    font-family: FontAwesome !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+}
+
+
+/* Karussell responsive - Panorama Format */
+.homepage__property {
+    max-height: 350px;
+    overflow: hidden;
+}
+
+.homepage__property .owl-carousel .item img {
+    height: 350px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .homepage__property {
+        max-height: 280px;
+    }
+    .homepage__property .owl-carousel .item img {
+        height: 280px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .homepage__property {
+        max-height: 200px;
+    }
+    .homepage__property .owl-carousel .item img {
+        height: 200px;
+    }
+}
+
+/* Suchmaske Dunkelblau Hintergrund */
+.search__area {
+    background-color: #1e3a5f !important;
+    padding: 30px 0;
+}
+
+.search__area .form-group label,
+.search__area .form-control,
+.search__area select {
+    color: #fff;
+}
+
+.search__area .select_option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Such-Button in Rot */
+.search__area .btn-search,
+.search__area button[type="submit"],
+.search__area .btn {
+    background-color: #c02333 !important;
+    border-color: #c02333 !important;
+    color: #fff !important;
+}
+
+.search__area .btn-search:hover,
+.search__area button[type="submit"]:hover,
+.search__area .btn:hover {
+    background-color: #a01d2b !important;
+    border-color: #a01d2b !important;
+}
+
+/* KÖNIGSKLASSE CTA Banner für Dienstleister */
+.cta-professionals {
+    background: linear-gradient(135deg, #1e3a5f 0%, #c02333 100%);
+    padding: 40px 0;
+    margin: 30px 0;
+}
+
+.cta-professionals .cta-box {
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 30px 40px;
+    backdrop-filter: blur(10px);
+}
+
+.cta-professionals h2 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.cta-professionals p {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    margin: 0;
+}
+
+.cta-professionals .btn-cta {
+    background: #fff;
+    color: #c02333;
+    padding: 15px 35px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.cta-professionals .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    background: #fff;
+    color: #1e3a5f;
+}
+
+.cta-professionals .btn-cta i {
+    margin-right: 8px;
+}
+
+/* Pulsing Animation */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cta-professionals h2 { font-size: 22px; }
+    .cta-professionals p { font-size: 16px; }
+    .cta-professionals .btn-cta { margin-top: 20px; }
+}
+
+/* CTA Banner dezenter */
+.cta-professionals {
+    background: #1e3a5f !important;
+    padding: 25px 0 !important;
+    margin: 20px 0 !important;
+}
+
+.cta-professionals .cta-box {
+    background: transparent !important;
+    padding: 15px 20px !important;
+}
+
+.cta-professionals h2 {
+    font-size: 22px !important;
+    margin-bottom: 5px !important;
+}
+
+.cta-professionals p {
+    font-size: 15px !important;
+}
+
+.cta-professionals .btn-cta {
+    padding: 12px 25px !important;
+    font-size: 14px !important;
+    box-shadow: none !important;
+}
+
+.pulse {
+    animation: none !important;
+}
+
+/* Alte Topbar ausblenden */
+.topbar {
+    display: none !important;
+}
+
+/* Footer Social Icons größer und weiß */
+.social-icons-footer a {
+    color: #fff !important;
+    font-size: 24px !important;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons-footer a:hover {
+    color: #c02333 !important;
+    transform: scale(1.2);
+}
+
+.social-icons-footer {
+    margin-bottom: 15px;
+}
+
+/* CTA Immobilien Bar - ROT */
+.cta-immobilien-bar {
+    background: #c02333 !important;
+    padding: 25px 0 !important;
+}
+
+.cta-immobilien-bar h3 {
+    color: #fff !important;
+    font-size: 22px !important;
+    margin: 0 0 5px 0 !important;
+    font-weight: 700 !important;
+}
+
+.cta-immobilien-bar h3 i {
+    margin-right: 10px;
+}
+
+.cta-immobilien-bar p {
+    color: rgba(255,255,255,0.9) !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+}
+
+.cta-immobilien-bar .btn-cta-immo {
+    background: #fff !important;
+    color: #c02333 !important;
+    padding: 12px 25px !important;
+    font-weight: 700 !important;
+    border-radius: 50px !important;
+}
+
+.cta-immobilien-bar .btn-cta-immo:hover {
+    background: #1e3a5f !important;
+    color: #fff !important;
+}
+
+/* Footer Service Überschrift */
+.footer-subtitle {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Footer Service Überschrift */
+.footer-subtitle {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Social Icons in einer Reihe */
+.social-icons-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.social-icons-row a {
+    color: #fff;
+    font-size: 22px;
+    transition: all 0.3s ease;
+}
+
+.social-icons-row a:hover {
+    color: #c02333;
+    transform: scale(1.2);
+}
+
+/* Footer Links vertikal */
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    font-size: 14px;
+}
+
+
+
+
+
+/* =============================================================================
+   TYPOGRAFIE - ImmobilienScout24 Stil (verbessert)
+   ============================================================================= */
+
+/* Basis */
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #5f5f5f;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Überschriften - DEUTLICH größer als Fließtext */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    color: #2d2d2d;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.6em;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 26px; }
+h3 { font-size: 22px; }
+h4 { font-size: 18px; }
+h5 { font-size: 17px; }
+h6 { font-size: 16px; }
+
+/* Paragraphen - kleiner als Überschriften */
+p {
+    color: #5f5f5f;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 1em;
+}
+
+/* Card-Titel - deutlich größer als Card-Text */
+.card .card-title,
+.card-title {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin-bottom: 10px !important;
+}
+
+.card-body p,
+.card-body {
+    font-size: 14px;
+    color: #5f5f5f;
+}
+
+/* Navigation - passende Schrift */
+.navbar-nav .nav-link {
+    font-family: 'Nunito Sans', -apple-system, sans-serif !important;
+    font-family: 'Nunito Sans', -apple-system, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #000000 !important;
+    letter-spacing: 0.2px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #003167 !important;
+}
+
+.dropdown-item {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #000000 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+    color: #003167 !important;
+}
+
+/* Property/Listing Karten */
+.property__card .card-title,
+.listing-card h5,
+.property-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #000000 !important;
+    margin-bottom: 8px !important;
+}
+
+/* Preise */
+.property-price,
+.listing-price,
+.price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #003167;
+}
+
+/* Buttons */
+.btn {
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 10px 20px;
+}
+
+/* Lead-Text */
+.lead {
+    font-size: 17px;
+    font-weight: 400;
+    color: #5f5f5f;
+}
+
+/* Labels */
+label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3a3a3a;
+}
+
+/* Tabellen */
+.table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.table td {
+    font-size: 14px;
+    color: #5f5f5f;
+}
+
+/* Badges */
+.badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+/* Text-Muted */
+.text-muted {
+    color: #8a8a8a !important;
+    font-size: 13px;
+}
+
+/* Links */
+a {
+    color: #003167;
+}
+
+/* Footer */
+.footer-title {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Small Text */
+small, .small {
+    font-size: 13px;
+    color: #8a8a8a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 { font-size: 26px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+    h4 { font-size: 16px; }
+    .card .card-title { font-size: 16px !important; }
+    .navbar-nav .nav-link {
+    font-family: 'Nunito Sans', -apple-system, sans-serif !important; font-size: 14px !important; }
+}
+
+/* FontAwesome Icons Fix */
+.fa:before {
+    font-family: FontAwesome !important;
 }

@@ -40,7 +40,7 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-6">
                                     <a href="#" class="profile__agency-logo">
-                                        <img src="{% if agent.profile_image %}{{agent.profile_image.url}}{% else %}{% static 'images/user.png' %}{% endif %}"
+                                        <img src="{% if professional %}{% if professional.profile_image %}{{professional.profile_image.url}}{% else %}{% static 'images/user.png' %}{% endif %}{% elif agent and agent.profile_image %}{{agent.profile_image.url}}{% else %}{% static 'images/user.png' %}{% endif %}"
                                         alt="" class="img-fluid">
                                         <div class="total__property-agent">
                                             {{listings.count}} {% if listings.count > 1 %}{{Listings}}{% else %}{{Listing}}{% endif %}

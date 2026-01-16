@@ -14,7 +14,7 @@ class ProfessionalAdmin(admin.ModelAdmin):
         'status_anzeige',
         'dokumente_vorhanden',
         'datum',
-        'profile_views'
+        'is_active'
     ]
     
     list_filter = [
@@ -24,7 +24,7 @@ class ProfessionalAdmin(admin.ModelAdmin):
     
     search_fields = ['name', 'email', 'city']
     list_per_page = 30
-    ordering = ['-created_at']
+    ordering = ['-created']
     
     actions = ['genehmigen', 'ablehnen']
     
@@ -83,7 +83,7 @@ class ProfessionalAdmin(admin.ModelAdmin):
     
     @admin.display(description='Registriert am')
     def datum(self, obj):
-        return obj.created_at.strftime('%d.%m.%Y')
+        return obj.created.strftime('%d.%m.%Y')
     
     fieldsets = (
         ('STATUS', {
@@ -113,7 +113,7 @@ class ProfessionalAdmin(admin.ModelAdmin):
         }),
     )
     
-    readonly_fields = ['dokumente_vorschau', 'created_at']
+    readonly_fields = ['dokumente_vorschau', 'created']
     
     @admin.display(description='')
     def dokumente_vorschau(self, obj):
