@@ -225,7 +225,17 @@ function generateKI() {
     const results = document.getElementById('ki-results');
     
     btn.disabled = true;
-    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Generiere...';
+    btn.innerHTML = '<span class="ki-loading"></span> Generiere...';
+    
+    // Animation Style hinzufügen
+    if (!document.getElementById('ki-style')) {
+        var style = document.createElement("style");
+        style.id = 'ki-style';
+        style.innerHTML = ".ki-loading{display:inline-block;width:12px;height:12px;border:1.5px solid rgba(0,123,255,0.3);border-top-color:#007bff;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px;}@keyframes spin{to{transform:rotate(360deg)}}.ki-glow{position:relative;overflow:hidden;}.ki-glow::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(90deg,transparent,rgba(0,123,255,0.4),transparent);border-radius:inherit;animation:shimmer 1.5s ease-in-out infinite;}@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}";
+        document.head.appendChild(style);
+    }
+    btn.classList.add("ki-glow");
+    
     container.style.display = 'block';
     loading.style.display = 'block';
     results.innerHTML = '';
@@ -237,6 +247,7 @@ function generateKI() {
         .then(data => {
             loading.style.display = 'none';
             btn.disabled = false;
+            btn.classList.remove("ki-glow");
             btn.innerHTML = '<i class="fa fa-magic"></i> KI-Text generieren';
             
             if (data.error) {
@@ -256,6 +267,7 @@ function generateKI() {
         .catch(err => {
             loading.style.display = 'none';
             btn.disabled = false;
+            btn.classList.remove("ki-glow");
             btn.innerHTML = '<i class="fa fa-magic"></i> KI-Text generieren';
             results.innerHTML = '<p style="color:red;">Fehler beim Laden.</p>';
         });

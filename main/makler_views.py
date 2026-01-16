@@ -94,10 +94,12 @@ def makler_objekt_neu(request):
             
             if 'photo_main' in request.FILES:
                 listing.photo_main = request.FILES['photo_main']
+            listing.photo_main_caption = request.POST.get('photo_main_caption', '')
             
             for i in range(1, 7):
                 if f'photo_{i}' in request.FILES:
                     setattr(listing, f'photo_{i}', request.FILES[f'photo_{i}'])
+                setattr(listing, f'photo_{i}_caption', request.POST.get(f'photo_{i}_caption', ''))
             
             listing.save()
             
@@ -152,9 +154,12 @@ def makler_objekt_bearbeiten(request, listing_id):
             
             if 'photo_main' in request.FILES:
                 listing.photo_main = request.FILES['photo_main']
+            listing.photo_main_caption = request.POST.get('photo_main_caption', '')
+            
             for i in range(1, 7):
                 if f'photo_{i}' in request.FILES:
                     setattr(listing, f'photo_{i}', request.FILES[f'photo_{i}'])
+                setattr(listing, f'photo_{i}_caption', request.POST.get(f'photo_{i}_caption', ''))
             
             if listing.listing_status == 'aktiv':
                 listing.listing_status = 'pruefung'

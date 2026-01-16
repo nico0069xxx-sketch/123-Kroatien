@@ -33,6 +33,16 @@ class Listing(models.Model):
     photo_4 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_5 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_6 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
+    
+    # Foto-Beschriftungen
+    photo_main_caption = models.CharField(max_length=200, blank=True, verbose_name="Hauptfoto Beschriftung")
+    photo_1_caption = models.CharField(max_length=200, blank=True, verbose_name="Foto 2 Beschriftung")
+    photo_2_caption = models.CharField(max_length=200, blank=True, verbose_name="Foto 3 Beschriftung")
+    photo_3_caption = models.CharField(max_length=200, blank=True, verbose_name="Foto 4 Beschriftung")
+    photo_4_caption = models.CharField(max_length=200, blank=True, verbose_name="Foto 5 Beschriftung")
+    photo_5_caption = models.CharField(max_length=200, blank=True, verbose_name="Foto 6 Beschriftung")
+    photo_6_caption = models.CharField(max_length=200, blank=True, verbose_name="Foto 7 Beschriftung")
+    
     # Status-System
     LISTING_STATUS = [
         ('pruefung', 'Zur Pruefung'),

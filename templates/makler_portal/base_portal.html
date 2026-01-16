@@ -15,7 +15,7 @@
                     <small class="text-white-50">{{ professional.name }}</small>
                 </div>
                 <div>
-                    <a href="{% url 'main:edit_agent' professional.id %}" class="btn btn-outline-light btn-sm mr-2"><i class="fa fa-user-edit"></i> Profil</a>
+                    {% if professional %}<a href="{% url 'main:edit_agent' professional.id %}" class="btn btn-outline-light btn-sm mr-2"><i class="fa fa-user-edit"></i> Profil</a>{% endif %}
                     <a href="{% url 'main:makler_dashboard' %}" class="btn btn-outline-light btn-sm mr-2">
                         <i class="fa fa-tachometer-alt"></i> Dashboard
                     </a>

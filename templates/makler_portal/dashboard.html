@@ -194,7 +194,16 @@ function generiereKI(id) {
     var btn = document.getElementById('ki-btn-' + id);
     var originalHtml = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    btn.innerHTML = '<span class="ki-loading"></span>';
+    
+    // Animation Style hinzufügen
+    if (!document.getElementById('ki-style')) {
+        var style = document.createElement("style");
+        style.id = 'ki-style';
+        style.innerHTML = ".ki-loading{display:inline-block;width:12px;height:12px;border:1.5px solid rgba(23,162,184,0.3);border-top-color:#17a2b8;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px;}@keyframes spin{to{transform:rotate(360deg)}}.ki-glow{position:relative;overflow:hidden;}.ki-glow::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(90deg,transparent,rgba(23,162,184,0.4),transparent);border-radius:inherit;animation:shimmer 1.5s ease-in-out infinite;}@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}";
+        document.head.appendChild(style);
+    }
+    btn.classList.add("ki-glow");
     
     fetch('/ge/api/m/gen/' + id + '/', {
         method: 'POST', 
@@ -203,6 +212,7 @@ function generiereKI(id) {
     .then(function(r) { return r.json(); })
     .then(function(d) {
         btn.disabled = false;
+        btn.classList.remove("ki-glow");
         if(d.success) {
             btn.innerHTML = '<i class="fa fa-check" style="color:green;"></i>';
             setTimeout(function() { btn.innerHTML = originalHtml; }, 2000);
@@ -214,6 +224,7 @@ function generiereKI(id) {
     })
     .catch(function(e) {
         btn.disabled = false;
+        btn.classList.remove("ki-glow");
         btn.innerHTML = originalHtml;
         alert('Verbindungsfehler');
     });
