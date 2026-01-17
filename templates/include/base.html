@@ -49,16 +49,17 @@
     <!-- favicon.ico in the root directory -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
 
-    <meta name="theme-color" content="#E41F0E">
+    <meta name="theme-color" content="#0F172A">
     <!-- Font Awesome 4.7 - Multiple CDN sources for reliability -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/modern-theme.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
     
     <!-- Elegante Typografie für Premium-Immobilien -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     {% block style %}{% endblock style %}
 
@@ -125,6 +126,8 @@
 </head>
 
 <body>
+    <!-- Mobile Nav Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
         {% if user.is_authenticated %}
         {% if messages %}
 
@@ -194,7 +197,7 @@
                 <button class="navbar-toggler rightNav" type="button" data-toggle="collapse" data-target="#main_nav99">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="main_nav99">
+                <div class="collapse navbar-collapse" id="main_nav99" style="background: #013565 !important;">
                     <ul class="navbar-nav mx-auto">
                         <!-- KAUFEN -->
                         <li class="nav-item dropdown">
@@ -377,6 +380,22 @@
         </script>
         {% block js %}{% endblock js %}
         {% include "chatbot_widget.html" %}
+
+<script>
+$(document).ready(function() {
+    $("#main_nav99").on("show.bs.collapse", function() {
+        $("#navOverlay").addClass("active");
+    });
+    $("#main_nav99").on("hide.bs.collapse", function() {
+        $("#navOverlay").removeClass("active");
+    });
+    $("#navOverlay").on("click", function() {
+        $("#main_nav99").collapse("hide");
+    });
+});
+</script>
+
+
     </body>
 
 </html>
