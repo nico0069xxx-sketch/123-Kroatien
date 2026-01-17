@@ -293,7 +293,7 @@ p {
 }
 
 .bg__footer-bottom-v1 {
-  background: #0A0F1A;
+  background: #000 !important;
 }
 
 .bg__footer-bottom-v1 a {
@@ -361,4 +361,12 @@ p {
 .navbar .btn-danger,
 .navbar .btn.dropdown-toggle {
   margin-top: 8px !important;
+}
+
+
+/* Footer Bottom - Bessere Schrift */
+.bg__footer-bottom-v1 {
+  font-size: 0.875rem !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
