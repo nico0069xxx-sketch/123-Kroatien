@@ -504,7 +504,7 @@ p {
     }
     
     #chatbot-widget #chatbot-toggle::before {
-        content: '•  Kroatien Agent  •';
+        content: '...noch Fragen?';
         font-size: 15px;
         color: white;
         font-family: 'Outfit', sans-serif;
@@ -531,7 +531,7 @@ p {
             rgba(255, 255, 255, 0.3),
             transparent
         );
-        animation: lightBeam 3s ease-in-out infinite;
+        animation: lightBeam 8s ease-in-out infinite;
     }
     
     @keyframes lightBeam {
