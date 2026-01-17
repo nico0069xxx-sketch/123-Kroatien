@@ -1,0 +1,690 @@
+/* =====================================================
+   123-KROATIEN.EU - Modern Theme
+   Premium Real Estate Portal Design
+   ===================================================== */
+
+/* ==================== CSS Variables ==================== */
+:root {
+  /* Primary Colors */
+  --color-primary: #0F172A;        /* Adriatic Deep - Navy */
+  --color-secondary: #EA580C;      /* Sunset Terracotta */
+  --color-accent: #EA580C;
+  
+  /* Background Colors */
+  --color-bg: #FFFFFF;
+  --color-bg-subtle: #F8FAFC;
+  --color-bg-muted: #F1F5F9;
+  
+  /* Text Colors */
+  --color-text: #0F172A;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  
+  /* Legacy Colors (for gradual migration) */
+  --color-red: #DC2626;
+  --color-blue: #013565;
+  
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* ==================== Base Typography ==================== */
+body {
+  font-family: var(--font-body) !important;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.title__head h2,
+.card__image-body h6 a,
+.footer-title {
+  font-family: var(--font-heading) !important;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+/* ==================== Top Bar ==================== */
+.topbar.bg-topnav,
+.bg-topnav {
+  background: var(--color-primary) !important;
+  padding: 0.5rem 0;
+}
+
+.topbar-link li a {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: color var(--transition-fast);
+}
+
+.topbar-link li a:hover {
+  color: #fff !important;
+}
+
+.lang-drop {
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #fff;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ==================== Navigation ==================== */
+.navbar.navbar-soft {
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  padding: 0.75rem 0 !important;
+  min-height: auto !important;
+  transition: all var(--transition-normal);
+}
+
+.navbar .navbar-brand img {
+  width: 200px !important;
+  max-width: 200px !important;
+  height: auto;
+  transition: all var(--transition-fast);
+}
+
+.navbar-nav .nav-item .nav-link {
+  font-family: var(--font-body) !important;
+  font-size: 0.9375rem !important;
+  font-weight: 500 !important;
+  color: var(--color-text) !important;
+  padding: 0.5rem 1rem !important;
+  transition: color var(--transition-fast);
+  text-transform: none !important;
+  letter-spacing: 0;
+}
+
+.navbar-nav .nav-item .nav-link:hover,
+.navbar-nav .nav-item .nav-link.active {
+  color: var(--color-secondary) !important;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+  border: none;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  padding: 0.625rem 1.25rem;
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-secondary);
+}
+
+/* CTA Button in Nav */
+.navbar .btn-danger,
+.navbar .btn.dropdown-toggle {
+  background: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+  font-family: var(--font-body);
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  padding: 0.625rem 1.25rem !important;
+  border-radius: var(--radius-full) !important;
+  text-transform: none !important;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+}
+
+.navbar .btn-danger:hover,
+.navbar .btn.dropdown-toggle:hover {
+  background: #C2410C !important;
+  border-color: #C2410C !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==================== Hero/Carousel Section ==================== */
+.homepage__property {
+  background: var(--color-bg-subtle);
+}
+
+.homepage__property-carousel .item img {
+  border-radius: 0;
+}
+
+/* ==================== Search Filter Area ==================== */
+.search__area {
+  background: var(--color-bg-subtle);
+  padding: 2rem 0;
+}
+
+.search__area .form-group select,
+.search__area .form-control {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+  height: auto;
+}
+
+.search__area .form-group select:focus,
+.search__area .form-control:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+  outline: none;
+}
+
+.search__area .btn-outline-blue,
+.search__area .btn-primary {
+  background: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
+  transition: all var(--transition-fast);
+}
+
+.search__area .btn-outline-blue:hover,
+.search__area .btn-primary:hover {
+  background: #C2410C !important;
+  border-color: #C2410C !important;
+  transform: translateY(-1px);
+}
+
+/* ==================== Section Titles ==================== */
+.title__head {
+  margin-bottom: 2.5rem;
+}
+
+.title__head h2 {
+  font-family: var(--font-heading) !important;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text) !important;
+  margin-bottom: 0.5rem;
+}
+
+.title__head h2.text-danger {
+  color: var(--color-text) !important;
+}
+
+.title__head p {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  font-size: 1.0625rem;
+}
+
+/* ==================== Info Cards (We for you section) ==================== */
+.myCard {
+  background: #fff;
+  border: none !important;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.myCard:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.myCard .myIcon {
+  font-size: 2.5rem;
+  color: var(--color-secondary) !important;
+  padding: 1rem;
+}
+
+.myCard h6 {
+  font-family: var(--font-heading) !important;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.myCard p {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+/* ==================== Property Cards ==================== */
+.card__image {
+  background: #fff;
+  border: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.card__image:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-6px);
+}
+
+.card__image .card__image-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.card__image .card__image-header img {
+  transition: transform var(--transition-slow);
+}
+
+.card__image:hover .card__image-header img {
+  transform: scale(1.05);
+}
+
+.card__image .info {
+  background: var(--color-secondary) !important;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.card__image-body {
+  padding: 1.25rem;
+}
+
+.card__image-body .badge {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary) !important;
+}
+
+.card__image-body h6 {
+  font-family: var(--font-heading) !important;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.card__image-body h6 a {
+  color: var(--color-text);
+  transition: color var(--transition-fast);
+}
+
+.card__image-body h6 a:hover {
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+
+.card__image-body p {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Property Stats */
+.card__content .list-inline-item span {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary) !important;
+}
+
+.card__content .list-inline-item i {
+  color: var(--color-secondary) !important;
+}
+
+/* Property Price */
+.card__image-footer h6 {
+  font-family: var(--font-mono) !important;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-secondary) !important;
+}
+
+.card__image-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--color-bg-muted);
+  background: var(--color-bg-subtle);
+}
+
+/* ==================== About Section ==================== */
+.home__about {
+  padding: 4rem 0;
+}
+
+.title__leading h2 {
+  font-family: var(--font-heading) !important;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text) !important;
+}
+
+.title__leading h2.text-danger {
+  color: var(--color-text) !important;
+}
+
+.title__leading p {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+
+.title__leading .btn-outline-blue {
+  background: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+}
+
+.title__leading .btn-outline-blue:hover {
+  background: #C2410C !important;
+  border-color: #C2410C !important;
+}
+
+/* ==================== Partners Section ==================== */
+.projects__partner {
+  padding: 3rem 0;
+  background: var(--color-bg-subtle);
+}
+
+/* ==================== Call to Action Banner ==================== */
+.bg-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #1E293B 100%) !important;
+}
+
+.bg-gradient h2 {
+  font-family: var(--font-heading) !important;
+  font-weight: 600;
+}
+
+.bg-gradient p {
+  font-family: var(--font-body);
+  opacity: 0.9;
+}
+
+/* ==================== Blog/News Cards ==================== */
+.blog__home .card__image-body h6 a {
+  font-family: var(--font-heading) !important;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.blog__home .card__image-body p {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
+.blog__home .btn.bg-logo2 {
+  background: var(--color-primary) !important;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+/* ==================== Footer ==================== */
+.myFooterBg {
+  background: var(--color-primary) !important;
+}
+
+.widget__footer .footer-title {
+  font-family: var(--font-heading) !important;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+
+.widget__footer p,
+.widget__footer a,
+.widget__footer li a {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color var(--transition-fast);
+}
+
+.widget__footer a:hover,
+.widget__footer li a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.widget__footer .form-control {
+  font-family: var(--font-body);
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+.widget__footer .btn-light {
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.bg__footer-bottom-v1 {
+  background: #0A0F1A;
+  padding: 1rem 0;
+}
+
+.bg__footer-bottom-v1 span {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.bg__footer-bottom-v1 a {
+  color: var(--color-secondary) !important;
+  font-weight: 600;
+}
+
+/* ==================== Buttons Global ==================== */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary,
+.btn-danger {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.btn-primary:hover,
+.btn-danger:hover {
+  background: #C2410C;
+  border-color: #C2410C;
+}
+
+.bg-logo2 {
+  background: var(--color-primary) !important;
+}
+
+/* ==================== Forms ==================== */
+.form-control {
+  font-family: var(--font-body);
+  border-radius: var(--radius-md);
+  border: 1px solid #E2E8F0;
+  padding: 0.75rem 1rem;
+  transition: all var(--transition-fast);
+}
+
+.form-control:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+}
+
+/* ==================== Utility Classes ==================== */
+.text-danger {
+  color: var(--color-secondary) !important;
+}
+
+.bg-danger {
+  background: var(--color-secondary) !important;
+}
+
+.txtRed {
+  color: var(--color-secondary) !important;
+}
+
+/* Price Display */
+.card__image-footer h6,
+[class*="price"] {
+  font-family: var(--font-mono) !important;
+}
+
+/* ==================== Mobile Responsiveness ==================== */
+@media (max-width: 991px) {
+  .navbar .navbar-brand img {
+    width: 160px !important;
+  }
+  
+  .navbar-nav .nav-item .nav-link {
+    padding: 0.75rem 0 !important;
+    border-bottom: 1px solid var(--color-bg-muted);
+  }
+  
+  h1 { font-size: 2rem; }
+  h2, .title__head h2 { font-size: 1.75rem; }
+  
+  .myCard {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 15px;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2, .title__head h2 { font-size: 1.5rem; }
+  
+  .card__image-body {
+    padding: 1rem;
+  }
+  
+  .home__about {
+    padding: 2.5rem 0;
+  }
+}
+
+/* ==================== Scroll to Top Button ==================== */
+#return-to-top {
+  background: var(--color-secondary);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-fast);
+}
+
+#return-to-top:hover {
+  background: #C2410C;
+  transform: translateY(-2px);
+}
+
+/* ==================== Nice Scrollbar ==================== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-subtle);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ==================== Selection Color ==================== */
+::selection {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+/* ==================== Animation for Cards ==================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card__image,
+.myCard {
+  animation: fadeInUp 0.5s ease forwards;
+}
