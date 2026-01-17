@@ -1101,3 +1101,25 @@ p {
 .navbar-collapse.show {
   z-index: 1003;
 }
+
+/* Desktop Navigation Fix */
+@media (min-width: 992px) {
+  /* Entfernen des blauen Hintergrunds von der Navigation */
+  .navbar.navbar-soft,
+  .navbar-nav,
+  .navbar .container {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  .navbar.navbar-soft {
+    background: #fff !important;
+  }
+  
+  /* Registrieren-Button im Desktop ausblenden */
+  .navbar .btn-danger.dropdown-toggle,
+  .navbar .nav-item .btn-danger,
+  .navbar-nav + .navbar-nav {
+    display: none !important;
+  }
+}
