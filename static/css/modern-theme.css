@@ -434,3 +434,17 @@ p {
   font-family: var(--font-body);
   font-weight: 700;
 }
+
+/* Listings Seite - Beide Spalten oben ausrichten */
+.products__filter {
+  margin-top: 0 !important;
+}
+
+.col-lg-8 .row {
+  align-items: flex-start;
+}
+
+.tabs__custom-v2 .nav-pills.myTab {
+  margin-top: 0;
+  padding-top: 0;
+}
