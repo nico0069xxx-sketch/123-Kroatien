@@ -92,7 +92,7 @@ p {
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 /* Dropdown */
@@ -111,14 +111,14 @@ p {
 
 .dropdown-item:hover {
   background-color: var(--color-bg-subtle);
-  color: var(--color-secondary);
+  color: #013565;
 }
 
 /* CTA Button in Nav */
 .navbar .btn-danger,
 .navbar .btn.dropdown-toggle {
   background: var(--color-secondary) !important;
-  border-color: var(--color-secondary) !important;
+  border-color: #013565 !important;
   font-family: var(--font-body);
   font-size: 0.875rem !important;
   font-weight: 600 !important;
@@ -151,7 +151,7 @@ p {
 .search__area .btn-outline-blue,
 .search__area .btn-primary {
   background: var(--color-secondary) !important;
-  border-color: var(--color-secondary) !important;
+  border-color: #013565 !important;
   font-family: var(--font-body);
   font-weight: 600;
   border-radius: var(--radius-md);
@@ -186,7 +186,7 @@ p {
 
 .myCard .myIcon {
   font-size: 2.5rem;
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
   padding: 1rem;
 }
 
@@ -238,7 +238,7 @@ p {
 }
 
 .card__image-body h6 a:hover {
-  color: var(--color-secondary);
+  color: #013565;
   text-decoration: none;
 }
 
@@ -247,12 +247,12 @@ p {
 }
 
 .card__content .list-inline-item i {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 .card__image-footer h6 {
   font-family: var(--font-mono) !important;
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 .card__image-footer {
@@ -267,7 +267,7 @@ p {
 
 .title__leading .btn-outline-blue {
   background: var(--color-secondary) !important;
-  border-color: var(--color-secondary) !important;
+  border-color: #013565 !important;
   border-radius: var(--radius-full);
 }
 
@@ -297,7 +297,7 @@ p {
 }
 
 .bg__footer-bottom-v1 a {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 /* Buttons */
@@ -307,16 +307,16 @@ p {
 
 .btn-primary, .btn-danger {
   background: var(--color-secondary);
-  border-color: var(--color-secondary);
+  border-color: #013565;
 }
 
 /* Utility */
 .text-danger {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 .txtRed {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 /* Mobile */
@@ -414,7 +414,7 @@ p {
 
 .card__image__body h6 a:hover,
 .card__image-body h6 a:hover {
-  color: var(--color-secondary);
+  color: #013565;
 }
 
 /* Property Stats - Icons in neuem Orange statt Rot */
@@ -424,13 +424,13 @@ p {
 }
 
 .card__content .list-inline-item i {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
 }
 
 /* Price */
 .card__image__footer .price h6,
 .card__image-footer h6 {
-  color: var(--color-secondary) !important;
+  color: #013565 !important;
   font-family: var(--font-body);
   font-weight: 700;
 }
@@ -566,7 +566,7 @@ p {
     
     .navbar-nav .nav-link:hover {
         background: #f8f9fa;
-        color: var(--color-secondary) !important;
+        color: #013565 !important;
     }
     
     /* Dropdown Mobile */
@@ -586,7 +586,7 @@ p {
     
     .navbar-nav .dropdown-item:hover {
         background: #e9ecef !important;
-        color: var(--color-secondary) !important;
+        color: #013565 !important;
     }
     
     /* Registrieren Button Mobile */
@@ -854,7 +854,7 @@ p {
     width: 100% !important;
     margin-top: 1rem !important;
     background: var(--color-secondary) !important;
-    border-color: var(--color-secondary) !important;
+    border-color: #013565 !important;
   }
 }
 
@@ -1122,4 +1122,153 @@ p {
   .navbar-nav + .navbar-nav {
     display: none !important;
   }
+}
+
+/* ==================== Elegante Dropdowns ==================== */
+/* Filter-Dropdowns auf der Startseite */
+.search__area select.form-control,
+.search__area .form-control,
+.form-group select,
+select.form-control {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #fff !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23013565' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 12px !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 0.875rem 2.5rem 0.875rem 1rem !important;
+  font-size: 0.9375rem !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.search__area select.form-control:hover,
+.search__area .form-control:hover,
+select.form-control:hover {
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08) !important;
+}
+
+.search__area select.form-control:focus,
+.search__area .form-control:focus,
+select.form-control:focus {
+  border-color: #013565 !important;
+  box-shadow: 0 0 0 3px rgba(1, 53, 101, 0.15) !important;
+  outline: none !important;
+}
+
+/* Dropdown-Optionen */
+.search__area select.form-control option,
+select.form-control option {
+  padding: 0.75rem 1rem !important;
+  font-weight: 400 !important;
+}
+
+/* Navigation Dropdowns */
+.navbar .dropdown-menu {
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12) !important;
+  padding: 0.5rem !important;
+  margin-top: 0.5rem !important;
+  animation: dropdownFade 0.2s ease !important;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar .dropdown-menu .dropdown-item {
+  border-radius: 8px !important;
+  padding: 0.625rem 1rem !important;
+  margin: 0.125rem 0 !important;
+  font-weight: 500 !important;
+  transition: all 0.15s ease !important;
+}
+
+.navbar .dropdown-menu .dropdown-item:hover {
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%) !important;
+  color: #013565 !important;
+  transform: translateX(4px) !important;
+}
+
+/* Geöffnete Dropdown-Liste Styling */
+select.form-control option,
+.search__area select option,
+.form-group select option {
+  padding: 12px 16px !important;
+  background: #fff !important;
+  color: #334155 !important;
+  font-weight: 400 !important;
+}
+
+select.form-control option:hover,
+select.form-control option:checked,
+.search__area select option:hover,
+.search__area select option:checked {
+  background: #EFF6FF !important;
+  background-color: #EFF6FF !important;
+  color: #013565 !important;
+}
+
+
+
+
+
+
+/* Suchmaske Dropdowns - Maximale Spezifität */
+body .search__area .nice-select.open,
+body form.search__area .nice-select.open {
+  border: 2px solid #013565 !important;
+  box-shadow: 0 0 0 4px rgba(1, 53, 101, 0.2) !important;
+}
+
+body .search__area .nice-select .option:hover,
+body form.search__area .nice-select .option:hover {
+  background-color: #DBEAFE !important;
+  color: #013565 !important;
+}
+
+body .search__area .nice-select .option.selected,
+body form.search__area .nice-select .option.selected {
+  background-color: #DBEAFE !important;
+  color: #013565 !important;
+  font-weight: 600 !important;
+}
+
+/* Suchmaske - Open-Effekt verstärkt */
+body .search__area .nice-select.open {
+  border-color: #013565 !important;
+  border-width: 2px !important;
+  box-shadow: 0 0 0 4px rgba(1, 53, 101, 0.25), 0 10px 20px rgba(0,0,0,0.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+body .search__area .nice-select:focus {
+  border-color: #013565 !important;
+  box-shadow: 0 0 0 4px rgba(1, 53, 101, 0.25) !important;
+}
+
+
+
+
+/* Listings-Seite - No Property Found nach oben neben Buttons */
+.tabs__custom-v2 h3.text-center.text-capitalize.mt-5.mb-5 {
+  margin-top: -42px !important;
+  text-align: left !important;
+  padding-left: 20px !important;
 }
