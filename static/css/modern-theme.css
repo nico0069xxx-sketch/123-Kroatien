@@ -546,3 +546,249 @@ p {
         }
     }
 }
+
+/* Mobile Navigation - Elegantes Design */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: #fff !important;
+        padding: 1rem;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        margin-top: 0.5rem;
+    }
+    
+    .navbar-nav .nav-link {
+        color: var(--color-text) !important;
+        padding: 0.875rem 1rem !important;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: 500 !important;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background: #f8f9fa;
+        color: var(--color-secondary) !important;
+    }
+    
+    /* Dropdown Mobile */
+    .navbar-nav .dropdown-menu {
+        background: #f8f9fa !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding-left: 1rem;
+        margin: 0;
+    }
+    
+    .navbar-nav .dropdown-item {
+        color: var(--color-text-secondary) !important;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .navbar-nav .dropdown-item:hover {
+        background: #e9ecef !important;
+        color: var(--color-secondary) !important;
+    }
+    
+    /* Registrieren Button Mobile */
+    .navbar .btn-danger {
+        margin: 1rem 0 0.5rem 0;
+        width: 100%;
+    }
+}
+
+/* Mobile Navigation - Dunkelblau mit weißer Schrift */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: #013565 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+        margin-top: 0 !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+    
+    .navbar-nav {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .navbar-nav .nav-item {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .navbar-nav .nav-link {
+        color: #fff !important;
+        padding: 1rem 1.5rem !important;
+        font-weight: 500 !important;
+        background: transparent !important;
+        transition: background 0.2s ease;
+    }
+    
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus {
+        background: rgba(255,255,255,0.1) !important;
+        color: #fff !important;
+    }
+    
+    /* Dropdown Arrow */
+    .navbar-nav .nav-link.dropdown-toggle::after {
+        color: #fff;
+    }
+    
+    /* Dropdown Mobile - Unternavigation */
+    .navbar-nav .dropdown-menu {
+        background: rgba(0,0,0,0.2) !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+    
+    .navbar-nav .dropdown-menu.show {
+        display: block;
+    }
+    
+    .navbar-nav .dropdown-item {
+        color: rgba(255,255,255,0.85) !important;
+        padding: 0.875rem 2rem !important;
+        font-size: 0.9rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: transparent !important;
+    }
+    
+    .navbar-nav .dropdown-item:hover {
+        background: rgba(255,255,255,0.1) !important;
+        color: #fff !important;
+    }
+    
+    /* Registrieren Button Mobile */
+    .navbar-nav .btn-danger,
+    .navbar .btn-danger {
+        margin: 0.5rem 1rem 1rem 1rem !important;
+        width: calc(100% - 2rem) !important;
+        background: var(--color-secondary) !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Entferne alte Styles */
+    .navbar-nav .nav-item .nav-link {
+        border-left: none !important;
+        border-right: none !important;
+    }
+}
+
+/* Mobile Navigation - KOMPLETT OVERRIDE */
+@media (max-width: 991px) {
+    /* Hauptcontainer dunkelblau */
+    .navbar-collapse,
+    .navbar-collapse.collapse,
+    .navbar-collapse.show,
+    #main_nav99,
+    #main_nav99.collapse,
+    #main_nav99.show {
+        background: #013565 !important;
+        border: none !important;
+    }
+    
+    /* Alle Nav-Items */
+    .navbar-nav > .nav-item > .nav-link {
+        color: #fff !important;
+        background: transparent !important;
+        font-weight: 500 !important;
+        padding: 1rem 1.5rem !important;
+        border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+        transition: background 0.2s ease !important;
+    }
+    
+    .navbar-nav > .nav-item > .nav-link:hover {
+        background: rgba(255,255,255,0.15) !important;
+    }
+    
+    /* Dropdown Items - Weiß mit dunkelblauer Schrift */
+    .navbar-nav .dropdown-menu {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .navbar-nav .dropdown-menu .dropdown-item {
+        background: #fff !important;
+        color: #013565 !important;
+        font-weight: 600 !important;
+        padding: 0.875rem 1.5rem !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .navbar-nav .dropdown-menu .dropdown-item:hover {
+        background: #f0f4f8 !important;
+        color: #013565 !important;
+        padding-left: 2rem !important;
+    }
+    
+    /* Dropdown Pfeil weiß */
+    .navbar-nav .dropdown-toggle::after {
+        border-top-color: #fff !important;
+    }
+}
+
+/* FORCE Mobile Navigation - Dunkelblau */
+@media (max-width: 991px) {
+    body .navbar-collapse,
+    body .navbar-collapse.collapse,
+    body .navbar-collapse.collapsing,
+    body .navbar-collapse.show,
+    body #main_nav99,
+    html body .navbar .navbar-collapse {
+        background-color: #013565 !important;
+        background: #013565 !important;
+    }
+    
+    body .navbar-nav .nav-item .nav-link,
+    body .navbar-nav > li > a {
+        color: #ffffff !important;
+        background-color: transparent !important;
+    }
+    
+    body .navbar-nav .nav-item .nav-link:hover,
+    body .navbar-nav > li > a:hover {
+        background-color: rgba(255,255,255,0.2) !important;
+        color: #ffffff !important;
+    }
+    
+    /* Dropdown weiß mit dunkelblauer Schrift */
+    body .navbar-nav .dropdown-menu,
+    body .dropdown-menu {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+    }
+    
+    body .navbar-nav .dropdown-menu .dropdown-item,
+    body .dropdown-menu a {
+        color: #013565 !important;
+        font-weight: 600 !important;
+        background: #ffffff !important;
+    }
+    
+    body .navbar-nav .dropdown-menu .dropdown-item:hover,
+    body .dropdown-menu a:hover {
+        background-color: #e8f0f8 !important;
+        padding-left: 1.5rem !important;
+    }
+}
+
+/* OVERRIDE lightblue aus styles.css */
+@media all and (max-width: 991px) {
+    .navbar-soft .navbar-nav,
+    .navbar.navbar-soft .navbar-nav,
+    nav.navbar-soft .navbar-nav {
+        background: #013565 !important;
+        background-color: #013565 !important;
+    }
+}
