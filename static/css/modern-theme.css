@@ -370,3 +370,67 @@ p {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Elegante Property Cards */
+.card__box-v1 {
+  background: #fff;
+  border: none !important;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.card__box-v1:hover {
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+}
+
+.card__image__header img,
+.card__image-header img {
+  transition: transform 0.4s ease;
+}
+
+.card__box-v1:hover img {
+  transform: scale(1.05);
+}
+
+/* Property Status Badge */
+.card__image__header .info,
+.card__image-header .info {
+  background: var(--color-secondary) !important;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Card Body */
+.card__image__body h6 a,
+.card__image-body h6 a {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.card__image__body h6 a:hover,
+.card__image-body h6 a:hover {
+  color: var(--color-secondary);
+}
+
+/* Property Stats - Icons in neuem Orange statt Rot */
+.card__content .list-inline-item span {
+  color: var(--color-text-secondary) !important;
+  font-size: 0.8rem;
+}
+
+.card__content .list-inline-item i {
+  color: var(--color-secondary) !important;
+}
+
+/* Price */
+.card__image__footer .price h6,
+.card__image-footer h6 {
+  color: var(--color-secondary) !important;
+  font-family: var(--font-body);
+  font-weight: 700;
+}
