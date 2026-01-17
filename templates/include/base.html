@@ -126,6 +126,8 @@
 </head>
 
 <body>
+    <!-- Mobile Nav Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
         {% if user.is_authenticated %}
         {% if messages %}
 
@@ -378,6 +380,22 @@
         </script>
         {% block js %}{% endblock js %}
         {% include "chatbot_widget.html" %}
+
+<script>
+$(document).ready(function() {
+    $("#main_nav99").on("show.bs.collapse", function() {
+        $("#navOverlay").addClass("active");
+    });
+    $("#main_nav99").on("hide.bs.collapse", function() {
+        $("#navOverlay").removeClass("active");
+    });
+    $("#navOverlay").on("click", function() {
+        $("#main_nav99").collapse("hide");
+    });
+});
+</script>
+
+
     </body>
 
 </html>
