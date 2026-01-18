@@ -3,7 +3,7 @@
 {% load i18n %}
 {% block body %}
     <!-- CAROUSEL HOMEPAGE -->
-    <div class="homepage__property bg-light">
+    <div class="homepage__property" style="position: relative; overflow: hidden;">
         <div class="homepage__property-carousel owl-carousel owl-theme">
             <div class="item">
                 <a href="#">
@@ -136,9 +136,16 @@
                 </a>
             </div>
         </div>
+        <!-- Hero Content Overlay -->
+        <div style="position: absolute; bottom: 12%; left: 0; right: 0; z-index: 100; padding: 0 2rem;">
+            <div class="container">
+                <p style="font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 1rem;">Kroatien - Adria - Mittelmeer</p>
+                <h1 style="font-size: 2.5rem; font-weight: 500; color: #fff; line-height: 1.2; margin-bottom: 1rem; text-shadow: 0 2px 20px rgba(0,0,0,0.4);">Exklusive Immobilien<br>an der kroatischen Kueste</h1>
+                <p style="font-size: 1rem; color: rgba(255,255,255,0.9);">Verifizierte Makler und persoenliche Beratung.</p>
+            </div>
+        </div>
     </div>
-
-    <!-- END CAROUSEL HOMEPAGE -->
+    <!-- END HERO SECTION -->
 
     <!-- AI SMART-SEARCH -->
     <div class="container my-4">
