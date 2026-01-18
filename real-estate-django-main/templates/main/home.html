@@ -864,7 +864,80 @@
 
 {% block js %}
 <script>
-// Preis-Optionen für Kauf und Miete
+// Scroll Reveal Animation
+document.addEventListener('DOMContentLoaded', function() {
+    // Add reveal-element class to sections
+    const sections = document.querySelectorAll('.popular__city-large, .featured__property, .home__about, .projects__partner, .blog__home');
+    
+    function revealSections() {
+        sections.forEach(function(section) {
+            const windowHeight = window.innerHeight;
+            const elementTop = section.getBoundingClientRect().top;
+            const revealPoint = 100;
+            
+            if (elementTop < windowHeight - revealPoint) {
+                section.classList.add('section-visible');
+            }
+        });
+    }
+    
+    // Add reveal-element class to cards
+    const cards = document.querySelectorAll('.myCard, .card__image');
+    cards.forEach(function(card, index) {
+        card.classList.add('reveal-element');
+        card.style.transitionDelay = (index % 6) * 100 + 'ms';
+    });
+    
+    function revealCards() {
+        cards.forEach(function(card) {
+            const windowHeight = window.innerHeight;
+            const elementTop = card.getBoundingClientRect().top;
+            const revealPoint = 80;
+            
+            if (elementTop < windowHeight - revealPoint) {
+                card.classList.add('revealed');
+            }
+        });
+    }
+    
+    // Parallax effect for hero
+    const heroImages = document.querySelectorAll('.homepage__property-carousel .tc-image-caption4 img');
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    function updateParallax() {
+        const scrollY = window.scrollY;
+        const heroHeight = document.querySelector('.homepage__property')?.offsetHeight || 600;
+        
+        if (scrollY < heroHeight) {
+            const parallaxValue = scrollY * 0.3;
+            heroImages.forEach(function(img) {
+                img.style.transform = 'translateY(' + parallaxValue + 'px) scale(1.05)';
+            });
+        }
+        
+        ticking = false;
+    }
+    
+    // Initial reveals
+    revealSections();
+    revealCards();
+    
+    // Throttled scroll listener
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                revealSections();
+                revealCards();
+                updateParallax();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+});
+
+// Price Options Script
 const salePricesFrom = [
     {value: '', label: '{{filter_Price_From}}'},
     {value: '50000', label: '50.000 €'},
@@ -918,15 +991,12 @@ function updatePriceOptions() {
     const priceFrom = document.getElementById('price_from');
     const priceTo = document.getElementById('price_to');
     
-    // Aktuelle Auswahl merken
     const currentFromValue = priceFrom.value;
     const currentToValue = priceTo.value;
     
-    // Optionen leeren
     priceFrom.innerHTML = '';
     priceTo.innerHTML = '';
     
-    // Neue Optionen basierend auf Kauf/Miete
     const fromOptions = (status === 'Rent') ? rentPricesFrom : salePricesFrom;
     const toOptions = (status === 'Rent') ? rentPricesTo : salePricesTo;
     
@@ -945,9 +1015,10 @@ function updatePriceOptions() {
     });
 }
 
-// Beim Laden der Seite prüfen
 document.addEventListener('DOMContentLoaded', function() {
-    updatePriceOptions();
+    if (document.getElementById('property_status')) {
+        updatePriceOptions();
+    }
 });
 </script>
 {% endblock js %}
