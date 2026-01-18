@@ -1123,3 +1123,38 @@ p {
     display: none !important;
   }
 }
+
+/* ==================== Navigation Farb-Fixes (18.01.2026) ==================== */
+
+/* 1. Hover-Effekt softer */
+.dropdown-menu .dropdown-item {
+  transition: all 0.25s ease !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  padding-left: 1.4rem;
+}
+
+/* 2. Dropdown Hintergrund: Hellblau statt Grau */
+.dropdown-item:hover,
+.dropdown-menu .dropdown-item:hover {
+  background-color: rgba(1, 53, 101, 0.12) !important;
+}
+
+/* 3. Hauptnav Linie + Text: Dunkelblau statt Orange */
+.navbar-nav .nav-item .nav-link:hover,
+.navbar-nav .nav-item .nav-link.active {
+  color: #013565 !important;
+}
+
+.navbar-hover .navbar-nav > .nav-item > .nav-link::before {
+  background-color: #013565 !important;
+}
+
+/* ==================== DROPDOWN PFEIL FIX ==================== */
+.dropdown-toggle[data-toggle="dropdown"]::after,
+.dropdown-toggle::after,
+.nav-link.dropdown-toggle::after {
+  color: #013565 !important;
+  border-top-color: #013565 !important;
+}
