@@ -36,6 +36,66 @@
             }, 5000);
         })();
     </script>
+    
+    <!-- Scroll Reveal Animation Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add scroll-reveal class to sections
+        var sections = document.querySelectorAll('.popular__city-large, .featured__property, .home__about, .projects__partner, .blog__home');
+        sections.forEach(function(section) {
+            section.classList.add('scroll-reveal');
+        });
+        
+        // Add scroll-reveal to cards with stagger
+        var cards = document.querySelectorAll('.myCard');
+        cards.forEach(function(card, index) {
+            card.classList.add('scroll-reveal');
+            card.classList.add('scroll-reveal-delay-' + ((index % 3) + 1));
+        });
+        
+        // Add scroll-reveal to property cards
+        var propertyCards = document.querySelectorAll('.card__image');
+        propertyCards.forEach(function(card, index) {
+            card.classList.add('scroll-reveal');
+            card.classList.add('scroll-reveal-delay-' + ((index % 4) + 1));
+        });
+        
+        // About section - left/right animation
+        var aboutText = document.querySelector('.title__leading');
+        var aboutImages = document.querySelector('.about__image');
+        if (aboutText) aboutText.classList.add('scroll-reveal-left');
+        if (aboutImages) aboutImages.classList.add('scroll-reveal-right');
+        
+        // Reveal function
+        function revealOnScroll() {
+            var reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
+            reveals.forEach(function(el) {
+                var windowHeight = window.innerHeight;
+                var elementTop = el.getBoundingClientRect().top;
+                var revealPoint = 100;
+                
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('revealed');
+                }
+            });
+        }
+        
+        // Initial check
+        revealOnScroll();
+        
+        // Throttled scroll listener
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    revealOnScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    });
+    </script>
     <!-- END HERO SECTION -->
 
     <!-- AI SMART-SEARCH -->

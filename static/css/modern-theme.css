@@ -1100,3 +1100,163 @@ p {
   display: flex !important;
   align-items: center !important;
 }
+
+
+/* =====================================================
+   ENHANCED HOVER EFFECTS & SCROLL ANIMATIONS
+   ===================================================== */
+
+/* ==================== Card Hover Effects ==================== */
+.card__image {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card__image:hover {
+  transform: translateY(-12px) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card__image .card__image-header img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card__image:hover .card__image-header img {
+  transform: scale(1.08) !important;
+}
+
+/* Info Badge Animation */
+.card__image .info {
+  transition: all 0.3s ease !important;
+}
+
+.card__image:hover .info {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* myCard Hover Effects */
+.myCard {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.myCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-secondary), #f97316);
+  transition: left 0.4s ease;
+}
+
+.myCard:hover::before {
+  left: 0;
+}
+
+.myCard:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Icon Animation in myCard */
+.myCard .myIcon {
+  transition: transform 0.3s ease, color 0.3s ease !important;
+}
+
+.myCard:hover .myIcon {
+  transform: scale(1.15);
+}
+
+/* About Section Image Hover */
+.about__image img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.about__image:hover img {
+  transform: scale(1.05);
+}
+
+/* Partner Logo Hover */
+.projects__partner-logo img {
+  transition: all 0.3s ease !important;
+  filter: grayscale(30%);
+  opacity: 0.8;
+}
+
+.projects__partner-logo img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Button Hover Enhancement */
+.btn-outline-blue, .btn-primary {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-blue:hover, .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(234, 88, 12, 0.3);
+}
+
+/* ==================== Scroll Reveal Animations ==================== */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered Animation Delays */
+.scroll-reveal-delay-1 { transition-delay: 0.1s; }
+.scroll-reveal-delay-2 { transition-delay: 0.2s; }
+.scroll-reveal-delay-3 { transition-delay: 0.3s; }
+.scroll-reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Fade In From Left */
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fade In From Right */
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale Up Animation */
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
