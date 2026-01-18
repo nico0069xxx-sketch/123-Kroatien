@@ -1067,3 +1067,36 @@ p {
   color: rgba(255,255,255,0.9) !important;
   max-width: 480px !important;
 }
+
+
+/* Force Carousel to show 1 full-width image */
+.homepage__property .owl-carousel .owl-stage {
+  display: flex !important;
+}
+
+.homepage__property .owl-carousel .owl-item {
+  min-width: 100vw !important;
+  width: 100vw !important;
+}
+
+.homepage__property .owl-carousel .owl-item img {
+  width: 100vw !important;
+  height: 75vh !important;
+  object-fit: cover !important;
+}
+
+
+/* Hide any unwanted logo overlay */
+.homepage__property .owl-item:not(.active) {
+  visibility: hidden !important;
+}
+
+.homepage__property .owl-carousel {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.homepage__property .owl-stage {
+  display: flex !important;
+  align-items: center !important;
+}
