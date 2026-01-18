@@ -130,3 +130,17 @@ Trotz gleicher Commit-Historie (fc523e8) zeigt die Webseite diese Probleme:
 ---
 
 Erstellt: 18.01.2026
+
+---
+
+## 🚨 HÖCHSTE PRIORITÄT: CSS-PROBLEM LÖSEN
+
+**Das CSS-Problem muss ZUERST behoben werden, bevor andere Arbeiten beginnen!**
+
+Die Webseite sieht aktuell falsch aus, obwohl der Code laut Git-History korrekt sein sollte. Ohne funktionierendes CSS macht es keinen Sinn, Dashboards zu strukturieren oder Anleitungen zu erstellen.
+
+### Reihenfolge:
+1. 🔴 **ZUERST:** CSS-Problem lösen (Navigation, Footer, Hover-Effekte)
+2. 🟡 **DANN:** Dashboards strukturieren
+3. 🟢 **DANACH:** Anleitungen erstellen
+
