@@ -528,47 +528,84 @@
     </section>
     <!-- END ABOUT -->
 
-    <section class="projects__partner bg-light">
+    <!-- PARTNER CAROUSEL -->
+    <section class="projects__partner bg-light py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="title__head">
                         <h2 class="text-center text-capitalize text-danger">{{our_partners}}</h2>
-                        {% comment %} <p class="text-center text-capitalize">{{BrandPartnersSuccessful}}</p> {% endcomment %}
+                        <p class="text-center text-muted">Verifizierte Dienstleister aus Kroatien</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="projects__partner-logo">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <img src="{% static 'images/anlage-logo-domus.png' %}" alt="" class="img-fluid">
-                            </li>
-                            <li class="list-inline-item">
-                                <img src="{% static 'images/anlage-logo-hausbau-kroatien.png' %}" alt="" class="img-fluid">
-                            </li>
-                            {% comment %} <li class="list-inline-item">
-                                <img src="{% static 'images/partner-logo6.png' %}" alt="" class="img-fluid">
-                            </li>
-                            <li class="list-inline-item">
-                                <img src="{% static 'images/partner-logo7.png' %}" alt="" class="img-fluid">
-                            </li>
-                            <li class="list-inline-item">
-                                <img src="{% static 'images/partner-logo8.png' %}" alt="" class="img-fluid">
-                            </li>
-                            <li class="list-inline-item">
-                                <img src="{% static 'images/partner-logo1.png' %}" alt="" class="img-fluid">
-                            </li>
-                            <li class="list-inline-item">
-                                <img src="{% static 'images/partner-logo5.png' %}" alt="" class="img-fluid">
-                            </li> {% endcomment %}
-                        </ul>
+                    <div class="partner-carousel-container" style="overflow: hidden; position: relative;">
+                        <div class="partner-carousel" id="partnerCarousel">
+                            {% if partners_with_logo %}
+                                {% for partner in partners_with_logo %}
+                                <a href="/ge/kroatien/{{ partner.professional_type|cut:'_' }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
+                                    <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
+                                </a>
+                                {% endfor %}
+                                {% for partner in partners_with_logo %}
+                                <a href="/ge/kroatien/{{ partner.professional_type|cut:'_' }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
+                                    <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
+                                </a>
+                                {% endfor %}
+                            {% else %}
+                                <div class="text-center w-100 py-4">
+                                    <p class="text-muted">Bald finden Sie hier unsere verifizierten Partner</p>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <style>
+        .partner-carousel-container { padding: 20px 0; }
+        .partner-carousel {
+            display: flex;
+            animation: scrollPartners 30s linear infinite;
+            width: max-content;
+        }
+        .partner-carousel:hover { animation-play-state: paused; }
+        .partner-logo-item {
+            flex: 0 0 auto;
+            margin: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .partner-logo-img {
+            max-height: 60px;
+            max-width: 150px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            filter: grayscale(30%);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .partner-logo-item:hover .partner-logo-img {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        @keyframes scrollPartners {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @media (max-width: 768px) {
+            .partner-logo-img { max-height: 45px; max-width: 120px; }
+            .partner-logo-item { margin: 0 25px; }
+        }
+    </style>
+    <!-- END PARTNER CAROUSEL -->
 
 
     {% comment %} <!-- TESTIMONIAL -->
