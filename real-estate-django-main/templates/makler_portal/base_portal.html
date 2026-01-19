@@ -16,6 +16,9 @@
                     <small class="text-white-50">{{ professional.name }}</small>
                 </div>
                 <div>
+                    <a href="{% url 'main:makler_anleitung' %}" class="btn btn-outline-light btn-sm mr-2" title="{% if lang == 'hr' %}Upute{% else %}Anleitung{% endif %}">
+                        <i class="fa fa-book"></i> {% if lang == 'hr' %}Upute{% else %}Anleitung{% endif %}
+                    </a>
                     <a href="{% url 'main:makler_profil' %}" class="btn btn-outline-light btn-sm mr-2">
                         <i class="fa fa-user"></i> Profil
                     </a>
