@@ -1,11 +1,9 @@
 {% extends 'include/base.html' %}
 {% load static %}
 
-{% block title %}
-{% if lang == 'hr' %}Upute - Makler Portal{% elif lang == 'en' %}User Guide{% else %}Anleitung - Makler-Portal{% endif %}
-{% endblock %}
+{% block title %}Anleitung - Makler-Portal{% endblock title %}
 
-{% block content %}
+{% block body %}
 <style>
 .guide-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
 .guide-header { background: linear-gradient(135deg, #003167 0%, #004a99 100%); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
@@ -74,4 +72,4 @@
 
 <a href="{% url 'main:makler_dashboard' %}" class="back-btn"><i class="fa fa-arrow-left"></i> {% if lang == 'hr' %}Povratak{% elif lang == 'en' %}Back{% else %}Zurueck{% endif %}</a>
 </div>
-{% endblock %}
+{% endblock body %}
