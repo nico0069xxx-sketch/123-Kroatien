@@ -1,159 +1,158 @@
 <analysis>**original_problem_statement:**
-The user, Nik, initiated a complete UI/UX overhaul for his Django-based real estate portal, 123-Kroatien.eu. The goal is to achieve a modern, trustworthy, and premium Königsklasse (first-class) aesthetic, moving away from a clunky, outdated look. The overhaul encompasses fonts, colors, layouts, navigation (desktop & mobile), component styling (like property cards), and overall responsiveness. The user has a strong visual sense and provides iterative feedback, often referencing professional portals like ImmobilienScout24 as a benchmark.
+The user, Nik, is overhauling the UI/UX for his Django-based real estate portal, 123-Kroatien.eu, to attract Croatian service providers.
+
+This session's requests included:
+-   Implementing a secure, free password reset function for both Gruppe A (Makler/Real Estate Agents) and Gruppe B (Professionals).
+-   Fixing a bug where service provider logos were displayed as question marks (?).
+-   Creating a comprehensive user guide for Gruppe A, similar to the existing one for Gruppe B.
+-   Explaining where and how service providers can add their social media links.
+-   Unifying the Corporate Identity (colors, fonts, sizes, and Umlaute) across the Gruppe A and B dashboards to match the new user guides.
+-   Creating a complete English version of the Partner werden (Become a Partner) landing page.
 
 **PRODUCT REQUIREMENTS:**
--   Replace existing fonts with a modern, elegant combination.
--   Establish a new, professional color palette, removing harsh or dated colors.
--   Redesign the main navigation to be clean and properly aligned.
--   Modernize all key components, including property cards, buttons, and forms.
--   Ensure the entire site is responsive and looks polished on mobile devices.
--   Improve the UX of filter and search components.
--   Enhance the mobile chatbot button to be less intrusive but still accessible.
--   Refine the mobile navigation menu to be more professional and integrated into the new design.
+-   **(P0)** Redesign dashboards for Gruppe A & Gruppe B.
+-   **(P0)** Fix critical, recurring CSS instability.
+-   **(P0 - New)** Implement a secure, token-based password reset for all users.
+-   **(P1 - New)** Create a detailed, trilingual user guide for Gruppe A.
+-   **(P1)** Improve login/registration visibility.
+-   **(P1 - New)** Create a complete, trilingual (DE/HR/EN) version of the partner landing page.
+-   **(P2 - New)** Fix the logo display bug.
+-   **(P2 - New)** Document the social media integration process for users.
+-   **(P2 - New)** Unify the CI across all user-facing dashboards.
 
-**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du). The user works on an Apple Mac () using the  shell in the Terminal. All commands must be simple, complete, and copy-pasteable for his local environment at path .
+**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du).
 
 **what currently exists?**
-A significant UI/UX overhaul has been started on a new Git branch, . A new primary stylesheet, , has been created and is driving the redesign.
-
-Key changes implemented so far:
--   **Typography**: The font Outfit has been implemented across the site for a clean, modern feel.
--   **Color Palette**: A new palette based on a deep navy () and a warm orange () has been established.
--   **Homepage**: The main navigation is now vertically centered. The footer contains new Trust Badges (SSL, DSGVO, etc.).
--   **Listings Page**: The old price slider has been replaced with Preis von/bis dropdowns that dynamically adjust their price ranges for Sale vs. Rent. The cluttered category list has been removed and replaced with a stylish AI search box.
--   **Mobile UI**: The intrusive floating chatbot button was replaced with an elegant, full-width bottom bar labeled • Kroatien Agent • featuring a subtle light-beam animation. The mobile navigation's background color has been successfully changed from light blue to the desired dark navy blue.
+The project is a Django monolith in  with fragile CSS and URL structures. A significant amount of work was completed in this session:
+1.  A new, secure, token-based password reset system was implemented for all users, replacing an insecure OTP-based one. This includes all necessary views (), URLs, and multi-lingual templates.
+2.  The root cause of the logo display bug was identified: media files are not served in Django's development server when . The user was instructed to use  for local development.
+3.  A new, detailed, trilingual (DE/HR/EN) user guide for Gruppe A (Makler) was created and linked in their dashboard.
+4.  The Corporate Identity (CI) was unified across the Gruppe A () and Gruppe B () dashboards, standardizing colors and correcting German Umlaute.
+5.  The  file was updated to exclude  and the  directory, preventing future merge conflicts.
+6.  The Partner werden landing page was made fully trilingual (DE/HR/EN), using the final approved design and content.
 
 **Last working item**:
-The agent was in the middle of a complete overhaul of the mobile navigation menu. After successfully fixing the background color, the user provided a list of further improvements to complete the redesign of this component.
+The agent just finished implementing the final, fully trilingual (DE/HR/EN) version of the Partner werden (Become a Partner) landing page. This involved restoring the correct version from git history, adding English translations for all text, and correcting a statistic to 30+ Years Experience.
 
--   Last item agent was working: Redesigning the mobile navigation menu. The agent had just fixed the background color and was about to implement the next set of user requests for this component.
--   Status: IN PROGRESS
--   Agent Testing Done: Y
--   Which testing method agent to use? Frontend testing agent, using screenshots of the mobile view to verify layout and styling changes.
--   User Testing Done: Y
+-   Last item agent was working: Finalizing and pushing the trilingual partner landing page.
+-   Status: USER VERIFICATION PENDING
+-   Agent Testing Done: Y (The agent guided the user to test the page with , which worked).
+-   Which testing method agent to use? Manual testing by user. The user has pushed the branch  and should now create and merge the Pull Request on GitHub. After merging, they should verify the page again on their local server.
+-   User Testing Done: N (Pending PR merge and final check).
 
 **All Pending/In progress Issue list**:
--   **Issue 1**: **SQLite Migration Fragility (P2, High-Risk)**
-    -   Description: A recurring risk from previous sessions. The user's local SQLite database is brittle, and complex schema changes should be approached with caution.
+-   **Issue 1: Critical CSS Instability (P0 - RECURRING BLOCKER)**
+    -   Description: The project's CSS is extremely fragile. Changes frequently break the layout. This is the highest priority technical debt to resolve.
     -   Status: NOT STARTED
     -   Is recurring issue?: Y
-    -   Should Test frontend/backend/both after fix?: Backend
--   **Issue 2**: **Consolidate Technical Debt (P2)**
-    -   Description: Several pieces of known technical debt exist:
-        1.  **Duplicated XML Import Logic**:  and  have separate XML import systems that should be unified.
-        2.  **Agent-Model Konsolidierung**: The old  model should be merged into the  model.
+-   **Issue 2: Brittle  Model (P2)**
+    -   Description: A previous crash was caused by a missing  database object. A hotfix was applied, but the root cause is unsolved.
+    -   Status: NOT STARTED
+    -   Is recurring issue?: N
+-   **Issue 3:  Dropdown Styling (P2)**
+    -   Description: Filter dropdowns use a legacy plugin that is difficult to style.
     -   Status: NOT STARTED
     -   Is recurring issue?: Y
-    -   Should Test frontend/backend/both after fix?: Backend
 
 **In progress Task List**:
--   **Task 1**: **UI/UX Overhaul (P0)**
-    -   Description: The main, overarching task of redesigning the entire portal's frontend.
-    -   Where to resume: Continue with the **Mobile Navigation Overhaul**. The user has provided specific next steps.
-    -   What will be achieved with this?: A modern, professional, and user-friendly interface across the application.
-    -   Status: IN PROGRESS
-    -   Should Test frontend/backend/both after fix?: Frontend
-    -   Blocked on something: No.
+There are no tasks currently in progress.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks**:
-    -   **(P0) Complete Mobile Navigation Overhaul**:
-        -   Remove the Registrieren (Register) button from the mobile navigation menu.
-        -   Add a new link for registration at the bottom of the Dienstleister (Services) dropdown, labeled Dienstleister Registrierung.
-        -   Move the language selector into the top bar () to match the desktop layout.
-        -   Add a background blur or glassmorphism effect to the main page content when the mobile navigation is open.
-    -   **(P1) Align Listings Page Columns**: Fix the vertical alignment issue where the left-side filter column and the right-side property listings don't start at the same height.
+    -   **(P1) Explain Social Media Integration:** The user asked how and where providers add their social media links. This needs to be documented, likely by adding a section to both the Gruppe A and Gruppe B user guides. The functionality is described in the new Gruppe A guide, but the user wants it explained.
+    -   **(P2)** Mobile View Optimization: Fine-tune the new dashboards (),  pages, and  for mobile devices.
+    -   **(P2)** Enhance Gruppe B User Guide: The new Gruppe A guide is more detailed (e.g., has a table of contents). The Gruppe B guide () should be updated to match this new, improved structure.
+    -   **(P2)** Investigate OpenAI Chatbot capabilities for service providers.
 -   **Future Tasks**:
-    -   **(P2)** Implement a customer review/rating system.
-    -   **(P2)** Consolidate the two different XML import implementations into one.
-    -   **(P2)** Merge the legacy  model into the  model.
+    -   **(P0)** Refactor URL Architecture.
+    -   **(P1)** Implement Review/Rating System.
+    -   **(P2)** Implement Meta Pixel Tracking.
+    -   **(P2)** Consolidate legacy code.
 
 **Completed work in this session**
--   **Branch Creation**: Started work on a new  branch.
--   **Core Styling**: Created  to house all new styles.
--   **Typography & Colors**: Switched the site font to Outfit and implemented a new, modern color scheme (navy blue and terracotta orange).
--   **Desktop Navigation**: Fixed the vertical alignment of the main navigation links relative to the logo.
--   **Footer Enhancement**: Added a Trust Badges section (SSL, DSGVO, Verifizierte Makler) into the bottom-most footer bar for a more professional look.
--   **Listings Page Overhaul ()**:
-    -   Replaced the price range slider with separate Preis von and Preis bis dropdowns.
-    -   Implemented JavaScript to dynamically switch price options between Sale and Rent.
-    -   Removed the cluttered Immobilien Kategorien block and replaced it with the AI search box from the homepage.
-    -   Hid the non-functional Sort by dropdown to clean up the UI.
--   **Mobile Chatbot UI**: Transformed the floating circular button into a sleek, full-width bottom tab with the text • Kroatien Agent • and a subtle light-beam animation.
--   **Mobile Navigation (Partial)**: Successfully fixed a persistent CSS override issue, changing the mobile navigation's background from  to the desired dark navy blue ().
+-   **Secure Password Reset System**: Implemented a token-based system in  and linked it from the login page.
+-   **Logo Bug Fix**: Diagnosed that media files were not being served because . Instructed the user to run the server with .
+-   **Gruppe A User Guide**: Created a new, detailed, trilingual guide at  and linked it from the dashboard.
+-   **CI Unification**: Standardized colors and fixed Umlaute in  and .
+-   **UX Improvement**: Moved the Profil bearbeiten button to the Schnell-Aktionen section in .
+-   **Git Hygiene**: Updated  to exclude  and .
+-   **Trilingual Partner Landing Page**: Created a full DE/HR/EN version of  with the user's final approved content.
 
 **Earlier issues found/mentioned but not fixed**
--   No issues were missed. All user feedback was addressed iteratively or is documented in the upcoming tasks.
+-   All are captured in the All Pending/In progress Issue list.
 
 **Known issue recurrence from previous fork**
--   **SQLite Migration Fragility**: This remains a known risk.
--   **Agent-Model Konsolidierung**: This is a known technical debt item.
+-   **CSS Fragility**: This remains the most critical recurring issue.
 
 **Code Architecture**
--   **Framework**: Django monolith
--   **Project Root**: 
--   **Frontend**: Django Template Language, vanilla JavaScript, and multiple CSS files.
--   **Styling**: A mix of , , and the newly created . The new file is being used for the overhaul, but often requires  to override legacy styles.
--   **Branching**: All new work is being done on the  branch.
+-   **Framework**: Django monolith in .
+-   **URL Routing**: Confusingly split between  and .
+-   **Styling**: Highly fragile.
+-   **Important Discovery**: The user's local environment is the source of truth and contains newer files not initially present on the agent's server, such as . The agent must always verify local file content with the user.
 
 **Key Technical Concepts**
--   **CSS Specificity & Overrides**: Diagnosed and resolved CSS conflicts by increasing selector specificity and using  to override stubborn styles from older CSS files (). This was crucial for fixing the mobile navigation background.
--   **Command-Line File Manipulation**: Extensively used , , , , and  to guide the non-technical user in editing files directly and safely via the terminal.
--   **Dynamic Frontend with JS**: Implemented vanilla JavaScript on the listings page to dynamically populate price filter dropdowns based on the user's selection of Sale or Rent.
--   **Django Static Files Workflow**: Consistently used  after CSS changes to ensure the development server served the updated files.
--   **Iterative Debugging**: Worked with the user to debug visual issues by inspecting browser elements, finding the source of problematic CSS, and applying targeted fixes.
--   **Django Shell for Seeding**: Created a dummy  object via the Django shell to enable testing of the listings page when the user's local database was empty.
+-   **Django  Media Handling**: Correctly identified that Django's dev server does not serve media files when , which was the root cause of the logo bug. The solution is to use  for local development.
+-   **Django Template Inheritance Debugging**: Fixed a blank page issue by correcting  to  to match the base template.
+-   **Git Workflow**: Successfully guided the user through creating branches, stashing, merging PRs, and resolving a  conflict by updating .
 
 **key DB schema**
--   No schema changes were made in this session.
+-   : Core model for service providers.
+-   : Standard Django user model.
 
 **changes in tech stack**
--   No changes to the tech stack.
+-   None.
 
 **All files of reference**
--   **Created & Heavily Modified**: 
--   **Modified**:  (font links, new CSS file link)
--   **Modified**:  (trust badges implementation)
--   **Modified**:  (price filter, AI search box, layout changes, JS for dynamic prices)
--   **Viewed for Context**: , , 
+-   **Created**:
+    -    & associated templates.
+    -   
+-   **Modified**:
+    -   : Added password reset URLs.
+    -   : Added .
+    -   : Patched the  view to correctly handle the  parameter.
+    -   : Added  view.
+    -   : Added link to new guide.
+    -   : Adjusted button layout.
+    -   : Standardized colors.
+    -   : Added rules for  and .
+    -   : Restored from git history and made fully trilingual.
 
-**Areas that need refactoring**
--   The CSS architecture needs consolidation. The use of multiple stylesheets (, , ) with competing rules and heavy reliance on  is creating technical debt. A future task should be to merge all relevant styles into  and remove the legacy files or rules.
+**Areas that need refactoring**:
+-   **URGENT: URL Architecture**.
+-   **URGENT: CSS Architecture**.
+-   **Code Duplication**: There are two  functions in . This should be consolidated.
 
 **key api endpoints**
--   No new API endpoints were created or modified.
+-   N/A (Web pages only)
 
 **Critical Info for New Agent**
--   The user is highly visual and provides feedback via screenshots. The workflow is iterative: implement a change, ask the user to test, receive feedback, and adjust.
--   The project's CSS has high specificity in legacy files (). New styles in  often require  or more specific selectors (e.g., ) to take effect.
--   The immediate next task is to continue the **Mobile Navigation Overhaul** based on the user's last request. The user is waiting to resume this specific task.
--   The user's local  is likely , so server errors (500) will not show a detailed traceback in the browser. You may need to guide the user to check the terminal output for error details.
+-   **The project is in the  directory.** You MUST  into it.
+-   **RUN SERVER WITH DEBUG=TRUE**: The command  is essential for media files (like logos) to be displayed locally.
+-   **USER'S LOCAL FILES ARE TRUTH**: The user has modified/newer files locally (e.g., , a dynamic ). Always ask the user to  or  files before editing to ensure you're working on the correct version.
+-   **User Guidance:** The user is non-technical on a Mac M1. Provide simple, atomic, copy-pasteable  commands.
+-   **Branching:** The user is comfortable with the  -> Pull Request -> Merge workflow.
 
 **documents and test reports created in this job**
 -   None.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: (After mobile nav background fix) YES !!!! (COMPLETED)
-2.  **User**: States they want to continue working on the navigation seamlessly. (PENDING)
-3.  **User**: Specifies next steps for mobile nav: remove register button, move it to Dienstleister dropdown, move language selector up, and add a blur/glass effect to the background. (PENDING - **This is the highest priority task**)
-4.  **Agent**: Commits changes and prepares for handoff. (COMPLETED)
-5.  **User**: ganz lieben dank (Thank you very much) (COMPLETED)
-6.  **Agent**: Friendly sign-off. (COMPLETED)
-7.  **User**: (On seeing the fixed background) YES !!!! - This confirms the last fix worked.
-8.  **User**: (After a failed attempt) nein hellblau habe den verlauf zuvor gelöscht (no, lightblue, I cleared the history before). This was part of the debug loop.
-9.  **Agent**: Provided  command to add an inline style to  as a fix attempt.
-10. **User**: hellblau die Schrift ist dicker (lightblue the font is thicker). Feedback during the debugging of the mobile nav background.
+10. **User:** Y E S !!!! Y E S !!!! Y E S !!!! - Final confirmation that the trilingual partner landing page is working as expected.
+9.  **Agent:** Provides the final, complete, trilingual  template.
+8.  **User:** Notes that the restored  is an old version and that the final one has country flags and 5 specific professions, and experience is 30+ years.
+7.  **Agent:** Restores  from the correct git commit ().
+6.  **User:** nein, ich sehe gerade das es sehr alt ist... (No, I see it's very old...) - Corrects the agent, stating the current landing page is an old version.
+5.  **User:** Asks for the 5 specified professions to be on the page and removes others.
+4.  **User:** ja das hat funktioniert, jedoch... (Yes that worked, however...) - Confirms an intermediate version of the landing page worked but was not the final one.
+3.  **Agent:** Provides a fully translated  file.
+2.  **User:** Asks why the agent can't just translate the whole page at once.
+1.  **User:** Reports that after adding the English language option, very little on the page is actually translated.
 
 **Project Health Check:**
--   **Broken**: None.
--   **Mocked**: A dummy  object was created in the user's local database to facilitate testing.
--   **Technical Debt**: CSS specificity is becoming an issue, with multiple stylesheets and increasing use of .
+-   **Broken**: CSS Architecture, URL Routing Architecture.
+-   **Technical Debt**: Very High. Fragile CSS and URL structures impede development.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o**: Utilized for the AI search feature. The user's local environment may lack a valid API key, which causes a non-blocking  in the background when creating new listings (translation signal fails).
--   **Emergent LLM Key**: Present in the codebase.
--   ****: Used for news features.
--   **, **: Used for Two-Factor Authentication.
+-   An OpenAI-powered chatbot is present on the site, but its implementation details are unknown.
 
 **Testing status**
 -   **Testing agent used after significant changes**: NO
@@ -162,13 +161,18 @@ The agent was in the middle of a complete overhaul of the mobile navigation menu
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
--   **Admin User:**
+-   **Admin:**
     -   URL: 
     -   Username: 
     -   Password: 
--   **Agent/Professional Portal Login:**
+-   **Gruppe A (Makler) Login:**
     -   URL: 
-    -   Login with a user that is linked to a  object (e.g., Nik).
+    -   Username: 
+    -   Password: 
+-   **Gruppe B (Professional) Login:**
+    -   URL: 
+    -   Username: 
+    -   Password: 
 
 **What agent forgot to execute**
--   All user requests were addressed in an iterative manner. The agent successfully kept track of the user's priorities and deferred tasks when requested. No items were forgotten.</analysis>
+-   The PR for  was closed due to a conflict and never merged. This PR contained the fix for  ->  in . Although the user applied this change locally with , it is not in the  branch. This change should be re-introduced in a new branch and pushed.</analysis>
