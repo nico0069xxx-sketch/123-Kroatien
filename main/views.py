@@ -964,6 +964,14 @@ def reference_project_delete(request, id, project_id):
 
 
 # Professional Registration View (Bilingual: German & Croatian)
+
+# Partner Landing Page
+def partner_landing(request, lang='ge'):
+    if lang not in ["ge", "hr"]:
+        lang = "ge"
+    context = {'lang': lang}
+    return render(request, 'main/partner_landing.html', context)
+
 def professional_registration(request, lang='ge'):
     success = True
     if request.method == 'POST':
@@ -1918,3 +1926,11 @@ def makler_dashboard(request):
     except Professional.DoesNotExist:
         messages.error(request, "Kein Makler-Profil gefunden.")
         return redirect('main:home')
+
+
+# Partner Landing Page
+def partner_landing(request, lang='ge'):
+    if lang not in ["ge", "hr"]:
+        lang = "ge"
+    context = {'lang': lang}
+    return render(request, 'main/partner_landing.html', context)

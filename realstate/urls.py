@@ -45,7 +45,7 @@ urlpatterns += [
 ]
 
 # Professional Detail URLs (ohne i18n prefix)
-from main import professional_views
+from main import professional_views, views
 from main import address_views, content_views
 urlpatterns += [
     # MARKT - muss VOR Professional URLs stehen
@@ -56,6 +56,8 @@ urlpatterns += [
     path("hr/hrvatska/trzisni-izvjestaji/", content_views.market_report_list, {"country": "hrvatska"}, name="market-reports-hr-direct"),
     path("hr/hrvatska/vazne-adrese/", address_views.important_addresses, {"country": "hrvatska"}, name="important-addresses-hr-direct"),
     
+    path("ge/kroatien/partner-werden/", views.partner_landing, {"lang": "ge"}, name="partner-landing-ge-direct"),
+    path("hr/hrvatska/postanite-partner/", views.partner_landing, {"lang": "hr"}, name="partner-landing-hr-direct"),
     path("ge/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-ge-direct"),
     path("ge/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-ge-direct"),
     path("hr/hrvatska/<str:category>/", professional_views.professional_list, {"country": "hrvatska"}, name="professional-list-hr-direct"),
