@@ -66,6 +66,17 @@ def makler_dashboard(request):
 
 
 @login_required
+
+@login_required
+def makler_anleitung(request):
+    """Anleitung fuer das Makler-Portal"""
+    professional = get_makler_professional(request.user)
+    if not professional:
+        return redirect("main:home")
+    lang = request.GET.get("lang", request.session.get("site_language", "ge"))
+    return render(request, "makler_portal/anleitung.html", {"professional": professional, "lang": lang})
+
+
 def makler_objekt_neu(request):
     """Neues Objekt anlegen"""
     professional = get_makler_professional(request.user)

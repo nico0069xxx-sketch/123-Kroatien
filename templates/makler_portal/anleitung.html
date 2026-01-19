@@ -1,0 +1,77 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}
+{% if lang == 'hr' %}Upute - Makler Portal{% elif lang == 'en' %}User Guide{% else %}Anleitung - Makler-Portal{% endif %}
+{% endblock %}
+
+{% block content %}
+<style>
+.guide-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.guide-header { background: linear-gradient(135deg, #003167 0%, #004a99 100%); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
+.guide-header h1 { font-size: 2rem; margin-bottom: 10px; }
+.guide-section { background: white; border-radius: 12px; padding: 30px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.guide-section h2 { color: #003167; font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; }
+.step-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #003167; color: white; border-radius: 50%; font-size: 0.9rem; font-weight: bold; margin-right: 10px; }
+.tip-box { background: #e8f4fd; border-left: 4px solid #004a99; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+.back-btn { display: inline-flex; align-items: center; gap: 8px; background: #003167; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 20px; }
+.back-btn:hover { background: #004a99; color: white; }
+.status-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+.status-table th, .status-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e9ecef; }
+.status-online { background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 20px; }
+.status-pruefung { background: #fff3cd; color: #856404; padding: 4px 12px; border-radius: 20px; }
+.status-verkauft { background: #e2e3e5; color: #383d41; padding: 4px 12px; border-radius: 20px; }
+</style>
+
+<div class="guide-container">
+<div class="guide-header">
+<h1><i class="fa fa-book"></i> {% if lang == 'hr' %}Upute za Makler Portal{% elif lang == 'en' %}Real Estate Portal Guide{% else %}Makler-Portal Anleitung{% endif %}</h1>
+<p>{% if lang == 'hr' %}Sve za upravljanje nekretninama{% elif lang == 'en' %}Everything to manage your properties{% else %}Alles fuer deine Immobilien{% endif %}</p>
+</div>
+
+<div class="guide-section">
+<h2><i class="fa fa-sign-in"></i> 1. {% if lang == 'hr' %}Prijava{% elif lang == 'en' %}Login{% else %}Anmeldung{% endif %}</h2>
+<p><span class="step-number">1</span> {% if lang == 'hr' %}Idite na /accounts/login{% elif lang == 'en' %}Go to /accounts/login{% else %}Gehe zu /accounts/login{% endif %}</p>
+<p><span class="step-number">2</span> {% if lang == 'hr' %}Unesite podatke{% elif lang == 'en' %}Enter credentials{% else %}Zugangsdaten eingeben{% endif %}</p>
+<p><span class="step-number">3</span> {% if lang == 'hr' %}Kliknite Prijava{% elif lang == 'en' %}Click Login{% else %}Klicke Anmelden{% endif %}</p>
+<div class="tip-box"><strong>{% if lang == 'hr' %}Savjet{% elif lang == 'en' %}Tip{% else %}Tipp{% endif %}:</strong> {% if lang == 'hr' %}Zaboravili lozinku? Kliknite "Zaboravljena lozinka" - link vrijedi 1 sat.{% elif lang == 'en' %}Forgot password? Click "Forgot Password" - link valid for 1 hour.{% else %}Passwort vergessen? Klicke "Passwort vergessen" - Link gilt 1 Stunde.{% endif %}</div>
+</div>
+
+<div class="guide-section">
+<h2><i class="fa fa-tachometer"></i> 2. Dashboard</h2>
+<table class="status-table">
+<tr><th>Status</th><th>{% if lang == 'hr' %}Znacenje{% elif lang == 'en' %}Meaning{% else %}Bedeutung{% endif %}</th></tr>
+<tr><td><span class="status-online">Online</span></td><td>{% if lang == 'hr' %}Vidljivo kupcima{% elif lang == 'en' %}Visible to buyers{% else %}Fuer Kaeufer sichtbar{% endif %}</td></tr>
+<tr><td><span class="status-pruefung">{% if lang == 'hr' %}Provjera{% elif lang == 'en' %}Review{% else %}Pruefung{% endif %}</span></td><td>{% if lang == 'hr' %}Ceka odobrenje{% elif lang == 'en' %}Awaiting approval{% else %}Wartet auf Freigabe{% endif %}</td></tr>
+<tr><td><span class="status-verkauft">{% if lang == 'hr' %}Prodano{% elif lang == 'en' %}Sold{% else %}Verkauft{% endif %}</span></td><td>{% if lang == 'hr' %}Nije vise aktivno{% elif lang == 'en' %}No longer active{% else %}Nicht mehr aktiv{% endif %}</td></tr>
+</table>
+</div>
+
+<div class="guide-section">
+<h2><i class="fa fa-plus-circle"></i> 3. {% if lang == 'hr' %}Nova nekretnina{% elif lang == 'en' %}New Property{% else %}Neue Immobilie{% endif %}</h2>
+<p><span class="step-number">1</span> {% if lang == 'hr' %}Kliknite "+ Novo"{% elif lang == 'en' %}Click "+ New"{% else %}Klicke "+ Neu"{% endif %}</p>
+<p><span class="step-number">2</span> {% if lang == 'hr' %}Ispunite podatke{% elif lang == 'en' %}Fill in data{% else %}Daten ausfuellen{% endif %}</p>
+<p><span class="step-number">3</span> {% if lang == 'hr' %}Dodajte fotografije{% elif lang == 'en' %}Add photos{% else %}Fotos hinzufuegen{% endif %}</p>
+<p><span class="step-number">4</span> {% if lang == 'hr' %}Spremite{% elif lang == 'en' %}Save{% else %}Speichern{% endif %}</p>
+</div>
+
+<div class="guide-section">
+<h2><i class="fa fa-magic"></i> 4. KI-{% if lang == 'hr' %}Tekstovi{% elif lang == 'en' %}Texts{% else %}Texte{% endif %}</h2>
+<p>{% if lang == 'hr' %}Automatski generirajte opise na njemackom!{% elif lang == 'en' %}Auto-generate German descriptions!{% else %}Automatisch deutsche Beschreibungen generieren!{% endif %}</p>
+<p><span class="step-number">1</span> {% if lang == 'hr' %}Otvorite nekretninu{% elif lang == 'en' %}Open property{% else %}Immobilie oeffnen{% endif %}</p>
+<p><span class="step-number">2</span> {% if lang == 'hr' %}Kliknite "KI-Text"{% elif lang == 'en' %}Click "AI Text"{% else %}Klicke "KI-Text"{% endif %}</p>
+</div>
+
+<div class="guide-section">
+<h2><i class="fa fa-upload"></i> 5. XML Import</h2>
+<p>{% if lang == 'hr' %}Uvezite vise nekretnina odjednom.{% elif lang == 'en' %}Import multiple properties at once.{% else %}Mehrere Immobilien auf einmal importieren.{% endif %}</p>
+</div>
+
+<div class="guide-section">
+<h2><i class="fa fa-share-alt"></i> 6. Social Media</h2>
+<p>{% if lang == 'hr' %}U profilu dodajte Facebook, Instagram, LinkedIn linkove.{% elif lang == 'en' %}Add Facebook, Instagram, LinkedIn links in your profile.{% else %}Im Profil Facebook, Instagram, LinkedIn Links hinzufuegen.{% endif %}</p>
+</div>
+
+<a href="{% url 'main:makler_dashboard' %}" class="back-btn"><i class="fa fa-arrow-left"></i> {% if lang == 'hr' %}Povratak{% elif lang == 'en' %}Back{% else %}Zurueck{% endif %}</a>
+</div>
+{% endblock %}
