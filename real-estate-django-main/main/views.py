@@ -1004,6 +1004,21 @@ def reference_project_delete(request, id, project_id):
     return redirect('main:reference_projects_list', id=id)
 
 
+# Partner Landing Page
+def partner_landing(request, lang='ge'):
+    """
+    Landing page for service providers with benefits and CTA.
+    Supports German (ge) and Croatian (hr).
+    """
+    if lang not in ["ge", "hr"]:
+        lang = "ge"
+    
+    context = {
+        'lang': lang,
+    }
+    return render(request, 'main/partner_landing.html', context)
+
+
 # Professional Registration View (Bilingual: German & Croatian)
 def professional_registration(request, lang='ge'):
     """
