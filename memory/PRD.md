@@ -1,87 +1,105 @@
-# 123-Kroatien.eu - Real Estate Django Portal
+# 123-Kroatien.eu - Immobilienportal PRD
 
 ## Original Problem Statement
-Complete UI/UX overhaul for Django-based real estate portal to attract Croatian service providers (real estate agents, lawyers, architects, etc.).
+Der Benutzer (Nik) betreibt ein Django-basiertes Immobilienportal "123-Kroatien.eu" für kroatische Immobilien, das deutsche Kunden ansprechen soll. Das Portal unterstützt 12 Sprachen über ein Translation-System.
 
-## What's Been Implemented (19. Januar 2026)
+## Was in dieser Session erledigt wurde
 
-### ✅ Session Completed Tasks
+### ✅ Abgeschlossen:
+1. **Social Media Dokumentation (Gruppe B)** - Trilingualer Abschnitt in `templates/professional_portal/anleitung.html` hinzugefügt
+2. **Logo-Fix** - `professional.logo` → `professional.company_logo` in 4 Dateien korrigiert
+3. **Moderne Property Detail Page** - Neues Template `templates/main/single-detail-modern.html` erstellt mit:
+   - Swipe-Galerie für Mobile
+   - Thumbnail-Leiste für Desktop
+   - Lightbox für Vollbild
+   - 8er Specs-Grid (Schlafzimmer, Bad, Fläche, etc.)
+   - Kontaktformular
+   - Makler-Info
+   - OpenStreetMap Karte
+   - Responsive Design
 
-1. **Sicheres Passwort-Reset-System** (feature/password-reset-security)
-   - Token-basiert mit SHA256
-   - 1 Stunde Gültigkeit
-   - Dreisprachig (DE/HR/EN)
-   - Für Gruppe A + B
+### ❌ KRITISCHES PROBLEM - Übersetzungen funktionieren nicht
 
-2. **Logo-Bug behoben**
-   - Problem: DEBUG=false verhinderte Media-Dateien
-   - Lösung: `DEBUG=true python3 manage.py runserver`
-   - Feldnamen korrigiert (company_logo statt logo)
+**Problem:** Die Übersetzungsvariablen werden im neuen Template nicht korrekt angezeigt. Obwohl die Sprache auf Französisch gestellt ist, erscheinen viele Labels auf Deutsch.
 
-3. **Makler-Portal Anleitung** (feature/makler-anleitung)
-   - Vollständiges Benutzerhandbuch für Gruppe A
-   - Dreisprachig (DE/HR/EN)
-   - Mit Inhaltsverzeichnis
-   - Alle Features dokumentiert (Dashboard, KI-Texte, XML-Import, etc.)
+**Was NICHT übersetzt wird:**
+- Hero: Standort fehlt komplett (Split, Kroatien sollte angezeigt werden)
+- "Zurueck" → sollte "Retour" sein
+- "ETAGEN" → sollte "Étages" sein
+- "OBJEKTART" → sollte "Type de bien" sein
+- "STATUS" → sollte "Statut" sein
+- "NAME" → sollte "Nom" sein
+- "TELEFON" → sollte "Téléphone" sein
+- "NACHRICHT" → sollte "Message" sein
+- "Senden" → sollte "Envoyer" sein
 
-4. **CI Vereinheitlichung** (feature/ci-vereinheitlichung)
-   - Farben: #003167 + #004a99 für beide Gruppen
-   - Umlaute korrigiert (Prüfung statt Pruefung)
-   - Profil-Button zu Schnell-Aktionen verschoben
+**Technische Details:**
 
-5. **.gitignore erweitert** (fix/gitignore)
-   - db.sqlite3
-   - *.sqlite3
-   - __pycache__/
-   - *.pyc
-   - .DS_Store
-   - media/
+1. **Übersetzungen existieren in der DB:**
+   ```
+   label_floors: page='property details', FR='Étages'
+   label_garage: page='property details', FR='Garage'
+   label_property_type: page='property details', FR='Type de bien'
+   label_property_status: page='property details', FR='Statut'
+   nav_back: page='property details', FR='Retour'
+   contact_name: page='contact', FR='Nom'
+   contact_phone: page='contact', FR='Téléphone'
+   contact_message: page='contact', FR='Message'
+   btn_send_message: page='contact', FR='Envoyer'
+   ```
 
-6. **Partner-Landingpage dreisprachig** (feature/partner-landing-english)
-   - Vollständig übersetzt (DE/HR/EN)
-   - 30+ Jahre Erfahrung
-   - 5 Berufsgruppen
-   - 12 Länder-Flaggen
+2. **Context Processor (`main/context_processors.py`):**
+   - Lädt Übersetzungen aus `pages.models.Translation`
+   - Wurde aktualisiert um auch `page='contact'` zu laden
+   - Zeile 82: `translations = Translation.objects.filter(page=page) | ... | Translation.objects.filter(page='contact')`
 
-## Prioritized Backlog
+3. **Template (`templates/main/single-detail-modern.html`):**
+   - Verwendet Variablen wie `{{ label_floors|default:"Etagen" }}`
+   - Die Fallback-Werte werden angezeigt, nicht die DB-Übersetzungen
 
-### P0 (Critical)
-- [ ] CSS-Architektur stabilisieren (mehrere konfliktreiche Stylesheets)
-- [ ] URL-Architektur refaktorieren (realstate/urls.py vs main/urls.py)
+**Mögliche Ursachen:**
+1. Die lokale Datei des Benutzers ist nicht synchron mit den Änderungen
+2. Der Context Processor wird nicht für diese View aufgerufen
+3. Die Variable-Namen im Template stimmen nicht exakt mit den DB-Namen überein
+4. Cache-Problem
 
-### P1 (High)
-- [ ] Bewertungs-/Rating-System implementieren
-- [ ] Gruppe B Anleitung erweitern (wie Gruppe A)
+**Debug-Vorschläge für nächsten Agenten:**
+1. Prüfe ob Context Processor in `realstate/settings.py` unter `TEMPLATES['OPTIONS']['context_processors']` eingetragen ist
+2. Prüfe in der View `main/views.py` ob der Context korrekt übergeben wird
+3. Teste mit: `{{ label_floors }}` ohne default um zu sehen ob Variable leer ist
+4. Prüfe die exakten Variablennamen in der View mit Debug-Output
 
-### P2 (Medium)
-- [ ] OpenAI Chatbot untersuchen
-- [ ] Mobile-Optimierung
-- [ ] Meta Pixel Tracking
+## Dateistruktur
 
-### P3 (Low)
-- [ ] Legacy-Code konsolidieren
+### Wichtige Dateien:
+- `/app/real-estate-django-main/` - Projektroot
+- `main/context_processors.py` - Übersetzungslogik
+- `main/views.py` - Views inkl. property_details
+- `pages/models.py` - Translation Model
+- `templates/main/single-detail-modern.html` - Neues Property Template
+- `templates/main/single-detail.html` - Altes Property Template (funktioniert!)
 
-## Test Credentials
-- **Admin:** /nik-verwaltung-2026/ | Nik / Admin1234!
-- **Makler (Gruppe A):** /makler-portal/login/ | Nik / Admin1234!
-- **Professional (Gruppe B):** /accounts/login | archtiket / Architekt!123456789
+### Git-Status:
+- Branch: `feature/modern-property-detail` (nicht gepusht)
+- Baseline: `9ec9d9a on main`
 
-## Important Commands
-```bash
-# Server starten (WICHTIG: mit DEBUG=true!)
-DEBUG=true python3 manage.py runserver
+## Benutzer-Kontext
+- Nik arbeitet auf Mac M1 mit Terminal/Safari
+- Verwendet `DEBUG=true python3 manage.py runserver`
+- Lokal unter `~/Desktop/real-estate-django-ALTmain`
+- Alle Befehle als einfache Copy-Paste Terminal-Befehle geben
 
-# Branch erstellen
-git checkout -b feature/name
-git checkout -b fix/name
+## Credentials
+- Admin: `/nik-verwaltung-2026/` - User: `Nik` / `Admin1234!`
+- Gruppe A (Makler): `/accounts/login` - User: `Nik` / `Admin1234!`
+- Gruppe B (Professional): `/accounts/login` - User: `archtiket` / `Architekt!123456789`
 
-# Push mit upstream
-git push --set-upstream origin branch-name
-```
+## Nächste Schritte
+1. **PRIORITÄT 1:** Übersetzungsproblem lösen
+2. Standort (city, country) im Hero-Bild anzeigen
+3. Alle Labels komplett übersetzen
+4. Template committen und pushen
+5. PR erstellen und mergen
 
-## Key Files
-- `/templates/makler_portal/anleitung.html` - Makler Guide
-- `/templates/professional_portal/anleitung.html` - Professional Guide
-- `/templates/main/partner_landing.html` - Partner Landing (3 Sprachen)
-- `/accounts/password_reset.py` - Sicheres Passwort-Reset
-- `/main/views.py` - Haupt-Views (partner_landing mit lang-Parameter)
+## Sprache
+Der Benutzer kommuniziert auf **Deutsch (informell "du")**.
