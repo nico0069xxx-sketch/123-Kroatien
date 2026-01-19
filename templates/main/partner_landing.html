@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-{% if lang == 'hr' %}Postanite partner - 123-Kroatien.eu{% else %}Partner werden - 123-Kroatien.eu{% endif %}
+{% if lang == 'hr' %}Postanite partner - 123-Kroatien.eu{% elif lang == 'en' %}Become a Partner - 123-Kroatien.eu{% else %}Partner werden - 123-Kroatien.eu{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -171,15 +171,17 @@
 <section class="hero-partner">
     <div class="container text-center">
         <span class="free-badge">
-            {% if lang == 'hr' %}100% BESPLATNO{% else %}100% KOSTENLOS{% endif %}
+            {% if lang == 'hr' %}100% BESPLATNO{% elif lang == 'en' %}100% FREE{% else %}100% KOSTENLOS{% endif %}
         </span>
         <h1>
-            {% if lang == 'hr' %}Povećajte svoju vidljivost u 12 zemalja
-            {% else %}Steigern Sie Ihre Sichtbarkeit in 12 Ländern{% endif %}
+            {% if lang == 'hr' %}Povecajte svoju vidljivost u 12 zemalja
+            {% elif lang == 'en' %}Increase Your Visibility in 12 Countries
+            {% else %}Steigern Sie Ihre Sichtbarkeit in 12 Laendern{% endif %}
         </h1>
         <p class="lead">
-            {% if lang == 'hr' %}Jeste li agent za nekretnine, građevinska tvrtka, arhitekt, odvjetnik ili porezni savjetnik? Registrirajte se i dosegnite tisuće kupaca iz cijele Europe kroz našu mrežu od 80+ web stranica.
-            {% else %}Sind Sie Immobilienmakler, Bauunternehmer, Architekt, Rechtsanwalt oder Steuerberater? Registrieren Sie sich und erreichen Sie tausende Käufer aus ganz Europa durch unser Netzwerk von 80+ Webseiten.{% endif %}
+            {% if lang == 'hr' %}Jeste li agent za nekretnine, gradevinska tvrtka, arhitekt, odvjetnik ili porezni savjetnik? Registrirajte se i dosegnite tisuce kupaca iz cijele Europe kroz nasu mrezu od 80+ web stranica.
+            {% elif lang == 'en' %}Are you a real estate agent, construction company, architect, lawyer or tax advisor? Register and reach thousands of buyers from all over Europe through our network of 80+ websites.
+            {% else %}Sind Sie Immobilienmakler, Bauunternehmer, Architekt, Rechtsanwalt oder Steuerberater? Registrieren Sie sich und erreichen Sie tausende Kaeufer aus ganz Europa durch unser Netzwerk von 80+ Webseiten.{% endif %}
         </p>
     </div>
 </section>
@@ -189,19 +191,19 @@
         <div class="row text-center">
             <div class="col-md-3 col-6 mb-3">
                 <div class="stat-number">80+</div>
-                <div class="stat-label">{% if lang == 'hr' %}Vlastitih web stranica{% else %}Eigene Webseiten{% endif %}</div>
+                <div class="stat-label">{% if lang == 'hr' %}Vlastitih web stranica{% elif lang == 'en' %}Own Websites{% else %}Eigene Webseiten{% endif %}</div>
             </div>
             <div class="col-md-3 col-6 mb-3">
                 <div class="stat-number">12</div>
-                <div class="stat-label">{% if lang == 'hr' %}Zemalja i jezika{% else %}Länder & Sprachen{% endif %}</div>
+                <div class="stat-label">{% if lang == 'hr' %}Zemalja i jezika{% elif lang == 'en' %}Countries & Languages{% else %}Laender & Sprachen{% endif %}</div>
             </div>
             <div class="col-md-3 col-6 mb-3">
                 <div class="stat-number">500+</div>
-                <div class="stat-label">{% if lang == 'hr' %}Verificiranih partnera{% else %}Verifizierte Partner{% endif %}</div>
+                <div class="stat-label">{% if lang == 'hr' %}Verificiranih partnera{% elif lang == 'en' %}Verified Partners{% else %}Verifizierte Partner{% endif %}</div>
             </div>
             <div class="col-md-3 col-6 mb-3">
-                <div class="stat-number">10+</div>
-                <div class="stat-label">{% if lang == 'hr' %}Godina iskustva{% else %}Jahre Erfahrung{% endif %}</div>
+                <div class="stat-number">30+</div>
+                <div class="stat-label">{% if lang == 'hr' %}Godina iskustva{% elif lang == 'en' %}Years Experience{% else %}Jahre Erfahrung{% endif %}</div>
             </div>
         </div>
     </div>
@@ -209,69 +211,87 @@
 
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-5">{% if lang == 'hr' %}Zašto postati partner?{% else %}Warum Partner werden?{% endif %}</h2>
+        <h2 class="text-center mb-5">{% if lang == 'hr' %}Zasto postati partner?{% elif lang == 'en' %}Why Become a Partner?{% else %}Warum Partner werden?{% endif %}</h2>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-globe"></i></div>
-                    <h3>{% if lang == 'hr' %}12 zemalja i jezika{% else %}12 Länder & Sprachen{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Vaš profil je dostupan kupcima iz Njemačke, Engleske, Francuske, Grčke, Hrvatske, Poljske, Češke, Rusije, Švedske, Norveške, Slovačke i Nizozemske.{% else %}Ihr Profil ist für Käufer aus Deutschland, England, Frankreich, Griechenland, Kroatien, Polen, Tschechien, Russland, Schweden, Norwegen, Slowakei und den Niederlanden verfügbar.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}12 zemalja i jezika{% elif lang == 'en' %}12 Countries & Languages{% else %}12 Laender & Sprachen{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Vas profil je dostupan kupcima iz Njemacke, Engleske, Francuske, Grcke, Hrvatske, Poljske, Ceske, Rusije, Svedske, Norveske, Slovacke i Nizozemske.
+                    {% elif lang == 'en' %}Your profile is available to buyers from Germany, England, France, Greece, Croatia, Poland, Czech Republic, Russia, Sweden, Norway, Slovakia and the Netherlands.
+                    {% else %}Ihr Profil ist fuer Kaeufer aus Deutschland, England, Frankreich, Griechenland, Kroatien, Polen, Tschechien, Russland, Schweden, Norwegen, Slowakei und den Niederlanden verfuegbar.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-sitemap"></i></div>
-                    <h3>{% if lang == 'hr' %}Mreža od 80+ web stranica{% else %}Netzwerk von 80+ Webseiten{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}123-Kroatien.eu upravlja mrežom od preko 80 specijaliziranih web stranica o Hrvatskoj, što vam daje maksimalnu vidljivost.{% else %}123-Kroatien.eu betreibt ein Netzwerk von über 80 spezialisierten Webseiten über Kroatien, was Ihnen maximale Sichtbarkeit bietet.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}Mreza od 80+ web stranica{% elif lang == 'en' %}Network of 80+ Websites{% else %}Netzwerk von 80+ Webseiten{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}123-Kroatien.eu upravlja mrezom od preko 80 specijaliziranih web stranica o Hrvatskoj, sto vam daje maksimalnu vidljivost.
+                    {% elif lang == 'en' %}123-Kroatien.eu operates a network of over 80 specialized websites about Croatia, giving you maximum visibility.
+                    {% else %}123-Kroatien.eu betreibt ein Netzwerk von ueber 80 spezialisierten Webseiten ueber Kroatien, was Ihnen maximale Sichtbarkeit bietet.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-microchip"></i></div>
-                    <h3>{% if lang == 'hr' %}KI pronalaženje{% else %}KI-Auffindbarkeit{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Vaš profil je optimiziran za umjetnu inteligenciju. Kada kupci koriste ChatGPT, Gemini ili druge AI alate za pretraživanje, vi ste vidljivi.{% else %}Ihr Profil ist für künstliche Intelligenz optimiert. Wenn Käufer ChatGPT, Gemini oder andere KI-Tools zur Suche nutzen, sind Sie sichtbar.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}KI pronalazenje{% elif lang == 'en' %}AI Discoverability{% else %}KI-Auffindbarkeit{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Vas profil je optimiziran za umjetnu inteligenciju. Kada kupci koriste ChatGPT, Gemini ili druge AI alate za pretrazivanje, vi ste vidljivi.
+                    {% elif lang == 'en' %}Your profile is optimized for artificial intelligence. When buyers use ChatGPT, Gemini or other AI tools to search, you are visible.
+                    {% else %}Ihr Profil ist fuer kuenstliche Intelligenz optimiert. Wenn Kaeufer ChatGPT, Gemini oder andere KI-Tools zur Suche nutzen, sind Sie sichtbar.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-search"></i></div>
-                    <h3>{% if lang == 'hr' %}SEO u 12 zemalja{% else %}SEO in 12 Ländern{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Vaš profil je optimiziran za tražilice u svim zemljama. Klijenti vas pronalaze kada traže "arhitekt Hrvatska" na bilo kojem jeziku.{% else %}Ihr Profil ist für Suchmaschinen in allen Ländern optimiert. Kunden finden Sie bei Suchen wie "Architekt Kroatien" in jeder Sprache.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}SEO u 12 zemalja{% elif lang == 'en' %}SEO in 12 Countries{% else %}SEO in 12 Laendern{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Vas profil je optimiziran za trazilice u svim zemljama. Klijenti vas pronalaze kada traze "arhitekt Hrvatska" na bilo kojem jeziku.
+                    {% elif lang == 'en' %}Your profile is optimized for search engines in all countries. Clients find you when searching for "architect Croatia" in any language.
+                    {% else %}Ihr Profil ist fuer Suchmaschinen in allen Laendern optimiert. Kunden finden Sie bei Suchen wie "Architekt Kroatien" in jeder Sprache.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-bullhorn"></i></div>
-                    <h3>{% if lang == 'hr' %}Aktivni marketing{% else %}Aktives Marketing{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}123-Kroatien.eu aktivno promovira platformu kroz online marketing, SEO kampanje i partnerstva, donoseći vam nove klijente.{% else %}123-Kroatien.eu bewirbt die Plattform aktiv durch Online-Marketing, SEO-Kampagnen und Partnerschaften und bringt Ihnen neue Kunden.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}Aktivni marketing{% elif lang == 'en' %}Active Marketing{% else %}Aktives Marketing{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}123-Kroatien.eu aktivno promovira platformu kroz online marketing, SEO kampanje i partnerstva, donoseci vam nove klijente.
+                    {% elif lang == 'en' %}123-Kroatien.eu actively promotes the platform through online marketing, SEO campaigns and partnerships, bringing you new clients.
+                    {% else %}123-Kroatien.eu bewirbt die Plattform aktiv durch Online-Marketing, SEO-Kampagnen und Partnerschaften und bringt Ihnen neue Kunden.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-language"></i></div>
-                    <h3>{% if lang == 'hr' %}Automatski prijevod{% else %}Automatische Übersetzung{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Ispunite profil samo na hrvatskom. Naš sustav automatski prevodi na svih 12 jezika bez dodatnog posla.{% else %}Füllen Sie Ihr Profil nur auf Kroatisch aus. Unser System übersetzt automatisch in alle 12 Sprachen ohne zusätzlichen Aufwand.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}Automatski prijevod{% elif lang == 'en' %}Automatic Translation{% else %}Automatische Uebersetzung{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Ispunite profil samo na hrvatskom. Nas sustav automatski prevodi na svih 12 jezika bez dodatnog posla.
+                    {% elif lang == 'en' %}Fill in your profile only in Croatian. Our system automatically translates into all 12 languages without extra work.
+                    {% else %}Fuellen Sie Ihr Profil nur auf Kroatisch aus. Unser System uebersetzt automatisch in alle 12 Sprachen ohne zusaetzlichen Aufwand.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-check-circle"></i></div>
-                    <h3>{% if lang == 'hr' %}Verifikacija i povjerenje{% else %}Verifizierung & Vertrauen{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Verificirani partneri dobivaju oznaku povjerenja koja značajno povećava broj upita od klijenata.{% else %}Verifizierte Partner erhalten ein Vertrauenssiegel, das die Kundenanfragen deutlich erhöht.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}Verifikacija i povjerenje{% elif lang == 'en' %}Verification & Trust{% else %}Verifizierung & Vertrauen{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Verificirani partneri dobivaju oznaku povjerenja koja znacajno povecava broj upita od klijenata.
+                    {% elif lang == 'en' %}Verified partners receive a trust badge that significantly increases client inquiries.
+                    {% else %}Verifizierte Partner erhalten ein Vertrauenssiegel, das die Kundenanfragen deutlich erhoeht.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-share-alt"></i></div>
-                    <h3>{% if lang == 'hr' %}Social Media integracija{% else %}Social-Media-Integration{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Povežite Facebook, Instagram i LinkedIn profile za još veću vidljivost i povjerenje kupaca.{% else %}Verknüpfen Sie Facebook, Instagram und LinkedIn für noch mehr Sichtbarkeit und Kundenvertrauen.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}Social Media integracija{% elif lang == 'en' %}Social Media Integration{% else %}Social-Media-Integration{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Povezite Facebook, Instagram i LinkedIn profile za jos vecu vidljivost i povjerenje kupaca.
+                    {% elif lang == 'en' %}Connect Facebook, Instagram and LinkedIn profiles for even more visibility and customer trust.
+                    {% else %}Verknuepfen Sie Facebook, Instagram und LinkedIn fuer noch mehr Sichtbarkeit und Kundenvertrauen.{% endif %}</p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="benefit-card">
                     <div class="benefit-icon"><i class="fa fa-gift"></i></div>
-                    <h3>{% if lang == 'hr' %}Bez skrivenih troškova{% else %}Keine versteckten Kosten{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Osnovna registracija je potpuno besplatna. Bez mjesečnih naknada, bez provizija, bez obveza.{% else %}Die Basisregistrierung ist völlig kostenlos. Keine monatlichen Gebühren, keine Provisionen, keine Verpflichtungen.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}Bez skrivenih troskova{% elif lang == 'en' %}No Hidden Costs{% else %}Keine versteckten Kosten{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Osnovna registracija je potpuno besplatna. Bez mjesecnih naknada, bez provizija, bez obveza.
+                    {% elif lang == 'en' %}Basic registration is completely free. No monthly fees, no commissions, no obligations.
+                    {% else %}Die Basisregistrierung ist voellig kostenlos. Keine monatlichen Gebuehren, keine Provisionen, keine Verpflichtungen.{% endif %}</p>
                 </div>
             </div>
         </div>
@@ -282,8 +302,10 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <h2>{% if lang == 'hr' %}Dostupni u cijeloj Europi{% else %}Europaweit verfügbar{% endif %}</h2>
-                <p class="lead">{% if lang == 'hr' %}Vaš profil se automatski prikazuje kupcima iz 12 europskih zemalja na njihovom jeziku.{% else %}Ihr Profil wird automatisch Käufern aus 12 europäischen Ländern in ihrer Sprache angezeigt.{% endif %}</p>
+                <h2>{% if lang == 'hr' %}Dostupni u cijeloj Europi{% elif lang == 'en' %}Available Across Europe{% else %}Europaweit verfuegbar{% endif %}</h2>
+                <p class="lead">{% if lang == 'hr' %}Vas profil se automatski prikazuje kupcima iz 12 europskih zemalja na njihovom jeziku.
+                {% elif lang == 'en' %}Your profile is automatically displayed to buyers from 12 European countries in their language.
+                {% else %}Ihr Profil wird automatisch Kaeufern aus 12 europaeischen Laendern in ihrer Sprache angezeigt.{% endif %}</p>
                 <div class="country-flags">
                     <span class="country-flag">🇬🇧 English</span>
                     <span class="country-flag">🇩🇪 German</span>
@@ -301,8 +323,10 @@
             </div>
             <div class="col-lg-6">
                 <div class="highlight-box">
-                    <h3>{% if lang == 'hr' %}80+ web stranica{% else %}80+ Webseiten{% endif %}</h3>
-                    <p>{% if lang == 'hr' %}Naša mreža specijaliziranih web stranica o Hrvatskoj osigurava da vas potencijalni klijenti mogu pronaći na više kanala.{% else %}Unser Netzwerk spezialisierter Webseiten über Kroatien stellt sicher, dass potenzielle Kunden Sie über mehrere Kanäle finden können.{% endif %}</p>
+                    <h3>{% if lang == 'hr' %}80+ web stranica{% elif lang == 'en' %}80+ Websites{% else %}80+ Webseiten{% endif %}</h3>
+                    <p>{% if lang == 'hr' %}Nasa mreza specijaliziranih web stranica o Hrvatskoj osigurava da vas potencijalni klijenti mogu pronaci na vise kanala.
+                    {% elif lang == 'en' %}Our network of specialized websites about Croatia ensures that potential clients can find you through multiple channels.
+                    {% else %}Unser Netzwerk spezialisierter Webseiten ueber Kroatien stellt sicher, dass potenzielle Kunden Sie ueber mehrere Kanaele finden koennen.{% endif %}</p>
                 </div>
             </div>
         </div>
@@ -311,27 +335,33 @@
 
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-5">{% if lang == 'hr' %}Kako funkcionira?{% else %}Wie funktioniert es?{% endif %}</h2>
+        <h2 class="text-center mb-5">{% if lang == 'hr' %}Kako funkcionira?{% elif lang == 'en' %}How Does It Work?{% else %}Wie funktioniert es?{% endif %}</h2>
         <div class="row">
             <div class="col-md-4">
                 <div class="process-step">
                     <div class="step-number">1</div>
-                    <h4>{% if lang == 'hr' %}Registracija{% else %}Registrierung{% endif %}</h4>
-                    <p>{% if lang == 'hr' %}Ispunite obrazac s vašim osnovnim podacima na hrvatskom jeziku.{% else %}Füllen Sie das Formular mit Ihren Basisdaten auf Kroatisch aus.{% endif %}</p>
+                    <h4>{% if lang == 'hr' %}Registracija{% elif lang == 'en' %}Registration{% else %}Registrierung{% endif %}</h4>
+                    <p>{% if lang == 'hr' %}Ispunite obrazac s vasim osnovnim podacima na hrvatskom jeziku.
+                    {% elif lang == 'en' %}Fill out the form with your basic details in Croatian.
+                    {% else %}Fuellen Sie das Formular mit Ihren Basisdaten auf Kroatisch aus.{% endif %}</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="process-step">
                     <div class="step-number">2</div>
-                    <h4>{% if lang == 'hr' %}Verifikacija{% else %}Verifizierung{% endif %}</h4>
-                    <p>{% if lang == 'hr' %}Učitajte profilnu sliku. Provjera u roku 48 sati.{% else %}Laden Sie ein Profilbild hoch. Prüfung innerhalb 48 Stunden.{% endif %}</p>
+                    <h4>{% if lang == 'hr' %}Verifikacija{% elif lang == 'en' %}Verification{% else %}Verifizierung{% endif %}</h4>
+                    <p>{% if lang == 'hr' %}Ucitajte profilnu sliku. Provjera u roku 48 sati.
+                    {% elif lang == 'en' %}Upload a profile picture. Review within 48 hours.
+                    {% else %}Laden Sie ein Profilbild hoch. Pruefung innerhalb 48 Stunden.{% endif %}</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="process-step">
                     <div class="step-number">3</div>
-                    <h4>{% if lang == 'hr' %}Aktivacija{% else %}Aktivierung{% endif %}</h4>
-                    <p>{% if lang == 'hr' %}Vaš profil postaje vidljiv kupcima u 12 zemalja na 12 jezika.{% else %}Ihr Profil wird für Käufer in 12 Ländern in 12 Sprachen sichtbar.{% endif %}</p>
+                    <h4>{% if lang == 'hr' %}Aktivacija{% elif lang == 'en' %}Activation{% else %}Aktivierung{% endif %}</h4>
+                    <p>{% if lang == 'hr' %}Vas profil postaje vidljiv kupcima u 12 zemalja na 12 jezika.
+                    {% elif lang == 'en' %}Your profile becomes visible to buyers in 12 countries in 12 languages.
+                    {% else %}Ihr Profil wird fuer Kaeufer in 12 Laendern in 12 Sprachen sichtbar.{% endif %}</p>
                 </div>
             </div>
         </div>
@@ -340,38 +370,38 @@
 
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="text-center mb-5">{% if lang == 'hr' %}Tko se može registrirati?{% else %}Wer kann sich registrieren?{% endif %}</h2>
+        <h2 class="text-center mb-5">{% if lang == 'hr' %}Tko se moze registrirati?{% elif lang == 'en' %}Who Can Register?{% else %}Wer kann sich registrieren?{% endif %}</h2>
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="row g-4 text-center justify-content-center">
                     <div class="col-lg col-md-4 col-6">
                         <div class="p-3">
                             <div class="provider-icon"><i class="fa fa-home"></i></div>
-                            <h6>{% if lang == 'hr' %}Agenti za nekretnine{% else %}Immobilienmakler{% endif %}</h6>
+                            <h6>{% if lang == 'hr' %}Agenti za nekretnine{% elif lang == 'en' %}Real Estate Agents{% else %}Immobilienmakler{% endif %}</h6>
                         </div>
                     </div>
                     <div class="col-lg col-md-4 col-6">
                         <div class="p-3">
                             <div class="provider-icon"><i class="fa fa-building"></i></div>
-                            <h6>{% if lang == 'hr' %}Građevinske tvrtke{% else %}Bauunternehmen{% endif %}</h6>
+                            <h6>{% if lang == 'hr' %}Gradevinske tvrtke{% elif lang == 'en' %}Construction Companies{% else %}Bauunternehmen{% endif %}</h6>
                         </div>
                     </div>
                     <div class="col-lg col-md-4 col-6">
                         <div class="p-3">
                             <div class="provider-icon"><i class="fa fa-pencil"></i></div>
-                            <h6>{% if lang == 'hr' %}Arhitekti{% else %}Architekten{% endif %}</h6>
+                            <h6>{% if lang == 'hr' %}Arhitekti{% elif lang == 'en' %}Architects{% else %}Architekten{% endif %}</h6>
                         </div>
                     </div>
                     <div class="col-lg col-md-4 col-6">
                         <div class="p-3">
                             <div class="provider-icon"><i class="fa fa-balance-scale"></i></div>
-                            <h6>{% if lang == 'hr' %}Odvjetnici{% else %}Anwälte{% endif %}</h6>
+                            <h6>{% if lang == 'hr' %}Odvjetnici{% elif lang == 'en' %}Lawyers{% else %}Anwaelte{% endif %}</h6>
                         </div>
                     </div>
                     <div class="col-lg col-md-4 col-6">
                         <div class="p-3">
                             <div class="provider-icon"><i class="fa fa-calculator"></i></div>
-                            <h6>{% if lang == 'hr' %}Porezni savjetnici{% else %}Steuerberater{% endif %}</h6>
+                            <h6>{% if lang == 'hr' %}Porezni savjetnici{% elif lang == 'en' %}Tax Advisors{% else %}Steuerberater{% endif %}</h6>
                         </div>
                     </div>
                 </div>
@@ -382,10 +412,12 @@
 
 <section class="cta-section text-center">
     <div class="container">
-        <h2 class="text-white mb-4">{% if lang == 'hr' %}Spremni za klijente iz cijele Europe?{% else %}Bereit für Kunden aus ganz Europa?{% endif %}</h2>
-        <p class="text-white mb-4" style="opacity:0.9;">{% if lang == 'hr' %}Registrirajte se besplatno i budite vidljivi u 12 zemalja na 12 jezika.{% else %}Registrieren Sie sich kostenlos und werden Sie in 12 Ländern in 12 Sprachen sichtbar.{% endif %}</p>
-        <a href="{% if lang == 'hr' %}{% url 'main:professional-reg-hr' %}{% else %}{% url 'main:professional-reg-ge' %}{% endif %}" class="btn-cta">
-            {% if lang == 'hr' %}Besplatna registracija{% else %}Kostenlos registrieren{% endif %}
+        <h2 class="text-white mb-4">{% if lang == 'hr' %}Spremni za klijente iz cijele Europe?{% elif lang == 'en' %}Ready for Clients from All Over Europe?{% else %}Bereit fuer Kunden aus ganz Europa?{% endif %}</h2>
+        <p class="text-white mb-4" style="opacity:0.9;">{% if lang == 'hr' %}Registrirajte se besplatno i budite vidljivi u 12 zemalja na 12 jezika.
+        {% elif lang == 'en' %}Register for free and be visible in 12 countries in 12 languages.
+        {% else %}Registrieren Sie sich kostenlos und werden Sie in 12 Laendern in 12 Sprachen sichtbar.{% endif %}</p>
+        <a href="{% if lang == 'hr' %}{% url 'main:professional-reg-hr' %}{% elif lang == 'en' %}{% url 'main:professional-reg-ge' %}{% else %}{% url 'main:professional-reg-ge' %}{% endif %}" class="btn-cta">
+            {% if lang == 'hr' %}Besplatna registracija{% elif lang == 'en' %}Free Registration{% else %}Kostenlos registrieren{% endif %}
         </a>
     </div>
 </section>
