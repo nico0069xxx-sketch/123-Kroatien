@@ -59,7 +59,7 @@
                             </div> <!-- form-group// -->
 
                             <div class="form-group">
-                                <a href="{% url 'account:forget_password' %}" class="float-right text-danger">{{Forgotpassword}}</a>
+                                <a href="{% url 'account:password_reset_request' %}" class="float-right text-danger" data-testid="forgot-password-link">{{Forgotpassword}}</a>
                                 <label class="float-left custom-control custom-checkbox"> <input type="checkbox"
                                         class="custom-control-input" checked="">
                                     <span class="custom-control-label"> {{Remember}} </span>
