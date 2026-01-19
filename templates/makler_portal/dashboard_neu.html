@@ -349,6 +349,10 @@
                 <i class="fa fa-upload"></i>
                 <span>{% if lang == 'hr' %}XML uvoz{% else %}XML-Import{% endif %}</span>
             </a>
+            <a href="{% url 'main:edit_agent' agent.id %}" class="quick-action">
+                <i class="fa fa-edit"></i>
+                <span>{% if lang == 'hr' %}Uredi profil{% else %}Profil bearbeiten{% endif %}</span>
+            </a>
             <a href="{% url 'main:makler_xml_dokumentation' %}" class="quick-action">
                 <i class="fa fa-book"></i>
                 <span>{% if lang == 'hr' %}Dokumentacija{% else %}Anleitung{% endif %}</span>
@@ -412,10 +416,6 @@
                 <span>{% if lang == 'hr' %}Logo nedostaje{% else %}Logo fehlt{% endif %}</span>
                 {% endif %}
             </div>
-            <a href="{% url 'main:edit_agent' agent.id %}" class="quick-action" style="margin-top:15px;">
-                <i class="fa fa-edit"></i>
-                <span>{% if lang == 'hr' %}Uredi profil{% else %}Profil bearbeiten{% endif %}</span>
-            </a>
         </div>
     </div>
 
@@ -461,7 +461,7 @@
             <div class="empty-state">
                 <i class="fa fa-home"></i>
                 <p>{% if lang == 'hr' %}Još nemate nekretnina{% else %}Noch keine Immobilien vorhanden{% endif %}</p>
-                <a href="{% url 'main:makler_objekt_neu' %}" class="btn" style="background:#003167;color:#fff;margin-top:15px;">
+                <a href="{% url 'main:makler_objekt_neu' %}" class="btn" style="background:#003167;color:#fff;margin-top:20px; margin-left:10px;">
                     {% if lang == 'hr' %}Dodaj prvu nekretninu{% else %}Erstes Objekt anlegen{% endif %}
                 </a>
             </div>
