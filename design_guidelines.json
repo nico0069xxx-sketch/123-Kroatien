@@ -1,114 +1,112 @@
 {
-  "brand_identity": {
-    "name": "123-Kroatien.eu",
-    "ethos": "Perfectionism, Trust, Mediterranean Elegance",
+  "design_system": {
+    "identity": {
+      "name": "123-Kroatien Luxury",
+      "tone": "Mediterranean Luxury, Trustworthy, Exclusive, Sunny",
+      "target_audience": "German buyers, High-net-worth, Holiday home seekers",
+      "theme_mode": "light"
+    },
     "typography": {
-      "headings": {
-        "font_family": "Playfair Display, serif",
-        "weights": ["400", "600", "700"],
-        "usage": "All section titles, hero headlines, property names. Letter-spacing: -0.02em."
+      "font_family": {
+        "heading": "Playfair Display, serif",
+        "body": "Manrope, sans-serif",
+        "mono": "JetBrains Mono, monospace"
       },
-      "body": {
-        "font_family": "DM Sans, sans-serif",
-        "weights": ["400", "500"],
-        "usage": "Listing details, descriptions, UI elements. High legibility."
-      },
-      "accent": {
-        "font_family": "JetBrains Mono, monospace",
-        "usage": "Price tags, technical specs (sqm), meta-data. Small sizes only."
+      "scale": {
+        "h1": "text-5xl md:text-7xl font-medium tracking-tight leading-[1.1]",
+        "h2": "text-3xl md:text-4xl font-medium tracking-tight",
+        "h3": "text-2xl font-medium",
+        "body_lg": "text-lg leading-relaxed text-muted-foreground",
+        "body_base": "text-base leading-relaxed text-muted-foreground",
+        "caption": "text-sm uppercase tracking-widest font-semibold text-muted-foreground"
       }
     },
     "colors": {
-      "primary": {
-        "name": "Adriatic Deep",
-        "hex": "#0F172A",
-        "tailwind": "bg-slate-900",
-        "usage": "Primary buttons, Footer, Text Headings"
+      "palette": {
+        "primary": "#003167",
+        "primary_foreground": "#ffffff",
+        "secondary": "#F5F5F0",
+        "secondary_foreground": "#003167",
+        "accent": "#db0000",
+        "background": "#FFFFFF",
+        "surface": "#F9F9F9",
+        "border": "#E2E2E2",
+        "muted": "#F4F4F5"
       },
-      "secondary": {
-        "name": "Sunset Terracotta",
-        "hex": "#EA580C",
-        "tailwind": "bg-orange-600",
-        "usage": "Call to Actions (CTAs), Price highlights, 'New' badges"
+      "usage": {
+        "primary": "Headings, Primary Buttons, Strong Borders",
+        "secondary": "Section Backgrounds, Secondary Buttons",
+        "accent": "Use SPARINGLY. Only for 'Sold', 'Hot', or very urgent alerts. Do not use for main buttons.",
+        "text_main": "#0A0A0A",
+        "text_muted": "#64748B"
+      }
+    },
+    "layout": {
+      "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+      "spacing": {
+        "section_gap": "py-24 md:py-32",
+        "element_gap": "gap-6 md:gap-12"
       },
-      "background": {
-        "default": "#FFFFFF",
-        "subtle": "#F8FAFC",
-        "paper": "#FFFFFF"
-      },
-      "text": {
-        "primary": "#0F172A",
-        "secondary": "#64748B",
-        "muted": "#94A3B8"
+      "grid_system": "Bento Grid (Asymmetrical)",
+      "border_radius": "rounded-none md:rounded-2xl"
+    },
+    "visual_enhancers": {
+      "shadows": "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+      "glassmorphism": "bg-white/80 backdrop-blur-md border border-white/20",
+      "borders": "border border-border/60",
+      "animation": {
+        "hover": "transition-all duration-500 ease-out hover:-translate-y-1",
+        "image_reveal": "animate-in fade-in zoom-in-95 duration-1000"
       }
     }
   },
-  "layout_system": {
-    "spacing": {
-      "base": "4px",
-      "container_padding": "p-6 md:p-12 lg:p-24",
-      "section_gap": "gap-16 md:gap-32"
+  "components": {
+    "HeroSection": {
+      "description": "Full-screen immersive experience. Not just a slider. A cinematic intro.",
+      "specs": "Height: 85vh. Content: Bottom-left aligned. Typography: Massive H1.",
+      "interaction": "Parallax scroll effect on the background image."
     },
-    "grid_strategy": {
-      "listings": "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",
-      "bento_featured": "grid-cols-1 md:grid-cols-4 auto-rows-[300px] gap-4"
+    "PropertyGallery": {
+      "description": "Bento Grid layout. Not a boring uniform grid.",
+      "specs": "Mix of landscape (col-span-2) and portrait (row-span-2) images.",
+      "interaction": "Click to open lightbox (Shadcn Dialog)."
     },
-    "container_width": "max-w-7xl mx-auto"
-  },
-  "ui_components": {
-    "navigation": {
-      "style": "Glassmorphism",
-      "behavior": "Sticky, transitions from transparent to white on scroll",
-      "elements": "Logo left, Links center (clean sans), CTA right (Pill shape)"
+    "SpecGrid": {
+      "description": "Clean, icon-driven specification area.",
+      "specs": "Grid-cols-2 md:grid-cols-4. Large numbers, small labels.",
+      "style": "Minimalist. No heavy borders. Use dividers."
     },
-    "buttons": {
-      "primary": "rounded-full px-8 py-6 font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5",
-      "secondary": "rounded-full px-6 py-4 border border-slate-200 hover:bg-slate-50"
-    },
-    "cards": {
-      "property_card": {
-        "style": "Minimalist, no visible border, heavy shadow on hover only",
-        "image_ratio": "aspect-[4/3]",
-        "content": "Clean typography, price prominent in Serif, icons for beds/baths in muted gray"
-      }
-    },
-    "hero_section": {
-      "type": "Immersive Search",
-      "layout": "Full screen background image with central search box floating",
-      "overlay": "bg-black/20"
+    "AgentCard": {
+      "description": "Floating glass card for the agent.",
+      "specs": "Sticky on desktop sidebar. Bottom sheet on mobile.",
+      "style": "Glassmorphism. High trust."
     }
   },
   "assets": {
-    "hero_images": [
-      "https://images.unsplash.com/photo-1502542068853-07bc5d568c4e?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "https://images.unsplash.com/photo-1741375003412-f8ffe1084817?crop=entropy&cs=srgb&fm=jpg&q=85"
-    ],
-    "property_images": [
-      "https://images.unsplash.com/photo-1741376255900-2ea68a653a2d?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "https://images.unsplash.com/photo-1695965556328-2771c67c84d5?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "https://images.unsplash.com/photo-1741375003259-91460664b739?crop=entropy&cs=srgb&fm=jpg&q=85"
-    ],
-    "interior_images": [
-      "https://images.unsplash.com/photo-1759722668087-efcc63c91ed2?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "https://images.unsplash.com/photo-1757439402190-99b73ac8e807?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "https://images.unsplash.com/photo-1758548157747-285c7012db5b?crop=entropy&cs=srgb&fm=jpg&q=85"
-    ]
+    "images": {
+      "hero_main": "https://images.unsplash.com/flagged/photo-1569880286597-0019858e19d6?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "gallery_1": "https://images.unsplash.com/photo-1741375003412-f8ffe1084817?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "gallery_2": "https://images.unsplash.com/photo-1757262798677-ab4af4455a58?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "gallery_3": "https://images.unsplash.com/photo-1757262798620-c2cc40cfb440?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "gallery_4": "https://images.pexels.com/photos/29674369/pexels-photo-29674369.jpeg",
+      "agent_placeholder": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
+    },
+    "icons": "Lucide React (Home, Bed, Bath, Square, MapPin, Euro, Phone, Mail)"
   },
   "instructions_to_main_agent": [
-    "1. INSTALL FONTS: Add '@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&family=Playfair+Display:wght@400;600;700&display=swap');' to index.css",
-    "2. UPDATE TAILWIND: Extend theme with 'font-serif': ['Playfair Display'] and 'font-sans': ['DM Sans']. Add colors 'adriatic' (#0F172A) and 'terracotta' (#EA580C).",
-    "3. NAVIGATION: Build a responsive Navbar that is NOT 'fat'. Use h-16 or h-20 max. Use a transparent background that becomes white/blur on scroll.",
-    "4. HERO: Create a 'HeroSearch' component. Use one of the 'hero_images' as background. Center the search bar. Make it look like Airbnb/ImmoScout but cleaner.",
-    "5. LISTINGS: Create a 'PropertyCard' component. Use the 'property_images'. Ensure the price is bold and serif. Add hover effects (lift up).",
-    "6. FOOTER: Create a clean, multi-column footer with 'Adriatic Deep' background and white text.",
-    "7. USE SHADCN: Use 'Select' for filters, 'Carousel' for hero gallery, 'Card' for properties, 'Sonner' for toasts.",
-    "8. DATA-TESTID: Add data-testid to all interactive elements (e.g., 'search-button', 'filter-dropdown', 'property-card-1')."
+    "1. SETUP: Ensure 'lucide-react' is installed. Use 'clsx' and 'tailwind-merge' for class handling.",
+    "2. FILE TYPE: Use .js or .jsx extensions. Do NOT use .tsx.",
+    "3. LAYOUT: Implement the 'PropertyDetailPage' as a single component or a set of components in a 'pages' folder.",
+    "4. DATA: Mock the 'listing' object with the fields provided in the problem statement (photo_main, price, etc.).",
+    "5. STYLE: Override the default Shadcn 'radius' to 0.5rem or 0.75rem for a softer feel.",
+    "6. CRITICAL: Do not use the corporate Red (#db0000) for the 'Buy Now' or 'Contact' button. It signals 'Stop' or 'Danger'. Use the Navy (#003167) for primary actions.",
+    "7. MAP: Use a placeholder image for the map if no API key is available, styled with a 'View on Map' overlay.",
+    "8. RESPONSIVE: Mobile is critical. Ensure the gallery collapses to a swipeable carousel on mobile."
   ],
   "universal_guidelines": [
-    "Avoid generic 'Bootstrap' look. Use custom padding and shadows.",
-    "Do not use gradients for text unless specified.",
-    "Ensure mobile responsiveness is priority #1.",
-    "Use 'sonner' for all notifications.",
-    "Keep the design 'Airy' - lots of whitespace."
+    "Avoid 'AI Slop': No generic centered text blocks.",
+    "Use 2x more padding than you think is necessary.",
+    "Micro-interactions on every button and link.",
+    "Dark mode is NOT the priority here. Focus on a stunning Light mode."
   ]
 }
