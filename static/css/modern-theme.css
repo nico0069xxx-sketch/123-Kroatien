@@ -1158,3 +1158,58 @@ p {
   color: #013565 !important;
   border-top-color: #013565 !important;
 }
+
+/* ==================== Dropdown Styling Fix (19.01.2026) ==================== */
+
+/* Dropdown Hintergrund: Hellblau statt Grau */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+body .dropdown-item:hover,
+body .dropdown-item:focus {
+  background-color: rgba(1, 53, 101, 0.12) !important;
+  color: #013565 !important;
+}
+
+/* Hover-Effekt softer */
+.dropdown-menu .dropdown-item {
+  transition: all 0.3s ease !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  padding-left: 1.35rem;
+}
+
+/* ==================== Dropdown Fix - Stärkere Spezifität ==================== */
+/* Überschreibt custom.css #f5f5f5 (grau) */
+html body .dropdown-menu .dropdown-item:hover,
+html body .navbar .dropdown-menu .dropdown-item:hover,
+html body .navbar-nav .dropdown-menu .dropdown-item:hover,
+html body nav .dropdown-menu .dropdown-item:hover {
+  background-color: rgba(1, 53, 101, 0.10) !important;
+  background: rgba(1, 53, 101, 0.10) !important;
+  color: #013565 !important;
+  padding-left: 1.5rem;
+  transition: all 0.25s ease !important;
+}
+
+/* Entferne alle Borders/Outlines von Dropdown Items */
+.dropdown-menu .dropdown-item,
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ==================== Dropdown Hover: Feld vergrößert sich zum User ==================== */
+.dropdown-menu .dropdown-item {
+  transition: all 0.2s ease !important;
+  position: relative;
+}
+
+html body .dropdown-menu .dropdown-item:hover {
+  transform: scale(1.05) !important;
+  transform-origin: right center !important;
+  background-color: rgba(1, 53, 101, 0.12) !important;
+  z-index: 10;
+}
