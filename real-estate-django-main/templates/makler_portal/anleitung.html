@@ -1,0 +1,676 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}
+{% if lang == 'hr' %}Upute - Makler Portal{% elif lang == 'en' %}User Guide - Real Estate Portal{% else %}Anleitung - Makler-Portal{% endif %}
+{% endblock %}
+
+{% block content %}
+<style>
+    .guide-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    .guide-header {
+        background: linear-gradient(135deg, #003167 0%, #004a99 100%);
+        color: white;
+        padding: 40px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .guide-header h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    .guide-header .subtitle {
+        opacity: 0.9;
+        font-size: 1.1rem;
+    }
+    .lang-switcher {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+    .lang-btn {
+        padding: 10px 20px;
+        border: 2px solid #003167;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .lang-btn.active {
+        background: #003167;
+        color: white;
+    }
+    .lang-btn:not(.active) {
+        background: white;
+        color: #003167;
+    }
+    .lang-btn:hover:not(.active) {
+        background: #f0f4f8;
+    }
+    .guide-section {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .guide-section h2 {
+        color: #003167;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .guide-section h2 i {
+        color: #004a99;
+    }
+    .guide-section h3 {
+        color: #003167;
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+    .guide-section p, .guide-section li {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 12px;
+    }
+    .guide-section ul {
+        padding-left: 20px;
+    }
+    .guide-section li {
+        margin-bottom: 8px;
+    }
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #003167;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .tip-box {
+        background: #e8f4fd;
+        border-left: 4px solid #004a99;
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 20px 0;
+    }
+    .tip-box strong {
+        color: #003167;
+    }
+    .warning-box {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 20px 0;
+    }
+    .warning-box strong {
+        color: #856404;
+    }
+    .feature-box {
+        background: #d4edda;
+        border-left: 4px solid #28a745;
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 20px 0;
+    }
+    .feature-box strong {
+        color: #155724;
+    }
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #003167;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+    .back-btn:hover {
+        background: #004a99;
+        color: white;
+        transform: translateY(-2px);
+    }
+    .status-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+    }
+    .status-table th, .status-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .status-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #003167;
+    }
+    .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    .status-online { background: #d4edda; color: #155724; }
+    .status-pruefung { background: #fff3cd; color: #856404; }
+    .status-verkauft { background: #e2e3e5; color: #383d41; }
+    .status-pausiert { background: #ffe5d0; color: #fd7e14; }
+    @media (max-width: 768px) {
+        .guide-header { padding: 25px; }
+        .guide-header h1 { font-size: 1.5rem; }
+        .guide-section { padding: 20px; }
+        .status-table { font-size: 0.9rem; }
+    }
+</style>
+
+<div class="guide-container">
+    <!-- Header -->
+    <div class="guide-header">
+        <h1>
+            {% if lang == 'hr' %}
+                <i class="fa fa-book"></i> Upute za Makler Portal
+            {% elif lang == 'en' %}
+                <i class="fa fa-book"></i> Real Estate Portal Guide
+            {% else %}
+                <i class="fa fa-book"></i> Makler-Portal Anleitung
+            {% endif %}
+        </h1>
+        <p class="subtitle">
+            {% if lang == 'hr' %}
+                Sve što trebate znati za upravljanje nekretninama
+            {% elif lang == 'en' %}
+                Everything you need to know to manage your properties
+            {% else %}
+                Alles was du wissen musst, um deine Immobilien zu verwalten
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <a href="?lang=hr" class="lang-btn {% if lang == 'hr' %}active{% endif %}">
+            <i class="fa fa-flag"></i> Hrvatski
+        </a>
+        <a href="?lang=de" class="lang-btn {% if lang == 'de' or not lang or lang == 'ge' %}active{% endif %}">
+            <i class="fa fa-flag"></i> Deutsch
+        </a>
+        <a href="?lang=en" class="lang-btn {% if lang == 'en' %}active{% endif %}">
+            <i class="fa fa-flag"></i> English
+        </a>
+    </div>
+
+    {% if lang == 'hr' %}
+    <!-- ==================== CROATIAN VERSION ==================== -->
+    
+    <!-- Section 1: Login -->
+    <div class="guide-section">
+        <h2><i class="fa fa-sign-in"></i> 1. Prijava u portal</h2>
+        <p><span class="step-number">1</span> Idite na stranicu za prijavu: <strong>/accounts/login</strong></p>
+        <p><span class="step-number">2</span> Unesite svoje korisničko ime i lozinku</p>
+        <p><span class="step-number">3</span> Kliknite "Prijava"</p>
+        <p><span class="step-number">4</span> Bit ćete preusmjereni na vaš Dashboard</p>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Savjet:</strong> 
+            Ako ste zaboravili lozinku, kliknite "Zaboravljena lozinka?" na stranici za prijavu. Primit ćete e-mail sa sigurnim linkom za resetiranje (vrijedi 1 sat).
+        </div>
+    </div>
+
+    <!-- Section 2: Dashboard -->
+    <div class="guide-section">
+        <h2><i class="fa fa-tachometer"></i> 2. Dashboard - Pregled</h2>
+        <p>Dashboard vam daje pregled svih vaših nekretnina na jednom mjestu:</p>
+        
+        <h3>Statistika</h3>
+        <table class="status-table">
+            <tr>
+                <th>Status</th>
+                <th>Značenje</th>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-online">Online</span></td>
+                <td>Nekretnina je vidljiva kupcima na web stranici</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-pruefung">Na provjeri</span></td>
+                <td>Nekretnina čeka odobrenje administratora</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-verkauft">Prodano</span></td>
+                <td>Nekretnina je prodana i nije više aktivna</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-pausiert">Pauzirano</span></td>
+                <td>Privremeno sakriveno od kupaca</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Section 3: Add Property -->
+    <div class="guide-section">
+        <h2><i class="fa fa-plus-circle"></i> 3. Dodavanje nove nekretnine</h2>
+        <p><span class="step-number">1</span> Kliknite na gumb <strong>"+ Novo"</strong> u gornjem desnom kutu</p>
+        <p><span class="step-number">2</span> Ispunite osnovne podatke:</p>
+        <ul>
+            <li><strong>Naslov</strong> - Privlačan naziv nekretnine</li>
+            <li><strong>Tip</strong> - Kuća, stan, zemljište, itd.</li>
+            <li><strong>Cijena</strong> - U eurima (€)</li>
+            <li><strong>Lokacija</strong> - Grad, regija, adresa</li>
+            <li><strong>Površina</strong> - m² stambene i zemljišne površine</li>
+            <li><strong>Sobe</strong> - Broj spavaćih soba i kupaonica</li>
+        </ul>
+        <p><span class="step-number">3</span> Dodajte fotografije (minimalno 3, preporučeno 10+)</p>
+        <p><span class="step-number">4</span> Napišite opis na hrvatskom jeziku</p>
+        <p><span class="step-number">5</span> Kliknite <strong>"Spremi"</strong></p>
+        
+        <div class="feature-box">
+            <strong><i class="fa fa-magic"></i> KI-Tekstovi:</strong> 
+            Koristite gumb "KI-Text" za automatsko generiranje profesionalnih opisa na njemačkom jeziku!
+        </div>
+    </div>
+
+    <!-- Section 4: KI Text -->
+    <div class="guide-section">
+        <h2><i class="fa fa-magic"></i> 4. KI-Tekstovi (Umjetna inteligencija)</h2>
+        <p>Naš AI sustav automatski stvara profesionalne opise nekretnina:</p>
+        
+        <p><span class="step-number">1</span> Otvorite postojeću nekretninu za uređivanje</p>
+        <p><span class="step-number">2</span> Kliknite na gumb <strong>"🪄 KI-Text"</strong></p>
+        <p><span class="step-number">3</span> AI će generirati opis na njemačkom jeziku</p>
+        <p><span class="step-number">4</span> Pregledajte i po potrebi prilagodite tekst</p>
+        <p><span class="step-number">5</span> Spremite promjene</p>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Savjet:</strong> 
+            Što više detalja unesete (površina, oprema, lokacija), to će AI tekst biti kvalitetniji!
+        </div>
+    </div>
+
+    <!-- Section 5: XML Import -->
+    <div class="guide-section">
+        <h2><i class="fa fa-upload"></i> 5. XML Import</h2>
+        <p>Uvezite više nekretnina odjednom pomoću XML datoteke:</p>
+        
+        <p><span class="step-number">1</span> Kliknite na <strong>"XML Import"</strong> u izborniku</p>
+        <p><span class="step-number">2</span> Preuzmite primjer XML datoteke kao predložak</p>
+        <p><span class="step-number">3</span> Pripremite svoju XML datoteku prema predlošku</p>
+        <p><span class="step-number">4</span> Učitajte datoteku i kliknite "Importieren"</p>
+        
+        <div class="warning-box">
+            <strong><i class="fa fa-exclamation-triangle"></i> Važno:</strong> 
+            XML format mora odgovarati našem predlošku. Pogledajte dokumentaciju za detalje.
+        </div>
+    </div>
+
+    <!-- Section 6: Actions -->
+    <div class="guide-section">
+        <h2><i class="fa fa-cogs"></i> 6. Upravljanje nekretninama</h2>
+        
+        <h3>Dostupne akcije:</h3>
+        <ul>
+            <li><strong>✏️ Uredi</strong> - Promjena podataka nekretnine</li>
+            <li><strong>🪄 KI-Text</strong> - Generiranje AI opisa</li>
+            <li><strong>✓ Prodano</strong> - Označavanje kao prodano</li>
+            <li><strong>⏸️ Pauziraj</strong> - Privremeno sakrivanje</li>
+            <li><strong>▶️ Aktiviraj</strong> - Ponovno objavljivanje</li>
+        </ul>
+    </div>
+
+    <!-- Section 7: Profile -->
+    <div class="guide-section">
+        <h2><i class="fa fa-user"></i> 7. Vaš profil</h2>
+        <p>Vaš profil je vaša digitalna vizit karta za kupce:</p>
+        
+        <ul>
+            <li>Kliknite na <strong>"Profil"</strong> u gornjem izborniku</li>
+            <li>Ažurirajte podatke o tvrtki, logo i kontakt informacije</li>
+            <li>Dodajte opis na hrvatskom i njemačkom jeziku</li>
+            <li>Povežite društvene mreže (Facebook, Instagram, LinkedIn)</li>
+        </ul>
+    </div>
+
+    <!-- Back Button -->
+    <a href="{% url 'main:makler_dashboard' %}" class="back-btn">
+        <i class="fa fa-arrow-left"></i> Povratak na Dashboard
+    </a>
+
+    {% elif lang == 'en' %}
+    <!-- ==================== ENGLISH VERSION ==================== -->
+    
+    <!-- Section 1: Login -->
+    <div class="guide-section">
+        <h2><i class="fa fa-sign-in"></i> 1. Logging into the Portal</h2>
+        <p><span class="step-number">1</span> Go to the login page: <strong>/accounts/login</strong></p>
+        <p><span class="step-number">2</span> Enter your username and password</p>
+        <p><span class="step-number">3</span> Click "Login"</p>
+        <p><span class="step-number">4</span> You will be redirected to your Dashboard</p>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Tip:</strong> 
+            If you forgot your password, click "Forgot Password?" on the login page. You will receive an email with a secure reset link (valid for 1 hour).
+        </div>
+    </div>
+
+    <!-- Section 2: Dashboard -->
+    <div class="guide-section">
+        <h2><i class="fa fa-tachometer"></i> 2. Dashboard Overview</h2>
+        <p>The Dashboard gives you an overview of all your properties in one place:</p>
+        
+        <h3>Statistics</h3>
+        <table class="status-table">
+            <tr>
+                <th>Status</th>
+                <th>Meaning</th>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-online">Online</span></td>
+                <td>Property is visible to buyers on the website</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-pruefung">Under Review</span></td>
+                <td>Property is awaiting admin approval</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-verkauft">Sold</span></td>
+                <td>Property has been sold and is no longer active</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-pausiert">Paused</span></td>
+                <td>Temporarily hidden from buyers</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Section 3: Add Property -->
+    <div class="guide-section">
+        <h2><i class="fa fa-plus-circle"></i> 3. Adding a New Property</h2>
+        <p><span class="step-number">1</span> Click the <strong>"+ New"</strong> button in the top right corner</p>
+        <p><span class="step-number">2</span> Fill in the basic information:</p>
+        <ul>
+            <li><strong>Title</strong> - An attractive name for the property</li>
+            <li><strong>Type</strong> - House, apartment, land, etc.</li>
+            <li><strong>Price</strong> - In Euros (€)</li>
+            <li><strong>Location</strong> - City, region, address</li>
+            <li><strong>Area</strong> - m² living space and land area</li>
+            <li><strong>Rooms</strong> - Number of bedrooms and bathrooms</li>
+        </ul>
+        <p><span class="step-number">3</span> Add photos (minimum 3, recommended 10+)</p>
+        <p><span class="step-number">4</span> Write a description in Croatian</p>
+        <p><span class="step-number">5</span> Click <strong>"Save"</strong></p>
+        
+        <div class="feature-box">
+            <strong><i class="fa fa-magic"></i> AI Texts:</strong> 
+            Use the "AI Text" button to automatically generate professional descriptions in German!
+        </div>
+    </div>
+
+    <!-- Section 4: AI Text -->
+    <div class="guide-section">
+        <h2><i class="fa fa-magic"></i> 4. AI Texts (Artificial Intelligence)</h2>
+        <p>Our AI system automatically creates professional property descriptions:</p>
+        
+        <p><span class="step-number">1</span> Open an existing property for editing</p>
+        <p><span class="step-number">2</span> Click the <strong>"🪄 AI Text"</strong> button</p>
+        <p><span class="step-number">3</span> The AI will generate a description in German</p>
+        <p><span class="step-number">4</span> Review and adjust the text if needed</p>
+        <p><span class="step-number">5</span> Save your changes</p>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Tip:</strong> 
+            The more details you provide (area, equipment, location), the better the AI text will be!
+        </div>
+    </div>
+
+    <!-- Section 5: XML Import -->
+    <div class="guide-section">
+        <h2><i class="fa fa-upload"></i> 5. XML Import</h2>
+        <p>Import multiple properties at once using an XML file:</p>
+        
+        <p><span class="step-number">1</span> Click on <strong>"XML Import"</strong> in the menu</p>
+        <p><span class="step-number">2</span> Download the sample XML file as a template</p>
+        <p><span class="step-number">3</span> Prepare your XML file according to the template</p>
+        <p><span class="step-number">4</span> Upload the file and click "Import"</p>
+        
+        <div class="warning-box">
+            <strong><i class="fa fa-exclamation-triangle"></i> Important:</strong> 
+            The XML format must match our template. See the documentation for details.
+        </div>
+    </div>
+
+    <!-- Section 6: Actions -->
+    <div class="guide-section">
+        <h2><i class="fa fa-cogs"></i> 6. Managing Properties</h2>
+        
+        <h3>Available Actions:</h3>
+        <ul>
+            <li><strong>✏️ Edit</strong> - Modify property data</li>
+            <li><strong>🪄 AI Text</strong> - Generate AI description</li>
+            <li><strong>✓ Sold</strong> - Mark as sold</li>
+            <li><strong>⏸️ Pause</strong> - Temporarily hide</li>
+            <li><strong>▶️ Activate</strong> - Republish</li>
+        </ul>
+    </div>
+
+    <!-- Section 7: Profile -->
+    <div class="guide-section">
+        <h2><i class="fa fa-user"></i> 7. Your Profile</h2>
+        <p>Your profile is your digital business card for buyers:</p>
+        
+        <ul>
+            <li>Click on <strong>"Profile"</strong> in the top menu</li>
+            <li>Update company details, logo, and contact information</li>
+            <li>Add a description in Croatian and German</li>
+            <li>Connect social media (Facebook, Instagram, LinkedIn)</li>
+        </ul>
+    </div>
+
+    <!-- Back Button -->
+    <a href="{% url 'main:makler_dashboard' %}" class="back-btn">
+        <i class="fa fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    {% else %}
+    <!-- ==================== GERMAN VERSION (DEFAULT) ==================== -->
+    
+    <!-- Section 1: Login -->
+    <div class="guide-section">
+        <h2><i class="fa fa-sign-in"></i> 1. Anmeldung im Portal</h2>
+        <p><span class="step-number">1</span> Gehe zur Login-Seite: <strong>/accounts/login</strong></p>
+        <p><span class="step-number">2</span> Gib deinen Benutzernamen und dein Passwort ein</p>
+        <p><span class="step-number">3</span> Klicke auf "Anmelden"</p>
+        <p><span class="step-number">4</span> Du wirst zu deinem Dashboard weitergeleitet</p>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Tipp:</strong> 
+            Falls du dein Passwort vergessen hast, klicke auf "Passwort vergessen?" auf der Login-Seite. Du erhältst eine E-Mail mit einem sicheren Link zum Zurücksetzen (gültig für 1 Stunde).
+        </div>
+    </div>
+
+    <!-- Section 2: Dashboard -->
+    <div class="guide-section">
+        <h2><i class="fa fa-tachometer"></i> 2. Dashboard - Übersicht</h2>
+        <p>Das Dashboard gibt dir einen Überblick über alle deine Immobilien auf einen Blick:</p>
+        
+        <h3>Statistiken</h3>
+        <table class="status-table">
+            <tr>
+                <th>Status</th>
+                <th>Bedeutung</th>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-online">Online</span></td>
+                <td>Immobilie ist für Käufer auf der Website sichtbar</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-pruefung">Prüfung</span></td>
+                <td>Immobilie wartet auf Admin-Freigabe</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-verkauft">Verkauft</span></td>
+                <td>Immobilie wurde verkauft und ist nicht mehr aktiv</td>
+            </tr>
+            <tr>
+                <td><span class="status-badge status-pausiert">Pausiert</span></td>
+                <td>Vorübergehend für Käufer ausgeblendet</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Section 3: Add Property -->
+    <div class="guide-section">
+        <h2><i class="fa fa-plus-circle"></i> 3. Neue Immobilie hinzufügen</h2>
+        <p><span class="step-number">1</span> Klicke auf den Button <strong>"+ Neu"</strong> oben rechts</p>
+        <p><span class="step-number">2</span> Fülle die Grunddaten aus:</p>
+        <ul>
+            <li><strong>Titel</strong> - Ein ansprechender Name für die Immobilie</li>
+            <li><strong>Typ</strong> - Haus, Wohnung, Grundstück, etc.</li>
+            <li><strong>Preis</strong> - In Euro (€)</li>
+            <li><strong>Standort</strong> - Stadt, Region, Adresse</li>
+            <li><strong>Fläche</strong> - m² Wohnfläche und Grundstücksfläche</li>
+            <li><strong>Zimmer</strong> - Anzahl Schlafzimmer und Badezimmer</li>
+        </ul>
+        <p><span class="step-number">3</span> Füge Fotos hinzu (mindestens 3, empfohlen 10+)</p>
+        <p><span class="step-number">4</span> Schreibe eine Beschreibung auf Kroatisch</p>
+        <p><span class="step-number">5</span> Klicke auf <strong>"Speichern"</strong></p>
+        
+        <div class="feature-box">
+            <strong><i class="fa fa-magic"></i> KI-Texte:</strong> 
+            Nutze den "KI-Text" Button, um automatisch professionelle Beschreibungen auf Deutsch zu generieren!
+        </div>
+    </div>
+
+    <!-- Section 4: KI Text -->
+    <div class="guide-section">
+        <h2><i class="fa fa-magic"></i> 4. KI-Texte (Künstliche Intelligenz)</h2>
+        <p>Unser KI-System erstellt automatisch professionelle Immobilienbeschreibungen:</p>
+        
+        <p><span class="step-number">1</span> Öffne eine bestehende Immobilie zur Bearbeitung</p>
+        <p><span class="step-number">2</span> Klicke auf den Button <strong>"🪄 KI-Text"</strong></p>
+        <p><span class="step-number">3</span> Die KI generiert eine Beschreibung auf Deutsch</p>
+        <p><span class="step-number">4</span> Überprüfe und passe den Text bei Bedarf an</p>
+        <p><span class="step-number">5</span> Speichere deine Änderungen</p>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Tipp:</strong> 
+            Je mehr Details du eingibst (Fläche, Ausstattung, Lage), desto besser wird der KI-Text!
+        </div>
+    </div>
+
+    <!-- Section 5: XML Import -->
+    <div class="guide-section">
+        <h2><i class="fa fa-upload"></i> 5. XML Import</h2>
+        <p>Importiere mehrere Immobilien auf einmal mit einer XML-Datei:</p>
+        
+        <p><span class="step-number">1</span> Klicke auf <strong>"XML Import"</strong> im Menü</p>
+        <p><span class="step-number">2</span> Lade die Beispiel-XML-Datei als Vorlage herunter</p>
+        <p><span class="step-number">3</span> Bereite deine XML-Datei nach der Vorlage vor</p>
+        <p><span class="step-number">4</span> Lade die Datei hoch und klicke auf "Importieren"</p>
+        
+        <div class="warning-box">
+            <strong><i class="fa fa-exclamation-triangle"></i> Wichtig:</strong> 
+            Das XML-Format muss unserer Vorlage entsprechen. Siehe die Dokumentation für Details.
+        </div>
+    </div>
+
+    <!-- Section 6: Actions -->
+    <div class="guide-section">
+        <h2><i class="fa fa-cogs"></i> 6. Immobilien verwalten</h2>
+        
+        <h3>Verfügbare Aktionen:</h3>
+        <ul>
+            <li><strong>✏️ Bearbeiten</strong> - Immobiliendaten ändern</li>
+            <li><strong>🪄 KI-Text</strong> - KI-Beschreibung generieren</li>
+            <li><strong>✓ Verkauft</strong> - Als verkauft markieren</li>
+            <li><strong>⏸️ Pausieren</strong> - Vorübergehend ausblenden</li>
+            <li><strong>▶️ Aktivieren</strong> - Wieder veröffentlichen</li>
+        </ul>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Tipp:</strong> 
+            Verkaufte Immobilien bleiben in deinem Archiv und können für Statistiken genutzt werden.
+        </div>
+    </div>
+
+    <!-- Section 7: Profile -->
+    <div class="guide-section">
+        <h2><i class="fa fa-user"></i> 7. Dein Profil</h2>
+        <p>Dein Profil ist deine digitale Visitenkarte für Käufer:</p>
+        
+        <ul>
+            <li>Klicke auf <strong>"Profil"</strong> im oberen Menü</li>
+            <li>Aktualisiere Firmendaten, Logo und Kontaktinformationen</li>
+            <li>Füge eine Beschreibung auf Kroatisch und Deutsch hinzu</li>
+            <li>Verknüpfe Social Media (Facebook, Instagram, LinkedIn)</li>
+        </ul>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-lightbulb-o"></i> Tipp:</strong> 
+            Ein vollständiges Profil mit Logo und Beschreibung schafft Vertrauen bei potenziellen Käufern!
+        </div>
+    </div>
+
+    <!-- Section 8: Social Media -->
+    <div class="guide-section">
+        <h2><i class="fa fa-share-alt"></i> 8. Social Media verknüpfen</h2>
+        <p>Verbinde deine Social-Media-Profile für mehr Sichtbarkeit:</p>
+        
+        <p><span class="step-number">1</span> Gehe zu deinem <strong>Profil</strong></p>
+        <p><span class="step-number">2</span> Scrolle zum Bereich "Social Media"</p>
+        <p><span class="step-number">3</span> Füge die vollständigen URLs ein:</p>
+        <ul>
+            <li><strong>Facebook:</strong> https://facebook.com/deineFirma</li>
+            <li><strong>Instagram:</strong> https://instagram.com/deineFirma</li>
+            <li><strong>LinkedIn:</strong> https://linkedin.com/company/deineFirma</li>
+        </ul>
+        <p><span class="step-number">4</span> Speichere dein Profil</p>
+        
+        <p>Die Icons erscheinen dann auf deinem öffentlichen Profil und ermöglichen Kunden, dir direkt zu folgen.</p>
+    </div>
+
+    <!-- Section 9: Support -->
+    <div class="guide-section">
+        <h2><i class="fa fa-life-ring"></i> 9. Hilfe & Support</h2>
+        <p>Bei Fragen oder Problemen erreichst du uns:</p>
+        
+        <ul>
+            <li><strong>E-Mail:</strong> info@123-kroatien.eu</li>
+            <li><strong>Telefon:</strong> Siehe Kontaktseite</li>
+        </ul>
+        
+        <div class="tip-box">
+            <strong><i class="fa fa-clock-o"></i> Antwortzeit:</strong> 
+            Wir antworten in der Regel innerhalb von 24-48 Stunden.
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="{% url 'main:makler_dashboard' %}" class="back-btn">
+        <i class="fa fa-arrow-left"></i> Zurück zum Dashboard
+    </a>
+
+    {% endif %}
+</div>
+{% endblock %}
