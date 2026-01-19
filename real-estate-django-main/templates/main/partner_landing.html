@@ -1,0 +1,548 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}
+{% if lang == 'hr' %}Postanite partner - 123-Kroatien.eu{% else %}Partner werden - 123-Kroatien.eu{% endif %}
+{% endblock %}
+
+{% block body %}
+<style>
+    .hero-partner {
+        background: linear-gradient(135deg, #003167 0%, #004a99 50%, #0066cc 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-partner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-partner h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .hero-partner .lead {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    .benefit-card {
+        background: white;
+        border-radius: 16px;
+        padding: 35px 30px;
+        height: 100%;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #f0f0f0;
+    }
+    .benefit-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    .benefit-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #003167 0%, #0066cc 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+    .benefit-icon i {
+        font-size: 28px;
+        color: white;
+    }
+    .benefit-card h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+    .benefit-card p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+    .stats-section {
+        background: #f8f9fa;
+        padding: 60px 0;
+    }
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+    }
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #003167;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+    .stat-label {
+        color: #666;
+        font-size: 1rem;
+    }
+    .process-section {
+        padding: 80px 0;
+    }
+    .process-step {
+        text-align: center;
+        padding: 30px 20px;
+        position: relative;
+    }
+    .step-number {
+        width: 60px;
+        height: 60px;
+        background: #003167;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 auto 20px;
+    }
+    .process-step h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 10px;
+    }
+    .process-step p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+    .cta-section {
+        background: linear-gradient(135deg, #003167 0%, #004a99 100%);
+        padding: 80px 0;
+        color: white;
+    }
+    .cta-section h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .cta-section p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+    .btn-cta {
+        background: white;
+        color: #003167;
+        padding: 18px 45px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .btn-cta:hover {
+        background: #f0f0f0;
+        color: #003167;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .testimonial-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+    }
+    .testimonial-card .quote {
+        font-style: italic;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+    .testimonial-card .author {
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+    .testimonial-card .role {
+        color: #888;
+        font-size: 0.9rem;
+    }
+    .free-badge {
+        background: #28a745;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+    .section-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 50px;
+    }
+    @media (max-width: 768px) {
+        .hero-partner h1 {
+            font-size: 2rem;
+        }
+        .hero-partner .lead {
+            font-size: 1.1rem;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-partner">
+    <div class="container text-center">
+        <span class="free-badge">
+            <i class="fas fa-gift me-2"></i>
+            {% if lang == 'hr' %}100% BESPLATNO{% else %}100% KOSTENLOS{% endif %}
+        </span>
+        <h1>
+            {% if lang == 'hr' %}
+                Povećajte svoju vidljivost u Hrvatskom tržištu nekretnina
+            {% else %}
+                Steigern Sie Ihre Sichtbarkeit auf dem kroatischen Immobilienmarkt
+            {% endif %}
+        </h1>
+        <p class="lead">
+            {% if lang == 'hr' %}
+                Jeste li agent za nekretnine, arhitekt, odvjetnik ili porezni savjetnik? 
+                Registrirajte se i dosegnite tisuće njemačkih kupaca koji traže pouzdane partnere u Hrvatskoj.
+            {% else %}
+                Sind Sie Immobilienmakler, Architekt, Rechtsanwalt oder Steuerberater? 
+                Registrieren Sie sich und erreichen Sie tausende deutsche Käufer, die zuverlässige Partner in Kroatien suchen.
+            {% endif %}
+        </p>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number">50.000+</div>
+                    <div class="stat-label">
+                        {% if lang == 'hr' %}Mjesečnih posjetitelja{% else %}Monatliche Besucher{% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">
+                        {% if lang == 'hr' %}Njemački kupci{% else %}Deutsche Käufer{% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">
+                        {% if lang == 'hr' %}Verificiranih partnera{% else %}Verifizierte Partner{% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">
+                        {% if lang == 'hr' %}Godina iskustva{% else %}Jahre Erfahrung{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                {% if lang == 'hr' %}Zašto postati partner?{% else %}Warum Partner werden?{% endif %}
+            </h2>
+            <p class="section-subtitle">
+                {% if lang == 'hr' %}
+                    Otkrijte prednosti suradnje s vodećim portalom za hrvatske nekretnine
+                {% else %}
+                    Entdecken Sie die Vorteile einer Partnerschaft mit dem führenden Portal für kroatische Immobilien
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Benefit 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>{% if lang == 'hr' %}Pristup njemačkim kupcima{% else %}Zugang zu deutschen Käufern{% endif %}</h3>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Naša platforma privlači kupce iz Njemačke, Austrije i Švicarske koji aktivno traže nekretnine i pouzdane partnere u Hrvatskoj.
+                        {% else %}
+                            Unsere Plattform zieht Käufer aus Deutschland, Österreich und der Schweiz an, die aktiv nach Immobilien und zuverlässigen Partnern in Kroatien suchen.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Benefit 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>{% if lang == 'hr' %}Automatski prijevod profila{% else %}Automatische Profilübersetzung{% endif %}</h3>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Ispunite profil samo na hrvatskom jeziku. Naš sustav automatski prevodi vaš sadržaj na njemački i engleski, bez dodatnog posla.
+                        {% else %}
+                            Füllen Sie Ihr Profil nur auf Kroatisch aus. Unser System übersetzt Ihre Inhalte automatisch ins Deutsche und Englische, ohne zusätzlichen Aufwand.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Benefit 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>{% if lang == 'hr' %}Verifikacija i povjerenje{% else %}Verifizierung und Vertrauen{% endif %}</h3>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Verificirani partneri dobivaju oznaku povjerenja koja povećava kredibilitet i broj upita od klijenata.
+                        {% else %}
+                            Verifizierte Partner erhalten ein Vertrauenssiegel, das die Glaubwürdigkeit erhöht und mehr Kundenanfragen generiert.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Benefit 4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>{% if lang == 'hr' %}SEO optimizacija{% else %}SEO-Optimierung{% endif %}</h3>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Vaš profil je optimiziran za tražilice. Klijenti vas pronalaze kad traže "arhitekt Hrvatska", "odvjetnik Zagreb" i slične pojmove.
+                        {% else %}
+                            Ihr Profil ist für Suchmaschinen optimiert. Kunden finden Sie bei Suchen wie "Architekt Kroatien", "Anwalt Zagreb" und ähnlichen Begriffen.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Benefit 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>{% if lang == 'hr' %}Integracija društvenih mreža{% else %}Social-Media-Integration{% endif %}</h3>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Povežite Facebook, Instagram i LinkedIn profile direktno s vašim profilom za veću vidljivost i povjerenje.
+                        {% else %}
+                            Verknüpfen Sie Facebook, Instagram und LinkedIn direkt mit Ihrem Profil für mehr Sichtbarkeit und Vertrauen.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Benefit 6 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                    <h3>{% if lang == 'hr' %}Bez skrivenih troškova{% else %}Keine versteckten Kosten{% endif %}</h3>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Osnovna registracija je potpuno besplatna. Bez mjesečnih naknada, bez provizija, bez obveza. Jednostavno se registrirajte i počnite.
+                        {% else %}
+                            Die Basisregistrierung ist völlig kostenlos. Keine monatlichen Gebühren, keine Provisionen, keine Verpflichtungen. Einfach registrieren und loslegen.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                {% if lang == 'hr' %}Kako funkcionira?{% else %}Wie funktioniert es?{% endif %}
+            </h2>
+            <p class="section-subtitle">
+                {% if lang == 'hr' %}U samo 3 koraka do vašeg profila{% else %}In nur 3 Schritten zu Ihrem Profil{% endif %}
+            </p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>{% if lang == 'hr' %}Registracija{% else %}Registrierung{% endif %}</h4>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Ispunite jednostavan obrazac s vašim osnovnim podacima i vrstom usluge koju nudite.
+                        {% else %}
+                            Füllen Sie das einfache Formular mit Ihren Basisdaten und der Art Ihrer Dienstleistung aus.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>{% if lang == 'hr' %}Verifikacija{% else %}Verifizierung{% endif %}</h4>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Učitajte profilnu sliku za verifikaciju. Naš tim pregledava profile u roku od 48 sati.
+                        {% else %}
+                            Laden Sie ein Profilbild zur Verifizierung hoch. Unser Team prüft Profile innerhalb von 48 Stunden.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>{% if lang == 'hr' %}Aktivacija{% else %}Aktivierung{% endif %}</h4>
+                    <p>
+                        {% if lang == 'hr' %}
+                            Vaš profil postaje vidljiv kupcima. Počnite primati upite i gradite svoju klijentelu.
+                        {% else %}
+                            Ihr Profil wird für Käufer sichtbar. Beginnen Sie, Anfragen zu erhalten und bauen Sie Ihren Kundenstamm auf.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Who Can Register Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                {% if lang == 'hr' %}Tko se može registrirati?{% else %}Wer kann sich registrieren?{% endif %}
+            </h2>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-home fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Agenti za nekretnine{% else %}Immobilienmakler{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-drafting-compass fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Arhitekti{% else %}Architekten{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-balance-scale fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Odvjetnici{% else %}Rechtsanwälte{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-calculator fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Porezni savjetnici{% else %}Steuerberater{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-hard-hat fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Građevinske tvrtke{% else %}Bauunternehmen{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-stamp fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Notari{% else %}Notare{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-tools fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Majstori{% else %}Handwerker{% endif %}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4">
+                            <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
+                            <h5>{% if lang == 'hr' %}Ostali stručnjaci{% else %}Weitere Experten{% endif %}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container text-center">
+        <h2>
+            {% if lang == 'hr' %}
+                Spremni za nove klijente?
+            {% else %}
+                Bereit für neue Kunden?
+            {% endif %}
+        </h2>
+        <p>
+            {% if lang == 'hr' %}
+                Registrirajte se besplatno i počnite graditi svoju prisutnost na hrvatskom tržištu nekretnina.
+            {% else %}
+                Registrieren Sie sich kostenlos und beginnen Sie, Ihre Präsenz auf dem kroatischen Immobilienmarkt aufzubauen.
+            {% endif %}
+        </p>
+        <a href="{% if lang == 'hr' %}{% url 'main:professional-reg-hr' %}{% else %}{% url 'main:professional-reg-ge' %}{% endif %}" class="btn-cta">
+            <i class="fas fa-user-plus me-2"></i>
+            {% if lang == 'hr' %}Besplatna registracija{% else %}Kostenlos registrieren{% endif %}
+        </a>
+    </div>
+</section>
+
+{% endblock body %}
