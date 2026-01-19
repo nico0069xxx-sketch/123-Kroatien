@@ -967,7 +967,8 @@ def reference_project_delete(request, id, project_id):
 
 # Partner Landing Page
 def partner_landing(request, lang='ge'):
-    if lang not in ["ge", "hr"]:
+    lang = request.GET.get('lang', lang)
+    if lang not in ["ge", "hr", "en"]:
         lang = "ge"
     context = {'lang': lang}
     return render(request, 'main/partner_landing.html', context)
@@ -1930,7 +1931,8 @@ def makler_dashboard(request):
 
 # Partner Landing Page
 def partner_landing(request, lang='ge'):
-    if lang not in ["ge", "hr"]:
+    lang = request.GET.get('lang', lang)
+    if lang not in ["ge", "hr", "en"]:
         lang = "ge"
     context = {'lang': lang}
     return render(request, 'main/partner_landing.html', context)
