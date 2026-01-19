@@ -1,0 +1,818 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}{{ listing.property_title }} | 123-Kroatien{% endblock %}
+
+{% block body %}
+<style>
+    /* FONTS */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+    
+    /* CSS VARIABLES */
+    :root {
+        --primary: #003167;
+        --primary-light: #004a9f;
+        --accent: #db0000;
+        --bg-cream: #F9F8F6;
+        --bg-white: #FFFFFF;
+        --text-dark: #0A0A0A;
+        --text-muted: #64748B;
+        --border: #E2E2E2;
+        --shadow: 0 8px 30px rgba(0,0,0,0.06);
+        --shadow-hover: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    
+    /* RESET & BASE */
+    .property-detail * {
+        font-family: 'Manrope', sans-serif;
+        box-sizing: border-box;
+    }
+    
+    .property-detail h1, 
+    .property-detail h2, 
+    .property-detail h3 {
+        font-family: 'Playfair Display', serif;
+        color: var(--primary);
+    }
+    
+    /* HERO SECTION */
+    .hero-gallery {
+        position: relative;
+        width: 100%;
+        background: var(--bg-cream);
+        padding: 0;
+    }
+    
+    .hero-main-image {
+        position: relative;
+        width: 100%;
+        height: 70vh;
+        min-height: 500px;
+        overflow: hidden;
+    }
+    
+    .hero-main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .hero-main-image:hover img {
+        transform: scale(1.02);
+    }
+    
+    .hero-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+        padding: 60px 40px 40px;
+        color: white;
+    }
+    
+    .property-badge {
+        display: inline-block;
+        background: var(--accent);
+        color: white;
+        padding: 8px 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+    }
+    
+    .hero-title {
+        font-size: clamp(28px, 5vw, 48px);
+        color: white;
+        margin: 0 0 12px 0;
+        line-height: 1.2;
+    }
+    
+    .hero-location {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        opacity: 0.9;
+    }
+    
+    .hero-location i {
+        color: var(--accent);
+    }
+    
+    /* THUMBNAIL GALLERY */
+    .thumbnail-strip {
+        display: flex;
+        gap: 8px;
+        padding: 16px 40px;
+        background: var(--bg-white);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    
+    .thumbnail-strip::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .thumbnail-item {
+        flex: 0 0 120px;
+        height: 80px;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: all 0.3s ease;
+        border: 3px solid transparent;
+    }
+    
+    .thumbnail-item:hover,
+    .thumbnail-item.active {
+        opacity: 1;
+        border-color: var(--primary);
+    }
+    
+    .thumbnail-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* MAIN CONTENT */
+    .property-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 60px 40px;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 60px;
+    }
+    
+    @media (max-width: 1024px) {
+        .property-content {
+            grid-template-columns: 1fr;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+    }
+    
+    /* PRICE TAG */
+    .price-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .price-tag {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(32px, 4vw, 48px);
+        font-weight: 600;
+        color: var(--primary);
+    }
+    
+    .price-tag span {
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--text-muted);
+    }
+    
+    .property-id {
+        font-size: 14px;
+        color: var(--text-muted);
+        background: var(--bg-cream);
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+    
+    /* SPEC GRID */
+    .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        background: var(--bg-cream);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 50px;
+    }
+    
+    @media (max-width: 768px) {
+        .spec-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    .spec-item {
+        padding: 28px 20px;
+        text-align: center;
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .spec-item:nth-child(4n) {
+        border-right: none;
+    }
+    
+    @media (max-width: 768px) {
+        .spec-item:nth-child(2n) {
+            border-right: none;
+        }
+    }
+    
+    .spec-item:nth-last-child(-n+4) {
+        border-bottom: none;
+    }
+    
+    @media (max-width: 768px) {
+        .spec-item:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+    }
+    
+    .spec-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-radius: 12px;
+        color: var(--primary);
+        font-size: 20px;
+        box-shadow: var(--shadow);
+    }
+    
+    .spec-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-dark);
+        line-height: 1;
+    }
+    
+    .spec-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 8px;
+    }
+    
+    /* DESCRIPTION */
+    .section-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+    }
+    
+    .description-text {
+        font-size: 16px;
+        line-height: 1.9;
+        color: var(--text-muted);
+        white-space: pre-line;
+    }
+    
+    /* DETAILS GRID */
+    .details-section {
+        margin-top: 50px;
+    }
+    
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px 40px;
+    }
+    
+    @media (max-width: 600px) {
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .detail-label {
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+    
+    .detail-value {
+        font-weight: 600;
+        color: var(--text-dark);
+        text-align: right;
+    }
+    
+    /* SIDEBAR */
+    .sidebar {
+        position: sticky;
+        top: 100px;
+    }
+    
+    @media (max-width: 1024px) {
+        .sidebar {
+            position: static;
+        }
+    }
+    
+    /* CONTACT CARD */
+    .contact-card {
+        background: white;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+    }
+    
+    .contact-card-title {
+        font-size: 20px;
+        margin-bottom: 24px;
+        text-align: center;
+    }
+    
+    .agent-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px;
+        background: var(--bg-cream);
+        border-radius: 12px;
+        margin-bottom: 24px;
+    }
+    
+    .agent-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        box-shadow: var(--shadow);
+    }
+    
+    .agent-name {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+    }
+    
+    .agent-role {
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+    
+    .contact-form .form-group {
+        margin-bottom: 16px;
+    }
+    
+    .contact-form label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+    
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: var(--bg-cream);
+    }
+    
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(0,49,103,0.1);
+    }
+    
+    .contact-form textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    
+    .btn-primary-custom {
+        width: 100%;
+        padding: 16px 24px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .btn-primary-custom:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+    }
+    
+    .btn-secondary-custom {
+        width: 100%;
+        padding: 14px 24px;
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .btn-secondary-custom:hover {
+        background: var(--bg-cream);
+    }
+    
+    /* BACK BUTTON */
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 12px 0;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+        color: var(--primary);
+        gap: 12px;
+    }
+    
+    /* PLACEHOLDER IMAGE */
+    .placeholder-image {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--bg-cream) 0%, #e8e8e8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-size: 48px;
+    }
+    
+    /* LIGHTBOX */
+    .lightbox-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.95);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .lightbox-overlay.active {
+        display: flex;
+    }
+    
+    .lightbox-content {
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+    
+    .lightbox-content img {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+    }
+    
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+    }
+    
+    .lightbox-close:hover {
+        opacity: 1;
+    }
+</style>
+
+<div class="property-detail">
+    <!-- HERO GALLERY -->
+    <section class="hero-gallery">
+        <div class="hero-main-image" onclick="openLightbox(0)">
+            {% if listing.photo_main %}
+                <img src="{{ listing.photo_main.url }}" alt="{{ listing.property_title }}" id="mainImage">
+            {% else %}
+                <div class="placeholder-image">
+                    <i class="fa fa-home"></i>
+                </div>
+            {% endif %}
+            
+            <div class="hero-overlay">
+                <span class="property-badge">{{ listing.property_status|default:"Zu verkaufen" }}</span>
+                <h1 class="hero-title">{{ listing.property_title }}</h1>
+                <p class="hero-location">
+                    <i class="fa fa-map-marker"></i>
+                    {{ listing.location }}{% if listing.city %}, {{ listing.city }}{% endif %}{% if listing.country %}, {{ listing.country }}{% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <!-- Thumbnail Strip -->
+        <div class="thumbnail-strip">
+            {% if listing.photo_main %}
+            <div class="thumbnail-item active" onclick="changeImage('{{ listing.photo_main.url }}', this, 0)">
+                <img src="{{ listing.photo_main.url }}" alt="Bild 1">
+            </div>
+            {% endif %}
+            {% if listing.photo_1 %}
+            <div class="thumbnail-item" onclick="changeImage('{{ listing.photo_1.url }}', this, 1)">
+                <img src="{{ listing.photo_1.url }}" alt="Bild 2">
+            </div>
+            {% endif %}
+            {% if listing.photo_2 %}
+            <div class="thumbnail-item" onclick="changeImage('{{ listing.photo_2.url }}', this, 2)">
+                <img src="{{ listing.photo_2.url }}" alt="Bild 3">
+            </div>
+            {% endif %}
+            {% if listing.photo_3 %}
+            <div class="thumbnail-item" onclick="changeImage('{{ listing.photo_3.url }}', this, 3)">
+                <img src="{{ listing.photo_3.url }}" alt="Bild 4">
+            </div>
+            {% endif %}
+            {% if listing.photo_4 %}
+            <div class="thumbnail-item" onclick="changeImage('{{ listing.photo_4.url }}', this, 4)">
+                <img src="{{ listing.photo_4.url }}" alt="Bild 5">
+            </div>
+            {% endif %}
+            {% if listing.photo_5 %}
+            <div class="thumbnail-item" onclick="changeImage('{{ listing.photo_5.url }}', this, 5)">
+                <img src="{{ listing.photo_5.url }}" alt="Bild 6">
+            </div>
+            {% endif %}
+            {% if listing.photo_6 %}
+            <div class="thumbnail-item" onclick="changeImage('{{ listing.photo_6.url }}', this, 6)">
+                <img src="{{ listing.photo_6.url }}" alt="Bild 7">
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <div class="property-content">
+        <main class="main-column">
+            <!-- Back Link -->
+            <a href="{% url 'main:listing' %}" class="back-link">
+                <i class="fa fa-arrow-left"></i> Zurück zur Übersicht
+            </a>
+            
+            <!-- Price Section -->
+            <div class="price-section">
+                <div class="price-tag">
+                    € {{ listing.property_price|floatformat:0|default:"Auf Anfrage" }}
+                </div>
+                <div class="property-id">ID: {{ listing.property_id|default:listing.id }}</div>
+            </div>
+            
+            <!-- Spec Grid -->
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-bed"></i></div>
+                    <div class="spec-value">{{ listing.bedrooms|default:"-" }}</div>
+                    <div class="spec-label">Schlafzimmer</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-bath"></i></div>
+                    <div class="spec-value">{{ listing.bathrooms|default:"-" }}</div>
+                    <div class="spec-label">Badezimmer</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-expand"></i></div>
+                    <div class="spec-value">{{ listing.area|default:"-" }}</div>
+                    <div class="spec-label">Wohnfläche m²</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-map"></i></div>
+                    <div class="spec-value">{{ listing.size|default:"-" }}</div>
+                    <div class="spec-label">Grundstück m²</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-building"></i></div>
+                    <div class="spec-value">{{ listing.floors|default:"-" }}</div>
+                    <div class="spec-label">Etagen</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-car"></i></div>
+                    <div class="spec-value">{{ listing.garage|default:"-" }}</div>
+                    <div class="spec-label">Garage</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-home"></i></div>
+                    <div class="spec-value" style="font-size: 16px;">{{ listing.property_type|default:"-" }}</div>
+                    <div class="spec-label">Objektart</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fa fa-tag"></i></div>
+                    <div class="spec-value" style="font-size: 16px;">{{ listing.property_status|default:"-" }}</div>
+                    <div class="spec-label">Status</div>
+                </div>
+            </div>
+            
+            <!-- Description -->
+            {% if listing.property_description %}
+            <section class="description-section">
+                <h2 class="section-title">Beschreibung</h2>
+                <p class="description-text">{{ listing.property_description }}</p>
+            </section>
+            {% endif %}
+            
+            <!-- Additional Details -->
+            <section class="details-section">
+                <h2 class="section-title">Details & Lage</h2>
+                <div class="details-grid">
+                    {% if listing.address %}
+                    <div class="detail-row">
+                        <span class="detail-label">Adresse</span>
+                        <span class="detail-value">{{ listing.address }}</span>
+                    </div>
+                    {% endif %}
+                    {% if listing.city %}
+                    <div class="detail-row">
+                        <span class="detail-label">Stadt</span>
+                        <span class="detail-value">{{ listing.city }}</span>
+                    </div>
+                    {% endif %}
+                    {% if listing.state %}
+                    <div class="detail-row">
+                        <span class="detail-label">Region</span>
+                        <span class="detail-value">{{ listing.state }}</span>
+                    </div>
+                    {% endif %}
+                    {% if listing.country %}
+                    <div class="detail-row">
+                        <span class="detail-label">Land</span>
+                        <span class="detail-value">{{ listing.country }}</span>
+                    </div>
+                    {% endif %}
+                    {% if listing.zipcode %}
+                    <div class="detail-row">
+                        <span class="detail-label">PLZ</span>
+                        <span class="detail-value">{{ listing.zipcode }}</span>
+                    </div>
+                    {% endif %}
+                    {% if listing.neighborhood %}
+                    <div class="detail-row">
+                        <span class="detail-label">Nachbarschaft</span>
+                        <span class="detail-value">{{ listing.neighborhood }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="detail-row">
+                        <span class="detail-label">Eingestellt am</span>
+                        <span class="detail-value">{{ listing.list_date|date:"d.m.Y"|default:"-" }}</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="contact-card">
+                <h3 class="contact-card-title">Interesse an diesem Objekt?</h3>
+                
+                {% if listing.realtor %}
+                <div class="agent-info">
+                    <img src="{% if listing.realtor.profile_image %}{{ listing.realtor.profile_image.url }}{% else %}{% static 'images/user.png' %}{% endif %}" 
+                         alt="{{ listing.realtor.first_name }}" class="agent-avatar">
+                    <div>
+                        <div class="agent-name">{{ listing.realtor.first_name }} {{ listing.realtor.last_name }}</div>
+                        <div class="agent-role">Ihr Ansprechpartner</div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <form class="contact-form" action="#" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="property_id" value="{{ listing.id }}">
+                    <input type="hidden" name="property_title" value="{{ listing.property_title }}">
+                    
+                    <div class="form-group">
+                        <label for="name">Ihr Name</label>
+                        <input type="text" id="name" name="name" placeholder="Max Mustermann" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" placeholder="max@beispiel.de" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefon (optional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+49 123 456789">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Nachricht</label>
+                        <textarea id="message" name="message" placeholder="Ich interessiere mich für dieses Objekt und möchte gerne mehr erfahren..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary-custom">
+                        <i class="fa fa-paper-plane"></i> Anfrage senden
+                    </button>
+                </form>
+                
+                <a href="tel:+385123456789" class="btn-secondary-custom">
+                    <i class="fa fa-phone"></i> Direkt anrufen
+                </a>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+        <img src="" alt="Vergrößertes Bild" id="lightboxImage">
+    </div>
+</div>
+
+<script>
+// Image Gallery
+const images = [
+    {% if listing.photo_main %}'{{ listing.photo_main.url }}'{% endif %}
+    {% if listing.photo_1 %},'{{ listing.photo_1.url }}'{% endif %}
+    {% if listing.photo_2 %},'{{ listing.photo_2.url }}'{% endif %}
+    {% if listing.photo_3 %},'{{ listing.photo_3.url }}'{% endif %}
+    {% if listing.photo_4 %},'{{ listing.photo_4.url }}'{% endif %}
+    {% if listing.photo_5 %},'{{ listing.photo_5.url }}'{% endif %}
+    {% if listing.photo_6 %},'{{ listing.photo_6.url }}'{% endif %}
+];
+
+let currentImageIndex = 0;
+
+function changeImage(src, element, index) {
+    document.getElementById('mainImage').src = src;
+    currentImageIndex = index;
+    
+    // Update active state
+    document.querySelectorAll('.thumbnail-item').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+}
+
+function openLightbox(index) {
+    if (images.length > 0) {
+        document.getElementById('lightboxImage').src = images[index] || images[0];
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close on ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+});
+</script>
+
+{% endblock body %}
