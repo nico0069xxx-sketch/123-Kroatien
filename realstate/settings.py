@@ -260,3 +260,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
+
+# SICHERHEIT: Passwort-Reset Token nur 1 Stunde gueltig
+PASSWORD_RESET_TIMEOUT = 3600
