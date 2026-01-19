@@ -131,3 +131,23 @@ def setup_2fa(request):
         'professional': professional,
     }
     return render(request, 'professional_portal/setup_2fa.html', context)
+
+
+@login_required(login_url='account:login')
+def anleitung(request):
+    """Anleitung / Upute / Guide für das Portal"""
+    try:
+        professional = Professional.objects.get(user=request.user)
+    except Professional.DoesNotExist:
+        professional = None
+    
+    # Sprache aus URL oder Session ermitteln
+    lang = request.GET.get('lang', 'hr')  # Standard: Kroatisch
+    if lang not in ['hr', 'de', 'en']:
+        lang = 'hr'
+    
+    context = {
+        'professional': professional,
+        'lang': lang,
+    }
+    return render(request, 'professional_portal/anleitung.html', context)
