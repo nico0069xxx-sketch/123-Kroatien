@@ -1,0 +1,390 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}Anleitung - Makler-Portal{% endblock title %}
+
+{% block body %}
+<style>
+.guide-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.guide-header { background: linear-gradient(135deg, #003167 0%, #004a99 100%); color: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
+.guide-header h1 { font-size: 2rem; margin-bottom: 10px; color: white !important; }
+.guide-header p { color: rgba(255,255,255,0.9); margin: 0; }
+.lang-switcher { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+.lang-btn { padding: 10px 20px; border: 2px solid #003167; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.3s; }
+.lang-btn.active { background: #003167; color: white; }
+.lang-btn:not(.active) { background: white; color: #003167; }
+.lang-btn:hover:not(.active) { background: #f0f4f8; }
+.guide-section { background: white; border-radius: 12px; padding: 30px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.guide-section h2 { color: #003167; font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.guide-section h3 { color: #003167; font-size: 1.1rem; margin: 20px 0 15px 0; }
+.guide-section p { color: #555; line-height: 1.8; margin-bottom: 12px; }
+.guide-section ul { padding-left: 20px; margin: 15px 0; }
+.guide-section li { color: #555; line-height: 1.8; margin-bottom: 8px; }
+.step-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #003167; color: white; border-radius: 50%; font-size: 0.9rem; font-weight: bold; margin-right: 10px; flex-shrink: 0; }
+.tip-box { background: #e8f4fd; border-left: 4px solid #004a99; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+.tip-box strong { color: #003167; }
+.warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+.warning-box strong { color: #856404; }
+.feature-box { background: #d4edda; border-left: 4px solid #28a745; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+.feature-box strong { color: #155724; }
+.back-btn { display: inline-flex; align-items: center; gap: 8px; background: #003167; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 20px; transition: all 0.3s; }
+.back-btn:hover { background: #004a99; color: white; transform: translateY(-2px); }
+.status-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+.status-table th, .status-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e9ecef; }
+.status-table th { background: #f8f9fa; color: #003167; font-weight: 600; }
+.status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
+.status-online { background: #d4edda; color: #155724; }
+.status-pruefung { background: #fff3cd; color: #856404; }
+.status-verkauft { background: #e2e3e5; color: #383d41; }
+.status-pausiert { background: #ffe5d0; color: #fd7e14; }
+.toc { background: #f8f9fa; border-radius: 12px; padding: 20px 30px; margin-bottom: 30px; }
+.toc h3 { color: #003167; margin-bottom: 15px; }
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc li { margin-bottom: 8px; }
+.toc a { color: #004a99; text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+@media (max-width: 768px) {
+    .guide-header { padding: 25px; }
+    .guide-header h1 { font-size: 1.5rem; }
+    .guide-section { padding: 20px; }
+}
+</style>
+
+<div class="guide-container">
+
+<!-- Header -->
+<div class="guide-header">
+    <h1><i class="fa fa-book"></i> 
+        {% if lang == 'hr' %}Upute za korištenje Makler Portala
+        {% elif lang == 'en' %}Real Estate Portal User Guide
+        {% else %}Makler-Portal Benutzerhandbuch{% endif %}
+    </h1>
+    <p>{% if lang == 'hr' %}Kompletan vodič za upravljanje vašim nekretninama
+       {% elif lang == 'en' %}Complete guide to managing your properties
+       {% else %}Vollständige Anleitung zur Verwaltung deiner Immobilien{% endif %}</p>
+</div>
+
+<!-- Sprachwahl -->
+<div class="lang-switcher">
+    <a href="?lang=de" class="lang-btn {% if lang == 'ge' or lang == 'de' or not lang %}active{% endif %}">🇩🇪 Deutsch</a>
+    <a href="?lang=hr" class="lang-btn {% if lang == 'hr' %}active{% endif %}">🇭🇷 Hrvatski</a>
+    <a href="?lang=en" class="lang-btn {% if lang == 'en' %}active{% endif %}">🇬🇧 English</a>
+</div>
+
+<!-- Inhaltsverzeichnis -->
+<div class="toc">
+    <h3><i class="fa fa-list"></i> {% if lang == 'hr' %}Sadržaj{% elif lang == 'en' %}Contents{% else %}Inhaltsverzeichnis{% endif %}</h3>
+    <ul>
+        <li><a href="#login">1. {% if lang == 'hr' %}Prijava u portal{% elif lang == 'en' %}Login{% else %}Anmeldung im Portal{% endif %}</a></li>
+        <li><a href="#dashboard">2. {% if lang == 'hr' %}Dashboard pregled{% elif lang == 'en' %}Dashboard Overview{% else %}Dashboard Übersicht{% endif %}</a></li>
+        <li><a href="#neue-immobilie">3. {% if lang == 'hr' %}Dodavanje nekretnine{% elif lang == 'en' %}Adding a Property{% else %}Neue Immobilie anlegen{% endif %}</a></li>
+        <li><a href="#ki-texte">4. {% if lang == 'hr' %}KI tekstovi{% elif lang == 'en' %}AI Texts{% else %}KI-Texte generieren{% endif %}</a></li>
+        <li><a href="#xml-import">5. {% if lang == 'hr' %}XML Import{% elif lang == 'en' %}XML Import{% else %}XML Import{% endif %}</a></li>
+        <li><a href="#verwaltung">6. {% if lang == 'hr' %}Upravljanje nekretninama{% elif lang == 'en' %}Property Management{% else %}Immobilien verwalten{% endif %}</a></li>
+        <li><a href="#profil">7. {% if lang == 'hr' %}Vaš profil{% elif lang == 'en' %}Your Profile{% else %}Dein Profil{% endif %}</a></li>
+        <li><a href="#social-media">8. {% if lang == 'hr' %}Društvene mreže{% elif lang == 'en' %}Social Media{% else %}Social Media{% endif %}</a></li>
+        <li><a href="#support">9. {% if lang == 'hr' %}Podrška{% elif lang == 'en' %}Support{% else %}Hilfe & Support{% endif %}</a></li>
+    </ul>
+</div>
+
+<!-- 1. Anmeldung -->
+<div class="guide-section" id="login">
+    <h2><i class="fa fa-sign-in"></i> 1. {% if lang == 'hr' %}Prijava u portal{% elif lang == 'en' %}Logging into the Portal{% else %}Anmeldung im Portal{% endif %}</h2>
+    
+    <p><span class="step-number">1</span> 
+        {% if lang == 'hr' %}Otvorite stranicu za prijavu: <strong>/accounts/login</strong>
+        {% elif lang == 'en' %}Open the login page: <strong>/accounts/login</strong>
+        {% else %}Öffne die Login-Seite: <strong>/accounts/login</strong>{% endif %}</p>
+    
+    <p><span class="step-number">2</span> 
+        {% if lang == 'hr' %}Unesite svoje korisničko ime i lozinku
+        {% elif lang == 'en' %}Enter your username and password
+        {% else %}Gib deinen Benutzernamen und dein Passwort ein{% endif %}</p>
+    
+    <p><span class="step-number">3</span> 
+        {% if lang == 'hr' %}Kliknite na "Prijava"
+        {% elif lang == 'en' %}Click "Login"
+        {% else %}Klicke auf "Anmelden"{% endif %}</p>
+    
+    <p><span class="step-number">4</span> 
+        {% if lang == 'hr' %}Bit ćete preusmjereni na vaš Dashboard
+        {% elif lang == 'en' %}You will be redirected to your Dashboard
+        {% else %}Du wirst zu deinem Dashboard weitergeleitet{% endif %}</p>
+    
+    <div class="tip-box">
+        <strong><i class="fa fa-lightbulb-o"></i> {% if lang == 'hr' %}Savjet{% elif lang == 'en' %}Tip{% else %}Tipp{% endif %}:</strong><br>
+        {% if lang == 'hr' %}Zaboravili ste lozinku? Kliknite "Zaboravljena lozinka?" na stranici za prijavu. Primit ćete e-mail sa sigurnim linkom za resetiranje (vrijedi 1 sat).
+        {% elif lang == 'en' %}Forgot your password? Click "Forgot Password?" on the login page. You will receive an email with a secure reset link (valid for 1 hour).
+        {% else %}Passwort vergessen? Klicke auf "Passwort vergessen?" auf der Login-Seite. Du erhältst eine E-Mail mit einem sicheren Link zum Zurücksetzen (gültig für 1 Stunde).{% endif %}
+    </div>
+</div>
+
+<!-- 2. Dashboard -->
+<div class="guide-section" id="dashboard">
+    <h2><i class="fa fa-tachometer"></i> 2. {% if lang == 'hr' %}Dashboard - Pregled{% elif lang == 'en' %}Dashboard Overview{% else %}Dashboard - Übersicht{% endif %}</h2>
+    
+    <p>{% if lang == 'hr' %}Dashboard vam daje pregled svih vaših nekretnina na jednom mjestu.
+       {% elif lang == 'en' %}The Dashboard gives you an overview of all your properties in one place.
+       {% else %}Das Dashboard gibt dir einen Überblick über alle deine Immobilien auf einen Blick.{% endif %}</p>
+    
+    <h3>{% if lang == 'hr' %}Status-Übersicht{% elif lang == 'en' %}Status Overview{% else %}Status-Übersicht{% endif %}</h3>
+    
+    <table class="status-table">
+        <tr>
+            <th>Status</th>
+            <th>{% if lang == 'hr' %}Značenje{% elif lang == 'en' %}Meaning{% else %}Bedeutung{% endif %}</th>
+        </tr>
+        <tr>
+            <td><span class="status-badge status-online">Online</span></td>
+            <td>{% if lang == 'hr' %}Nekretnina je vidljiva kupcima na web stranici{% elif lang == 'en' %}Property is visible to buyers on the website{% else %}Immobilie ist für Käufer auf der Website sichtbar{% endif %}</td>
+        </tr>
+        <tr>
+            <td><span class="status-badge status-pruefung">{% if lang == 'hr' %}Na provjeri{% elif lang == 'en' %}Under Review{% else %}Prüfung{% endif %}</span></td>
+            <td>{% if lang == 'hr' %}Nekretnina čeka odobrenje administratora{% elif lang == 'en' %}Property is awaiting admin approval{% else %}Immobilie wartet auf Admin-Freigabe{% endif %}</td>
+        </tr>
+        <tr>
+            <td><span class="status-badge status-verkauft">{% if lang == 'hr' %}Prodano{% elif lang == 'en' %}Sold{% else %}Verkauft{% endif %}</span></td>
+            <td>{% if lang == 'hr' %}Nekretnina je prodana i nije više aktivna{% elif lang == 'en' %}Property has been sold and is no longer active{% else %}Immobilie wurde verkauft und ist nicht mehr aktiv{% endif %}</td>
+        </tr>
+        <tr>
+            <td><span class="status-badge status-pausiert">{% if lang == 'hr' %}Pauzirano{% elif lang == 'en' %}Paused{% else %}Pausiert{% endif %}</span></td>
+            <td>{% if lang == 'hr' %}Privremeno sakriveno od kupaca{% elif lang == 'en' %}Temporarily hidden from buyers{% else %}Vorübergehend für Käufer ausgeblendet{% endif %}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- 3. Neue Immobilie -->
+<div class="guide-section" id="neue-immobilie">
+    <h2><i class="fa fa-plus-circle"></i> 3. {% if lang == 'hr' %}Dodavanje nove nekretnine{% elif lang == 'en' %}Adding a New Property{% else %}Neue Immobilie anlegen{% endif %}</h2>
+    
+    <p><span class="step-number">1</span> 
+        {% if lang == 'hr' %}Kliknite na gumb <strong>"+ Novo"</strong> u gornjem desnom kutu
+        {% elif lang == 'en' %}Click the <strong>"+ New"</strong> button in the top right corner
+        {% else %}Klicke auf den Button <strong>"+ Neu"</strong> oben rechts{% endif %}</p>
+    
+    <p><span class="step-number">2</span> 
+        {% if lang == 'hr' %}Ispunite osnovne podatke:
+        {% elif lang == 'en' %}Fill in the basic information:
+        {% else %}Fülle die Grunddaten aus:{% endif %}</p>
+    
+    <ul>
+        <li><strong>{% if lang == 'hr' %}Naslov{% elif lang == 'en' %}Title{% else %}Titel{% endif %}</strong> - {% if lang == 'hr' %}Privlačan naziv nekretnine{% elif lang == 'en' %}An attractive name for the property{% else %}Ein ansprechender Name für die Immobilie{% endif %}</li>
+        <li><strong>{% if lang == 'hr' %}Tip{% elif lang == 'en' %}Type{% else %}Typ{% endif %}</strong> - {% if lang == 'hr' %}Kuća, stan, zemljište, itd.{% elif lang == 'en' %}House, apartment, land, etc.{% else %}Haus, Wohnung, Grundstück, etc.{% endif %}</li>
+        <li><strong>{% if lang == 'hr' %}Cijena{% elif lang == 'en' %}Price{% else %}Preis{% endif %}</strong> - {% if lang == 'hr' %}U eurima (€){% elif lang == 'en' %}In Euros (€){% else %}In Euro (€){% endif %}</li>
+        <li><strong>{% if lang == 'hr' %}Lokacija{% elif lang == 'en' %}Location{% else %}Standort{% endif %}</strong> - {% if lang == 'hr' %}Grad, regija, adresa{% elif lang == 'en' %}City, region, address{% else %}Stadt, Region, Adresse{% endif %}</li>
+        <li><strong>{% if lang == 'hr' %}Površina{% elif lang == 'en' %}Area{% else %}Fläche{% endif %}</strong> - {% if lang == 'hr' %}m² stambene i zemljišne površine{% elif lang == 'en' %}m² living space and land area{% else %}m² Wohnfläche und Grundstücksfläche{% endif %}</li>
+        <li><strong>{% if lang == 'hr' %}Sobe{% elif lang == 'en' %}Rooms{% else %}Zimmer{% endif %}</strong> - {% if lang == 'hr' %}Broj spavaćih soba i kupaonica{% elif lang == 'en' %}Number of bedrooms and bathrooms{% else %}Anzahl Schlafzimmer und Badezimmer{% endif %}</li>
+    </ul>
+    
+    <p><span class="step-number">3</span> 
+        {% if lang == 'hr' %}Dodajte fotografije (minimalno 3, preporučeno 10+)
+        {% elif lang == 'en' %}Add photos (minimum 3, recommended 10+)
+        {% else %}Füge Fotos hinzu (mindestens 3, empfohlen 10+){% endif %}</p>
+    
+    <p><span class="step-number">4</span> 
+        {% if lang == 'hr' %}Napišite opis na hrvatskom jeziku
+        {% elif lang == 'en' %}Write a description
+        {% else %}Schreibe eine Beschreibung{% endif %}</p>
+    
+    <p><span class="step-number">5</span> 
+        {% if lang == 'hr' %}Kliknite <strong>"Spremi"</strong>
+        {% elif lang == 'en' %}Click <strong>"Save"</strong>
+        {% else %}Klicke auf <strong>"Speichern"</strong>{% endif %}</p>
+    
+    <div class="feature-box">
+        <strong><i class="fa fa-magic"></i> {% if lang == 'hr' %}KI-Tekstovi{% elif lang == 'en' %}AI Texts{% else %}KI-Texte{% endif %}:</strong><br>
+        {% if lang == 'hr' %}Koristite gumb "KI-Text" za automatsko generiranje profesionalnih opisa na njemačkom jeziku!
+        {% elif lang == 'en' %}Use the "AI Text" button to automatically generate professional descriptions in German!
+        {% else %}Nutze den "KI-Text" Button, um automatisch professionelle Beschreibungen auf Deutsch zu generieren!{% endif %}
+    </div>
+</div>
+
+<!-- 4. KI-Texte -->
+<div class="guide-section" id="ki-texte">
+    <h2><i class="fa fa-magic"></i> 4. {% if lang == 'hr' %}KI-Tekstovi (Umjetna inteligencija){% elif lang == 'en' %}AI Texts (Artificial Intelligence){% else %}KI-Texte (Künstliche Intelligenz){% endif %}</h2>
+    
+    <p>{% if lang == 'hr' %}Naš AI sustav automatski stvara profesionalne opise nekretnina na njemačkom jeziku.
+       {% elif lang == 'en' %}Our AI system automatically creates professional property descriptions in German.
+       {% else %}Unser KI-System erstellt automatisch professionelle Immobilienbeschreibungen auf Deutsch.{% endif %}</p>
+    
+    <p><span class="step-number">1</span> 
+        {% if lang == 'hr' %}Otvorite postojeću nekretninu za uređivanje
+        {% elif lang == 'en' %}Open an existing property for editing
+        {% else %}Öffne eine bestehende Immobilie zur Bearbeitung{% endif %}</p>
+    
+    <p><span class="step-number">2</span> 
+        {% if lang == 'hr' %}Kliknite na gumb <strong>"🪄 KI-Text"</strong>
+        {% elif lang == 'en' %}Click the <strong>"🪄 AI Text"</strong> button
+        {% else %}Klicke auf den Button <strong>"🪄 KI-Text"</strong>{% endif %}</p>
+    
+    <p><span class="step-number">3</span> 
+        {% if lang == 'hr' %}AI će generirati opis na njemačkom jeziku
+        {% elif lang == 'en' %}The AI will generate a description in German
+        {% else %}Die KI generiert eine Beschreibung auf Deutsch{% endif %}</p>
+    
+    <p><span class="step-number">4</span> 
+        {% if lang == 'hr' %}Pregledajte i po potrebi prilagodite tekst
+        {% elif lang == 'en' %}Review and adjust the text if needed
+        {% else %}Überprüfe und passe den Text bei Bedarf an{% endif %}</p>
+    
+    <p><span class="step-number">5</span> 
+        {% if lang == 'hr' %}Spremite promjene
+        {% elif lang == 'en' %}Save your changes
+        {% else %}Speichere deine Änderungen{% endif %}</p>
+    
+    <div class="tip-box">
+        <strong><i class="fa fa-lightbulb-o"></i> {% if lang == 'hr' %}Savjet{% elif lang == 'en' %}Tip{% else %}Tipp{% endif %}:</strong><br>
+        {% if lang == 'hr' %}Što više detalja unesete (površina, oprema, lokacija), to će AI tekst biti kvalitetniji!
+        {% elif lang == 'en' %}The more details you provide (area, equipment, location), the better the AI text will be!
+        {% else %}Je mehr Details du eingibst (Fläche, Ausstattung, Lage), desto besser wird der KI-Text!{% endif %}
+    </div>
+</div>
+
+<!-- 5. XML Import -->
+<div class="guide-section" id="xml-import">
+    <h2><i class="fa fa-upload"></i> 5. XML Import</h2>
+    
+    <p>{% if lang == 'hr' %}Uvezite više nekretnina odjednom pomoću XML datoteke.
+       {% elif lang == 'en' %}Import multiple properties at once using an XML file.
+       {% else %}Importiere mehrere Immobilien auf einmal mit einer XML-Datei.{% endif %}</p>
+    
+    <p><span class="step-number">1</span> 
+        {% if lang == 'hr' %}Kliknite na <strong>"XML Import"</strong> u izborniku
+        {% elif lang == 'en' %}Click on <strong>"XML Import"</strong> in the menu
+        {% else %}Klicke auf <strong>"XML Import"</strong> im Menü{% endif %}</p>
+    
+    <p><span class="step-number">2</span> 
+        {% if lang == 'hr' %}Preuzmite primjer XML datoteke kao predložak
+        {% elif lang == 'en' %}Download the sample XML file as a template
+        {% else %}Lade die Beispiel-XML-Datei als Vorlage herunter{% endif %}</p>
+    
+    <p><span class="step-number">3</span> 
+        {% if lang == 'hr' %}Pripremite svoju XML datoteku prema predlošku
+        {% elif lang == 'en' %}Prepare your XML file according to the template
+        {% else %}Bereite deine XML-Datei nach der Vorlage vor{% endif %}</p>
+    
+    <p><span class="step-number">4</span> 
+        {% if lang == 'hr' %}Učitajte datoteku i kliknite "Importieren"
+        {% elif lang == 'en' %}Upload the file and click "Import"
+        {% else %}Lade die Datei hoch und klicke auf "Importieren"{% endif %}</p>
+    
+    <div class="warning-box">
+        <strong><i class="fa fa-exclamation-triangle"></i> {% if lang == 'hr' %}Važno{% elif lang == 'en' %}Important{% else %}Wichtig{% endif %}:</strong><br>
+        {% if lang == 'hr' %}XML format mora odgovarati našem predlošku. Pogledajte dokumentaciju za detalje.
+        {% elif lang == 'en' %}The XML format must match our template. See the documentation for details.
+        {% else %}Das XML-Format muss unserer Vorlage entsprechen. Siehe die Dokumentation für Details.{% endif %}
+    </div>
+</div>
+
+<!-- 6. Verwaltung -->
+<div class="guide-section" id="verwaltung">
+    <h2><i class="fa fa-cogs"></i> 6. {% if lang == 'hr' %}Upravljanje nekretninama{% elif lang == 'en' %}Managing Properties{% else %}Immobilien verwalten{% endif %}</h2>
+    
+    <h3>{% if lang == 'hr' %}Dostupne akcije{% elif lang == 'en' %}Available Actions{% else %}Verfügbare Aktionen{% endif %}:</h3>
+    
+    <ul>
+        <li><strong>✏️ {% if lang == 'hr' %}Uredi{% elif lang == 'en' %}Edit{% else %}Bearbeiten{% endif %}</strong> - {% if lang == 'hr' %}Promjena podataka nekretnine{% elif lang == 'en' %}Modify property data{% else %}Immobiliendaten ändern{% endif %}</li>
+        <li><strong>🪄 KI-Text</strong> - {% if lang == 'hr' %}Generiranje AI opisa{% elif lang == 'en' %}Generate AI description{% else %}KI-Beschreibung generieren{% endif %}</li>
+        <li><strong>✓ {% if lang == 'hr' %}Prodano{% elif lang == 'en' %}Sold{% else %}Verkauft{% endif %}</strong> - {% if lang == 'hr' %}Označavanje kao prodano{% elif lang == 'en' %}Mark as sold{% else %}Als verkauft markieren{% endif %}</li>
+        <li><strong>⏸️ {% if lang == 'hr' %}Pauziraj{% elif lang == 'en' %}Pause{% else %}Pausieren{% endif %}</strong> - {% if lang == 'hr' %}Privremeno sakrivanje{% elif lang == 'en' %}Temporarily hide{% else %}Vorübergehend ausblenden{% endif %}</li>
+        <li><strong>▶️ {% if lang == 'hr' %}Aktiviraj{% elif lang == 'en' %}Activate{% else %}Aktivieren{% endif %}</strong> - {% if lang == 'hr' %}Ponovno objavljivanje{% elif lang == 'en' %}Republish{% else %}Wieder veröffentlichen{% endif %}</li>
+    </ul>
+    
+    <div class="tip-box">
+        <strong><i class="fa fa-lightbulb-o"></i> {% if lang == 'hr' %}Savjet{% elif lang == 'en' %}Tip{% else %}Tipp{% endif %}:</strong><br>
+        {% if lang == 'hr' %}Prodane nekretnine ostaju u vašem arhivu i mogu se koristiti za statistike.
+        {% elif lang == 'en' %}Sold properties remain in your archive and can be used for statistics.
+        {% else %}Verkaufte Immobilien bleiben in deinem Archiv und können für Statistiken genutzt werden.{% endif %}
+    </div>
+</div>
+
+<!-- 7. Profil -->
+<div class="guide-section" id="profil">
+    <h2><i class="fa fa-user"></i> 7. {% if lang == 'hr' %}Vaš profil{% elif lang == 'en' %}Your Profile{% else %}Dein Profil{% endif %}</h2>
+    
+    <p>{% if lang == 'hr' %}Vaš profil je vaša digitalna vizit karta za kupce.
+       {% elif lang == 'en' %}Your profile is your digital business card for buyers.
+       {% else %}Dein Profil ist deine digitale Visitenkarte für Käufer.{% endif %}</p>
+    
+    <ul>
+        <li>{% if lang == 'hr' %}Kliknite na <strong>"Profil"</strong> u gornjem izborniku{% elif lang == 'en' %}Click on <strong>"Profile"</strong> in the top menu{% else %}Klicke auf <strong>"Profil"</strong> im oberen Menü{% endif %}</li>
+        <li>{% if lang == 'hr' %}Ažurirajte podatke o tvrtki, logo i kontakt informacije{% elif lang == 'en' %}Update company details, logo, and contact information{% else %}Aktualisiere Firmendaten, Logo und Kontaktinformationen{% endif %}</li>
+        <li>{% if lang == 'hr' %}Dodajte opis na hrvatskom i njemačkom jeziku{% elif lang == 'en' %}Add a description in Croatian and German{% else %}Füge eine Beschreibung auf Kroatisch und Deutsch hinzu{% endif %}</li>
+        <li>{% if lang == 'hr' %}Povežite društvene mreže{% elif lang == 'en' %}Connect social media{% else %}Verknüpfe Social Media{% endif %}</li>
+    </ul>
+    
+    <div class="tip-box">
+        <strong><i class="fa fa-lightbulb-o"></i> {% if lang == 'hr' %}Savjet{% elif lang == 'en' %}Tip{% else %}Tipp{% endif %}:</strong><br>
+        {% if lang == 'hr' %}Potpun profil s logom i opisom stvara povjerenje kod potencijalnih kupaca!
+        {% elif lang == 'en' %}A complete profile with logo and description builds trust with potential buyers!
+        {% else %}Ein vollständiges Profil mit Logo und Beschreibung schafft Vertrauen bei potenziellen Käufern!{% endif %}
+    </div>
+</div>
+
+<!-- 8. Social Media -->
+<div class="guide-section" id="social-media">
+    <h2><i class="fa fa-share-alt"></i> 8. {% if lang == 'hr' %}Društvene mreže{% elif lang == 'en' %}Social Media{% else %}Social Media verknüpfen{% endif %}</h2>
+    
+    <p>{% if lang == 'hr' %}Povežite svoje profile na društvenim mrežama za veću vidljivost.
+       {% elif lang == 'en' %}Connect your social media profiles for greater visibility.
+       {% else %}Verbinde deine Social-Media-Profile für mehr Sichtbarkeit.{% endif %}</p>
+    
+    <p><span class="step-number">1</span> 
+        {% if lang == 'hr' %}Idite na vaš <strong>Profil</strong>
+        {% elif lang == 'en' %}Go to your <strong>Profile</strong>
+        {% else %}Gehe zu deinem <strong>Profil</strong>{% endif %}</p>
+    
+    <p><span class="step-number">2</span> 
+        {% if lang == 'hr' %}Pronađite odjeljak "Društvene mreže"
+        {% elif lang == 'en' %}Find the "Social Media" section
+        {% else %}Scrolle zum Bereich "Social Media"{% endif %}</p>
+    
+    <p><span class="step-number">3</span> 
+        {% if lang == 'hr' %}Unesite potpune URL adrese:
+        {% elif lang == 'en' %}Enter the complete URLs:
+        {% else %}Füge die vollständigen URLs ein:{% endif %}</p>
+    
+    <ul>
+        <li><strong>Facebook:</strong> https://facebook.com/VasaTvrtka</li>
+        <li><strong>Instagram:</strong> https://instagram.com/VasaTvrtka</li>
+        <li><strong>LinkedIn:</strong> https://linkedin.com/company/VasaTvrtka</li>
+    </ul>
+    
+    <p><span class="step-number">4</span> 
+        {% if lang == 'hr' %}Spremite profil
+        {% elif lang == 'en' %}Save your profile
+        {% else %}Speichere dein Profil{% endif %}</p>
+    
+    <p>{% if lang == 'hr' %}Ikone će se pojaviti na vašem javnom profilu i omogućiti kupcima da vas izravno prate.
+       {% elif lang == 'en' %}The icons will appear on your public profile and allow buyers to follow you directly.
+       {% else %}Die Icons erscheinen dann auf deinem öffentlichen Profil und ermöglichen Kunden, dir direkt zu folgen.{% endif %}</p>
+</div>
+
+<!-- 9. Support -->
+<div class="guide-section" id="support">
+    <h2><i class="fa fa-life-ring"></i> 9. {% if lang == 'hr' %}Pomoć i podrška{% elif lang == 'en' %}Help & Support{% else %}Hilfe & Support{% endif %}</h2>
+    
+    <p>{% if lang == 'hr' %}Imate pitanja ili problema? Kontaktirajte nas:
+       {% elif lang == 'en' %}Have questions or issues? Contact us:
+       {% else %}Bei Fragen oder Problemen erreichst du uns:{% endif %}</p>
+    
+    <ul>
+        <li><strong>E-Mail:</strong> info@123-kroatien.eu</li>
+    </ul>
+    
+    <div class="tip-box">
+        <strong><i class="fa fa-clock-o"></i> {% if lang == 'hr' %}Vrijeme odgovora{% elif lang == 'en' %}Response Time{% else %}Antwortzeit{% endif %}:</strong><br>
+        {% if lang == 'hr' %}Obično odgovaramo u roku od 24-48 sati.
+        {% elif lang == 'en' %}We usually respond within 24-48 hours.
+        {% else %}Wir antworten in der Regel innerhalb von 24-48 Stunden.{% endif %}
+    </div>
+</div>
+
+<!-- Zurück-Button -->
+<a href="{% url 'main:makler_dashboard' %}" class="back-btn">
+    <i class="fa fa-arrow-left"></i> 
+    {% if lang == 'hr' %}Povratak na Dashboard{% elif lang == 'en' %}Back to Dashboard{% else %}Zurück zum Dashboard{% endif %}
+</a>
+
+</div>
+{% endblock body %}

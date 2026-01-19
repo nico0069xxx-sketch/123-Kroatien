@@ -49,6 +49,7 @@ urlpatterns = [
     path('makler-portal/objekt/<int:listing_id>/bearbeiten/', makler_views.makler_objekt_bearbeiten, name='makler_objekt_bearbeiten'),
     path('makler-portal/xml-import/', makler_views.makler_xml_import, name='makler_xml_import'),
     path('makler-portal/xml-dokumentation/', makler_views.makler_xml_dokumentation, name='makler_xml_dokumentation'),
+    path('makler-portal/anleitung/', makler_views.makler_anleitung, name='makler_anleitung'),
     path('api/makler/verkauft/<int:listing_id>/', makler_views.makler_objekt_verkauft, name='makler_objekt_verkauft'),
     path('api/makler/pausieren/<int:listing_id>/', makler_views.makler_objekt_pausieren, name='makler_objekt_pausieren'),
     path('api/makler/aktivieren/<int:listing_id>/', makler_views.makler_objekt_aktivieren, name='makler_objekt_aktivieren'),
