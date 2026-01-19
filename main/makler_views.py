@@ -49,11 +49,19 @@ def makler_dashboard(request):
     page = request.GET.get('page', 1)
     listings_page = paginator.get_page(page)
     
-    return render(request, 'makler_portal/dashboard.html', {
+    # Profil-Vollständigkeit berechnen
+    profile_fields = [professional.name, professional.email, professional.phone, 
+                      professional.city, professional.company_logo, professional.description]
+    filled = sum(1 for f in profile_fields if f)
+    profile_complete = int((filled / len(profile_fields)) * 100)
+    
+    return render(request, 'makler_portal/dashboard_neu.html', {
         'professional': professional,
+        'agent': professional,
         'listings': listings_page,
         'stats': stats,
         'lang': lang,
+        'profile_complete': profile_complete,
     })
 
 

@@ -27,7 +27,20 @@ def dashboard_gruppe_b(request):
     except Professional.DoesNotExist:
         messages.error(request, 'Kein Professional-Profil gefunden.')
         return redirect('main:home')
-    return render(request, 'professional_portal/dashboard_gruppe_b.html', {'professional': professional})
+    
+    lang = request.session.get('site_language', 'ge')
+    
+    # Profil-Vollständigkeit berechnen
+    profile_fields = [professional.name, professional.email, professional.phone, 
+                      professional.city, professional.company_logo, professional.description]
+    filled = sum(1 for f in profile_fields if f)
+    profile_complete = int((filled / len(profile_fields)) * 100)
+    
+    return render(request, 'professional_portal/dashboard_neu.html', {
+        'professional': professional,
+        'lang': lang,
+        'profile_complete': profile_complete,
+    })
 
 @login_required(login_url='account:login')
 def edit_profile(request):

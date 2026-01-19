@@ -168,7 +168,7 @@ def login_view(request):
             
             # Check fuer Professional 2FA
             from main.professional_models import Professional
-            professional = Professional.objects.filter(user=user, has_portal_access=True).first()
+            professional = Professional.objects.filter(user=user).first()
             if professional and professional.must_setup_2fa and not professional.totp_enabled and not professional.email_2fa_enabled:
                 auth.login(request, user)
                 return redirect('/makler-portal/2fa-auswahl/')
