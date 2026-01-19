@@ -60,3 +60,9 @@ _quarantine/
 Thumbs.db
 .DS_Store
 *.bak
+db.sqlite3
+*.sqlite3
+__pycache__/
+*.pyc
+.DS_Store
+media/
