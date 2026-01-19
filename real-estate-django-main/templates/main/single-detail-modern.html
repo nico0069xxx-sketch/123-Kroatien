@@ -13,13 +13,13 @@
 .gallery-slider{display:flex;transition:transform .4s ease;height:100%;touch-action:pan-y}
 .gallery-slide{min-width:100%;height:100%;position:relative}
 .gallery-slide img{width:100%;height:100%;object-fit:cover}
-.gallery-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:60px 50px 40px;color:#fff}
+.gallery-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:60px 50px 40px;color:#fff}
 @media(max-width:768px){.gallery-overlay{padding:40px 20px 30px}}
-.badge{background:var(--accent);color:#fff;padding:10px 20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;display:inline-block;margin-bottom:16px;border-radius:4px}
-.gallery-overlay h1{font-size:clamp(24px,5vw,48px);color:#fff;margin:0 0 12px;line-height:1.15}
-.gallery-location{display:flex;align-items:center;gap:10px;font-size:16px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.badge{background:var(--accent);color:#fff;padding:10px 20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;display:inline-block;margin-bottom:16px;border-radius:4px;box-shadow:0 4px 15px rgba(0,0,0,.5)}
+.gallery-overlay h1{font-size:clamp(24px,5vw,48px);color:#fff;margin:0 0 12px;line-height:1.15;text-shadow:0 2px 20px rgba(0,0,0,1),0 0 40px rgba(0,0,0,.8)}
+.gallery-location{display:flex;align-items:center;gap:10px;font-size:18px;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,1),0 0 40px rgba(0,0,0,.8);font-weight:600}
 @media(max-width:768px){.gallery-location{font-size:14px}}
-.gallery-location i{color:var(--accent)}
+.gallery-location i{color:var(--accent);text-shadow:none}
 .gallery-counter{position:absolute;top:20px;right:20px;background:rgba(0,0,0,.6);color:#fff;padding:8px 16px;border-radius:20px;font-size:14px;font-weight:600;z-index:10}
 .gallery-dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
 .gallery-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .3s;border:none}
@@ -37,7 +37,7 @@
 .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--text-muted);text-decoration:none;font-weight:600;margin-bottom:25px;transition:all .3s}
 .back-link:hover{color:var(--primary);gap:12px}
 .price-section{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:30px;padding-bottom:30px;border-bottom:1px solid var(--border);gap:15px}
-.price-tag{font-size:clamp(28px,4vw,42px);font-weight:700;color:var(--primary)}
+.price-tag{font-size:clamp(28px,4vw,42px);font-weight:700;color:var(--primary);font-family:'Manrope',sans-serif}
 .prop-id{font-size:13px;color:var(--text-muted);background:var(--bg);padding:10px 18px;border-radius:25px;font-weight:600}
 .specs{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg);border-radius:16px;overflow:hidden;margin-bottom:40px}
 @media(max-width:768px){.specs{grid-template-columns:repeat(2,1fr)}}
@@ -47,9 +47,9 @@
 .spec:nth-child(n+5){border-bottom:none}
 @media(max-width:768px){.spec:nth-child(n+7){border-bottom:none}.spec:nth-child(5),.spec:nth-child(6){border-bottom:1px solid var(--border)}}
 .spec-icon{width:45px;height:45px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;background:var(--bg-white);border-radius:12px;color:var(--primary);font-size:18px;box-shadow:var(--shadow)}
-.spec-value{font-size:22px;font-weight:700;color:var(--text);line-height:1}
+.spec-value{font-size:22px;font-weight:700;color:var(--text);line-height:1;font-family:'Manrope',sans-serif}
 @media(max-width:768px){.spec-value{font-size:20px}}
-.spec-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:6px}
+.spec-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:6px;font-family:'Manrope',sans-serif}
 .section{margin-bottom:40px}
 .section-title{font-size:20px;margin-bottom:18px;display:flex;align-items:center;gap:15px}
 .section-title:after{content:'';flex:1;height:1px;background:var(--border)}
@@ -69,11 +69,11 @@
 .agent-name{font-weight:700;color:var(--text);font-size:15px;margin-bottom:2px}
 .agent-role{font-size:12px;color:var(--text-muted)}
 .form-group{margin-bottom:12px}
-.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-input,textarea{width:100%;padding:13px 15px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;background:var(--bg);transition:all .3s;box-sizing:border-box}
+.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;font-family:'Manrope',sans-serif}
+input,textarea{width:100%;padding:13px 15px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:'Manrope',sans-serif;background:var(--bg);transition:all .3s;box-sizing:border-box}
 input:focus,textarea:focus{outline:none;border-color:var(--primary);background:var(--bg-white);box-shadow:0 0 0 3px rgba(0,49,103,.1)}
 textarea{min-height:80px;resize:vertical}
-.btn{width:100%;padding:15px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;font-family:inherit}
+.btn{width:100%;padding:15px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;font-family:'Manrope',sans-serif}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:var(--primary-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,49,103,.25)}
 .btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary);margin-top:10px;text-decoration:none}
@@ -120,49 +120,44 @@ textarea{min-height:80px;resize:vertical}
 {% if listing.photo_6 %}<div class="thumb" onclick="goToSlide(6)"><img src="{{ listing.photo_6.url }}"></div>{% endif %}
 </div>
 
-<div class="swipe-hint"><i class="fa fa-hand-pointer-o"></i> {{SwipeForMore}}</div>
-
 <div class="content">
 <main>
-<a href="{% url 'main:listing' %}" class="back-link"><i class="fa fa-arrow-left"></i> {{BackToOverview}}</a>
+<a href="{% url 'main:listing' %}" class="back-link"><i class="fa fa-arrow-left"></i> {{ nav_back|default:"Zurueck" }}</a>
 
 <div class="price-section">
 <div class="price-tag">EUR {{ listing.json_content.property_price }}</div>
-<div class="prop-id">ID: {{ listing.id }}</div>
+<div class="prop-id">{{ label_property_id|default:"ID" }}: {{ listing.id }}</div>
 </div>
 
 <div class="specs">
-<div class="spec"><div class="spec-icon"><i class="fa fa-bed"></i></div><div class="spec-value">{{ listing.json_content.bedrooms }}</div><div class="spec-lbl">{{BedroomsP}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-bath"></i></div><div class="spec-value">{{ listing.json_content.bathrooms }}</div><div class="spec-lbl">{{BathroomsP}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-expand"></i></div><div class="spec-value">{{ listing.json_content.area }}</div><div class="spec-lbl">{{AreaP}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-map-o"></i></div><div class="spec-value">{{ listing.json_content.size }}</div><div class="spec-lbl">{{PropertySize}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-building"></i></div><div class="spec-value">{{ listing.json_content.floors }}</div><div class="spec-lbl">{{FloorsP}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-car"></i></div><div class="spec-value">{{ listing.json_content.garage }}</div><div class="spec-lbl">{{Garage}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-home"></i></div><div class="spec-value" style="font-size:14px">{{ listing.json_content.property_type }}</div><div class="spec-lbl">{{PropertyType}}</div></div>
-<div class="spec"><div class="spec-icon"><i class="fa fa-tag"></i></div><div class="spec-value" style="font-size:14px">{{ listing.json_content.property_status }}</div><div class="spec-lbl">{{PropertyStatus}}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-bed"></i></div><div class="spec-value">{{ listing.json_content.bedrooms }}</div><div class="spec-lbl">{{ label_bedrooms|default:"Schlafzimmer" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-bath"></i></div><div class="spec-value">{{ listing.json_content.bathrooms }}</div><div class="spec-lbl">{{ label_bathrooms|default:"Badezimmer" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-expand"></i></div><div class="spec-value">{{ listing.json_content.area }}</div><div class="spec-lbl">{{ label_area|default:"Flaeche" }} {{ label_sqm|default:"m2" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-map-o"></i></div><div class="spec-value">{{ listing.json_content.size }}</div><div class="spec-lbl">{{ label_sqm|default:"m2" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-building"></i></div><div class="spec-value">{{ listing.json_content.floors }}</div><div class="spec-lbl">{{ label_floors|default:"Etagen" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-car"></i></div><div class="spec-value">{{ listing.json_content.garage }}</div><div class="spec-lbl">{{ label_garage|default:"Garage" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-home"></i></div><div class="spec-value" style="font-size:14px">{{ listing.json_content.property_type }}</div><div class="spec-lbl">{{ label_property_type|default:"Objektart" }}</div></div>
+<div class="spec"><div class="spec-icon"><i class="fa fa-tag"></i></div><div class="spec-value" style="font-size:14px">{{ listing.json_content.property_status }}</div><div class="spec-lbl">{{ label_property_status|default:"Status" }}</div></div>
 </div>
 
 {% if listing.json_content.property_description %}
 <div class="section">
-<h2 class="section-title">{{DescriptionP}}</h2>
+<h2 class="section-title">{{ label_description|default:"Beschreibung" }}</h2>
 <p class="desc-text">{{ listing.json_content.property_description }}</p>
 </div>
 {% endif %}
 
 <div class="section">
-<h2 class="section-title">{{Additionaldetails}}</h2>
+<h2 class="section-title">{{ label_details|default:"Details" }}</h2>
 <div class="details-grid">
-{% if listing.json_content.address %}<div class="detail-row"><span class="detail-lbl">{{AddressP}}</span><span class="detail-val">{{ listing.json_content.address }}</span></div>{% endif %}
-{% if listing.json_content.city %}<div class="detail-row"><span class="detail-lbl">{{CityP}}</span><span class="detail-val">{{ listing.json_content.city }}</span></div>{% endif %}
-{% if listing.json_content.state %}<div class="detail-row"><span class="detail-lbl">{{StateP}}</span><span class="detail-val">{{ listing.json_content.state }}</span></div>{% endif %}
-{% if listing.json_content.country %}<div class="detail-row"><span class="detail-lbl">{{CountryP}}</span><span class="detail-val">{{ listing.json_content.country }}</span></div>{% endif %}
-{% if listing.json_content.zipcode %}<div class="detail-row"><span class="detail-lbl">{{ZipP}}</span><span class="detail-val">{{ listing.json_content.zipcode }}</span></div>{% endif %}
-<div class="detail-row"><span class="detail-lbl">{{ListedOn}}</span><span class="detail-val">{{ listing.list_date|date:"d.m.Y" }}</span></div>
+{% if listing.json_content.city %}<div class="detail-row"><span class="detail-lbl">{{ filter_location|default:"Ort" }}</span><span class="detail-val">{{ listing.json_content.city }}</span></div>{% endif %}
+{% if listing.json_content.country %}<div class="detail-row"><span class="detail-lbl">{{ CountryP|default:"Land" }}</span><span class="detail-val">{{ listing.json_content.country }}</span></div>{% endif %}
+<div class="detail-row"><span class="detail-lbl">{{ label_property_id|default:"ID" }}</span><span class="detail-val">{{ listing.id }}</span></div>
 </div>
 </div>
 
 <div class="section">
-<h2 class="section-title">{{LocationP}}</h2>
+<h2 class="section-title">{{ label_location|default:"Standort" }}</h2>
 <div class="map-container">
 <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=13.5%2C42.5%2C19.5%2C46.5&layer=mapnik" allowfullscreen loading="lazy"></iframe>
 </div>
@@ -172,12 +167,12 @@ textarea{min-height:80px;resize:vertical}
 <aside class="sidebar">
 {% if listing.realtor %}
 <div class="card">
-<h3 class="card-title">{{YourContact}}</h3>
+<h3 class="card-title">{{ dropdown_realtor|default:"Makler" }}</h3>
 <div class="agent-box">
 <img src="{% if listing.realtor.profile_image %}{{ listing.realtor.profile_image.url }}{% else %}{% static 'images/user.png' %}{% endif %}" class="agent-img" alt="">
 <div>
 <div class="agent-name">{{ listing.realtor.first_name }} {{ listing.realtor.last_name }}</div>
-<div class="agent-role">{{RealEstateAgent}}</div>
+<div class="agent-role">{{ dropdown_realtor|default:"Immobilienmakler" }}</div>
 </div>
 </div>
 {% if listing.realtor.phone %}<p style="margin:8px 0;font-size:14px"><i class="fa fa-phone" style="color:var(--primary);margin-right:8px"></i>{{ listing.realtor.phone }}</p>{% endif %}
@@ -186,17 +181,17 @@ textarea{min-height:80px;resize:vertical}
 {% endif %}
 
 <div class="card">
-<h3 class="card-title">{{InterestedInProperty}}</h3>
+<h3 class="card-title">{{ btn_contact_agent|default:"Kontakt" }}</h3>
 <form method="POST" action="#">
 {% csrf_token %}
 <input type="hidden" name="property_id" value="{{ listing.id }}">
-<div class="form-group"><label>{{YourName}}</label><input type="text" name="name" placeholder="Max Mustermann" required></div>
-<div class="form-group"><label>{{Email}}</label><input type="email" name="email" placeholder="max@beispiel.de" required></div>
-<div class="form-group"><label>{{Phone}}</label><input type="tel" name="phone" placeholder="+49 123 456789"></div>
-<div class="form-group"><label>{{Message}}</label><textarea name="message" placeholder="..."></textarea></div>
-<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> {{SendInquiry}}</button>
+<div class="form-group"><label>{{ contact_name|default:"Name" }}</label><input type="text" name="name" required></div>
+<div class="form-group"><label>{{ contact_email|default:"E-Mail" }}</label><input type="email" name="email" required></div>
+<div class="form-group"><label>{{ contact_phone|default:"Telefon" }}</label><input type="tel" name="phone"></div>
+<div class="form-group"><label>{{ contact_message|default:"Nachricht" }}</label><textarea name="message"></textarea></div>
+<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> {{ btn_send_message|default:"Senden" }}</button>
 </form>
-<a href="tel:+385123456789" class="btn btn-secondary"><i class="fa fa-phone"></i> {{CallDirectly}}</a>
+<a href="tel:+385123456789" class="btn btn-secondary"><i class="fa fa-phone"></i> {{ Contact|default:"Anrufen" }}</a>
 </div>
 </aside>
 </div>
@@ -211,10 +206,7 @@ textarea{min-height:80px;resize:vertical}
 
 <script>
 var images=[{% if listing.photo_main %}"{{ listing.photo_main.url }}"{% endif %}{% if listing.photo_1 %},"{{ listing.photo_1.url }}"{% endif %}{% if listing.photo_2 %},"{{ listing.photo_2.url }}"{% endif %}{% if listing.photo_3 %},"{{ listing.photo_3.url }}"{% endif %}{% if listing.photo_4 %},"{{ listing.photo_4.url }}"{% endif %}{% if listing.photo_5 %},"{{ listing.photo_5.url }}"{% endif %}{% if listing.photo_6 %},"{{ listing.photo_6.url }}"{% endif %}];
-var currentIdx=0;
-var totalSlides=images.length||1;
-var slider=document.getElementById('gallerySlider');
-var dotsContainer=document.getElementById('galleryDots');
+var currentIdx=0;var totalSlides=images.length||1;var slider=document.getElementById('gallerySlider');var dotsContainer=document.getElementById('galleryDots');
 document.getElementById('totalSlides').textContent=totalSlides;
 for(var i=0;i<totalSlides;i++){var dot=document.createElement('button');dot.className='gallery-dot'+(i===0?' active':'');dot.onclick=(function(idx){return function(){goToSlide(idx)}})(i);dotsContainer.appendChild(dot)}
 function updateSlider(){slider.style.transform='translateX(-'+currentIdx*100+'%)';document.getElementById('currentSlide').textContent=currentIdx+1;document.querySelectorAll('.gallery-dot').forEach(function(d,i){d.classList.toggle('active',i===currentIdx)});document.querySelectorAll('.thumb').forEach(function(t,i){t.classList.toggle('active',i===currentIdx)})}
