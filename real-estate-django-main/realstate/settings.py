@@ -218,6 +218,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'service.mahamudh472@gmail.com'
 EMAIL_HOST_PASSWORD = 'pmjv woji jdsx kvns'
 
+# ========================================
+# SICHERHEIT: Passwort-Reset Token Einstellungen
+# ========================================
+# Token ist nur 1 Stunde gültig (3600 Sekunden)
+# Django Standard ist 3 Tage - wir reduzieren für mehr Sicherheit
+PASSWORD_RESET_TIMEOUT = 3600  # 1 Stunde in Sekunden
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
