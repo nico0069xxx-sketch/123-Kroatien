@@ -1,105 +1,151 @@
-# 123-Kroatien.eu - Immobilienportal PRD
+# 123-Kroatien.eu - Real Estate Portal PRD
 
 ## Original Problem Statement
-Der Benutzer (Nik) betreibt ein Django-basiertes Immobilienportal "123-Kroatien.eu" für kroatische Immobilien, das deutsche Kunden ansprechen soll. Das Portal unterstützt 12 Sprachen über ein Translation-System.
+Django-basiertes Immobilienportal mit zwei Benutzergruppen (Gruppe A: Makler/Bauträger, Gruppe B: Professionals/Dienstleister). Das Portal unterstützt 12 Sprachen und benötigt moderne UI/UX-Überarbeitung.
 
-## Was in dieser Session erledigt wurde
+---
 
-### ✅ Abgeschlossen:
-1. **Social Media Dokumentation (Gruppe B)** - Trilingualer Abschnitt in `templates/professional_portal/anleitung.html` hinzugefügt
-2. **Logo-Fix** - `professional.logo` → `professional.company_logo` in 4 Dateien korrigiert
-3. **Moderne Property Detail Page** - Neues Template `templates/main/single-detail-modern.html` erstellt mit:
-   - Swipe-Galerie für Mobile
-   - Thumbnail-Leiste für Desktop
-   - Lightbox für Vollbild
-   - 8er Specs-Grid (Schlafzimmer, Bad, Fläche, etc.)
-   - Kontaktformular
-   - Makler-Info
-   - OpenStreetMap Karte
-   - Responsive Design
+## User Context
+- **User:** Nik (Deutsch, informelles "du")
+- **System:** Apple Mac M1, Terminal, Safari
+- **Lokaler Pfad:** `~/Desktop/real-estate-django-ALTmain`
+- **Emergent Pfad:** `/app/real-estate-django-main`
 
-### ❌ KRITISCHES PROBLEM - Übersetzungen funktionieren nicht
+---
 
-**Problem:** Die Übersetzungsvariablen werden im neuen Template nicht korrekt angezeigt. Obwohl die Sprache auf Französisch gestellt ist, erscheinen viele Labels auf Deutsch.
+## Git Workflow Rules (KRITISCH!)
 
-**Was NICHT übersetzt wird:**
-- Hero: Standort fehlt komplett (Split, Kroatien sollte angezeigt werden)
-- "Zurueck" → sollte "Retour" sein
-- "ETAGEN" → sollte "Étages" sein
-- "OBJEKTART" → sollte "Type de bien" sein
-- "STATUS" → sollte "Statut" sein
-- "NAME" → sollte "Nom" sein
-- "TELEFON" → sollte "Téléphone" sein
-- "NACHRICHT" → sollte "Message" sein
-- "Senden" → sollte "Envoyer" sein
+```
+BASELINE: 9ec9d9a on main — DO NOT BREAK
+WORKFLOW: Branch-only (feature/*, fix/*)
+GITHUB: Canonical history
+TIME MACHINE: Parallel backup (recovery only)
+```
 
-**Technische Details:**
+### START (MUST):
+1. `cd ~/Desktop/real-estate-django-ALTmain`
+2. `git fetch --all`
+3. Verify: git status clean, branch is main, HEAD at/from 9ec9d9a
+4. Create feature/* or fix/* branch BEFORE any work
+5. Dirty tree → WIP commit or timestamped stash immediately
 
-1. **Übersetzungen existieren in der DB:**
+### RULES (MUST):
+- Never work directly on main
+- Never delete/overwrite without Git history
+- Never commit secrets (.env), db.sqlite3, media/, backups
+- Never use iCloud as source/merge/restore
+- Model changes require migrations
+- GitHub Actions workflow changes via GitHub Web UI only
+
+### END (MUST):
+- Run checks/tests if available
+- Commit changes
+- Push branch to GitHub
+- Update HANDOFF.md (done/next/risks)
+- Ensure git status clean
+
+---
+
+## Prioritized Task List
+
+### 🔴 P0 - Critical / Blocker
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Übersetzungs-Blocker lösen | BLOCKED | `single-detail-modern.html` übersetzt statische Labels nicht. Problem liegt in `main/context_processors.py` |
+| Objektnummer sichtbar machen | TODO | Jedes Objekt braucht sichtbare Objektnummer (vom Makler/Bauträger via XML oder manuell vergeben) |
+
+### 🟡 P1 - Important
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Login-System vereinfachen | TODO | Verschiedene Rollen haben Anmeldeprobleme, kostet Zeit und nervt |
+| Gruppe B User Guide erweitern | TODO | Soll wie Gruppe A Guide strukturiert sein |
+| OpenAI Chatbot prüfen | TODO | Möglichkeiten für Service Provider |
+
+### 🟠 P2 - Backlog
+
+| Task | Status | Notes |
+|------|--------|-------|
+| CSS-Architektur stabilisieren | TODO | KRITISCH - sehr fragil |
+| URL-Architektur refactoren | TODO | Dringend |
+| Review/Rating System | TODO | |
+| Mobile View Optimierung | TODO | |
+| Legacy Code konsolidieren | TODO | z.B. zwei `partner_landing` Funktionen |
+| Brittle Topbar Model | TODO | Hotfix existiert, Root Cause offen |
+| nice-select.js Dropdown Styling | TODO | Legacy Plugin, schwer zu stylen |
+
+---
+
+## Completed Work
+
+### Session vor diesem Fork:
+- ✅ Social Media Dokumentation für Gruppe B (`anleitung.html`)
+- ✅ Logo-Bug behoben (`professional.logo` → `professional.company_logo`)
+- ✅ 6 Dummy-Listings erstellt (ohne Bilder)
+- ✅ Listing Card Error behoben (`NoReverseMatch`)
+- ✅ Neue moderne Property-Detail-Seite (`single-detail-modern.html`)
+- ✅ OpenStreetMap eingebunden (Stadt-Ebene, bleibt so)
+
+---
+
+## Translation System Debug Checklist
+
+Der Übersetzungs-Blocker erfordert folgende Schritte:
+
+1. **Alle `page`-Werte in DB auflisten:**
+   ```bash
+   python3 manage.py shell -c "from pages.models import Translation; print(set(t.page for t in Translation.objects.all()))"
    ```
-   label_floors: page='property details', FR='Étages'
-   label_garage: page='property details', FR='Garage'
-   label_property_type: page='property details', FR='Type de bien'
-   label_property_status: page='property details', FR='Statut'
-   nav_back: page='property details', FR='Retour'
-   contact_name: page='contact', FR='Nom'
-   contact_phone: page='contact', FR='Téléphone'
-   contact_message: page='contact', FR='Message'
-   btn_send_message: page='contact', FR='Envoyer'
-   ```
 
-2. **Context Processor (`main/context_processors.py`):**
-   - Lädt Übersetzungen aus `pages.models.Translation`
-   - Wurde aktualisiert um auch `page='contact'` zu laden
-   - Zeile 82: `translations = Translation.objects.filter(page=page) | ... | Translation.objects.filter(page='contact')`
+2. **`context_processors.py` analysieren:**
+   - Datei: `main/context_processors.py`
+   - Funktion: `get_my_translations`
+   - Problem: Lädt nicht alle benötigten Seiten
 
-3. **Template (`templates/main/single-detail-modern.html`):**
-   - Verwendet Variablen wie `{{ label_floors|default:"Etagen" }}`
-   - Die Fallback-Werte werden angezeigt, nicht die DB-Übersetzungen
+3. **Query erweitern:** 
+   Alle Seiten hinzufügen die Labels für Detail-Seite haben (z.B. 'contact', etc.)
 
-**Mögliche Ursachen:**
-1. Die lokale Datei des Benutzers ist nicht synchron mit den Änderungen
-2. Der Context Processor wird nicht für diese View aufgerufen
-3. Die Variable-Namen im Template stimmen nicht exakt mit den DB-Namen überein
-4. Cache-Problem
+4. **Testen:** Mit `?lang=fr` Parameter
 
-**Debug-Vorschläge für nächsten Agenten:**
-1. Prüfe ob Context Processor in `realstate/settings.py` unter `TEMPLATES['OPTIONS']['context_processors']` eingetragen ist
-2. Prüfe in der View `main/views.py` ob der Context korrekt übergeben wird
-3. Teste mit: `{{ label_floors }}` ohne default um zu sehen ob Variable leer ist
-4. Prüfe die exakten Variablennamen in der View mit Debug-Output
+---
 
-## Dateistruktur
+## Key Files
 
-### Wichtige Dateien:
-- `/app/real-estate-django-main/` - Projektroot
-- `main/context_processors.py` - Übersetzungslogik
-- `main/views.py` - Views inkl. property_details
-- `pages/models.py` - Translation Model
-- `templates/main/single-detail-modern.html` - Neues Property Template
-- `templates/main/single-detail.html` - Altes Property Template (funktioniert!)
+| File | Purpose |
+|------|---------|
+| `templates/main/single-detail-modern.html` | Neue Property-Detail-Seite (BLOCKER) |
+| `main/context_processors.py` | Lädt Übersetzungen (DEBUG HERE) |
+| `main/views.py` | `property_details` View |
+| `pages/models.py` | `Translation` Model |
 
-### Git-Status:
-- Branch: `feature/modern-property-detail` (nicht gepusht)
-- Baseline: `9ec9d9a on main`
-
-## Benutzer-Kontext
-- Nik arbeitet auf Mac M1 mit Terminal/Safari
-- Verwendet `DEBUG=true python3 manage.py runserver`
-- Lokal unter `~/Desktop/real-estate-django-ALTmain`
-- Alle Befehle als einfache Copy-Paste Terminal-Befehle geben
+---
 
 ## Credentials
-- Admin: `/nik-verwaltung-2026/` - User: `Nik` / `Admin1234!`
-- Gruppe A (Makler): `/accounts/login` - User: `Nik` / `Admin1234!`
-- Gruppe B (Professional): `/accounts/login` - User: `archtiket` / `Architekt!123456789`
 
-## Nächste Schritte
-1. **PRIORITÄT 1:** Übersetzungsproblem lösen
-2. Standort (city, country) im Hero-Bild anzeigen
-3. Alle Labels komplett übersetzen
-4. Template committen und pushen
-5. PR erstellen und mergen
+| Role | URL | Username | Password |
+|------|-----|----------|----------|
+| Admin | `/nik-verwaltung-2026/` | Nik | Admin1234! |
+| Gruppe A (Makler) | `/accounts/login` | Nik | Admin1234! |
+| Gruppe B (Professional) | `/accounts/login` | archtiket | Architekt!123456789 |
 
-## Sprache
-Der Benutzer kommuniziert auf **Deutsch (informell "du")**.
+---
+
+## Technical Architecture
+
+- **Framework:** Django Monolith
+- **Location:** `/app/real-estate-django-main`
+- **Translations:** 
+  - Dynamic: `json_content` JSONField auf Models
+  - Static Labels: `pages.Translation` Model, geladen via Context Processor
+
+---
+
+## Decisions Made
+
+- OpenStreetMap bleibt auf Stadt-Ebene (kein Straßen-Zoom) ✅
+- Objektnummer muss sichtbar sein, normale Größe ✅
+
+---
+
+*Last Updated: December 2024*
