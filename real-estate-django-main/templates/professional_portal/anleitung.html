@@ -1,0 +1,476 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}
+{% if lang == 'hr' %}Upute - Portal za partnere{% elif lang == 'en' %}User Guide - Partner Portal{% else %}Anleitung - Partner-Portal{% endif %}
+{% endblock %}
+
+{% block content %}
+<style>
+    .guide-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    .guide-header {
+        background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+        color: white;
+        padding: 40px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .guide-header h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    .guide-header .subtitle {
+        opacity: 0.9;
+        font-size: 1.1rem;
+    }
+    .lang-switcher {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+    .lang-btn {
+        padding: 10px 20px;
+        border: 2px solid #1e3a5f;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .lang-btn.active {
+        background: #1e3a5f;
+        color: white;
+    }
+    .lang-btn:not(.active) {
+        background: white;
+        color: #1e3a5f;
+    }
+    .lang-btn:hover:not(.active) {
+        background: #f0f4f8;
+    }
+    .guide-section {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .guide-section h2 {
+        color: #1e3a5f;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .guide-section h2 i {
+        color: #2d5a87;
+    }
+    .guide-section p, .guide-section li {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 12px;
+    }
+    .guide-section ul {
+        padding-left: 20px;
+    }
+    .guide-section li {
+        margin-bottom: 8px;
+    }
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #1e3a5f;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .tip-box {
+        background: #e8f4fd;
+        border-left: 4px solid #2d5a87;
+        padding: 15px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 20px 0;
+    }
+    .tip-box strong {
+        color: #1e3a5f;
+    }
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #1e3a5f;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+    .back-btn:hover {
+        background: #2d5a87;
+        color: white;
+        transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+        .guide-header {
+            padding: 25px;
+        }
+        .guide-header h1 {
+            font-size: 1.5rem;
+        }
+        .guide-section {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="guide-container">
+    <!-- Header -->
+    <div class="guide-header">
+        <h1>
+            {% if lang == 'hr' %}
+                <i class="fas fa-book-open"></i> Upute za korištenje portala
+            {% elif lang == 'en' %}
+                <i class="fas fa-book-open"></i> Portal User Guide
+            {% else %}
+                <i class="fas fa-book-open"></i> Portal-Anleitung
+            {% endif %}
+        </h1>
+        <p class="subtitle">
+            {% if lang == 'hr' %}
+                Sve što trebate znati za uspješno korištenje vašeg profila
+            {% elif lang == 'en' %}
+                Everything you need to know to successfully use your profile
+            {% else %}
+                Alles was du wissen musst, um dein Profil erfolgreich zu nutzen
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <a href="?lang=hr" class="lang-btn {% if lang == 'hr' %}active{% endif %}">
+            <i class="fas fa-flag"></i> Hrvatski
+        </a>
+        <a href="?lang=de" class="lang-btn {% if lang == 'de' %}active{% endif %}">
+            <i class="fas fa-flag"></i> Deutsch
+        </a>
+        <a href="?lang=en" class="lang-btn {% if lang == 'en' %}active{% endif %}">
+            <i class="fas fa-flag"></i> English
+        </a>
+    </div>
+
+    {% if lang == 'hr' %}
+    <!-- CROATIAN VERSION -->
+    
+    <!-- Section 1: Prijava -->
+    <div class="guide-section">
+        <h2><i class="fas fa-sign-in-alt"></i> 1. Prijava u portal</h2>
+        <p><span class="step-number">1</span> Idite na stranicu za prijavu</p>
+        <p><span class="step-number">2</span> Unesite svoje korisničko ime i lozinku</p>
+        <p><span class="step-number">3</span> Kliknite "Prijava"</p>
+        
+        <div class="tip-box">
+            <strong><i class="fas fa-lightbulb"></i> Savjet:</strong> 
+            Ako ste zaboravili lozinku, kontaktirajte nas na info@123-kroatien.eu
+        </div>
+    </div>
+
+    <!-- Section 2: Profil -->
+    <div class="guide-section">
+        <h2><i class="fas fa-user-edit"></i> 2. Uređivanje profila</h2>
+        <p>Vaš profil je vaša digitalna vizit karta. Evo kako ga možete urediti:</p>
+        
+        <p><span class="step-number">1</span> Na nadzornoj ploči kliknite "Profil bearbeiten" (Uredi profil)</p>
+        <p><span class="step-number">2</span> Ispunite sve podatke:</p>
+        <ul>
+            <li><strong>Naziv tvrtke</strong> - Vaš službeni naziv</li>
+            <li><strong>E-mail</strong> - Kontakt e-mail za klijente</li>
+            <li><strong>Telefon</strong> - Broj telefona</li>
+            <li><strong>Web stranica</strong> - Vaša web adresa (ako imate)</li>
+            <li><strong>Grad i adresa</strong> - Vaša lokacija</li>
+            <li><strong>Opis</strong> - Opišite svoje usluge na hrvatskom i njemačkom</li>
+        </ul>
+        <p><span class="step-number">3</span> Učitajte logo vaše tvrtke i profilnu sliku</p>
+        <p><span class="step-number">4</span> Kliknite "Spremi" za spremanje promjena</p>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-lightbulb"></i> Savjet:</strong> 
+            Potpuni profil s logom i opisom privlači više klijenata!
+        </div>
+    </div>
+
+    <!-- Section 3: Lozinka -->
+    <div class="guide-section">
+        <h2><i class="fas fa-key"></i> 3. Promjena lozinke</h2>
+        <p>Za vašu sigurnost, preporučujemo redovitu promjenu lozinke:</p>
+        
+        <p><span class="step-number">1</span> Kliknite "Passwort ändern" (Promijeni lozinku) na nadzornoj ploči</p>
+        <p><span class="step-number">2</span> Unesite trenutnu lozinku</p>
+        <p><span class="step-number">3</span> Unesite novu lozinku (najmanje 10 znakova)</p>
+        <p><span class="step-number">4</span> Potvrdite novu lozinku</p>
+        <p><span class="step-number">5</span> Kliknite "Spremi"</p>
+    </div>
+
+    <!-- Section 4: 2FA -->
+    <div class="guide-section">
+        <h2><i class="fas fa-shield-alt"></i> 4. Dvofaktorska autentifikacija (2FA)</h2>
+        <p>Dodatna zaštita vašeg računa:</p>
+        
+        <p><span class="step-number">1</span> Kliknite "2FA verwalten" (Upravljanje 2FA)</p>
+        <p><span class="step-number">2</span> Odaberite metodu: Authenticator aplikacija ili E-mail kod</p>
+        <p><span class="step-number">3</span> Slijedite upute na zaslonu</p>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-shield-alt"></i> Zašto 2FA?</strong> 
+            Dvofaktorska autentifikacija štiti vaš račun čak i ako netko sazna vašu lozinku.
+        </div>
+    </div>
+
+    <!-- Section 5: Javni profil -->
+    <div class="guide-section">
+        <h2><i class="fas fa-eye"></i> 5. Vaš javni profil</h2>
+        <p>Kad je vaš profil aktivan, klijenti vas mogu pronaći na našoj platformi:</p>
+        
+        <ul>
+            <li>Vaš profil se pojavljuje u kategoriji vašeg zanimanja (Arhitekti, Odvjetnici, itd.)</li>
+            <li>Klijenti mogu vidjeti vaše kontakt podatke, opis i logo</li>
+            <li>Kliknite "Profil ansehen" (Pregledaj profil) da vidite kako vas drugi vide</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-check-circle"></i> Status profila:</strong> 
+            Vaš profil mora biti "Aktiv" i "Verifiziert" da bude javno vidljiv.
+        </div>
+    </div>
+
+    <!-- Section 6: Kontakt -->
+    <div class="guide-section">
+        <h2><i class="fas fa-headset"></i> 6. Trebate pomoć?</h2>
+        <p>Naš tim vam stoji na raspolaganju:</p>
+        
+        <ul>
+            <li><strong>E-mail:</strong> info@123-kroatien.eu</li>
+            <li><strong>Telefon:</strong> +385 (0)xx xxx xxxx</li>
+            <li><strong>Radno vrijeme:</strong> Pon - Pet, 9:00 - 17:00</li>
+        </ul>
+    </div>
+
+    {% elif lang == 'en' %}
+    <!-- ENGLISH VERSION -->
+    
+    <!-- Section 1: Login -->
+    <div class="guide-section">
+        <h2><i class="fas fa-sign-in-alt"></i> 1. Logging into the Portal</h2>
+        <p><span class="step-number">1</span> Go to the login page</p>
+        <p><span class="step-number">2</span> Enter your username and password</p>
+        <p><span class="step-number">3</span> Click "Login"</p>
+        
+        <div class="tip-box">
+            <strong><i class="fas fa-lightbulb"></i> Tip:</strong> 
+            If you forgot your password, contact us at info@123-kroatien.eu
+        </div>
+    </div>
+
+    <!-- Section 2: Profile -->
+    <div class="guide-section">
+        <h2><i class="fas fa-user-edit"></i> 2. Editing Your Profile</h2>
+        <p>Your profile is your digital business card. Here's how to edit it:</p>
+        
+        <p><span class="step-number">1</span> On the dashboard, click "Edit Profile"</p>
+        <p><span class="step-number">2</span> Fill in all details:</p>
+        <ul>
+            <li><strong>Company Name</strong> - Your official business name</li>
+            <li><strong>Email</strong> - Contact email for clients</li>
+            <li><strong>Phone</strong> - Your phone number</li>
+            <li><strong>Website</strong> - Your web address (if available)</li>
+            <li><strong>City and Address</strong> - Your location</li>
+            <li><strong>Description</strong> - Describe your services in Croatian and German</li>
+        </ul>
+        <p><span class="step-number">3</span> Upload your company logo and profile picture</p>
+        <p><span class="step-number">4</span> Click "Save" to save your changes</p>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-lightbulb"></i> Tip:</strong> 
+            A complete profile with logo and description attracts more clients!
+        </div>
+    </div>
+
+    <!-- Section 3: Password -->
+    <div class="guide-section">
+        <h2><i class="fas fa-key"></i> 3. Changing Your Password</h2>
+        <p>For your security, we recommend changing your password regularly:</p>
+        
+        <p><span class="step-number">1</span> Click "Change Password" on the dashboard</p>
+        <p><span class="step-number">2</span> Enter your current password</p>
+        <p><span class="step-number">3</span> Enter your new password (minimum 10 characters)</p>
+        <p><span class="step-number">4</span> Confirm your new password</p>
+        <p><span class="step-number">5</span> Click "Save"</p>
+    </div>
+
+    <!-- Section 4: 2FA -->
+    <div class="guide-section">
+        <h2><i class="fas fa-shield-alt"></i> 4. Two-Factor Authentication (2FA)</h2>
+        <p>Additional protection for your account:</p>
+        
+        <p><span class="step-number">1</span> Click "Manage 2FA"</p>
+        <p><span class="step-number">2</span> Choose your method: Authenticator app or Email code</p>
+        <p><span class="step-number">3</span> Follow the on-screen instructions</p>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-shield-alt"></i> Why 2FA?</strong> 
+            Two-factor authentication protects your account even if someone learns your password.
+        </div>
+    </div>
+
+    <!-- Section 5: Public Profile -->
+    <div class="guide-section">
+        <h2><i class="fas fa-eye"></i> 5. Your Public Profile</h2>
+        <p>When your profile is active, clients can find you on our platform:</p>
+        
+        <ul>
+            <li>Your profile appears in your profession's category (Architects, Lawyers, etc.)</li>
+            <li>Clients can see your contact details, description, and logo</li>
+            <li>Click "View Profile" to see how others see you</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-check-circle"></i> Profile Status:</strong> 
+            Your profile must be "Active" and "Verified" to be publicly visible.
+        </div>
+    </div>
+
+    <!-- Section 6: Contact -->
+    <div class="guide-section">
+        <h2><i class="fas fa-headset"></i> 6. Need Help?</h2>
+        <p>Our team is here to assist you:</p>
+        
+        <ul>
+            <li><strong>Email:</strong> info@123-kroatien.eu</li>
+            <li><strong>Phone:</strong> +385 (0)xx xxx xxxx</li>
+            <li><strong>Business hours:</strong> Mon - Fri, 9:00 AM - 5:00 PM</li>
+        </ul>
+    </div>
+
+    {% else %}
+    <!-- GERMAN VERSION -->
+    
+    <!-- Section 1: Anmeldung -->
+    <div class="guide-section">
+        <h2><i class="fas fa-sign-in-alt"></i> 1. Anmeldung im Portal</h2>
+        <p><span class="step-number">1</span> Gehe zur Login-Seite</p>
+        <p><span class="step-number">2</span> Gib deinen Benutzernamen und dein Passwort ein</p>
+        <p><span class="step-number">3</span> Klicke auf "Anmelden"</p>
+        
+        <div class="tip-box">
+            <strong><i class="fas fa-lightbulb"></i> Tipp:</strong> 
+            Falls du dein Passwort vergessen hast, kontaktiere uns unter info@123-kroatien.eu
+        </div>
+    </div>
+
+    <!-- Section 2: Profil -->
+    <div class="guide-section">
+        <h2><i class="fas fa-user-edit"></i> 2. Profil bearbeiten</h2>
+        <p>Dein Profil ist deine digitale Visitenkarte. So bearbeitest du es:</p>
+        
+        <p><span class="step-number">1</span> Klicke im Dashboard auf "Profil bearbeiten"</p>
+        <p><span class="step-number">2</span> Fülle alle Angaben aus:</p>
+        <ul>
+            <li><strong>Firmenname</strong> - Dein offizieller Name</li>
+            <li><strong>E-Mail</strong> - Kontakt-E-Mail für Kunden</li>
+            <li><strong>Telefon</strong> - Deine Telefonnummer</li>
+            <li><strong>Website</strong> - Deine Webadresse (falls vorhanden)</li>
+            <li><strong>Stadt und Adresse</strong> - Dein Standort</li>
+            <li><strong>Beschreibung</strong> - Beschreibe deine Dienstleistungen auf Kroatisch und Deutsch</li>
+        </ul>
+        <p><span class="step-number">3</span> Lade dein Firmenlogo und Profilbild hoch</p>
+        <p><span class="step-number">4</span> Klicke auf "Speichern" um die Änderungen zu sichern</p>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-lightbulb"></i> Tipp:</strong> 
+            Ein vollständiges Profil mit Logo und Beschreibung zieht mehr Kunden an!
+        </div>
+    </div>
+
+    <!-- Section 3: Passwort -->
+    <div class="guide-section">
+        <h2><i class="fas fa-key"></i> 3. Passwort ändern</h2>
+        <p>Für deine Sicherheit empfehlen wir, das Passwort regelmäßig zu ändern:</p>
+        
+        <p><span class="step-number">1</span> Klicke auf "Passwort ändern" im Dashboard</p>
+        <p><span class="step-number">2</span> Gib dein aktuelles Passwort ein</p>
+        <p><span class="step-number">3</span> Gib dein neues Passwort ein (mindestens 10 Zeichen)</p>
+        <p><span class="step-number">4</span> Bestätige dein neues Passwort</p>
+        <p><span class="step-number">5</span> Klicke auf "Speichern"</p>
+    </div>
+
+    <!-- Section 4: 2FA -->
+    <div class="guide-section">
+        <h2><i class="fas fa-shield-alt"></i> 4. Zwei-Faktor-Authentifizierung (2FA)</h2>
+        <p>Zusätzlicher Schutz für dein Konto:</p>
+        
+        <p><span class="step-number">1</span> Klicke auf "2FA verwalten"</p>
+        <p><span class="step-number">2</span> Wähle deine Methode: Authenticator-App oder E-Mail-Code</p>
+        <p><span class="step-number">3</span> Folge den Anweisungen auf dem Bildschirm</p>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-shield-alt"></i> Warum 2FA?</strong> 
+            Zwei-Faktor-Authentifizierung schützt dein Konto auch wenn jemand dein Passwort kennt.
+        </div>
+    </div>
+
+    <!-- Section 5: Öffentliches Profil -->
+    <div class="guide-section">
+        <h2><i class="fas fa-eye"></i> 5. Dein öffentliches Profil</h2>
+        <p>Wenn dein Profil aktiv ist, können Kunden dich auf unserer Plattform finden:</p>
+        
+        <ul>
+            <li>Dein Profil erscheint in der Kategorie deines Berufs (Architekten, Anwälte, etc.)</li>
+            <li>Kunden können deine Kontaktdaten, Beschreibung und Logo sehen</li>
+            <li>Klicke auf "Profil ansehen" um zu sehen, wie andere dich sehen</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong><i class="fas fa-check-circle"></i> Profil-Status:</strong> 
+            Dein Profil muss "Aktiv" und "Verifiziert" sein, um öffentlich sichtbar zu sein.
+        </div>
+    </div>
+
+    <!-- Section 6: Kontakt -->
+    <div class="guide-section">
+        <h2><i class="fas fa-headset"></i> 6. Brauchst du Hilfe?</h2>
+        <p>Unser Team steht dir zur Verfügung:</p>
+        
+        <ul>
+            <li><strong>E-Mail:</strong> info@123-kroatien.eu</li>
+            <li><strong>Telefon:</strong> +385 (0)xx xxx xxxx</li>
+            <li><strong>Geschäftszeiten:</strong> Mo - Fr, 9:00 - 17:00 Uhr</li>
+        </ul>
+    </div>
+
+    {% endif %}
+
+    <!-- Back Button -->
+    <div style="text-align: center;">
+        <a href="{% url 'professional_portal:dashboard' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            {% if lang == 'hr' %}Natrag na nadzornu ploču{% elif lang == 'en' %}Back to Dashboard{% else %}Zurück zum Dashboard{% endif %}
+        </a>
+    </div>
+</div>
+{% endblock %}
