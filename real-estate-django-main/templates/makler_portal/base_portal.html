@@ -16,17 +16,11 @@
                     <small class="text-white-50">{{ professional.name }}</small>
                 </div>
                 <div>
-                    <a href="{% url 'main:makler_dashboard' %}" class="btn btn-outline-light btn-sm mr-2">
+                    <a href="{% url 'main:makler_profil' %}" class="btn btn-outline-light btn-sm mr-2">
+                        <i class="fa fa-user"></i> Profil
+                    </a>
+                    <a href="{% url 'main:makler_dashboard' %}" class="btn btn-outline-light btn-sm">
                         <i class="fa fa-tachometer-alt"></i> Dashboard
-                    </a>
-                    <a href="{% url 'main:makler_xml_dokumentation' %}" class="btn btn-info btn-sm mr-2">
-                        <i class="fa fa-book"></i> {% if lang == 'hr' %}Upute{% else %}Anleitung{% endif %}
-                    </a>
-                    <a href="{% url 'main:makler_xml_import' %}" class="btn btn-warning btn-sm mr-2">
-                        <i class="fa fa-file-code"></i> XML
-                    </a>
-                    <a href="{% url 'main:makler_objekt_neu' %}" class="btn btn-success btn-sm">
-                        <i class="fa fa-plus"></i> {% if lang == 'hr' %}Nova nekretnina{% else %}Neues Objekt{% endif %}
                     </a>
                 </div>
             </div>
