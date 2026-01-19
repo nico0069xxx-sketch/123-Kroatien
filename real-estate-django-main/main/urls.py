@@ -83,9 +83,11 @@ urlpatterns = [
     path('ge/kroatien/<str:category>/', professional_views.professional_list, {'country': 'kroatien'}, name='professional-list-ge'),
     path('ge/kroatien/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'kroatien'}, name='professional-detail-ge'),
     path('ge/kroatien/registrierung/', professional_views.professional_registration, {'country': 'kroatien'}, name='professional-reg-ge'),
+    path('ge/kroatien/partner-werden/', views.partner_landing, {'lang': 'ge'}, name='partner-landing-ge'),
     
     # Croatian URLs
     path('hr/hrvatska/<str:category>/', professional_views.professional_list, {'country': 'hrvatska'}, name='professional-list-hr'),
     path('hr/hrvatska/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'hrvatska'}, name='professional-detail-hr'),
     path('hr/hrvatska/registracija/', professional_views.professional_registration, {'country': 'hrvatska'}, name='professional-reg-hr'),
+    path('hr/hrvatska/postanite-partner/', views.partner_landing, {'lang': 'hr'}, name='partner-landing-hr'),
 ]
