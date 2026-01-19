@@ -13,4 +13,5 @@ urlpatterns = [
     path('2fa-email-verifizieren/', professional_portal_views.verify_email_2fa, name='verify_email_2fa'),
     path('2fa-email-erneut/', professional_portal_views.resend_email_code, name='resend_email_code'),
     path('ki-beschreibung/', professional_portal_views.generate_description, name='generate_description'),
+    path('anleitung/', professional_portal_views.anleitung, name='anleitung'),
 ]

@@ -191,3 +191,22 @@ def generate_description(request):
         return JsonResponse({'success': True, 'suggestions': suggestions})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+
+@login_required(login_url='account:login')
+def anleitung(request):
+    """Anleitung / Upute / Guide für das Portal"""
+    try:
+        professional = Professional.objects.get(user=request.user)
+    except Professional.DoesNotExist:
+        professional = None
+    
+    lang = request.GET.get('lang', 'hr')
+    if lang not in ['hr', 'de', 'en']:
+        lang = 'hr'
+    
+    context = {
+        'professional': professional,
+        'lang': lang,
+    }
+    return render(request, 'professional_portal/anleitung.html', context)
