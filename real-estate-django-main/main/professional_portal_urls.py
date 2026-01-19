@@ -16,4 +16,7 @@ urlpatterns = [
     # Sicherheit
     path('passwort-aendern/', professional_portal_views.change_password, name='change_password'),
     path('2fa-einrichten/', professional_portal_views.setup_2fa, name='setup_2fa'),
+    
+    # Anleitung / Upute / Guide
+    path('anleitung/', professional_portal_views.anleitung, name='anleitung'),
 ]
