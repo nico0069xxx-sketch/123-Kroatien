@@ -24,8 +24,8 @@
       {% for professional in professionals %}
       <div class="col-md-4 mb-4">
         <div class="card h-100" style="border-color: #003167;">
-          {% if professional.logo %}
-          <img src="{{ professional.logo.url }}" class="card-img-top p-3" alt="{{ professional.name }}" style="max-height: 150px; object-fit: contain;">
+          {% if professional.company_logo %}
+          <img src="{{ professional.company_logo.url }}" class="card-img-top p-3" alt="{{ professional.name }}" style="max-height: 150px; object-fit: contain;">
           {% else %}
           <div class="card-img-top p-3 d-flex align-items-center justify-content-center" style="height: 150px; background-color: #f0f0f0;">
             <span style="font-size: 3rem; color: #003167;">{{ professional.name|slice:":1" }}</span>
