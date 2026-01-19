@@ -65,16 +65,23 @@
                 class="col-md-4 col-lg-3 col-xl-3 my-auto card__image__footer-first">
                 <div class="card__image__footer">
                     <figure>
+                        {% if listing.realtor %}
                         <img onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'" src="{% if listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
                             class="img-fluid rounded-circle">
+                        {% else %}
+                        <img src="{% static 'images/p2.png' %}" alt="" class="img-fluid rounded-circle">
+                        {% endif %}
                     </figure>
                     <ul class="list-inline my-auto">
                         <li class="list-inline-item name">
+                            {% if listing.realtor %}
                             <a href="{% url "main:agent" listing.realtor.id %}">
                                 {{listing.realtor.first_name}}
                                 {{listing.realtor.last_name}}
                             </a>
-
+                            {% else %}
+                            <span>-</span>
+                            {% endif %}
                         </li>
 
 
