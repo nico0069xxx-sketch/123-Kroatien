@@ -416,7 +416,7 @@
         <p class="text-white mb-4" style="opacity:0.9;">{% if lang == 'hr' %}Registrirajte se besplatno i budite vidljivi u 12 zemalja na 12 jezika.
         {% elif lang == 'en' %}Register for free and be visible in 12 countries in 12 languages.
         {% else %}Registrieren Sie sich kostenlos und werden Sie in 12 Laendern in 12 Sprachen sichtbar.{% endif %}</p>
-        <a href="{% if lang == 'hr' %}{% url 'main:professional-reg-hr' %}{% elif lang == 'en' %}{% url 'main:professional-reg-ge' %}{% else %}{% url 'main:professional-reg-ge' %}{% endif %}" class="btn-cta">
+        <a href="/ge/ge/kroatien/registrierung/" class="btn-cta">
             {% if lang == 'hr' %}Besplatna registracija{% elif lang == 'en' %}Free Registration{% else %}Kostenlos registrieren{% endif %}
         </a>
     </div>
