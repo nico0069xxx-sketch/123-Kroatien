@@ -596,7 +596,7 @@ def send_registration_email(request):
             email = EmailMessage(
                 subject=email_subject,
                 body=email_body,
-                from_email='ja@brandoz.de,
+                from_email='ja@brandoz.de',
                 to=['office@123-kroatien.eu'],  # Add the recipient email(s) here
             )
 
