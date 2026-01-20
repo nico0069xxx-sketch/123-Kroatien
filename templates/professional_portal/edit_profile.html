@@ -228,32 +228,48 @@
 <div class="form-section">
 <h3 class="section-title">Öffnungszeiten</h3>
 <div class="opening-hours-grid">
-{% with days="Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag" %}
-{% with keys="mo,di,mi,do,fr,sa,so" %}
-{% for day in days.split %}
-{% with day_key=forloop.counter0 %}
 <div class="opening-day">
-<label>{{ day }}</label>
-<select name="hours_{{ forloop.counter0 }}_from">
-<option value="">Von</option>
-{% for time in times %}
-<option value="{{ time }}">{{ time }}</option>
-{% endfor %}
-</select>
-<select name="hours_{{ forloop.counter0 }}_to">
-<option value="">Bis</option>
-{% for time in times %}
-<option value="{{ time }}">{{ time }}</option>
-{% endfor %}
-</select>
-<label class="closed-check">
-<input type="checkbox" name="hours_{{ forloop.counter0 }}_closed"> Geschlossen
-</label>
+<label>Montag</label>
+<select name="hours_0_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_0_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_0_closed"> Geschlossen</label>
 </div>
-{% endwith %}
-{% endfor %}
-{% endwith %}
-{% endwith %}
+<div class="opening-day">
+<label>Dienstag</label>
+<select name="hours_1_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_1_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_1_closed"> Geschlossen</label>
+</div>
+<div class="opening-day">
+<label>Mittwoch</label>
+<select name="hours_2_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_2_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_2_closed"> Geschlossen</label>
+</div>
+<div class="opening-day">
+<label>Donnerstag</label>
+<select name="hours_3_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_3_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_3_closed"> Geschlossen</label>
+</div>
+<div class="opening-day">
+<label>Freitag</label>
+<select name="hours_4_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_4_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_4_closed"> Geschlossen</label>
+</div>
+<div class="opening-day">
+<label>Samstag</label>
+<select name="hours_5_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_5_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_5_closed"> Geschlossen</label>
+</div>
+<div class="opening-day">
+<label>Sonntag</label>
+<select name="hours_6_from"><option value="">Von</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<select name="hours_6_to"><option value="">Bis</option>{% for time in times %}<option value="{{ time }}">{{ time }}</option>{% endfor %}</select>
+<label class="closed-check"><input type="checkbox" name="hours_6_closed"> Geschlossen</label>
+</div>
 </div>
 </div>
 
