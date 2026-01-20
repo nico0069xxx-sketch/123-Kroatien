@@ -1,5 +1,5 @@
 from django import forms
-from .professional_models import Professional, ProfessionalDocument
+from .professional_models import Professional
 
 
 # Form labels in German and Croatian
@@ -25,7 +25,6 @@ FORM_LABELS = {
         'profile_image': 'Profilbild (Pflicht)',
         'company_logo': 'Firmenlogo',
         'document': 'Dokument zur Verifizierung (z.B. Ausweis)',
-        'document_type': 'Dokumenttyp',
         'opening_hours': 'Öffnungszeiten',
         'submit': 'Registrierung absenden',
         'success_title': 'Registrierung erfolgreich!',
@@ -51,12 +50,6 @@ FORM_LABELS = {
             'zentralkroatien': 'Zentralkroatien',
             'lika': 'Lika',
             'gorski_kotar': 'Gorski Kotar',
-        },
-        'document_types': {
-            'business_license': 'Gewerbeschein',
-            'id_document': 'Personalausweis/Reisepass',
-            'company_register': 'Handelsregisterauszug',
-            'other': 'Sonstiges',
         },
         'days': {
             'mo': 'Montag',
@@ -89,7 +82,6 @@ FORM_LABELS = {
         'profile_image': 'Profilna slika (obavezno)',
         'company_logo': 'Logo tvrtke',
         'document': 'Dokument za verifikaciju (npr. osobna iskaznica)',
-        'document_type': 'Vrsta dokumenta',
         'opening_hours': 'Radno vrijeme',
         'submit': 'Pošalji registraciju',
         'success_title': 'Registracija uspješna!',
@@ -116,12 +108,6 @@ FORM_LABELS = {
             'lika': 'Lika',
             'gorski_kotar': 'Gorski Kotar',
         },
-        'document_types': {
-            'business_license': 'Obrtnica',
-            'id_document': 'Osobna iskaznica/Putovnica',
-            'company_register': 'Izvadak iz sudskog registra',
-            'other': 'Ostalo',
-        },
         'days': {
             'mo': 'Ponedjeljak',
             'di': 'Utorak',
@@ -147,7 +133,6 @@ ALL_SPECIALIZATIONS = {
 class ProfessionalRegistrationForm(forms.Form):
     """
     Registration form for professionals with all fields.
-    Supports German and Croatian.
     """
     
     # Basic fields
@@ -218,9 +203,9 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
     )
     
-    # Specializations - will be filtered by JavaScript based on professional_type
+    # Specializations
     specializations = forms.MultipleChoiceField(
-        choices=[],  # Set dynamically
+        choices=[],
         required=False,
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
     )
@@ -235,18 +220,13 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.FileInput(attrs={'class': 'form-control'})
     )
     
-    # Document upload
+    # Document upload (stored as file, not in separate model)
     document = forms.FileField(
         required=False,
         widget=forms.FileInput(attrs={'class': 'form-control', 'accept': '.pdf,.jpg,.jpeg,.png'})
     )
-    document_type = forms.ChoiceField(
-        choices=[('', '---')] + list(ProfessionalDocument.DOCUMENT_TYPES),
-        required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
     
-    # Opening hours fields (for each day)
+    # Opening hours fields
     mo_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
     mo_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
     mo_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
@@ -299,7 +279,6 @@ class ProfessionalRegistrationForm(forms.Form):
         self.fields['profile_image'].label = labels['profile_image']
         self.fields['company_logo'].label = labels['company_logo']
         self.fields['document'].label = labels.get('document', 'Dokument')
-        self.fields['document_type'].label = labels.get('document_type', 'Dokumenttyp')
         
         # Translate professional type choices
         type_labels = labels['professional_types']
@@ -319,18 +298,11 @@ class ProfessionalRegistrationForm(forms.Form):
             for key, val in Professional.REGIONS
         ]
         
-        # Combine all specializations for the form
+        # Combine all specializations
         all_specs = []
         for specs in ALL_SPECIALIZATIONS.values():
             all_specs.extend(specs)
         self.fields['specializations'].choices = list(set(all_specs))
-        
-        # Document type choices
-        doc_labels = labels.get('document_types', {})
-        self.fields['document_type'].choices = [('', '---')] + [
-            (key, doc_labels.get(key, val))
-            for key, val in ProfessionalDocument.DOCUMENT_TYPES
-        ]
     
     def get_opening_hours(self):
         """Extract opening hours from form data"""
@@ -351,7 +323,7 @@ class ProfessionalRegistrationForm(forms.Form):
         """Create Professional instance from cleaned form data"""
         d = self.cleaned_data
         
-        # Create professional with all fields
+        # Create professional
         professional = Professional.objects.create(
             professional_type=d['professional_type'],
             name=d['name'],
@@ -380,15 +352,5 @@ class ProfessionalRegistrationForm(forms.Form):
         else:
             professional.description_de = d.get('description', '')
         professional.save()
-        
-        # Save document if provided
-        document = d.get('document')
-        document_type = d.get('document_type')
-        if document and document_type:
-            ProfessionalDocument.objects.create(
-                professional=professional,
-                document_type=document_type,
-                file=document
-            )
         
         return professional
