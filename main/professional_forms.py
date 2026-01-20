@@ -94,9 +94,17 @@ class ProfessionalRegistrationForm(forms.Form):
         d = self.cleaned_data
         slug = slugify(d["name"] + "-" + d["city"] + "-" + str(uuid.uuid4())[:8])
         return Professional.objects.create(
-            professional_type=d["professional_type"], name=d["name"], slug=slug,
-            email=d["email"], phone=d.get("phone",""), city=d["city"],
-            region=d["region"], languages_spoken=d["languages_spoken"],
-            company_name=d.get("company_name",""), website=d.get("website",""),
-            is_active=False, is_verified=False
+            professional_type=d["professional_type"], 
+            name=d["name"], 
+            slug=slug,
+            email=d["email"], 
+            phone=d.get("phone",""), 
+            city=d["city"],
+            region=d["region"], 
+            spoken_languages=d.get("spoken_languages", []),
+            service_regions=d.get("service_regions", []),
+            company_name=d.get("company_name",""), 
+            website=d.get("website",""),
+            is_active=False, 
+            is_verified=False
         )
