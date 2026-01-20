@@ -328,14 +328,32 @@ class ProfessionalContent(models.Model):
 
 # Lead model for contact requests
 class Lead(models.Model):
+    # Lead model for contact requests
+class Lead(models.Model):
+    STATUS_CHOICES = (
+        ('new', 'Neu'),
+        ('contacted', 'Kontaktiert'),
+        ('closed', 'Abgeschlossen'),
+    )
+    
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='leads', null=True, blank=True)
+    listing = models.ForeignKey('listings.Listing', on_delete=models.SET_NULL, null=True, blank=True, related_name='leads')
     name = models.CharField(max_length=200)
     email = models.EmailField()
     phone = models.CharField(max_length=50, blank=True, null=True)
     message = models.TextField()
     property_reference = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    notes = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     is_read = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-created']
+    
+    def __str__(self):
+        return f"Lead von {self.name} - {self.created.strftime('%d.%m.%Y')}"
     
     class Meta:
         ordering = ['-created']
