@@ -48,6 +48,7 @@ def edit_profile(request):
         professional = Professional.objects.get(user=request.user)
     except Professional.DoesNotExist:
         return redirect('main:home')
+    
     if request.method == 'POST':
         professional.name = request.POST.get('name', professional.name)
         professional.email = request.POST.get('email', professional.email)
@@ -56,22 +57,57 @@ def edit_profile(request):
         professional.city = request.POST.get('city', '')
         professional.region = request.POST.get('region', '')
         professional.address = request.POST.get('address', '')
+        professional.oib_number = request.POST.get('oib_number', '')
         professional.website = request.POST.get('website', '')
         professional.facebook = request.POST.get('facebook', '')
         professional.instagram = request.POST.get('instagram', '')
         professional.linkedin = request.POST.get('linkedin', '')
         professional.description_de = request.POST.get('description_de', '')
         professional.description_hr = request.POST.get('description_hr', '')
-        professional.description_en = request.POST.get('description_en', '')
-        professional.languages_spoken = request.POST.get('languages', '')
+        
+        # Multi-select fields (come as lists)
+        professional.service_regions = request.POST.getlist('service_regions')
+        professional.spoken_languages = request.POST.getlist('spoken_languages')
+        professional.specializations = request.POST.getlist('specializations')
+        
+        # Opening hours
+        opening_hours = {}
+        day_keys = ['mo', 'di', 'mi', 'do', 'fr', 'sa', 'so']
+        for i, day_key in enumerate(day_keys):
+            closed = request.POST.get(f'hours_{i}_closed') == 'on'
+            from_time = request.POST.get(f'hours_{i}_from', '')
+            to_time = request.POST.get(f'hours_{i}_to', '')
+            opening_hours[day_key] = {
+                'from': from_time,
+                'to': to_time,
+                'closed': closed
+            }
+        professional.opening_hours = opening_hours
+        
         if 'portrait' in request.FILES:
-            professional.portrait = request.FILES['portrait']
+            professional.portrait_photo = request.FILES['portrait']
         if 'logo' in request.FILES:
-            professional.logo = request.FILES['logo']
+            professional.company_logo = request.FILES['logo']
+        
         professional.save()
         messages.success(request, 'Profil erfolgreich aktualisiert!')
         return redirect('professional_portal:dashboard')
-    return render(request, 'professional_portal/edit_profile.html', {'professional': professional})
+    
+    # Get choices for template
+    regions = Professional.REGIONS
+    languages = Professional.LANGUAGES
+    specializations = professional.get_specialization_choices()
+    
+    # Time choices for opening hours
+    times = [f'{h:02d}:{m:02d}' for h in range(6, 23) for m in [0, 30]]
+    
+    return render(request, 'professional_portal/edit_profile.html', {
+        'professional': professional,
+        'regions': regions,
+        'languages': languages,
+        'specializations': specializations,
+        'times': times,
+    })
 
 @login_required(login_url='account:login')
 def change_password(request):
