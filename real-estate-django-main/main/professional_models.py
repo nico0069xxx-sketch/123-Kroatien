@@ -172,6 +172,7 @@ class Professional(models.Model):
     # Location
     city = models.CharField(max_length=200, blank=True, null=True)
     region = models.CharField(max_length=50, choices=REGIONS, blank=True, null=True)
+    service_regions = models.JSONField(default=list, blank=True, verbose_name="Serviceregionen (Mehrfachauswahl)")
     address = models.CharField(max_length=500, blank=True, null=True)
     country = models.CharField(max_length=100, default='Kroatien')
     
