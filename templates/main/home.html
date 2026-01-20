@@ -536,7 +536,7 @@
                 <div class="col-md-8 col-lg-6">
                     <div class="title__head">
                         <h2 class="text-center text-capitalize text-danger">{{our_partners}}</h2>
-                        <p class="text-center text-muted">Verifizierte Dienstleister aus Kroatien</p>
+                        <p class="text-center text-muted">Verificirani pružatelji usluga iz Hrvatske</p>
                     </div>
                 </div>
             </div>
@@ -556,10 +556,21 @@
                                 </a>
                                 {% endfor %}
                             {% else %}
-                                <div class="text-center w-100 py-4">
-                                    <p class="text-muted">Bald finden Sie hier unsere verifizierten Partner</p>
-                                </div>
-                            {% endif %}
+    <div class="partner-carousel" id="partnerCarousel">
+        <a href="#" class="partner-logo-item">
+            <img src="{% static 'images/anlage-logo-domus.png' %}" alt="Domus" class="partner-logo-img">
+        </a>
+        <a href="#" class="partner-logo-item">
+            <img src="{% static 'images/anlage-logo-hausbau-kroatien.png' %}" alt="Hausbau Kroatien" class="partner-logo-img">
+        </a>
+        <a href="#" class="partner-logo-item">
+            <img src="{% static 'images/partner-logo6.png' %}" alt="Partner" class="partner-logo-img">
+        </a>
+        <a href="#" class="partner-logo-item">
+            <img src="{% static 'images/partner-logo7.png' %}" alt="Partner" class="partner-logo-img">
+        </a>
+    </div>
+{% endif %}
                         </div>
                     </div>
                 </div>
