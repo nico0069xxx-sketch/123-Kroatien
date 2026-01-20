@@ -1,5 +1,5 @@
 from django import forms
-from .professional_models import Professional
+from .professional_models import Professional, ProfessionalDocument
 
 
 # Form labels in German and Croatian
@@ -21,8 +21,12 @@ FORM_LABELS = {
         'website': 'Website',
         'description': 'Beschreibung Ihrer Dienstleistungen',
         'spoken_languages': 'Gesprochene Sprachen',
-        'profile_image': 'Profilbild',
+        'specializations': 'Spezialisierungen',
+        'profile_image': 'Profilbild (Pflicht)',
         'company_logo': 'Firmenlogo',
+        'document': 'Dokument zur Verifizierung (z.B. Ausweis)',
+        'document_type': 'Dokumenttyp',
+        'opening_hours': 'Öffnungszeiten',
         'submit': 'Registrierung absenden',
         'success_title': 'Registrierung erfolgreich!',
         'success_message': 'Vielen Dank für Ihre Registrierung. Wir werden Ihre Angaben prüfen und Sie per E-Mail benachrichtigen.',
@@ -48,6 +52,21 @@ FORM_LABELS = {
             'lika': 'Lika',
             'gorski_kotar': 'Gorski Kotar',
         },
+        'document_types': {
+            'business_license': 'Gewerbeschein',
+            'id_document': 'Personalausweis/Reisepass',
+            'company_register': 'Handelsregisterauszug',
+            'other': 'Sonstiges',
+        },
+        'days': {
+            'mo': 'Montag',
+            'di': 'Dienstag',
+            'mi': 'Mittwoch',
+            'do': 'Donnerstag',
+            'fr': 'Freitag',
+            'sa': 'Samstag',
+            'so': 'Sonntag',
+        },
     },
     'hr': {
         'title': 'Registracija pružatelja usluga',
@@ -66,8 +85,12 @@ FORM_LABELS = {
         'website': 'Web stranica',
         'description': 'Opis vaših usluga',
         'spoken_languages': 'Jezici koje govorite',
-        'profile_image': 'Profilna slika',
+        'specializations': 'Specijalizacije',
+        'profile_image': 'Profilna slika (obavezno)',
         'company_logo': 'Logo tvrtke',
+        'document': 'Dokument za verifikaciju (npr. osobna iskaznica)',
+        'document_type': 'Vrsta dokumenta',
+        'opening_hours': 'Radno vrijeme',
         'submit': 'Pošalji registraciju',
         'success_title': 'Registracija uspješna!',
         'success_message': 'Hvala vam na registraciji. Provjerit ćemo vaše podatke i obavijestiti vas putem e-maila.',
@@ -93,20 +116,44 @@ FORM_LABELS = {
             'lika': 'Lika',
             'gorski_kotar': 'Gorski Kotar',
         },
+        'document_types': {
+            'business_license': 'Obrtnica',
+            'id_document': 'Osobna iskaznica/Putovnica',
+            'company_register': 'Izvadak iz sudskog registra',
+            'other': 'Ostalo',
+        },
+        'days': {
+            'mo': 'Ponedjeljak',
+            'di': 'Utorak',
+            'mi': 'Srijeda',
+            'do': 'Četvrtak',
+            'fr': 'Petak',
+            'sa': 'Subota',
+            'so': 'Nedjelja',
+        },
     },
+}
+
+# All specializations combined for form choices
+ALL_SPECIALIZATIONS = {
+    'real_estate_agent': Professional.SPEC_REAL_ESTATE_AGENT,
+    'construction_company': Professional.SPEC_CONSTRUCTION,
+    'lawyer': Professional.SPEC_LAWYER,
+    'tax_advisor': Professional.SPEC_TAX_ADVISOR,
+    'architect': Professional.SPEC_ARCHITECT,
 }
 
 
 class ProfessionalRegistrationForm(forms.Form):
     """
-    Registration form for professionals.
+    Registration form for professionals with all fields.
     Supports German and Croatian.
     """
     
     # Basic fields
     professional_type = forms.ChoiceField(
         choices=Professional.PROFESSIONAL_TYPES,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_professional_type'})
     )
     name = forms.CharField(
         max_length=200,
@@ -164,22 +211,69 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
     )
     
-    # Multi-select fields (stored as JSON in model)
+    # Multi-select fields
     spoken_languages = forms.MultipleChoiceField(
         choices=Professional.LANGUAGES,
         required=False,
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
     )
     
-    # Images
-    profile_image = forms.ImageField(
+    # Specializations - will be filtered by JavaScript based on professional_type
+    specializations = forms.MultipleChoiceField(
+        choices=[],  # Set dynamically
         required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
+    )
+    
+    # Images - profile_image is required
+    profile_image = forms.ImageField(
+        required=True,
         widget=forms.FileInput(attrs={'class': 'form-control'})
     )
     company_logo = forms.ImageField(
         required=False,
         widget=forms.FileInput(attrs={'class': 'form-control'})
     )
+    
+    # Document upload
+    document = forms.FileField(
+        required=False,
+        widget=forms.FileInput(attrs={'class': 'form-control', 'accept': '.pdf,.jpg,.jpeg,.png'})
+    )
+    document_type = forms.ChoiceField(
+        choices=[('', '---')] + list(ProfessionalDocument.DOCUMENT_TYPES),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    
+    # Opening hours fields (for each day)
+    mo_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    mo_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    mo_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    
+    di_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    di_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    di_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    
+    mi_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    mi_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    mi_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    
+    do_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    do_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    do_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    
+    fr_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    fr_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    fr_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    
+    sa_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    sa_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    sa_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    
+    so_from = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    so_to = forms.ChoiceField(choices=Professional.TIME_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}))
+    so_closed = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
     
     def __init__(self, *args, lang='ge', **kwargs):
         super().__init__(*args, **kwargs)
@@ -201,8 +295,11 @@ class ProfessionalRegistrationForm(forms.Form):
         self.fields['website'].label = labels['website']
         self.fields['description'].label = labels['description']
         self.fields['spoken_languages'].label = labels.get('spoken_languages', 'Gesprochene Sprachen')
+        self.fields['specializations'].label = labels.get('specializations', 'Spezialisierungen')
         self.fields['profile_image'].label = labels['profile_image']
         self.fields['company_logo'].label = labels['company_logo']
+        self.fields['document'].label = labels.get('document', 'Dokument')
+        self.fields['document_type'].label = labels.get('document_type', 'Dokumenttyp')
         
         # Translate professional type choices
         type_labels = labels['professional_types']
@@ -221,6 +318,34 @@ class ProfessionalRegistrationForm(forms.Form):
             (key, region_labels.get(key, val))
             for key, val in Professional.REGIONS
         ]
+        
+        # Combine all specializations for the form
+        all_specs = []
+        for specs in ALL_SPECIALIZATIONS.values():
+            all_specs.extend(specs)
+        self.fields['specializations'].choices = list(set(all_specs))
+        
+        # Document type choices
+        doc_labels = labels.get('document_types', {})
+        self.fields['document_type'].choices = [('', '---')] + [
+            (key, doc_labels.get(key, val))
+            for key, val in ProfessionalDocument.DOCUMENT_TYPES
+        ]
+    
+    def get_opening_hours(self):
+        """Extract opening hours from form data"""
+        d = self.cleaned_data
+        days = ['mo', 'di', 'mi', 'do', 'fr', 'sa', 'so']
+        opening_hours = {}
+        
+        for day in days:
+            opening_hours[day] = {
+                'from': d.get(f'{day}_from', ''),
+                'to': d.get(f'{day}_to', ''),
+                'closed': d.get(f'{day}_closed', False),
+            }
+        
+        return opening_hours
     
     def save(self):
         """Create Professional instance from cleaned form data"""
@@ -242,8 +367,10 @@ class ProfessionalRegistrationForm(forms.Form):
             website=d.get('website', ''),
             description=d.get('description', ''),
             spoken_languages=d.get('spoken_languages', []),
+            specializations=d.get('specializations', []),
             profile_image=d.get('profile_image'),
             company_logo=d.get('company_logo'),
+            opening_hours=self.get_opening_hours(),
             is_active=False,
         )
         
@@ -253,5 +380,15 @@ class ProfessionalRegistrationForm(forms.Form):
         else:
             professional.description_de = d.get('description', '')
         professional.save()
+        
+        # Save document if provided
+        document = d.get('document')
+        document_type = d.get('document_type')
+        if document and document_type:
+            ProfessionalDocument.objects.create(
+                professional=professional,
+                document_type=document_type,
+                file=document
+            )
         
         return professional
