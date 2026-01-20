@@ -326,9 +326,6 @@ class ProfessionalContent(models.Model):
     def __str__(self):
         return f"{self.professional.name} - {self.get_language_display()}"
 
-# Lead model for contact requests
-class Lead(models.Model):
-    # Lead model for contact requests
 class Lead(models.Model):
     STATUS_CHOICES = (
         ('new', 'Neu'),
