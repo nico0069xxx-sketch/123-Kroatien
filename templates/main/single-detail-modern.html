@@ -122,7 +122,7 @@ textarea{min-height:80px;resize:vertical}
 <a href="{% url 'main:listing' %}" class="back-link"><i class="fa fa-arrow-left"></i> {{ nav_back|default:"Zurueck" }}</a>
 <div class="price-section">
 <div class="price-tag">EUR {{ listing.json_content.property_price }}</div>
-<div class="prop-id">{{ label_property_id|default:"ID" }}: {{ listing.id }}</div>
+<div class="prop-id">{{ label_property_id|default:"ID" }}: 123K-{{ listing.property_id|default:listing.id }}</div>
 </div>
 <div class="specs">
 <div class="spec"><div class="spec-icon"><i class="fa fa-bed"></i></div><div class="spec-value">{{ listing.json_content.bedrooms }}</div><div class="spec-lbl">{{ label_bedrooms|default:"Schlafzimmer" }}</div></div>
@@ -145,7 +145,7 @@ textarea{min-height:80px;resize:vertical}
 <div class="details-grid">
 {% if listing.json_content.city %}<div class="detail-row"><span class="detail-lbl">{{ filter_location|default:"Ort" }}</span><span class="detail-val">{{ listing.json_content.city|default:listing.location }}</span></div>{% endif %}
 {% if listing.json_content.country %}<div class="detail-row"><span class="detail-lbl">{{ CountryP|default:"Land" }}</span><span class="detail-val">{{ listing.json_content.country }}</span></div>{% endif %}
-<div class="detail-row"><span class="detail-lbl">{{ label_property_id|default:"ID" }}</span><span class="detail-val">{{ listing.id }}</span></div>
+<div class="detail-row"><span class="detail-lbl">{{ label_property_id|default:"ID" }}</span><span class="detail-val">123K-{{ listing.property_id|default:listing.id }}</span></div>
 </div>
 </div>
 <div class="section">
