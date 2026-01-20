@@ -974,7 +974,7 @@ def partner_landing(request, lang='ge'):
     return render(request, 'main/partner_landing.html', context)
 
 def professional_registration(request, lang='ge'):
-    success = True
+    success = False
     if request.method == 'POST':
         try:
             data = request.POST
