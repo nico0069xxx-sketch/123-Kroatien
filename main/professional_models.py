@@ -326,9 +326,48 @@ class ProfessionalContent(models.Model):
     def __str__(self):
         return f"{self.professional.name} - {self.get_language_display()}"
 
+# Lead model for contact requests
+class Lead(models.Model):
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='leads', null=True, blank=True)
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=50, blank=True, null=True)
+    message = models.TextField()
+    property_reference = models.CharField(max_length=100, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-created']
+    
+    def __str__(self):
+        return f"Lead von {self.name} - {self.created.strftime('%d.%m.%Y')}"
+
+
+# Reference projects for professionals
+class ReferenceProject(models.Model):
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    year = models.PositiveIntegerField(blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-year', '-created']
+    
+    def __str__(self):
+        return f"{self.title} - {self.professional.name}"
+
+
 # Backward compatibility aliases
 RealEstateAgentProfile = Professional
 ConstructionCompanyProfile = Professional
 LawyerProfile = Professional
 TaxAdvisorProfile = Professional
 ArchitectProfile = Professional
+
+# Export constants at module level
+REGIONS = Professional.REGIONS
+PROFESSIONAL_TYPES = Professional.PROFESSIONAL_TYPES
