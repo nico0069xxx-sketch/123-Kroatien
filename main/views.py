@@ -517,7 +517,7 @@ def send_owner_form(request):
             email = EmailMessage(
                 subject=email_subject,
                 body=email_body,
-                from_email='service.mahamudh472@gmail.com',
+                from_email='ja@brandoz.de',
                 to=['office@123-kroatien.eu'],  # Add the recipient email(s) here
             )
 
@@ -596,7 +596,7 @@ def send_registration_email(request):
             email = EmailMessage(
                 subject=email_subject,
                 body=email_body,
-                from_email='service.mahamudh472@gmail.com',
+                from_email='ja@brandoz.de,
                 to=['office@123-kroatien.eu'],  # Add the recipient email(s) here
             )
 
@@ -638,7 +638,7 @@ def send_email(request):
             send_mail(
                 subject,
                 message,
-                'service.mahamudh472@gmail.com',  
+                'ja@brandoz.de',  
                 ['office@123-kroatien.eu'],
                 fail_silently=False,
             )
@@ -999,7 +999,7 @@ Name: {data.get('contact_firstname','')} {data.get('contact_lastname','')}
 E-Mail: {data.get('contact_email','')}
 Telefon: {data.get('contact_telephone','')}
 """
-            send_mail('Neue Professional-Registrierung', body, 'service.mahamudh472@gmail.com', ['office@123-kroatien.eu'], fail_silently=False)
+            send_mail('Neue Professional-Registrierung', body, 'ja@brandoz.de', ['office@123-kroatien.eu'], fail_silently=False)
             success = True; print("=== SUCCESS IST TRUE ===")
         except Exception as e:
             print(f'Email error: {e}')
