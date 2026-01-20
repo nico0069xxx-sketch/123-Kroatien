@@ -1,5 +1,5 @@
 from django import forms
-from .professional_models import Professional, ProfessionalDocument
+from .professional_models import Professional
 
 
 # Form labels in German and Croatian
@@ -21,11 +21,8 @@ FORM_LABELS = {
         'website': 'Website',
         'description': 'Beschreibung Ihrer Dienstleistungen',
         'spoken_languages': 'Gesprochene Sprachen',
-        'specializations': 'Spezialisierungen',
         'profile_image': 'Profilbild',
         'company_logo': 'Firmenlogo',
-        'document': 'Dokument zur Verifizierung',
-        'document_type': 'Dokumenttyp',
         'submit': 'Registrierung absenden',
         'success_title': 'Registrierung erfolgreich!',
         'success_message': 'Vielen Dank für Ihre Registrierung. Wir werden Ihre Angaben prüfen und Sie per E-Mail benachrichtigen.',
@@ -51,12 +48,6 @@ FORM_LABELS = {
             'lika': 'Lika',
             'gorski_kotar': 'Gorski Kotar',
         },
-        'document_types': {
-            'business_license': 'Gewerbeschein',
-            'id_document': 'Personalausweis/Reisepass',
-            'company_register': 'Handelsregisterauszug',
-            'other': 'Sonstiges',
-        },
     },
     'hr': {
         'title': 'Registracija pružatelja usluga',
@@ -75,11 +66,8 @@ FORM_LABELS = {
         'website': 'Web stranica',
         'description': 'Opis vaših usluga',
         'spoken_languages': 'Jezici koje govorite',
-        'specializations': 'Specijalizacije',
         'profile_image': 'Profilna slika',
         'company_logo': 'Logo tvrtke',
-        'document': 'Dokument za verifikaciju',
-        'document_type': 'Vrsta dokumenta',
         'submit': 'Pošalji registraciju',
         'success_title': 'Registracija uspješna!',
         'success_message': 'Hvala vam na registraciji. Provjerit ćemo vaše podatke i obavijestiti vas putem e-maila.',
@@ -104,12 +92,6 @@ FORM_LABELS = {
             'zentralkroatien': 'Središnja Hrvatska',
             'lika': 'Lika',
             'gorski_kotar': 'Gorski Kotar',
-        },
-        'document_types': {
-            'business_license': 'Obrtnica',
-            'id_document': 'Osobna iskaznica/Putovnica',
-            'company_register': 'Izvadak iz sudskog registra',
-            'other': 'Ostalo',
         },
     },
 }
@@ -199,13 +181,6 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.FileInput(attrs={'class': 'form-control'})
     )
     
-    # Document
-    document = forms.FileField(required=False)
-    document_type = forms.ChoiceField(
-        choices=[('', '---')] + list(ProfessionalDocument.DOCUMENT_TYPES),
-        required=False
-    )
-    
     def __init__(self, *args, lang='ge', **kwargs):
         super().__init__(*args, **kwargs)
         self.lang = lang
@@ -246,15 +221,6 @@ class ProfessionalRegistrationForm(forms.Form):
             (key, region_labels.get(key, val))
             for key, val in Professional.REGIONS
         ]
-        
-        # Document fields
-        self.fields['document'].label = labels['document']
-        self.fields['document_type'].label = labels['document_type']
-        doc_labels = labels['document_types']
-        self.fields['document_type'].choices = [('', '---')] + [
-            (key, doc_labels.get(key, val))
-            for key, val in ProfessionalDocument.DOCUMENT_TYPES
-        ]
     
     def save(self):
         """Create Professional instance from cleaned form data"""
@@ -287,15 +253,5 @@ class ProfessionalRegistrationForm(forms.Form):
         else:
             professional.description_de = d.get('description', '')
         professional.save()
-        
-        # Save document if provided
-        document = d.get('document')
-        document_type = d.get('document_type')
-        if document and document_type:
-            ProfessionalDocument.objects.create(
-                professional=professional,
-                document_type=document_type,
-                file=document
-            )
         
         return professional
