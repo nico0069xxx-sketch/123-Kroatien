@@ -1,157 +1,313 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block body %}
+
+<div style="background-position: center 0%" class="registrationBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white" style="text-shadow: 3px 3px 6px #000, 0 0 20px rgba(0,0,0,0.9);">{{ labels.title }}</h1>
+          <p class="text-white" style="text-shadow: 2px 2px 4px #000, 0 0 15px rgba(0,0,0,0.9);">{{ labels.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="bg-white py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        {% if success %}
+        <div class="alert alert-success text-center py-5">
+          <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+          <h3>{{ labels.success_title }}</h3>
+          <p class="mb-0">{{ labels.success_message }}</p>
+        </div>
+        {% else %}
+        
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <form id="professionalRegistrationForm" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                <strong>{% if lang == "hr" %}Molimo ispravite greške:{% else %}Bitte korrigieren Sie die Fehler:{% endif %}</strong>
+                <ul class="mb-0 mt-2">
+                  {% for field in form %}
+                    {% for error in field.errors %}
+                      <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+              
+              <h5 class="border-bottom pb-2 mb-4">
+                <i class="fas fa-briefcase text-primary me-2"></i>
+                {% if lang == "hr" %}Vrsta usluge{% else %}Art der Dienstleistung{% endif %}
+              </h5>
+              
+              <div class="mb-4">
+                <label for="id_professional_type" class="form-label fw-bold">
+                  {{ labels.professional_type }} <span class="text-danger">*</span>
+                </label>
+                {{ form.professional_type }}
+              </div>
+              
+              <div class="mb-4">
+                <label for="id_license_number" class="form-label fw-bold">
+                  <span id="license_label">{% if lang == "hr" %}Broj licence{% else %}Lizenz-Nummer{% endif %}</span> <span class="text-danger">*</span>
+                </label>
+                {{ form.license_number }}
+                <small class="text-muted" id="license_help">{% if lang == "hr" %}Unesite svoj službeni registracijski broj{% else %}Geben Sie Ihre offizielle Registrierungsnummer ein{% endif %}</small>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-building text-primary me-2"></i>
+                {% if lang == "hr" %}Podaci o tvrtki{% else %}Firmendaten{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_name" class="form-label fw-bold">{{ labels.name }} <span class="text-danger">*</span></label>
+                  {{ form.name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_company_name" class="form-label">{{ labels.company_name }}</label>
+                  {{ form.company_name }}
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_oib_number" class="form-label">{{ labels.oib_number }}</label>
+                  {{ form.oib_number }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_website" class="form-label">{{ labels.website }}</label>
+                  {{ form.website }}
+                </div>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                {% if lang == "hr" %}Lokacija{% else %}Standort{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_city" class="form-label fw-bold">{{ labels.city }} <span class="text-danger">*</span></label>
+                  {{ form.city }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_region" class="form-label">{{ labels.region }}</label>
+                  {{ form.region }}
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="id_address" class="form-label">{{ labels.address }}</label>
+                {{ form.address }}
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">{% if lang == "hr" %}Servisne regije{% else %}Service-Regionen{% endif %}</label>
+                <div class="row">
+                  {% for checkbox in form.service_regions %}
+                  <div class="col-md-4 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-phone text-primary me-2"></i>
+                {% if lang == "hr" %}Kontakt{% else %}Kontakt{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_email" class="form-label fw-bold">{{ labels.email }} <span class="text-danger">*</span></label>
+                  {{ form.email }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_phone" class="form-label">{{ labels.phone }}</label>
+                  {{ form.phone }}
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="id_mobile" class="form-label">{{ labels.mobile }}</label>
+                {{ form.mobile }}
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">{% if lang == "hr" %}Jezici koje govorite{% else %}Gesprochene Sprachen{% endif %}</label>
+                <div class="row">
+                  {% for checkbox in form.spoken_languages %}
+                  <div class="col-md-3 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-star text-primary me-2"></i>
+                {% if lang == "hr" %}Specijalizacije{% else %}Spezialisierungen{% endif %}
+              </h5>
+              
+              <div id="spec_real_estate_agent" class="spec-section mb-4">
+                <div class="row">{% for checkbox in form.spec_real_estate_agent %}<div class="col-md-4 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>{% endfor %}</div>
+              </div>
+              <div id="spec_construction_company" class="spec-section mb-4" style="display:none;">
+                <div class="row">{% for checkbox in form.spec_construction_company %}<div class="col-md-4 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>{% endfor %}</div>
+              </div>
+              <div id="spec_lawyer" class="spec-section mb-4" style="display:none;">
+                <div class="row">{% for checkbox in form.spec_lawyer %}<div class="col-md-4 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>{% endfor %}</div>
+              </div>
+              <div id="spec_tax_advisor" class="spec-section mb-4" style="display:none;">
+                <div class="row">{% for checkbox in form.spec_tax_advisor %}<div class="col-md-4 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>{% endfor %}</div>
+              </div>
+              <div id="spec_architect" class="spec-section mb-4" style="display:none;">
+                <div class="row">{% for checkbox in form.spec_architect %}<div class="col-md-4 col-6"><div class="form-check">{{ checkbox.tag }}<label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div></div>{% endfor %}</div>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-clock text-primary me-2"></i>
+                {% if lang == "hr" %}Radno vrijeme{% else %}Öffnungszeiten{% endif %}
+              </h5>
+              
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead><tr><th>{% if lang == "hr" %}Dan{% else %}Tag{% endif %}</th><th>{% if lang == "hr" %}Od{% else %}Von{% endif %}</th><th>{% if lang == "hr" %}Do{% else %}Bis{% endif %}</th><th>{% if lang == "hr" %}Zatvoreno{% else %}Geschlossen{% endif %}</th></tr></thead>
+                  <tbody>
+                    <tr><td>{% if lang == "hr" %}Ponedjeljak{% else %}Montag{% endif %}</td><td>{{ form.mo_from }}</td><td>{{ form.mo_to }}</td><td>{{ form.mo_closed }}</td></tr>
+                    <tr><td>{% if lang == "hr" %}Utorak{% else %}Dienstag{% endif %}</td><td>{{ form.di_from }}</td><td>{{ form.di_to }}</td><td>{{ form.di_closed }}</td></tr>
+                    <tr><td>{% if lang == "hr" %}Srijeda{% else %}Mittwoch{% endif %}</td><td>{{ form.mi_from }}</td><td>{{ form.mi_to }}</td><td>{{ form.mi_closed }}</td></tr>
+                    <tr><td>{% if lang == "hr" %}Četvrtak{% else %}Donnerstag{% endif %}</td><td>{{ form.do_from }}</td><td>{{ form.do_to }}</td><td>{{ form.do_closed }}</td></tr>
+                    <tr><td>{% if lang == "hr" %}Petak{% else %}Freitag{% endif %}</td><td>{{ form.fr_from }}</td><td>{{ form.fr_to }}</td><td>{{ form.fr_closed }}</td></tr>
+                    <tr><td>{% if lang == "hr" %}Subota{% else %}Samstag{% endif %}</td><td>{{ form.sa_from }}</td><td>{{ form.sa_to }}</td><td>{{ form.sa_closed }}</td></tr>
+                    <tr><td>{% if lang == "hr" %}Nedjelja{% else %}Sonntag{% endif %}</td><td>{{ form.so_from }}</td><td>{{ form.so_to }}</td><td>{{ form.so_closed }}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-image text-primary me-2"></i>
+                {% if lang == "hr" %}Slike{% else %}Bilder{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_profile_image" class="form-label fw-bold">{% if lang == "hr" %}Profilna slika{% else %}Profilbild{% endif %} <span class="text-danger">*</span></label>
+                  {{ form.profile_image }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_company_logo" class="form-label">{% if lang == "hr" %}Logo tvrtke{% else %}Firmenlogo{% endif %}</label>
+                  {{ form.company_logo }}
+                </div>
+              </div>
+              
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-id-card text-primary me-2"></i>
+                {% if lang == "hr" %}Dokument za verifikaciju{% else %}Ausweis zur Verifizierung{% endif %}
+              </h5>
+              
+              <div class="mb-3">
+                <label for="id_document" class="form-label fw-bold">{% if lang == "hr" %}Osobna iskaznica ili putovnica{% else %}Personalausweis oder Reisepass{% endif %} <span class="text-danger">*</span></label>
+                {{ form.document }}
+                <small class="text-muted d-block mt-1">{% if lang == "hr" %}PDF, JPG, PNG{% else %}PDF, JPG, PNG{% endif %}</small>
+              </div>
+              
+              <div class="alert alert-info">
+                <i class="fas fa-shield-alt me-2"></i>
+                {% if lang == "hr" %}Vaši podaci su sigurni i koriste se isključivo za verifikaciju.{% else %}Ihre Daten sind sicher und werden ausschließlich zur Verifizierung verwendet.{% endif %}
+              </div>
+              
+              <div class="mt-5">
+                <div class="form-check mb-4">
+                  <input type="checkbox" class="form-check-input" id="privacy" name="privacy" required>
+                  <label class="form-check-label" for="privacy">
+                    {% if lang == "hr" %}Slažem se s <a href="{% url 'main:data-protection' %}">politikom zaštite podataka</a> i <a href="{% url 'main:agb' %}">uvjetima korištenja</a>. <span class="text-danger">*</span>{% else %}Ich stimme der <a href="{% url 'main:data-protection' %}">Datenschutzerklärung</a> und den <a href="{% url 'main:agb' %}">AGB</a> zu. <span class="text-danger">*</span>{% endif %}
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100"><i class="fas fa-paper-plane me-2"></i>{{ labels.submit }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.form-control{border-radius:4px;border:1px solid #ced4da;padding:10px 15px}
+.form-control:focus{border-color:#003167;box-shadow:0 0 0 .2rem rgba(0,49,103,.25)}
+.form-control-sm{padding:5px 10px}
+.btn-primary{background-color:#003167;border-color:#003167}
+.btn-primary:hover{background-color:#002550;border-color:#002550}
+.card{border:none;border-radius:8px}
+.form-check-input{margin-right:8px}
+.table th,.table td{vertical-align:middle}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const typeSelect = document.getElementById('id_professional_type');
-    const licenseLabel = document.getElementById('license_label');
-    const licenseHelp = document.getElementById('license_help');
-    const lang = '{{ lang }}';
+    var typeSelect = document.getElementById('id_professional_type');
+    var licenseLabel = document.getElementById('license_label');
+    var licenseHelp = document.getElementById('license_help');
+    var lang = '{{ lang }}';
     
-    // License labels per type
-    const licenseLabels = {
-        'ge': {
-            'real_estate_agent': 'Maklerlizenz-Nummer (Posrednik ID)',
-            'construction_company': 'Gewerbeschein-Nummer',
-            'lawyer': 'Anwaltskammer-Nummer (HOAK)',
-            'tax_advisor': 'Steuerberater-ID',
-            'architect': 'Architektenkammer-Nummer'
-        },
-        'hr': {
-            'real_estate_agent': 'Broj posredničke licence (Posrednik ID)',
-            'construction_company': 'Broj obrtnice',
-            'lawyer': 'Broj HOAK (Hrvatska odvjetnička komora)',
-            'tax_advisor': 'ID poreznog savjetnika',
-            'architect': 'Broj Hrvatske komore arhitekata'
-        }
+    var licenseLabels = {
+        'ge': {'real_estate_agent': 'Maklerlizenz-Nummer (Posrednik ID)', 'construction_company': 'Gewerbeschein-Nummer', 'lawyer': 'Anwaltskammer-Nummer (HOAK)', 'tax_advisor': 'Steuerberater-ID', 'architect': 'Architektenkammer-Nummer'},
+        'hr': {'real_estate_agent': 'Broj posredničke licence (Posrednik ID)', 'construction_company': 'Broj obrtnice', 'lawyer': 'Broj HOAK (Hrvatska odvjetnička komora)', 'tax_advisor': 'ID poreznog savjetnika', 'architect': 'Broj Hrvatske komore arhitekata'}
     };
     
-    const licenseHelpTexts = {
-        'ge': {
-            'real_estate_agent': 'Die kroatische Maklerlizenz vom Wirtschaftsministerium',
-            'construction_company': 'Ihre Gewerbeschein-Nummer (Obrt)',
-            'lawyer': 'Ihre HOAK-Mitgliedsnummer (Hrvatska odvjetnička komora)',
-            'tax_advisor': 'Ihre Registrierungsnummer als Steuerberater',
-            'architect': 'Ihre Mitgliedsnummer der kroatischen Architektenkammer'
-        },
-        'hr': {
-            'real_estate_agent': 'Hrvatska posrednička licenca Ministarstva gospodarstva',
-            'construction_company': 'Vaš broj obrtnice',
-            'lawyer': 'Vaš HOAK članski broj (Hrvatska odvjetnička komora)',
-            'tax_advisor': 'Vaš registracijski broj poreznog savjetnika',
-            'architect': 'Vaš članski broj Hrvatske komore arhitekata'
-        }
+    var licenseHelpTexts = {
+        'ge': {'real_estate_agent': 'Die kroatische Maklerlizenz vom Wirtschaftsministerium', 'construction_company': 'Ihre Gewerbeschein-Nummer (Obrt)', 'lawyer': 'Ihre HOAK-Mitgliedsnummer', 'tax_advisor': 'Ihre Registrierungsnummer als Steuerberater', 'architect': 'Ihre Mitgliedsnummer der kroatischen Architektenkammer'},
+        'hr': {'real_estate_agent': 'Hrvatska posrednička licenca Ministarstva gospodarstva', 'construction_company': 'Vaš broj obrtnice', 'lawyer': 'Vaš HOAK članski broj', 'tax_advisor': 'Vaš registracijski broj poreznog savjetnika', 'architect': 'Vaš članski broj Hrvatske komore arhitekata'}
     };
     
-    // Specialization translations
-    const specTranslations = {
-        'hr': {
-            // Real Estate Agent
-            'Wohnimmobilien': 'Stambene nekretnine',
-            'Gewerbeimmobilien': 'Poslovne nekretnine',
-            'Luxusimmobilien': 'Luksuzne nekretnine',
-            'Grundstücke': 'Zemljišta',
-            'Ferienimmobilien': 'Nekretnine za odmor',
-            'Neubauprojekte & Bauträgerobjekte': 'Novogradnja i investitorski projekti',
-            'Investitionsimmobilien': 'Investicijske nekretnine',
-            'Auslands- & Käuferbetreuung': 'Podrška stranim kupcima',
-            'Projektvermarktung': 'Marketing projekata',
-            'Immobilienbewertung': 'Procjena nekretnina',
-            'Immobilienverwaltung': 'Upravljanje nekretninama',
-            // Construction
-            'Neubau': 'Novogradnja',
-            'Sanierung & Renovierung': 'Sanacija i renoviranje',
-            'Umbau & Erweiterung': 'Prenamjena i proširenje',
-            'Rohbau': 'Gruba gradnja',
-            'Schlüsselfertiges Bauen': 'Gradnja ključ u ruke',
-            'Poolbau': 'Izgradnja bazena',
-            'Außenanlagen & Erschließung': 'Vanjski radovi i infrastruktura',
-            'Innenausbau': 'Unutarnji radovi',
-            'Dach- & Fassadenbau': 'Krovovi i fasade',
-            'Beton- & Stahlbetonarbeiten': 'Betonski i armiranobetonski radovi',
-            'Küsten- & Hangbebauung': 'Gradnja na obali i padinama',
-            'Bau nach kroatischen Normen': 'Gradnja prema hrvatskim normama',
-            // Lawyer
-            'Immobilienrecht': 'Pravo nekretnina',
-            'Baurecht & Raumordnungsrecht': 'Građevinsko i prostorno pravo',
-            'Gesellschaftsrecht': 'Pravo društava',
-            'Steuerrecht': 'Porezno pravo',
-            'Erbrecht & Nachlassplanung': 'Nasljedno pravo',
-            'Familienrecht': 'Obiteljsko pravo',
-            'Einwanderungs- & Aufenthaltsrecht': 'Imigracijski i boravišni propisi',
-            'Vertragsrecht': 'Ugovorno pravo',
-            'Verwaltungsrecht': 'Upravno pravo',
-            'Grundbuch- & Katasterrecht': 'Zemljišnoknjižno i katastarsko pravo',
-            'Due-Diligence-Prüfungen': 'Due diligence provjere',
-            'Vertretung vor Behörden & Gerichten': 'Zastupanje pred tijelima i sudovima',
-            // Tax Advisor
-            'Einkommensteuer': 'Porez na dohodak',
-            'Unternehmensbesteuerung': 'Oporezivanje poduzeća',
-            'Immobilienbesteuerung': 'Oporezivanje nekretnina',
-            'Internationale Steuerberatung': 'Međunarodno porezno savjetovanje',
-            'Buchhaltung & Jahresabschlüsse': 'Knjigovodstvo i godišnji izvještaji',
-            'Mehrwertsteuer (PDV)': 'Porez na dodanu vrijednost (PDV)',
-            'Steueroptimierung für Investoren': 'Porezna optimizacija za investitore',
-            'Grenzüberschreitende Strukturen': 'Prekogranične strukture',
-            'Selbstständige & Freiberufler': 'Samostalni i slobodne profesije',
-            'Steuerliche Vertretung': 'Porezno zastupanje',
-            'Ferienvermietung & Tourismusbesteuerung': 'Turistički najam i oporezivanje',
-            // Architect
-            'Wohnbau': 'Stambena gradnja',
-            'Gewerbe- & Tourismusbau': 'Poslovna i turistička gradnja',
-            'Innenarchitektur': 'Dizajn interijera',
-            'Landschaftsarchitektur': 'Krajobrazna arhitektura',
-            'Sanierung & Denkmalpflege': 'Sanacija i zaštita spomenika',
-            'Energieeffizientes Bauen': 'Energetski učinkovita gradnja',
-            'Genehmigungs- & Einreichplanung': 'Projektiranje za dozvole',
-            'Ausführungsplanung': 'Izvedbeno projektiranje',
-            '3D-Planung & Visualisierung': '3D planiranje i vizualizacija',
-            'Raumordnungs- & Bebauungsberatung': 'Prostorno i urbanističko savjetovanje',
-            'Küsten- & Zonenplanung': 'Obalno i zonsko planiranje',
-            'Nachhaltiges & ökologisches Bauen': 'Održiva i ekološka gradnja'
-        }
+    var specTranslations = {
+        'Wohnimmobilien': 'Stambene nekretnine', 'Gewerbeimmobilien': 'Poslovne nekretnine', 'Luxusimmobilien': 'Luksuzne nekretnine', 'Grundstücke': 'Zemljišta', 'Ferienimmobilien': 'Nekretnine za odmor', 'Neubauprojekte & Bauträgerobjekte': 'Novogradnja i investitorski projekti', 'Investitionsimmobilien': 'Investicijske nekretnine', 'Auslands- & Käuferbetreuung': 'Podrška stranim kupcima', 'Projektvermarktung': 'Marketing projekata', 'Immobilienbewertung': 'Procjena nekretnina', 'Immobilienverwaltung': 'Upravljanje nekretninama',
+        'Neubau': 'Novogradnja', 'Sanierung & Renovierung': 'Sanacija i renoviranje', 'Umbau & Erweiterung': 'Prenamjena i proširenje', 'Rohbau': 'Gruba gradnja', 'Schlüsselfertiges Bauen': 'Gradnja ključ u ruke', 'Poolbau': 'Izgradnja bazena', 'Außenanlagen & Erschließung': 'Vanjski radovi', 'Innenausbau': 'Unutarnji radovi', 'Dach- & Fassadenbau': 'Krovovi i fasade', 'Beton- & Stahlbetonarbeiten': 'Betonski radovi', 'Küsten- & Hangbebauung': 'Gradnja na obali', 'Bau nach kroatischen Normen': 'Gradnja prema hrvatskim normama',
+        'Immobilienrecht': 'Pravo nekretnina', 'Baurecht & Raumordnungsrecht': 'Građevinsko pravo', 'Gesellschaftsrecht': 'Pravo društava', 'Steuerrecht': 'Porezno pravo', 'Erbrecht & Nachlassplanung': 'Nasljedno pravo', 'Familienrecht': 'Obiteljsko pravo', 'Einwanderungs- & Aufenthaltsrecht': 'Imigracijski propisi', 'Vertragsrecht': 'Ugovorno pravo', 'Verwaltungsrecht': 'Upravno pravo', 'Grundbuch- & Katasterrecht': 'Zemljišnoknjižno pravo', 'Due-Diligence-Prüfungen': 'Due diligence', 'Vertretung vor Behörden & Gerichten': 'Zastupanje pred sudovima',
+        'Einkommensteuer': 'Porez na dohodak', 'Unternehmensbesteuerung': 'Oporezivanje poduzeća', 'Immobilienbesteuerung': 'Oporezivanje nekretnina', 'Internationale Steuerberatung': 'Međunarodno savjetovanje', 'Buchhaltung & Jahresabschlüsse': 'Knjigovodstvo', 'Mehrwertsteuer (PDV)': 'PDV', 'Steueroptimierung für Investoren': 'Porezna optimizacija', 'Grenzüberschreitende Strukturen': 'Prekogranične strukture', 'Selbstständige & Freiberufler': 'Slobodne profesije', 'Steuerliche Vertretung': 'Porezno zastupanje', 'Ferienvermietung & Tourismusbesteuerung': 'Turistički najam',
+        'Wohnbau': 'Stambena gradnja', 'Gewerbe- & Tourismusbau': 'Poslovna gradnja', 'Innenarchitektur': 'Dizajn interijera', 'Landschaftsarchitektur': 'Krajobrazna arhitektura', 'Sanierung & Denkmalpflege': 'Sanacija spomenika', 'Energieeffizientes Bauen': 'Energetski učinkovita gradnja', 'Genehmigungs- & Einreichplanung': 'Projektiranje za dozvole', 'Ausführungsplanung': 'Izvedbeno projektiranje', '3D-Planung & Visualisierung': '3D vizualizacija', 'Raumordnungs- & Bebauungsberatung': 'Urbanističko savjetovanje', 'Küsten- & Zonenplanung': 'Obalno planiranje', 'Nachhaltiges & ökologisches Bauen': 'Održiva gradnja'
     };
     
-    function updateSpecializations() {
-        const selectedType = typeSelect.value;
-        const currentLang = lang || 'ge';
+    function updateForm() {
+        if (!typeSelect) return;
+        var selectedType = typeSelect.value;
+        var currentLang = lang || 'ge';
         
-        // Hide all spec sections
-        document.querySelectorAll('.spec-section').forEach(function(el) {
-            el.style.display = 'none';
-        });
+        document.querySelectorAll('.spec-section').forEach(function(el) { el.style.display = 'none'; });
+        var specDiv = document.getElementById('spec_' + selectedType);
+        if (specDiv) specDiv.style.display = 'block';
         
-        // Show the relevant one
-        const specDiv = document.getElementById('spec_' + selectedType);
-        if (specDiv) {
-            specDiv.style.display = 'block';
-        }
-        
-        // Update license label
-        const labels = licenseLabels[currentLang] || licenseLabels['ge'];
-        const helps = licenseHelpTexts[currentLang] || licenseHelpTexts['ge'];
-        
-        if (labels[selectedType]) {
-            licenseLabel.textContent = labels[selectedType];
-        }
-        if (helps[selectedType]) {
-            licenseHelp.textContent = helps[selectedType];
-        }
+        var labels = licenseLabels[currentLang] || licenseLabels['ge'];
+        var helps = licenseHelpTexts[currentLang] || licenseHelpTexts['ge'];
+        if (labels[selectedType] && licenseLabel) licenseLabel.textContent = labels[selectedType];
+        if (helps[selectedType] && licenseHelp) licenseHelp.textContent = helps[selectedType];
     }
     
-    // Translate specializations if Croatian
-    function translateSpecializations() {
-        if (lang === 'hr' && specTranslations['hr']) {
+    function translateSpecs() {
+        if (lang === 'hr') {
             document.querySelectorAll('.spec-section .form-check-label').forEach(function(label) {
-                const germanText = label.textContent.trim();
-                if (specTranslations['hr'][germanText]) {
-                    label.textContent = specTranslations['hr'][germanText];
-                }
+                var txt = label.textContent.trim();
+                if (specTranslations[txt]) label.textContent = specTranslations[txt];
             });
         }
     }
     
-    typeSelect.addEventListener('change', updateSpecializations);
-    
-    // Initial calls
-    updateSpecializations();
-    translateSpecializations();
+    if (typeSelect) typeSelect.addEventListener('change', updateForm);
+    updateForm();
+    translateSpecs();
 });
 </script>
+
+{% endblock body %}
