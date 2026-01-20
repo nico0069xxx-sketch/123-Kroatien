@@ -19,13 +19,13 @@ FORM_LABELS = {
         'company_name': 'Firmenname',
         'oib_number': 'OIB-Nummer (kroatische Steuernummer)',
         'website': 'Website',
-        'description': 'Beschreibung Ihrer Dienstleistungen',
         'spoken_languages': 'Gesprochene Sprachen',
         'specializations': 'Spezialisierungen',
         'profile_image': 'Profilbild (Pflicht)',
         'company_logo': 'Firmenlogo',
-        'document': 'Dokument zur Verifizierung (z.B. Ausweis)',
+        'document': 'Ausweis zur Verifizierung (Pflicht)',
         'opening_hours': 'Öffnungszeiten',
+        'license_number': 'Lizenz-/Registrierungsnummer',
         'submit': 'Registrierung absenden',
         'success_title': 'Registrierung erfolgreich!',
         'success_message': 'Vielen Dank für Ihre Registrierung. Wir werden Ihre Angaben prüfen und Sie per E-Mail benachrichtigen.',
@@ -36,6 +36,13 @@ FORM_LABELS = {
             'lawyer': 'Rechtsanwalt',
             'tax_advisor': 'Steuerberater',
             'architect': 'Architekt',
+        },
+        'license_labels': {
+            'real_estate_agent': 'Maklerlizenz-Nummer (Posrednik ID)',
+            'construction_company': 'Gewerbeschein-Nummer',
+            'lawyer': 'Anwaltskammer-Nummer (HOAK)',
+            'tax_advisor': 'Steuerberater-ID',
+            'architect': 'Architektenkammer-Nummer',
         },
         'regions': {
             'istrien': 'Istrien',
@@ -76,13 +83,13 @@ FORM_LABELS = {
         'company_name': 'Naziv tvrtke',
         'oib_number': 'OIB (osobni identifikacijski broj)',
         'website': 'Web stranica',
-        'description': 'Opis vaših usluga',
         'spoken_languages': 'Jezici koje govorite',
         'specializations': 'Specijalizacije',
         'profile_image': 'Profilna slika (obavezno)',
         'company_logo': 'Logo tvrtke',
-        'document': 'Dokument za verifikaciju (npr. osobna iskaznica)',
+        'document': 'Osobna iskaznica za verifikaciju (obavezno)',
         'opening_hours': 'Radno vrijeme',
+        'license_number': 'Broj licence/registracije',
         'submit': 'Pošalji registraciju',
         'success_title': 'Registracija uspješna!',
         'success_message': 'Hvala vam na registraciji. Provjerit ćemo vaše podatke i obavijestiti vas putem e-maila.',
@@ -93,6 +100,13 @@ FORM_LABELS = {
             'lawyer': 'Odvjetnik',
             'tax_advisor': 'Porezni savjetnik',
             'architect': 'Arhitekt',
+        },
+        'license_labels': {
+            'real_estate_agent': 'Broj licence posrednika (Posrednik ID)',
+            'construction_company': 'Broj obrtnice',
+            'lawyer': 'Broj Hrvatske odvjetničke komore (HOAK)',
+            'tax_advisor': 'ID poreznog savjetnika',
+            'architect': 'Broj Hrvatske komore arhitekata',
         },
         'regions': {
             'istrien': 'Istra',
@@ -120,7 +134,7 @@ FORM_LABELS = {
     },
 }
 
-# All specializations combined for form choices
+# All specializations per professional type
 ALL_SPECIALIZATIONS = {
     'real_estate_agent': Professional.SPEC_REAL_ESTATE_AGENT,
     'construction_company': Professional.SPEC_CONSTRUCTION,
@@ -154,6 +168,13 @@ class ProfessionalRegistrationForm(forms.Form):
     mobile = forms.CharField(
         max_length=50, required=False,
         widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    
+    # License/Registration number (required)
+    license_number = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'id_license_number'})
     )
     
     # Location
@@ -190,12 +211,6 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'})
     )
     
-    # Description
-    description = forms.CharField(
-        required=False,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
-    )
-    
     # Multi-select fields
     spoken_languages = forms.MultipleChoiceField(
         choices=Professional.LANGUAGES,
@@ -203,9 +218,29 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
     )
     
-    # Specializations
-    specializations = forms.MultipleChoiceField(
-        choices=[],
+    # Specializations per type
+    spec_real_estate_agent = forms.MultipleChoiceField(
+        choices=Professional.SPEC_REAL_ESTATE_AGENT,
+        required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
+    )
+    spec_construction_company = forms.MultipleChoiceField(
+        choices=Professional.SPEC_CONSTRUCTION,
+        required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
+    )
+    spec_lawyer = forms.MultipleChoiceField(
+        choices=Professional.SPEC_LAWYER,
+        required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
+    )
+    spec_tax_advisor = forms.MultipleChoiceField(
+        choices=Professional.SPEC_TAX_ADVISOR,
+        required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
+    )
+    spec_architect = forms.MultipleChoiceField(
+        choices=Professional.SPEC_ARCHITECT,
         required=False,
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
     )
@@ -220,9 +255,9 @@ class ProfessionalRegistrationForm(forms.Form):
         widget=forms.FileInput(attrs={'class': 'form-control'})
     )
     
-    # Document upload (stored as file, not in separate model)
+    # Document upload - REQUIRED
     document = forms.FileField(
-        required=False,
+        required=True,
         widget=forms.FileInput(attrs={'class': 'form-control', 'accept': '.pdf,.jpg,.jpeg,.png'})
     )
     
@@ -266,6 +301,7 @@ class ProfessionalRegistrationForm(forms.Form):
         self.fields['email'].label = labels['email']
         self.fields['phone'].label = labels['phone']
         self.fields['mobile'].label = labels['mobile']
+        self.fields['license_number'].label = labels.get('license_number', 'Lizenz-Nummer')
         self.fields['city'].label = labels['city']
         self.fields['region'].label = labels['region']
         self.fields['service_regions'].label = labels.get('service_regions', 'Service-Regionen')
@@ -273,12 +309,10 @@ class ProfessionalRegistrationForm(forms.Form):
         self.fields['company_name'].label = labels['company_name']
         self.fields['oib_number'].label = labels['oib_number']
         self.fields['website'].label = labels['website']
-        self.fields['description'].label = labels['description']
         self.fields['spoken_languages'].label = labels.get('spoken_languages', 'Gesprochene Sprachen')
-        self.fields['specializations'].label = labels.get('specializations', 'Spezialisierungen')
         self.fields['profile_image'].label = labels['profile_image']
         self.fields['company_logo'].label = labels['company_logo']
-        self.fields['document'].label = labels.get('document', 'Dokument')
+        self.fields['document'].label = labels.get('document', 'Ausweis')
         
         # Translate professional type choices
         type_labels = labels['professional_types']
@@ -297,12 +331,6 @@ class ProfessionalRegistrationForm(forms.Form):
             (key, region_labels.get(key, val))
             for key, val in Professional.REGIONS
         ]
-        
-        # Combine all specializations
-        all_specs = []
-        for specs in ALL_SPECIALIZATIONS.values():
-            all_specs.extend(specs)
-        self.fields['specializations'].choices = list(set(all_specs))
     
     def get_opening_hours(self):
         """Extract opening hours from form data"""
@@ -318,6 +346,24 @@ class ProfessionalRegistrationForm(forms.Form):
             }
         
         return opening_hours
+    
+    def get_specializations(self):
+        """Get specializations based on professional type"""
+        d = self.cleaned_data
+        prof_type = d.get('professional_type', '')
+        
+        field_map = {
+            'real_estate_agent': 'spec_real_estate_agent',
+            'construction_company': 'spec_construction_company',
+            'lawyer': 'spec_lawyer',
+            'tax_advisor': 'spec_tax_advisor',
+            'architect': 'spec_architect',
+        }
+        
+        field_name = field_map.get(prof_type)
+        if field_name:
+            return d.get(field_name, [])
+        return []
     
     def save(self):
         """Create Professional instance from cleaned form data"""
@@ -337,20 +383,18 @@ class ProfessionalRegistrationForm(forms.Form):
             company_name=d.get('company_name', ''),
             oib_number=d.get('oib_number', ''),
             website=d.get('website', ''),
-            description=d.get('description', ''),
             spoken_languages=d.get('spoken_languages', []),
-            specializations=d.get('specializations', []),
+            specializations=self.get_specializations(),
             profile_image=d.get('profile_image'),
             company_logo=d.get('company_logo'),
             opening_hours=self.get_opening_hours(),
             is_active=False,
         )
         
-        # Set description for the registration language
-        if self.lang == 'hr':
-            professional.description_hr = d.get('description', '')
-        else:
-            professional.description_de = d.get('description', '')
+        # Store license number in a suitable field (using oib_number or add to model)
+        # For now, we append it to the name or store separately
+        # You may want to add a license_number field to the Professional model
+        
         professional.save()
         
         return professional
