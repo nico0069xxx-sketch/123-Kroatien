@@ -81,7 +81,6 @@ def home(request):
     ).exclude(company_logo='').order_by('?')[:12]  # Zufaellig, max 12
     
    # Get verified partners with logos for carousel
-    from main.professional_models import Professional
     partners_with_logo = Professional.objects.filter(
         is_active=True,
         company_logo__isnull=False
