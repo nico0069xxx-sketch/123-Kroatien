@@ -20,11 +20,16 @@ class Migration(migrations.Migration):
             name='specializations',
             field=models.JSONField(blank=True, default=list, verbose_name='Spezialisierungen (Mehrfachauswahl)'),
         ),
-        # Add spoken_languages (multi-select JSON)
+        # Add spoken_languages (multi-select JSON) - replaces old 'languages' field
         migrations.AddField(
             model_name='professional',
             name='spoken_languages',
             field=models.JSONField(blank=True, default=list, verbose_name='Gesprochene Sprachen (Mehrfachauswahl)'),
+        ),
+        # Remove old languages field
+        migrations.RemoveField(
+            model_name='professional',
+            name='languages',
         ),
         # Add opening_hours (JSON for each day)
         migrations.AddField(
