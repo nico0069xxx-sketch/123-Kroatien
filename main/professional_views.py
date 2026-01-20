@@ -444,7 +444,7 @@ def professional_list(request, country, category):
     professionals_with_translations = []
     for prof in professionals:
         prof.translated_region = translate_region(prof.region, lang)
-        prof.translated_languages = translate_languages(prof.languages, lang)
+        prof.translated_languages = translate_languages(prof.spoken_languages, lang)
         professionals_with_translations.append(prof)
     
     return render(request, "main/professional_list.html", {
