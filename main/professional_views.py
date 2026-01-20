@@ -536,7 +536,7 @@ def professional_detail(request, country, category, slug):
 from main.professional_forms import ProfessionalRegistrationForm, FORM_LABELS
 
 def professional_registration(request, country):
-    lang = get_lang_from_request(request, country)
+    lang = "hr"  # Registrierung immer auf Kroatisch
     
     # Nur DE und HR erlaubt
     if lang not in ["ge", "hr"]:
