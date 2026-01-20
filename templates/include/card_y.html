@@ -3,7 +3,6 @@
     <div class="card__image card__box-v1">
         <a href="{% url 'main:property_details' listing.id %}">
             <div class="card__image-header h-250">
-                {% comment %} <div class="bg-mycolor ribbon text-capitalize">{% trans 'featured' %}</div> {% endcomment %}
                 <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.png' %}{% endif %}" alt=""
                     class="img-fluid w100 img-transition">
                 <div class="info" style="background-color: #db0000;"> {{listing.json_content.property_status}}
@@ -24,7 +23,6 @@
             </p>
             <ul class="list-inline card__content">
                 <li class="list-inline-item">
-
                     <span style="color: #db0000;">
                         {{baths}} <br>
                         <i class="fa fa-bath" style="color: #db0000;"></i> {{listing.json_content.bathrooms}}
@@ -53,27 +51,29 @@
         </div>
         <div class="card__image-footer">
             <figure>
+                {% if listing.realtor %}
                 <img onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'" src="{% if listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
                     class="img-fluid rounded-circle">
+                {% else %}
+                <img src="{% static 'images/p2.png' %}" alt="" class="img-fluid rounded-circle">
+                {% endif %}
             </figure>
             <ul class="list-inline my-auto">
                 <li class="list-inline-item ">
+                    {% if listing.realtor %}
                     <a href="{% url "main:agent" listing.realtor.id %}">
                         {{listing.realtor.first_name}}
                         {{listing.realtor.last_name}}
                     </a>
-
+                    {% else %}
+                    <span>-</span>
+                    {% endif %}
                 </li>
-
             </ul>
             <ul class="list-inline my-auto ml-auto">
                 <li class="list-inline-item">
-
-                    <h6>$
-                        {{listing.json_content.property_price}}
-                    </h6>
+                    <h6>€ {{listing.json_content.property_price}}</h6>
                 </li>
-
             </ul>
         </div>
     </div>

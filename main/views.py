@@ -359,7 +359,7 @@ def single_details(request, id):
     context = {
         'listing': listing,
     }
-    return render(request, 'main/single-detail.html', context)
+    return render(request, 'main/single-detail-modern.html', context)
 
 
 @login_required(login_url='main:login_required')
