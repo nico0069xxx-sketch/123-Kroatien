@@ -1936,3 +1936,7 @@ def partner_landing(request, lang='ge'):
         lang = "ge"
     context = {'lang': lang}
     return render(request, 'main/partner_landing.html', context)
+def registration_success(request, lang='ge'):
+
+    
+    return render(request, 'main/registration/success.html', {'lang': lang})
