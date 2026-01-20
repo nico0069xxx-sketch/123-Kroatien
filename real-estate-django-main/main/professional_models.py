@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 import uuid
+import json
 
 
 class Professional(models.Model):
@@ -25,13 +26,132 @@ class Professional(models.Model):
     # Types that can post properties (Makler-Portal access)
     CAN_POST_PROPERTIES = ['real_estate_agent', 'construction_company']
     
+    # Updated regions (12 Croatian regions)
     REGIONS = (
         ('istrien', 'Istrien'),
-        ('kvarner', 'Kvarner'),
-        ('dalmatien', 'Dalmatien'),
-        ('zagreb', 'Zagreb'),
-        ('slavonien', 'Slavonien'),
-        ('andere', 'Andere'),
+        ('kvarner', 'Kvarner Bucht'),
+        ('norddalmatien', 'Norddalmatien'),
+        ('mitteldalmatien', 'Mitteldalmatien'),
+        ('sueddalmatien', 'Süddalmatien'),
+        ('zagreb', 'Stadt Zagreb'),
+        ('zagreber_umland', 'Zagreber Umland'),
+        ('nordkroatien', 'Nordkroatien (Varaždin & Međimurje)'),
+        ('slawonien', 'Slawonien'),
+        ('zentralkroatien', 'Zentralkroatien (Karlovac & Sisak)'),
+        ('lika', 'Lika'),
+        ('gorski_kotar', 'Gorski Kotar'),
+    )
+    
+    # Languages (12 supported languages)
+    LANGUAGES = (
+        ('de', 'Deutsch'),
+        ('en', 'English'),
+        ('hr', 'Hrvatski'),
+        ('fr', 'Français'),
+        ('nl', 'Nederlands'),
+        ('pl', 'Polski'),
+        ('cz', 'Čeština'),
+        ('sk', 'Slovenčina'),
+        ('ru', 'Русский'),
+        ('gr', 'Ελληνικά'),
+        ('sw', 'Svenska'),
+        ('no', 'Norsk'),
+    )
+    
+    # Specializations per professional type
+    SPEC_REAL_ESTATE_AGENT = (
+        ('wohnimmobilien', 'Wohnimmobilien'),
+        ('gewerbeimmobilien', 'Gewerbeimmobilien'),
+        ('luxusimmobilien', 'Luxusimmobilien'),
+        ('grundstuecke', 'Grundstücke'),
+        ('ferienimmobilien', 'Ferienimmobilien'),
+        ('neubauprojekte', 'Neubauprojekte & Bauträgerobjekte'),
+        ('investitionsimmobilien', 'Investitionsimmobilien'),
+        ('kaeuferbetreuung', 'Auslands- & Käuferbetreuung'),
+        ('projektvermarktung', 'Projektvermarktung'),
+        ('immobilienbewertung', 'Immobilienbewertung'),
+        ('immobilienverwaltung', 'Immobilienverwaltung'),
+    )
+    
+    SPEC_CONSTRUCTION = (
+        ('neubau', 'Neubau'),
+        ('sanierung', 'Sanierung & Renovierung'),
+        ('umbau', 'Umbau & Erweiterung'),
+        ('rohbau', 'Rohbau'),
+        ('schluesselfertig', 'Schlüsselfertiges Bauen'),
+        ('poolbau', 'Poolbau'),
+        ('aussenanlagen', 'Außenanlagen & Erschließung'),
+        ('innenausbau', 'Innenausbau'),
+        ('dach_fassade', 'Dach- & Fassadenbau'),
+        ('betonarbeiten', 'Beton- & Stahlbetonarbeiten'),
+        ('hangbebauung', 'Küsten- & Hangbebauung'),
+        ('kroatische_normen', 'Bau nach kroatischen Normen'),
+    )
+    
+    SPEC_LAWYER = (
+        ('immobilienrecht', 'Immobilienrecht'),
+        ('baurecht', 'Baurecht & Raumordnungsrecht'),
+        ('gesellschaftsrecht', 'Gesellschaftsrecht'),
+        ('steuerrecht', 'Steuerrecht'),
+        ('erbrecht', 'Erbrecht & Nachlassplanung'),
+        ('familienrecht', 'Familienrecht'),
+        ('einwanderungsrecht', 'Einwanderungs- & Aufenthaltsrecht'),
+        ('vertragsrecht', 'Vertragsrecht'),
+        ('verwaltungsrecht', 'Verwaltungsrecht'),
+        ('grundbuchrecht', 'Grundbuch- & Katasterrecht'),
+        ('due_diligence', 'Due-Diligence-Prüfungen'),
+        ('behoerdenvertretung', 'Vertretung vor Behörden & Gerichten'),
+    )
+    
+    SPEC_TAX_ADVISOR = (
+        ('einkommensteuer', 'Einkommensteuer'),
+        ('unternehmensbesteuerung', 'Unternehmensbesteuerung'),
+        ('immobilienbesteuerung', 'Immobilienbesteuerung'),
+        ('internationale_steuern', 'Internationale Steuerberatung'),
+        ('buchhaltung', 'Buchhaltung & Jahresabschlüsse'),
+        ('mehrwertsteuer', 'Mehrwertsteuer (PDV)'),
+        ('steueroptimierung', 'Steueroptimierung für Investoren'),
+        ('grenzueberschreitend', 'Grenzüberschreitende Strukturen'),
+        ('selbststaendige', 'Selbstständige & Freiberufler'),
+        ('steuervertretung', 'Steuerliche Vertretung'),
+        ('ferienvermietung', 'Ferienvermietung & Tourismusbesteuerung'),
+    )
+    
+    SPEC_ARCHITECT = (
+        ('wohnbau', 'Wohnbau'),
+        ('gewerbebau', 'Gewerbe- & Tourismusbau'),
+        ('innenarchitektur', 'Innenarchitektur'),
+        ('landschaftsarchitektur', 'Landschaftsarchitektur'),
+        ('sanierung_denkmal', 'Sanierung & Denkmalpflege'),
+        ('energieeffizient', 'Energieeffizientes Bauen'),
+        ('genehmigungsplanung', 'Genehmigungs- & Einreichplanung'),
+        ('ausfuehrungsplanung', 'Ausführungsplanung'),
+        ('3d_visualisierung', '3D-Planung & Visualisierung'),
+        ('raumordnung', 'Raumordnungs- & Bebauungsberatung'),
+        ('kuestenplanung', 'Küsten- & Zonenplanung'),
+        ('nachhaltiges_bauen', 'Nachhaltiges & ökologisches Bauen'),
+    )
+    
+    # Time choices for opening hours (30 min intervals)
+    TIME_CHOICES = (
+        ('', '-- Uhrzeit --'),
+        ('06:00', '06:00'), ('06:30', '06:30'),
+        ('07:00', '07:00'), ('07:30', '07:30'),
+        ('08:00', '08:00'), ('08:30', '08:30'),
+        ('09:00', '09:00'), ('09:30', '09:30'),
+        ('10:00', '10:00'), ('10:30', '10:30'),
+        ('11:00', '11:00'), ('11:30', '11:30'),
+        ('12:00', '12:00'), ('12:30', '12:30'),
+        ('13:00', '13:00'), ('13:30', '13:30'),
+        ('14:00', '14:00'), ('14:30', '14:30'),
+        ('15:00', '15:00'), ('15:30', '15:30'),
+        ('16:00', '16:00'), ('16:30', '16:30'),
+        ('17:00', '17:00'), ('17:30', '17:30'),
+        ('18:00', '18:00'), ('18:30', '18:30'),
+        ('19:00', '19:00'), ('19:30', '19:30'),
+        ('20:00', '20:00'), ('20:30', '20:30'),
+        ('21:00', '21:00'), ('21:30', '21:30'),
+        ('22:00', '22:00'),
     )
     
     # Primary key
