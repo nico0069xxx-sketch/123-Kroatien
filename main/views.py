@@ -1929,11 +1929,10 @@ def makler_dashboard(request):
 
 # Partner Landing Page
 def partner_landing(request, lang='ge'):
-    lang = request.GET.get('lang', lang)
-    if lang not in ["ge", "hr", "en"]:
-        lang = "ge"
+    lang = "hr"  # Immer Kroatisch
     context = {'lang': lang}
     return render(request, 'main/partner_landing.html', context)
+    
 def registration_success(request, lang='ge'):
 
     
