@@ -71,6 +71,7 @@ urlpatterns = [
     
     # Professional Registration URLs (Bilingual: German & Croatian)
     path('ge/kroatien/professional-registrierung/', views.professional_registration, {'lang': 'ge'}, name='professional-registration-ge'),
+    path('ge/kroatien/registrierung-erfolgreich/', views.registration_success, {'lang': 'ge'}, name='registration-success'),
     path('hr/hrvatska/registracija-profesionalaca/', views.professional_registration, {'lang': 'hr'}, name='professional-registration-hr'),
     
     # MARKT - Wichtige Adressen & Marktberichte (MUSS vor Professional URLs stehen!)
