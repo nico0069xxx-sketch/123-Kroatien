@@ -406,11 +406,11 @@ TRANSLATIONS = {
 
 
 def get_lang_from_request(request, country):
-    # Session-Sprache hat Vorrang (damit Sprachwechsel funktioniert)
+    # Session-Sprache hat Vorrang (vom Sprachmenü oben)
     session_lang = request.session.get("site_language")
     if session_lang:
         return session_lang
-    # Fallback: URL-Land
+    # Dann URL-Land
     lang = COUNTRY_TO_LANG.get(country)
     if lang:
         return lang
