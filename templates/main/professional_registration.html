@@ -1,282 +1,431 @@
-{% extends "include/base.html" %}
+{% extends 'include/base.html' %}
 {% load static %}
-
 {% block body %}
-<style>
-.reg-container { max-width: 800px; margin: 40px auto; padding: 20px; }
-.reg-header { background: linear-gradient(135deg, #003167 0%, #004a99 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
-.reg-form { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-.form-section { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-.form-section:last-child { border-bottom: none; }
-.section-title { font-size: 1.1rem; font-weight: 600; color: #003167; margin-bottom: 15px; }
-.form-label { font-weight: 500; margin-bottom: 5px; display: block; }
-.form-control, .form-select { width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; margin-bottom: 10px; }
-.form-control:focus, .form-select:focus { outline: none; border-color: #003167; }
-.required-star { color: #dc3545; }
-.help-text { font-size: 0.85rem; color: #666; margin-top: -5px; margin-bottom: 10px; }
-.row { display: flex; flex-wrap: wrap; margin: 0 -10px; }
-.col-6 { flex: 0 0 50%; padding: 0 10px; }
-.col-4 { flex: 0 0 33.33%; padding: 0 10px; }
-.col-3 { flex: 0 0 25%; padding: 0 10px; }
-.checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
-.checkbox-item { display: flex; align-items: center; gap: 6px; padding: 8px; background: #f8f9fa; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-.checkbox-item:hover { background: #e9ecef; }
-.checkbox-item input { margin: 0; }
-.checkbox-item.checked { background: #d4edda; }
-.btn-submit { background: #003167; color: white; padding: 14px 40px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; width: 100%; }
-.btn-submit:hover { background: #004a99; }
-.alert-success { background: #d4edda; color: #155724; padding: 20px; border-radius: 8px; text-align: center; }
-.gruppe-a-section { background: #f0f7ff; border: 2px solid #003167; border-radius: 8px; padding: 20px; margin-top: 15px; }
-@media (max-width: 768px) { .checkbox-grid { grid-template-columns: repeat(2, 1fr); } .col-6, .col-4, .col-3 { flex: 0 0 100%; } }
-</style>
 
-<div class="reg-container">
-    <div class="reg-header">
-        <h2>{% if lang == "hr" %}Registracija profesionalaca{% elif lang == "en" %}Professional Registration{% else %}Professional-Registrierung{% endif %}</h2>
-        <p style="opacity: 0.9; margin: 0;">{% if lang == "hr" %}Pridružite se našoj mreži{% elif lang == "en" %}Join our network{% else %}Werden Sie Teil unseres Netzwerks{% endif %}</p>
+<div style="background-position: center 0%" class="registrationBg bg-theme-overlay">
+  <section class="section__breadcrumb">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="text-white">{{ labels.title }}</h1>
+          <p class="text-white-50">{{ labels.subtitle }}</p>
+        </div>
+      </div>
     </div>
-    
-    {% if success %}
-    <div class="alert-success">
-        <h4>{% if lang == "hr" %}Hvala!{% elif lang == "en" %}Thank you!{% else %}Vielen Dank!{% endif %}</h4>
-        <p>{% if lang == "hr" %}Vaša registracija je zaprimljena. Kontaktirat ćemo vas uskoro.{% elif lang == "en" %}Your registration has been received. We will contact you soon.{% else %}Ihre Registrierung wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.{% endif %}</p>
-    </div>
-    {% else %}
-    
-    <form method="post" enctype="multipart/form-data" class="reg-form" id="regForm">
-        {% csrf_token %}
-        
-        <!-- Berufsgruppe -->
-        <div class="form-section">
-            <label class="form-label">{% if lang == "hr" %}Vrsta profesionalca{% elif lang == "en" %}Professional Type{% else %}Berufsgruppe{% endif %} <span class="required-star">*</span></label>
-            <select name="professional_type" id="professionalType" class="form-select" required>
-                <option value="">-- {% if lang == "hr" %}Odaberite{% elif lang == "en" %}Select{% else %}Bitte wählen{% endif %} --</option>
-                <option value="real_estate_agent">{% if lang == "hr" %}Agencija za nekretnine{% elif lang == "en" %}Real Estate Agent{% else %}Immobilienmakler{% endif %}</option>
-                <option value="construction_company">{% if lang == "hr" %}Građevinska tvrtka{% elif lang == "en" %}Construction Company{% else %}Bauunternehmen{% endif %}</option>
-                <option value="lawyer">{% if lang == "hr" %}Odvjetnik{% elif lang == "en" %}Lawyer{% else %}Rechtsanwalt{% endif %}</option>
-                <option value="tax_advisor">{% if lang == "hr" %}Porezni savjetnik{% elif lang == "en" %}Tax Advisor{% else %}Steuerberater{% endif %}</option>
-                <option value="architect">{% if lang == "hr" %}Arhitekt{% elif lang == "en" %}Architect{% else %}Architekt{% endif %}</option>
-            </select>
-        </div>
-        
-        <!-- Basisdaten -->
-        <div class="form-section">
-            <h3 class="section-title">{% if lang == "hr" %}Osnovni podaci{% elif lang == "en" %}Basic Information{% else %}Grunddaten{% endif %}</h3>
-            <div class="row">
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}Ime / Naziv tvrtke{% elif lang == "en" %}Name / Company{% else %}Name / Firmenname{% endif %} <span class="required-star">*</span></label>
-                    <input type="text" name="name" class="form-control" required>
-                </div>
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}E-mail{% elif lang == "en" %}Email{% else %}E-Mail{% endif %} <span class="required-star">*</span></label>
-                    <input type="email" name="email" class="form-control" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}Telefon{% elif lang == "en" %}Phone{% else %}Telefon{% endif %} <span class="required-star">*</span></label>
-                    <input type="tel" name="phone" class="form-control" placeholder="+385 XX XXX XXXX" required>
-                </div>
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}Adresa{% elif lang == "en" %}Address{% else %}Adresse{% endif %} <span class="required-star">*</span></label>
-                    <input type="text" name="address" class="form-control" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}Grad{% elif lang == "en" %}City{% else %}Stadt{% endif %} <span class="required-star">*</span></label>
-                    <input type="text" name="city" class="form-control" required>
-                </div>
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}Regija{% elif lang == "en" %}Region{% else %}Region{% endif %} <span class="required-star">*</span></label>
-                    <select name="region" class="form-select" required>
-                        <option value="">-- {% if lang == "hr" %}Odaberite{% elif lang == "en" %}Select{% else %}Bitte wählen{% endif %} --</option>
-                        <option value="istrien">Istrien / Istra</option>
-                        <option value="kvarner">Kvarner</option>
-                        <option value="norddalmatien">{% if lang == "hr" %}Sjeverna Dalmacija{% else %}Norddalmatien{% endif %}</option>
-                        <option value="mitteldalmatien">{% if lang == "hr" %}Srednja Dalmacija{% else %}Mitteldalmatien{% endif %}</option>
-                        <option value="sueddalmatien">{% if lang == "hr" %}Južna Dalmacija{% else %}Süddalmatien{% endif %}</option>
-                        <option value="zagreb">Zagreb</option>
-                        <option value="zagreber_umland">{% if lang == "hr" %}Zagrebačka okolica{% else %}Zagreber Umland{% endif %}</option>
-                        <option value="nordkroatien">{% if lang == "hr" %}Sjeverna Hrvatska{% else %}Nordkroatien{% endif %}</option>
-                        <option value="slawonien">{% if lang == "hr" %}Slavonija{% else %}Slawonien{% endif %}</option>
-                        <option value="zentralkroatien">{% if lang == "hr" %}Središnja Hrvatska{% else %}Zentralkroatien{% endif %}</option>
-                        <option value="lika">Lika</option>
-                        <option value="gorski_kotar">Gorski Kotar</option>
-                    </select>
-                </div>
-            </div>
-            <label class="form-label">{% if lang == "hr" %}Web stranica{% elif lang == "en" %}Website{% else %}Website{% endif %}</label>
-            <input type="url" name="website" class="form-control" placeholder="https://">
-        </div>
-        
-        <!-- Serviceregionen -->
-        <div class="form-section">
-            <h3 class="section-title">{% if lang == "hr" %}Područja usluga{% elif lang == "en" %}Service Regions{% else %}Serviceregionen{% endif %} <span class="required-star">*</span></h3>
-            <p class="help-text">{% if lang == "hr" %}Odaberite barem jedno područje{% elif lang == "en" %}Select at least one region{% else %}Mindestens 1 Region auswählen{% endif %}</p>
-            <div class="checkbox-grid" id="regionGrid">
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="istrien"> Istrien</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="kvarner"> Kvarner</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="norddalmatien"> {% if lang == "hr" %}Sjev. Dalmacija{% else %}Norddalmatien{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="mitteldalmatien"> {% if lang == "hr" %}Sred. Dalmacija{% else %}Mitteldalmatien{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="sueddalmatien"> {% if lang == "hr" %}Južna Dalmacija{% else %}Süddalmatien{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="zagreb"> Zagreb</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="zagreber_umland"> {% if lang == "hr" %}Zag. okolica{% else %}Zag. Umland{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="nordkroatien"> {% if lang == "hr" %}Sjev. Hrvatska{% else %}Nordkroatien{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="slawonien"> {% if lang == "hr" %}Slavonija{% else %}Slawonien{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="zentralkroatien"> {% if lang == "hr" %}Sred. Hrvatska{% else %}Zentralkroatien{% endif %}</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="lika"> Lika</label>
-                <label class="checkbox-item"><input type="checkbox" name="service_regions" value="gorski_kotar"> Gorski Kotar</label>
-            </div>
-        </div>
-        
-        <!-- Sprachen -->
-        <div class="form-section">
-            <h3 class="section-title">{% if lang == "hr" %}Jezici{% elif lang == "en" %}Languages{% else %}Sprachen{% endif %} <span class="required-star">*</span></h3>
-            <p class="help-text">{% if lang == "hr" %}Odaberite barem jedan jezik{% elif lang == "en" %}Select at least one language{% else %}Mindestens 1 Sprache auswählen{% endif %}</p>
-            <div class="checkbox-grid" id="langGrid">
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="de"> Deutsch</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="en"> English</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="hr"> Hrvatski</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="fr"> Français</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="nl"> Nederlands</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="pl"> Polski</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="cz"> Čeština</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="sk"> Slovenčina</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="ru"> Русский</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="gr"> Ελληνικά</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="sw"> Svenska</label>
-                <label class="checkbox-item"><input type="checkbox" name="spoken_languages" value="no"> Norsk</label>
-            </div>
-        </div>
-        
-        <!-- Identifikation -->
-        <div class="form-section">
-            <h3 class="section-title">{% if lang == "hr" %}Identifikacija{% elif lang == "en" %}Identification{% else %}Identifikation{% endif %} ({% if lang == "hr" %}interno{% elif lang == "en" %}internal{% else %}intern{% endif %})</h3>
-            <div class="row">
-                <div class="col-6">
-                    <label class="form-label">OIB <span class="required-star">*</span></label>
-                    <input type="text" name="oib_number" id="oibInput" class="form-control" maxlength="11" pattern="[0-9]{11}" required>
-                    <p class="help-text" id="oibHelp">11-{% if lang == "hr" %}znamenkasti OIB{% elif lang == "en" %}digit OIB number{% else %}stellige OIB-Nummer{% endif %}</p>
-                </div>
-                <div class="col-6">
-                    <label class="form-label" id="licenseLabel">{% if lang == "hr" %}Licenca{% elif lang == "en" %}License{% else %}Lizenznummer{% endif %} <span class="required-star">*</span></label>
-                    <input type="text" name="license_number" class="form-control" required>
-                    <p class="help-text" id="licenseHelp">{% if lang == "hr" %}Vaš registracijski broj{% elif lang == "en" %}Your registration number{% else %}Ihre Registrierungsnummer{% endif %}</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- GRUPPE A: XML-Import (nur für Makler/Bauunternehmen) -->
-        <div class="form-section gruppe-a-section" id="gruppeASection" style="display: none;">
-            <h3 class="section-title">{% if lang == "hr" %}Import nekretnina{% elif lang == "en" %}Property Import{% else %}Objekt-Import & XML-Schnittstelle{% endif %}</h3>
-            
-            <label class="form-label">{% if lang == "hr" %}Aktivirati XML?{% elif lang == "en" %}Enable XML?{% else %}XML-Schnittstelle aktivieren?{% endif %}</label>
-            <select name="xml_enabled" id="xmlEnabled" class="form-select">
-                <option value="no">{% if lang == "hr" %}Ne - ručni unos{% elif lang == "en" %}No - Manual entry{% else %}Nein - Manuelle Objekteingabe{% endif %}</option>
-                <option value="yes">{% if lang == "hr" %}Da - XML/OpenImmo{% elif lang == "en" %}Yes - XML/OpenImmo{% else %}Ja - XML/OpenImmo Import{% endif %}</option>
-            </select>
-            
-            <div id="xmlOptions" style="display: none; margin-top: 15px;">
-                <label class="form-label">{% if lang == "hr" %}Vrsta sučelja{% elif lang == "en" %}Interface Type{% else %}Schnittstellen-Typ{% endif %}</label>
-                <select name="xml_type" class="form-select">
-                    <option value="openimmo">OpenImmo (Standard)</option>
-                    <option value="wordpress">WordPress XML</option>
-                    <option value="custom">{% if lang == "hr" %}Vlastiti format{% elif lang == "en" %}Custom format{% else %}Eigenes Format{% endif %}</option>
-                </select>
-                
-                <label class="form-label">{% if lang == "hr" %}Očekivani broj nekretnina{% elif lang == "en" %}Expected properties{% else %}Erwartete Anzahl Objekte{% endif %}</label>
-                <select name="expected_objects" class="form-select">
-                    <option value="1-10">1-10</option>
-                    <option value="11-50">11-50</option>
-                    <option value="51-100">51-100</option>
-                    <option value="101-500">101-500</option>
-                    <option value="501-1000">501-1000</option>
-                </select>
-                
-                <label class="form-label">XML-Feed URL ({% if lang == "hr" %}opcionalno{% elif lang == "en" %}optional{% else %}optional{% endif %})</label>
-                <input type="url" name="xml_feed_url" class="form-control" placeholder="https://ihre-seite.de/feed.xml">
-            </div>
-        </div>
-        
-        <!-- Bilder -->
-        <div class="form-section">
-            <h3 class="section-title">{% if lang == "hr" %}Slike{% elif lang == "en" %}Images{% else %}Bilder{% endif %} ({% if lang == "hr" %}opcionalno{% elif lang == "en" %}optional{% else %}optional{% endif %})</h3>
-            <div class="row">
-                <div class="col-6">
-                    <label class="form-label">Logo</label>
-                    <input type="file" name="logo" class="form-control" accept="image/*">
-                </div>
-                <div class="col-6">
-                    <label class="form-label">{% if lang == "hr" %}Profilna slika{% elif lang == "en" %}Profile photo{% else %}Profilbild{% endif %}</label>
-                    <input type="file" name="portrait" class="form-control" accept="image/*">
-                </div>
-            </div>
-        </div>
-        
-        <p style="font-size: 12px; color: #666; margin: 15px 0;">
-            {% if lang == "hr" %}Registracijom prihvaćate naše uvjete zaštite podataka i opće uvjete.{% elif lang == "en" %}By registering you accept our privacy policy and terms.{% else %}Mit der Registrierung akzeptieren Sie unsere Datenschutzbestimmungen und AGB.{% endif %}
-        </p>
-        
-        <button type="submit" class="btn-submit">{% if lang == "hr" %}Registriraj{% elif lang == "en" %}Register{% else %}Registrieren{% endif %}</button>
-    </form>
-    {% endif %}
+  </section>
 </div>
 
-<script>
-// Checkbox styling
-document.querySelectorAll('.checkbox-item input').forEach(cb => {
-    cb.addEventListener('change', function() {
-        this.closest('.checkbox-item').classList.toggle('checked', this.checked);
-    });
-});
+<section class="bg-white py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        {% if success %}
+        <!-- Success Message -->
+        <div class="alert alert-success text-center py-5">
+          <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+          <h3>{{ labels.success_title }}</h3>
+          <p class="mb-0">{{ labels.success_message }}</p>
+        </div>
+        {% else %}
+        
+        <!-- Registration Form -->
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <form id="professionalRegistrationForm" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              <!-- Form Errors -->
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                <strong>{% if lang == "hr" %}Molimo ispravite greške:{% else %}Bitte korrigieren Sie die Fehler:{% endif %}</strong>
+                <ul class="mb-0 mt-2">
+                  {% for field in form %}
+                    {% for error in field.errors %}
+                      <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                  {% endfor %}
+                  {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+              
+              <!-- Section 1: Professional Type -->
+              <h5 class="border-bottom pb-2 mb-4">
+                <i class="fas fa-briefcase text-primary me-2"></i>
+                {% if lang == "hr" %}Vrsta usluge{% else %}Art der Dienstleistung{% endif %}
+              </h5>
+              
+              <div class="mb-4">
+                <label for="id_professional_type" class="form-label fw-bold">
+                  {{ labels.professional_type }} <span class="text-danger">*</span>
+                </label>
+                {{ form.professional_type }}
+              </div>
+              
+              <!-- Section 2: Company Info -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-building text-primary me-2"></i>
+                {% if lang == "hr" %}Podaci o tvrtki{% else %}Firmendaten{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_name" class="form-label fw-bold">
+                    {{ labels.name }} <span class="text-danger">*</span>
+                  </label>
+                  {{ form.name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_company_name" class="form-label">{{ labels.company_name }}</label>
+                  {{ form.company_name }}
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_oib_number" class="form-label">{{ labels.oib_number }}</label>
+                  {{ form.oib_number }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_website" class="form-label">{{ labels.website }}</label>
+                  {{ form.website }}
+                </div>
+              </div>
+              
+              <!-- Section 3: Location -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                {% if lang == "hr" %}Lokacija{% else %}Standort{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_city" class="form-label fw-bold">
+                    {{ labels.city }} <span class="text-danger">*</span>
+                  </label>
+                  {{ form.city }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_region" class="form-label">{{ labels.region }}</label>
+                  {{ form.region }}
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="id_address" class="form-label">{{ labels.address }}</label>
+                {{ form.address }}
+              </div>
+              
+              <!-- Service Regions -->
+              <div class="mb-4">
+                <label class="form-label fw-bold">
+                  {% if lang == "hr" %}Servisne regije{% else %}Service-Regionen (wo sind Sie tätig?){% endif %}
+                </label>
+                <div class="row">
+                  {% for checkbox in form.service_regions %}
+                  <div class="col-md-4 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- Section 4: Contact -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-phone text-primary me-2"></i>
+                {% if lang == "hr" %}Kontakt{% else %}Kontakt{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_email" class="form-label fw-bold">
+                    {{ labels.email }} <span class="text-danger">*</span>
+                  </label>
+                  {{ form.email }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_phone" class="form-label">{{ labels.phone }}</label>
+                  {{ form.phone }}
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="id_mobile" class="form-label">{{ labels.mobile }}</label>
+                {{ form.mobile }}
+              </div>
+              
+              <!-- Spoken Languages -->
+              <div class="mb-4">
+                <label class="form-label fw-bold">
+                  {% if lang == "hr" %}Jezici koje govorite{% else %}Gesprochene Sprachen{% endif %}
+                </label>
+                <div class="row">
+                  {% for checkbox in form.spoken_languages %}
+                  <div class="col-md-3 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- Section 5: Specializations -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-star text-primary me-2"></i>
+                {% if lang == "hr" %}Specijalizacije{% else %}Spezialisierungen{% endif %}
+              </h5>
+              
+              <div class="mb-4">
+                <div class="row">
+                  {% for checkbox in form.specializations %}
+                  <div class="col-md-4 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- Section 6: Description -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-align-left text-primary me-2"></i>
+                {% if lang == "hr" %}Opis{% else %}Beschreibung{% endif %}
+              </h5>
+              
+              <div class="mb-3">
+                <label for="id_description" class="form-label">{{ labels.description }}</label>
+                {{ form.description }}
+                <small class="text-muted">
+                  {% if lang == "hr" %}
+                    Opišite svoje usluge, iskustvo i specijalnosti.
+                  {% else %}
+                    Beschreiben Sie Ihre Dienstleistungen, Erfahrung und Spezialisierungen.
+                  {% endif %}
+                </small>
+              </div>
+              
+              <!-- Section 7: Opening Hours -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-clock text-primary me-2"></i>
+                {% if lang == "hr" %}Radno vrijeme{% else %}Öffnungszeiten{% endif %}
+              </h5>
+              
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>{% if lang == "hr" %}Dan{% else %}Tag{% endif %}</th>
+                      <th>{% if lang == "hr" %}Od{% else %}Von{% endif %}</th>
+                      <th>{% if lang == "hr" %}Do{% else %}Bis{% endif %}</th>
+                      <th>{% if lang == "hr" %}Zatvoreno{% else %}Geschlossen{% endif %}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{% if lang == "hr" %}Ponedjeljak{% else %}Montag{% endif %}</td>
+                      <td>{{ form.mo_from }}</td>
+                      <td>{{ form.mo_to }}</td>
+                      <td>{{ form.mo_closed }}</td>
+                    </tr>
+                    <tr>
+                      <td>{% if lang == "hr" %}Utorak{% else %}Dienstag{% endif %}</td>
+                      <td>{{ form.di_from }}</td>
+                      <td>{{ form.di_to }}</td>
+                      <td>{{ form.di_closed }}</td>
+                    </tr>
+                    <tr>
+                      <td>{% if lang == "hr" %}Srijeda{% else %}Mittwoch{% endif %}</td>
+                      <td>{{ form.mi_from }}</td>
+                      <td>{{ form.mi_to }}</td>
+                      <td>{{ form.mi_closed }}</td>
+                    </tr>
+                    <tr>
+                      <td>{% if lang == "hr" %}Četvrtak{% else %}Donnerstag{% endif %}</td>
+                      <td>{{ form.do_from }}</td>
+                      <td>{{ form.do_to }}</td>
+                      <td>{{ form.do_closed }}</td>
+                    </tr>
+                    <tr>
+                      <td>{% if lang == "hr" %}Petak{% else %}Freitag{% endif %}</td>
+                      <td>{{ form.fr_from }}</td>
+                      <td>{{ form.fr_to }}</td>
+                      <td>{{ form.fr_closed }}</td>
+                    </tr>
+                    <tr>
+                      <td>{% if lang == "hr" %}Subota{% else %}Samstag{% endif %}</td>
+                      <td>{{ form.sa_from }}</td>
+                      <td>{{ form.sa_to }}</td>
+                      <td>{{ form.sa_closed }}</td>
+                    </tr>
+                    <tr>
+                      <td>{% if lang == "hr" %}Nedjelja{% else %}Sonntag{% endif %}</td>
+                      <td>{{ form.so_from }}</td>
+                      <td>{{ form.so_to }}</td>
+                      <td>{{ form.so_closed }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Section 8: Images -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-image text-primary me-2"></i>
+                {% if lang == "hr" %}Slike{% else %}Bilder{% endif %}
+              </h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="id_profile_image" class="form-label fw-bold">
+                    {{ form.profile_image.label }} <span class="text-danger">*</span>
+                  </label>
+                  {{ form.profile_image }}
+                  <small class="text-muted">
+                    {% if lang == "hr" %}Vaša fotografija (obavezno){% else %}Ihr Profilbild (Pflicht){% endif %}
+                  </small>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_company_logo" class="form-label">{{ form.company_logo.label }}</label>
+                  {{ form.company_logo }}
+                  <small class="text-muted">
+                    {% if lang == "hr" %}Logo tvrtke (PNG, JPG){% else %}Firmenlogo (PNG, JPG){% endif %}
+                  </small>
+                </div>
+              </div>
+              
+              <!-- Section 9: Document Upload -->
+              <h5 class="border-bottom pb-2 mb-4 mt-5">
+                <i class="fas fa-id-card text-primary me-2"></i>
+                {% if lang == "hr" %}Dokument za verifikaciju{% else %}Ausweis zur Verifizierung{% endif %}
+              </h5>
+              
+              <div class="mb-3">
+                <label for="id_document" class="form-label">
+                  {% if lang == "hr" %}Osobna iskaznica ili putovnica{% else %}Personalausweis oder Reisepass{% endif %}
+                </label>
+                {{ form.document }}
+                <small class="text-muted d-block mt-1">
+                  {% if lang == "hr" %}
+                    Molimo priložite kopiju vašeg osobnog dokumenta (PDF, JPG, PNG). Ovo nam pomaže verificirati vaš identitet.
+                  {% else %}
+                    Bitte laden Sie eine Kopie Ihres Ausweises hoch (PDF, JPG, PNG). Dies hilft uns, Ihre Identität zu verifizieren.
+                  {% endif %}
+                </small>
+              </div>
+              
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                {% if lang == "hr" %}
+                  Vaši podaci su sigurni i koriste se isključivo za verifikaciju. Nakon provjere, dokument će biti izbrisan.
+                {% else %}
+                  Ihre Daten sind sicher und werden ausschließlich zur Verifizierung verwendet. Nach der Prüfung wird das Dokument gelöscht.
+                {% endif %}
+              </div>
+              
+              <!-- Privacy & Submit -->
+              <div class="mt-5">
+                <div class="form-check mb-4">
+                  <input type="checkbox" class="form-check-input" id="privacy" name="privacy" required>
+                  <label class="form-check-label" for="privacy">
+                    {% if lang == "hr" %}
+                      Slažem se s <a href="{% url 'main:data-protection' %}">politikom zaštite podataka</a> i <a href="{% url 'main:agb' %}">uvjetima korištenja</a>. <span class="text-danger">*</span>
+                    {% else %}
+                      Ich stimme der <a href="{% url 'main:data-protection' %}">Datenschutzerklärung</a> und den <a href="{% url 'main:agb' %}">AGB</a> zu. <span class="text-danger">*</span>
+                    {% endif %}
+                  </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                  <i class="fas fa-paper-plane me-2"></i>
+                  {{ labels.submit }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        {% endif %}
+        
+        <!-- Info Text -->
+        <div class="mt-5 text-center">
+          <p class="text-muted">
+            {% if lang == "hr" %}
+              Nakon uspješne registracije, kontaktirat ćemo vas kako bismo razgovarali o daljnjim koracima i maksimizirali vašu prisutnost na 123-Kroatien.eu.
+            {% else %}
+              Nach erfolgreicher Registrierung setzen wir uns mit Ihnen in Verbindung, um die weiteren Schritte zu besprechen und Ihre Präsenz auf 123-Kroatien.eu zu maximieren.
+            {% endif %}
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
 
-// OIB validation
-document.getElementById('oibInput').addEventListener('input', function() {
-    this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11);
-    if (this.value.length === 11) {
-        this.style.borderColor = '#28a745';
-    } else {
-        this.style.borderColor = '#e0e0e0';
-    }
-});
+<section class="bg-gradient py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <h2 class="text-uppercase text-light">
+          {% if lang == "hr" %}
+            JAMČIMO VAM NAJVIŠU POVJERLJIVOST I TRANSPARENTNOST.
+          {% else %}
+            WIR GARANTIEREN IHNEN HÖCHSTE VERTRAULICHKEIT UND TRANSPARENZ.
+          {% endif %}
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
 
-// Professional type change - show/hide Gruppe A fields & update license label
-var licenseConfig = {
-    'real_estate_agent': { label: 'Makler-Lizenznummer', help: 'Licenca za posredovanje', gruppeA: true },
-    'construction_company': { label: 'Handelsregister', help: 'Sudski registar', gruppeA: true },
-    'lawyer': { label: 'Anwaltsnummer (HOK)', help: 'Hrvatska odvjetnička komora', gruppeA: false },
-    'tax_advisor': { label: 'Steuerberater-Lizenz (HKPS)', help: 'Hrvatska komora poreznih savjetnika', gruppeA: false },
-    'architect': { label: 'Architekten-Lizenz (HKA)', help: 'Hrvatska komora arhitekata', gruppeA: false }
-};
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <img src="{% static 'images/logo-black2.png' %}" alt="logo" style="width: 255px; padding: 20px 0" />
+    </div>
+  </div>
+</div>
 
-document.getElementById('professionalType').addEventListener('change', function() {
-    var config = licenseConfig[this.value] || { label: 'Lizenznummer', help: '', gruppeA: false };
-    document.getElementById('licenseLabel').innerHTML = config.label + ' <span class="required-star">*</span>';
-    document.getElementById('licenseHelp').textContent = config.help;
-    document.getElementById('gruppeASection').style.display = config.gruppeA ? 'block' : 'none';
-});
+<style>
+.form-control {
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  padding: 10px 15px;
+}
+.form-control:focus {
+  border-color: #003167;
+  box-shadow: 0 0 0 0.2rem rgba(0, 49, 103, 0.25);
+}
+.form-control-sm {
+  padding: 5px 10px;
+}
+.btn-primary {
+  background-color: #003167;
+  border-color: #003167;
+}
+.btn-primary:hover {
+  background-color: #002550;
+  border-color: #002550;
+}
+.card {
+  border: none;
+  border-radius: 8px;
+}
+.form-check-input {
+  margin-right: 8px;
+}
+.table th, .table td {
+  vertical-align: middle;
+}
+</style>
 
-// XML options toggle
-document.getElementById('xmlEnabled').addEventListener('change', function() {
-    document.getElementById('xmlOptions').style.display = this.value === 'yes' ? 'block' : 'none';
-});
-
-// Form validation
-document.getElementById('regForm').addEventListener('submit', function(e) {
-    var regions = document.querySelectorAll('input[name="service_regions"]:checked');
-    var languages = document.querySelectorAll('input[name="spoken_languages"]:checked');
-    
-    if (regions.length === 0) {
-        e.preventDefault();
-        alert('{% if lang == "hr" %}Odaberite barem jedno područje{% elif lang == "en" %}Select at least one region{% else %}Bitte mindestens eine Region auswählen{% endif %}');
-        return;
-    }
-    if (languages.length === 0) {
-        e.preventDefault();
-        alert('{% if lang == "hr" %}Odaberite barem jedan jezik{% elif lang == "en" %}Select at least one language{% else %}Bitte mindestens eine Sprache auswählen{% endif %}');
-        return;
-    }
-});
-</script>
 {% endblock body %}
