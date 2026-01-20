@@ -1,7 +1,7 @@
 {% extends 'main/registration/base_registration.html' %}
 
 {% block registration_content %}
-<h2 class="mb-4" style="color: #003167;">{{ trans.step1_title }}</h2>
+<h2 class="mb-4" style="color: #003167;">{{ trans.step1_title|default:"Registrierung - Schritt 1" }}</h2>
 
 <form method="post" enctype="multipart/form-data" id="step1Form">
     {% csrf_token %}
@@ -21,104 +21,67 @@
     
     <!-- Berufsgruppe -->
     <div class="mb-4">
-        <label class="form-label">{{ trans.professional_type }} <span class="required-star">*</span></label>
-        <select name="professional_type" id="professionalType" class="form-select {% if form.professional_type.errors %}is-invalid{% endif %}" required>
-            {% for value, label in form.professional_type.field.choices %}
-            <option value="{{ value }}" {% if form.professional_type.value == value %}selected{% endif %}>{{ label }}</option>
-            {% endfor %}
+        <label class="form-label">Berufsgruppe <span class="required-star">*</span></label>
+        <select name="professional_type" id="professionalType" class="form-select" required>
+            <option value="">-- Bitte wählen --</option>
+            <option value="real_estate_agent">Immobilienmakler</option>
+            <option value="construction_company">Bauunternehmen</option>
+            <option value="lawyer">Rechtsanwalt</option>
+            <option value="tax_advisor">Steuerberater</option>
+            <option value="architect">Architekt</option>
         </select>
-        {% if form.professional_type.errors %}
-        <div class="error-text">{{ form.professional_type.errors.0 }}</div>
-        {% endif %}
     </div>
     
     <div class="row">
-        <!-- Name -->
         <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.name }} <span class="required-star">*</span></label>
-            <input type="text" name="name" class="form-control {% if form.name.errors %}is-invalid{% endif %}" 
-                   value="{{ form.name.value|default:'' }}" required>
-            {% if form.name.errors %}
-            <div class="error-text">{{ form.name.errors.0 }}</div>
-            {% endif %}
+            <label class="form-label">Name / Firmenname <span class="required-star">*</span></label>
+            <input type="text" name="name" class="form-control" required>
         </div>
-        
-        <!-- Firmenname -->
         <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.company_name }}</label>
-            <input type="text" name="company_name" class="form-control" 
-                   value="{{ form.company_name.value|default:'' }}">
+            <label class="form-label">E-Mail <span class="required-star">*</span></label>
+            <input type="email" name="email" class="form-control" required>
         </div>
     </div>
     
     <div class="row">
-        <!-- E-Mail -->
         <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.email }} <span class="required-star">*</span></label>
-            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
-                   value="{{ form.email.value|default:'' }}" required>
-            {% if form.email.errors %}
-            <div class="error-text">{{ form.email.errors.0 }}</div>
-            {% endif %}
+            <label class="form-label">Telefon <span class="required-star">*</span></label>
+            <input type="tel" name="phone" class="form-control" placeholder="+385 XX XXX XXXX" required>
         </div>
-        
-        <!-- Telefon -->
-        <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.phone }} <span class="required-star">*</span></label>
-            <input type="tel" name="phone" class="form-control {% if form.phone.errors %}is-invalid{% endif %}" 
-                   value="{{ form.phone.value|default:'' }}" placeholder="+385 XX XXX XXXX" required>
-            {% if form.phone.errors %}
-            <div class="error-text">{{ form.phone.errors.0 }}</div>
-            {% endif %}
-            <div class="help-text">Format: +385 XX XXX XXXX</div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <!-- Stadt -->
-        <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.city }} <span class="required-star">*</span></label>
-            <input type="text" name="city" class="form-control {% if form.city.errors %}is-invalid{% endif %}" 
-                   value="{{ form.city.value|default:'' }}" required>
-            {% if form.city.errors %}
-            <div class="error-text">{{ form.city.errors.0 }}</div>
-            {% endif %}
-        </div>
-        
-        <!-- Adresse -->
         <div class="col-md-6 mb-3">
             <label class="form-label">Adresse <span class="required-star">*</span></label>
-            <input type="text" name="address" class="form-control" 
-                   value="{{ form.address.value|default:'' }}" placeholder="Straße und Hausnummer" required>
+            <input type="text" name="address" class="form-control" placeholder="Straße und Hausnummer" required>
         </div>
     </div>
     
-    <!-- Region (Hauptsitz) -->
-    <div class="mb-3">
-        <label class="form-label">{{ trans.region }} (Hauptsitz) <span class="required-star">*</span></label>
-        <select name="region" class="form-select {% if form.region.errors %}is-invalid{% endif %}" required>
-            <option value="">-- Bitte wählen --</option>
-            <option value="istrien">Istrien</option>
-            <option value="kvarner">Kvarner Bucht</option>
-            <option value="norddalmatien">Norddalmatien</option>
-            <option value="mitteldalmatien">Mitteldalmatien</option>
-            <option value="sueddalmatien">Süddalmatien</option>
-            <option value="zagreb">Stadt Zagreb</option>
-            <option value="zagreber_umland">Zagreber Umland</option>
-            <option value="nordkroatien">Nordkroatien (Varaždin & Međimurje)</option>
-            <option value="slawonien">Slawonien</option>
-            <option value="zentralkroatien">Zentralkroatien (Karlovac & Sisak)</option>
-            <option value="lika">Lika</option>
-            <option value="gorski_kotar">Gorski Kotar</option>
-        </select>
-        {% if form.region.errors %}
-        <div class="error-text">{{ form.region.errors.0 }}</div>
-        {% endif %}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Stadt <span class="required-star">*</span></label>
+            <input type="text" name="city" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Region (Hauptsitz) <span class="required-star">*</span></label>
+            <select name="region" class="form-select" required>
+                <option value="">-- Bitte wählen --</option>
+                <option value="istrien">Istrien</option>
+                <option value="kvarner">Kvarner Bucht</option>
+                <option value="norddalmatien">Norddalmatien</option>
+                <option value="mitteldalmatien">Mitteldalmatien</option>
+                <option value="sueddalmatien">Süddalmatien</option>
+                <option value="zagreb">Stadt Zagreb</option>
+                <option value="zagreber_umland">Zagreber Umland</option>
+                <option value="nordkroatien">Nordkroatien (Varaždin & Međimurje)</option>
+                <option value="slawonien">Slawonien</option>
+                <option value="zentralkroatien">Zentralkroatien (Karlovac & Sisak)</option>
+                <option value="lika">Lika</option>
+                <option value="gorski_kotar">Gorski Kotar</option>
+            </select>
+        </div>
     </div>
     
-    <!-- Tätigkeitsregionen (Mehrfachauswahl) -->
+    <!-- Tätigkeitsregionen -->
     <div class="mb-4">
-        <label class="form-label">{{ trans.service_regions }} <span class="required-star">*</span></label>
+        <label class="form-label">Serviceregionen <span class="required-star">*</span></label>
         <p class="help-text mb-2">In welchen Regionen bieten Sie Ihre Dienstleistungen an? (mind. 1)</p>
         <div class="row">
             <div class="col-md-4 col-6"><div class="form-check"><input type="checkbox" name="service_regions" value="istrien" class="form-check-input" id="sr_istrien"><label class="form-check-label" for="sr_istrien">Istrien</label></div></div>
@@ -136,9 +99,9 @@
         </div>
     </div>
     
-    <!-- Sprachen (Checkboxen statt Freitext) -->
+    <!-- Sprachen -->
     <div class="mb-4">
-        <label class="form-label">{{ trans.languages_spoken }} <span class="required-star">*</span></label>
+        <label class="form-label">Gesprochene Sprachen <span class="required-star">*</span></label>
         <p class="help-text mb-2">Welche Sprachen sprechen Sie? (mind. 1)</p>
         <div class="row">
             <div class="col-md-3 col-4"><div class="form-check"><input type="checkbox" name="spoken_languages" value="de" class="form-check-input" id="lang_de"><label class="form-check-label" for="lang_de">Deutsch</label></div></div>
@@ -158,30 +121,20 @@
     
     <!-- Website -->
     <div class="mb-4">
-        <label class="form-label">{{ trans.website }}</label>
-        <input type="url" name="website" class="form-control" 
-               value="{{ form.website.value|default:'' }}" placeholder="https://www.beispiel.com">
+        <label class="form-label">Website</label>
+        <input type="url" name="website" class="form-control" placeholder="https://www.beispiel.com">
     </div>
     
     <hr class="my-4">
     <h5 class="mb-3" style="color: #003167;">Identifikation & Registrierung (intern)</h5>
-    <p class="text-muted mb-3">Diese Daten werden nur intern zur Verifizierung verwendet und nicht öffentlich angezeigt.</p>
+    <p class="text-muted mb-3">Diese Daten werden nur intern zur Verifizierung verwendet.</p>
     
     <div class="row">
-        <!-- OIB -->
         <div class="col-md-6 mb-3">
             <label class="form-label">OIB-Nummer <span class="required-star">*</span></label>
-            <input type="text" name="oib_number" id="oibInput" 
-                   class="form-control {% if form.oib_number.errors %}is-invalid{% endif %}" 
-                   value="{{ form.oib_number.value|default:'' }}" 
-                   maxlength="11" pattern="[0-9]{11}" required>
+            <input type="text" name="oib_number" id="oibInput" class="form-control" maxlength="11" pattern="[0-9]{11}" required>
             <div id="oibFeedback" class="help-text">11-stellige kroatische OIB-Nummer</div>
-            {% if form.oib_number.errors %}
-            <div class="error-text">{{ form.oib_number.errors.0 }}</div>
-            {% endif %}
         </div>
-        
-        <!-- Berufs-spezifische Lizenznummer -->
         <div class="col-md-6 mb-3">
             <label class="form-label" id="licenseLabel">Lizenznummer <span class="required-star">*</span></label>
             <input type="text" name="license_number" id="licenseInput" class="form-control" required>
@@ -189,92 +142,114 @@
         </div>
     </div>
     
+    <!-- ========== GRUPPE A FELDER (nur für Makler/Bauträger) ========== -->
+    <div id="gruppeAFields" style="display: none;">
+        <hr class="my-4">
+        <h5 class="mb-3" style="color: #003167;">Objekt-Import & XML-Schnittstelle</h5>
+        <p class="text-muted mb-3">Konfigurieren Sie Ihre Objekt-Übertragung</p>
+        
+        <div class="mb-3">
+            <label class="form-label">XML-Schnittstelle aktivieren?</label>
+            <select name="xml_enabled" class="form-select">
+                <option value="no">Nein - Manuelle Objekteingabe</option>
+                <option value="yes">Ja - XML/OpenImmo Import</option>
+            </select>
+        </div>
+        
+        <div id="xmlOptions" style="display: none;">
+            <div class="mb-3">
+                <label class="form-label">Schnittstellen-Typ</label>
+                <select name="xml_type" class="form-select">
+                    <option value="openimmo">OpenImmo (Standard)</option>
+                    <option value="wordpress">WordPress XML</option>
+                    <option value="custom">Eigenes Format</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Erwartete Anzahl Objekte</label>
+                <select name="expected_objects" class="form-select">
+                    <option value="1-10">1-10 Objekte</option>
+                    <option value="11-50">11-50 Objekte</option>
+                    <option value="51-100">51-100 Objekte</option>
+                    <option value="101-500">101-500 Objekte</option>
+                    <option value="501-1000">501-1000 Objekte</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">XML-Feed URL (optional)</label>
+                <input type="url" name="xml_feed_url" class="form-control" placeholder="https://ihre-seite.de/immobilien.xml">
+                <div class="help-text">Falls Sie bereits einen XML-Feed haben</div>
+            </div>
+        </div>
+    </div>
+    <!-- ========== ENDE GRUPPE A FELDER ========== -->
+    
     <hr class="my-4">
     <h5 class="mb-3" style="color: #003167;">Bilder (optional)</h5>
     
     <div class="row">
-        <!-- Logo -->
         <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.logo }}</label>
+            <label class="form-label">Firmenlogo</label>
             <input type="file" name="logo" class="form-control" accept="image/*">
-            <div class="help-text">Firmenlogo (JPG, PNG)</div>
+            <div class="help-text">JPG, PNG (max. 2MB)</div>
         </div>
-        
-        <!-- Portrait -->
         <div class="col-md-6 mb-3">
-            <label class="form-label">{{ trans.portrait }}</label>
+            <label class="form-label">Profilbild</label>
             <input type="file" name="portrait" class="form-control" accept="image/*">
-            <div class="help-text">Profilbild (JPG, PNG)</div>
+            <div class="help-text">JPG, PNG (max. 2MB)</div>
         </div>
     </div>
     
-    <!-- Buttons -->
     <div class="d-flex justify-content-end mt-4">
-        <button type="submit" class="btn btn-primary">
-            {{ trans.next }} →
-        </button>
+        <button type="submit" class="btn btn-primary">Weiter →</button>
     </div>
 </form>
 
 <script>
-// OIB Live-Validierung
+// OIB Validierung
 document.getElementById('oibInput').addEventListener('input', function() {
     var oib = this.value.replace(/[^0-9]/g, '');
     this.value = oib;
     var feedback = document.getElementById('oibFeedback');
-    
-    if (oib.length === 0) {
-        feedback.innerHTML = '11-stellige kroatische OIB-Nummer';
-        feedback.style.color = '#6c757d';
-        this.classList.remove('is-valid', 'is-invalid');
-    } else if (oib.length < 11) {
-        feedback.innerHTML = 'Noch ' + (11 - oib.length) + ' Ziffern eingeben';
-        feedback.style.color = '#6c757d';
-    } else if (oib.length === 11) {
+    if (oib.length === 11) {
         this.classList.add('is-valid');
         feedback.innerHTML = '✓ OIB Format korrekt';
         feedback.style.color = '#28a745';
     } else {
-        this.value = oib.substring(0, 11);
+        this.classList.remove('is-valid');
+        feedback.innerHTML = '11-stellige kroatische OIB-Nummer';
+        feedback.style.color = '#6c757d';
     }
 });
 
-// Dynamische Lizenznummer basierend auf Berufsgruppe
+// Dynamische Lizenznummer + Gruppe A Felder
 var licenseConfig = {
-    'real_estate_agent': {
-        label: 'Makler-Lizenznummer',
-        help: 'Licenca za posredovanje u prometu nekretnina'
-    },
-    'construction_company': {
-        label: 'Handelsregisternummer',
-        help: 'Sudski registar / Registar izvođača radova'
-    },
-    'lawyer': {
-        label: 'Anwaltsnummer (HOK)',
-        help: 'Mitgliedsnummer bei der Kroatischen Rechtsanwaltskammer'
-    },
-    'tax_advisor': {
-        label: 'Steuerberater-Lizenznummer (HKPS)',
-        help: 'Licenca ovlaštenog poreznog savjetnika'
-    },
-    'architect': {
-        label: 'Architekten-Lizenznummer (HKA)',
-        help: 'Upisni broj ovlaštenog arhitekta'
-    }
+    'real_estate_agent': { label: 'Makler-Lizenznummer', help: 'Licenca za posredovanje u prometu nekretnina', gruppeA: true },
+    'construction_company': { label: 'Handelsregisternummer', help: 'Sudski registar / Registar izvođača radova', gruppeA: true },
+    'lawyer': { label: 'Anwaltsnummer (HOK)', help: 'Mitgliedsnummer Kroatische Rechtsanwaltskammer', gruppeA: false },
+    'tax_advisor': { label: 'Steuerberater-Lizenznummer (HKPS)', help: 'Licenca ovlaštenog poreznog savjetnika', gruppeA: false },
+    'architect': { label: 'Architekten-Lizenznummer (HKA)', help: 'Upisni broj ovlaštenog arhitekta', gruppeA: false }
 };
 
 document.getElementById('professionalType').addEventListener('change', function() {
     var type = this.value;
-    var config = licenseConfig[type] || {label: 'Lizenznummer', help: 'Ihre Registrierungsnummer'};
+    var config = licenseConfig[type] || { label: 'Lizenznummer', help: 'Ihre Registrierungsnummer', gruppeA: false };
     
     document.getElementById('licenseLabel').innerHTML = config.label + ' <span class="required-star">*</span>';
     document.getElementById('licenseHelp').textContent = config.help;
+    
+    // Gruppe A Felder ein-/ausblenden
+    document.getElementById('gruppeAFields').style.display = config.gruppeA ? 'block' : 'none';
 });
 
-// Initial trigger
-document.getElementById('professionalType').dispatchEvent(new Event('change'));
+// XML Optionen ein-/ausblenden
+document.querySelector('select[name="xml_enabled"]').addEventListener('change', function() {
+    document.getElementById('xmlOptions').style.display = this.value === 'yes' ? 'block' : 'none';
+});
 
-// Validierung: mind. 1 Region und 1 Sprache
+// Validierung
 document.getElementById('step1Form').addEventListener('submit', function(e) {
     var regions = document.querySelectorAll('input[name="service_regions"]:checked');
     var languages = document.querySelectorAll('input[name="spoken_languages"]:checked');
@@ -284,12 +259,14 @@ document.getElementById('step1Form').addEventListener('submit', function(e) {
         alert('Bitte wählen Sie mindestens eine Serviceregion aus.');
         return false;
     }
-    
     if (languages.length === 0) {
         e.preventDefault();
         alert('Bitte wählen Sie mindestens eine Sprache aus.');
         return false;
     }
 });
+
+// Initial
+document.getElementById('professionalType').dispatchEvent(new Event('change'));
 </script>
 {% endblock %}
