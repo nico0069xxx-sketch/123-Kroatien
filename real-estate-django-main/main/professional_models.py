@@ -197,8 +197,11 @@ class Professional(models.Model):
     description_de = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Deutsch)")
     description_hr = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Kroatisch)")
     
-    # Languages spoken
-    languages = models.CharField(max_length=500, blank=True, null=True, verbose_name="Gesprochene Sprachen")
+    # Languages spoken (multi-select as JSON)
+    spoken_languages = models.JSONField(default=list, blank=True, verbose_name="Gesprochene Sprachen (Mehrfachauswahl)")
+    
+    # Opening hours (JSON for each day)
+    opening_hours = models.JSONField(default=dict, blank=True, verbose_name="Öffnungszeiten")
     
     # Social Media (extended)
     facebook = models.URLField(max_length=500, blank=True, null=True)
