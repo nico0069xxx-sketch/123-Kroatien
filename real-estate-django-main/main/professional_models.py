@@ -182,11 +182,11 @@ class Professional(models.Model):
     profile_image = models.ImageField(upload_to='professionals/profiles/', blank=True, null=True)
     portrait_photo = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
     
-    # Extended company info (NEW)
+    # Extended company info
     slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name="Slogan/Motto")
     founded_year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Gründungsjahr")
     employee_count = models.CharField(max_length=50, blank=True, null=True, verbose_name="Mitarbeiterzahl")
-    specializations = models.TextField(blank=True, null=True, verbose_name="Spezialisierungen")
+    specializations = models.JSONField(default=list, blank=True, verbose_name="Spezialisierungen (Mehrfachauswahl)")
     
     # Croatian specific
     oib_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="OIB-Nummer")
