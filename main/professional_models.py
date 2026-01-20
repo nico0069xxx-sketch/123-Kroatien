@@ -345,6 +345,9 @@ class Lead(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_read = models.BooleanField(default=False)
+
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    source_url = models.URLField(max_length=500, blank=True, null=True)
     
     class Meta:
         ordering = ['-created']
