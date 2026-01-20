@@ -17,55 +17,82 @@
 .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 1rem; }
 .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #1e3a5f; }
 .form-group textarea { min-height: 120px; resize: vertical; }
+.required { color: #dc3545; }
+.checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+.checkbox-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #f8f9fa; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.checkbox-item:hover { background: #e9ecef; }
+.checkbox-item input[type="checkbox"] { width: auto; margin: 0; }
+.checkbox-item.checked { background: #d4edda; border: 1px solid #28a745; }
+.opening-hours-grid { display: grid; gap: 10px; }
+.opening-day { display: grid; grid-template-columns: 120px 1fr 1fr auto; gap: 10px; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 8px; }
+.opening-day label { margin: 0; font-weight: 500; }
+.opening-day select { padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+.opening-day .closed-check { display: flex; align-items: center; gap: 5px; }
 .btn-save { background: #1e3a5f; color: white; padding: 14px 40px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
 .btn-save:hover { background: #2d5a87; }
 .btn-back { color: #666; text-decoration: none; margin-right: 20px; }
 .btn-container { margin-top: 30px; display: flex; align-items: center; justify-content: space-between; }
 .alert-success { background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+.alert-error { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
 .btn-ki { background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 15px; }
 .btn-ki:hover { background: #218838; }
-.btn-ki:disabled { background: #ccc; cursor: not-allowed; }
 .ki-suggestions { background: #f8f9fa; border-radius: 8px; padding: 20px; margin-top: 15px; display: none; }
 .ki-suggestion { background: white; border: 2px solid #e9ecef; border-radius: 8px; padding: 15px; margin-bottom: 15px; cursor: pointer; }
 .ki-suggestion:hover { border-color: #1e3a5f; }
 .ki-suggestion.selected { border-color: #28a745; background: #f0fff0; }
-.ki-suggestion-title { font-weight: 600; color: #1e3a5f; margin-bottom: 10px; }
-.ki-suggestion-text { color: #666; font-size: 0.95rem; line-height: 1.5; }
 .lang-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
 .lang-tab { padding: 8px 16px; border: 2px solid #e9ecef; border-radius: 8px; cursor: pointer; background: white; }
 .lang-tab.active { background: #1e3a5f; color: white; border-color: #1e3a5f; }
-.loading { text-align: center; padding: 20px; color: #666; }
 .image-upload { display: flex; align-items: center; gap: 20px; }
 .image-preview { width: 120px; height: 120px; border-radius: 12px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px dashed #dee2e6; }
 .image-preview img { width: 100%; height: 100%; object-fit: cover; }
 .image-preview i { font-size: 2.5rem; color: #dee2e6; }
-.image-input { flex: 1; }
 .image-hint { font-size: 0.85rem; color: #666; margin-top: 5px; }
-.current-image { position: relative; }
-.current-image .remove-btn { position: absolute; top: -8px; right: -8px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px; }
-@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .image-upload { flex-direction: column; align-items: flex-start; } }
+.hint-text { font-size: 0.85rem; color: #666; margin-top: 5px; }
+.field-info { background: #e8f4fd; border-left: 3px solid #2d5a87; padding: 10px 15px; margin-bottom: 20px; border-radius: 0 8px 8px 0; font-size: 0.9rem; color: #1e3a5f; }
+@media (max-width: 768px) { 
+    .form-row { grid-template-columns: 1fr; } 
+    .image-upload { flex-direction: column; align-items: flex-start; } 
+    .opening-day { grid-template-columns: 1fr; gap: 5px; }
+    .checkbox-grid { grid-template-columns: 1fr; }
+}
 </style>
+
 <div class="edit-container">
 <div class="edit-header">
-<a href="{% url 'professional_portal:dashboard' %}">← Zurueck zum Dashboard</a>
+<a href="{% url 'professional_portal:dashboard' %}">← Zurück zum Dashboard</a>
 <h1>Profil bearbeiten</h1>
 </div>
+
+<div class="field-info">
+<strong>Hinweis:</strong> Felder mit <span class="required">*</span> sind Pflichtfelder. Ein vollständiges Profil wird schneller verifiziert!
+</div>
+
 {% if messages %}
 {% for message in messages %}
 <div class="alert-success">{{ message }}</div>
 {% endfor %}
 {% endif %}
+
+{% if error %}
+<div class="alert-error">{{ error }}</div>
+{% endif %}
+
 <form method="post" class="edit-form" enctype="multipart/form-data">
 {% csrf_token %}
+
+<!-- BILDER -->
 <div class="form-section">
-<h3 class="section-title">Bilder</h3>
+<h3 class="section-title">Bilder <span class="required">*</span> <small style="font-weight:normal;color:#666;">(Logo oder Profilbild erforderlich)</small></h3>
 <div class="form-row">
 <div class="form-group">
 <label>Portrait / Profilbild</label>
 <div class="image-upload">
 <div class="image-preview">
-{% if professional.portrait %}
-<img src="{{ professional.portrait.url }}" alt="Portrait">
+{% if professional.portrait_photo %}
+<img src="{{ professional.portrait_photo.url }}" alt="Portrait">
+{% elif professional.profile_image %}
+<img src="{{ professional.profile_image.url }}" alt="Profil">
 {% else %}
 <i class="fa fa-user"></i>
 {% endif %}
@@ -94,56 +121,145 @@
 </div>
 </div>
 </div>
+
+<!-- PERSÖNLICHE DATEN -->
 <div class="form-section">
-<h3 class="section-title">Persoenliche Daten</h3>
+<h3 class="section-title">Firmendaten</h3>
 <div class="form-row">
 <div class="form-group">
-<label>Name / Firmenname *</label>
+<label>Firmenname <span class="required">*</span></label>
 <input type="text" name="name" value="{{ professional.name }}" required>
 </div>
 <div class="form-group">
-<label>E-Mail *</label>
+<label>E-Mail <span class="required">*</span></label>
 <input type="email" name="email" value="{{ professional.email }}" required>
 </div>
 </div>
 <div class="form-row">
 <div class="form-group">
-<label>Telefon</label>
-<input type="text" name="phone" value="{{ professional.phone|default:'' }}">
+<label>Telefon <span class="required">*</span></label>
+<input type="text" name="phone" value="{{ professional.phone|default:'' }}" required>
 </div>
 <div class="form-group">
 <label>Mobil</label>
 <input type="text" name="mobile" value="{{ professional.mobile|default:'' }}">
 </div>
 </div>
+<div class="form-group">
+<label>OIB-Nummer <span class="required">*</span> <small style="color:#666;">(nur intern sichtbar)</small></label>
+<input type="text" name="oib_number" value="{{ professional.oib_number|default:'' }}" required>
 </div>
+</div>
+
+<!-- ADRESSE -->
 <div class="form-section">
 <h3 class="section-title">Adresse</h3>
 <div class="form-row">
 <div class="form-group">
-<label>Stadt</label>
-<input type="text" name="city" value="{{ professional.city|default:'' }}">
+<label>Stadt <span class="required">*</span></label>
+<input type="text" name="city" value="{{ professional.city|default:'' }}" required>
 </div>
 <div class="form-group">
 <label>Region</label>
 <select name="region">
-<option value="">-- Bitte waehlen --</option>
+<option value="">-- Bitte wählen --</option>
 <option value="istrien" {% if professional.region == 'istrien' %}selected{% endif %}>Istrien</option>
-<option value="kvarner" {% if professional.region == 'kvarner' %}selected{% endif %}>Kvarner</option>
-<option value="dalmatien" {% if professional.region == 'dalmatien' %}selected{% endif %}>Dalmatien</option>
-<option value="zagreb" {% if professional.region == 'zagreb' %}selected{% endif %}>Zagreb</option>
-<option value="slavonien" {% if professional.region == 'slavonien' %}selected{% endif %}>Slavonien</option>
-<option value="andere" {% if professional.region == 'andere' %}selected{% endif %}>Andere</option>
+<option value="kvarner" {% if professional.region == 'kvarner' %}selected{% endif %}>Kvarner Bucht</option>
+<option value="norddalmatien" {% if professional.region == 'norddalmatien' %}selected{% endif %}>Norddalmatien</option>
+<option value="mitteldalmatien" {% if professional.region == 'mitteldalmatien' %}selected{% endif %}>Mitteldalmatien</option>
+<option value="sueddalmatien" {% if professional.region == 'sueddalmatien' %}selected{% endif %}>Süddalmatien</option>
+<option value="zagreb" {% if professional.region == 'zagreb' %}selected{% endif %}>Stadt Zagreb</option>
+<option value="zagreber_umland" {% if professional.region == 'zagreber_umland' %}selected{% endif %}>Zagreber Umland</option>
+<option value="nordkroatien" {% if professional.region == 'nordkroatien' %}selected{% endif %}>Nordkroatien (Varaždin & Međimurje)</option>
+<option value="slawonien" {% if professional.region == 'slawonien' %}selected{% endif %}>Slawonien</option>
+<option value="zentralkroatien" {% if professional.region == 'zentralkroatien' %}selected{% endif %}>Zentralkroatien (Karlovac & Sisak)</option>
+<option value="lika" {% if professional.region == 'lika' %}selected{% endif %}>Lika</option>
+<option value="gorski_kotar" {% if professional.region == 'gorski_kotar' %}selected{% endif %}>Gorski Kotar</option>
 </select>
 </div>
 </div>
 <div class="form-group">
-<label>Strasse und Hausnummer</label>
-<input type="text" name="address" value="{{ professional.address|default:'' }}">
+<label>Adresse <span class="required">*</span></label>
+<input type="text" name="address" value="{{ professional.address|default:'' }}" required placeholder="Straße und Hausnummer">
 </div>
 </div>
+
+<!-- SERVICEREGIONEN -->
 <div class="form-section">
-<h3 class="section-title">Online-Praesenz</h3>
+<h3 class="section-title">Serviceregionen <span class="required">*</span> <small style="font-weight:normal;color:#666;">(mind. 1 auswählen)</small></h3>
+<p class="hint-text">In welchen Regionen bieten Sie Ihre Dienstleistungen an?</p>
+<div class="checkbox-grid" id="service-regions">
+{% for region_key, region_name in regions %}
+<label class="checkbox-item {% if region_key in professional.service_regions %}checked{% endif %}">
+<input type="checkbox" name="service_regions" value="{{ region_key }}" {% if region_key in professional.service_regions %}checked{% endif %}>
+{{ region_name }}
+</label>
+{% endfor %}
+</div>
+</div>
+
+<!-- SPRACHEN -->
+<div class="form-section">
+<h3 class="section-title">Gesprochene Sprachen <span class="required">*</span> <small style="font-weight:normal;color:#666;">(mind. 1 auswählen)</small></h3>
+<div class="checkbox-grid" id="languages">
+{% for lang_key, lang_name in languages %}
+<label class="checkbox-item {% if lang_key in professional.spoken_languages %}checked{% endif %}">
+<input type="checkbox" name="spoken_languages" value="{{ lang_key }}" {% if lang_key in professional.spoken_languages %}checked{% endif %}>
+{{ lang_name }}
+</label>
+{% endfor %}
+</div>
+</div>
+
+<!-- SPEZIALISIERUNGEN -->
+<div class="form-section">
+<h3 class="section-title">Spezialisierungen <span class="required">*</span> <small style="font-weight:normal;color:#666;">(mind. 1 auswählen)</small></h3>
+<div class="checkbox-grid" id="specializations">
+{% for spec_key, spec_name in specializations %}
+<label class="checkbox-item {% if spec_key in professional.specializations %}checked{% endif %}">
+<input type="checkbox" name="specializations" value="{{ spec_key }}" {% if spec_key in professional.specializations %}checked{% endif %}>
+{{ spec_name }}
+</label>
+{% endfor %}
+</div>
+</div>
+
+<!-- ÖFFNUNGSZEITEN -->
+<div class="form-section">
+<h3 class="section-title">Öffnungszeiten</h3>
+<div class="opening-hours-grid">
+{% with days="Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag,Sonntag" %}
+{% with keys="mo,di,mi,do,fr,sa,so" %}
+{% for day in days.split %}
+{% with day_key=forloop.counter0 %}
+<div class="opening-day">
+<label>{{ day }}</label>
+<select name="hours_{{ forloop.counter0 }}_from">
+<option value="">Von</option>
+{% for time in times %}
+<option value="{{ time }}">{{ time }}</option>
+{% endfor %}
+</select>
+<select name="hours_{{ forloop.counter0 }}_to">
+<option value="">Bis</option>
+{% for time in times %}
+<option value="{{ time }}">{{ time }}</option>
+{% endfor %}
+</select>
+<label class="closed-check">
+<input type="checkbox" name="hours_{{ forloop.counter0 }}_closed"> Geschlossen
+</label>
+</div>
+{% endwith %}
+{% endfor %}
+{% endwith %}
+{% endwith %}
+</div>
+</div>
+
+<!-- ONLINE-PRÄSENZ -->
+<div class="form-section">
+<h3 class="section-title">Online-Präsenz</h3>
 <div class="form-group">
 <label>Website</label>
 <input type="url" name="website" value="{{ professional.website|default:'' }}" placeholder="https://...">
@@ -163,16 +279,18 @@
 <input type="url" name="linkedin" value="{{ professional.linkedin|default:'' }}">
 </div>
 </div>
+
+<!-- BESCHREIBUNG -->
 <div class="form-section">
 <h3 class="section-title">Beschreibung</h3>
 <div class="lang-tabs">
 <div class="lang-tab active" data-lang="de">Deutsch</div>
 <div class="lang-tab" data-lang="hr">Kroatisch</div>
-<div class="lang-tab" data-lang="en">Englisch</div>
 </div>
 <button type="button" class="btn-ki" onclick="generateKI()">
-<i class="fa fa-magic"></i> KI-Text generieren
+<i class="fa fa-magic"></i> KI-Text generieren (12 Sprachen)
 </button>
+<p class="hint-text">Die KI übersetzt Ihren Text automatisch in alle 12 unterstützten Sprachen.</p>
 <div id="ki-suggestions" class="ki-suggestions">
 <div class="loading" id="ki-loading">Text wird generiert...</div>
 <div id="ki-results"></div>
@@ -180,41 +298,49 @@
 <div id="desc-de" class="desc-field">
 <div class="form-group">
 <label>Beschreibung (Deutsch)</label>
-<textarea name="description_de" id="description_de" placeholder="Beschreibe deine Dienstleistungen...">{{ professional.description_de|default:'' }}</textarea>
+<textarea name="description_de" id="description_de" placeholder="Beschreiben Sie Ihre Dienstleistungen...">{{ professional.description_de|default:'' }}</textarea>
 </div>
 </div>
 <div id="desc-hr" class="desc-field" style="display:none;">
 <div class="form-group">
 <label>Beschreibung (Kroatisch)</label>
-<textarea name="description_hr" id="description_hr" placeholder="Opisite svoje usluge...">{{ professional.description_hr|default:'' }}</textarea>
+<textarea name="description_hr" id="description_hr" placeholder="Opišite svoje usluge...">{{ professional.description_hr|default:'' }}</textarea>
 </div>
 </div>
-<div id="desc-en" class="desc-field" style="display:none;">
-<div class="form-group">
-<label>Beschreibung (Englisch)</label>
-<textarea name="description_en" id="description_en" placeholder="Describe your services...">{{ professional.description_en|default:'' }}</textarea>
 </div>
-</div>
-<div class="form-group">
-<label>Gesprochene Sprachen</label>
-<input type="text" name="languages" value="{{ professional.languages_spoken|default:'' }}" placeholder="z.B. Deutsch, Kroatisch, Englisch">
-</div>
-</div>
+
 <div class="btn-container">
 <a href="{% url 'professional_portal:dashboard' %}" class="btn-back">Abbrechen</a>
 <button type="submit" class="btn-save">Speichern</button>
 </div>
 </form>
 </div>
+
 <script>
-let currentLang = 'de';
+// Checkbox styling
+document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+        this.closest('.checkbox-item').classList.toggle('checked', this.checked);
+    });
+});
+
+// Language tabs
 document.querySelectorAll('.lang-tab').forEach(tab => {
     tab.addEventListener('click', function() {
         document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        currentLang = this.dataset.lang;
+        const lang = this.dataset.lang;
         document.querySelectorAll('.desc-field').forEach(f => f.style.display = 'none');
-        document.getElementById('desc-' + currentLang).style.display = 'block';
+        document.getElementById('desc-' + lang).style.display = 'block';
+    });
+});
+
+// Opening hours - disable times when closed
+document.querySelectorAll('.opening-day input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+        const row = this.closest('.opening-day');
+        const selects = row.querySelectorAll('select');
+        selects.forEach(s => s.disabled = this.checked);
     });
 });
 
@@ -225,30 +351,17 @@ function generateKI() {
     const results = document.getElementById('ki-results');
     
     btn.disabled = true;
-    btn.innerHTML = '<span class="ki-loading"></span> Generiere...';
-    
-    // Animation Style hinzufügen
-    if (!document.getElementById('ki-style')) {
-        var style = document.createElement("style");
-        style.id = 'ki-style';
-        style.innerHTML = ".ki-loading{display:inline-block;width:12px;height:12px;border:1.5px solid rgba(0,123,255,0.3);border-top-color:#007bff;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px;}@keyframes spin{to{transform:rotate(360deg)}}.ki-glow{position:relative;overflow:hidden;}.ki-glow::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(90deg,transparent,rgba(0,123,255,0.4),transparent);border-radius:inherit;animation:shimmer 1.5s ease-in-out infinite;}@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}";
-        document.head.appendChild(style);
-    }
-    btn.classList.add("ki-glow");
-    
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Generiere...';
     container.style.display = 'block';
     loading.style.display = 'block';
     results.innerHTML = '';
     
-    const langMap = {'de': 'ge', 'hr': 'hr', 'en': 'en'};
-    
-    fetch('/ge/portal/ki-beschreibung/?lang=' + langMap[currentLang])
+    fetch('/ge/portal/ki-beschreibung/')
         .then(response => response.json())
         .then(data => {
             loading.style.display = 'none';
             btn.disabled = false;
-            btn.classList.remove("ki-glow");
-            btn.innerHTML = '<i class="fa fa-magic"></i> KI-Text generieren';
+            btn.innerHTML = '<i class="fa fa-magic"></i> KI-Text generieren (12 Sprachen)';
             
             if (data.error) {
                 results.innerHTML = '<p style="color:red;">Fehler: ' + data.error + '</p>';
@@ -256,29 +369,27 @@ function generateKI() {
             }
             
             let html = '';
-            for (const [key, value] of Object.entries(data.suggestions)) {
-                html += '<div class="ki-suggestion" onclick="selectSuggestion(this, \'' + currentLang + '\')">';
-                html += '<div class="ki-suggestion-title">' + value.style_name + '</div>';
+            for (const [key, value] of Object.entries(data.suggestions || {})) {
+                html += '<div class="ki-suggestion" onclick="selectSuggestion(this)">';
+                html += '<div class="ki-suggestion-title">' + (value.style_name || key) + '</div>';
                 html += '<div class="ki-suggestion-text">' + value.text + '</div>';
                 html += '</div>';
             }
-            results.innerHTML = html;
+            results.innerHTML = html || '<p>Keine Vorschläge verfügbar.</p>';
         })
         .catch(err => {
             loading.style.display = 'none';
             btn.disabled = false;
-            btn.classList.remove("ki-glow");
-            btn.innerHTML = '<i class="fa fa-magic"></i> KI-Text generieren';
+            btn.innerHTML = '<i class="fa fa-magic"></i> KI-Text generieren (12 Sprachen)';
             results.innerHTML = '<p style="color:red;">Fehler beim Laden.</p>';
         });
 }
 
-function selectSuggestion(el, lang) {
+function selectSuggestion(el) {
     document.querySelectorAll('.ki-suggestion').forEach(s => s.classList.remove('selected'));
     el.classList.add('selected');
     const text = el.querySelector('.ki-suggestion-text').innerText;
-    const fieldMap = {'de': 'description_de', 'hr': 'description_hr', 'en': 'description_en'};
-    document.getElementById(fieldMap[lang]).value = text;
+    document.getElementById('description_de').value = text;
 }
 </script>
 {% endblock body %}
