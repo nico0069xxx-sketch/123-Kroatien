@@ -265,6 +265,55 @@ class Professional(models.Model):
         if lang == 'hr':
             return self.description_hr or self.description_de or self.description
         return self.description_de or self.description
+    
+    def get_specialization_choices(self):
+        """Get specialization choices based on professional type"""
+        spec_map = {
+            'real_estate_agent': self.SPEC_REAL_ESTATE_AGENT,
+            'construction_company': self.SPEC_CONSTRUCTION,
+            'lawyer': self.SPEC_LAWYER,
+            'tax_advisor': self.SPEC_TAX_ADVISOR,
+            'architect': self.SPEC_ARCHITECT,
+        }
+        return spec_map.get(self.professional_type, ())
+    
+    def get_specializations_display(self):
+        """Get human-readable list of specializations"""
+        if not self.specializations:
+            return []
+        choices = dict(self.get_specialization_choices())
+        return [choices.get(spec, spec) for spec in self.specializations]
+    
+    def get_spoken_languages_display(self):
+        """Get human-readable list of spoken languages"""
+        if not self.spoken_languages:
+            return []
+        lang_dict = dict(self.LANGUAGES)
+        return [lang_dict.get(lang, lang) for lang in self.spoken_languages]
+    
+    def get_service_regions_display(self):
+        """Get human-readable list of service regions"""
+        if not self.service_regions:
+            return []
+        region_dict = dict(self.REGIONS)
+        return [region_dict.get(reg, reg) for reg in self.service_regions]
+    
+    def get_opening_hours_display(self):
+        """Get formatted opening hours"""
+        if not self.opening_hours:
+            return {}
+        days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
+        day_keys = ['mo', 'di', 'mi', 'do', 'fr', 'sa', 'so']
+        result = {}
+        for day_name, day_key in zip(days, day_keys):
+            day_data = self.opening_hours.get(day_key, {})
+            if day_data.get('closed'):
+                result[day_name] = 'Geschlossen'
+            elif day_data.get('from') and day_data.get('to'):
+                result[day_name] = f"{day_data['from']} - {day_data['to']}"
+            else:
+                result[day_name] = '-'
+        return result
 
 
 class ProfessionalContent(models.Model):
