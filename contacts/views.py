@@ -17,7 +17,7 @@ def contactForm(request):
             message_name, # subject
             message, # message
             message_email, # from email
-            ['omarfaruk2468@gmail.com'], # To email
+            ['ja@brandoz.de'], # To email
         )
         ### Send an Email End ###
         return render(request, 'contacts/contact-form.html', {'message_name':message_name})
