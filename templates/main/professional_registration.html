@@ -7,8 +7,8 @@
     <div class="container">
       <div class="row d-flex justify-content-center">
         <div class="col-md-8 text-center">
-          <h1 class="text-white">{{ labels.title }}</h1>
-          <p class="text-white-50">{{ labels.subtitle }}</p>
+          <h1 class="text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">{{ labels.title }}</h1>
+          <p class="text-white-50" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">{{ labels.subtitle }}</p>
         </div>
       </div>
     </div>
@@ -63,6 +63,17 @@
                   {{ labels.professional_type }} <span class="text-danger">*</span>
                 </label>
                 {{ form.professional_type }}
+              </div>
+              
+              <!-- License Number (dynamic label) -->
+              <div class="mb-4">
+                <label for="id_license_number" class="form-label fw-bold">
+                  <span id="license_label">{% if lang == "hr" %}Broj licence{% else %}Lizenz-Nummer{% endif %}</span> <span class="text-danger">*</span>
+                </label>
+                {{ form.license_number }}
+                <small class="text-muted" id="license_help">
+                  {% if lang == "hr" %}Unesite svoj službeni registracijski broj{% else %}Geben Sie Ihre offizielle Registrierungsnummer ein{% endif %}
+                </small>
               </div>
               
               <!-- Section 2: Company Info -->
@@ -122,7 +133,7 @@
               <!-- Service Regions -->
               <div class="mb-4">
                 <label class="form-label fw-bold">
-                  {% if lang == "hr" %}Servisne regije{% else %}Service-Regionen (wo sind Sie tätig?){% endif %}
+                  {% if lang == "hr" %}Servisne regije (gdje ste aktivni?){% else %}Service-Regionen (wo sind Sie tätig?){% endif %}
                 </label>
                 <div class="row">
                   {% for checkbox in form.service_regions %}
@@ -177,15 +188,17 @@
                 </div>
               </div>
               
-              <!-- Section 5: Specializations -->
+              <!-- Section 5: Specializations (dynamic per type) -->
               <h5 class="border-bottom pb-2 mb-4 mt-5">
                 <i class="fas fa-star text-primary me-2"></i>
                 {% if lang == "hr" %}Specijalizacije{% else %}Spezialisierungen{% endif %}
               </h5>
               
-              <div class="mb-4">
+              <!-- Immobilienmakler -->
+              <div id="spec_real_estate_agent" class="spec-section mb-4">
+                <p class="text-muted small mb-2">{% if lang == "hr" %}Odaberite svoje specijalnosti:{% else %}Wählen Sie Ihre Fachgebiete:{% endif %}</p>
                 <div class="row">
-                  {% for checkbox in form.specializations %}
+                  {% for checkbox in form.spec_real_estate_agent %}
                   <div class="col-md-4 col-6">
                     <div class="form-check">
                       {{ checkbox.tag }}
@@ -196,25 +209,67 @@
                 </div>
               </div>
               
-              <!-- Section 6: Description -->
-              <h5 class="border-bottom pb-2 mb-4 mt-5">
-                <i class="fas fa-align-left text-primary me-2"></i>
-                {% if lang == "hr" %}Opis{% else %}Beschreibung{% endif %}
-              </h5>
-              
-              <div class="mb-3">
-                <label for="id_description" class="form-label">{{ labels.description }}</label>
-                {{ form.description }}
-                <small class="text-muted">
-                  {% if lang == "hr" %}
-                    Opišite svoje usluge, iskustvo i specijalnosti.
-                  {% else %}
-                    Beschreiben Sie Ihre Dienstleistungen, Erfahrung und Spezialisierungen.
-                  {% endif %}
-                </small>
+              <!-- Bauunternehmen -->
+              <div id="spec_construction_company" class="spec-section mb-4" style="display:none;">
+                <p class="text-muted small mb-2">{% if lang == "hr" %}Odaberite svoje specijalnosti:{% else %}Wählen Sie Ihre Fachgebiete:{% endif %}</p>
+                <div class="row">
+                  {% for checkbox in form.spec_construction_company %}
+                  <div class="col-md-4 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
               </div>
               
-              <!-- Section 7: Opening Hours -->
+              <!-- Rechtsanwalt -->
+              <div id="spec_lawyer" class="spec-section mb-4" style="display:none;">
+                <p class="text-muted small mb-2">{% if lang == "hr" %}Odaberite svoje specijalnosti:{% else %}Wählen Sie Ihre Fachgebiete:{% endif %}</p>
+                <div class="row">
+                  {% for checkbox in form.spec_lawyer %}
+                  <div class="col-md-4 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- Steuerberater -->
+              <div id="spec_tax_advisor" class="spec-section mb-4" style="display:none;">
+                <p class="text-muted small mb-2">{% if lang == "hr" %}Odaberite svoje specijalnosti:{% else %}Wählen Sie Ihre Fachgebiete:{% endif %}</p>
+                <div class="row">
+                  {% for checkbox in form.spec_tax_advisor %}
+                  <div class="col-md-4 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- Architekt -->
+              <div id="spec_architect" class="spec-section mb-4" style="display:none;">
+                <p class="text-muted small mb-2">{% if lang == "hr" %}Odaberite svoje specijalnosti:{% else %}Wählen Sie Ihre Fachgebiete:{% endif %}</p>
+                <div class="row">
+                  {% for checkbox in form.spec_architect %}
+                  <div class="col-md-4 col-6">
+                    <div class="form-check">
+                      {{ checkbox.tag }}
+                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- Section 6: Opening Hours -->
               <h5 class="border-bottom pb-2 mb-4 mt-5">
                 <i class="fas fa-clock text-primary me-2"></i>
                 {% if lang == "hr" %}Radno vrijeme{% else %}Öffnungszeiten{% endif %}
@@ -277,7 +332,7 @@
                 </table>
               </div>
               
-              <!-- Section 8: Images -->
+              <!-- Section 7: Images -->
               <h5 class="border-bottom pb-2 mb-4 mt-5">
                 <i class="fas fa-image text-primary me-2"></i>
                 {% if lang == "hr" %}Slike{% else %}Bilder{% endif %}
@@ -286,7 +341,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="id_profile_image" class="form-label fw-bold">
-                    {{ form.profile_image.label }} <span class="text-danger">*</span>
+                    {% if lang == "hr" %}Profilna slika{% else %}Profilbild{% endif %} <span class="text-danger">*</span>
                   </label>
                   {{ form.profile_image }}
                   <small class="text-muted">
@@ -294,23 +349,23 @@
                   </small>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="id_company_logo" class="form-label">{{ form.company_logo.label }}</label>
+                  <label for="id_company_logo" class="form-label">
+                    {% if lang == "hr" %}Logo tvrtke{% else %}Firmenlogo{% endif %}
+                  </label>
                   {{ form.company_logo }}
-                  <small class="text-muted">
-                    {% if lang == "hr" %}Logo tvrtke (PNG, JPG){% else %}Firmenlogo (PNG, JPG){% endif %}
-                  </small>
+                  <small class="text-muted">PNG, JPG</small>
                 </div>
               </div>
               
-              <!-- Section 9: Document Upload -->
+              <!-- Section 8: Document Upload -->
               <h5 class="border-bottom pb-2 mb-4 mt-5">
                 <i class="fas fa-id-card text-primary me-2"></i>
                 {% if lang == "hr" %}Dokument za verifikaciju{% else %}Ausweis zur Verifizierung{% endif %}
               </h5>
               
               <div class="mb-3">
-                <label for="id_document" class="form-label">
-                  {% if lang == "hr" %}Osobna iskaznica ili putovnica{% else %}Personalausweis oder Reisepass{% endif %}
+                <label for="id_document" class="form-label fw-bold">
+                  {% if lang == "hr" %}Osobna iskaznica ili putovnica{% else %}Personalausweis oder Reisepass{% endif %} <span class="text-danger">*</span>
                 </label>
                 {{ form.document }}
                 <small class="text-muted d-block mt-1">
@@ -323,7 +378,7 @@
               </div>
               
               <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
+                <i class="fas fa-shield-alt me-2"></i>
                 {% if lang == "hr" %}
                   Vaši podaci su sigurni i koriste se isključivo za verifikaciju. Nakon provjere, dokument će biti izbrisan.
                 {% else %}
@@ -355,45 +410,10 @@
         
         {% endif %}
         
-        <!-- Info Text -->
-        <div class="mt-5 text-center">
-          <p class="text-muted">
-            {% if lang == "hr" %}
-              Nakon uspješne registracije, kontaktirat ćemo vas kako bismo razgovarali o daljnjim koracima i maksimizirali vašu prisutnost na 123-Kroatien.eu.
-            {% else %}
-              Nach erfolgreicher Registrierung setzen wir uns mit Ihnen in Verbindung, um die weiteren Schritte zu besprechen und Ihre Präsenz auf 123-Kroatien.eu zu maximieren.
-            {% endif %}
-          </p>
-        </div>
-        
       </div>
     </div>
   </div>
 </section>
-
-<section class="bg-gradient py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-9">
-        <h2 class="text-uppercase text-light">
-          {% if lang == "hr" %}
-            JAMČIMO VAM NAJVIŠU POVJERLJIVOST I TRANSPARENTNOST.
-          {% else %}
-            WIR GARANTIEREN IHNEN HÖCHSTE VERTRAULICHKEIT UND TRANSPARENZ.
-          {% endif %}
-        </h2>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <img src="{% static 'images/logo-black2.png' %}" alt="logo" style="width: 255px; padding: 20px 0" />
-    </div>
-  </div>
-</div>
 
 <style>
 .form-control {
@@ -427,5 +447,58 @@
   vertical-align: middle;
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const typeSelect = document.getElementById('id_professional_type');
+    const licenseLabel = document.getElementById('license_label');
+    const licenseHelp = document.getElementById('license_help');
+    
+    // License labels per type (German)
+    const licenseLabelsDE = {
+        'real_estate_agent': 'Maklerlizenz-Nummer (Posrednik ID)',
+        'construction_company': 'Gewerbeschein-Nummer',
+        'lawyer': 'Anwaltskammer-Nummer (HOAK)',
+        'tax_advisor': 'Steuerberater-ID',
+        'architect': 'Architektenkammer-Nummer'
+    };
+    
+    const licenseHelpDE = {
+        'real_estate_agent': 'Die kroatische Maklerlizenz vom Wirtschaftsministerium',
+        'construction_company': 'Ihre Gewerbeschein-Nummer (Obrt)',
+        'lawyer': 'Ihre HOAK-Mitgliedsnummer (Hrvatska odvjetnička komora)',
+        'tax_advisor': 'Ihre Registrierungsnummer als Steuerberater',
+        'architect': 'Ihre Mitgliedsnummer der kroatischen Architektenkammer'
+    };
+    
+    function updateSpecializations() {
+        const selectedType = typeSelect.value;
+        
+        // Hide all spec sections
+        document.querySelectorAll('.spec-section').forEach(function(el) {
+            el.style.display = 'none';
+        });
+        
+        // Show the relevant one
+        const specDiv = document.getElementById('spec_' + selectedType);
+        if (specDiv) {
+            specDiv.style.display = 'block';
+        }
+        
+        // Update license label
+        if (licenseLabelsDE[selectedType]) {
+            licenseLabel.textContent = licenseLabelsDE[selectedType];
+        }
+        if (licenseHelpDE[selectedType]) {
+            licenseHelp.textContent = licenseHelpDE[selectedType];
+        }
+    }
+    
+    typeSelect.addEventListener('change', updateSpecializations);
+    
+    // Initial call
+    updateSpecializations();
+});
+</script>
 
 {% endblock body %}
