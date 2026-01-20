@@ -967,9 +967,7 @@ def reference_project_delete(request, id, project_id):
 
 # Partner Landing Page
 def partner_landing(request, lang='ge'):
-    lang = request.GET.get('lang', lang)
-    if lang not in ["ge", "hr", "en"]:
-        lang = "ge"
+    lang = "hr"  # Immer Kroatisch
     context = {'lang': lang}
     return render(request, 'main/partner_landing.html', context)
 
