@@ -52,8 +52,8 @@ TIME MACHINE: Parallel backup (recovery only)
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Übersetzungs-Blocker lösen | BLOCKED | `single-detail-modern.html` übersetzt statische Labels nicht. Problem liegt in `main/context_processors.py` |
-| Objektnummer sichtbar machen | TODO | Jedes Objekt braucht sichtbare Objektnummer (vom Makler/Bauträger via XML oder manuell vergeben) |
+| Übersetzungs-Blocker lösen | ✅ DONE | Alle 12 Sprachen funktionieren. Fehlende Keys hinzugefügt (nav_back, btn_send_message, label_details) |
+| Objektnummer sichtbar machen | ✅ DONE | 123K-Prefix implementiert für Branding (z.B. 123K-4567) |
 
 ### 🟡 P1 - Important
 
