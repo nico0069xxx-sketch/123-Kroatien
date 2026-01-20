@@ -438,12 +438,13 @@
                                 </div>
                                 <div class="card__image-footer">
                                     <figure>
-                                        <img onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'" src="{% if listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
+                                       <img {% if listing.realtor and listing.realtor.id %}onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'"{% endif %} src="{% if listing.realtor and listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
+                                        
                                             class="img-fluid rounded-circle">
                                     </figure>
                                     <ul class="list-inline my-auto">
                                         <li class="list-inline-item ">
-                                            <a href="{% url "main:agent" listing.realtor.id %}">
+                                            <a href="{% if listing.realtor and listing.realtor.id %}{% url "main:agent" listing.realtor.id %}{% else %}#{% endif %}">
                                                 {{listing.realtor.first_name}}
                                                 {{listing.realtor.last_name}}
                                             </a>
