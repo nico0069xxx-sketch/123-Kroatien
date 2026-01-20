@@ -325,3 +325,10 @@ class ProfessionalContent(models.Model):
     
     def __str__(self):
         return f"{self.professional.name} - {self.get_language_display()}"
+
+# Backward compatibility aliases
+RealEstateAgentProfile = Professional
+ConstructionCompanyProfile = Professional
+LawyerProfile = Professional
+TaxAdvisorProfile = Professional
+ArchitectProfile = Professional
