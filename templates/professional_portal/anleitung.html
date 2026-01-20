@@ -7,532 +7,224 @@
 
 {% block body %}
 <style>
-    .guide-container {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
-    .guide-header {
-        background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
-        color: white;
-        padding: 40px;
-        border-radius: 16px;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-    .guide-header h1 {
-        font-size: 2rem;
-        margin-bottom: 10px;
-        font-weight: 600;
-        color: white;
-    }
-    .guide-header .subtitle {
-        opacity: 0.9;
-        font-size: 1.1rem;
-        color: white;
-    }
-    .lang-switcher {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 30px;
-    }
-    .lang-btn {
-        padding: 10px 20px;
-        border: 2px solid #1e3a5f;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-    .lang-btn.active {
-        background: #1e3a5f;
-        color: white;
-    }
-    .lang-btn:not(.active) {
-        background: white;
-        color: #1e3a5f;
-    }
-    .lang-btn:hover:not(.active) {
-        background: #f0f4f8;
-    }
-    .guide-section {
-        background: white;
-        border-radius: 12px;
-        padding: 30px;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-    .guide-section h2 {
-        color: #1e3a5f;
-        font-size: 1.4rem;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #e9ecef;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .guide-section h2 i {
-        color: #2d5a87;
-    }
-    .guide-section p, .guide-section li {
-        color: #555;
-        line-height: 1.8;
-        margin-bottom: 12px;
-    }
-    .guide-section ul {
-        padding-left: 20px;
-    }
-    .guide-section li {
-        margin-bottom: 8px;
-    }
-    .step-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        background: #1e3a5f;
-        color: white;
-        border-radius: 50%;
-        font-size: 0.9rem;
-        font-weight: bold;
-        margin-right: 10px;
-    }
-    .tip-box {
-        background: #e8f4fd;
-        border-left: 4px solid #2d5a87;
-        padding: 15px 20px;
-        border-radius: 0 8px 8px 0;
-        margin: 20px 0;
-    }
-    .tip-box strong {
-        color: #1e3a5f;
-    }
-    .back-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #1e3a5f;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        margin-top: 20px;
-    }
-    .back-btn:hover {
-        background: #2d5a87;
-        color: white;
-        transform: translateY(-2px);
-    }
-    @media (max-width: 768px) {
-        .guide-header {
-            padding: 25px;
-        }
-        .guide-header h1 {
-            font-size: 1.5rem;
-        }
-        .guide-section {
-            padding: 20px;
-        }
-    }
+.guide-container{max-width:900px;margin:0 auto;padding:40px 20px}
+.guide-header{background:linear-gradient(135deg,#1e3a5f 0%,#2d5a87 100%);color:#fff;padding:40px;border-radius:16px;margin-bottom:30px;text-align:center}
+.guide-header h1{font-size:2rem;margin-bottom:10px;font-weight:600;color:#fff}
+.guide-header .subtitle{opacity:.9;font-size:1.1rem;color:#fff}
+.lang-switcher{display:flex;justify-content:center;gap:10px;margin-bottom:30px;flex-wrap:wrap}
+.lang-btn{padding:10px 20px;border:2px solid #1e3a5f;border-radius:8px;text-decoration:none;font-weight:500;transition:all .3s ease}
+.lang-btn.active{background:#1e3a5f;color:#fff}
+.lang-btn:not(.active){background:#fff;color:#1e3a5f}
+.guide-section{background:#fff;border-radius:12px;padding:30px;margin-bottom:24px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.guide-section h2{color:#1e3a5f;font-size:1.4rem;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #e9ecef;display:flex;align-items:center;gap:12px}
+.guide-section h3{color:#1e3a5f;font-size:1.1rem;margin-top:20px;margin-bottom:15px}
+.guide-section p,.guide-section li{color:#555;line-height:1.8;margin-bottom:12px}
+.guide-section ul{padding-left:20px}
+.step-number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#1e3a5f;color:#fff;border-radius:50%;font-size:.9rem;font-weight:700;margin-right:10px}
+.tip-box{background:#e8f4fd;border-left:4px solid #2d5a87;padding:15px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.tip-box strong{color:#1e3a5f}
+.warning-box{background:#fff3cd;border-left:4px solid #ffc107;padding:15px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.warning-box strong{color:#856404}
+.feature-box{background:#d4edda;border-left:4px solid #28a745;padding:15px 20px;border-radius:0 8px 8px 0;margin:20px 0}
+.feature-box strong{color:#155724}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:#1e3a5f;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:500;transition:all .3s ease;margin-top:20px}
+.back-btn:hover{background:#2d5a87;color:#fff}
+.status-table{width:100%;border-collapse:collapse;margin:15px 0}
+.status-table th,.status-table td{padding:12px;text-align:left;border-bottom:1px solid #e9ecef}
+.status-table th{background:#f8f9fa;font-weight:600;color:#1e3a5f}
+.status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.85rem;font-weight:500}
+.status-aktiv{background:#d4edda;color:#155724}
+.status-verifiziert{background:#cce5ff;color:#004085}
+.status-pruefung{background:#fff3cd;color:#856404}
+.status-inaktiv{background:#e2e3e5;color:#383d41}
 </style>
 
 <div class="guide-container">
-    <!-- Header -->
-    <div class="guide-header">
-        <h1>
-            {% if lang == 'hr' %}
-                <i class="fas fa-book-open"></i> Upute za korištenje portala
-            {% elif lang == 'en' %}
-                <i class="fas fa-book-open"></i> Portal User Guide
-            {% else %}
-                <i class="fas fa-book-open"></i> Portal-Anleitung
-            {% endif %}
-        </h1>
-        <p class="subtitle">
-            {% if lang == 'hr' %}
-                Sve što trebate znati za uspješno korištenje vašeg profila
-            {% elif lang == 'en' %}
-                Everything you need to know to successfully use your profile
-            {% else %}
-                Alles was du wissen musst, um dein Profil erfolgreich zu nutzen
-            {% endif %}
-        </p>
-    </div>
+<div class="guide-header">
+<h1>{% if lang == 'hr' %}<i class="fas fa-book-open"></i> Upute za korištenje portala{% elif lang == 'en' %}<i class="fas fa-book-open"></i> Portal User Guide{% else %}<i class="fas fa-book-open"></i> Partner-Portal Anleitung{% endif %}</h1>
+<p class="subtitle">{% if lang == 'hr' %}Sve što trebate znati za uspješno korištenje vašeg profila{% elif lang == 'en' %}Everything you need to know to use your profile{% else %}Alles was du wissen musst, um dein Profil zu nutzen{% endif %}</p>
+</div>
 
-    <!-- Language Switcher -->
-    <div class="lang-switcher">
-        <a href="?lang=hr" class="lang-btn {% if lang == 'hr' %}active{% endif %}">
-            <i class="fas fa-flag"></i> Hrvatski
-        </a>
-        <a href="?lang=de" class="lang-btn {% if lang == 'de' %}active{% endif %}">
-            <i class="fas fa-flag"></i> Deutsch
-        </a>
-        <a href="?lang=en" class="lang-btn {% if lang == 'en' %}active{% endif %}">
-            <i class="fas fa-flag"></i> English
-        </a>
-    </div>
+<div class="lang-switcher">
+<a href="?lang=hr" class="lang-btn {% if lang == 'hr' %}active{% endif %}"><i class="fas fa-flag"></i> Hrvatski</a>
+<a href="?lang=de" class="lang-btn {% if lang == 'de' or not lang %}active{% endif %}"><i class="fas fa-flag"></i> Deutsch</a>
+<a href="?lang=en" class="lang-btn {% if lang == 'en' %}active{% endif %}"><i class="fas fa-flag"></i> English</a>
+</div>
 
-    {% if lang == 'hr' %}
-    <!-- CROATIAN VERSION -->
-    
-    <!-- Section 1: Prijava -->
-    <div class="guide-section">
-        <h2><i class="fas fa-sign-in-alt"></i> 1. Prijava u portal</h2>
-        <p><span class="step-number">1</span> Idite na stranicu za prijavu</p>
-        <p><span class="step-number">2</span> Unesite svoje korisničko ime i lozinku</p>
-        <p><span class="step-number">3</span> Kliknite "Prijava"</p>
-        
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Savjet:</strong> 
-            Ako ste zaboravili lozinku, kliknite "Zaboravljena lozinka?" na stranici za prijavu. Primit ćete e-mail sa sigurnim linkom za resetiranje (vrijedi 1 sat).
-        </div>
-    </div>
+{% if lang == 'hr' %}
+<div class="guide-section"><h2><i class="fas fa-sign-in-alt"></i> 1. Prijava u portal</h2>
+<p><span class="step-number">1</span> Idite na stranicu za prijavu</p>
+<p><span class="step-number">2</span> Unesite korisničko ime i lozinku</p>
+<p><span class="step-number">3</span> Kliknite "Prijava"</p>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Savjet:</strong> Ako ste zaboravili lozinku, kliknite "Zaboravljena lozinka?"</div></div>
 
-    <!-- Section 2: Profil -->
-    <div class="guide-section">
-        <h2><i class="fas fa-user-edit"></i> 2. Uređivanje profila</h2>
-        <p>Vaš profil je vaša digitalna vizit karta. Evo kako ga možete urediti:</p>
-        
-        <p><span class="step-number">1</span> Na nadzornoj ploči kliknite "Profil bearbeiten" (Uredi profil)</p>
-        <p><span class="step-number">2</span> Ispunite sve podatke:</p>
-        <ul>
-            <li><strong>Naziv tvrtke</strong> - Vaš službeni naziv</li>
-            <li><strong>E-mail</strong> - Kontakt e-mail za klijente</li>
-            <li><strong>Telefon</strong> - Broj telefona</li>
-            <li><strong>Web stranica</strong> - Vaša web adresa (ako imate)</li>
-            <li><strong>Grad i adresa</strong> - Vaša lokacija</li>
-            <li><strong>Opis</strong> - Opišite svoje usluge na hrvatskom i njemačkom</li>
-        </ul>
-        <p><span class="step-number">3</span> Učitajte logo vaše tvrtke i profilnu sliku</p>
-        <p><span class="step-number">4</span> Kliknite "Spremi" za spremanje promjena</p>
+<div class="guide-section"><h2><i class="fas fa-tachometer-alt"></i> 2. Nadzorna ploča</h2>
+<p>Pregled vašeg profila i statusa:</p>
+<table class="status-table">
+<tr><th>Status</th><th>Značenje</th></tr>
+<tr><td><span class="status-badge status-aktiv">Aktivan</span></td><td>Profil je vidljiv u imeniku</td></tr>
+<tr><td><span class="status-badge status-verifiziert">Verificiran</span></td><td>Profil je provjeren</td></tr>
+<tr><td><span class="status-badge status-pruefung">Na provjeri</span></td><td>Čeka odobrenje</td></tr>
+<tr><td><span class="status-badge status-inaktiv">Neaktivan</span></td><td>Nije vidljiv javnosti</td></tr>
+</table></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Savjet:</strong> 
-            Potpuni profil s logom i opisom privlači više klijenata!
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-user-edit"></i> 3. Uređivanje profila</h2>
+<p><span class="step-number">1</span> Kliknite "Profil bearbeiten"</p>
+<p><span class="step-number">2</span> Ispunite podatke: naziv, e-mail, telefon, web, opis</p>
+<p><span class="step-number">3</span> Učitajte logo i profilnu sliku</p>
+<p><span class="step-number">4</span> Kliknite "Speichern"</p>
+<div class="feature-box"><strong><i class="fas fa-magic"></i> KI-Tekstovi:</strong> Koristite "KI-Text" za automatski profesionalni opis!</div></div>
 
-    <!-- Section 3: Lozinka -->
-    <div class="guide-section">
-        <h2><i class="fas fa-key"></i> 3. Promjena lozinke</h2>
-        <p>Za vašu sigurnost, preporučujemo redovitu promjenu lozinke:</p>
-        
-        <p><span class="step-number">1</span> Kliknite "Passwort ändern" (Promijeni lozinku) na nadzornoj ploči</p>
-        <p><span class="step-number">2</span> Unesite trenutnu lozinku</p>
-        <p><span class="step-number">3</span> Unesite novu lozinku (najmanje 10 znakova)</p>
-        <p><span class="step-number">4</span> Potvrdite novu lozinku</p>
-        <p><span class="step-number">5</span> Kliknite "Spremi"</p>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-magic"></i> 4. KI-Tekstovi</h2>
+<p><span class="step-number">1</span> Otvorite profil za uređivanje</p>
+<p><span class="step-number">2</span> Kliknite "🪄 KI-Text"</p>
+<p><span class="step-number">3</span> AI generira opis na njemačkom</p>
+<p><span class="step-number">4</span> Pregledajte i prilagodite tekst</p>
+<div class="warning-box"><strong><i class="fas fa-exclamation-triangle"></i> Važno:</strong> Uvijek pregledajte tekst prije spremanja!</div></div>
 
-    <!-- Section 4: 2FA -->
-    <div class="guide-section">
-        <h2><i class="fas fa-shield-alt"></i> 4. Dvofaktorska autentifikacija (2FA)</h2>
-        <p>Dodatna zaštita vašeg računa:</p>
-        
-        <p><span class="step-number">1</span> Kliknite "2FA verwalten" (Upravljanje 2FA)</p>
-        <p><span class="step-number">2</span> Odaberite metodu: Authenticator aplikacija ili E-mail kod</p>
-        <p><span class="step-number">3</span> Slijedite upute na zaslonu</p>
+<div class="guide-section"><h2><i class="fas fa-key"></i> 5. Promjena lozinke</h2>
+<p><span class="step-number">1</span> Kliknite "Passwort ändern"</p>
+<p><span class="step-number">2</span> Unesite trenutnu i novu lozinku (min. 10 znakova)</p>
+<p><span class="step-number">3</span> Kliknite "Speichern"</p></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-shield-alt"></i> Zašto 2FA?</strong> 
-            Dvofaktorska autentifikacija štiti vaš račun čak i ako netko sazna vašu lozinku.
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-shield-alt"></i> 6. Dvofaktorska autentifikacija (2FA)</h2>
+<p><span class="step-number">1</span> Kliknite "2FA verwalten"</p>
+<p><span class="step-number">2</span> Odaberite: Authenticator ili E-mail kod</p>
+<div class="feature-box"><strong><i class="fas fa-shield-alt"></i> Zašto 2FA?</strong> Štiti račun i ako netko sazna lozinku!</div></div>
 
-    <!-- Section 5: Javni profil -->
-    <div class="guide-section">
-        <h2><i class="fas fa-eye"></i> 5. Vaš javni profil</h2>
-        <p>Kad je vaš profil aktivan, klijenti vas mogu pronaći na našoj platformi:</p>
-        
-        <ul>
-            <li>Vaš profil se pojavljuje u kategoriji vašeg zanimanja (Arhitekti, Odvjetnici, itd.)</li>
-            <li>Klijenti mogu vidjeti vaše kontakt podatke, opis i logo</li>
-            <li>Kliknite "Profil ansehen" (Pregledaj profil) da vidite kako vas drugi vide</li>
-        </ul>
+<div class="guide-section"><h2><i class="fas fa-eye"></i> 7. Javni profil</h2>
+<p>Kad je profil aktivan i verificiran, klijenti vas mogu pronaći.</p>
+<div class="warning-box"><strong><i class="fas fa-check-circle"></i> Uvjeti:</strong> Profil mora biti "Aktivan" i "Verificiran".</div></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-check-circle"></i> Status profila:</strong> 
-            Vaš profil mora biti "Aktiv" i "Verifiziert" da bude javno vidljiv.
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-share-alt"></i> 8. Društvene mreže</h2>
+<p><span class="step-number">1</span> Idite na Profil</p>
+<p><span class="step-number">2</span> Pronađite "Social Media"</p>
+<p><span class="step-number">3</span> Unesite URL-ove: Facebook, Instagram, LinkedIn</p>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Savjet:</strong> Ikone će se pojaviti na vašem profilu!</div></div>
 
-    <!-- Section 6: Social Media -->
-    <div class="guide-section">
-        <h2><i class="fas fa-share-alt"></i> 6. Povezivanje društvenih mreža</h2>
-        <p>Povežite svoje profile na društvenim mrežama za veću vidljivost:</p>
-        
-        <p><span class="step-number">1</span> Idite na svoj <strong>Profil</strong> (kliknite "Profil bearbeiten")</p>
-        <p><span class="step-number">2</span> Pomaknite se do odjeljka <strong>"Social Media"</strong></p>
-        <p><span class="step-number">3</span> Unesite potpune URL adrese:</p>
-        <ul>
-            <li><i class="fab fa-facebook" style="color: #1877f2;"></i> <strong>Facebook:</strong> https://facebook.com/vasaTvrtka</li>
-            <li><i class="fab fa-instagram" style="color: #e4405f;"></i> <strong>Instagram:</strong> https://instagram.com/vasaTvrtka</li>
-            <li><i class="fab fa-linkedin" style="color: #0077b5;"></i> <strong>LinkedIn:</strong> https://linkedin.com/company/vasaTvrtka</li>
-        </ul>
-        <p><span class="step-number">4</span> Kliknite <strong>"Änderungen speichern"</strong> (Spremi promjene)</p>
-        
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Savjet:</strong> 
-            Ikone društvenih mreža pojavit će se na vašem javnom profilu i omogućiti klijentima da vas izravno prate!
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-headset"></i> 9. Pomoć</h2>
+<ul><li><strong>E-mail:</strong> info@123-kroatien.eu</li><li><strong>Radno vrijeme:</strong> Pon-Pet, 9-17h</li></ul></div>
 
-    <!-- Section 7: Kontakt -->
-    <div class="guide-section">
-        <h2><i class="fas fa-headset"></i> 7. Trebate pomoć?</h2>
-        <p>Naš tim vam stoji na raspolaganju:</p>
-        
-        <ul>
-            <li><strong>E-mail:</strong> info@123-kroatien.eu</li>
-            <li><strong>Radno vrijeme:</strong> Pon - Pet, 9:00 - 17:00</li>
-        </ul>
-    </div>
+{% elif lang == 'en' %}
+<div class="guide-section"><h2><i class="fas fa-sign-in-alt"></i> 1. Logging In</h2>
+<p><span class="step-number">1</span> Go to the login page</p>
+<p><span class="step-number">2</span> Enter username and password</p>
+<p><span class="step-number">3</span> Click "Login"</p>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Tip:</strong> Forgot password? Click "Forgot Password?"</div></div>
 
-    {% elif lang == 'en' %}
-    <!-- ENGLISH VERSION -->
-    
-    <!-- Section 1: Login -->
-    <div class="guide-section">
-        <h2><i class="fas fa-sign-in-alt"></i> 1. Logging into the Portal</h2>
-        <p><span class="step-number">1</span> Go to the login page</p>
-        <p><span class="step-number">2</span> Enter your username and password</p>
-        <p><span class="step-number">3</span> Click "Login"</p>
-        
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Tip:</strong> 
-            If you forgot your password, click "Forgot Password?" on the login page. You will receive an email with a secure link to reset your password (valid for 1 hour).
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-tachometer-alt"></i> 2. Dashboard</h2>
+<p>Overview of your profile and status:</p>
+<table class="status-table">
+<tr><th>Status</th><th>Meaning</th></tr>
+<tr><td><span class="status-badge status-aktiv">Active</span></td><td>Profile visible in directory</td></tr>
+<tr><td><span class="status-badge status-verifiziert">Verified</span></td><td>Profile verified by admin</td></tr>
+<tr><td><span class="status-badge status-pruefung">Under Review</span></td><td>Awaiting approval</td></tr>
+<tr><td><span class="status-badge status-inaktiv">Inactive</span></td><td>Not publicly visible</td></tr>
+</table></div>
 
-    <!-- Section 2: Profile -->
-    <div class="guide-section">
-        <h2><i class="fas fa-user-edit"></i> 2. Editing Your Profile</h2>
-        <p>Your profile is your digital business card. Here's how to edit it:</p>
-        
-        <p><span class="step-number">1</span> On the dashboard, click "Edit Profile"</p>
-        <p><span class="step-number">2</span> Fill in all details:</p>
-        <ul>
-            <li><strong>Company Name</strong> - Your official business name</li>
-            <li><strong>Email</strong> - Contact email for clients</li>
-            <li><strong>Phone</strong> - Your phone number</li>
-            <li><strong>Website</strong> - Your web address (if available)</li>
-            <li><strong>City and Address</strong> - Your location</li>
-            <li><strong>Description</strong> - Describe your services in Croatian and German</li>
-        </ul>
-        <p><span class="step-number">3</span> Upload your company logo and profile picture</p>
-        <p><span class="step-number">4</span> Click "Save" to save your changes</p>
+<div class="guide-section"><h2><i class="fas fa-user-edit"></i> 3. Editing Profile</h2>
+<p><span class="step-number">1</span> Click "Edit Profile"</p>
+<p><span class="step-number">2</span> Fill in: name, email, phone, website, description</p>
+<p><span class="step-number">3</span> Upload logo and profile picture</p>
+<p><span class="step-number">4</span> Click "Save"</p>
+<div class="feature-box"><strong><i class="fas fa-magic"></i> AI Texts:</strong> Use "AI Text" for automatic professional descriptions!</div></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Tip:</strong> 
-            A complete profile with logo and description attracts more clients!
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-magic"></i> 4. AI Texts</h2>
+<p><span class="step-number">1</span> Open profile for editing</p>
+<p><span class="step-number">2</span> Click "🪄 AI Text"</p>
+<p><span class="step-number">3</span> AI generates description in German</p>
+<p><span class="step-number">4</span> Review and adjust text</p>
+<div class="warning-box"><strong><i class="fas fa-exclamation-triangle"></i> Important:</strong> Always review text before saving!</div></div>
 
-    <!-- Section 3: Password -->
-    <div class="guide-section">
-        <h2><i class="fas fa-key"></i> 3. Changing Your Password</h2>
-        <p>For your security, we recommend changing your password regularly:</p>
-        
-        <p><span class="step-number">1</span> Click "Change Password" on the dashboard</p>
-        <p><span class="step-number">2</span> Enter your current password</p>
-        <p><span class="step-number">3</span> Enter your new password (minimum 10 characters)</p>
-        <p><span class="step-number">4</span> Confirm your new password</p>
-        <p><span class="step-number">5</span> Click "Save"</p>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-key"></i> 5. Change Password</h2>
+<p><span class="step-number">1</span> Click "Change Password"</p>
+<p><span class="step-number">2</span> Enter current and new password (min. 10 chars)</p>
+<p><span class="step-number">3</span> Click "Save"</p></div>
 
-    <!-- Section 4: 2FA -->
-    <div class="guide-section">
-        <h2><i class="fas fa-shield-alt"></i> 4. Two-Factor Authentication (2FA)</h2>
-        <p>Additional protection for your account:</p>
-        
-        <p><span class="step-number">1</span> Click "Manage 2FA"</p>
-        <p><span class="step-number">2</span> Choose your method: Authenticator app or Email code</p>
-        <p><span class="step-number">3</span> Follow the on-screen instructions</p>
+<div class="guide-section"><h2><i class="fas fa-shield-alt"></i> 6. Two-Factor Authentication (2FA)</h2>
+<p><span class="step-number">1</span> Click "Manage 2FA"</p>
+<p><span class="step-number">2</span> Choose: Authenticator app or Email code</p>
+<div class="feature-box"><strong><i class="fas fa-shield-alt"></i> Why 2FA?</strong> Protects your account even if password is known!</div></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-shield-alt"></i> Why 2FA?</strong> 
-            Two-factor authentication protects your account even if someone learns your password.
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-eye"></i> 7. Public Profile</h2>
+<p>When active and verified, clients can find you in the directory.</p>
+<div class="warning-box"><strong><i class="fas fa-check-circle"></i> Requirements:</strong> Profile must be "Active" and "Verified".</div></div>
 
-    <!-- Section 5: Public Profile -->
-    <div class="guide-section">
-        <h2><i class="fas fa-eye"></i> 5. Your Public Profile</h2>
-        <p>When your profile is active, clients can find you on our platform:</p>
-        
-        <ul>
-            <li>Your profile appears in your profession's category (Architects, Lawyers, etc.)</li>
-            <li>Clients can see your contact details, description, and logo</li>
-            <li>Click "View Profile" to see how others see you</li>
-        </ul>
+<div class="guide-section"><h2><i class="fas fa-share-alt"></i> 8. Social Media</h2>
+<p><span class="step-number">1</span> Go to Profile</p>
+<p><span class="step-number">2</span> Find "Social Media" section</p>
+<p><span class="step-number">3</span> Enter URLs: Facebook, Instagram, LinkedIn</p>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Tip:</strong> Icons will appear on your public profile!</div></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-check-circle"></i> Profile Status:</strong> 
-            Your profile must be "Active" and "Verified" to be publicly visible.
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-headset"></i> 9. Help</h2>
+<ul><li><strong>Email:</strong> info@123-kroatien.eu</li><li><strong>Hours:</strong> Mon-Fri, 9am-5pm</li></ul></div>
 
-    <!-- Section 6: Social Media -->
-    <div class="guide-section">
-        <h2><i class="fas fa-share-alt"></i> 6. Connecting Social Media</h2>
-        <p>Connect your social media profiles for greater visibility:</p>
-        
-        <p><span class="step-number">1</span> Go to your <strong>Profile</strong> (click "Edit Profile")</p>
-        <p><span class="step-number">2</span> Scroll down to the <strong>"Social Media"</strong> section</p>
-        <p><span class="step-number">3</span> Enter the complete URLs:</p>
-        <ul>
-            <li><i class="fab fa-facebook" style="color: #1877f2;"></i> <strong>Facebook:</strong> https://facebook.com/yourCompany</li>
-            <li><i class="fab fa-instagram" style="color: #e4405f;"></i> <strong>Instagram:</strong> https://instagram.com/yourCompany</li>
-            <li><i class="fab fa-linkedin" style="color: #0077b5;"></i> <strong>LinkedIn:</strong> https://linkedin.com/company/yourCompany</li>
-        </ul>
-        <p><span class="step-number">4</span> Click <strong>"Save Changes"</strong></p>
-        
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Tip:</strong> 
-            The social media icons will appear on your public profile and allow clients to follow you directly!
-        </div>
-    </div>
+{% else %}
+<div class="guide-section"><h2><i class="fas fa-sign-in-alt"></i> 1. Anmeldung</h2>
+<p><span class="step-number">1</span> Gehe zur Login-Seite</p>
+<p><span class="step-number">2</span> Gib Benutzername und Passwort ein</p>
+<p><span class="step-number">3</span> Klicke "Anmelden"</p>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Tipp:</strong> Passwort vergessen? Klicke "Passwort vergessen?"</div></div>
 
-    <!-- Section 7: Contact -->
-    <div class="guide-section">
-        <h2><i class="fas fa-headset"></i> 7. Need Help?</h2>
-        <p>Our team is here to assist you:</p>
-        
-        <ul>
-            <li><strong>Email:</strong> info@123-kroatien.eu</li>
-            <li><strong>Business hours:</strong> Mon - Fri, 9:00 AM - 5:00 PM</li>
-        </ul>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-tachometer-alt"></i> 2. Dashboard</h2>
+<p>Überblick über dein Profil und Status:</p>
+<table class="status-table">
+<tr><th>Status</th><th>Bedeutung</th></tr>
+<tr><td><span class="status-badge status-aktiv">Aktiv</span></td><td>Profil ist im Branchenbuch sichtbar</td></tr>
+<tr><td><span class="status-badge status-verifiziert">Verifiziert</span></td><td>Profil wurde geprüft</td></tr>
+<tr><td><span class="status-badge status-pruefung">In Prüfung</span></td><td>Wartet auf Freigabe</td></tr>
+<tr><td><span class="status-badge status-inaktiv">Inaktiv</span></td><td>Nicht öffentlich sichtbar</td></tr>
+</table>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Tipp:</strong> Vollständiges Profil wird schneller verifiziert!</div></div>
 
-    {% else %}
-    <!-- GERMAN VERSION -->
-    
-    <!-- Section 1: Anmeldung -->
-    <div class="guide-section">
-        <h2><i class="fas fa-sign-in-alt"></i> 1. Anmeldung im Portal</h2>
-        <p><span class="step-number">1</span> Gehe zur Login-Seite</p>
-        <p><span class="step-number">2</span> Gib deinen Benutzernamen und dein Passwort ein</p>
-        <p><span class="step-number">3</span> Klicke auf "Anmelden"</p>
-        
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Tipp:</strong> 
-            Falls du dein Passwort vergessen hast, klicke auf "Passwort vergessen?" auf der Login-Seite. Du erhältst eine E-Mail mit einem sicheren Link zum Zurücksetzen (gültig für 1 Stunde).
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-user-edit"></i> 3. Profil bearbeiten</h2>
+<p><span class="step-number">1</span> Klicke "Profil bearbeiten"</p>
+<p><span class="step-number">2</span> Fülle aus: Name, E-Mail, Telefon, Website, Beschreibung</p>
+<p><span class="step-number">3</span> Lade Logo und Profilbild hoch</p>
+<p><span class="step-number">4</span> Klicke "Speichern"</p>
+<div class="feature-box"><strong><i class="fas fa-magic"></i> KI-Texte:</strong> Nutze "KI-Text" für automatische professionelle Beschreibungen!</div></div>
 
-    <!-- Section 2: Profil -->
-    <div class="guide-section">
-        <h2><i class="fas fa-user-edit"></i> 2. Profil bearbeiten</h2>
-        <p>Dein Profil ist deine digitale Visitenkarte. So bearbeitest du es:</p>
-        
-        <p><span class="step-number">1</span> Klicke im Dashboard auf "Profil bearbeiten"</p>
-        <p><span class="step-number">2</span> Fülle alle Angaben aus:</p>
-        <ul>
-            <li><strong>Firmenname</strong> - Dein offizieller Name</li>
-            <li><strong>E-Mail</strong> - Kontakt-E-Mail für Kunden</li>
-            <li><strong>Telefon</strong> - Deine Telefonnummer</li>
-            <li><strong>Website</strong> - Deine Webadresse (falls vorhanden)</li>
-            <li><strong>Stadt und Adresse</strong> - Dein Standort</li>
-            <li><strong>Beschreibung</strong> - Beschreibe deine Dienstleistungen auf Kroatisch und Deutsch</li>
-        </ul>
-        <p><span class="step-number">3</span> Lade dein Firmenlogo und Profilbild hoch</p>
-        <p><span class="step-number">4</span> Klicke auf "Speichern" um die Änderungen zu sichern</p>
+<div class="guide-section"><h2><i class="fas fa-magic"></i> 4. KI-Texte</h2>
+<p><span class="step-number">1</span> Öffne dein Profil zur Bearbeitung</p>
+<p><span class="step-number">2</span> Klicke "🪄 KI-Text"</p>
+<p><span class="step-number">3</span> Die KI generiert eine Beschreibung auf Deutsch</p>
+<p><span class="step-number">4</span> Überprüfe und passe den Text an</p>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Tipp:</strong> Je mehr Details, desto besser der KI-Text!</div>
+<div class="warning-box"><strong><i class="fas fa-exclamation-triangle"></i> Wichtig:</strong> Überprüfe den Text immer vor dem Speichern!</div></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Tipp:</strong> 
-            Ein vollständiges Profil mit Logo und Beschreibung zieht mehr Kunden an!
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-key"></i> 5. Passwort ändern</h2>
+<p><span class="step-number">1</span> Klicke "Passwort ändern"</p>
+<p><span class="step-number">2</span> Gib aktuelles und neues Passwort ein (min. 10 Zeichen)</p>
+<p><span class="step-number">3</span> Klicke "Speichern"</p>
+<div class="tip-box"><strong><i class="fas fa-shield-alt"></i> Sicherheitstipp:</strong> Nutze Groß-/Kleinbuchstaben, Zahlen und Sonderzeichen.</div></div>
 
-    <!-- Section 3: Passwort -->
-    <div class="guide-section">
-        <h2><i class="fas fa-key"></i> 3. Passwort ändern</h2>
-        <p>Für deine Sicherheit empfehlen wir, das Passwort regelmäßig zu ändern:</p>
-        
-        <p><span class="step-number">1</span> Klicke auf "Passwort ändern" im Dashboard</p>
-        <p><span class="step-number">2</span> Gib dein aktuelles Passwort ein</p>
-        <p><span class="step-number">3</span> Gib dein neues Passwort ein (mindestens 10 Zeichen)</p>
-        <p><span class="step-number">4</span> Bestätige dein neues Passwort</p>
-        <p><span class="step-number">5</span> Klicke auf "Speichern"</p>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-shield-alt"></i> 6. Zwei-Faktor-Authentifizierung (2FA)</h2>
+<p><span class="step-number">1</span> Klicke "2FA verwalten"</p>
+<p><span class="step-number">2</span> Wähle: Authenticator-App oder E-Mail-Code</p>
+<p><span class="step-number">3</span> Folge den Anweisungen</p>
+<div class="feature-box"><strong><i class="fas fa-shield-alt"></i> Warum 2FA?</strong> Schützt dein Konto auch wenn jemand dein Passwort kennt!</div></div>
 
-    <!-- Section 4: 2FA -->
-    <div class="guide-section">
-        <h2><i class="fas fa-shield-alt"></i> 4. Zwei-Faktor-Authentifizierung (2FA)</h2>
-        <p>Zusätzlicher Schutz für dein Konto:</p>
-        
-        <p><span class="step-number">1</span> Klicke auf "2FA verwalten"</p>
-        <p><span class="step-number">2</span> Wähle deine Methode: Authenticator-App oder E-Mail-Code</p>
-        <p><span class="step-number">3</span> Folge den Anweisungen auf dem Bildschirm</p>
+<div class="guide-section"><h2><i class="fas fa-eye"></i> 7. Öffentliches Profil</h2>
+<p>Wenn dein Profil aktiv und verifiziert ist, können Kunden dich finden:</p>
+<ul><li>Profil erscheint in deiner Berufskategorie</li><li>Klicke "Profil ansehen" um dein öffentliches Profil zu sehen</li></ul>
+<div class="warning-box"><strong><i class="fas fa-check-circle"></i> Voraussetzungen:</strong> Profil muss "Aktiv" und "Verifiziert" sein.</div></div>
 
-        <div class="tip-box">
-            <strong><i class="fas fa-shield-alt"></i> Warum 2FA?</strong> 
-            Zwei-Faktor-Authentifizierung schützt dein Konto auch wenn jemand dein Passwort kennt.
-        </div>
-    </div>
+<div class="guide-section"><h2><i class="fas fa-share-alt"></i> 8. Social Media verknüpfen</h2>
+<p><span class="step-number">1</span> Gehe zu deinem Profil</p>
+<p><span class="step-number">2</span> Scrolle zu "Social Media"</p>
+<p><span class="step-number">3</span> Füge URLs ein:</p>
+<ul><li><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook: https://facebook.com/deineFirma</li>
+<li><i class="fab fa-instagram" style="color:#e4405f"></i> Instagram: https://instagram.com/deineFirma</li>
+<li><i class="fab fa-linkedin" style="color:#0077b5"></i> LinkedIn: https://linkedin.com/company/deineFirma</li></ul>
+<div class="tip-box"><strong><i class="fas fa-lightbulb"></i> Tipp:</strong> Die Icons erscheinen auf deinem öffentlichen Profil!</div></div>
 
-    <!-- Section 5: Öffentliches Profil -->
-    <div class="guide-section">
-        <h2><i class="fas fa-eye"></i> 5. Dein öffentliches Profil</h2>
-        <p>Wenn dein Profil aktiv ist, können Kunden dich auf unserer Plattform finden:</p>
-        
-        <ul>
-            <li>Dein Profil erscheint in der Kategorie deines Berufs (Architekten, Anwälte, etc.)</li>
-            <li>Kunden können deine Kontaktdaten, Beschreibung und Logo sehen</li>
-            <li>Klicke auf "Profil ansehen" um zu sehen, wie andere dich sehen</li>
-        </ul>
+<div class="guide-section"><h2><i class="fas fa-headset"></i> 9. Brauchst du Hilfe?</h2>
+<ul><li><strong>E-Mail:</strong> info@123-kroatien.eu</li><li><strong>Geschäftszeiten:</strong> Mo-Fr, 9-17 Uhr</li></ul>
+<div class="tip-box"><strong><i class="fas fa-clock"></i> Antwortzeit:</strong> Innerhalb von 24-48 Stunden.</div></div>
+{% endif %}
 
-        <div class="tip-box">
-            <strong><i class="fas fa-check-circle"></i> Profil-Status:</strong> 
-            Dein Profil muss "Aktiv" und "Verifiziert" sein, um öffentlich sichtbar zu sein.
-        </div>
-    </div>
-
-    <!-- Section 6: Social Media -->
-    <div class="guide-section">
-        <h2><i class="fas fa-share-alt"></i> 6. Social Media verknüpfen</h2>
-        <p>Verbinde deine Social-Media-Profile für mehr Sichtbarkeit:</p>
-        
-        <p><span class="step-number">1</span> Gehe zu deinem <strong>Profil</strong> (klicke auf "Profil bearbeiten")</p>
-        <p><span class="step-number">2</span> Scrolle zum Bereich <strong>"Social Media"</strong></p>
-        <p><span class="step-number">3</span> Füge die vollständigen URLs ein:</p>
-        <ul>
-            <li><i class="fab fa-facebook" style="color: #1877f2;"></i> <strong>Facebook:</strong> https://facebook.com/deineFirma</li>
-            <li><i class="fab fa-instagram" style="color: #e4405f;"></i> <strong>Instagram:</strong> https://instagram.com/deineFirma</li>
-            <li><i class="fab fa-linkedin" style="color: #0077b5;"></i> <strong>LinkedIn:</strong> https://linkedin.com/company/deineFirma</li>
-        </ul>
-        <p><span class="step-number">4</span> Klicke auf <strong>"Änderungen speichern"</strong></p>
-        
-        <div class="tip-box">
-            <strong><i class="fas fa-lightbulb"></i> Tipp:</strong> 
-            Die Social-Media-Icons erscheinen auf deinem öffentlichen Profil und ermöglichen Kunden, dir direkt zu folgen!
-        </div>
-    </div>
-
-    <!-- Section 7: Kontakt -->
-    <div class="guide-section">
-        <h2><i class="fas fa-headset"></i> 7. Brauchst du Hilfe?</h2>
-        <p>Unser Team steht dir zur Verfügung:</p>
-        
-        <ul>
-            <li><strong>E-Mail:</strong> info@123-kroatien.eu</li>
-            <li><strong>Geschäftszeiten:</strong> Mo - Fr, 9:00 - 17:00 Uhr</li>
-        </ul>
-    </div>
-
-    {% endif %}
-
-    <!-- Back Button -->
-    <div style="text-align: center;">
-        <a href="{% url 'professional_portal:dashboard' %}" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            {% if lang == 'hr' %}Natrag na nadzornu ploču{% elif lang == 'en' %}Back to Dashboard{% else %}Zurück zum Dashboard{% endif %}
-        </a>
-    </div>
+<div style="text-align:center">
+<a href="{% url 'professional_portal:dashboard' %}" class="back-btn"><i class="fas fa-arrow-left"></i> {% if lang == 'hr' %}Natrag{% elif lang == 'en' %}Back to Dashboard{% else %}Zurück zum Dashboard{% endif %}</a>
+</div>
 </div>
 {% endblock body %}

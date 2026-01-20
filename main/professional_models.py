@@ -3,26 +3,12 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 import uuid
 
-# Konstanten fuer Import
-REGIONS = (
-    ('istrien', 'Istrien'),
-    ('kvarner', 'Kvarner'),
-    ('dalmatien', 'Dalmatien'),
-    ('zagreb', 'Zagreb'),
-    ('slavonien', 'Slavonien'),
-    ('andere', 'Andere'),
-)
-
-PROFESSIONAL_TYPES = (
-    ('real_estate_agent', 'Immobilienmakler'),
-    ('construction_company', 'Bauunternehmen'),
-    ('lawyer', 'Rechtsanwalt'),
-    ('tax_advisor', 'Steuerberater'),
-    ('architect', 'Architekt'),
-)
-
 
 class Professional(models.Model):
+    """
+    Unified model for all Croatian service providers (Branchenbuch)
+    """
+    
     PROFESSIONAL_TYPES = (
         ('real_estate_agent', 'Immobilienmakler'),
         ('construction_company', 'Bauunternehmen'),
@@ -33,51 +19,170 @@ class Professional(models.Model):
     
     CAN_POST_PROPERTIES = ['real_estate_agent', 'construction_company']
     
+    # 12 Croatian Regions
     REGIONS = (
         ('istrien', 'Istrien'),
-        ('kvarner', 'Kvarner'),
-        ('dalmatien', 'Dalmatien'),
-        ('zagreb', 'Zagreb'),
-        ('slavonien', 'Slavonien'),
-        ('andere', 'Andere'),
+        ('kvarner', 'Kvarner Bucht'),
+        ('norddalmatien', 'Norddalmatien'),
+        ('mitteldalmatien', 'Mitteldalmatien'),
+        ('sueddalmatien', 'Süddalmatien'),
+        ('zagreb', 'Stadt Zagreb'),
+        ('zagreber_umland', 'Zagreber Umland'),
+        ('nordkroatien', 'Nordkroatien (Varaždin & Međimurje)'),
+        ('slawonien', 'Slawonien'),
+        ('zentralkroatien', 'Zentralkroatien (Karlovac & Sisak)'),
+        ('lika', 'Lika'),
+        ('gorski_kotar', 'Gorski Kotar'),
     )
     
+    # 12 Languages
+    LANGUAGES = (
+        ('de', 'Deutsch'),
+        ('en', 'English'),
+        ('hr', 'Hrvatski'),
+        ('fr', 'Français'),
+        ('nl', 'Nederlands'),
+        ('pl', 'Polski'),
+        ('cz', 'Čeština'),
+        ('sk', 'Slovenčina'),
+        ('ru', 'Русский'),
+        ('gr', 'Ελληνικά'),
+        ('sw', 'Svenska'),
+        ('no', 'Norsk'),
+    )
+    
+    # Specializations per type
+    SPEC_REAL_ESTATE_AGENT = (
+        ('wohnimmobilien', 'Wohnimmobilien'),
+        ('gewerbeimmobilien', 'Gewerbeimmobilien'),
+        ('luxusimmobilien', 'Luxusimmobilien'),
+        ('grundstuecke', 'Grundstücke'),
+        ('ferienimmobilien', 'Ferienimmobilien'),
+        ('neubauprojekte', 'Neubauprojekte & Bauträgerobjekte'),
+        ('investitionsimmobilien', 'Investitionsimmobilien'),
+        ('kaeuferbetreuung', 'Auslands- & Käuferbetreuung'),
+        ('projektvermarktung', 'Projektvermarktung'),
+        ('immobilienbewertung', 'Immobilienbewertung'),
+        ('immobilienverwaltung', 'Immobilienverwaltung'),
+    )
+    
+    SPEC_CONSTRUCTION = (
+        ('neubau', 'Neubau'),
+        ('sanierung', 'Sanierung & Renovierung'),
+        ('umbau', 'Umbau & Erweiterung'),
+        ('rohbau', 'Rohbau'),
+        ('schluesselfertig', 'Schlüsselfertiges Bauen'),
+        ('poolbau', 'Poolbau'),
+        ('aussenanlagen', 'Außenanlagen & Erschließung'),
+        ('innenausbau', 'Innenausbau'),
+        ('dach_fassade', 'Dach- & Fassadenbau'),
+        ('betonarbeiten', 'Beton- & Stahlbetonarbeiten'),
+        ('hangbebauung', 'Küsten- & Hangbebauung'),
+        ('kroatische_normen', 'Bau nach kroatischen Normen'),
+    )
+    
+    SPEC_LAWYER = (
+        ('immobilienrecht', 'Immobilienrecht'),
+        ('baurecht', 'Baurecht & Raumordnungsrecht'),
+        ('gesellschaftsrecht', 'Gesellschaftsrecht'),
+        ('steuerrecht', 'Steuerrecht'),
+        ('erbrecht', 'Erbrecht & Nachlassplanung'),
+        ('familienrecht', 'Familienrecht'),
+        ('einwanderungsrecht', 'Einwanderungs- & Aufenthaltsrecht'),
+        ('vertragsrecht', 'Vertragsrecht'),
+        ('verwaltungsrecht', 'Verwaltungsrecht'),
+        ('grundbuchrecht', 'Grundbuch- & Katasterrecht'),
+        ('due_diligence', 'Due-Diligence-Prüfungen'),
+        ('behoerdenvertretung', 'Vertretung vor Behörden & Gerichten'),
+    )
+    
+    SPEC_TAX_ADVISOR = (
+        ('einkommensteuer', 'Einkommensteuer'),
+        ('unternehmensbesteuerung', 'Unternehmensbesteuerung'),
+        ('immobilienbesteuerung', 'Immobilienbesteuerung'),
+        ('internationale_steuern', 'Internationale Steuerberatung'),
+        ('buchhaltung', 'Buchhaltung & Jahresabschlüsse'),
+        ('mehrwertsteuer', 'Mehrwertsteuer (PDV)'),
+        ('steueroptimierung', 'Steueroptimierung für Investoren'),
+        ('grenzueberschreitend', 'Grenzüberschreitende Strukturen'),
+        ('selbststaendige', 'Selbstständige & Freiberufler'),
+        ('steuervertretung', 'Steuerliche Vertretung'),
+        ('ferienvermietung', 'Ferienvermietung & Tourismusbesteuerung'),
+    )
+    
+    SPEC_ARCHITECT = (
+        ('wohnbau', 'Wohnbau'),
+        ('gewerbebau', 'Gewerbe- & Tourismusbau'),
+        ('innenarchitektur', 'Innenarchitektur'),
+        ('landschaftsarchitektur', 'Landschaftsarchitektur'),
+        ('sanierung_denkmal', 'Sanierung & Denkmalpflege'),
+        ('energieeffizient', 'Energieeffizientes Bauen'),
+        ('genehmigungsplanung', 'Genehmigungs- & Einreichplanung'),
+        ('ausfuehrungsplanung', 'Ausführungsplanung'),
+        ('3d_visualisierung', '3D-Planung & Visualisierung'),
+        ('raumordnung', 'Raumordnungs- & Bebauungsberatung'),
+        ('kuestenplanung', 'Küsten- & Zonenplanung'),
+        ('nachhaltiges_bauen', 'Nachhaltiges & ökologisches Bauen'),
+    )
+    
+    # Time choices for opening hours
+    TIME_CHOICES = (
+        ('', '-- Uhrzeit --'),
+        ('06:00', '06:00'), ('06:30', '06:30'), ('07:00', '07:00'), ('07:30', '07:30'),
+        ('08:00', '08:00'), ('08:30', '08:30'), ('09:00', '09:00'), ('09:30', '09:30'),
+        ('10:00', '10:00'), ('10:30', '10:30'), ('11:00', '11:00'), ('11:30', '11:30'),
+        ('12:00', '12:00'), ('12:30', '12:30'), ('13:00', '13:00'), ('13:30', '13:30'),
+        ('14:00', '14:00'), ('14:30', '14:30'), ('15:00', '15:00'), ('15:30', '15:30'),
+        ('16:00', '16:00'), ('16:30', '16:30'), ('17:00', '17:00'), ('17:30', '17:30'),
+        ('18:00', '18:00'), ('18:30', '18:30'), ('19:00', '19:00'), ('19:30', '19:30'),
+        ('20:00', '20:00'), ('20:30', '20:30'), ('21:00', '21:00'), ('21:30', '21:30'),
+        ('22:00', '22:00'),
+    )
+    
+    # Primary key
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='professional')
     
+    # REQUIRED FIELDS (Pflichtfelder)
     professional_type = models.CharField(max_length=50, choices=PROFESSIONAL_TYPES, default='real_estate_agent')
-    name = models.CharField(max_length=200, verbose_name="Name / Firmenname")
+    name = models.CharField(max_length=200, verbose_name="Firmenname *")
     slug = models.SlugField(max_length=250, unique=True, blank=True)
-    email = models.EmailField(max_length=500)
-    phone = models.CharField(max_length=50, blank=True, null=True)
-    mobile = models.CharField(max_length=50, blank=True, null=True)
-    fax = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(max_length=500, verbose_name="E-Mail *")
+    phone = models.CharField(max_length=50, verbose_name="Telefon *")
+    city = models.CharField(max_length=200, verbose_name="Stadt *")
+    address = models.CharField(max_length=500, verbose_name="Adresse *")
+    oib_number = models.CharField(max_length=20, verbose_name="OIB-Nummer * (intern)")
     
-    city = models.CharField(max_length=200, blank=True, null=True)
-    region = models.CharField(max_length=50, choices=REGIONS, blank=True, null=True)
-    address = models.CharField(max_length=500, blank=True, null=True)
-    country = models.CharField(max_length=100, default='Kroatien')
+    # Multi-select required fields (stored as JSON)
+    service_regions = models.JSONField(default=list, verbose_name="Serviceregionen * (mind. 1)")
+    spoken_languages = models.JSONField(default=list, verbose_name="Sprachen * (mind. 1)")
+    specializations = models.JSONField(default=list, verbose_name="Spezialisierungen * (mind. 1)")
     
-    company_name = models.CharField(max_length=200, blank=True, null=True, verbose_name="Firmenname")
-    company_logo = models.ImageField(upload_to='professionals/logos/', blank=True, null=True)
-    profile_image = models.ImageField(upload_to='professionals/profiles/', blank=True, null=True)
+    # Images - at least one required
+    company_logo = models.ImageField(upload_to='professionals/logos/', blank=True, null=True, verbose_name="Logo")
+    profile_image = models.ImageField(upload_to='professionals/profiles/', blank=True, null=True, verbose_name="Profilbild")
     portrait_photo = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
     
-    # Extended company info (NEW)
+    # OPTIONAL FIELDS
+    mobile = models.CharField(max_length=50, blank=True, null=True)
+    fax = models.CharField(max_length=50, blank=True, null=True)
+    region = models.CharField(max_length=50, choices=REGIONS, blank=True, null=True)
+    country = models.CharField(max_length=100, default='Kroatien')
+    company_name = models.CharField(max_length=200, blank=True, null=True)
     slogan = models.CharField(max_length=300, blank=True, null=True, verbose_name="Slogan/Motto")
     founded_year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Gründungsjahr")
     employee_count = models.CharField(max_length=50, blank=True, null=True, verbose_name="Mitarbeiterzahl")
-    specializations = models.TextField(blank=True, null=True, verbose_name="Spezialisierungen")
-    
-    oib_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="OIB-Nummer")
     website = models.URLField(max_length=500, blank=True, null=True)
     
+    # Opening hours (JSON)
+    opening_hours = models.JSONField(default=dict, blank=True, verbose_name="Öffnungszeiten")
+    
+    # Descriptions
     description = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Original)")
     description_de = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Deutsch)")
     description_hr = models.TextField(blank=True, null=True, verbose_name="Beschreibung (Kroatisch)")
     
-    languages = models.CharField(max_length=500, blank=True, null=True, verbose_name="Gesprochene Sprachen")
-    
+    # Social Media
     facebook = models.URLField(max_length=500, blank=True, null=True)
     instagram = models.URLField(max_length=500, blank=True, null=True)
     linkedin = models.URLField(max_length=500, blank=True, null=True)
@@ -86,24 +191,26 @@ class Professional(models.Model):
     tiktok = models.URLField(max_length=500, blank=True, null=True)
     
     # Display toggles
-    show_references = models.BooleanField(default=True, verbose_name="Referenzen anzeigen")
-    show_contact_form = models.BooleanField(default=True, verbose_name="Kontaktformular anzeigen")
-    show_listings = models.BooleanField(default=True, verbose_name="Immobilien anzeigen")
-    show_social_media = models.BooleanField(default=True, verbose_name="Social Media anzeigen")
-    show_team = models.BooleanField(default=False, verbose_name="Team anzeigen")
+    show_references = models.BooleanField(default=True)
+    show_contact_form = models.BooleanField(default=True)
+    show_listings = models.BooleanField(default=True)
+    show_social_media = models.BooleanField(default=True)
+    show_team = models.BooleanField(default=False)
     
-    is_active = models.BooleanField(default=False, verbose_name="Aktiv")
-    is_verified = models.BooleanField(default=False, verbose_name="Verifiziert")
+    # Status
+    is_active = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     
+    # 2FA
     totp_secret = models.CharField(max_length=32, blank=True, null=True)
     totp_enabled = models.BooleanField(default=False)
     totp_verified = models.BooleanField(default=False)
     must_setup_2fa = models.BooleanField(default=True)
-    
     email_2fa_enabled = models.BooleanField(default=False)
     email_2fa_code = models.CharField(max_length=6, blank=True, null=True)
     email_2fa_code_created = models.DateTimeField(blank=True, null=True)
     
+    # Timestamps
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     
@@ -133,6 +240,69 @@ class Professional(models.Model):
         if lang == 'hr':
             return self.description_hr or self.description_de or self.description
         return self.description_de or self.description
+    
+    def get_specialization_choices(self):
+        spec_map = {
+            'real_estate_agent': self.SPEC_REAL_ESTATE_AGENT,
+            'construction_company': self.SPEC_CONSTRUCTION,
+            'lawyer': self.SPEC_LAWYER,
+            'tax_advisor': self.SPEC_TAX_ADVISOR,
+            'architect': self.SPEC_ARCHITECT,
+        }
+        return spec_map.get(self.professional_type, ())
+    
+    def get_specializations_display(self):
+        if not self.specializations:
+            return []
+        choices = dict(self.get_specialization_choices())
+        return [choices.get(spec, spec) for spec in self.specializations]
+    
+    def get_spoken_languages_display(self):
+        if not self.spoken_languages:
+            return []
+        lang_dict = dict(self.LANGUAGES)
+        return [lang_dict.get(lang, lang) for lang in self.spoken_languages]
+    
+    def get_service_regions_display(self):
+        if not self.service_regions:
+            return []
+        region_dict = dict(self.REGIONS)
+        return [region_dict.get(reg, reg) for reg in self.service_regions]
+    
+    def get_opening_hours_display(self):
+        if not self.opening_hours:
+            return {}
+        days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
+        day_keys = ['mo', 'di', 'mi', 'do', 'fr', 'sa', 'so']
+        result = {}
+        for day_name, day_key in zip(days, day_keys):
+            day_data = self.opening_hours.get(day_key, {})
+            if day_data.get('closed'):
+                result[day_name] = 'Geschlossen'
+            elif day_data.get('from') and day_data.get('to'):
+                result[day_name] = f"{day_data['from']} - {day_data['to']}"
+            else:
+                result[day_name] = '-'
+        return result
+    
+    def has_required_image(self):
+        """Check if at least logo or profile image exists"""
+        return bool(self.company_logo) or bool(self.profile_image)
+    
+    def is_profile_complete(self):
+        """Check if all required fields are filled"""
+        return all([
+            self.name,
+            self.email,
+            self.phone,
+            self.city,
+            self.address,
+            self.oib_number,
+            len(self.service_regions) >= 1,
+            len(self.spoken_languages) >= 1,
+            len(self.specializations) >= 1,
+            self.has_required_image(),
+        ])
 
 
 class ProfessionalContent(models.Model):
@@ -143,192 +313,79 @@ class ProfessionalContent(models.Model):
     
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='contents')
     language = models.CharField(max_length=5, choices=LANGUAGES)
-    
     about_text = models.TextField(blank=True, null=True, verbose_name="Über uns")
     services_text = models.TextField(blank=True, null=True, verbose_name="Leistungen")
     working_approach = models.TextField(blank=True, null=True, verbose_name="Arbeitsweise")
     faq_text = models.TextField(blank=True, null=True, verbose_name="FAQ")
     
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    
     class Meta:
-        verbose_name = 'Dienstleister-Inhalt'
-        verbose_name_plural = 'Dienstleister-Inhalte'
-        unique_together = ['professional', 'language']
+        unique_together = ('professional', 'language')
+        verbose_name = 'Professional Content'
+        verbose_name_plural = 'Professional Contents'
     
     def __str__(self):
         return f"{self.professional.name} - {self.get_language_display()}"
 
-
-class ProfessionalDocument(models.Model):
-    DOCUMENT_TYPES = (
-        ('business_license', 'Gewerbeschein'),
-        ('id_document', 'Personalausweis/Reisepass'),
-        ('company_register', 'Handelsregisterauszug'),
-        ('other', 'Sonstiges'),
-    )
-    
-    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='documents')
-    document_type = models.CharField(max_length=50, choices=DOCUMENT_TYPES)
-    file = models.FileField(upload_to='professionals/documents/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    is_verified = models.BooleanField(default=False)
-    notes = models.TextField(blank=True, null=True)
-    
-    class Meta:
-        verbose_name = 'Dokument'
-        verbose_name_plural = 'Dokumente'
-    
-    def __str__(self):
-        return f"{self.professional.name} - {self.get_document_type_display()}"
-
-
-class ReferenceProject(models.Model):
-    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
-    
-    title = models.CharField(max_length=200, verbose_name="Projekttitel")
-    description = models.TextField(blank=True, null=True, verbose_name="Beschreibung")
-    year = models.PositiveIntegerField(blank=True, null=True, verbose_name="Jahr")
-    location = models.CharField(max_length=200, blank=True, null=True, verbose_name="Standort")
-    project_type = models.CharField(max_length=100, blank=True, null=True, verbose_name="Projektart")
-    
-    image_1 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
-    image_2 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
-    image_3 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
-    image_4 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
-    image_5 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
-    image_6 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
-    
-    sort_order = models.PositiveIntegerField(default=0, verbose_name="Sortierreihenfolge")
-    is_featured = models.BooleanField(default=False, verbose_name="Hervorgehoben")
-    
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        verbose_name = 'Referenzprojekt'
-        verbose_name_plural = 'Referenzprojekte'
-        ordering = ['sort_order', '-year', '-created']
-    
-    def __str__(self):
-        return f"{self.title} ({self.professional.name})"
-    
-    def get_images(self):
-        images = []
-        for i in range(1, 7):
-            img = getattr(self, f'image_{i}')
-            if img:
-                images.append(img)
-        return images
-
-
-
-class RealEstateAgentProfile(models.Model):
-    """Extended profile for real estate agents"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='agent_profile')
-    license_number = models.CharField(max_length=100, blank=True, null=True)
-    years_experience = models.PositiveIntegerField(blank=True, null=True)
-    specialties = models.TextField(blank=True, null=True)
-    
-    class Meta:
-        verbose_name = 'Makler-Profil'
-        verbose_name_plural = 'Makler-Profile'
-    
-    def __str__(self):
-        return f"Makler-Profil: {self.professional.name}"
-
-
-class ConstructionCompanyProfile(models.Model):
-    """Extended profile for construction companies"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='construction_profile')
-    company_size = models.CharField(max_length=50, blank=True, null=True)
-    founded_year = models.PositiveIntegerField(blank=True, null=True)
-    certifications = models.TextField(blank=True, null=True)
-    
-    class Meta:
-        verbose_name = 'Bauunternehmen-Profil'
-        verbose_name_plural = 'Bauunternehmen-Profile'
-    
-    def __str__(self):
-        return f"Bauunternehmen-Profil: {self.professional.name}"
-
-
-class LawyerProfile(models.Model):
-    """Extended profile for lawyers"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='lawyer_profile')
-    bar_association = models.CharField(max_length=200, blank=True, null=True)
-    practice_areas = models.TextField(blank=True, null=True)
-    
-    class Meta:
-        verbose_name = 'Anwalt-Profil'
-        verbose_name_plural = 'Anwalt-Profile'
-    
-    def __str__(self):
-        return f"Anwalt-Profil: {self.professional.name}"
-
-
-class TaxAdvisorProfile(models.Model):
-    """Extended profile for tax advisors"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='tax_advisor_profile')
-    certification = models.CharField(max_length=200, blank=True, null=True)
-    specializations = models.TextField(blank=True, null=True)
-    
-    class Meta:
-        verbose_name = 'Steuerberater-Profil'
-        verbose_name_plural = 'Steuerberater-Profile'
-    
-    def __str__(self):
-        return f"Steuerberater-Profil: {self.professional.name}"
-
-
-class ArchitectProfile(models.Model):
-    """Extended profile for architects"""
-    professional = models.OneToOneField(Professional, on_delete=models.CASCADE, related_name='architect_profile')
-    chamber_membership = models.CharField(max_length=200, blank=True, null=True)
-    portfolio_url = models.URLField(blank=True, null=True)
-    design_style = models.TextField(blank=True, null=True)
-    
-    class Meta:
-        verbose_name = 'Architekt-Profil'
-        verbose_name_plural = 'Architekt-Profile'
-    
-    def __str__(self):
-        return f"Architekt-Profil: {self.professional.name}"
-
-
 class Lead(models.Model):
-    """Stores contact form submissions from professional profile pages."""
     STATUS_CHOICES = (
         ('new', 'Neu'),
-        ('in_progress', 'In Bearbeitung'),
-        ('completed', 'Abgeschlossen'),
-        ('spam', 'Spam'),
+        ('contacted', 'Kontaktiert'),
+        ('closed', 'Abgeschlossen'),
     )
     
-    professional = models.ForeignKey(
-        'Professional', 
-        on_delete=models.CASCADE, 
-        related_name='leads',
-        verbose_name="Dienstleister"
-    )
-    
-    name = models.CharField(max_length=200, verbose_name="Name")
-    email = models.EmailField(verbose_name="E-Mail")
-    phone = models.CharField(max_length=50, blank=True, null=True, verbose_name="Telefon")
-    message = models.TextField(verbose_name="Nachricht")
-    
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new', verbose_name="Status")
-    source_url = models.URLField(blank=True, null=True, verbose_name="Quell-URL")
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='leads', null=True, blank=True)
+    listing = models.ForeignKey('listings.Listing', on_delete=models.SET_NULL, null=True, blank=True, related_name='leads')
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=50, blank=True, null=True)
+    message = models.TextField()
+    property_reference = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    notes = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    is_read = models.BooleanField(default=False)
+
     ip_address = models.GenericIPAddressField(blank=True, null=True)
-    
-    created = models.DateTimeField(auto_now_add=True, verbose_name="Erstellt am")
-    updated = models.DateTimeField(auto_now=True, verbose_name="Aktualisiert am")
+    source_url = models.URLField(max_length=500, blank=True, null=True)
     
     class Meta:
-        verbose_name = 'Anfrage'
-        verbose_name_plural = 'Anfragen'
         ordering = ['-created']
     
     def __str__(self):
-        return f"Anfrage von {self.name} an {self.professional.name}"
+        return f"Lead von {self.name} - {self.created.strftime('%d.%m.%Y')}"
+    
+    class Meta:
+        ordering = ['-created']
+    
+    def __str__(self):
+        return f"Lead von {self.name} - {self.created.strftime('%d.%m.%Y')}"
+
+
+# Reference projects for professionals
+class ReferenceProject(models.Model):
+    professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    year = models.PositiveIntegerField(blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-year', '-created']
+    
+    def __str__(self):
+        return f"{self.title} - {self.professional.name}"
+
+
+# Backward compatibility aliases
+RealEstateAgentProfile = Professional
+ConstructionCompanyProfile = Professional
+LawyerProfile = Professional
+TaxAdvisorProfile = Professional
+ArchitectProfile = Professional
+
+# Export constants at module level
+REGIONS = Professional.REGIONS
+PROFESSIONAL_TYPES = Professional.PROFESSIONAL_TYPES
