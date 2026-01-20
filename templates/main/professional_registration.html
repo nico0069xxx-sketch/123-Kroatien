@@ -9,6 +9,13 @@
         <div class="col-md-8 text-center">
           <h1 class="text-white" style="text-shadow: 3px 3px 6px #000, 0 0 20px rgba(0,0,0,0.9);">{{ labels.title }}</h1>
           <p class="text-white" style="text-shadow: 2px 2px 4px #000, 0 0 15px rgba(0,0,0,0.9);">{{ labels.subtitle }}</p>
+          
+          <!-- Language Buttons -->
+          <div class="mt-4">
+            <a href="/ge/ge/kroatien/registrierung/" class="btn btn-sm {% if lang == 'ge' %}btn-light{% else %}btn-outline-light{% endif %} me-2">🇩🇪 Deutsch</a>
+            <a href="/hr/hr/hrvatska/registracija/" class="btn btn-sm {% if lang == 'hr' %}btn-light{% else %}btn-outline-light{% endif %} me-2">🇭🇷 Hrvatski</a>
+            <a href="/en/en/croatia/registration/" class="btn btn-sm {% if lang == 'en' %}btn-light{% else %}btn-outline-light{% endif %}">🇬🇧 English</a>
+          </div>
         </div>
       </div>
     </div>
@@ -218,7 +225,7 @@
               <div class="mb-3">
                 <label for="id_document" class="form-label fw-bold">{% if lang == "hr" %}Osobna iskaznica ili putovnica{% else %}Personalausweis oder Reisepass{% endif %} <span class="text-danger">*</span></label>
                 {{ form.document }}
-                <small class="text-muted d-block mt-1">{% if lang == "hr" %}PDF, JPG, PNG{% else %}PDF, JPG, PNG{% endif %}</small>
+                <small class="text-muted d-block mt-1">PDF, JPG, PNG</small>
               </div>
               
               <div class="alert alert-info">
