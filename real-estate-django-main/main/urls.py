@@ -92,4 +92,4 @@ urlpatterns = [
     path('hr/hrvatska/postanite-partner/', views.partner_landing, {'lang': 'hr'}, name='partner-landing-hr'),
     path('hr/hrvatska/<str:category>/', professional_views.professional_list, {'country': 'hrvatska'}, name='professional-list-hr'),
     path('hr/hrvatska/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'hrvatska'}, name='professional-detail-hr'),
-]
+] + glossary_urlpatterns  # Dynamische Glossar-URLs für alle 12 Sprachen
