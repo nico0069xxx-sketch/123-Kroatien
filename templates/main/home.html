@@ -543,33 +543,45 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="partner-carousel-container" style="overflow: hidden; position: relative;">
-                        <div class="partner-carousel" id="partnerCarousel">
-                            {% if partners_with_logo %}
-                                {% for partner in partners_with_logo %}
-                                <a href="/ge/kroatien/{{ partner.professional_type|cut:'_' }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
-                                    <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
-                                </a>
-                                {% endfor %}
-                                {% for partner in partners_with_logo %}
-                                <a href="/ge/kroatien/{{ partner.professional_type|cut:'_' }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
-                                    <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
-                                </a>
-                                {% endfor %}
-                            {% else %}
-    <div class="partner-carousel" id="partnerCarousel">
-        <a href="#" class="partner-logo-item">
-            <img src="{% static 'images/anlage-logo-domus.png' %}" alt="Domus" class="partner-logo-img">
-        </a>
-        <a href="#" class="partner-logo-item">
-            <img src="{% static 'images/anlage-logo-hausbau-kroatien.png' %}" alt="Hausbau Kroatien" class="partner-logo-img">
-        </a>
-        <a href="#" class="partner-logo-item">
-            <img src="{% static 'images/partner-logo6.png' %}" alt="Partner" class="partner-logo-img">
-        </a>
-        <a href="#" class="partner-logo-item">
-            <img src="{% static 'images/partner-logo7.png' %}" alt="Partner" class="partner-logo-img">
-        </a>
-    </div>
+                       <div class="partner-carousel" id="partnerCarousel">
+                        {% if partners_with_logo %}
+                            {% for partner in partners_with_logo %}
+                            <a href="/ge/kroatien/{{ partner.professional_type }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
+                                <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
+                            </a>
+                            {% endfor %}
+                            {% for partner in partners_with_logo %}
+                            <a href="/ge/kroatien/{{ partner.professional_type }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
+                                <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/anlage-logo-domus.png' %}" alt="Domus" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/anlage-logo-hausbau-kroatien.png' %}" alt="Hausbau Kroatien" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/partner-logo6.png' %}" alt="Partner" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/partner-logo7.png' %}" alt="Partner" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/anlage-logo-domus.png' %}" alt="Domus" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/anlage-logo-hausbau-kroatien.png' %}" alt="Hausbau Kroatien" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/partner-logo6.png' %}" alt="Partner" class="partner-logo-img">
+                            </a>
+                            <a href="#" class="partner-logo-item">
+                                <img src="{% static 'images/partner-logo7.png' %}" alt="Partner" class="partner-logo-img">
+                            </a>
+                        {% endif %}
+                    </div>
 {% endif %}
                         </div>
                     </div>
