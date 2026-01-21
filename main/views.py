@@ -73,18 +73,12 @@ def home(request):
         else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
 
     lang = request.session.get('site_language', 'ge')
-    # Partner-Logos: Verifizierte Professionals mit Logo (Gruppe A + B)
+    # Partner-Logos: Verifizierte Professionals mit Logo
     partners_with_logo = Professional.objects.filter(
         is_active=True,
         is_verified=True,
         company_logo__isnull=False
-    ).exclude(company_logo='').order_by('?')[:12]  # Zufaellig, max 12
-    
-   # Get verified partners with logos for carousel
-    partners_with_logo = Professional.objects.filter(
-        is_active=True,
-        company_logo__isnull=False
-    ).exclude(company_logo='')[:10]
+    ).exclude(company_logo='').order_by('?')[:12]
     
     context = {
         'latest_8_listings': latest_8_listings,

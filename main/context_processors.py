@@ -188,6 +188,57 @@ def get_my_translations(request):
         'sw': 'Nyheter',
         'no': 'Nyheter',
     }
+    context['news_url'] = news_urls.get(user_language, '/ge/kroatien/nachrichten/')
+    
+    # News Label
+    news_labels = {
+        'ge': 'Nachrichten',
+        'en': 'News',
+        'hr': 'Vijesti',
+        'fr': 'Actualités',
+        'nl': 'Nieuws',
+        'pl': 'Wiadomości',
+        'cz': 'Zprávy',
+        'sk': 'Správy',
+        'ru': 'Новости',
+        'gr': 'Νέα',
+        'sw': 'Nyheter',
+        'no': 'Nyheter',
+    }
     context['news_label'] = news_labels.get(user_language, 'Nachrichten')
+
+    # Partner Section Labels
+    partner_labels = {
+        'ge': 'Unsere Partner',
+        'en': 'Our Partners',
+        'hr': 'Naši partneri',
+        'fr': 'Nos partenaires',
+        'nl': 'Onze partners',
+        'pl': 'Nasi partnerzy',
+        'cz': 'Naši partneři',
+        'sk': 'Naši partneri',
+        'ru': 'Наши партнеры',
+        'gr': 'Οι συνεργάτες μας',
+        'sw': 'Våra partners',
+        'no': 'Våre partnere',
+    }
+    context['our_partners'] = partner_labels.get(user_language, 'Unsere Partner')
+    
+    # Partner Subtitle Labels
+    partner_subtitle = {
+        'ge': 'Verifizierte Partner aus Kroatien',
+        'en': 'Verified partners from Croatia',
+        'hr': 'Verificirani partneri iz Hrvatske',
+        'fr': 'Partenaires vérifiés de Croatie',
+        'nl': 'Geverifieerde partners uit Kroatië',
+        'pl': 'Zweryfikowani partnerzy z Chorwacji',
+        'cz': 'Ověření partneři z Chorvatska',
+        'sk': 'Overení partneri z Chorvátska',
+        'ru': 'Проверенные партнеры из Хорватии',
+        'gr': 'Επαληθευμένοι συνεργάτες από την Κροατία',
+        'sw': 'Verifierade partners från Kroatien',
+        'no': 'Verifiserte partnere fra Kroatia',
+    }
+    context['partner_subtitle'] = partner_subtitle.get(user_language, 'Verifizierte Partner aus Kroatien')
 
     return context
