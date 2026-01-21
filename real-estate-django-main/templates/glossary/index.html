@@ -1,0 +1,388 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+/* Glossar Index Styles */
+.glossary-hero {
+    background: linear-gradient(135deg, var(--color-primary, #0F172A) 0%, #1E293B 100%);
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.glossary-hero h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.glossary-hero p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.125rem;
+    max-width: 600px;
+}
+
+/* Search & Filters */
+.glossary-filters {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.glossary-search {
+    position: relative;
+}
+
+.glossary-search input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 2px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.glossary-search input:focus {
+    outline: none;
+    border-color: var(--color-secondary, #EA580C);
+}
+
+.glossary-search .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94A3B8;
+}
+
+.filter-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.filter-select {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.9375rem;
+    cursor: pointer;
+}
+
+/* Term Cards - Akkordeon */
+.glossary-terms {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.term-card {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.term-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-secondary, #EA580C);
+}
+
+.term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    background: #FAFAFA;
+}
+
+.term-header h3 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text, #0F172A);
+    margin: 0;
+}
+
+.term-header .toggle-icon {
+    color: #94A3B8;
+    transition: transform 0.2s;
+}
+
+.term-card.expanded .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.term-content {
+    display: none;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid #E2E8F0;
+}
+
+.term-card.expanded .term-content {
+    display: block;
+}
+
+.term-short-def {
+    color: var(--color-text-secondary, #64748B);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.term-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary, #EA580C);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: gap 0.2s;
+}
+
+.term-link:hover {
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #C2410C;
+}
+
+/* Pagination */
+.glossary-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem 0;
+}
+
+.pagination-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-text, #0F172A);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.pagination-btn:hover {
+    background: var(--color-secondary, #EA580C);
+    color: #fff;
+    border-color: var(--color-secondary, #EA580C);
+    text-decoration: none;
+}
+
+.pagination-btn.active {
+    background: var(--color-secondary, #EA580C);
+    color: #fff;
+    border-color: var(--color-secondary, #EA580C);
+}
+
+.pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Results Info */
+.results-info {
+    color: var(--color-text-secondary, #64748B);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-text-secondary, #64748B);
+}
+
+.no-results i {
+    font-size: 3rem;
+    color: #E2E8F0;
+    margin-bottom: 1rem;
+}
+
+/* Disclaimer */
+.glossary-disclaimer {
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: #92400E;
+}
+
+.glossary-disclaimer i {
+    margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .glossary-hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+    }
+    
+    .filter-select {
+        width: 100%;
+    }
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="glossary-hero">
+    <div class="container">
+        <h1>{{ t.glossary_title }}</h1>
+        <p>{{ t.glossary_subtitle }}</p>
+    </div>
+</section>
+
+<div class="container py-4">
+    <!-- Search & Filters -->
+    <div class="glossary-filters">
+        <form method="GET" action="" id="glossary-filter-form">
+            <div class="glossary-search">
+                <i class="fa fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="{{ q }}" 
+                    placeholder="{{ t.search_placeholder }}"
+                    data-testid="glossary-search-input"
+                >
+            </div>
+            
+            <div class="filter-row">
+                <select name="audience" class="filter-select" onchange="this.form.submit()" data-testid="filter-audience">
+                    <option value="">{{ t.filter_audience }}: {{ t.all }}</option>
+                    {% for cat in audience_cats %}
+                    <option value="{{ cat.key }}" {% if audience == cat.key %}selected{% endif %}>
+                        {{ cat.get_label_for_language|default:cat.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+                
+                <select name="topic" class="filter-select" onchange="this.form.submit()" data-testid="filter-topic">
+                    <option value="">{{ t.filter_topic }}: {{ t.all }}</option>
+                    {% for cat in topic_cats %}
+                    <option value="{{ cat.key }}" {% if topic == cat.key %}selected{% endif %}>
+                        {{ cat.get_label_for_language|default:cat.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+                
+                <select name="asset_type" class="filter-select" onchange="this.form.submit()" data-testid="filter-asset-type">
+                    <option value="">{{ t.filter_asset_type }}: {{ t.all }}</option>
+                    {% for cat in asset_type_cats %}
+                    <option value="{{ cat.key }}" {% if asset_type == cat.key %}selected{% endif %}>
+                        {{ cat.get_label_for_language|default:cat.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Results Info -->
+    {% if total_count %}
+    <div class="results-info">
+        <strong>{{ total_count }}</strong> {{ t.results_count }}
+        {% if q %} – "{{ q }}"{% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Term Cards (Akkordeon) -->
+    {% if page_obj.object_list %}
+    <div class="glossary-terms" data-testid="glossary-terms-list">
+        {% for term in page_obj %}
+        <div class="term-card" data-testid="term-card-{{ term.slug }}">
+            <div class="term-header" onclick="toggleTerm(this)">
+                <h3>{{ term.title }}</h3>
+                <i class="fa fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="term-content">
+                <p class="term-short-def">{{ term.short_def }}</p>
+                <a href="{{ glossary_base_url }}{{ term.slug }}/" class="term-link" data-testid="learn-more-{{ term.slug }}">
+                    {{ t.learn_more }} <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav class="glossary-pagination" data-testid="glossary-pagination">
+        {% if page_obj.has_previous %}
+        <a href="?{% if q %}q={{ q }}&{% endif %}{% if audience %}audience={{ audience }}&{% endif %}{% if topic %}topic={{ topic }}&{% endif %}{% if asset_type %}asset_type={{ asset_type }}&{% endif %}page={{ page_obj.previous_page_number }}" class="pagination-btn">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+        {% endif %}
+        
+        <span class="pagination-info">
+            {{ t.page }} {{ page_obj.number }} {{ t.of }} {{ page_obj.paginator.num_pages }}
+        </span>
+        
+        {% if page_obj.has_next %}
+        <a href="?{% if q %}q={{ q }}&{% endif %}{% if audience %}audience={{ audience }}&{% endif %}{% if topic %}topic={{ topic }}&{% endif %}{% if asset_type %}asset_type={{ asset_type }}&{% endif %}page={{ page_obj.next_page_number }}" class="pagination-btn">
+            <i class="fa fa-chevron-right"></i>
+        </a>
+        {% endif %}
+    </nav>
+    {% endif %}
+    
+    {% else %}
+    <!-- No Results -->
+    <div class="no-results" data-testid="no-results">
+        <i class="fa fa-search"></i>
+        <p>{{ t.no_results }}</p>
+    </div>
+    {% endif %}
+    
+    <!-- Disclaimer -->
+    <div class="glossary-disclaimer">
+        <i class="fa fa-info-circle"></i>
+        {{ t.disclaimer_short }}
+    </div>
+</div>
+
+<script>
+function toggleTerm(header) {
+    const card = header.closest('.term-card');
+    card.classList.toggle('expanded');
+}
+
+// Auto-expand first card
+document.addEventListener('DOMContentLoaded', function() {
+    const firstCard = document.querySelector('.term-card');
+    if (firstCard) {
+        firstCard.classList.add('expanded');
+    }
+});
+
+// Search on Enter
+document.querySelector('input[name="q"]').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        document.getElementById('glossary-filter-form').submit();
+    }
+});
+</script>
+{% endblock body %}

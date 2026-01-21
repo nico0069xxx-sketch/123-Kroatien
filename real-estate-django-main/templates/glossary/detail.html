@@ -1,0 +1,461 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+/* Glossar Detail Styles */
+.glossary-detail-hero {
+    background: linear-gradient(135deg, var(--color-primary, #0F172A) 0%, #1E293B 100%);
+    padding: 2rem 0;
+}
+
+.breadcrumb-nav {
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+.breadcrumb-nav a:hover {
+    color: #fff;
+}
+
+.breadcrumb-nav span {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0.5rem;
+}
+
+.glossary-detail-hero h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2.25rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.glossary-detail-hero .short-def {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    max-width: 700px;
+    line-height: 1.6;
+}
+
+/* Main Content */
+.glossary-detail-content {
+    padding: 3rem 0;
+}
+
+.detail-main {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.detail-main h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.5rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E2E8F0;
+}
+
+.long-definition {
+    color: var(--color-text-secondary, #475569);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.long-definition p {
+    margin-bottom: 1rem;
+}
+
+/* Synonyms */
+.synonyms-section {
+    background: #F8FAFC;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.synonyms-section h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary, #64748B);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.synonym-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.synonym-tag {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 0.375rem 0.875rem;
+    font-size: 0.875rem;
+    color: var(--color-text, #0F172A);
+}
+
+/* FAQ Accordion */
+.faq-section {
+    margin-top: 2rem;
+}
+
+.faq-section h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.5rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 1.25rem;
+}
+
+.faq-item {
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    background: #FAFAFA;
+    font-weight: 600;
+    color: var(--color-text, #0F172A);
+}
+
+.faq-question:hover {
+    background: #F1F5F9;
+}
+
+.faq-question .toggle-icon {
+    color: #94A3B8;
+    transition: transform 0.2s;
+}
+
+.faq-item.expanded .faq-question .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid #E2E8F0;
+    color: var(--color-text-secondary, #475569);
+    line-height: 1.7;
+}
+
+.faq-item.expanded .faq-answer {
+    display: block;
+}
+
+/* Sidebar */
+.detail-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+/* Related Terms */
+.related-terms {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.related-terms h3 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.125rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.related-term-link {
+    display: block;
+    padding: 0.625rem 0;
+    color: var(--color-text, #0F172A);
+    text-decoration: none;
+    border-bottom: 1px solid #F1F5F9;
+    transition: color 0.2s, padding-left 0.2s;
+}
+
+.related-term-link:hover {
+    color: var(--color-secondary, #EA580C);
+    padding-left: 0.5rem;
+    text-decoration: none;
+}
+
+.related-term-link:last-child {
+    border-bottom: none;
+}
+
+/* Language Switcher */
+.language-switcher {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem;
+}
+
+.language-switcher h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary, #64748B);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.lang-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.lang-link {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text, #0F172A);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.lang-link:hover {
+    background: var(--color-secondary, #EA580C);
+    border-color: var(--color-secondary, #EA580C);
+    color: #fff;
+    text-decoration: none;
+}
+
+.lang-link.active {
+    background: var(--color-primary, #0F172A);
+    border-color: var(--color-primary, #0F172A);
+    color: #fff;
+}
+
+/* Back Link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary, #EA580C);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    transition: gap 0.2s;
+}
+
+.back-link:hover {
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #C2410C;
+}
+
+/* Disclaimer */
+.detail-disclaimer {
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: #92400E;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .detail-sidebar {
+        position: static;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .glossary-detail-hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .detail-main {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<!-- SEO: Canonical & hreflang -->
+<link rel="canonical" href="{{ canonical_url }}">
+{% for hreflang in hreflang_links %}
+<link rel="alternate" hreflang="{{ hreflang.lang }}" href="{{ hreflang.url }}">
+{% endfor %}
+
+<!-- Schema.org Markup -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": "{{ term.title }}",
+    "description": "{{ term.short_def }}",
+    "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "{{ t.glossary_title }}",
+        "url": "{{ glossary_base_url }}"
+    }
+    {% if term.faqs %},
+    "mainEntity": [
+        {% for faq in term.faqs %}
+        {
+            "@type": "Question",
+            "name": "{{ faq.q }}",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{ faq.a }}"
+            }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+    {% endif %}
+}
+</script>
+
+<!-- Hero Section -->
+<section class="glossary-detail-hero">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="{{ glossary_base_url }}">{{ t.glossary_title }}</a>
+            <span>/</span>
+            <span style="color: rgba(255,255,255,0.9);">{{ term.title }}</span>
+        </nav>
+        <h1 data-testid="term-title">{{ term.title }}</h1>
+        <p class="short-def">{{ term.short_def }}</p>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="glossary-detail-content">
+    <div class="container">
+        <div class="row">
+            <!-- Main Column -->
+            <div class="col-lg-8">
+                <div class="detail-main" data-testid="term-detail-content">
+                    {% if term.long_def %}
+                    <div class="long-definition">
+                        {{ term.long_def|linebreaks }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if term.synonyms %}
+                    <div class="synonyms-section">
+                        <h3>{{ t.synonyms }}</h3>
+                        <div class="synonym-tags">
+                            {% for synonym in term.synonyms %}
+                            <span class="synonym-tag">{{ synonym }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- FAQ Section -->
+                {% if term.faqs %}
+                <div class="faq-section" data-testid="term-faqs">
+                    <h2>{{ t.faq_title }}</h2>
+                    {% for faq in term.faqs %}
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>{{ faq.q }}</span>
+                            <i class="fa fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            {{ faq.a }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Back Link -->
+                <a href="{{ glossary_base_url }}" class="back-link" data-testid="back-to-glossary">
+                    <i class="fa fa-arrow-left"></i> {{ t.back_to_glossary }}
+                </a>
+                
+                <!-- Disclaimer -->
+                <div class="detail-disclaimer">
+                    <i class="fa fa-info-circle"></i>
+                    {{ t.disclaimer_short }}
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="detail-sidebar">
+                    <!-- Related Terms -->
+                    {% if related_terms %}
+                    <div class="related-terms" data-testid="related-terms">
+                        <h3>{{ t.related_terms }}</h3>
+                        {% for related in related_terms %}
+                        <a href="{{ glossary_base_url }}{{ related.slug }}/" class="related-term-link">
+                            {{ related.title }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Language Switcher -->
+                    {% if all_translations|length > 1 %}
+                    <div class="language-switcher" data-testid="language-switcher">
+                        <h3>Sprache / Language</h3>
+                        <div class="lang-links">
+                            {% for tr in all_translations %}
+                            <a href="{{ tr.get_absolute_url }}" 
+                               class="lang-link {% if tr.language == lang %}active{% endif %}">
+                                {{ tr.language|upper }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function toggleFaq(question) {
+    const item = question.closest('.faq-item');
+    item.classList.toggle('expanded');
+}
+
+// Auto-expand first FAQ
+document.addEventListener('DOMContentLoaded', function() {
+    const firstFaq = document.querySelector('.faq-item');
+    if (firstFaq) {
+        firstFaq.classList.add('expanded');
+    }
+});
+</script>
+{% endblock body %}
