@@ -1,4 +1,4 @@
-.topbar {
+v.topbar {
   background: #e41f0e;
   background: linear-gradient(90deg, #94041e 0%, #d1343c 61%, #ff0000 100%);
 }
@@ -108,7 +108,7 @@
 }
 */
 
-.myCard {
+v.myCard {
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.05);
 
@@ -927,3 +927,39 @@ small, .small {
     border: none !important;
     outline: none !important;
 }
+/* ============================================
+   FIX: Remove blue focus box from navigation
+   ============================================ */
+
+/* Remove all focus outlines and borders from nav elements */
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link:active,
+.navbar-nav .nav-link.active:focus,
+.navbar-nav .dropdown-toggle:focus,
+.navbar-nav .dropdown-toggle.show,
+.navbar-nav .dropdown-toggle:active,
+.navbar .btn:focus,
+.navbar .btn:active,
+.navbar .btn.dropdown-toggle:focus,
+.navbar .btn.dropdown-toggle.show {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Also target Bootstrap's default focus state */
+.nav-link:focus-visible,
+.dropdown-toggle:focus-visible,
+.btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any potential border from active dropdown state */
+.navbar-nav .nav-item.show > .nav-link,
+.navbar-nav .nav-item.show > .dropdown-toggle {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
