@@ -1,0 +1,74 @@
+{% extends 'include/base.html' %}
+
+{% block style %}
+<style>
+.glossary-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 3rem 0; }
+.glossary-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; }
+.glossary-hero p { color: rgba(255,255,255,0.85); }
+.glossary-filters { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 1.5rem; margin-bottom: 2rem; }
+.glossary-search input { width: 100%; padding: 0.875rem; border: 2px solid #E2E8F0; border-radius: 8px; }
+.filter-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+.filter-select { flex: 1; min-width: 180px; padding: 0.75rem; border: 1px solid #E2E8F0; border-radius: 8px; }
+.term-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; margin-bottom: 0.75rem; overflow: hidden; }
+.term-header { display: flex; justify-content: space-between; padding: 1rem; cursor: pointer; background: #FAFAFA; }
+.term-header h3 { font-size: 1.125rem; margin: 0; }
+.term-content { display: none; padding: 1rem; border-top: 1px solid #E2E8F0; }
+.term-card.expanded .term-content { display: block; }
+.term-link { color: #EA580C; font-weight: 600; text-decoration: none; }
+.glossary-disclaimer { background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 8px; padding: 1rem; margin-top: 2rem; color: #92400E; }
+</style>
+{% endblock style %}
+
+{% block body %}
+<section class="glossary-hero">
+    <div class="container">
+        <h1>{{ t.glossary_title }}</h1>
+        <p>{{ t.glossary_subtitle }}</p>
+    </div>
+</section>
+
+<div class="container py-4">
+    <div class="glossary-filters">
+        <form method="GET">
+            <div class="glossary-search">
+                <input type="text" name="q" value="{{ q }}" placeholder="{{ t.search_placeholder }}">
+            </div>
+            <div class="filter-row">
+                <select name="audience" class="filter-select" onchange="this.form.submit()">
+                    <option value="">{{ t.filter_audience }}: {{ t.all }}</option>
+                    {% for cat in audience_cats %}
+                    <option value="{{ cat.key }}" {% if audience == cat.key %}selected{% endif %}>{{ cat.label }}</option>
+                    {% endfor %}
+                </select>
+                <select name="topic" class="filter-select" onchange="this.form.submit()">
+                    <option value="">{{ t.filter_topic }}: {{ t.all }}</option>
+                    {% for cat in topic_cats %}
+                    <option value="{{ cat.key }}" {% if topic == cat.key %}selected{% endif %}>{{ cat.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+
+    {% if total_count %}<p><strong>{{ total_count }}</strong> {{ t.results_count }}</p>{% endif %}
+
+    {% for term in page_obj %}
+    <div class="term-card" onclick="this.classList.toggle('expanded')">
+        <div class="term-header">
+            <h3>{{ term.title }}</h3>
+            <i class="fa fa-chevron-down"></i>
+        </div>
+        <div class="term-content">
+            <p>{{ term.short_def }}</p>
+            <a href="{{ glossary_base_url }}{{ term.slug }}/" class="term-link">{{ t.learn_more }} →</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>{{ t.no_results }}</p>
+    {% endfor %}
+
+    <div class="glossary-disclaimer">
+        <i class="fa fa-info-circle"></i> {{ t.disclaimer_short }}
+    </div>
+</div>
+{% endblock body %}

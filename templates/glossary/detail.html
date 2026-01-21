@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #d4d3df; -webkit-text-stroke: #d4d3df; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.051)}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #d4d3df; -webkit-text-stroke: #d4d3df; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.051); min-height: 16.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">{% extends 'include/base.html' %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% block style %}</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">.glossary-detail-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 2rem 0; }</span></p>
+<p class="p1"><span class="s1">.glossary-detail-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.25rem; color: #fff; }</span></p>
+<p class="p1"><span class="s1">.glossary-detail-hero .short-def { color: rgba(255,255,255,0.9); font-size: 1.125rem; }</span></p>
+<p class="p1"><span class="s1">.breadcrumb-nav a { color: rgba(255,255,255,0.7); text-decoration: none; }</span></p>
+<p class="p1"><span class="s1">.detail-main { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: 2rem; margin-bottom: 2rem; }</span></p>
+<p class="p1"><span class="s1">.detail-main h2 { font-family: 'Playfair Display', serif; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.75rem; }</span></p>
+<p class="p1"><span class="s1">.long-definition { color: #475569; line-height: 1.8; }</span></p>
+<p class="p1"><span class="s1">.synonyms-section { background: #F8FAFC; border-radius: 8px; padding: 1.25rem; margin-top: 1.5rem; }</span></p>
+<p class="p1"><span class="s1">.synonym-tag { background: #fff; border: 1px solid #E2E8F0; border-radius: 20px; padding: 0.375rem 0.875rem; margin: 0.25rem; display: inline-block; }</span></p>
+<p class="p1"><span class="s1">.faq-item { background: #fff; border: 1px solid #E2E8F0; border-radius: 8px; margin-bottom: 0.75rem; }</span></p>
+<p class="p1"><span class="s1">.faq-question { padding: 1rem; cursor: pointer; background: #FAFAFA; font-weight: 600; }</span></p>
+<p class="p1"><span class="s1">.faq-answer { display: none; padding: 1rem; border-top: 1px solid #E2E8F0; }</span></p>
+<p class="p1"><span class="s1">.faq-item.expanded .faq-answer { display: block; }</span></p>
+<p class="p1"><span class="s1">.related-terms { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: 1.5rem; }</span></p>
+<p class="p1"><span class="s1">.related-term-link { display: block; padding: 0.625rem 0; color: #0F172A; text-decoration: none; border-bottom: 1px solid #F1F5F9; }</span></p>
+<p class="p1"><span class="s1">.related-term-link:hover { color: #EA580C; }</span></p>
+<p class="p1"><span class="s1">.back-link { color: #EA580C; font-weight: 600; text-decoration: none; }</span></p>
+<p class="p1"><span class="s1">.detail-disclaimer { background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 8px; padding: 1rem; margin-top: 2rem; color: #92400E; }</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">{% endblock style %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% block body %}</span></p>
+<p class="p1"><span class="s1">&lt;section class="glossary-detail-hero"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;nav class="breadcrumb-nav"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="{{ glossary_base_url }}"&gt;{{ t.glossary_title }}&lt;/a&gt; / &lt;span style="color:#fff"&gt;{{ term.title }}&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1&gt;{{ term.title }}&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p class="short-def"&gt;{{ term.short_def }}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section class="py-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="col-lg-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="detail-main"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% if term.long_def %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="long-definition"&gt;{{ term.long_def|linebreaks }}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% endif %}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% if term.synonyms %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="synonyms-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;{{ t.synonyms }}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>{% for syn in term.synonyms %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;span class="synonym-tag"&gt;{{ syn }}&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>{% endfor %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% endif %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{% if term.faqs %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="faq-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h2&gt;{{ t.faq_title }}&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% for faq in term.faqs %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="faq-item" onclick="this.classList.toggle('expanded')"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="faq-question"&gt;{{ faq.q }}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="faq-answer"&gt;{{ faq.a }}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% endfor %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{% endif %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="{{ glossary_base_url }}" class="back-link"&gt;← {{ t.back_to_glossary }}&lt;/a&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="detail-disclaimer"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;i class="fa fa-info-circle"&gt;&lt;/i&gt; {{ t.disclaimer_short }}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="col-lg-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{% if related_terms %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="related-terms"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h3&gt;{{ t.related_terms }}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% for related in related_terms %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;a href="{{ glossary_base_url }}{{ related.slug }}/" class="related-term-link"&gt;{{ related.title }}&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{% endfor %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{% endif %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p1"><span class="s1">{% endblock body %}</span></p>
+</body>
+</html>

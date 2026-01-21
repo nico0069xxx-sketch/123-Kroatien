@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #d4d3df; -webkit-text-stroke: #d4d3df; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.051)}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #d4d3df; -webkit-text-stroke: #d4d3df; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.051); min-height: 16.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">{% extends 'include/base.html' %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% block style %}</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">.landing-hero { background: linear-gradient(135deg, #0F172A 0%, #0E4D64 100%); padding: 4rem 0; }</span></p>
+<p class="p1"><span class="s1">.landing-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; }</span></p>
+<p class="p1"><span class="s1">.landing-hero p { color: rgba(255,255,255,0.85); }</span></p>
+<p class="p1"><span class="s1">.badge-holiday { background: rgba(6,182,212,0.2); border: 1px solid #06B6D4; color: #fff; padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.8rem; }</span></p>
+<p class="p1"><span class="s1">.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 3rem 0; }</span></p>
+<p class="p1"><span class="s1">.term-card-landing { background: #fff; border-radius: 12px; padding: 1.5rem; border: 1px solid #E2E8F0; }</span></p>
+<p class="p1"><span class="s1">.term-card-landing:hover { box-shadow: 0 12px 24px rgba(0,0,0,0.08); transform: translateY(-4px); }</span></p>
+<p class="p1"><span class="s1">.term-card-landing h3 { font-family: 'Playfair Display', serif; font-size: 1.125rem; }</span></p>
+<p class="p1"><span class="s1">.term-card-landing a { color: #06B6D4; font-weight: 600; text-decoration: none; }</span></p>
+<p class="p1"><span class="s1">.cta-section { background: #0F172A; padding: 4rem 0; text-align: center; }</span></p>
+<p class="p1"><span class="s1">.cta-section h2 { color: #fff; font-family: 'Playfair Display', serif; }</span></p>
+<p class="p1"><span class="s1">.cta-section p { color: rgba(255,255,255,0.85); }</span></p>
+<p class="p1"><span class="s1">.cta-btn { background: #06B6D4; color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; }</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">{% endblock style %}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{% block body %}</span></p>
+<p class="p1"><span class="s1">&lt;section class="landing-hero"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="badge-holiday"&gt;&lt;i class="fa fa-sun-o"&gt;&lt;/i&gt; Ferien&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1&gt;{{ t.holiday_title }}&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p&gt;{{ t.holiday_subtitle }}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="term-grid"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% for term in featured_terms %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="term-card-landing"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h3&gt;{{ term.title }}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;{{ term.short_def }}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;a href="{{ glossary_base_url }}{{ term.slug }}/"&gt;{{ t.learn_more }} →&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% empty %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p&gt;Keine Begriffe vorhanden.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{% endfor %}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section class="cta-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h2&gt;Alle Begriffe durchsuchen&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p&gt;Entdecken Sie das vollständige Glossar.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;a href="{{ glossary_base_url }}" class="cta-btn"&gt;Zum Glossar →&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p1"><span class="s1">{% endblock body %}</span></p>
+</body>
+</html>

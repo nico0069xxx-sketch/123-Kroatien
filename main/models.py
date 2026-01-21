@@ -53,3 +53,6 @@ from main.professional_models import (
     ArchitectProfile,
     ProfessionalContent,
 )
+
+# Import Glossar Models für Django Migration
+from .glossary_models import *

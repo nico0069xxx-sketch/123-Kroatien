@@ -47,6 +47,7 @@ urlpatterns += [
 # Professional Detail URLs (ohne i18n prefix)
 from main import professional_views, views
 from main import address_views, content_views
+from main import glossary_views
 urlpatterns += [
     # MARKT - muss VOR Professional URLs stehen
     path("ge/kroatien/marktberichte/", content_views.market_report_list, {"country": "kroatien"}, name="market-reports-ge-direct"),
@@ -58,6 +59,11 @@ urlpatterns += [
     
     path("ge/kroatien/partner-werden/", views.partner_landing, {"lang": "ge"}, name="partner-landing-ge-direct"),
     path("hr/hrvatska/postanite-partner/", views.partner_landing, {"lang": "hr"}, name="partner-landing-hr-direct"),
+    
+    # GLOSSAR URLs - VOR <str:category>!
+    path("ge/kroatien/glossar/", glossary_views.glossary_index, {"lang": "ge", "country": "kroatien"}, name="glossary-index-ge-direct"),
+    path("ge/kroatien/glossar/<str:slug>/", glossary_views.glossary_detail, {"lang": "ge", "country": "kroatien"}, name="glossary-detail-ge-direct"),
+    
     path("ge/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-ge-direct"),
     path("ge/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-ge-direct"),
     path("hr/hrvatska/<str:category>/", professional_views.professional_list, {"country": "hrvatska"}, name="professional-list-hr-direct"),
