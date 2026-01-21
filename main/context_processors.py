@@ -224,4 +224,55 @@ def get_my_translations(request):
     }
     context['partner_subtitle'] = partner_subtitle.get(user_language, 'Verifizierte Partner aus Kroatien')
 
+    # Hero Section - Tagline
+    hero_tagline = {
+        'ge': 'KROATIEN - ADRIA - MITTELMEER',
+        'en': 'CROATIA - ADRIATIC - MEDITERRANEAN',
+        'hr': 'HRVATSKA - JADRAN - MEDITERAN',
+        'fr': 'CROATIE - ADRIATIQUE - MÉDITERRANÉE',
+        'nl': 'KROATIË - ADRIATISCHE ZEE - MIDDELLANDSE ZEE',
+        'pl': 'CHORWACJA - ADRIATYK - MORZE ŚRÓDZIEMNE',
+        'cz': 'CHORVATSKO - JADRAN - STŘEDOMOŘÍ',
+        'sk': 'CHORVÁTSKO - JADRAN - STREDOMORIE',
+        'ru': 'ХОРВАТИЯ - АДРИАТИКА - СРЕДИЗЕМНОМОРЬЕ',
+        'gr': 'ΚΡΟΑΤΊΑ - ΑΔΡΙΑΤΙΚΉ - ΜΕΣΌΓΕΙΟΣ',
+        'sw': 'KROATIEN - ADRIATISKA HAVET - MEDELHAVET',
+        'no': 'KROATIA - ADRIATERHAVET - MIDDELHAVET',
+    }
+    context['hero_tagline'] = hero_tagline.get(user_language, 'KROATIEN - ADRIA - MITTELMEER')
+
+    # Hero Section - Title
+    hero_title = {
+        'ge': 'Exklusive Immobilien<br>an der kroatischen Küste',
+        'en': 'Exclusive Properties<br>on the Croatian Coast',
+        'hr': 'Ekskluzivne nekretnine<br>na hrvatskoj obali',
+        'fr': 'Propriétés exclusives<br>sur la côte croate',
+        'nl': 'Exclusief vastgoed<br>aan de Kroatische kust',
+        'pl': 'Ekskluzywne nieruchomości<br>na chorwackim wybrzeżu',
+        'cz': 'Exkluzivní nemovitosti<br>na chorvatském pobřeží',
+        'sk': 'Exkluzívne nehnuteľnosti<br>na chorvátskom pobreží',
+        'ru': 'Эксклюзивная недвижимость<br>на хорватском побережье',
+        'gr': 'Αποκλειστικά ακίνητα<br>στην κροατική ακτή',
+        'sw': 'Exklusiva fastigheter<br>vid den kroatiska kusten',
+        'no': 'Eksklusive eiendommer<br>ved den kroatiske kysten',
+    }
+    context['hero_title'] = hero_title.get(user_language, 'Exklusive Immobilien<br>an der kroatischen Küste')
+
+    # Hero Section - Subtitle
+    hero_subtitle = {
+        'ge': 'Verifizierte Immobilienmakler und persönliche Beratung für Ihre Traumimmobilie.',
+        'en': 'Verified real estate agents and personal advice for your dream property.',
+        'hr': 'Verificirani agenti za nekretnine i osobno savjetovanje za vašu nekretninu iz snova.',
+        'fr': 'Agents immobiliers vérifiés et conseils personnalisés pour votre propriété de rêve.',
+        'nl': 'Geverifieerde makelaars en persoonlijk advies voor uw droomwoning.',
+        'pl': 'Zweryfikowani agenci nieruchomości i osobiste doradztwo dla wymarzonej nieruchomości.',
+        'cz': 'Ověření realitní makléři a osobní poradenství pro vaši vysněnou nemovitost.',
+        'sk': 'Overení realitní makléri a osobné poradenstvo pre vašu vysnívanú nehnuteľnosť.',
+        'ru': 'Проверенные агенты по недвижимости и персональные консультации для вашей мечты.',
+        'gr': 'Επαληθευμένοι μεσίτες και προσωπικές συμβουλές για το ακίνητο των ονείρων σας.',
+        'sw': 'Verifierade fastighetsmäklare och personlig rådgivning för din drömbostad.',
+        'no': 'Verifiserte eiendomsmeglere og personlig rådgivning for drømmeeiendommen din.',
+    }
+    context['hero_subtitle'] = hero_subtitle.get(user_language, 'Verifizierte Immobilienmakler und persönliche Beratung für Ihre Traumimmobilie.')
+
     return context
