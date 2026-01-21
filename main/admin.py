@@ -66,23 +66,17 @@ class ProfessionalAdmin(admin.ModelAdmin):
     def status_anzeige(self, obj):
         if obj.is_verified and obj.is_active:
             return format_html('<span style="background:#1a5c1a;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">AKTIV</span>')
-        elif obj.id_document:
+        elif obj.company_logo:
             return format_html('<span style="background:#c9a227;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">PRUEFEN</span>')
         else:
             return format_html('<span style="background:#8b0000;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">NEU</span>')
     
-    @admin.display(description='Dokumente')
+    @admin.display(description='Logo')
     def dokumente_vorhanden(self, obj):
-        if obj.id_document:
+        if obj.company_logo:
             return format_html('<span style="color:#1a5c1a">✓ Ja</span>')
         return format_html('<span style="color:#999">Nein</span>')
     
-    @admin.display(description='Dokumente')
-    def dokumente_vorhanden(self, obj):
-        count = obj.documents.count()
-        if count > 0:
-            return format_html('<span style="color:#1a5c1a">Ja ({})</span>', count)
-        return format_html('<span style="color:#999">Nein</span>')
 
     
     @admin.display(description='Registriert am')
@@ -99,8 +93,13 @@ class ProfessionalAdmin(admin.ModelAdmin):
         }),
         ('DOKUMENTE', {
             'fields': (
+                'logo_vorschau',
+                'profil_vorschau',
+                'portrait_vorschau',
+                'ausweis_vorschau',
             ),
         }),
+
         ('KONTAKT', {
             'fields': (
                 'name',
@@ -117,7 +116,31 @@ class ProfessionalAdmin(admin.ModelAdmin):
         }),
     )
     
-    readonly_fields = ['created']
+    readonly_fields = ['created', 'logo_vorschau', 'profil_vorschau', 'portrait_vorschau', 'ausweis_vorschau']
+    
+    @admin.display(description='Ausweisdokument')
+    def ausweis_vorschau(self, obj):
+        if obj.id_document:
+            return format_html('<a href="{}" target="_blank">Dokument ansehen</a>', obj.id_document.url)
+        return "Kein Ausweis hochgeladen"
+    
+    @admin.display(description='Logo')
+    def logo_vorschau(self, obj):
+        if obj.company_logo:
+            return format_html('<img src="{}" style="max-height:100px;"/>', obj.company_logo.url)
+        return "Kein Logo hochgeladen"
+    
+    @admin.display(description='Profilbild')
+    def profil_vorschau(self, obj):
+        if obj.profile_image:
+            return format_html('<img src="{}" style="max-height:100px;"/>', obj.profile_image.url)
+        return "Kein Profilbild hochgeladen"
+    
+    @admin.display(description='Portrait')
+    def portrait_vorschau(self, obj):
+        if obj.portrait_photo:
+            return format_html('<img src="{}" style="max-height:100px;"/>', obj.portrait_photo.url)
+        return "Kein Portrait hochgeladen"
     
 
 @admin.register(ProfessionalContent)

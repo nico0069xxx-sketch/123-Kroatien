@@ -387,6 +387,7 @@ class ProfessionalRegistrationForm(forms.Form):
             specializations=self.get_specializations(),
             profile_image=d.get('profile_image'),
             company_logo=d.get('company_logo'),
+            id_document=d.get('document'),
             opening_hours=self.get_opening_hours(),
             is_active=False,
         )

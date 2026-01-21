@@ -162,6 +162,7 @@ class Professional(models.Model):
     company_logo = models.ImageField(upload_to='professionals/logos/', blank=True, null=True, verbose_name="Logo")
     profile_image = models.ImageField(upload_to='professionals/profiles/', blank=True, null=True, verbose_name="Profilbild")
     portrait_photo = models.ImageField(upload_to='professionals/portraits/', blank=True, null=True)
+    id_document = models.FileField(upload_to='professionals/documents/', blank=True, null=True, verbose_name="Ausweisdokument")
     
     # OPTIONAL FIELDS
     mobile = models.CharField(max_length=50, blank=True, null=True)
