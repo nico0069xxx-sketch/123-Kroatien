@@ -1,0 +1,405 @@
+[
+  {
+    "canonical_key": "abgeschlossenes-bauwerk",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Abgeschlossenes Bauwerk",
+      "slug": "abgeschlossenes-bauwerk",
+      "short_def": "Rechtlich genehmigte und vollständig fertiggestellte Immobilie.",
+      "long_def": "Ein abgeschlossenes Bauwerk ist eine Immobilie, die über eine gültige Baugenehmigung verfügt, gemäß dieser errichtet wurde und offiziell als fertiggestellt gilt. In Kroatien ist die rechtliche Baulegalität Voraussetzung für Eigentumseintragung, Finanzierung, Vermietung und Wiederverkauf.",
+      "synonyms": [
+        "fertiggestelltes Gebäude",
+        "legales Bauwerk"
+      ],
+      "keywords": [
+        "Baulegalität",
+        "Abnahme",
+        "Genehmigung"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "nutzungsbewilligung",
+      "legalisierung"
+    ]
+  },
+  {
+    "canonical_key": "abschreibung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Abschreibung",
+      "slug": "abschreibung-immobilien",
+      "short_def": "Steuerliche Verteilung von Immobilienkosten über mehrere Jahre.",
+      "long_def": "Die Abschreibung ermöglicht es Investoren, Anschaffungs- oder Herstellungskosten einer Immobilie steuerlich über einen definierten Zeitraum zu verteilen. In Kroatien gelten je nach Nutzungsart unterschiedliche Abschreibungsmöglichkeiten, insbesondere bei Vermietung oder gewerblicher Nutzung.",
+      "synonyms": [
+        "AfA"
+      ],
+      "keywords": [
+        "Steuern",
+        "Rendite",
+        "Investition"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "rendite",
+      "steuerpflicht",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "alleineigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Alleineigentum",
+      "slug": "alleineigentum",
+      "short_def": "Volles Eigentum einer Immobilie durch eine einzelne Partei.",
+      "long_def": "Beim Alleineigentum ist eine Immobilie zu 100 Prozent einer natürlichen oder juristischen Person zugeordnet. Es bestehen keine Miteigentumsanteile Dritter. Diese Eigentumsform vereinfacht Entscheidungsprozesse, Verkauf und Belastungen im Grundbuch.",
+      "synonyms": [
+        "Volleigentum"
+      ],
+      "keywords": [
+        "Eigentum",
+        "Grundbuch"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "miteigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "anzahlung-kapara",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Anzahlung (Kapara)",
+      "slug": "anzahlung-kapara",
+      "short_def": "Vertragliche Sicherheitsleistung beim Immobilienkauf.",
+      "long_def": "Die Kapara ist eine in Kroatien übliche Anzahlung, die beim Abschluss eines Vor- oder Kaufvertrags geleistet wird. Sie dient der Absicherung beider Vertragsparteien. Je nach Vertragsgestaltung verfällt sie bei Rücktritt oder ist doppelt zurückzuzahlen.",
+      "synonyms": [
+        "Kaution Kaufvertrag"
+      ],
+      "keywords": [
+        "Kaufvertrag",
+        "Vorvertrag",
+        "Sicherheit"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "vorvertrag",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "baugenehmigung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Baugenehmigung",
+      "slug": "baugenehmigung",
+      "short_def": "Behördliche Genehmigung zur Errichtung eines Bauwerks.",
+      "long_def": "Die Baugenehmigung bestätigt, dass ein Bauvorhaben den geltenden Bau- und Raumordnungsvorschriften entspricht. Immobilien ohne gültige Baugenehmigung gelten in Kroatien als rechtlich risikobehaftet und können Nutzung, Verkauf oder Finanzierung verhindern.",
+      "synonyms": [
+        "Baubewilligung"
+      ],
+      "keywords": [
+        "Bau",
+        "Genehmigung",
+        "Legalität"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "legalisierung",
+      "nutzungsbewilligung",
+      "widmungsplan"
+    ]
+  },
+  {
+    "canonical_key": "bebaubarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Bebaubarkeit",
+      "slug": "bebaubarkeit",
+      "short_def": "Rechtliche Möglichkeit, ein Grundstück zu bebauen.",
+      "long_def": "Die Bebaubarkeit beschreibt, ob und in welchem Umfang ein Grundstück bebaut werden darf. Sie ergibt sich aus Flächenwidmung, Bebauungsplan und lokalen Bauvorschriften und ist ein zentraler Wertfaktor bei Grundstücken.",
+      "synonyms": [
+        "Bauzulässigkeit"
+      ],
+      "keywords": [
+        "Grundstück",
+        "Bau",
+        "Widmung"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "baukoeffizient",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "belastung-grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Belastung (Grundbuch)",
+      "slug": "belastung-grundbuch",
+      "short_def": "Im Grundbuch eingetragene Einschränkung oder Verpflichtung.",
+      "long_def": "Belastungen wie Hypotheken, Dienstbarkeiten oder Wohnrechte werden im kroatischen Grundbuch eingetragen. Sie können Nutzung, Wert und Verfügbarkeit einer Immobilie erheblich beeinflussen und müssen vor jedem Kauf geprüft werden.",
+      "synonyms": [
+        "Grundbuchbelastung"
+      ],
+      "keywords": [
+        "Hypothek",
+        "Servitut",
+        "Risiko"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "grundbuch",
+      "hypothek",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "closing",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Closing",
+      "slug": "closing-kaufabschluss",
+      "short_def": "Rechtlicher Abschluss eines Immobilienkaufs.",
+      "long_def": "Das Closing bezeichnet den finalen Schritt des Immobilienkaufs, bei dem Kaufpreiszahlung, Vertragsunterzeichnung und Eigentumsübertragung erfolgen. In Kroatien wird dieser Prozess in der Regel notariell begleitet.",
+      "synonyms": [
+        "Kaufabschluss"
+      ],
+      "keywords": [
+        "Eigentumsübertragung",
+        "Notar"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "grundbuch",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "due-diligence",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Due Diligence",
+      "slug": "due-diligence",
+      "short_def": "Umfassende rechtliche und wirtschaftliche Immobilienprüfung.",
+      "long_def": "Die Due Diligence umfasst die Prüfung von Eigentumsverhältnissen, Baulegalität, Belastungen, Steuern und Nutzungsmöglichkeiten. Sie ist in Kroatien essenziell, um rechtliche und finanzielle Risiken vor dem Kauf zu minimieren.",
+      "synonyms": [
+        "Sorgfaltsprüfung"
+      ],
+      "keywords": [
+        "Risiko",
+        "Prüfung",
+        "Recht"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "grundbuch",
+      "baugenehmigung",
+      "steuern"
+    ]
+  },
+  {
+    "canonical_key": "dienstbarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Dienstbarkeit (Servitut)",
+      "slug": "dienstbarkeit-servitut",
+      "short_def": "Im Grundbuch eingetragenes Nutzungsrecht zugunsten Dritter.",
+      "long_def": "Eine Dienstbarkeit ist ein im Grundbuch eingetragenes Recht, das einer anderen Person oder Immobilie bestimmte Nutzungen erlaubt oder vorschreibt, etwa Wegerechte oder Leitungsrechte. Sie kann den Marktwert beeinflussen.",
+      "synonyms": [
+        "Servitut"
+      ],
+      "keywords": [
+        "Wegerecht",
+        "Leitungsrecht"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "doppelbesteuerungsabkommen",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "international"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Doppelbesteuerungsabkommen",
+      "slug": "doppelbesteuerungsabkommen",
+      "short_def": "Abkommen zur Vermeidung doppelter Steuerbelastung.",
+      "long_def": "Doppelbesteuerungsabkommen regeln, welcher Staat das Besteuerungsrecht für Einkünfte aus Immobilien besitzt. Für internationale Investoren in Kroatien sind sie zentral zur Vermeidung doppelter Besteuerung.",
+      "synonyms": [
+        "DBA"
+      ],
+      "keywords": [
+        "Internationale Steuern",
+        "Besteuerung"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "rendite"
+    ]
+  }
+]

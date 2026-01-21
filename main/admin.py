@@ -137,3 +137,6 @@ class LeadAdmin(admin.ModelAdmin):
 
 from main.professional_models import Lead
 
+
+# Glossar Admin
+from main.glossary_admin import *

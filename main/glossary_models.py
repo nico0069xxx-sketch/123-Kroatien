@@ -107,6 +107,7 @@ class TermCategory(models.Model):
 class GlossaryTerm(models.Model):
     canonical_key = models.SlugField(max_length=120, unique=True)
     categories = models.ManyToManyField(TermCategory, blank=True, related_name="terms")
+    related_terms = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="related_from")
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
