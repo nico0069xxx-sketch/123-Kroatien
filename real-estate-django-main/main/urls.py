@@ -4,6 +4,7 @@ from . import professional_views
 from . import xml_views
 from . import makler_views
 from pages.views import translate_all
+from .glossary_urls import glossary_urlpatterns
 
 app_name = 'main'
 
