@@ -1,75 +1,43 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #d4d3df; -webkit-text-stroke: #d4d3df; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.051)}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #d4d3df; -webkit-text-stroke: #d4d3df; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.051); min-height: 16.0px}
-    span.s1 {font-kerning: none}
-  </style>
-</head>
-<body>
-<p class="p1"><span class="s1">{% extends 'include/base.html' %}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">{% block style %}</span></p>
-<p class="p1"><span class="s1">&lt;style&gt;</span></p>
-<p class="p1"><span class="s1">.legal-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 3rem 0; }</span></p>
-<p class="p1"><span class="s1">.legal-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.25rem; color: #fff; }</span></p>
-<p class="p1"><span class="s1">.legal-content { padding: 3rem 0; }</span></p>
-<p class="p1"><span class="s1">.legal-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: 2.5rem; margin-bottom: 2rem; }</span></p>
-<p class="p1"><span class="s1">.legal-card h2 { font-family: 'Playfair Display', serif; border-bottom: 2px solid #E2E8F0; padding-bottom: 1rem; margin-bottom: 1.5rem; }</span></p>
-<p class="p1"><span class="s1">.legal-card h3 { margin-top: 1.5rem; }</span></p>
-<p class="p1"><span class="s1">.legal-card ul { padding-left: 1.5rem; }</span></p>
-<p class="p1"><span class="s1">.highlight-box { background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 8px; padding: 1.25rem; margin: 1.5rem 0; }</span></p>
-<p class="p1"><span class="s1">.highlight-box.info { background: #DBEAFE; border-color: #93C5FD; }</span></p>
-<p class="p1"><span class="s1">.back-link { color: #EA580C; font-weight: 600; text-decoration: none; }</span></p>
-<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">{% endblock style %}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">{% block body %}</span></p>
-<p class="p1"><span class="s1">&lt;section class="legal-hero"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1&gt;Haftungsausschluss / Disclaimer&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;section class="legal-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="row justify-content-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="col-lg-10"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="legal-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h2&gt;Haftungsausschluss&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Die auf dieser Website bereitgestellten Inhalte dienen ausschließlich der allgemeinen Information und stellen keine Rechts-, Steuer- oder Anlageberatung dar.&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="highlight-box"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;strong&gt;Wichtiger Hinweis:&lt;/strong&gt; Wir können keine Gewähr für Vollständigkeit, Richtigkeit oder Aktualität der Inhalte übernehmen.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h3&gt;Keine professionelle Beratung&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Bei Entscheidungen im Zusammenhang mit Immobilien in Kroatien sollten Sie stets:&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;li&gt;Einen in Kroatien zugelassenen Rechtsanwalt konsultieren&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;li&gt;Steuerliche Fragen mit einem Steuerberater klären&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;li&gt;Einen Notar für die Beurkundung hinzuziehen&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/ul&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h3&gt;Haftungsbeschränkung&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Wir haften nicht für Schäden, die durch die Nutzung der bereitgestellten Informationen entstehen.&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="highlight-box info"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;strong&gt;Empfehlung:&lt;/strong&gt; Lassen Sie alle wichtigen Dokumente von einem Rechtsanwalt prüfen.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="{{ glossary_base_url }}" class="back-link"&gt;← {{ t.back_to_glossary }}&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
-<p class="p1"><span class="s1">{% endblock body %}</span></p>
-</body>
-</html>
+{% extends 'include/base.html' %}
+
+{% block style %}
+<style>
+.legal-hero { background: linear-gradient(135deg, #1E293B 0%, #334155 100%); padding: 3rem 0; }
+.legal-hero h1 { color: #fff; font-size: 2rem; }
+.legal-content { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 2rem; margin-top: -1rem; position: relative; z-index: 10; max-width: 800px; margin-left: auto; margin-right: auto; }
+.legal-content h2 { color: #1E293B; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.5rem; }
+.legal-content p { color: #475569; line-height: 1.8; margin-bottom: 1rem; }
+.legal-content ul { color: #475569; line-height: 1.8; margin: 1rem 0; padding-left: 1.5rem; }
+.legal-content li { margin-bottom: 0.5rem; }
+.legal-updated { color: #94A3B8; font-size: 0.875rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="legal-hero">
+    <div class="container">
+        <h1>Rechtliche Hinweise & Haftungsausschluss</h1>
+    </div>
+</section>
+
+<div class="container" style="padding: 0 1rem 3rem;">
+    <div class="legal-content">
+        <h2>1. Allgemeine Hinweise</h2>
+        <p>Die auf dieser Website bereitgestellten Informationen dienen ausschließlich allgemeinen Informationszwecken. Sie stellen keine Rechts-, Steuer- oder Finanzberatung dar.</p>
+        
+        <h2>2. Keine Rechtsberatung</h2>
+        <p>Die Inhalte unseres Immobilien-Glossars und anderer Informationsseiten ersetzen nicht die individuelle Beratung durch einen qualifizierten Rechtsanwalt, Notar oder Steuerberater. Für den Immobilienkauf in Kroatien empfehlen wir dringend, professionelle Beratung in Anspruch zu nehmen.</p>
+        
+        <h2>3. Aktualität der Informationen</h2>
+        <p>Wir bemühen uns, alle Informationen aktuell und korrekt zu halten. Gesetze und Vorschriften können sich jedoch ändern. Wir übernehmen keine Gewähr für die Aktualität, Richtigkeit und Vollständigkeit der bereitgestellten Informationen.</p>
+        
+        <h2>4. Haftungsausschluss</h2>
+        <p>Die Nutzung der auf dieser Website bereitgestellten Informationen erfolgt auf eigenes Risiko. Wir haften nicht für Schäden, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen entstehen.</p>
+        
+        <h2>5. Externe Links</h2>
+        <p>Unsere Website kann Links zu externen Websites enthalten. Wir haben keinen Einfluss auf deren Inhalte und übernehmen keine Verantwortung dafür.</p>
+        
+        <p class="legal-updated">Letzte Aktualisierung: Januar 2025</p>
+    </div>
+</div>
+{% endblock %}
