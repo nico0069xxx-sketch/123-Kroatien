@@ -66,10 +66,16 @@ class ProfessionalAdmin(admin.ModelAdmin):
     def status_anzeige(self, obj):
         if obj.is_verified and obj.is_active:
             return format_html('<span style="background:#1a5c1a;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">AKTIV</span>')
-        elif obj.documents.exists():
+        elif obj.id_document:
             return format_html('<span style="background:#c9a227;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">PRUEFEN</span>')
         else:
             return format_html('<span style="background:#8b0000;color:white;padding:4px 12px;border-radius:4px;font-weight:bold;">NEU</span>')
+    
+    @admin.display(description='Dokumente')
+    def dokumente_vorhanden(self, obj):
+        if obj.id_document:
+            return format_html('<span style="color:#1a5c1a">✓ Ja</span>')
+        return format_html('<span style="color:#999">Nein</span>')
     
     @admin.display(description='Dokumente')
     def dokumente_vorhanden(self, obj):
