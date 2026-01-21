@@ -893,3 +893,37 @@ small, .small {
 .fa:before {
     font-family: FontAwesome !important;
 }
+
+/* Remove blue focus outline from navigation */
+.navbar .nav-link:focus,
+.navbar .dropdown-toggle:focus,
+.navbar .btn:focus,
+.lang-drop:focus,
+.navbar select:focus,
+.navbar a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.dropdown-toggle:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Fix: Remove blue box from active nav items */
+.navbar-nav .nav-item.show .nav-link,
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:focus,
+.navbar-nav .dropdown-toggle:focus,
+.navbar-nav .dropdown-toggle.show,
+.nav-link.active.dropdown-toggle {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.navbar-soft .navbar-nav .nav-item.show .nav-link {
+    border: none !important;
+    outline: none !important;
+}
