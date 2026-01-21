@@ -1,0 +1,324 @@
+[
+  {
+    "model": "main.glossaryterm",
+    "pk": 1,
+    "fields": {
+      "canonical_key": "land-registry",
+      "is_published": true,
+      "categories": [1, 2, 3, 4]
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 1,
+      "language": "ge",
+      "title": "Grundbuch",
+      "slug": "grundbuch",
+      "short_def": "Öffentliches Register für Eigentum an Grundstücken und Immobilien in Kroatien.",
+      "long_def": "Das Grundbuch (kroatisch: Zemljišna knjiga) ist das amtliche Register, in dem alle Grundstücke und deren Eigentumsverhältnisse in Kroatien verzeichnet sind.\n\nEs wird vom zuständigen Grundbuchamt (Zemljišnoknjižni odjel) geführt und enthält:\n- Eigentümerangaben\n- Grundstücksgrenzen und -größe\n- Belastungen (Hypotheken, Servituten)\n- Beschränkungen des Eigentumsrechts\n\nVor jedem Immobilienkauf in Kroatien sollte ein Grundbuchauszug (Izvadak iz zemljišne knjige) eingeholt und von einem Anwalt geprüft werden.",
+      "synonyms": ["Grundbuchauszug", "Grundbucheintrag", "Zemljišna knjiga"],
+      "keywords": ["Grundbuch Kroatien", "Land Registry Croatia", "Eigentum prüfen"],
+      "faqs": [
+        {"q": "Wie bekomme ich einen Grundbuchauszug?", "a": "Beim zuständigen Grundbuchamt oder online über das e-Grundbuch Portal Kroatiens."},
+        {"q": "Was kostet ein Grundbuchauszug?", "a": "Die Gebühren sind gering (ca. 10-20 EUR) und werden bei Antragstellung fällig."}
+      ],
+      "status": "published",
+      "meta_title": "Grundbuch Kroatien - Was Sie wissen müssen",
+      "meta_description": "Alles über das kroatische Grundbuch: Einsicht, Auszug, Prüfung vor dem Immobilienkauf."
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 1,
+      "language": "en",
+      "title": "Land Registry",
+      "slug": "land-registry",
+      "short_def": "Official public register for property ownership and encumbrances in Croatia.",
+      "long_def": "The Land Registry (Croatian: Zemljišna knjiga) is the official register recording all land parcels and property ownership in Croatia.\n\nIt is maintained by the competent Land Registry Office (Zemljišnoknjižni odjel) and contains:\n- Owner information\n- Property boundaries and size\n- Encumbrances (mortgages, easements)\n- Ownership restrictions\n\nBefore any property purchase in Croatia, a land registry extract should be obtained and reviewed by a lawyer.",
+      "synonyms": ["Land Register", "Property Registry", "Zemljišna knjiga"],
+      "keywords": ["Land Registry Croatia", "Property Ownership Croatia", "Title Check"],
+      "faqs": [
+        {"q": "How do I obtain a land registry extract?", "a": "From the competent Land Registry Office or online via Croatia's e-Land Registry portal."},
+        {"q": "What does a land registry extract cost?", "a": "Fees are low (approx. 10-20 EUR) and payable upon application."}
+      ],
+      "status": "published",
+      "meta_title": "Land Registry Croatia - Essential Guide",
+      "meta_description": "Everything about the Croatian land registry: access, extracts, verification before property purchase."
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 1,
+      "language": "hr",
+      "title": "Zemljišna knjiga",
+      "slug": "zemljisna-knjiga",
+      "short_def": "Službeni javni registar za vlasništvo nekretnina i terete u Hrvatskoj.",
+      "long_def": "Zemljišna knjiga je službeni registar u kojem su evidentirane sve zemljišne čestice i vlasništvo nad nekretninama u Hrvatskoj.\n\nVodi je nadležni zemljišnoknjižni odjel i sadrži:\n- Podatke o vlasniku\n- Granice i veličinu nekretnine\n- Terete (hipoteke, služnosti)\n- Ograničenja prava vlasništva\n\nPrije svake kupnje nekretnine u Hrvatskoj potrebno je pribaviti izvadak iz zemljišne knjige i dati ga odvjetniku na pregled.",
+      "synonyms": ["Gruntovnica", "ZK izvadak"],
+      "keywords": ["Zemljišna knjiga Hrvatska", "Vlasništvo nekretnine", "ZK izvadak"],
+      "faqs": [
+        {"q": "Kako dobiti ZK izvadak?", "a": "U nadležnom zemljišnoknjižnom odjelu ili online putem e-Zemljišne knjige."},
+        {"q": "Koliko košta ZK izvadak?", "a": "Pristojbe su niske (cca 10-20 EUR) i plaćaju se pri podnošenju zahtjeva."}
+      ],
+      "status": "published",
+      "meta_title": "Zemljišna knjiga - Vodič za kupce",
+      "meta_description": "Sve o zemljišnoj knjizi: pristup, izvadak, provjera prije kupnje nekretnine."
+    }
+  },
+
+  {
+    "model": "main.glossaryterm",
+    "pk": 2,
+    "fields": {
+      "canonical_key": "oib-number",
+      "is_published": true,
+      "categories": [1, 2, 3, 4, 5]
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 2,
+      "language": "ge",
+      "title": "OIB-Nummer",
+      "slug": "oib-nummer",
+      "short_def": "Persönliche Identifikationsnummer für alle Rechtsgeschäfte in Kroatien.",
+      "long_def": "Die OIB (Osobni identifikacijski broj) ist eine einzigartige 11-stellige Identifikationsnummer, die in Kroatien für natürliche und juristische Personen verwendet wird.\n\nSie ist erforderlich für:\n- Immobilientransaktionen\n- Bankkontoeröffnung\n- Steuererklärungen\n- Notarielle Beurkundungen\n- Grundbucheintragungen\n\nAusländische Käufer erhalten die OIB beim Finanzamt (Porezna uprava) oder über das zuständige Konsulat.",
+      "synonyms": ["Osobni identifikacijski broj", "Steuer-ID Kroatien"],
+      "keywords": ["OIB beantragen", "OIB Ausländer", "Kroatien Steuernummer"],
+      "faqs": [
+        {"q": "Wie bekomme ich als Ausländer eine OIB?", "a": "Beim kroatischen Finanzamt mit Reisepass oder über das Konsulat."},
+        {"q": "Ist die OIB für den Immobilienkauf Pflicht?", "a": "Ja, ohne OIB ist keine notarielle Beurkundung möglich."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 2,
+      "language": "en",
+      "title": "OIB Number",
+      "slug": "oib-number",
+      "short_def": "Personal identification number required for all legal transactions in Croatia.",
+      "long_def": "The OIB (Osobni identifikacijski broj) is a unique 11-digit identification number used in Croatia for both natural and legal persons.\n\nIt is required for:\n- Real estate transactions\n- Opening bank accounts\n- Tax declarations\n- Notarial certifications\n- Land registry entries\n\nForeign buyers can obtain their OIB from the Tax Administration (Porezna uprava) or through the relevant consulate.",
+      "synonyms": ["Personal Identification Number", "Croatian Tax ID"],
+      "keywords": ["OIB application", "OIB foreigners", "Croatia tax number"],
+      "faqs": [
+        {"q": "How can foreigners obtain an OIB?", "a": "At the Croatian Tax Administration with passport or through the consulate."},
+        {"q": "Is OIB mandatory for property purchase?", "a": "Yes, no notarial certification is possible without OIB."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 2,
+      "language": "hr",
+      "title": "OIB",
+      "slug": "oib",
+      "short_def": "Osobni identifikacijski broj potreban za sve pravne poslove u Hrvatskoj.",
+      "long_def": "OIB (Osobni identifikacijski broj) je jedinstveni 11-znamenkasti identifikacijski broj koji se u Hrvatskoj koristi za fizičke i pravne osobe.\n\nPotreban je za:\n- Transakcije nekretninama\n- Otvaranje bankovnih računa\n- Porezne prijave\n- Javnobilježničke ovjere\n- Upise u zemljišne knjige\n\nStrani kupci mogu dobiti OIB u Poreznoj upravi ili putem nadležnog konzulata.",
+      "synonyms": ["Osobni identifikacijski broj", "Porezni broj"],
+      "keywords": ["OIB zahtjev", "OIB stranci", "Porezni broj Hrvatska"],
+      "faqs": [
+        {"q": "Kako stranci mogu dobiti OIB?", "a": "U Poreznoj upravi s putovnicom ili putem konzulata."},
+        {"q": "Je li OIB obavezan za kupnju nekretnine?", "a": "Da, bez OIB-a nije moguća javnobilježnička ovjera."}
+      ],
+      "status": "published"
+    }
+  },
+
+  {
+    "model": "main.glossaryterm",
+    "pk": 3,
+    "fields": {
+      "canonical_key": "building-permit",
+      "is_published": true,
+      "categories": [1, 2, 4, 10]
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 3,
+      "language": "ge",
+      "title": "Baugenehmigung",
+      "slug": "baugenehmigung",
+      "short_def": "Behördliche Genehmigung für Bau- und Renovierungsarbeiten in Kroatien.",
+      "long_def": "Die Baugenehmigung (kroatisch: Građevinska dozvola) ist die offizielle Genehmigung der zuständigen Behörde für Bauvorhaben in Kroatien.\n\nWichtig zu prüfen:\n- Liegt eine gültige Baugenehmigung vor?\n- Wurde das Gebäude gemäß Genehmigung errichtet?\n- Gibt es eine Nutzungsgenehmigung (Uporabna dozvola)?\n\nBei älteren Gebäuden ohne Genehmigung kann eine Legalisierung erforderlich sein.",
+      "synonyms": ["Građevinska dozvola", "Bauerlaubnis"],
+      "keywords": ["Baugenehmigung Kroatien", "Building Permit Croatia", "Legalisierung"],
+      "faqs": [
+        {"q": "Brauche ich eine Baugenehmigung für Renovierungen?", "a": "Für größere Umbauarbeiten ja, für kosmetische Renovierungen meist nicht."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 3,
+      "language": "en",
+      "title": "Building Permit",
+      "slug": "building-permit",
+      "short_def": "Official authorization for construction and renovation works in Croatia.",
+      "long_def": "The Building Permit (Croatian: Građevinska dozvola) is the official authorization from competent authorities for construction projects in Croatia.\n\nKey points to verify:\n- Is there a valid building permit?\n- Was the building constructed according to the permit?\n- Is there a usage permit (Uporabna dozvola)?\n\nOlder buildings without permits may require legalization.",
+      "synonyms": ["Građevinska dozvola", "Construction Permit"],
+      "keywords": ["Building Permit Croatia", "Construction Authorization", "Legalization"],
+      "faqs": [
+        {"q": "Do I need a building permit for renovations?", "a": "For major alterations yes, for cosmetic renovations usually not."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 3,
+      "language": "hr",
+      "title": "Građevinska dozvola",
+      "slug": "gradevinska-dozvola",
+      "short_def": "Službeno odobrenje za građevinske radove u Hrvatskoj.",
+      "long_def": "Građevinska dozvola je službeno odobrenje nadležnog tijela za građevinske projekte u Hrvatskoj.\n\nVažno za provjeru:\n- Postoji li valjana građevinska dozvola?\n- Je li zgrada izgrađena prema dozvoli?\n- Postoji li uporabna dozvola?\n\nStarije zgrade bez dozvole mogu zahtijevati legalizaciju.",
+      "synonyms": ["Dozvola za gradnju", "Građevna dozvola"],
+      "keywords": ["Građevinska dozvola Hrvatska", "Dozvola za gradnju", "Legalizacija"],
+      "faqs": [
+        {"q": "Trebam li građevinsku dozvolu za renoviranje?", "a": "Za veće preinake da, za kozmetičke renovacije obično ne."}
+      ],
+      "status": "published"
+    }
+  },
+
+  {
+    "model": "main.glossaryterm",
+    "pk": 4,
+    "fields": {
+      "canonical_key": "transfer-tax",
+      "is_published": true,
+      "categories": [1, 2, 3, 5, 6]
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 4,
+      "language": "ge",
+      "title": "Grunderwerbsteuer",
+      "slug": "grunderwerbsteuer",
+      "short_def": "Steuer auf den Erwerb von Immobilien in Kroatien (derzeit 3%).",
+      "long_def": "Die Grunderwerbsteuer (kroatisch: Porez na promet nekretnina) beträgt in Kroatien derzeit 3% des Kaufpreises.\n\nWichtige Punkte:\n- Fällig bei Kauf von Bestandsimmobilien\n- Bei Neubau vom Bauträger fällt stattdessen PDV (25%) an\n- Steuerpflichtig ist der Käufer\n- Frist: 30 Tage nach Vertragsabschluss\n\nDie Steuerbemessungsgrundlage ist der Marktwert oder Kaufpreis (der höhere Wert).",
+      "synonyms": ["Porez na promet nekretnina", "Immobiliensteuer"],
+      "keywords": ["Grunderwerbsteuer Kroatien", "Transfer Tax", "3% Steuer"],
+      "faqs": [
+        {"q": "Wer zahlt die Grunderwerbsteuer?", "a": "Der Käufer ist steuerpflichtig."},
+        {"q": "Wann fällt PDV statt Grunderwerbsteuer an?", "a": "Bei Kauf vom Bauträger (Erstbezug) wird PDV (25%) berechnet."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 4,
+      "language": "en",
+      "title": "Transfer Tax",
+      "slug": "transfer-tax",
+      "short_def": "Tax on property acquisition in Croatia (currently 3%).",
+      "long_def": "The Transfer Tax (Croatian: Porez na promet nekretnina) in Croatia is currently 3% of the purchase price.\n\nKey points:\n- Applies to existing property purchases\n- New builds from developers incur PDV (25%) instead\n- The buyer is liable for the tax\n- Deadline: 30 days after contract signing\n\nThe tax base is the market value or purchase price (whichever is higher).",
+      "synonyms": ["Property Transfer Tax", "Porez na promet nekretnina"],
+      "keywords": ["Transfer Tax Croatia", "Property Tax", "3% Tax"],
+      "faqs": [
+        {"q": "Who pays the transfer tax?", "a": "The buyer is liable for the tax."},
+        {"q": "When does PDV apply instead of transfer tax?", "a": "When buying from a developer (first sale), PDV (25%) is charged."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 4,
+      "language": "hr",
+      "title": "Porez na promet nekretnina",
+      "slug": "porez-na-promet-nekretnina",
+      "short_def": "Porez na stjecanje nekretnina u Hrvatskoj (trenutno 3%).",
+      "long_def": "Porez na promet nekretnina u Hrvatskoj trenutno iznosi 3% kupoprodajne cijene.\n\nVažne točke:\n- Primjenjuje se na kupnju postojećih nekretnina\n- Za novogradnju od investitora primjenjuje se PDV (25%)\n- Kupac je obveznik poreza\n- Rok: 30 dana od potpisivanja ugovora\n\nPorezna osnovica je tržišna vrijednost ili kupoprodajna cijena (veći iznos).",
+      "synonyms": ["Porez na prijenos nekretnina", "Porez na nekretnine"],
+      "keywords": ["Porez nekretnine Hrvatska", "Porez 3%", "Prijenos vlasništva"],
+      "faqs": [
+        {"q": "Tko plaća porez na promet nekretnina?", "a": "Kupac je obveznik poreza."},
+        {"q": "Kada se plaća PDV umjesto poreza na promet?", "a": "Kod kupnje od investitora (prva prodaja) obračunava se PDV (25%)."}
+      ],
+      "status": "published"
+    }
+  },
+
+  {
+    "model": "main.glossaryterm",
+    "pk": 5,
+    "fields": {
+      "canonical_key": "easement",
+      "is_published": true,
+      "categories": [1, 2, 3, 4]
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 5,
+      "language": "ge",
+      "title": "Dienstbarkeit / Servitut",
+      "slug": "dienstbarkeit",
+      "short_def": "Recht Dritter zur Nutzung eines Grundstücks (z.B. Wegerecht).",
+      "long_def": "Eine Dienstbarkeit (kroatisch: Služnost) ist ein im Grundbuch eingetragenes Recht, das einem Dritten die Nutzung eines fremden Grundstücks erlaubt.\n\nHäufige Arten:\n- Wegerecht (pravo prolaza)\n- Leitungsrecht für Versorgungsleitungen\n- Aussichtsservitut\n\nBeim Immobilienkauf sollte immer geprüft werden, ob Servitute bestehen, da diese den Wert und die Nutzung der Immobilie beeinflussen können.",
+      "synonyms": ["Servitut", "Služnost", "Wegerecht"],
+      "keywords": ["Servitut Kroatien", "Wegerecht", "Grundbuch Belastung"],
+      "faqs": [
+        {"q": "Wie erkenne ich Servitute?", "a": "Im Grundbuchauszug unter 'Lasten und Beschränkungen'."},
+        {"q": "Kann ich ein Servitut löschen?", "a": "Nur mit Zustimmung des Berechtigten oder durch gerichtliche Aufhebung."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 5,
+      "language": "en",
+      "title": "Easement",
+      "slug": "easement",
+      "short_def": "Third-party right to use a property (e.g., right of way).",
+      "long_def": "An easement (Croatian: Služnost) is a right registered in the land registry that allows a third party to use someone else's property.\n\nCommon types:\n- Right of way (pravo prolaza)\n- Utility easements for supply lines\n- View easements\n\nWhen purchasing property, always check for existing easements as they can affect the value and use of the property.",
+      "synonyms": ["Servitude", "Služnost", "Right of Way"],
+      "keywords": ["Easement Croatia", "Right of Way", "Land Registry Encumbrance"],
+      "faqs": [
+        {"q": "How do I identify easements?", "a": "In the land registry extract under 'encumbrances and restrictions'."},
+        {"q": "Can I remove an easement?", "a": "Only with consent of the beneficiary or through court cancellation."}
+      ],
+      "status": "published"
+    }
+  },
+  {
+    "model": "main.glossarytermtranslation",
+    "fields": {
+      "term": 5,
+      "language": "hr",
+      "title": "Služnost",
+      "slug": "sluznost",
+      "short_def": "Pravo treće strane na korištenje nekretnine (npr. pravo prolaza).",
+      "long_def": "Služnost je pravo upisano u zemljišnu knjigu koje omogućuje trećoj strani korištenje tuđe nekretnine.\n\nČeste vrste:\n- Pravo prolaza\n- Služnost vodova za komunalne instalacije\n- Služnost pogleda\n\nPri kupnji nekretnine uvijek provjerite postojeće služnosti jer mogu utjecati na vrijednost i korištenje nekretnine.",
+      "synonyms": ["Servitut", "Pravo prolaza", "Teret"],
+      "keywords": ["Služnost Hrvatska", "Pravo prolaza", "Teret zemljišne knjige"],
+      "faqs": [
+        {"q": "Kako prepoznati služnosti?", "a": "U izvatku iz zemljišne knjige pod 'tereti i ograničenja'."},
+        {"q": "Mogu li ukloniti služnost?", "a": "Samo uz pristanak ovlaštenika ili sudskim ukidanjem."}
+      ],
+      "status": "published"
+    }
+  }
+]
