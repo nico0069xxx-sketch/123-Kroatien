@@ -1,0 +1,315 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+.legal-hero {
+    background: linear-gradient(135deg, var(--color-primary, #0F172A) 0%, #1E293B 100%);
+    padding: 3rem 0;
+}
+
+.legal-hero h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2.25rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.legal-hero p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.legal-content {
+    padding: 3rem 0;
+}
+
+.legal-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.legal-card h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.5rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #E2E8F0;
+}
+
+.legal-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text, #0F172A);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.legal-card p, .legal-card li {
+    color: var(--color-text-secondary, #475569);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.legal-card ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.legal-card li {
+    margin-bottom: 0.5rem;
+}
+
+.highlight-box {
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.highlight-box.info {
+    background: #DBEAFE;
+    border-color: #93C5FD;
+}
+
+.highlight-box p {
+    margin-bottom: 0;
+    color: #92400E;
+}
+
+.highlight-box.info p {
+    color: #1E40AF;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary, #EA580C);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.back-link:hover {
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+/* Multi-language tabs */
+.lang-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.lang-tab {
+    padding: 0.5rem 1rem;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text, #0F172A);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lang-tab:hover {
+    background: #E2E8F0;
+}
+
+.lang-tab.active {
+    background: var(--color-primary, #0F172A);
+    color: #fff;
+    border-color: var(--color-primary, #0F172A);
+}
+
+.lang-content {
+    display: none;
+}
+
+.lang-content.active {
+    display: block;
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<!-- Hero -->
+<section class="legal-hero">
+    <div class="container">
+        <h1>Haftungsausschluss / Disclaimer</h1>
+        <p>Rechtliche Hinweise zur Nutzung unserer Inhalte</p>
+    </div>
+</section>
+
+<section class="legal-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Language Tabs -->
+                <div class="lang-tabs">
+                    <button class="lang-tab active" onclick="showLang('de')">Deutsch</button>
+                    <button class="lang-tab" onclick="showLang('en')">English</button>
+                    <button class="lang-tab" onclick="showLang('hr')">Hrvatski</button>
+                </div>
+                
+                <!-- German Content -->
+                <div id="lang-de" class="lang-content active">
+                    <div class="legal-card">
+                        <h2>Vollständiger Haftungsausschluss</h2>
+                        
+                        <p>Die auf dieser Website und im Glossar bereitgestellten Inhalte dienen ausschließlich der allgemeinen Information und stellen keine Rechts-, Steuer- oder Anlageberatung dar.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Wichtiger Hinweis:</strong> Obwohl wir uns um Richtigkeit und Aktualität bemühen, können wir keine Gewähr für Vollständigkeit, Richtigkeit oder Aktualität der Inhalte übernehmen.</p>
+                        </div>
+                        
+                        <h3>Keine professionelle Beratung</h3>
+                        <p>Die Informationen auf dieser Website ersetzen nicht die Beratung durch qualifizierte Fachleute. Bei Entscheidungen im Zusammenhang mit dem Kauf, Verkauf oder der Vermietung von Immobilien in Kroatien sollten Sie stets:</p>
+                        <ul>
+                            <li>Einen in Kroatien zugelassenen Rechtsanwalt konsultieren</li>
+                            <li>Steuerliche Fragen mit einem qualifizierten Steuerberater klären</li>
+                            <li>Einen Notar für die Beurkundung hinzuziehen</li>
+                            <li>Bei Finanzierungsfragen professionelle Beratung einholen</li>
+                        </ul>
+                        
+                        <h3>Länderspezifische Regelungen</h3>
+                        <p>Die dargestellten Informationen beziehen sich auf Kroatien. Rechtliche und steuerliche Regelungen können sich ändern und regional unterschiedlich sein. Internationale Käufer sollten auch die Vorschriften ihres Heimatlandes berücksichtigen.</p>
+                        
+                        <h3>Haftungsbeschränkung</h3>
+                        <p>Wir haften nicht für Schäden, die durch die Nutzung oder Nichtnutzung der auf dieser Website bereitgestellten Informationen entstehen. Dies gilt insbesondere für:</p>
+                        <ul>
+                            <li>Finanzielle Verluste</li>
+                            <li>Entgangene Geschäftsmöglichkeiten</li>
+                            <li>Folgeschäden aus Entscheidungen basierend auf unseren Inhalten</li>
+                        </ul>
+                        
+                        <div class="highlight-box info">
+                            <p><strong>Empfehlung:</strong> Lassen Sie alle wichtigen Dokumente und Verträge von einem in Kroatien zugelassenen Rechtsanwalt prüfen, bevor Sie rechtlich bindende Verpflichtungen eingehen.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="legal-card">
+                        <h2>Kurzfassung (für Footer/Hinweise)</h2>
+                        <p style="font-style: italic; background: #F8FAFC; padding: 1rem; border-radius: 8px;">
+                            "Nur zur Information. Keine Rechts-, Steuer- oder Anlageberatung. Konsultieren Sie qualifizierte Fachleute in Kroatien."
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- English Content -->
+                <div id="lang-en" class="lang-content">
+                    <div class="legal-card">
+                        <h2>Full Disclaimer</h2>
+                        
+                        <p>The contents provided on this website and in the glossary are for general informational purposes only and do not constitute legal, tax, or investment advice.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Important Notice:</strong> While we strive for accuracy and timeliness, we cannot guarantee the completeness, correctness, or currency of the content.</p>
+                        </div>
+                        
+                        <h3>No Professional Advice</h3>
+                        <p>The information on this website does not replace advice from qualified professionals. For decisions related to buying, selling, or renting property in Croatia, you should always:</p>
+                        <ul>
+                            <li>Consult a lawyer licensed in Croatia</li>
+                            <li>Clarify tax matters with a qualified tax advisor</li>
+                            <li>Engage a notary for official documentation</li>
+                            <li>Seek professional advice for financing matters</li>
+                        </ul>
+                        
+                        <h3>Country-Specific Regulations</h3>
+                        <p>The information presented relates to Croatia. Legal and tax regulations may change and vary by region. International buyers should also consider the regulations of their home country.</p>
+                        
+                        <h3>Limitation of Liability</h3>
+                        <p>We are not liable for damages arising from the use or non-use of information provided on this website. This applies in particular to:</p>
+                        <ul>
+                            <li>Financial losses</li>
+                            <li>Lost business opportunities</li>
+                            <li>Consequential damages from decisions based on our content</li>
+                        </ul>
+                        
+                        <div class="highlight-box info">
+                            <p><strong>Recommendation:</strong> Have all important documents and contracts reviewed by a lawyer licensed in Croatia before entering into legally binding obligations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="legal-card">
+                        <h2>Short Version (for footer/notices)</h2>
+                        <p style="font-style: italic; background: #F8FAFC; padding: 1rem; border-radius: 8px;">
+                            "Information only. No legal, tax, or investment advice. Consult qualified professionals in Croatia."
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Croatian Content -->
+                <div id="lang-hr" class="lang-content">
+                    <div class="legal-card">
+                        <h2>Potpuna Izjava o Odricanju Odgovornosti</h2>
+                        
+                        <p>Sadržaji na ovoj web stranici i u pojmovniku služe isključivo u opće informativne svrhe i ne predstavljaju pravne, porezne ili investicijske savjete.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Važna napomena:</strong> Iako nastojimo osigurati točnost i aktualnost, ne možemo jamčiti potpunost, ispravnost ili ažurnost sadržaja.</p>
+                        </div>
+                        
+                        <h3>Bez profesionalnog savjetovanja</h3>
+                        <p>Informacije na ovoj web stranici ne zamjenjuju savjetovanje s kvalificiranim stručnjacima. Pri odlukama vezanim uz kupnju, prodaju ili iznajmljivanje nekretnina u Hrvatskoj uvijek biste trebali:</p>
+                        <ul>
+                            <li>Konzultirati odvjetnika licenciranog u Hrvatskoj</li>
+                            <li>Porezna pitanja razjasniti s kvalificiranim poreznim savjetnikom</li>
+                            <li>Angažirati javnog bilježnika za ovjeru dokumenata</li>
+                            <li>Zatražiti stručno savjetovanje za pitanja financiranja</li>
+                        </ul>
+                        
+                        <h3>Propisi specifični za državu</h3>
+                        <p>Prikazane informacije odnose se na Hrvatsku. Pravni i porezni propisi mogu se mijenjati i razlikovati po regijama. Međunarodni kupci trebaju uzeti u obzir i propise svoje matične države.</p>
+                        
+                        <h3>Ograničenje odgovornosti</h3>
+                        <p>Ne odgovaramo za štete nastale korištenjem ili nekorištenjem informacija na ovoj web stranici. To se posebno odnosi na:</p>
+                        <ul>
+                            <li>Financijske gubitke</li>
+                            <li>Propuštene poslovne prilike</li>
+                            <li>Posljedične štete iz odluka temeljenih na našim sadržajima</li>
+                        </ul>
+                        
+                        <div class="highlight-box info">
+                            <p><strong>Preporuka:</strong> Neka sve važne dokumente i ugovore pregleda odvjetnik licenciran u Hrvatskoj prije ulaska u pravno obvezujuće odnose.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="legal-card">
+                        <h2>Kratka verzija (za podnožje/obavijesti)</h2>
+                        <p style="font-style: italic; background: #F8FAFC; padding: 1rem; border-radius: 8px;">
+                            "Samo informativno. Bez pravnih, poreznih ili investicijskih savjeta. Konzultirajte kvalificirane stručnjake u Hrvatskoj."
+                        </p>
+                    </div>
+                </div>
+                
+                <a href="{{ glossary_base_url }}" class="back-link">
+                    <i class="fa fa-arrow-left"></i> {{ t.back_to_glossary }}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function showLang(lang) {
+    // Hide all content
+    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.lang-tab').forEach(el => el.classList.remove('active'));
+    
+    // Show selected
+    document.getElementById('lang-' + lang).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+{% endblock body %}

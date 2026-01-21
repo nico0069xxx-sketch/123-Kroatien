@@ -1,0 +1,468 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+.legal-hero {
+    background: linear-gradient(135deg, var(--color-primary, #0F172A) 0%, #1E293B 100%);
+    padding: 3rem 0;
+}
+
+.legal-hero h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2.25rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.legal-hero p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.legal-content {
+    padding: 3rem 0;
+}
+
+.guide-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.guide-card h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.5rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #E2E8F0;
+}
+
+.guide-steps {
+    counter-reset: step-counter;
+}
+
+.guide-step {
+    position: relative;
+    padding-left: 4rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.guide-step:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.guide-step::before {
+    counter-increment: step-counter;
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--color-secondary, #EA580C);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.guide-step h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 0.5rem;
+}
+
+.guide-step p {
+    color: var(--color-text-secondary, #475569);
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+/* Checklist */
+.checklist {
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.checklist h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.25rem;
+    color: #92400E;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.checklist ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.checklist li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.875rem;
+    color: #78350F;
+    line-height: 1.6;
+}
+
+.checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    font-size: 1.125rem;
+}
+
+/* Language Tabs */
+.lang-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.lang-tab {
+    padding: 0.5rem 1rem;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text, #0F172A);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lang-tab:hover {
+    background: #E2E8F0;
+}
+
+.lang-tab.active {
+    background: var(--color-primary, #0F172A);
+    color: #fff;
+    border-color: var(--color-primary, #0F172A);
+}
+
+.lang-content {
+    display: none;
+}
+
+.lang-content.active {
+    display: block;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary, #EA580C);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.back-link:hover {
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.disclaimer-note {
+    background: #DBEAFE;
+    border: 1px solid #93C5FD;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: #1E40AF;
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<!-- Hero -->
+<section class="legal-hero">
+    <div class="container">
+        <h1>Käufer-Leitfaden / Buyer Guide</h1>
+        <p>Leitfaden für ausländische Immobilienkäufer in Kroatien</p>
+    </div>
+</section>
+
+<section class="legal-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Language Tabs -->
+                <div class="lang-tabs">
+                    <button class="lang-tab active" onclick="showLang('de')">Deutsch</button>
+                    <button class="lang-tab" onclick="showLang('en')">English</button>
+                    <button class="lang-tab" onclick="showLang('hr')">Hrvatski</button>
+                </div>
+                
+                <!-- German Content -->
+                <div id="lang-de" class="lang-content active">
+                    <div class="guide-card">
+                        <h2>10 Schritte zum Immobilienkauf in Kroatien</h2>
+                        
+                        <div class="guide-steps">
+                            <div class="guide-step">
+                                <h3>Ziel definieren</h3>
+                                <p>Klären Sie, ob Sie die Immobilie als Investment, Feriendomizil oder Luxus-Lifestyle-Objekt nutzen möchten. Dies beeinflusst Standortwahl, Budget und rechtliche Strukturierung.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Standort & Mikrolage bewerten</h3>
+                                <p>Berücksichtigen Sie Faktoren wie Infrastruktur, Erreichbarkeit, lokale Dienstleistungen, Meeresnähe, Ausrichtung und zukünftige Entwicklungspläne.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Rechtliche Due Diligence</h3>
+                                <p>Lassen Sie Grundbuch, Belastungen, Zugangswege, Servituten und Eigentumshistorie von einem kroatischen Anwalt prüfen.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Zonierung & Baugenehmigungen</h3>
+                                <p>Prüfen Sie Flächenwidmungsplan, zulässige Nutzung, Baugenehmigung und etwaige Legalisierungsanforderungen.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Vorvertrag & Anzahlung (Kapara)</h3>
+                                <p>Der Vorvertrag sichert das Geschäft ab. Die Kapara (üblicherweise 10%) wird hinterlegt und verfällt bei Rücktritt des Käufers.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Zahlungsabwicklung</h3>
+                                <p>Nutzen Sie sichere Transferwege oder Treuhandkonten. Klären Sie Währungstransfer und Bankverbindungen vorab.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Steuern & Nebenkosten</h3>
+                                <p>Beachten Sie Grunderwerbsteuer (3%) oder Mehrwertsteuer (PDV 25%), Notarkosten, Anwaltsgebühren und Grundbucheintragsgebühren.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Übergabeprotokoll</h3>
+                                <p>Dokumentieren Sie den Zustand bei Übergabe inkl. Zählerstände, vorhandenes Inventar und eventuelle Mängel.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Vermietung (falls geplant)</h3>
+                                <p>Informieren Sie sich über Registrierungs- und Lizenzierungsanforderungen für Kurzzeitvermietung sowie die steuerlichen Pflichten.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Laufende Eigentümerschaft</h3>
+                                <p>Planen Sie Wartung, Versicherung, Hausverwaltung und laufende Compliance-Anforderungen.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Checklist -->
+                    <div class="checklist">
+                        <h2><i class="fa fa-exclamation-triangle"></i> Kroatien Risiko-Checkliste</h2>
+                        <ul>
+                            <li>Grundbucheintrag stimmt mit Verkäufer überein</li>
+                            <li>Belastungen (Hypotheken/Servituten) geklärt</li>
+                            <li>Flächenwidmungsplan und zulässige Nutzung verifiziert</li>
+                            <li>Baugenehmigung/Legalität bestätigt (falls zutreffend)</li>
+                            <li>Zugangswege und Wegerechte geklärt</li>
+                            <li>Kurzzeitvermietungslizenz-Anforderungen geprüft</li>
+                            <li>Steuermodell geklärt (keine Beratung)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="disclaimer-note">
+                        <i class="fa fa-info-circle"></i>
+                        <strong>Hinweis:</strong> Dieser Leitfaden dient nur zur Orientierung und ersetzt keine professionelle Rechts-, Steuer- oder Anlageberatung.
+                    </div>
+                </div>
+                
+                <!-- English Content -->
+                <div id="lang-en" class="lang-content">
+                    <div class="guide-card">
+                        <h2>10 Steps to Buying Property in Croatia</h2>
+                        
+                        <div class="guide-steps">
+                            <div class="guide-step">
+                                <h3>Define Your Goal</h3>
+                                <p>Clarify whether you intend to use the property as an investment, holiday home, or luxury lifestyle property. This influences location, budget, and legal structuring.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Evaluate Location & Micro-location</h3>
+                                <p>Consider infrastructure, accessibility, local services, proximity to the sea, orientation, and future development plans.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Legal Due Diligence</h3>
+                                <p>Have a Croatian lawyer review land registry, encumbrances, access rights, easements, and ownership history.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Zoning & Building Permits</h3>
+                                <p>Verify zoning plan, permitted use, building permit status, and any legalization requirements.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Pre-contract & Deposit (Kapara)</h3>
+                                <p>The pre-contract secures the deal. The Kapara (typically 10%) is deposited and forfeited if the buyer withdraws.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Payment Flow</h3>
+                                <p>Use secure transfer methods or escrow accounts. Clarify currency exchange and banking arrangements in advance.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Taxes & Acquisition Costs</h3>
+                                <p>Account for transfer tax (3%) or VAT (PDV 25%), notary fees, legal fees, and land registry fees.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Handover Protocol</h3>
+                                <p>Document the condition at handover including meter readings, existing inventory, and any defects.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Rental (if applicable)</h3>
+                                <p>Learn about registration and licensing requirements for short-term rentals and tax obligations.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Ongoing Ownership</h3>
+                                <p>Plan for maintenance, insurance, property management, and ongoing compliance requirements.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Checklist -->
+                    <div class="checklist">
+                        <h2><i class="fa fa-exclamation-triangle"></i> Croatia Risk Checklist</h2>
+                        <ul>
+                            <li>Land registry entry matches seller</li>
+                            <li>Encumbrances (mortgages/easements) clarified</li>
+                            <li>Zoning plan and permitted use verified</li>
+                            <li>Building permit/legality confirmed (where applicable)</li>
+                            <li>Access/right-of-way clarified</li>
+                            <li>Short-term rental licensing requirements checked</li>
+                            <li>Tax model clarified (non-advisory)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="disclaimer-note">
+                        <i class="fa fa-info-circle"></i>
+                        <strong>Note:</strong> This guide is for orientation purposes only and does not replace professional legal, tax, or investment advice.
+                    </div>
+                </div>
+                
+                <!-- Croatian Content -->
+                <div id="lang-hr" class="lang-content">
+                    <div class="guide-card">
+                        <h2>10 koraka do kupnje nekretnine u Hrvatskoj</h2>
+                        
+                        <div class="guide-steps">
+                            <div class="guide-step">
+                                <h3>Definirajte svoj cilj</h3>
+                                <p>Razjasnite namjeravate li nekretninu koristiti kao investiciju, za odmor ili kao luksuznu nekretninu za život. To utječe na lokaciju, proračun i pravnu strukturu.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Procijenite lokaciju i mikrolokaciju</h3>
+                                <p>Razmotrite infrastrukturu, pristupačnost, lokalne usluge, blizinu mora, orijentaciju i buduće razvojne planove.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Pravna dubinska analiza</h3>
+                                <p>Neka hrvatski odvjetnik pregleda zemljišne knjige, terete, pristupna prava, služnosti i povijest vlasništva.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Zoniranje i građevinske dozvole</h3>
+                                <p>Provjerite prostorni plan, dopuštenu uporabu, status građevinske dozvole i eventualne zahtjeve za legalizaciju.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Predugovor i kapara</h3>
+                                <p>Predugovor osigurava posao. Kapara (obično 10%) se polaže i gubi ako se kupac povuče.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Tijek plaćanja</h3>
+                                <p>Koristite sigurne metode prijenosa ili escrow račune. Unaprijed razjasnite deviznu razmjenu i bankovne aranžmane.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Porezi i troškovi stjecanja</h3>
+                                <p>Računajte s porezom na promet (3%) ili PDV-om (25%), javnobilježničkim pristojbama, odvjetničkim naknadama i pristojbama za upis u zemljišne knjige.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Primopredajni zapisnik</h3>
+                                <p>Dokumentirajte stanje pri primopredaji uključujući očitanja brojila, postojeći inventar i eventualne nedostatke.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Najam (ako je primjenjivo)</h3>
+                                <p>Informirajte se o zahtjevima za registraciju i licenciranje kratkoročnog najma te o poreznim obvezama.</p>
+                            </div>
+                            
+                            <div class="guide-step">
+                                <h3>Tekuće vlasništvo</h3>
+                                <p>Planirajte održavanje, osiguranje, upravljanje imovinom i tekuće zahtjeve usklađenosti.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Checklist -->
+                    <div class="checklist">
+                        <h2><i class="fa fa-exclamation-triangle"></i> Kontrolna lista rizika za Hrvatsku</h2>
+                        <ul>
+                            <li>Upis u zemljišnu knjigu odgovara prodavatelju</li>
+                            <li>Tereti (hipoteke/služnosti) razjašnjeni</li>
+                            <li>Prostorni plan i dopuštena uporaba provjereni</li>
+                            <li>Građevinska dozvola/legalnost potvrđena (gdje je primjenjivo)</li>
+                            <li>Pristup/pravo prolaza razjašnjeno</li>
+                            <li>Zahtjevi za licenciranje kratkoročnog najma provjereni</li>
+                            <li>Porezni model razjašnjen (bez savjetovanja)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="disclaimer-note">
+                        <i class="fa fa-info-circle"></i>
+                        <strong>Napomena:</strong> Ovaj vodič služi samo za orijentaciju i ne zamjenjuje profesionalne pravne, porezne ili investicijske savjete.
+                    </div>
+                </div>
+                
+                <a href="{{ glossary_base_url }}" class="back-link">
+                    <i class="fa fa-arrow-left"></i> {{ t.back_to_glossary }}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function showLang(lang) {
+    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.lang-tab').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById('lang-' + lang).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+{% endblock body %}
