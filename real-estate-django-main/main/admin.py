@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.contrib import messages
 from .professional_models import Professional, ProfessionalContent, ProfessionalDocument
 
+# Import Glossar Admin
+from .glossary_admin import *
+
 
 class ProfessionalContentInline(admin.TabularInline):
     model = ProfessionalContent
