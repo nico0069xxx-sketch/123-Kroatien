@@ -1,0 +1,359 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+/* Landing Page Styles */
+.landing-hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 50%, #0F172A 100%);
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.landing-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.landing-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-hero .badge-investor {
+    display: inline-block;
+    background: rgba(234, 88, 12, 0.2);
+    border: 1px solid var(--color-secondary, #EA580C);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.landing-hero h1 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2.75rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.landing-hero p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.125rem;
+    max-width: 600px;
+    line-height: 1.7;
+}
+
+/* Stats Row */
+.landing-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-secondary, #EA580C);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.25rem;
+}
+
+/* Featured Terms Section */
+.featured-terms-section {
+    padding: 4rem 0;
+    background: #F8FAFC;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 0.75rem;
+}
+
+.section-header p {
+    color: var(--color-text-secondary, #64748B);
+    font-size: 1.0625rem;
+}
+
+/* Term Grid */
+.term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.term-card-landing {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #E2E8F0;
+    transition: all 0.3s ease;
+}
+
+.term-card-landing:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+    border-color: var(--color-secondary, #EA580C);
+}
+
+.term-card-landing h3 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.125rem;
+    color: var(--color-text, #0F172A);
+    margin-bottom: 0.75rem;
+}
+
+.term-card-landing p {
+    color: var(--color-text-secondary, #64748B);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.term-card-landing a {
+    color: var(--color-secondary, #EA580C);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    transition: gap 0.2s;
+}
+
+.term-card-landing a:hover {
+    gap: 0.625rem;
+}
+
+/* Topic Navigation */
+.topic-nav-section {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.topic-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: #F8FAFC;
+    border-radius: 10px;
+    border: 1px solid #E2E8F0;
+    text-decoration: none;
+    color: var(--color-text, #0F172A);
+    transition: all 0.2s;
+}
+
+.topic-card:hover {
+    background: var(--color-secondary, #EA580C);
+    color: #fff;
+    text-decoration: none;
+    border-color: var(--color-secondary, #EA580C);
+}
+
+.topic-card i {
+    font-size: 1.5rem;
+    width: 40px;
+    text-align: center;
+    color: var(--color-secondary, #EA580C);
+    transition: color 0.2s;
+}
+
+.topic-card:hover i {
+    color: #fff;
+}
+
+.topic-card span {
+    font-weight: 500;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, var(--color-primary, #0F172A) 0%, #1E293B 100%);
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.0625rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.cta-btn {
+    display: inline-block;
+    background: var(--color-secondary, #EA580C);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.cta-btn:hover {
+    background: #C2410C;
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .landing-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .landing-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="landing-hero">
+    <div class="container">
+        <span class="badge-investor">
+            <i class="fa fa-line-chart"></i> Investor
+        </span>
+        <h1>{{ t.investors_title }}</h1>
+        <p>{{ t.investors_subtitle }}</p>
+        
+        <div class="landing-stats">
+            <div class="stat-item">
+                <div class="stat-number">{{ featured_terms|length }}+</div>
+                <div class="stat-label">Fachbegriffe</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Sprachen</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Kroatien-Fokus</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Terms -->
+<section class="featured-terms-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>{{ t.featured_terms }}</h2>
+            <p>Die wichtigsten Begriffe für Immobilieninvestoren in Kroatien</p>
+        </div>
+        
+        <div class="term-grid" data-testid="investor-terms-grid">
+            {% for term in featured_terms %}
+            <div class="term-card-landing">
+                <h3>{{ term.title }}</h3>
+                <p>{{ term.short_def }}</p>
+                <a href="{{ glossary_base_url }}{{ term.slug }}/">
+                    {{ t.learn_more }} <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+            {% empty %}
+            <p>Keine Begriffe vorhanden.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Topic Navigation -->
+<section class="topic-nav-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>{{ t.browse_by_topic }}</h2>
+        </div>
+        
+        <div class="topic-grid">
+            <a href="{{ glossary_base_url }}?topic=legal&audience={{ audience_key }}" class="topic-card">
+                <i class="fa fa-gavel"></i>
+                <span>Recht & Grundbuch</span>
+            </a>
+            <a href="{{ glossary_base_url }}?topic=tax&audience={{ audience_key }}" class="topic-card">
+                <i class="fa fa-calculator"></i>
+                <span>Steuern</span>
+            </a>
+            <a href="{{ glossary_base_url }}?topic=purchase-process&audience={{ audience_key }}" class="topic-card">
+                <i class="fa fa-file-text-o"></i>
+                <span>Kaufprozess</span>
+            </a>
+            <a href="{{ glossary_base_url }}?topic=finance&audience={{ audience_key }}" class="topic-card">
+                <i class="fa fa-bank"></i>
+                <span>Finanzierung</span>
+            </a>
+            <a href="{{ glossary_base_url }}?topic=valuation&audience={{ audience_key }}" class="topic-card">
+                <i class="fa fa-bar-chart"></i>
+                <span>Bewertung</span>
+            </a>
+            <a href="{{ glossary_base_url }}?topic=rental&audience={{ audience_key }}" class="topic-card">
+                <i class="fa fa-key"></i>
+                <span>Vermietung</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Alle Begriffe durchsuchen</h2>
+        <p>Entdecken Sie das vollständige Glossar mit über 100 Fachbegriffen rund um Immobilien in Kroatien.</p>
+        <a href="{{ glossary_base_url }}" class="cta-btn">
+            Zum Glossar <i class="fa fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+{% endblock body %}
