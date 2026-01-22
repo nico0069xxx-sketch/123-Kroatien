@@ -24,6 +24,7 @@
 {% endblock style %}
 
 {% block body %}
+{% include "glossary/_jsonld_defined_term.html" %}
 <section class="term-detail-hero">
     <div class="container">
         <nav class="term-breadcrumb">
@@ -44,12 +45,13 @@
         {% endif %}
         
         <div class="term-meta">
-            <strong>Kategorien:</strong>
+            <strong>{{ t.categories_label|default:"Kategorien" }}:</strong>
             <div class="term-categories">
+                {% load glossary_tags %}
                 {% for cat in term.term.categories.all %}
-                <span class="term-category-tag">{{ cat.label }}</span>
+                <span class="term-category-tag">{{ cat.label|translate_category:lang }}</span>
                 {% empty %}
-                <span class="term-category-tag">Allgemein</span>
+                <span class="term-category-tag">{{ t.general_label|default:"Allgemein" }}</span>
                 {% endfor %}
             </div>
         </div>
