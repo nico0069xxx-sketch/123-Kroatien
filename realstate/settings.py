@@ -96,6 +96,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    
+    # Custom Redirect Middleware
+    'main.middleware.redirect_registry_middleware.RedirectRegistryMiddleware',
+    'main.middleware.smart_redirect_middleware.SmartRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'realstate.urls'

@@ -1,0 +1,22 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block meta_robots %}<meta name="robots" content="noindex,follow">{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-1 text-danger">404</h1>
+            <h2 class="mb-4">Seite nicht gefunden</h2>
+            <p class="lead mb-4">
+                Die Seite <code>{{ path }}</code> existiert leider nicht.
+            </p>
+            <div class="mt-4">
+                <a href="/" class="btn btn-primary me-2">Startseite</a>
+                <a href="/listing/" class="btn btn-outline-secondary">Immobilien</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

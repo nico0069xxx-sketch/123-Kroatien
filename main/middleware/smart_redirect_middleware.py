@@ -1,4 +1,6 @@
 # core/middleware/smart_redirect_middleware.py
+"""
+
 Smart redirect resolver to avoid dead ends while keeping correct HTTP status codes.
 
 Purpose:
@@ -10,11 +12,12 @@ Notes:
 - This middleware MUST NOT turn unknown URLs into 200 OK.
 - It only redirects when an unambiguous target exists.
 
+"""
 import re
 from django.http import HttpResponsePermanentRedirect
 from django.utils.deprecation import MiddlewareMixin
 
-from glossary.models import GlossaryTermAlias
+from main.glossary_models import GlossaryTermAlias
 
 # IMPORTANT: Keep these mappings aligned with your existing context_processors.py
 COUNTRY_NAMES = {

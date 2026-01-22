@@ -6,6 +6,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from main.views import set_language_from_url, news_page
 from main.xml_views import rss_listings, xml_sitemap, robots_txt, xml_sitemap, robots_txt, rss_listings
+from django.contrib.sitemaps.views import sitemap
+from main.glossary_sitemaps import get_glossary_sitemaps
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -13,6 +15,7 @@ urlpatterns = [
         # SEO (öffentlich zugänglich)
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
+    path('sitemaps/glossary.xml', sitemap, {'sitemaps': get_glossary_sitemaps()},    	name='glossary-sitemap'),
     path('rss/listings/', rss_listings, {'lang': 'ge'}, name='rss_listings'),
     path('en/rss/listings/', rss_listings, {'lang': 'en'}, name='rss_en'),
     path('hr/rss/listings/', rss_listings, {'lang': 'hr'}, name='rss_hr'),
@@ -76,3 +79,5 @@ path('portal/', include('main.professional_portal_urls')),
     path('', include('main.urls')),
     prefix_default_language=True,
 )
+
+handler404 = 'main.views_404.smart_404_handler'
