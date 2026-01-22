@@ -1,0 +1,1455 @@
+[
+  {
+    "canonical_key": "abgeschlossenes-bauwerk",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Završena građevina",
+      "slug": "zavrsena-gradevina",
+      "short_def": "Pravno odobrena i potpuno dovršena nekretnina.",
+      "long_def": "Završena građevina je nekretnina koja ima važeću građevinsku dozvolu, izgrađena je prema toj dozvoli i službeno se smatra dovršenom. U Hrvatskoj, pravna legalnost gradnje uvjet je za upis vlasništva, financiranje, iznajmljivanje i preprodaju.",
+      "synonyms": [
+        "dovršena zgrada",
+        "legalna građevina"
+      ],
+      "keywords": [
+        "građevinska legalnost",
+        "primopredaja",
+        "dozvola"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "nutzungsbewilligung",
+      "legalisierung"
+    ]
+  },
+  {
+    "canonical_key": "abschreibung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Amortizacija",
+      "slug": "amortizacija",
+      "short_def": "Porezna raspodjela troškova nekretnine kroz više godina.",
+      "long_def": "Amortizacija omogućuje investitorima poreznu raspodjelu troškova nabave ili izgradnje nekretnine tijekom definiranog razdoblja. U Hrvatskoj vrijede različite mogućnosti amortizacije ovisno o svrsi korištenja, osobito kod iznajmljivanja ili poslovnog korištenja.",
+      "synonyms": [
+        "Otpisi",
+        "Amortizacijski odbici"
+      ],
+      "keywords": [
+        "Porez",
+        "Povrat",
+        "Investicija",
+        "Nekretnine",
+        "Iznajmljivanje",
+        "Poslovna uporaba"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "steuerpflicht",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "alleineigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Isključivo vlasništvo",
+      "slug": "iskljucivo-vlasnistvo",
+      "short_def": "Puno vlasništvo nad nekretninom od strane jedne stranke.",
+      "long_def": "Isključivo vlasništvo znači da je nekretnina 100 posto u vlasništvu fizičke ili pravne osobe, bez suvlasničkih udjela trećih strana. Ovaj oblik vlasništva pojednostavljuje donošenje odluka, prodaju i terete u zemljišnim knjigama.",
+      "synonyms": [
+        "Puno vlasništvo"
+      ],
+      "keywords": [
+        "vlasništvo",
+        "zemljišne knjige",
+        "nekretnine"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "miteigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "anzahlung-kapara",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Kapara (Polog)",
+      "slug": "kapara-polog",
+      "short_def": "Osiguranje pri kupoprodaji nekretnina.",
+      "long_def": "Kapara je uobičajeni polog u Hrvatskoj, koji se uplaćuje prilikom sklapanja predugovora ili kupoprodajnog ugovora. Služi za osiguranje obiju strana ugovora. Ovisno o uvjetima ugovora, u slučaju odustajanja gubi se ili se vraća u dvostrukom iznosu.",
+      "synonyms": [
+        "Predujam",
+        "Depozit"
+      ],
+      "keywords": [
+        "Kupoprodajni ugovor",
+        "Predugovor",
+        "Osiguranje",
+        "Polog",
+        "Nekretnine"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "vorvertrag",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "baugenehmigung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Građevinska dozvola",
+      "slug": "gradevinska-dozvola",
+      "short_def": "Službeno odobrenje za izgradnju objekta.",
+      "long_def": "Građevinska dozvola potvrđuje da je građevinski projekt u skladu s važećim propisima o gradnji i prostornom uređenju. Nekretnine bez važeće građevinske dozvole u Hrvatskoj smatraju se pravno rizičnima i mogu spriječiti korištenje, prodaju ili financiranje.",
+      "synonyms": [
+        "Građevinsko odobrenje"
+      ],
+      "keywords": [
+        "građevina",
+        "dozvola",
+        "legalitet"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "legalisierung",
+      "nutzungsbewilligung",
+      "widmungsplan"
+    ]
+  },
+  {
+    "canonical_key": "bebaubarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Izgradivost",
+      "slug": "izgradivost",
+      "short_def": "Pravna mogućnost gradnje na nekretnini.",
+      "long_def": "Izgradivost opisuje može li se i u kojoj mjeri može nekretnina graditi. Proizlazi iz prostornog plana, građevinskog plana i lokalnih građevinskih propisa te je ključno za procjenu vrijednosti zemljišta.",
+      "synonyms": [
+        "Dozvola za gradnju"
+      ],
+      "keywords": [
+        "Nekretnina",
+        "Izgradnja",
+        "Prostorni plan",
+        "Građevinski plan",
+        "Građevinska dozvola",
+        "Propisi"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "baukoeffizient",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "belastung-grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Teret (Zemljišna knjiga)",
+      "slug": "teret-zemljisna-knjiga",
+      "short_def": "Ograničenje ili obveza upisana u zemljišnu knjigu.",
+      "long_def": "Tereti poput hipoteka, služnosti ili prava korištenja upisuju se u hrvatskoj zemljišnoj knjizi. Oni mogu značajno utjecati na korištenje, vrijednost i raspoloživost nekretnine te ih je potrebno provjeriti prije svake kupnje.",
+      "synonyms": [
+        "Teret na nekretnini",
+        "Zemljišnoknjižna oprava"
+      ],
+      "keywords": [
+        "Hipoteka",
+        "Služnost",
+        "Pravo korištenja",
+        "Nekretnina",
+        "Zemljišna knjiga"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "hypothek",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "closing",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Završetak transakcije",
+      "slug": "zavrsetak-transakcije",
+      "short_def": "Pravni završetak kupnje nekretnine.",
+      "long_def": "Završetak transakcije označava posljednji korak u kupnji nekretnine, gdje se odvija plaćanje, potpisivanje ugovora i prijenos vlasništva. U Hrvatskoj je ovaj proces obično praćen od strane javnog bilježnika.",
+      "synonyms": [
+        "Zaključenje kupoprodaje"
+      ],
+      "keywords": [
+        "Prijenos vlasništva",
+        "Javni bilježnik",
+        "Ugovor"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "grundbuch",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "due-diligence",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Due Diligence",
+      "slug": "due-diligence",
+      "short_def": "Sveobuhvatan pravni i ekonomski pregled nekretnine.",
+      "long_def": "Due Diligence uključuje pregled vlasničkih odnosa, građevinskih dozvola, tereta, poreza i mogućnosti korištenja. U Hrvatskoj je esencijalna za minimiziranje pravnih i financijskih rizika prije kupnje.",
+      "synonyms": [
+        "Provjera pažljivosti",
+        "Pregled due diligence",
+        "Pravna provjera"
+      ],
+      "keywords": [
+        "Rizik",
+        "Pregled",
+        "Pravo",
+        "Nekretnine",
+        "Financije"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "baugenehmigung",
+      "steuern"
+    ]
+  },
+  {
+    "canonical_key": "dienstbarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Služnost (Servitut)",
+      "slug": "sluznost-servitut",
+      "short_def": "Pravo upisano u zemljišnu knjigu koje omogućuje korištenje trećim stranama.",
+      "long_def": "Služnost je pravo upisano u zemljišnu knjigu koje omogućuje ili propisuje korištenje druge osobe ili nekretnine, kao što su pravo prolaza ili pravo vođenja instalacija. Može utjecati na tržišnu vrijednost.",
+      "synonyms": [
+        "Servitut",
+        "Evidentirana ovlast"
+      ],
+      "keywords": [
+        "Pravo prolaza",
+        "Pravo vođenja instalacija",
+        "Zemljišna knjiga",
+        "Nekretnina",
+        "Pravni odnosi"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "doppelbesteuerungsabkommen",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "international"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Sporazum o izbjegavanju dvostrukog oporezivanja",
+      "slug": "sporazum-o-izbjegavanju-dvostrukog-oporezivanja",
+      "short_def": "Sporazum za izbjegavanje dvostrukog poreznog opterećenja.",
+      "long_def": "Sporazumi o izbjegavanju dvostrukog oporezivanja određuju koja država ima pravo oporezivanja prihoda iz nekretnina. Za međunarodne ulagače u Hrvatskoj ključno je za izbjegavanje dvostrukog oporezivanja.",
+      "synonyms": [
+        "Sporazum o dvostrukom oporezivanju"
+      ],
+      "keywords": [
+        "Međunarodni porezi",
+        "Oporezivanje",
+        "Nekretnine"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "eigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Vlasništvo",
+      "slug": "vlasnistvo",
+      "short_def": "Pravno zaštićena kontrola nad nekretninom.",
+      "long_def": "Vlasništvo označava sveobuhvatno pravo raspolaganja nekretninom, uključujući korištenje, opterećenje ili prodaju. U Hrvatskoj vlasništvo nekretnine nastaje tek upisom u zemljišne knjige.",
+      "synonyms": [
+        "Vlasništvo nekretnine"
+      ],
+      "keywords": [
+        "Zemljišne knjige",
+        "Vlasnik",
+        "Pravo"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "alleineigentum",
+      "miteigentum"
+    ]
+  },
+  {
+    "canonical_key": "eigentumsuebertragung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Prijenos vlasništva",
+      "slug": "prijenos-vlasnistva",
+      "short_def": "Pravni prijenos vlasništva na kupca.",
+      "long_def": "Prijenos vlasništva u Hrvatskoj odvija se upisom novog vlasnika u zemljišne knjige. Preduvjeti su valjani kupoprodajni ugovor i dokaz o uplati kupoprodajne cijene.",
+      "synonyms": [
+        "Prenos vlasništva"
+      ],
+      "keywords": [
+        "Zemljišne knjige",
+        "Kupoprodajni ugovor",
+        "Zaključenje"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "erschliessung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Infrastrukturna veza",
+      "slug": "infrastrukturna-veza",
+      "short_def": "Povezivanje zemljišta s infrastrukturom.",
+      "long_def": "Infrastrukturna veza uključuje priključak zemljišta na javnu infrastrukturu kao što su cesta, struja, voda i kanalizacija. Stupanj opremljenosti značajno utječe na mogućnost gradnje i tržišnu vrijednost.",
+      "synonyms": [
+        "Priključak na infrastrukturu"
+      ],
+      "keywords": [
+        "zemljište",
+        "infrastruktura",
+        "gradnja"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "grundstueck",
+      "baukosten"
+    ]
+  },
+  {
+    "canonical_key": "finanzierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Financiranje",
+      "slug": "financiranje",
+      "short_def": "Financiranje nekretnina putem vlastitog ili tuđeg kapitala.",
+      "long_def": "Financiranje označava osiguranje vlastitog i tuđeg kapitala za kupnju ili gradnju nekretnine. U Hrvatskoj je financiranje za strance moguće, ali je vezano za određene uvjete.",
+      "synonyms": [
+        "Hipotekarni kredit"
+      ],
+      "keywords": [
+        "Kredit",
+        "Banka",
+        "Kapital"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "hypothek",
+      "rendite",
+      "bank"
+    ]
+  },
+  {
+    "canonical_key": "flaechenwidmung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Namjena prostora",
+      "slug": "namjena-prostora",
+      "short_def": "Određivanje dopuštene uporabe zemljišta.",
+      "long_def": "Namjena prostora definira kako se zemljište smije koristiti, primjerice kao građevinsko zemljište, zelenilo ili turistička zona. To je dio prostornog planiranja i temelj svake odluke o gradnji.",
+      "synonyms": [
+        "Namjena",
+        "Plan namjene"
+      ],
+      "keywords": [
+        "prostorno planiranje",
+        "građevinska zona",
+        "namjena zemljišta"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Zemljišna knjiga",
+      "slug": "zemljisna-knjiga",
+      "short_def": "Javni registar za vlasništvo i opterećenja.",
+      "long_def": "Hrvatska zemljišna knjiga je javni registar u kojem su upisani vlasnički odnosi, opterećenja i prava na nekretninama. Samo upisana prava smatraju se pravno obvezujućima.",
+      "synonyms": [
+        "Katastar"
+      ],
+      "keywords": [
+        "vlasništvo",
+        "hipoteka",
+        "služnost"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "eigentum",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "grundstueck",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Zemljište",
+      "slug": "zemljiste",
+      "short_def": "Nepodgrađeno ili građevinsko zemljište.",
+      "long_def": "Zemljište je definirana površina koja može biti izgrađena ili neizgrađena. Njegova upotreba i izgradnja ovise o namjeni, dostupnosti infrastrukture te građevinskim propisima.",
+      "synonyms": [
+        " parcela"
+      ],
+      "keywords": [
+        "zemljište",
+        "građevinsko",
+        "parcela"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "flaechenwidmung",
+      "erschliessung"
+    ]
+  },
+  {
+    "canonical_key": "hypothek",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Hipoteka",
+      "slug": "hipoteka",
+      "short_def": "Založno pravo upisano u zemljišnu knjigu.",
+      "long_def": "Hipoteka je založno pravo upisano u zemljišnu knjigu u korist kreditora. Služi kao osiguranje zajma i predstavlja značajno opterećenje nekretnine.",
+      "synonyms": [
+        "Založno pravo"
+      ],
+      "keywords": [
+        "Kredit",
+        "Opterećenje",
+        "Banka"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "immobilienbewertung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Procjena nekretnina",
+      "slug": "procjena-nekretnina",
+      "short_def": "Utvrđivanje tržišne vrijednosti nekretnine.",
+      "long_def": "Procjena nekretnina koristi se za utvrđivanje trenutne tržišne vrijednosti nekretnine. U Hrvatskoj procjene uzimaju u obzir lokaciju, stanje, mogućnosti korištenja, pravnu situaciju i tržišno okruženje. Relevantna je za odluke o kupnji, financiranje i analize investicija.",
+      "synonyms": [
+        "tržišna procjena"
+      ],
+      "keywords": [
+        "tržišna vrijednost",
+        "procjena",
+        "investicija"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "rendite",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "immobilienkauf",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Kupnja nekretnine",
+      "slug": "kupnja-nekretnine",
+      "short_def": "Stjecanje vlasništva nad nekretninom.",
+      "long_def": "Kupnja nekretnine u Hrvatskoj uključuje sklapanje ugovora, plaćanje kupoprodajne cijene i upis u zemljišne knjige. Za strane kupce važno je obratiti pažnju na pravne, porezne i formalne specifičnosti.",
+      "synonyms": [
+        "Stjecanje nekretnine"
+      ],
+      "keywords": [
+        "kupoprodajni ugovor",
+        "zemljišne knjige",
+        "zaključenje"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "investition",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Investicija",
+      "slug": "investicija",
+      "short_def": "Ulaganje kapitala radi rasta vrijednosti ili prinosa.",
+      "long_def": "Investiranje u nekretnine ima za cilj stalni prihod, rast vrijednosti ili oboje. U Hrvatskoj je ključna lokacija, upotreba, porezni okvir i pravna sigurnost.",
+      "synonyms": [
+        "Ulaganje",
+        "Kapitalna investicija"
+      ],
+      "keywords": [
+        "Prinos",
+        "Rast vrijednosti",
+        "Nekretnine",
+        "Lokacija",
+        "Porezi"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "immobilienbewertung",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "kaufvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Kupoprodajni ugovor",
+      "slug": "kupoprodajni-ugovor",
+      "short_def": "Pravni sporazum o stjecanju nekretnine.",
+      "long_def": "Kupoprodajni ugovor uređuje prava i obveze kupca i prodavatelja. U Hrvatskoj mora ispunjavati određene formalne zahtjeve i čini temelj za plaćanje kupoprodajne cijene i prijenos vlasništva.",
+      "synonyms": [
+        "Ugovor o kupnji nekretnine"
+      ],
+      "keywords": [
+        "ugovor",
+        "bilježnik",
+        "kapara"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "legalisierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Legalizacija",
+      "slug": "legalizacija",
+      "short_def": "Naknadno pravno priznavanje građevine.",
+      "long_def": "Legalizacija označava postupak naknadnog odobravanja građevine izgrađene bez važeće građevinske dozvole. U Hrvatskoj je ovaj postupak vezan uz stroge uvjete i nije uvijek moguć.",
+      "synonyms": [
+        "Naknadna dozvola"
+      ],
+      "keywords": [
+        "Legalnost gradnje",
+        "Odobrenje",
+        "Građevinska dozvola"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "abgeschlossenes-bauwerk",
+      "nutzungsbewilligung"
+    ]
+  },
+  {
+    "canonical_key": "luxusimmobilie",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "villa",
+        "apartment"
+      ]
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Luksuzna nekretnina",
+      "slug": "luksuzna-nekretnina",
+      "short_def": "Nekretnina visoke kvalitete s iznadprosječnom opremom.",
+      "long_def": "Luksuzne nekretnine odlikuju se ekskluzivnom lokacijom, kvalitetnom gradnjom, dizajnom, privatnošću i posebnim značajkama. U Hrvatskoj se često nalaze na obalnim područjima ili otocima.",
+      "synonyms": [
+        "Premium nekretnina"
+      ],
+      "keywords": [
+        "Vila",
+        "Premium",
+        "Ekskluzivno",
+        "Obala",
+        "Dizajn",
+        "Privatnost"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "investition",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "marktwert",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Tržišna vrijednost",
+      "slug": "trzisna-vrijednost",
+      "short_def": "Cijena koja se može postići na slobodnom tržištu.",
+      "long_def": "Tržišna vrijednost opisuje vjerojatnu cijenu nekretnine koja se može postići pri prodaji u normalnim tržišnim uvjetima. Nastaje iz ponude, potražnje, lokacije, stanja i pravnih okvira.",
+      "synonyms": [
+        "Vrijednost prometa"
+      ],
+      "keywords": [
+        "procjena",
+        "cijena",
+        "tržište nekretnina"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "immobilienbewertung",
+      "rendite",
+      "investition"
+    ]
+  },
+  {
+    "canonical_key": "miteigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Suvlasništvo",
+      "slug": "suvlasnistvo",
+      "short_def": "Zajedničko vlasništvo više strana.",
+      "long_def": "Kod suvlasništva nekretnina pripada više osobama prema određenim udjelima. Odluke o korištenju, prodaji ili opterećenju zahtijevaju, ovisno o konstelaciji, suglasnost svih suvlasnika.",
+      "synonyms": [
+        "Zajedničko vlasništvo"
+      ],
+      "keywords": [
+        "vlasnički udjeli",
+        "prava",
+        "nekretnine",
+        "suglasnost",
+        "prodaja",
+        "opterećenje"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "alleineigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "notar",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Javni bilježnik",
+      "slug": "javni-biljeznik",
+      "short_def": "Javni službenik za ovjeru ugovora.",
+      "long_def": "Javni bilježnik prati kupnju nekretnina u Hrvatskoj putem ovjere potpisa i utvrđivanja ugovora. Osigurava formalnu pravnu sigurnost procesa kupnje.",
+      "synonyms": [
+        "Notarijat"
+      ],
+      "keywords": [
+        "ovjera",
+        "ugovor",
+        "kupoprodaja"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "oib-nummer",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "tax",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "OIB broj",
+      "slug": "oib-broj",
+      "short_def": "Osobni hrvatski porezni identifikacijski broj.",
+      "long_def": "OIB broj je jedinstveni porezni identifikacijski broj potreban u Hrvatskoj za gotovo sve pravne i porezne transakcije, uključujući kupnju nekretnina i upis vlasništva.",
+      "synonyms": [
+        "Porezni broj Hrvatska"
+      ],
+      "keywords": [
+        "Porezi",
+        "Registracija",
+        "Nekretnine",
+        "Hrvatska",
+        "Identifikacija"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "rendite",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Povrat",
+      "slug": "povrat",
+      "short_def": "Prihod od ulaganja u nekretnine u odnosu na ulaganje.",
+      "long_def": "Povrat mjeri financijski prihod od nekretnine u odnosu na uloženi kapital. U obzir uzima prihod od najma, troškove, poreze i potencijalno povećanje vrijednosti.",
+      "synonyms": [
+        "Prinos",
+        "Zarada"
+      ],
+      "keywords": [
+        "Novčani tok",
+        "Ulaganje",
+        "Nekretnina",
+        "Najam",
+        "Troškovi"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "investition",
+      "immobilienbewertung",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "steuerpflicht",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Porezna obveza",
+      "slug": "porezna-obveza",
+      "short_def": "Obveza plaćanja poreza.",
+      "long_def": "Porezna obveza opisuje zakonsku obvezu plaćanja poreza. Kod vlasništva nekretnina u Hrvatskoj mogu se naplatiti porez na kupnju, posjed i dohodak.",
+      "synonyms": [
+        "Porezna dužnost"
+      ],
+      "keywords": [
+        "Porez",
+        "Pristojbe",
+        "Nekretnine",
+        "Hrvatska",
+        "Kupnja",
+        "Posjed",
+        "Dohodak"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "oib-nummer",
+      "doppelbesteuerungsabkommen"
+    ]
+  },
+  {
+    "canonical_key": "servitut",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Servitut",
+      "slug": "servitut",
+      "short_def": "Pravom upisano pravo korištenja u korist trećih osoba.",
+      "long_def": "Servitut je stvarno pravo upisano u zemljišne knjige koje pojedinim osobama ili nekretninama daje prava korištenja, kao što su pravo prolaza ili pravo provođenja infrastrukture. Servituti mogu utjecati na korištenje i vrijednost nekretnine.",
+      "synonyms": [
+        "Sljedeće pravo"
+      ],
+      "keywords": [
+        "pravo prolaza",
+        "pravo korištenja",
+        "zemljišne knjige",
+        "nekretnina",
+        "infrastruktura"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "dienstbarkeit",
+      "grundbuch",
+      "belastung-grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "uebergabeprotokoll",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Zapisnik o primopredaji",
+      "slug": "zapisnik-o-primopredaji",
+      "short_def": "Dokumentirana primopredaja nekretnine kupcu.",
+      "long_def": "Zapisnik o primopredaji dokumentira stanje nekretnine u trenutku primopredaje. Sadrži podatke o nedostacima, stanjima brojila, ključevima i opremi te služi pravnoj sigurnosti obje strane.",
+      "synonyms": [
+        "Dokument primopredaje"
+      ],
+      "keywords": [
+        "primopredaja",
+        "stanje",
+        "nekretnina",
+        "dokumenti"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "closing",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "umsatzsteuer-pdv",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Porez na dodanu vrijednost (PDV)",
+      "slug": "porez-na-dodanu-vrijednost-pdv",
+      "short_def": "Porez na dodanu vrijednost na određene nekretninske transakcije.",
+      "long_def": "Porez na dodanu vrijednost (PDV) može se primijeniti pri kupnji novih nekretnina ili kod komercijalne uporabe. U Hrvatskoj je standardna stopa 25 posto. Primjena PDV-a ili poreza na promet nekretnina ovisi o vrsti i starosti nekretnine.",
+      "synonyms": [
+        "PDV"
+      ],
+      "keywords": [
+        "PDV",
+        "porez",
+        "nekretnine",
+        "Hrvatska",
+        "dodana vrijednost"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "vermietung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "rental",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Najam",
+      "slug": "najam",
+      "short_def": "Privremeno ustupanje nekretnine uz plaćanje.",
+      "long_def": "Najam uključuje privremeno ustupanje nekretnine uz naknadu. U Hrvatskoj treba poštovati porezne, pravne i regulative dozvole, posebice kod turističkog kratkoročnog najma.",
+      "synonyms": [
+        "Zakup"
+      ],
+      "keywords": [
+        "najam",
+        "prihod",
+        "nekretnina"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "umsatzsteuer-pdv",
+      "steuerpflicht"
+    ]
+  },
+  {
+    "canonical_key": "vorvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Predugovor",
+      "slug": "predugovor",
+      "short_def": "Privremena obveza prije kupoprodajnog ugovora.",
+      "long_def": "Predugovor ureduje bitne točke planirane kupnje nekretnine prije sklapanja konačnog ugovora. Obično sadrži kupoprodajnu cijenu, uvjete plaćanja i kaparu.",
+      "synonyms": [
+        "Ugovor o rezervaciji"
+      ],
+      "keywords": [
+        "Kapara",
+        "kupoprodaja",
+        "nekretnine",
+        "ugovor",
+        "rezervacija"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "widmungsplan",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Plan korištenja zemljišta",
+      "slug": "plan-koristenja-zemljista",
+      "short_def": "Plan dozvoljene uporabe zemljišta.",
+      "long_def": "Plan korištenja zemljišta je alat prostornog planiranja koji određuje kako se zemljišta mogu koristiti. Temelji se na izdavanju građevinskih dozvola i investicijskim odlukama.",
+      "synonyms": [
+        "Prostorni plan"
+      ],
+      "keywords": [
+        "uporaba zemljišta",
+        "građevinska zona",
+        "prostorno planiranje",
+        "investicijske odluke"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "flaechenwidmung",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "zins",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "hr",
+      "title": "Kamatna stopa",
+      "slug": "kamatna-stopa",
+      "short_def": "Trošak za posuđena sredstva.",
+      "long_def": "Kamatna stopa označava naknadu za korištenje tuđih sredstava. Kod financiranja nekretnina, kamatne stope znatno utječu na ukupne troškove i isplativost investicije.",
+      "synonyms": [
+        "Kamatne stope"
+      ],
+      "keywords": [
+        "kredit",
+        "financiranje",
+        "hipoteka",
+        "ulaganje",
+        "troškovi"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "rendite"
+    ]
+  }
+]

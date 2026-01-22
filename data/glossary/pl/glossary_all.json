@@ -1,0 +1,1421 @@
+[
+  {
+    "canonical_key": "abgeschlossenes-bauwerk",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Zakończona Budowa",
+      "slug": "zakonczona-budowa",
+      "short_def": "Prawnie zatwierdzona i w pełni ukończona nieruchomość.",
+      "long_def": "Zakończona budowa to nieruchomość, która posiada ważne pozwolenie na budowę, została zbudowana zgodnie z nim i jest oficjalnie uznana za ukończoną. W Chorwacji prawna legalność budowy jest warunkiem wpisu do rejestru własności, finansowania, wynajmu i odsprzedaży.",
+      "synonyms": [
+        "ukończony budynek",
+        "legalna budowla"
+      ],
+      "keywords": [
+        "legalność budowy",
+        "odbiór",
+        "pozwolenie"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "nutzungsbewilligung",
+      "legalisierung"
+    ]
+  },
+  {
+    "canonical_key": "abschreibung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Amortyzacja",
+      "slug": "amortyzacja",
+      "short_def": "Podział kosztów nieruchomości w rozliczeniach podatkowych na kilka lat.",
+      "long_def": "Amortyzacja pozwala inwestorom rozłożyć koszty zakupu lub budowy nieruchomości na określony okres czasu w rozliczeniach podatkowych. W Chorwacji obowiązują różne możliwości amortyzacji w zależności od sposobu użytkowania, szczególnie przy wynajmie lub użytkowaniu komercyjnym.",
+      "synonyms": [
+        "Odpis"
+      ],
+      "keywords": [
+        "Podatki",
+        "Zwrot",
+        "Inwestycja"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "steuerpflicht",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "alleineigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Własność indywidualna",
+      "slug": "wlasnosc-indywidualna",
+      "short_def": "Pełna własność nieruchomości przez jedną stronę.",
+      "long_def": "Przy własności indywidualnej nieruchomość w 100% należy do osoby fizycznej lub prawnej. Nie ma udziałów współwłasności stron trzecich. Ta forma własności ułatwia procesy decyzyjne, sprzedaż i obciążenia w księdze wieczystej.",
+      "synonyms": [
+        "Pełna własność"
+      ],
+      "keywords": [
+        "własność",
+        "księga wieczysta",
+        "nieruchomość"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "miteigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "anzahlung-kapara",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Zaliczka (Kapara)",
+      "slug": "zaliczka-kapara",
+      "short_def": "Umowa zabezpieczająca przy zakupie nieruchomości.",
+      "long_def": "Kapara to powszechna w Chorwacji zaliczka wpłacana przy zawarciu wstępnej umowy lub aktu zakupu. Ma zabezpieczać obie strony umowy. W zależności od ustaleń umowy zaliczka przepada przy odstąpieniu lub jest zwracana podwójnie.",
+      "synonyms": [
+        "Zadatek",
+        "Kaucja"
+      ],
+      "keywords": [
+        "umowa zakupu",
+        "umowa wstępna",
+        "zabezpieczenie"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "vorvertrag",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "baugenehmigung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Pozwolenie na budowę",
+      "slug": "pozwolenie-na-budowe",
+      "short_def": "Zezwolenie urzędowe na budowę obiektu.",
+      "long_def": "Pozwolenie na budowę potwierdza, że planowana inwestycja jest zgodna z obowiązującymi przepisami budowlanymi. Nieruchomości bez ważnego pozwolenia na budowę w Chorwacji są uznawane za prawnie ryzykowne i mogą utrudnić użytkowanie, sprzedaż czy finansowanie.",
+      "synonyms": [
+        "Zgoda budowlana"
+      ],
+      "keywords": [
+        "budowa",
+        "zezwolenie",
+        "legalność"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "legalisierung",
+      "nutzungsbewilligung",
+      "widmungsplan"
+    ]
+  },
+  {
+    "canonical_key": "bebaubarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Zabudowalność",
+      "slug": "zabudowalnosc",
+      "short_def": "Prawna możliwość zabudowy działki.",
+      "long_def": "Zabudowalność określa, czy i w jakim zakresie można zabudować działkę. Wynika z przeznaczenia terenu, planu zagospodarowania przestrzennego i lokalnych przepisów budowlanych, stanowiąc kluczowy czynnik wartości działek.",
+      "synonyms": [
+        "Możliwość zabudowy"
+      ],
+      "keywords": [
+        "Działka",
+        "Budowa",
+        "Przeznaczenie"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "baukoeffizient",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "belastung-grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Obciążenie (księga wieczysta)",
+      "slug": "obciazenie-ksiega-wieczysta",
+      "short_def": "Ograniczenie lub zobowiązanie wpisane w księdze wieczystej.",
+      "long_def": "Obciążenia takie jak hipoteki, służebności lub prawa do zamieszkania są wpisywane w chorwackiej księdze wieczystej. Mogą one znacznie wpłynąć na użytkowanie, wartość i dostępność nieruchomości i muszą być sprawdzone przed każdym zakupem.",
+      "synonyms": [
+        "Obciążenie księgi wieczystej"
+      ],
+      "keywords": [
+        "hipoteka",
+        "służebność",
+        "ryzyko"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "hypothek",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "closing",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Finalizacja",
+      "slug": "finalizacja",
+      "short_def": "Prawne zakończenie zakupu nieruchomości.",
+      "long_def": "Finalizacja oznacza ostatni etap zakupu nieruchomości, obejmujący zapłatę ceny, podpisanie umowy i przeniesienie własności. W Chorwacji proces ten jest zazwyczaj notarialnie poświadczany.",
+      "synonyms": [
+        "Zamknięcie transakcji"
+      ],
+      "keywords": [
+        "Przeniesienie własności",
+        "Notariusz",
+        "Zakup nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "grundbuch",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "due-diligence",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Due Diligence",
+      "slug": "due-diligence",
+      "short_def": "Kompleksowa analiza prawna i gospodarcza nieruchomości.",
+      "long_def": "Due Diligence to analiza prawa własności, legalności budowy, obciążeń, podatków i możliwości użytkowania. W Chorwacji jest niezbędna do minimalizowania ryzyka prawnego i finansowego przed zakupem.",
+      "synonyms": [
+        "Analiza due diligence",
+        "Audyt nieruchomości"
+      ],
+      "keywords": [
+        "Ryzyko",
+        "Analiza",
+        "Prawo",
+        "Nieruchomość"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "baugenehmigung",
+      "steuern"
+    ]
+  },
+  {
+    "canonical_key": "dienstbarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Służebność (Służebność)",
+      "slug": "sluzebnosc-sluzebnosc",
+      "short_def": "Prawo użytkowania wpisane do księgi wieczystej na korzyść osób trzecich.",
+      "long_def": "Służebność to prawo wpisane do księgi wieczystej, które pozwala lub nakazuje określone użytkowanie innej osobie lub nieruchomości, np. prawo przechodu czy prawo przewodów. Może wpływać na wartość rynkową.",
+      "synonyms": [
+        "Służebność"
+      ],
+      "keywords": [
+        "Prawo przechodu",
+        "Prawo przewodów",
+        "Nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "doppelbesteuerungsabkommen",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "international"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Umowa o unikaniu podwójnego opodatkowania",
+      "slug": "umowa-o-unikaniu-podwojnego-opodatkowania",
+      "short_def": "Umowa zapobiegająca podwójnemu obciążeniu podatkowemu.",
+      "long_def": "Umowy o unikaniu podwójnego opodatkowania określają, które państwo ma prawo opodatkowania dochodów z nieruchomości. Dla międzynarodowych inwestorów w Chorwacji są kluczowe do unikania podwójnego opodatkowania.",
+      "synonyms": [
+        "UPO"
+      ],
+      "keywords": [
+        "Podatki międzynarodowe",
+        "Opodatkowanie",
+        "Nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "eigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Własność",
+      "slug": "wlasnosc",
+      "short_def": "Prawnie chronione zarządzanie nieruchomością.",
+      "long_def": "Własność oznacza pełne prawo do dysponowania nieruchomością, jej użytkowania, obciążania lub zbycia. W Chorwacji własność nieruchomości powstaje dopiero po wpisie do księgi wieczystej.",
+      "synonyms": [
+        "Własność nieruchomości"
+      ],
+      "keywords": [
+        "księga wieczysta",
+        "właściciel",
+        "prawo"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "alleineigentum",
+      "miteigentum"
+    ]
+  },
+  {
+    "canonical_key": "eigentumsuebertragung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Przeniesienie własności",
+      "slug": "przeniesienie-wlasnosci",
+      "short_def": "Prawne przeniesienie własności na kupującego.",
+      "long_def": "Przeniesienie własności w Chorwacji następuje poprzez wpis nowego właściciela do księgi wieczystej. Wymagane są ważna umowa kupna oraz dowód zapłaty ceny zakupu.",
+      "synonyms": [
+        "Przepisanie własności"
+      ],
+      "keywords": [
+        "księga wieczysta",
+        "umowa kupna",
+        "zamknięcie"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "erschliessung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Uzbrojenie terenu",
+      "slug": "uzbrojenie-terenu",
+      "short_def": "Podłączenie działki do infrastruktury.",
+      "long_def": "Uzbrojenie terenu obejmuje podłączenie działki do publicznej infrastruktury, takiej jak droga, prąd, woda i kanalizacja. Stopień uzbrojenia wpływa znacząco na możliwość zabudowy i wartość rynkową.",
+      "synonyms": [
+        "Podłączenie do infrastruktury"
+      ],
+      "keywords": [
+        "Działka",
+        "Infrastruktura",
+        "Budowa"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "grundstueck",
+      "baukosten"
+    ]
+  },
+  {
+    "canonical_key": "finanzierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Finansowanie",
+      "slug": "finansowanie",
+      "short_def": "Finansowanie nieruchomości za pomocą kapitału własnego lub obcego.",
+      "long_def": "Finansowanie to zapewnienie kapitału własnego i obcego na zakup lub budowę nieruchomości. W Chorwacji finansowanie jest możliwe dla obcokrajowców, jednak związane z pewnymi wymaganiami.",
+      "synonyms": [
+        "Kredyt hipoteczny"
+      ],
+      "keywords": [
+        "Kredyt",
+        "Bank",
+        "Kapitał własny"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "hypothek",
+      "rendite",
+      "bank"
+    ]
+  },
+  {
+    "canonical_key": "flaechenwidmung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Przeznaczenie terenu",
+      "slug": "przeznaczenie-terenu",
+      "short_def": "Określenie dopuszczalnego użytkowania nieruchomości.",
+      "long_def": "Przeznaczenie terenu definiuje, jak można wykorzystać nieruchomość, np. jako tereny budowlane, tereny zielone lub strefy turystyczne. Jest to część planowania przestrzennego i podstawa każdej decyzji budowlanej.",
+      "synonyms": [
+        "Zmiana zagospodarowania"
+      ],
+      "keywords": [
+        "planowanie przestrzenne",
+        "strefa budowlana",
+        "teren budowlany"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Księga wieczysta",
+      "slug": "ksiega-wieczysta",
+      "short_def": "Publiczny rejestr własności i obciążeń.",
+      "long_def": "Chorwacka księga wieczysta to publiczny rejestr, w którym rejestrowane są stosunki własności, obciążenia i prawa do nieruchomości. Tylko zarejestrowane prawa są prawnie wiążące.",
+      "synonyms": [
+        "Rejestr gruntów"
+      ],
+      "keywords": [
+        "własność",
+        "hipoteka",
+        "służebność"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "eigentum",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "grundstueck",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Działka",
+      "slug": "dzialka",
+      "short_def": "Niezabudowany lub możliwy do zabudowy teren.",
+      "long_def": "Działka to wydzielona powierzchnia terenu, która może być zabudowana lub nie. Jej użytkowanie i zabudowa zależą od przeznaczenia, uzbrojenia terenu oraz przepisów budowlanych.",
+      "synonyms": [
+        "Parcela",
+        "Łąka"
+      ],
+      "keywords": [
+        "Ziemia",
+        "Teren",
+        "Budowlany",
+        "Nieruchomość",
+        "Inwestycja"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "flaechenwidmung",
+      "erschliessung"
+    ]
+  },
+  {
+    "canonical_key": "hypothek",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Hipoteka",
+      "slug": "hipoteka",
+      "short_def": "Zabezpieczenie hipoteczne wpisane do księgi wieczystej.",
+      "long_def": "Hipoteka to zabezpieczenie wierzytelności na rzecz kredytodawcy, wpisane do księgi wieczystej. Służy do zabezpieczenia kredytów i stanowi istotne obciążenie nieruchomości.",
+      "synonyms": [
+        "Zastaw hipoteczny"
+      ],
+      "keywords": [
+        "Kredyt",
+        "Obciążenie",
+        "Bank"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "immobilienbewertung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Wycena nieruchomości",
+      "slug": "wycena-nieruchomosci",
+      "short_def": "Identyfikacja rynkowej wartości nieruchomości.",
+      "long_def": "Wycena nieruchomości służy określeniu aktualnej wartości rynkowej nieruchomości. W Chorwacji wyceny uwzględniają lokalizację, stan, możliwości użytkowe, sytuację prawną i otoczenie rynkowe. Jest istotna dla decyzji kupna, finansowania i analiz inwestycyjnych.",
+      "synonyms": [
+        "Określenie wartości rynkowej"
+      ],
+      "keywords": [
+        "Wartość rynkowa",
+        "Wycena",
+        "Zysk"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "rendite",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "immobilienkauf",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Zakup nieruchomości",
+      "slug": "zakup-nieruchomosci",
+      "short_def": "Nabycie własności nieruchomości.",
+      "long_def": "Zakup nieruchomości w Chorwacji obejmuje zawarcie umowy, zapłatę ceny zakupu i wpis do księgi wieczystej. Dla zagranicznych nabywców ważne są kwestie prawne, podatkowe i formalne.",
+      "synonyms": [
+        "Nabycie nieruchomości"
+      ],
+      "keywords": [
+        "umowa kupna",
+        "księga wieczysta",
+        "zawarcie umowy"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "investition",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Inwestycja",
+      "slug": "inwestycja",
+      "short_def": "Lokata kapitału z zamiarem wzrostu wartości lub zyskowności.",
+      "long_def": "Inwestycja w nieruchomości dąży do uzyskania bieżących dochodów, wzrostu wartości lub obu tych celów. W Chorwacji kluczowymi czynnikami są lokalizacja, przeznaczenie, ramy podatkowe i pewność prawna.",
+      "synonyms": [
+        "Lokata kapitału"
+      ],
+      "keywords": [
+        "Zyskowność",
+        "Wzrost wartości",
+        "Nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "immobilienbewertung",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "kaufvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Umowa kupna",
+      "slug": "umowa-kupna",
+      "short_def": "Prawne porozumienie dotyczące nabycia nieruchomości.",
+      "long_def": "Umowa kupna reguluje prawa i obowiązki kupującego i sprzedającego. W Chorwacji musi spełniać określone wymagania formalne i stanowi podstawę do zapłaty ceny zakupu oraz przeniesienia własności.",
+      "synonyms": [
+        "Umowa kupna nieruchomości"
+      ],
+      "keywords": [
+        "umowa",
+        "notariusz",
+        "kapara"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "legalisierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Legalizacja",
+      "slug": "legalizacja",
+      "short_def": "Późniejsze prawne uznanie budynku.",
+      "long_def": "Legalizacja oznacza procedurę późniejszego uznania budynku wzniesionego bez ważnego pozwolenia na budowę. W Chorwacji jest związana z surowymi warunkami i nie zawsze jest możliwa.",
+      "synonyms": [
+        "Późniejsze uznanie"
+      ],
+      "keywords": [
+        "Legalność budowlana",
+        "Pozwolenie",
+        "Budownictwo"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "abgeschlossenes-bauwerk",
+      "nutzungsbewilligung"
+    ]
+  },
+  {
+    "canonical_key": "luxusimmobilie",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "villa",
+        "apartment"
+      ]
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Nieruchomość luksusowa",
+      "slug": "nieruchomosc-luksusowa",
+      "short_def": "Nieruchomość wysokiej jakości z ponadprzeciętnymi udogodnieniami.",
+      "long_def": "Nieruchomości luksusowe charakteryzują się ekskluzywną lokalizacją, wysoką jakością budowlaną, designem, prywatnością oraz wyjątkowymi cechami wyposażenia. W Chorwacji często znajdują się w lokalizacjach nadmorskich lub na wyspach.",
+      "synonyms": [
+        "Nieruchomość premium"
+      ],
+      "keywords": [
+        "Willa",
+        "Premium",
+        "Ekskluzywny"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "investition",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "marktwert",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Wartość rynkowa",
+      "slug": "wartosc-rynkowa",
+      "short_def": "Cena możliwa do uzyskania na wolnym rynku.",
+      "long_def": "Wartość rynkowa opisuje prawdopodobną cenę nieruchomości, jaką można uzyskać przy sprzedaży w normalnych warunkach rynkowych. Wynika z podaży, popytu, lokalizacji, stanu i ram prawnych.",
+      "synonyms": [
+        "Wartość handlowa"
+      ],
+      "keywords": [
+        "Wycena",
+        "Cena",
+        "Rynek nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "immobilienbewertung",
+      "rendite",
+      "investition"
+    ]
+  },
+  {
+    "canonical_key": "miteigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Współwłasność",
+      "slug": "wspolwlasnosc",
+      "short_def": "Wspólna własność kilku stron.",
+      "long_def": "Współwłasność oznacza, że nieruchomość należy do kilku osób w określonych udziałach. Decyzje o użytkowaniu, sprzedaży lub obciążeniu wymagają, w zależności od sytuacji, zgody wszystkich współwłaścicieli.",
+      "synonyms": [
+        "Własność wspólna"
+      ],
+      "keywords": [
+        "udziały własności",
+        "prawa",
+        "nieruchomość"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "alleineigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "notar",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Notariusz",
+      "slug": "notariusz",
+      "short_def": "Funkcjonariusz publiczny do uwierzytelniania umów.",
+      "long_def": "Notariusz w Chorwacji uczestniczy w zakupie nieruchomości przez poświadczenie podpisów i uwierzytelnianie umów, zapewniając formalne bezpieczeństwo prawne procesu zakupu.",
+      "synonyms": [
+        "Kancelaria notarialna"
+      ],
+      "keywords": [
+        "uwierzytelnianie",
+        "umowa kupna",
+        "notariusz"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "oib-nummer",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "tax",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Numer OIB",
+      "slug": "numer-oib",
+      "short_def": "Osobisty chorwacki numer identyfikacji podatkowej.",
+      "long_def": "Numer OIB to unikalny numer identyfikacji podatkowej wymagany w Chorwacji do prawie wszystkich operacji prawnych i podatkowych, w tym zakupu nieruchomości i rejestracji własności.",
+      "synonyms": [
+        "Identyfikacja podatkowa Chorwacja"
+      ],
+      "keywords": [
+        "Podatki",
+        "Rejestracja",
+        "Chorwacki numer podatkowy",
+        "Tożsamość podatkowa",
+        "Zakup nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "rendite",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Rendita",
+      "slug": "rendita",
+      "short_def": "Wynik inwestycji w nieruchomość względem zaangażowanego kapitału.",
+      "long_def": "Rendita mierzy wynik finansowy nieruchomości względem zainwestowanego kapitału, uwzględniając dochody z najmu, koszty, podatki i potencjalny wzrost wartości.",
+      "synonyms": [
+        "Dochód"
+      ],
+      "keywords": [
+        "Przepływ gotówki",
+        "Inwestycja",
+        "Nieruchomości"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "investition",
+      "immobilienbewertung",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "steuerpflicht",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Obowiązek podatkowy",
+      "slug": "obowiazek-podatkowy",
+      "short_def": "Zobowiązanie do płacenia podatków.",
+      "long_def": "Obowiązek podatkowy odnosi się do ustawowego zobowiązania do odprowadzania podatków. W przypadku posiadania nieruchomości w Chorwacji mogą wystąpić podatki od nabycia, własności i dochodów.",
+      "synonyms": [
+        "Zobowiązanie podatkowe"
+      ],
+      "keywords": [
+        "Podatki",
+        "Nieruchomości",
+        "Chorwacja"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "oib-nummer",
+      "doppelbesteuerungsabkommen"
+    ]
+  },
+  {
+    "canonical_key": "servitut",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Służebność",
+      "slug": "sluzebnosc",
+      "short_def": "Prawnie zabezpieczone prawo użytkowania na rzecz osób trzecich.",
+      "long_def": "Służebność to ograniczone prawo rzeczowe zapisane w księdze wieczystej, które przyznaje określonym osobom lub nieruchomościom prawa użytkowania, takie jak prawa przejazdu lub prawa przesyłowe. Służebności mogą wpływać na użytkowanie i wartość nieruchomości.",
+      "synonyms": [
+        "służebność gruntowa"
+      ],
+      "keywords": [
+        "prawo przejazdu",
+        "prawo przesyłowe",
+        "księga wieczysta"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "dienstbarkeit",
+      "grundbuch",
+      "belastung-grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "uebergabeprotokoll",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Protokół zdawczo-odbiorczy",
+      "slug": "protokol-zdawczo-odbiorczy",
+      "short_def": "Dokumentowana przekazanie nieruchomości kupującemu.",
+      "long_def": "Protokół zdawczo-odbiorczy dokumentuje stan nieruchomości w momencie przekazania. Zawiera informacje o wadach, stanach liczników, kluczach i wyposażeniu, zapewniając ochronę prawną obu stronom.",
+      "synonyms": [
+        "Dokument przekazania"
+      ],
+      "keywords": [
+        "przekazanie",
+        "stan",
+        "nieruchomość"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "closing",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "umsatzsteuer-pdv",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Podatek VAT (PDV)",
+      "slug": "podatek-vat-pdv",
+      "short_def": "Podatek od wartości dodanej na określone transakcje nieruchomości.",
+      "long_def": "Podatek VAT (PDV) może być naliczany przy zakupie nowych nieruchomości lub przy użytkowaniu komercyjnym. W Chorwacji standardowa stawka wynosi 25 procent. Czy pobierany jest PDV lub podatek od zakupu nieruchomości, zależy od rodzaju i wieku nieruchomości.",
+      "synonyms": [
+        "podatek od wartości dodanej"
+      ],
+      "keywords": [
+        "PDV",
+        "podatki",
+        "nieruchomości",
+        "Chorwacja",
+        "VAT"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "vermietung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "rental",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Wynajem",
+      "slug": "wynajem",
+      "short_def": "Oddanie nieruchomości do korzystania za opłatą.",
+      "long_def": "Wynajem obejmuje tymczasowe oddanie nieruchomości do korzystania za opłatą. W Chorwacji należy przestrzegać przepisów podatkowych, prawnych i związanych z pozwoleniami, zwłaszcza przy krótkoterminowym wynajmie turystycznym.",
+      "synonyms": [
+        "Umowa najmu"
+      ],
+      "keywords": [
+        "Najem",
+        "Dochód",
+        "Nieruchomość"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "umsatzsteuer-pdv",
+      "steuerpflicht"
+    ]
+  },
+  {
+    "canonical_key": "vorvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Umowa przedwstępna",
+      "slug": "umowa-przedwstepna",
+      "short_def": "Tymczasowe zobowiązanie przed umową kupna.",
+      "long_def": "Umowa przedwstępna reguluje kluczowe aspekty planowanego zakupu nieruchomości przed podpisaniem ostatecznej umowy kupna. Zawiera zazwyczaj cenę, warunki płatności i kapara.",
+      "synonyms": [
+        "Umowa rezerwacyjna"
+      ],
+      "keywords": [
+        "kapara",
+        "proces zakupu",
+        "umowa przedwstępna",
+        "nieruchomości",
+        "warunki płatności"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "widmungsplan",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Plan przeznaczenia",
+      "slug": "plan-przeznaczenia",
+      "short_def": "Plan dotyczący dopuszczalnego wykorzystania działek.",
+      "long_def": "Plan przeznaczenia to narzędzie planowania przestrzennego, które określa, jak mogą być wykorzystywane działki. Stanowi podstawę do wydawania pozwoleń na budowę i podejmowania decyzji inwestycyjnych.",
+      "synonyms": [
+        "Plan zagospodarowania przestrzennego"
+      ],
+      "keywords": [
+        "przeznaczenie działki",
+        "strefa budowlana",
+        "planowanie przestrzenne",
+        "pozowlenie budowlane",
+        "zagospodarowanie",
+        "plan przestrzenny"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "flaechenwidmung",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "zins",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "pl",
+      "title": "Oprocentowanie",
+      "slug": "oprocentowanie",
+      "short_def": "Koszt kapitału pożyczonego.",
+      "long_def": "Oprocentowanie to opłata za korzystanie z kapitału obcego. W finansowaniu nieruchomości stawki oprocentowania znacznie wpływają na całkowite koszty i rentowność inwestycji.",
+      "synonyms": [
+        "Stopa procentowa"
+      ],
+      "keywords": [
+        "Kredyt",
+        "Finansowanie",
+        "Inwestycja"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "rendite"
+    ]
+  }
+]

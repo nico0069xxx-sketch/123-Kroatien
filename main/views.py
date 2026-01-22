@@ -659,12 +659,62 @@ def loginRequired(request):
 
 
 def set_language_from_url(request, user_language):
+    from .glossary_models import COUNTRY_NAMES, GLOSSARY_URLS
+    import re
+    
     request.session['site_language'] = user_language
     translation.activate(user_language)
     referer = request.META.get('HTTP_REFERER', '/')
-    # Replace language prefix in URL
-    import re
-    new_url = re.sub(r'^(https?://[^/]+)?/(ge|en|hr|fr|gr|pl|cz|ru|sw|nb|sl|nl)/', f'/{user_language}/', referer)
+    
+    # Parse the referer URL
+    path_match = re.match(r'^(https?://[^/]+)?/([a-z]{2})/([^/]+)/([^/]+)/?(.*)$', referer)
+    
+    if path_match:
+        source_lang = path_match.group(2)
+        source_country = path_match.group(3)
+        source_segment = path_match.group(4)
+        rest = path_match.group(5)
+        
+        # Check if this is a glossary page
+        if source_segment in GLOSSARY_URLS.values():
+            target_country = COUNTRY_NAMES.get(user_language, 'kroatien')
+            target_segment = GLOSSARY_URLS.get(user_language, 'glossar')
+            
+            if rest:
+                # Detail page - try to find equivalent slug
+                slug = rest.rstrip('/')
+                from .glossary_models import GlossaryTermTranslation
+                try:
+                    source_trans = GlossaryTermTranslation.objects.select_related('term').filter(
+                        language=source_lang,
+                        slug=slug,
+                        status__in=['approved', 'published']
+                    ).first()
+                    if source_trans:
+                        target_trans = GlossaryTermTranslation.objects.filter(
+                            term=source_trans.term,
+                            language=user_language,
+                            status__in=['approved', 'published']
+                        ).first()
+                        if target_trans:
+                            return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/{target_trans.slug}/')
+                except Exception:
+                    pass
+                # Fallback to glossary index
+                return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
+            else:
+                # Index page
+                return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
+        
+        # Not glossary - just replace language and country
+        target_country = COUNTRY_NAMES.get(user_language, source_country)
+        new_url = f'/{user_language}/{target_country}/{source_segment}/'
+        if rest:
+            new_url += rest
+        return HttpResponseRedirect(new_url)
+    
+    # Simple language prefix replacement as fallback
+    new_url = re.sub(r'^(https?://[^/]+)?/(ge|en|hr|fr|gr|pl|cz|ru|sw|no|sk|nl)/', f'/{user_language}/', referer)
     if new_url == referer:
         new_url = f'/{user_language}/'
     return HttpResponseRedirect(new_url)

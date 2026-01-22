@@ -1,0 +1,1435 @@
+[
+  {
+    "canonical_key": "abgeschlossenes-bauwerk",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Готовый объект",
+      "slug": "",
+      "short_def": "Юридически одобренная и полностью завершенная недвижимость.",
+      "long_def": "Готовый объект – это недвижимость, имеющая действительное разрешение на строительство, построенная в соответствии с ним и официально считающаяся завершенной. В Хорватии юридическая легальность строительства является условием для регистрации собственности, финансирования, аренды и перепродажи.",
+      "synonyms": [
+        "завершенное здание",
+        "законный объект"
+      ],
+      "keywords": [
+        "строительная легальность",
+        "завершение",
+        "разрешение"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "nutzungsbewilligung",
+      "legalisierung"
+    ]
+  },
+  {
+    "canonical_key": "abschreibung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Амортизация",
+      "slug": "-2",
+      "short_def": "Налоговое распределение стоимости недвижимости на несколько лет.",
+      "long_def": "Амортизация позволяет инвесторам распределять затраты на приобретение или строительство недвижимости на определённый период времени для налоговых целей. В Хорватии действуют различные возможности амортизации в зависимости от типа использования, особенно при сдаче в аренду или коммерческом использовании.",
+      "synonyms": [
+        "Афа"
+      ],
+      "keywords": [
+        "налоги",
+        "доходность",
+        "инвестиции"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "steuerpflicht",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "alleineigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Индивидуальная собственность",
+      "slug": "-3",
+      "short_def": "Полная собственность на недвижимость одной стороной.",
+      "long_def": "При индивидуальной собственности недвижимость на 100 процентов принадлежит физическому или юридическому лицу. Нет долей собственности третьих лиц. Эта форма собственности упрощает процессы принятия решений, продажи и обременений в Реестре недвижимости.",
+      "synonyms": [
+        "Полная собственность"
+      ],
+      "keywords": [
+        "Собственность",
+        "Реестр недвижимости",
+        "Недвижимость"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "miteigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "anzahlung-kapara",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Аванс (Капара)",
+      "slug": "-4",
+      "short_def": "Договорное обеспечение при покупке недвижимости.",
+      "long_def": "Капара — это аванс, характерный для Хорватии, который вносится при заключении предварительного договора или договора купли-продажи. Она служит для обеспечения обеих сторон договора. В зависимости от условий договора при отказе она может быть потеряна или возвращена в двойном размере.",
+      "synonyms": [
+        "задаток договор купли-продажи"
+      ],
+      "keywords": [
+        "договор купли-продажи",
+        "предварительный договор",
+        "обеспечение"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "vorvertrag",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "baugenehmigung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Строительное разрешение",
+      "slug": "-5",
+      "short_def": "Официальное разрешение на возведение сооружения.",
+      "long_def": "Строительное разрешение подтверждает, что проект соответствует действующим строительным и градостроительным нормам. Недвижимость без действующего разрешения в Хорватии считается юридически рискованной и может препятствовать использованию, продаже или финансированию.",
+      "synonyms": [
+        "Строительное одобрение"
+      ],
+      "keywords": [
+        "Строительство",
+        "Разрешение",
+        "Законность"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "legalisierung",
+      "nutzungsbewilligung",
+      "widmungsplan"
+    ]
+  },
+  {
+    "canonical_key": "bebaubarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Строительная возможность",
+      "slug": "-6",
+      "short_def": "Правовая возможность застройки участка.",
+      "long_def": "Строительная возможность описывает, можно ли и в какой степени застраивать участок. Она определяется зонированием, планом застройки и местными строительными нормами и является ключевым фактором стоимости участка.",
+      "synonyms": [
+        "Допустимость застройки"
+      ],
+      "keywords": [
+        "Участок",
+        "Строительство",
+        "Зонирование"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "baukoeffizient",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "belastung-grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Обременение (ЕГРН)",
+      "slug": "-7",
+      "short_def": "Ограничение или обязательство, внесенное в ЕГРН.",
+      "long_def": "Обременения, такие как ипотеки, сервитуты или права на жилье, заносятся в хорватский ЕГРН. Они могут значительно повлиять на использование, стоимость и доступность недвижимости и должны быть проверены перед каждой покупкой.",
+      "synonyms": [
+        "обременение в реестре"
+      ],
+      "keywords": [
+        "ипотека",
+        "сервитут",
+        "риск"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "hypothek",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "closing",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Закрытие сделки",
+      "slug": "-8",
+      "short_def": "Юридическое завершение покупки недвижимости.",
+      "long_def": "Закрытие сделки - это конечный шаг покупки недвижимости, включающий оплату, подписание договора и передачу собственности. В Хорватии этот процесс обычно сопровождается нотариусом.",
+      "synonyms": [
+        "завершение сделки"
+      ],
+      "keywords": [
+        "передача собственности",
+        "нотариус",
+        "договор"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "grundbuch",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "due-diligence",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Комплексная проверка (Due Diligence)",
+      "slug": "due-diligence",
+      "short_def": "Всесторонняя юридическая и экономическая проверка недвижимости.",
+      "long_def": "Комплексная проверка включает анализ прав собственности, строительной легальности, обременений, налогов и возможностей использования. Она важна в Хорватии для минимизации правовых и финансовых рисков перед покупкой.",
+      "synonyms": [
+        "Дю Дилидженс",
+        "Аудит"
+      ],
+      "keywords": [
+        "Риск",
+        "Проверка",
+        "Законы",
+        "Недвижимость"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "baugenehmigung",
+      "steuern"
+    ]
+  },
+  {
+    "canonical_key": "dienstbarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Сервитут (Dienstbarkeit)",
+      "slug": "dienstbarkeit",
+      "short_def": "Право использования, зарегистрированное в земельной книге в пользу третьих лиц.",
+      "long_def": "Сервитут— это право, зарегистрированное в земельной книге, которое позволяет или предписывает определенное использование другой стороне или имуществу, например, право прохода или право прокладки коммуникаций. Может влиять на рыночную стоимость.",
+      "synonyms": [
+        "Сервитут",
+        "Эндемент"
+      ],
+      "keywords": [
+        "право прохода",
+        "право пути",
+        "право прокладки"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "doppelbesteuerungsabkommen",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "international"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Соглашение об избежании двойного налогообложения",
+      "slug": "-9",
+      "short_def": "Соглашение для устранения двойного налогообложения.",
+      "long_def": "Соглашения об избежании двойного налогообложения регулируют, какое государство имеет право облагать налогом доходы от недвижимости. Для международных инвесторов в Хорватии они важны для предотвращения двойного налогообложения.",
+      "synonyms": [
+        "СИДН"
+      ],
+      "keywords": [
+        "международные налоги",
+        "налогообложение",
+        "недвижимость"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "eigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Собственность",
+      "slug": "-10",
+      "short_def": "Юридически защищенное владение недвижимостью.",
+      "long_def": "Собственность обозначает полное право распоряжаться недвижимостью, использовать, обременять или продавать её. В Хорватии право собственности на недвижимость возникает только после регистрации в земельной книге.",
+      "synonyms": [
+        "Недвижимость"
+      ],
+      "keywords": [
+        "Земельная книга",
+        "Собственник",
+        "Право"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "alleineigentum",
+      "miteigentum"
+    ]
+  },
+  {
+    "canonical_key": "eigentumsuebertragung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Передача права собственности",
+      "slug": "-11",
+      "short_def": "Юридический переход права собственности к покупателю.",
+      "long_def": "Передача права собственности в Хорватии осуществляется путём регистрации нового владельца в земельной книге. Необходимы действительный договор купли-продажи и подтверждение оплаты покупной цены.",
+      "synonyms": [
+        "Переписывание права собственности"
+      ],
+      "keywords": [
+        "земельная книга",
+        "договор купли-продажи",
+        "завершение сделки"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "erschliessung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Подведение коммуникаций",
+      "slug": "-12",
+      "short_def": "Подключение участка к инфраструктуре.",
+      "long_def": "Подведение коммуникаций включает подключение участка к общественной инфраструктуре, такой как дороги, электричество, водоснабжение и водоотведение. Уровень подведения коммуникаций значительно влияет на возможность строительства и рыночную стоимость.",
+      "synonyms": [
+        "подключение к инфраструктуре"
+      ],
+      "keywords": [
+        "участок",
+        "инфраструктура",
+        "строительство"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "grundstueck",
+      "baukosten"
+    ]
+  },
+  {
+    "canonical_key": "finanzierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Финансирование",
+      "slug": "-13",
+      "short_def": "Финансирование недвижимости за счет заемного или собственного капитала.",
+      "long_def": "Финансирование описывает предоставление собственного и заемного капитала для покупки или строительства недвижимости. В Хорватии финансирование доступно для иностранцев, но связано с определенными условиями.",
+      "synonyms": [
+        "ипотечный кредит",
+        "ипотека"
+      ],
+      "keywords": [
+        "кредит",
+        "банк",
+        "собственный капитал"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "hypothek",
+      "rendite",
+      "bank"
+    ]
+  },
+  {
+    "canonical_key": "flaechenwidmung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Назначение земельного участка",
+      "slug": "-14",
+      "short_def": "Определение допустимого использования земельного участка.",
+      "long_def": "Назначение земельного участка определяет, как можно использовать участок, например, как застроенную зону, зеленую зону или туристическую зону. Оно является частью планирования территории и основой для любого строительного решения.",
+      "synonyms": [
+        "Назначение"
+      ],
+      "keywords": [
+        "планировка",
+        "строительная зона",
+        "землепользование",
+        "разрешенное использование"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Земельная книга",
+      "slug": "-15",
+      "short_def": "Публичный реестр для имущества и обременений.",
+      "long_def": "Хорватская земельная книга - это публичный реестр, в котором зарегистрированы право собственности, обременения и права на недвижимость. Только зарегистрированные права считаются юридически обязательными.",
+      "synonyms": [
+        "Кадастр"
+      ],
+      "keywords": [
+        "собственность",
+        "ипотека",
+        "сервитут"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "eigentum",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "grundstueck",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Земельный участок",
+      "slug": "-16",
+      "short_def": "Не застроенная или подлежащая застройке земля.",
+      "long_def": "Земельный участок — это выделенная территория, которая может быть застроена или нет. Использование и застройка зависят от назначения, инфраструктуры и строительных норм.",
+      "synonyms": [
+        "Парцелла",
+        "Участок"
+      ],
+      "keywords": [
+        "земля",
+        "строительство",
+        "участок",
+        "недвижимость"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "flaechenwidmung",
+      "erschliessung"
+    ]
+  },
+  {
+    "canonical_key": "hypothek",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Ипотека",
+      "slug": "-17",
+      "short_def": "Залоговое право на недвижимость, зарегистрированное в земельной книге.",
+      "long_def": "Ипотека — это зарегистрированное в земельной книге залоговое право в пользу кредитора. Она служит обеспечением заёмов и представляет собой значительную нагрузку на недвижимость.",
+      "synonyms": [
+        "Залог",
+        "Закладная"
+      ],
+      "keywords": [
+        "Кредит",
+        "Залог",
+        "Банк",
+        "Недвижимость",
+        "Долг"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "immobilienbewertung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Оценка недвижимости",
+      "slug": "-18",
+      "short_def": "Определение рыночной стоимости недвижимости.",
+      "long_def": "Оценка недвижимости служит для определения текущей рыночной стоимости недвижимости. В Хорватии оценки учитывают местоположение, состояние, возможности использования, правовой статус и рыночную среду. Она актуальна для принятия решений о покупке, финансировании и инвестиционном анализе.",
+      "synonyms": [
+        "Определение рыночной стоимости"
+      ],
+      "keywords": [
+        "Рыночная стоимость",
+        "Оценка",
+        "Доходность"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "rendite",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "immobilienkauf",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Покупка недвижимости",
+      "slug": "-19",
+      "short_def": "Приобретение недвижимости в собственность.",
+      "long_def": "Покупка недвижимости в Хорватии включает заключение контракта, оплату покупки и внесение в земельный кадастр. Иностранным покупателям следует учитывать правовые, налоговые и формальные особенности.",
+      "synonyms": [
+        "Приобретение недвижимости"
+      ],
+      "keywords": [
+        "Договор купли-продажи",
+        "Земельный кадастр",
+        "Закрытие сделки"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "investition",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Инвестиция",
+      "slug": "-20",
+      "short_def": "Вложение капитала для увеличения стоимости или получения дохода.",
+      "long_def": "Инвестиции в недвижимость нацелены на получение текущего дохода, увеличение стоимости или оба результата. В Хорватии центральную роль играют местоположение, использование, налоговый режим и правовая безопасность.",
+      "synonyms": [
+        "Капитальные вложения"
+      ],
+      "keywords": [
+        "Доходность",
+        "Рост стоимости",
+        "Недвижимость",
+        "Хорватия",
+        "Инвестиции"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "immobilienbewertung",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "kaufvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Договор купли-продажи",
+      "slug": "-21",
+      "short_def": "Юридическое соглашение о приобретении недвижимости.",
+      "long_def": "Договор купли-продажи определяет права и обязанности покупателя и продавца. В Хорватии он должен соответствовать определённым формальным требованиям и является основой для оплаты покупной цены и перехода права собственности.",
+      "synonyms": [
+        "договор о покупке недвижимости"
+      ],
+      "keywords": [
+        "договор",
+        "нотариус",
+        "кафара"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "legalisierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Легализация",
+      "slug": "-22",
+      "short_def": "Постфактум юридическое признание строения.",
+      "long_def": "Легализация обозначает процесс постфактум утверждения постройки, возведенной без действительного разрешения на строительство. В Хорватии она связана с строгими условиями и не всегда возможна.",
+      "synonyms": [
+        "Дополнительное утверждение"
+      ],
+      "keywords": [
+        "строительная легализация",
+        "разрешение",
+        "законность строительства"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "abgeschlossenes-bauwerk",
+      "nutzungsbewilligung"
+    ]
+  },
+  {
+    "canonical_key": "luxusimmobilie",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "villa",
+        "apartment"
+      ]
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Роскошная недвижимость",
+      "slug": "-23",
+      "short_def": "Высококачественная недвижимость с оборудованием выше среднего.",
+      "long_def": "Роскошная недвижимость отличается эксклюзивным местоположением, высоким качеством строительства, дизайном, приватностью и особыми характеристиками. В Хорватии их часто можно встретить на побережье или на островах.",
+      "synonyms": [
+        "Премиум-объект"
+      ],
+      "keywords": [
+        "Вилла",
+        "Премиум",
+        "Эксклюзивность"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "investition",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "marktwert",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Рыночная стоимость",
+      "slug": "-24",
+      "short_def": "Цена, которую можно получить на открытом рынке.",
+      "long_def": "Рыночная стоимость описывает вероятную цену, которая может быть получена при продаже недвижимости в обычных рыночных условиях. Она определяется на основе предложения, спроса, местоположения, состояния и правовых условий.",
+      "synonyms": [
+        "Рыночная цена",
+        "Оценочная стоимость"
+      ],
+      "keywords": [
+        "Оценка",
+        "Цена",
+        "Рынок недвижимости",
+        "Спрос",
+        "Предложение"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "immobilienbewertung",
+      "rendite",
+      "investition"
+    ]
+  },
+  {
+    "canonical_key": "miteigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Совладение",
+      "slug": "-25",
+      "short_def": "Общее владение несколькими сторонами.",
+      "long_def": "При совладении недвижимость принадлежит нескольким лицам в определённых долях. Решения об использовании, продаже или обременении требуют согласия всех совладельцев, в зависимости от ситуации.",
+      "synonyms": [
+        "Совместная собственность"
+      ],
+      "keywords": [
+        "доли собственности",
+        "права",
+        "собственники",
+        "недвижимость",
+        "коллективная собственность"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "alleineigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "notar",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Нотариус",
+      "slug": "-26",
+      "short_def": "Государственный служащий для удостоверения договоров.",
+      "long_def": "Нотариус в Хорватии сопровождает покупку недвижимости через заверение подписей и удостоверение договоров. Он обеспечивает формальную правовую безопасность процесса покупки.",
+      "synonyms": [
+        "нотариат"
+      ],
+      "keywords": [
+        "удостоверение",
+        "договор купли-продажи",
+        "подпись"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "oib-nummer",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "tax",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "OIB-номер",
+      "slug": "oib",
+      "short_def": "Персональный идентификационный номер налогоплательщика в Хорватии.",
+      "long_def": "OIB-номер — это уникальный идентификационный номер для налоговых целей в Хорватии, необходимый для большинства юридических и налоговых операций, включая покупку и регистрацию недвижимости.",
+      "synonyms": [
+        "налоговый номер Хорватии"
+      ],
+      "keywords": [
+        "налоги",
+        "регистрация",
+        "недвижимость",
+        "Хорватия"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "rendite",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Доходность",
+      "slug": "-27",
+      "short_def": "Доход от вложения в недвижимость по отношению к инвестициям.",
+      "long_def": "Доходность измеряет финансовый результат инвестиции в недвижимость в соотношении с вложенным капиталом. Она учитывает доход от аренды, затраты, налоги и потенциальное увеличение стоимости.",
+      "synonyms": [
+        "Прибыль"
+      ],
+      "keywords": [
+        "Денежный поток",
+        "Инвестиция",
+        "Недвижимость"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "investition",
+      "immobilienbewertung",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "steuerpflicht",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "налоговое обязательство",
+      "slug": "-28",
+      "short_def": "Обязанность уплаты налогов.",
+      "long_def": "Налоговое обязательство — это законное обязательство уплаты налогов. В случае владения недвижимостью в Хорватии могут возникнуть налоги на покупку, владение и доход.",
+      "synonyms": [
+        "налогообложение"
+      ],
+      "keywords": [
+        "налоги",
+        "сборы",
+        "недвижимость",
+        "Хорватия"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "oib-nummer",
+      "doppelbesteuerungsabkommen"
+    ]
+  },
+  {
+    "canonical_key": "servitut",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Сервитут",
+      "slug": "-29",
+      "short_def": "Закрепленное в земельной книге право пользования в пользу третьих лиц.",
+      "long_def": "Сервитут — это обременение, которое вносится в земельную книгу и предоставляет определенным лицам или земельным участкам права пользования, например, право прохода или прокладки коммуникаций. Сервитуты могут влиять на использование и стоимость недвижимости.",
+      "synonyms": [
+        "обременение",
+        "право сервитута"
+      ],
+      "keywords": [
+        "право прохода",
+        "право на прокладку коммуникаций",
+        "права пользования"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "dienstbarkeit",
+      "grundbuch",
+      "belastung-grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "uebergabeprotokoll",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Акт передачи",
+      "slug": "-30",
+      "short_def": "Документированная передача недвижимости покупателю.",
+      "long_def": "Акт передачи документирует состояние недвижимости на момент передачи. Он включает данные о дефектах, показаниях счетчиков, ключах и оборудовании и служит правовой защитой обеих сторон.",
+      "synonyms": [
+        "Документ передачи"
+      ],
+      "keywords": [
+        "передача",
+        "состояние",
+        "недвижимость",
+        "документ",
+        "правовая защита"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "closing",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "umsatzsteuer-pdv",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Налог на добавленную стоимость (PDV)",
+      "slug": "pdv",
+      "short_def": "НДС на определённые сделки с недвижимостью.",
+      "long_def": "Налог на добавленную стоимость (PDV) может взиматься при покупке новой недвижимости или при коммерческом использовании. В Хорватии стандартная ставка составляет 25 процентов. Зависимо от типа и возраста недвижимости может применяться PDV или налог на передачу недвижимости.",
+      "synonyms": [
+        "НДС"
+      ],
+      "keywords": [
+        "PDV",
+        "налоги",
+        "недвижимость",
+        "Хорватия",
+        "транзакции"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "vermietung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "rental",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Аренда",
+      "slug": "-31",
+      "short_def": "Передача недвижимости во временное пользование за плату.",
+      "long_def": "Аренда включает временную передачу недвижимости за плату. В Хорватии необходимо учитывать налоговые, правовые и разрешительные требования, особенно для краткосрочной туристической аренды.",
+      "synonyms": [
+        "арендные отношения"
+      ],
+      "keywords": [
+        "аренда",
+        "доход",
+        "недвижимость",
+        "Хорватия",
+        "туризм"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "umsatzsteuer-pdv",
+      "steuerpflicht"
+    ]
+  },
+  {
+    "canonical_key": "vorvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Предварительный договор",
+      "slug": "-32",
+      "short_def": "Предварительное обязательство перед договором купли-продажи.",
+      "long_def": "Предварительный договор регулирует основные моменты планируемой покупки недвижимости до заключения окончательного договора. Он обычно включает стоимость покупки, условия оплаты и капару.",
+      "synonyms": [
+        "Договор бронирования"
+      ],
+      "keywords": [
+        "капара",
+        "процесс покупки",
+        "условия оплаты",
+        "стоимость",
+        "рыночная цена"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "widmungsplan",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ru",
+      "title": "План зонирования",
+      "slug": "-33",
+      "short_def": "План, определяющий допустимое использование земельных участков.",
+      "long_def": "План зонирования является инструментом пространственного планирования и определяет, как можно использовать земельные участки. Он служит основой для получения разрешений на строительство и принятия инвестиционных решений.",
+      "synonyms": [
+        "План пространственного планирования"
+      ],
+      "keywords": [
+        "зонирование",
+        "строительная зона",
+        "использование земли",
+        "планирование территории"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "flaechenwidmung",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "zins",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ru",
+      "title": "Процент",
+      "slug": "-34",
+      "short_def": "Расходы за использование одолженного капитала.",
+      "long_def": "Процент обозначает плату за использование заемного капитала. В недвижимости ставки процентов существенно влияют на общие затраты и рентабельность инвестиций.",
+      "synonyms": [
+        "Процентная ставка"
+      ],
+      "keywords": [
+        "Кредит",
+        "Финансирование",
+        "Инвестиции"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "rendite"
+    ]
+  }
+]
