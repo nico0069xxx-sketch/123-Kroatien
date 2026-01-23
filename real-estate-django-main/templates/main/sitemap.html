@@ -1,21 +1,115 @@
-{% extends 'include/base.html' %} {% load static %} {% block body %}
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<!-- SEO Meta Tags -->
+<meta name="description" content="{% if language == 'hr' %}Kompletna mapa stranica 123-Kroatien.eu - Vaš vodič kroz hrvatske nekretnine{% elif language == 'en' %}Complete sitemap of 123-Kroatien.eu - Your guide to Croatian real estate{% else %}Vollständige Sitemap von 123-Kroatien.eu - Ihr Wegweiser zu kroatischen Immobilien{% endif %}">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://123-kroatien.eu/sitemap">
+
+<!-- Hreflang Tags for all 12 languages -->
+<link rel="alternate" hreflang="de" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="en" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="hr" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="fr" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="nl" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="pl" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="cs" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="sk" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="ru" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="el" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="sv" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="no" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu/sitemap">
+
+<!-- JSON-LD Structured Data for AI & SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{% if language == 'hr' %}Mapa stranica{% elif language == 'en' %}Sitemap{% else %}Sitemap{% endif %}",
+  "description": "{% if language == 'hr' %}Kompletna struktura web stranice 123-Kroatien.eu{% elif language == 'en' %}Complete website structure of 123-Kroatien.eu{% else %}Vollständige Website-Struktur von 123-Kroatien.eu{% endif %}",
+  "url": "https://123-kroatien.eu/sitemap",
+  "inLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "123-Kroatien.eu",
+    "url": "https://123-kroatien.eu",
+    "description": "{% if language == 'hr' %}Vodeći portal za nekretnine u Hrvatskoj{% elif language == 'en' %}Leading real estate portal in Croatia{% else %}Führendes Immobilienportal in Kroatien{% endif %}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://123-kroatien.eu/listing/?search={search_term}",
+      "query-input": "required name=search_term"
+    }
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "{% if language == 'hr' %}Kategorije stranica{% elif language == 'en' %}Page Categories{% else %}Seitenkategorien{% endif %}",
+    "itemListElement": [
+      {
+        "@type": "SiteNavigationElement",
+        "position": 1,
+        "name": "{% if language == 'hr' %}Početna{% elif language == 'en' %}Home{% else %}Startseite{% endif %}",
+        "url": "https://123-kroatien.eu/"
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "position": 2,
+        "name": "{% if language == 'hr' %}Nekretnine{% elif language == 'en' %}Properties{% else %}Immobilien{% endif %}",
+        "url": "https://123-kroatien.eu/listing/"
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "position": 3,
+        "name": "{% if language == 'hr' %}Pojmovnik{% elif language == 'en' %}Glossary{% else %}Glossar{% endif %}",
+        "url": "https://123-kroatien.eu/ge/kroatien/glossar/"
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "position": 4,
+        "name": "{% if language == 'hr' %}Kontakt{% elif language == 'en' %}Contact{% else %}Kontakt{% endif %}",
+        "url": "https://123-kroatien.eu/contact/"
+      }
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "123-Kroatien.eu",
+    "url": "https://123-kroatien.eu",
+    "logo": "https://123-kroatien.eu/static/images/logo-black2.png"
+  }
+}
+</script>
+{% endblock %}
+
+{% block body %}
 <header>
   <div class="sitemapBg bg-theme-overlay">
     <section class="section__breadcrumb">
       <div class="container">
         <div class="row d-flex justify-content-center">
           <div class="col-md-8 text-center">
-            <h2 class="text-capitalize text-white">Sitemap</h2>
-            {% comment %}
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a href="index.html" class="text-white"> {{ Home }} </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#" class="text-white"> Blog details </a>
-              </li>
-            </ul>
-            {% endcomment %}
+            <h1 class="text-capitalize text-white">
+              {% if language == 'hr' %}Mapa stranica
+              {% elif language == 'en' %}Sitemap
+              {% elif language == 'fr' %}Plan du site
+              {% elif language == 'nl' %}Sitemap
+              {% elif language == 'pl' %}Mapa strony
+              {% elif language == 'cz' %}Mapa stránek
+              {% elif language == 'sk' %}Mapa stránok
+              {% elif language == 'ru' %}Карта сайта
+              {% elif language == 'gr' %}Χάρτης ιστοτόπου
+              {% elif language == 'sw' %}Webbplatskarta
+              {% elif language == 'no' %}Nettstedkart
+              {% else %}Sitemap
+              {% endif %}
+            </h1>
+            <p class="text-white-50">
+              {% if language == 'hr' %}Kompletan pregled svih stranica
+              {% elif language == 'en' %}Complete overview of all pages
+              {% else %}Vollständiger Überblick aller Seiten
+              {% endif %}
+            </p>
           </div>
         </div>
       </div>
@@ -23,40 +117,196 @@
   </div>
 </header>
 
-<section class="bg-gradient py-5">
+<section class="py-5">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-9">
-        <h2 class="text-uppercase text-light">
-          WIR GARANTIEREN IHNEN HÖCHSTE VERTRAULICHKEIT UND TRANSPARENZ.
-        </h2>
-        <p class="text-capitalize text-light">
-          Gerne Informieren Wir Sie Diskret Über Den Aktuellen Wert Ihrer
-          Immobilie Und Unterstützen Sie Bei Der Suche Nach Einem Passenden
-          Käufer.
-        </p>
+    <div class="row">
+      
+      <!-- Hauptseiten -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-home"></i>
+              {% if language == 'hr' %}Glavne stranice
+              {% elif language == 'en' %}Main Pages
+              {% else %}Hauptseiten
+              {% endif %}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/">{% if language == 'hr' %}Početna{% elif language == 'en' %}Home{% else %}Startseite{% endif %}</a></li>
+              <li><a href="/listing/">{% if language == 'hr' %}Sve nekretnine{% elif language == 'en' %}All Properties{% else %}Alle Immobilien{% endif %}</a></li>
+              <li><a href="/about/">{% if language == 'hr' %}O nama{% elif language == 'en' %}About Us{% else %}Über uns{% endif %}</a></li>
+              <li><a href="/contact/">{% if language == 'hr' %}Kontakt{% elif language == 'en' %}Contact{% else %}Kontakt{% endif %}</a></li>
+              <li><a href="/faq/">{% if language == 'hr' %}Česta pitanja{% elif language == 'en' %}FAQ{% else %}FAQ{% endif %}</a></li>
+              <li><a href="/{{ language }}/blog-single-1">{% if language == 'hr' %}Blog{% elif language == 'en' %}Blog{% else %}Blog{% endif %}</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      {% comment %}
-      <div class="col-lg-3">
-        <a href="#" class="btn btn-light text-uppercase"
-          >{{requestquote}} <i class="fa fa-angle-right ml-3 arrow-btn"></i
-        ></a>
+
+      <!-- Rechtliches -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-gavel"></i>
+              {% if language == 'hr' %}Pravne informacije
+              {% elif language == 'en' %}Legal
+              {% else %}Rechtliches
+              {% endif %}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/imprint/">{% if language == 'hr' %}Impressum{% elif language == 'en' %}Imprint{% else %}Impressum{% endif %}</a></li>
+              <li><a href="/data-protection/">{% if language == 'hr' %}Zaštita podataka{% elif language == 'en' %}Privacy Policy{% else %}Datenschutz{% endif %}</a></li>
+              <li><a href="/agb">{% if language == 'hr' %}Uvjeti korištenja{% elif language == 'en' %}Terms & Conditions{% else %}AGB{% endif %}</a></li>
+              <li><a href="/cancellation-policy">{% if language == 'hr' %}Pravo na odustanak{% elif language == 'en' %}Cancellation Policy{% else %}Widerrufsrecht{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% else %}glossar{% endif %}/disclaimer/">{% if language == 'hr' %}Odricanje odgovornosti{% elif language == 'en' %}Disclaimer{% else %}Haftungsausschluss{% endif %}</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      {% endcomment %}
+
+      <!-- Dienstleister -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-briefcase"></i>
+              {% if language == 'hr' %}Pružatelji usluga
+              {% elif language == 'en' %}Service Providers
+              {% else %}Dienstleister Kroatien
+              {% endif %}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benutzer-Bereich -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-user"></i>
+              {% if language == 'hr' %}Korisnički prostor
+              {% elif language == 'en' %}User Area
+              {% else %}Benutzer-Bereich
+              {% endif %}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}postanite-partner{% else %}partner-werden{% endif %}/">{% if language == 'hr' %}Postanite partner{% elif language == 'en' %}Become a Partner{% else %}Partner werden{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ language }}/{{ country_name }}/{% if language == 'hr' %}registracija{% else %}registrierung{% endif %}/">{% if language == 'hr' %}Registracija{% elif language == 'en' %}Register{% else %}Registrieren{% endif %}</a></li>
+              <li><a href="/accounts/login">{% if language == 'hr' %}Prijava{% elif language == 'en' %}Login{% else %}Anmelden{% endif %}</a></li>
+              <li><a href="/makler-dashboard/">{% if language == 'hr' %}Portal za agente{% elif language == 'en' %}Agent Portal{% else %}Makler-Portal{% endif %}</a></li>
+              <li><a href="/accounts/password-reset/">{% if language == 'hr' %}Zaboravljena lozinka{% elif language == 'en' %}Forgot Password{% else %}Passwort vergessen{% endif %}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-cogs"></i>
+              {% if language == 'hr' %}Usluge
+              {% elif language == 'en' %}Services
+              {% else %}Service
+              {% endif %}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% else %}glossar{% endif %}/">{% if language == 'hr' %}Pojmovnik nekretnina{% elif language == 'en' %}Real Estate Glossary{% else %}Immobilien-Glossar{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% else %}glossar{% endif %}/buyer-guide/">{% if language == 'hr' %}Vodič za kupce{% elif language == 'en' %}Buyer Guide{% else %}Käufer Kurzleitfaden{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}trzisni-izvjestaji{% else %}marktberichte{% endif %}/">{% if language == 'hr' %}Tržišni izvještaji{% elif language == 'en' %}Market Reports{% else %}Marktberichte{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}vazne-adrese{% else %}wichtige-adressen{% endif %}/">{% if language == 'hr' %}Važne adrese{% elif language == 'en' %}Important Addresses{% else %}Wichtige Adressen{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}vijesti{% else %}nachrichten{% endif %}/">{% if language == 'hr' %}Vijesti{% elif language == 'en' %}News{% else %}Nachrichten{% endif %}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- KI -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-magic"></i>
+              {% if language == 'hr' %}Umjetna inteligencija
+              {% elif language == 'en' %}Artificial Intelligence
+              {% else %}KI
+              {% endif %}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/#ki-suche">{% if language == 'hr' %}AI brza pretraga nekretnina{% elif language == 'en' %}AI Property Quick Search{% else %}KI Immobilien Schnellsuche{% endif %}</a></li>
+              <li><span class="text-muted">{% if language == 'hr' %}Tražilica stručnjaka (trenutno nedostupno){% elif language == 'en' %}Expert Finder (currently unavailable){% else %}Expertenfinder (derzeit nicht verfügbar){% endif %}</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <!-- Technical Links for SEO -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card shadow-sm bg-light">
+          <div class="card-body">
+            <h6 class="card-title text-muted">
+              <i class="fa fa-search"></i>
+              {% if language == 'hr' %}SEO & Tehničke poveznice
+              {% elif language == 'en' %}SEO & Technical Links
+              {% else %}SEO & Technische Links
+              {% endif %}
+            </h6>
+            <div class="d-flex flex-wrap" style="gap: 10px;">
+              <a href="/sitemap.xml" class="btn btn-outline-dark btn-sm">sitemap.xml</a>
+              <a href="/sitemaps/glossary.xml" class="btn btn-outline-dark btn-sm">glossary-sitemap.xml</a>
+              <a href="/robots.txt" class="btn btn-outline-dark btn-sm">robots.txt</a>
+              <a href="/rss/listings/" class="btn btn-outline-dark btn-sm">RSS-Feed</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-primary">
+              <i class="fa fa-globe"></i>
+              {% if language == 'hr' %}Dostupni jezici
+              {% elif language == 'en' %}Available Languages
+              {% else %}Verfügbare Sprachen
+              {% endif %}
+            </h6>
+            <div class="d-flex flex-wrap" style="gap: 8px;">
+              <a href="/set-language/ge/" class="btn btn-sm {% if language == 'ge' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇩🇪 Deutsch</a>
+              <a href="/set-language/en/" class="btn btn-sm {% if language == 'en' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇬🇧 English</a>
+              <a href="/set-language/hr/" class="btn btn-sm {% if language == 'hr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇭🇷 Hrvatski</a>
+              <a href="/set-language/fr/" class="btn btn-sm {% if language == 'fr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇫🇷 Français</a>
+              <a href="/set-language/nl/" class="btn btn-sm {% if language == 'nl' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇳🇱 Nederlands</a>
+              <a href="/set-language/pl/" class="btn btn-sm {% if language == 'pl' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇵🇱 Polski</a>
+              <a href="/set-language/cz/" class="btn btn-sm {% if language == 'cz' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇨🇿 Čeština</a>
+              <a href="/set-language/sk/" class="btn btn-sm {% if language == 'sk' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇸🇰 Slovenčina</a>
+              <a href="/set-language/ru/" class="btn btn-sm {% if language == 'ru' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇷🇺 Русский</a>
+              <a href="/set-language/gr/" class="btn btn-sm {% if language == 'gr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇬🇷 Ελληνικά</a>
+              <a href="/set-language/sw/" class="btn btn-sm {% if language == 'sw' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇸🇪 Svenska</a>
+              <a href="/set-language/no/" class="btn btn-sm {% if language == 'no' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇳🇴 Norsk</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
-<!-- END CALL TO ACTION -->
-
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <img
-        src="{% static 'images/logo-black2.png' %}"
-        alt="logo"
-        style="width: 255px; padding: 20px 0"
-      />
-    </div>
-  </div>
-</div>
 {% endblock %}
