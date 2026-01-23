@@ -143,13 +143,28 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 | File | Purpose |
 |------|---------|
-| `PROJEKT_SITEMAP.md` | **NEU** - Vollständige URL-Struktur & Projektübersicht |
+| `KI_STATUS_REPORT.md` | **NEU** - Status aller KI-Funktionen |
+| `templates/main/sitemap.html` | **NEU** - 12-sprachige Sitemap mit JSON-LD |
 | `main/context_processors.py` | Lädt Übersetzungen + Cookie Banner Sprache |
 | `main/glossary_*.py` | Glossar-System (Models, Views, URLs) |
+| `main/listing_description_ai.py` | KI-Textgenerierung (Emergent) |
 | `main/middleware/*.py` | Redirect-Middleware |
 | `templates/include/base.html` | Haupt-Layout mit Cookie Banner |
 | `templates/glossary/*.html` | Glossar-Templates |
 | `templates/main/faq.html` | FAQ mit multilingual JSON |
+
+---
+
+## KI-Funktionen Status
+
+| Feature | Status | API |
+|---------|--------|-----|
+| KI-Textgenerierung (Listings) | ✅ OK | Emergent OpenAI GPT-4o |
+| Professional AI Generator | ✅ OK | Emergent OpenAI GPT-4o |
+| Übersetzungsservice | ⚠️ Legacy | Direkt OpenAI (MIGRATION NÖTIG) |
+| Expertenfinder | ❌ Nicht implementiert | - |
+| KI Schnellsuche | ❓ Unklar | - |
+| Chatbot | ❌ Nicht implementiert | - |
 
 ---
 
