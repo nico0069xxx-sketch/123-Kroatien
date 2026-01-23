@@ -153,11 +153,30 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 ## Technical Architecture
 
-- **Framework:** Django Monolith
+- **Framework:** Django 4.2.1 Monolith
+- **Python:** 3.8+
 - **Location:** `/app/real-estate-django-main`
+- **Database:** SQLite (Dev) / PostgreSQL (Prod)
 - **Translations:** 
   - Dynamic: `json_content` JSONField auf Models
   - Static Labels: `pages.Translation` Model, geladen via Context Processor
+  - Cookie Banner: Separate JSON-Dateien pro Sprache
+
+### Middleware (Aktiv)
+- `RedirectRegistryMiddleware` - DB-basierte 301-Redirects
+- `SmartRedirectMiddleware` - Intelligente URL-Umleitung
+- Custom 404 Handler - Smart-404 mit Vorschlägen
+
+---
+
+## Bekannte Technische Schulden
+
+| Problem | Priorität | Details |
+|---------|-----------|---------|
+| **Django Migrations** | 🔴 Hoch | `makemigrations` schlägt fehl wegen NOT NULL in professional_models. Nur bypassed, nicht gelöst. |
+| **CSS-Konflikte** | 🟡 Mittel | Inline Styles vs. `styles.css`/`modern-theme.css`. Akkordeon-Animationen funktionieren nicht. |
+| **URL-Übersetzungen** | 🟡 Mittel | Einige Pfade nicht übersetzt (z.B. `/en/croatia/marktberichte/`) |
+| **Context Processor** | 🟡 Mittel | `main/context_processors.py` ist komplex und fehleranfällig geworden. |
 
 ---
 
@@ -165,7 +184,8 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 - OpenStreetMap bleibt auf Stadt-Ebene (kein Straßen-Zoom) ✅
 - Objektnummer muss sichtbar sein, normale Größe ✅
+- Cookie Banner nutzt URL-Path für Sprach-Erkennung (Fallback auf Session) ✅
 
 ---
 
-*Last Updated: December 2024*
+*Last Updated: Dezember 2024*
