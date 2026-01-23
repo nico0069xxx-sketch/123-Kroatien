@@ -428,7 +428,9 @@ def faq(request):
     except:
         faqs = []
     faq_titles = {"ge": "Häufig gestellte Fragen", "en": "Frequently Asked Questions", "hr": "Često postavljana pitanja", "fr": "Questions fréquentes", "nl": "Veelgestelde vragen", "pl": "Często zadawane pytania", "cz": "Často kladené dotazy", "sk": "Často kladené otázky", "ru": "Часто задаваемые вопросы", "gr": "Συχνές ερωτήσεις", "sw": "Vanliga frågor", "no": "Ofte stilte spørsmål"}
-    return render(request, "main/faq.html", {"faqs": faqs, "faq_title": faq_titles.get(lang, "FAQ"), "country": "kroatien", "lang": lang})
+    faq_subtitles = {"ge": "Häufig gestellte Fragen rund um Immobilien in Kroatien", "en": "Frequently asked questions about real estate in Croatia", "hr": "Često postavljana pitanja o nekretninama u Hrvatskoj", "fr": "Questions fréquentes sur l'immobilier en Croatie", "nl": "Veelgestelde vragen over onroerend goed in Kroatië", "pl": "Często zadawane pytania dotyczące nieruchomości w Chorwacji", "cz": "Často kladené dotazy o nemovitostech v Chorvatsku", "sk": "Často kladené otázky o nehnuteľnostiach v Chorvátsku", "ru": "Часто задаваемые вопросы о недвижимости в Хорватии", "gr": "Συχνές ερωτήσεις για ακίνητα στην Κροατία", "sw": "Vanliga frågor om fastigheter i Kroatien", "no": "Ofte stilte spørsmål om eiendom i Kroatia"}
+
+    return render(request, "main/faq.html", {"faqs": faqs, "faq_title": faq_titles.get(lang, "FAQ"), "faq_subtitle": faq_subtitles.get(lang, ""), "country": "kroatien", "lang": lang})
 
 
 @login_required(login_url='main:login_required')
