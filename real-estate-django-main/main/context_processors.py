@@ -1,5 +1,18 @@
 from django.utils.translation import activate
 from pages.models import Translation
+from django.urls import reverse
+import re
+import json
+
+# Alle unterstützten Sprachen
+ALL_LANGUAGES = ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']
+
+# Glossar-Pfad je Sprache
+GLOSSARY_URLS = {
+    "ge": "glossar", "en": "glossary", "hr": "pojmovnik", "fr": "glossaire",
+    "nl": "woordenlijst", "pl": "slownik", "cz": "glosar", "sk": "slovnik",
+    "ru": "glossarij", "gr": "glossari", "sw": "ordlista", "no": "ordliste",
+}
 
 # URL-Pfade für Dienstleister in allen Sprachen
 CATEGORY_URLS = {
