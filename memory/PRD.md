@@ -215,4 +215,25 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 ---
 
-*Last Updated: Januar 2025*
+## Session Zusammenfassung (23. Januar 2025)
+
+### Erledigt heute:
+- ✅ PROJEKT_SITEMAP.md (Entwickler-Doku) erstellt
+- ✅ Website-Sitemap `/sitemap` mit 12 Sprachen & JSON-LD SEO
+- ✅ Sitemap öffentlich gemacht, dann wieder geschützt
+- ✅ Session Cookie auf 2 Wochen verlängert
+- ✅ Footer Sitemap-Link repariert
+- ✅ AGB Text sichtbar gemacht & öffentlich
+- ✅ Buyer-Guide Farbe grün → blau
+- ✅ Buyer-Guide komplett in 12 Sprachen übersetzt
+- ✅ Buyer-Guide Sprach-Switcher am Ende der Seite
+- ✅ KI-Status-Report erstellt
+
+### Bekannte Probleme:
+- ⚠️ Header Sprach-Switcher führt zu falschen URLs bei sprachabhängigen Seiten
+- ⚠️ Django Migrations weiterhin instabil (professional_models)
+- ⚠️ Expertenfinder & Chatbot existieren NICHT im Code
+
+---
+
+*Last Updated: 23. Januar 2025*
