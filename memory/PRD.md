@@ -46,34 +46,61 @@ TIME MACHINE: Parallel backup (recovery only)
 
 ---
 
+## 📍 PROJEKT-SITEMAP
+
+Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
+
+### Haupt-URLs
+| Bereich | URLs | Beschreibung |
+|---------|------|--------------|
+| Öffentlich | `/`, `/listing/`, `/contact/`, `/about/`, `/faq/` | Hauptseiten |
+| Glossar | `/{lang}/{country}/{glossar}/` | 12-sprachig, SEO-optimiert |
+| Makler-Portal | `/makler-dashboard/`, `/makler-portal/*` | Für Makler & Bauträger |
+| Professional Portal | `/portal/*` | Für Anwälte, Steuerberater, Architekten |
+| Directory | `/ge/kroatien/{kategorie}/` | Öffentliches Dienstleister-Verzeichnis |
+| Accounts | `/accounts/*` | Login, Register, Password-Reset |
+| Technisch | `/admin/`, `/sitemap.xml`, `/robots.txt` | Admin & SEO |
+
+### 12 unterstützte Sprachen
+`ge` (DE), `en`, `hr`, `fr`, `nl`, `pl`, `cz`, `sk`, `ru`, `gr`, `sw`, `no`
+
+---
+
 ## Prioritized Task List
 
 ### 🔴 P0 - Critical / Blocker
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Übersetzungs-Blocker lösen | ✅ DONE | Alle 12 Sprachen funktionieren. Fehlende Keys hinzugefügt (nav_back, btn_send_message, label_details) |
-| Objektnummer sichtbar machen | ✅ DONE | 123K-Prefix implementiert für Branding (z.B. 123K-4567) |
+| Übersetzungs-Blocker lösen | ✅ DONE | Alle 12 Sprachen funktionieren |
+| Objektnummer sichtbar machen | ✅ DONE | 123K-Prefix implementiert |
+| Django Migrations instabil | ⚠️ BYPASSED | `makemigrations` schlägt fehl (professional_models Problem) |
 
 ### 🟡 P1 - Important
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Login-System vereinfachen | TODO | Verschiedene Rollen haben Anmeldeprobleme, kostet Zeit und nervt |
-| Gruppe B User Guide erweitern | TODO | Soll wie Gruppe A Guide strukturiert sein |
-| OpenAI Chatbot prüfen | TODO | Möglichkeiten für Service Provider |
+| Smart-404 Handler | ✅ DONE | Custom 404 mit Vorschlägen |
+| Redirect Middleware | ✅ DONE | DB-basierte 301-Redirects aktiv |
+| Sitemaps | ✅ DONE | `/sitemaps/glossary.xml` |
+| Hreflang Tags | ✅ DONE | Auf Glossar-Detailseiten |
+| Cookie Banner 12 Sprachen | ✅ DONE | Multilingual, URL-basierte Sprach-Erkennung |
+| Glossar Akkordeon-UI | ✅ DONE | Premium-Design mit Pagination |
+| FAQ Redesign | ✅ DONE | Öffentlich, multilingual aus JSON |
+| CSS-Animationen fixen | TODO | Akkordeon-Animationen haben CSS-Konflikte |
+| Sprint 4: Topic Clustering | TODO | Landing-Pages mit Compliance-Texten |
+| Login-System vereinfachen | TODO | Verschiedene Rollen haben Anmeldeprobleme |
 
 ### 🟠 P2 - Backlog
 
 | Task | Status | Notes |
 |------|--------|-------|
-| CSS-Architektur stabilisieren | TODO | KRITISCH - sehr fragil |
-| URL-Architektur refactoren | TODO | Dringend |
+| CSS-Architektur stabilisieren | TODO | KRITISCH - sehr fragil, inline vs. global |
+| URL-Architektur refactoren | TODO | z.B. `/en/croatia/marktberichte/` nicht übersetzt |
+| Glossar-Slugs RU/GR | TODO | Numerisch statt Wörter |
 | Review/Rating System | TODO | |
 | Mobile View Optimierung | TODO | |
 | Legacy Code konsolidieren | TODO | z.B. zwei `partner_landing` Funktionen |
-| Brittle Topbar Model | TODO | Hotfix existiert, Root Cause offen |
-| nice-select.js Dropdown Styling | TODO | Legacy Plugin, schwer zu stylen |
 
 ---
 
