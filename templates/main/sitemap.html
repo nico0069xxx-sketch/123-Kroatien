@@ -1,6 +1,14 @@
 {% extends 'include/base.html' %}
 {% load static %}
 
+{% block extra_head %}
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://123-kroatien.eu/sitemap">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Sitemap","url":"https://123-kroatien.eu/sitemap","inLanguage":["de","en","hr","fr","nl","pl","cs","sk","ru","el","sv","no"]}
+</script>
+{% endblock %}
+
 {% block body %}
 <header>
   <div class="sitemapBg bg-theme-overlay">
@@ -8,7 +16,9 @@
       <div class="container">
         <div class="row d-flex justify-content-center">
           <div class="col-md-8 text-center">
-            <h2 class="text-capitalize text-white">Sitemap</h2>
+            <h1 class="text-capitalize text-white">
+              {% if language == 'hr' %}Mapa stranica{% elif language == 'en' %}Sitemap{% elif language == 'fr' %}Plan du site{% elif language == 'nl' %}Sitemap{% elif language == 'pl' %}Mapa strony{% elif language == 'cz' %}Mapa stránek{% elif language == 'sk' %}Mapa stránok{% elif language == 'ru' %}Карта сайта{% elif language == 'gr' %}Χάρτης{% elif language == 'sw' %}Webbplatskarta{% elif language == 'no' %}Nettstedkart{% else %}Sitemap{% endif %}
+            </h1>
           </div>
         </div>
       </div>
@@ -24,12 +34,12 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fa fa-home"></i> Hauptseiten</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-home"></i> {% if language == 'hr' %}Glavne stranice{% elif language == 'en' %}Main Pages{% elif language == 'fr' %}Pages principales{% elif language == 'nl' %}Hoofdpaginas{% elif language == 'pl' %}Strony główne{% elif language == 'cz' %}Hlavní stránky{% elif language == 'sk' %}Hlavné stránky{% elif language == 'ru' %}Главные страницы{% elif language == 'gr' %}Κύριες σελίδες{% elif language == 'sw' %}Huvudsidor{% elif language == 'no' %}Hovedsider{% else %}Hauptseiten{% endif %}</h5>
             <ul class="list-unstyled">
-              <li><a href="/">Startseite</a></li>
-              <li><a href="/listing/">Alle Immobilien</a></li>
-              <li><a href="/about/">Über uns</a></li>
-              <li><a href="/contact/">Kontakt</a></li>
+              <li><a href="/">{% if language == 'hr' %}Početna{% elif language == 'en' %}Home{% elif language == 'fr' %}Accueil{% elif language == 'nl' %}Home{% elif language == 'pl' %}Strona główna{% elif language == 'cz' %}Domů{% elif language == 'sk' %}Domov{% elif language == 'ru' %}Главная{% elif language == 'gr' %}Αρχική{% elif language == 'sw' %}Hem{% elif language == 'no' %}Hjem{% else %}Startseite{% endif %}</a></li>
+              <li><a href="/listing/">{% if language == 'hr' %}Sve nekretnine{% elif language == 'en' %}All Properties{% elif language == 'fr' %}Tous les biens{% elif language == 'nl' %}Alle objecten{% elif language == 'pl' %}Wszystkie nieruchomości{% elif language == 'cz' %}Všechny nemovitosti{% elif language == 'sk' %}Všetky nehnuteľnosti{% elif language == 'ru' %}Вся недвижимость{% elif language == 'gr' %}Όλα τα ακίνητα{% elif language == 'sw' %}Alla fastigheter{% elif language == 'no' %}Alle eiendommer{% else %}Alle Immobilien{% endif %}</a></li>
+              <li><a href="/about/">{% if language == 'hr' %}O nama{% elif language == 'en' %}About Us{% elif language == 'fr' %}À propos{% elif language == 'nl' %}Over ons{% elif language == 'pl' %}O nas{% elif language == 'cz' %}O nás{% elif language == 'sk' %}O nás{% elif language == 'ru' %}О нас{% elif language == 'gr' %}Σχετικά{% elif language == 'sw' %}Om oss{% elif language == 'no' %}Om oss{% else %}Über uns{% endif %}</a></li>
+              <li><a href="/contact/">{% if language == 'hr' %}Kontakt{% elif language == 'en' %}Contact{% elif language == 'fr' %}Contact{% elif language == 'nl' %}Contact{% elif language == 'pl' %}Kontakt{% elif language == 'cz' %}Kontakt{% elif language == 'sk' %}Kontakt{% elif language == 'ru' %}Контакт{% elif language == 'gr' %}Επικοινωνία{% elif language == 'sw' %}Kontakt{% elif language == 'no' %}Kontakt{% else %}Kontakt{% endif %}</a></li>
               <li><a href="/faq/">FAQ</a></li>
               <li><a href="/ge/blog-single-1">Blog</a></li>
             </ul>
@@ -41,45 +51,43 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fa fa-gavel"></i> Rechtliches</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-gavel"></i> {% if language == 'hr' %}Pravne informacije{% elif language == 'en' %}Legal{% elif language == 'fr' %}Mentions légales{% elif language == 'nl' %}Juridisch{% elif language == 'pl' %}Prawne{% elif language == 'cz' %}Právní{% elif language == 'sk' %}Právne{% elif language == 'ru' %}Правовая информация{% elif language == 'gr' %}Νομικά{% elif language == 'sw' %}Juridisk{% elif language == 'no' %}Juridisk{% else %}Rechtliches{% endif %}</h5>
             <ul class="list-unstyled">
               <li><a href="/imprint/">Impressum</a></li>
-              <li><a href="/data-protection/">Datenschutz</a></li>
-              <li><a href="/agb">AGB</a></li>
-              <li><a href="/cancellation-policy">Widerrufsrecht</a></li>
-              <li><a href="/ge/kroatien/glossar/disclaimer/">Haftungsausschluss</a></li>
+              <li><a href="/data-protection/">{% if language == 'hr' %}Zaštita podataka{% elif language == 'en' %}Privacy Policy{% elif language == 'fr' %}Protection des données{% elif language == 'nl' %}Privacy{% elif language == 'pl' %}Ochrona danych{% elif language == 'cz' %}Ochrana údajů{% elif language == 'sk' %}Ochrana údajov{% elif language == 'ru' %}Защита данных{% elif language == 'gr' %}Προστασία δεδομένων{% elif language == 'sw' %}Dataskydd{% elif language == 'no' %}Personvern{% else %}Datenschutz{% endif %}</a></li>
+              <li><a href="/agb">{% if language == 'hr' %}Uvjeti{% elif language == 'en' %}Terms{% elif language == 'fr' %}CGV{% elif language == 'nl' %}Voorwaarden{% elif language == 'pl' %}Regulamin{% elif language == 'cz' %}Podmínky{% elif language == 'sk' %}Podmienky{% elif language == 'ru' %}Условия{% elif language == 'gr' %}Όροι{% elif language == 'sw' %}Villkor{% elif language == 'no' %}Vilkår{% else %}AGB{% endif %}</a></li>
+              <li><a href="/cancellation-policy">{% if language == 'hr' %}Odustanak{% elif language == 'en' %}Cancellation{% elif language == 'fr' %}Rétractation{% elif language == 'nl' %}Herroeping{% elif language == 'pl' %}Odstąpienie{% elif language == 'cz' %}Odstoupení{% elif language == 'sk' %}Odstúpenie{% elif language == 'ru' %}Отмена{% elif language == 'gr' %}Ακύρωση{% elif language == 'sw' %}Ångerrätt{% elif language == 'no' %}Angre{% else %}Widerrufsrecht{% endif %}</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Dienstleister Kroatien -->
+      <!-- Dienstleister -->
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fa fa-briefcase"></i> Dienstleister Kroatien</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-briefcase"></i> {% if language == 'hr' %}Pružatelji usluga{% elif language == 'en' %}Service Providers{% elif language == 'fr' %}Prestataires{% elif language == 'nl' %}Dienstverleners{% elif language == 'pl' %}Usługodawcy{% elif language == 'cz' %}Poskytovatelé{% elif language == 'sk' %}Poskytovatelia{% elif language == 'ru' %}Поставщики услуг{% elif language == 'gr' %}Πάροχοι{% elif language == 'sw' %}Tjänsteleverantörer{% elif language == 'no' %}Tjenesteleverandører{% else %}Dienstleister{% endif %}</h5>
             <ul class="list-unstyled">
-              <li><a href="/ge/kroatien/immobilienmakler/">Immobilienmakler</a></li>
-              <li><a href="/ge/kroatien/bauunternehmen/">Bauunternehmen</a></li>
-              <li><a href="/ge/kroatien/rechtsanwaelte/">Rechtsanwälte</a></li>
-              <li><a href="/ge/kroatien/steuerberater/">Steuerberater</a></li>
-              <li><a href="/ge/kroatien/architekten/">Architekten</a></li>
+              <li><a href="/ge/kroatien/immobilienmakler/">{% if language == 'hr' %}Agenti za nekretnine{% elif language == 'en' %}Real Estate Agents{% else %}Immobilienmakler{% endif %}</a></li>
+              <li><a href="/ge/kroatien/bauunternehmen/">{% if language == 'hr' %}Građevinske tvrtke{% elif language == 'en' %}Construction Companies{% else %}Bauunternehmen{% endif %}</a></li>
+              <li><a href="/ge/kroatien/rechtsanwaelte/">{% if language == 'hr' %}Odvjetnici{% elif language == 'en' %}Lawyers{% else %}Rechtsanwälte{% endif %}</a></li>
+              <li><a href="/ge/kroatien/steuerberater/">{% if language == 'hr' %}Porezni savjetnici{% elif language == 'en' %}Tax Advisors{% else %}Steuerberater{% endif %}</a></li>
+              <li><a href="/ge/kroatien/architekten/">{% if language == 'hr' %}Arhitekti{% elif language == 'en' %}Architects{% else %}Architekten{% endif %}</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Benutzer-Bereich -->
+      <!-- Benutzer -->
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fa fa-user"></i> Benutzer-Bereich</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-user"></i> {% if language == 'hr' %}Korisnici{% elif language == 'en' %}Users{% elif language == 'fr' %}Utilisateurs{% elif language == 'nl' %}Gebruikers{% elif language == 'pl' %}Użytkownicy{% elif language == 'cz' %}Uživatelé{% elif language == 'sk' %}Používatelia{% elif language == 'ru' %}Пользователи{% elif language == 'gr' %}Χρήστες{% elif language == 'sw' %}Användare{% elif language == 'no' %}Brukere{% else %}Benutzer{% endif %}</h5>
             <ul class="list-unstyled">
-              <li><a href="/ge/kroatien/partner-werden/">Partner werden</a></li>
-              <li><a href="/ge/ge/kroatien/registrierung/">Registrieren</a></li>
-              <li><a href="/accounts/login">Anmelden</a></li>
-              <li><a href="/makler-dashboard/">Makler-Portal</a></li>
-              <li><a href="/accounts/password-reset/">Passwort vergessen</a></li>
+              <li><a href="/ge/kroatien/partner-werden/">{% if language == 'hr' %}Postanite partner{% elif language == 'en' %}Become Partner{% else %}Partner werden{% endif %}</a></li>
+              <li><a href="/ge/ge/kroatien/registrierung/">{% if language == 'hr' %}Registracija{% elif language == 'en' %}Register{% else %}Registrieren{% endif %}</a></li>
+              <li><a href="/accounts/login">{% if language == 'hr' %}Prijava{% elif language == 'en' %}Login{% else %}Anmelden{% endif %}</a></li>
+              <li><a href="/makler-dashboard/">{% if language == 'hr' %}Portal{% elif language == 'en' %}Portal{% else %}Makler-Portal{% endif %}</a></li>
             </ul>
           </div>
         </div>
@@ -91,11 +99,10 @@
           <div class="card-body">
             <h5 class="card-title text-primary"><i class="fa fa-cogs"></i> Service</h5>
             <ul class="list-unstyled">
-              <li><a href="/ge/kroatien/glossar/">Immobilien-Glossar</a></li>
-              <li><a href="/ge/kroatien/glossar/buyer-guide/">Käufer Kurzleitfaden</a></li>
-              <li><a href="/ge/kroatien/marktberichte/">Marktberichte</a></li>
-              <li><a href="/ge/kroatien/wichtige-adressen/">Wichtige Adressen</a></li>
-              <li><a href="/ge/kroatien/nachrichten/">Nachrichten</a></li>
+              <li><a href="/ge/kroatien/glossar/">{% if language == 'hr' %}Pojmovnik{% elif language == 'en' %}Glossary{% else %}Glossar{% endif %}</a></li>
+              <li><a href="/ge/kroatien/glossar/buyer-guide/">{% if language == 'hr' %}Vodič za kupce{% elif language == 'en' %}Buyer Guide{% else %}Käufer-Leitfaden{% endif %}</a></li>
+              <li><a href="/ge/kroatien/marktberichte/">{% if language == 'hr' %}Tržišni izvještaji{% elif language == 'en' %}Market Reports{% else %}Marktberichte{% endif %}</a></li>
+              <li><a href="/ge/kroatien/nachrichten/">{% if language == 'hr' %}Vijesti{% elif language == 'en' %}News{% else %}Nachrichten{% endif %}</a></li>
             </ul>
           </div>
         </div>
@@ -105,16 +112,56 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fa fa-magic"></i> KI</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-magic"></i> {% if language == 'hr' %}AI{% elif language == 'en' %}AI{% elif language == 'ru' %}ИИ{% else %}KI{% endif %}</h5>
             <ul class="list-unstyled">
-              <li><a href="/#ki-suche">KI Immobilien Schnellsuche</a></li>
-              <li><span class="text-muted">Expertenfinder (derzeit nicht verfügbar)</span></li>
+              <li><a href="/#ki-suche">{% if language == 'hr' %}AI pretraga{% elif language == 'en' %}AI Search{% else %}KI Schnellsuche{% endif %}</a></li>
+              <li><span class="text-muted">{% if language == 'hr' %}Tražilica stručnjaka (uskoro){% elif language == 'en' %}Expert Finder (coming soon){% else %}Expertenfinder (in Entwicklung){% endif %}</span></li>
             </ul>
           </div>
         </div>
       </div>
 
     </div>
+
+    <!-- Sprachen -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-primary"><i class="fa fa-globe"></i> {% if language == 'hr' %}Jezici{% elif language == 'en' %}Languages{% else %}Sprachen{% endif %}</h6>
+            <div class="d-flex flex-wrap" style="gap: 8px;">
+              <a href="/set-language/ge/?next=/sitemap" class="btn btn-sm {% if language == 'ge' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇩🇪 Deutsch</a>
+              <a href="/set-language/en/?next=/sitemap" class="btn btn-sm {% if language == 'en' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇬🇧 English</a>
+              <a href="/set-language/hr/?next=/sitemap" class="btn btn-sm {% if language == 'hr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇭🇷 Hrvatski</a>
+              <a href="/set-language/fr/?next=/sitemap" class="btn btn-sm {% if language == 'fr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇫🇷 Français</a>
+              <a href="/set-language/nl/?next=/sitemap" class="btn btn-sm {% if language == 'nl' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇳🇱 Nederlands</a>
+              <a href="/set-language/pl/?next=/sitemap" class="btn btn-sm {% if language == 'pl' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇵🇱 Polski</a>
+              <a href="/set-language/cz/?next=/sitemap" class="btn btn-sm {% if language == 'cz' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇨🇿 Čeština</a>
+              <a href="/set-language/sk/?next=/sitemap" class="btn btn-sm {% if language == 'sk' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇸🇰 Slovenčina</a>
+              <a href="/set-language/ru/?next=/sitemap" class="btn btn-sm {% if language == 'ru' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇷🇺 Русский</a>
+              <a href="/set-language/gr/?next=/sitemap" class="btn btn-sm {% if language == 'gr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇬🇷 Ελληνικά</a>
+              <a href="/set-language/sw/?next=/sitemap" class="btn btn-sm {% if language == 'sw' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇸🇪 Svenska</a>
+              <a href="/set-language/no/?next=/sitemap" class="btn btn-sm {% if language == 'no' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇳🇴 Norsk</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card shadow-sm bg-light">
+          <div class="card-body">
+            <h6 class="card-title text-muted"><i class="fa fa-search"></i> SEO</h6>
+            <a href="/sitemap.xml" class="btn btn-outline-dark btn-sm">sitemap.xml</a>
+            <a href="/sitemaps/glossary.xml" class="btn btn-outline-dark btn-sm">glossary.xml</a>
+            <a href="/robots.txt" class="btn btn-outline-dark btn-sm">robots.txt</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 {% endblock %}
