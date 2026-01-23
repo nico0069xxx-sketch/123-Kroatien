@@ -409,7 +409,7 @@ def glossary_index(request, lang, country):
     t = get_translations(lang)
 
     return render(request, "glossary/index.html", {
-        "lang": lang, "country": country, "language": lang,
+        "lang": lang, "language": lang, "country": country, "language": lang,
         "q": q, "audience": audience, "topic": topic, "asset_type": asset_type,
         "page_obj": page_obj, "total_count": paginator.count,
         "audience_cats": categories.filter(group="audience"),
@@ -451,7 +451,7 @@ def glossary_detail(request, slug, lang, country):
                 related_urls.append(request.build_absolute_uri(rel_trans.get_absolute_url()))
 
         return render(request, "glossary/detail.html", {
-            "lang": lang, "country": country, "language": lang,
+            "lang": lang, "language": lang, "country": country, "language": lang,
             "term": translation, "translation": translation,
             "all_translations": all_translations,
             "hreflang_links": hreflang_links, "related_terms": related_terms,
@@ -478,7 +478,7 @@ def _landing_page(request, lang, country, audience_key, template_name):
     t = get_translations(lang)
 
     return render(request, template_name, {
-        "lang": lang, "country": country, "language": lang,
+        "lang": lang, "language": lang, "country": country, "language": lang,
         "audience_key": audience_key, "featured_terms": featured_terms,
         "topic_categories": topic_categories,
         "glossary_base_url": get_glossary_base_url(lang), "t": t,
@@ -501,7 +501,7 @@ def disclaimer_page(request, lang, country):
     request.session['site_language'] = lang
     t = get_translations(lang)
     return render(request, "legal/disclaimer.html", {
-        "lang": lang, "country": country, "glossary_base_url": get_glossary_base_url(lang), "t": t,
+        "lang": lang, "language": lang, "country": country, "glossary_base_url": get_glossary_base_url(lang), "t": t,
     })
 
 
@@ -509,5 +509,5 @@ def buyer_guide_page(request, lang, country):
     request.session['site_language'] = lang
     t = get_translations(lang)
     return render(request, "legal/buyer_guide.html", {
-        "lang": lang, "country": country, "glossary_base_url": get_glossary_base_url(lang), "t": t,
+        "lang": lang, "language": lang, "country": country, "glossary_base_url": get_glossary_base_url(lang), "t": t,
     })
