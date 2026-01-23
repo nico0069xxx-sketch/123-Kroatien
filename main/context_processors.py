@@ -124,6 +124,16 @@ def get_my_translations(request):
     }
     context['news_label'] = news_labels.get(user_language, 'Nachrichten')
 
+    # Experten-Finder
+    experten_finder_labels = {
+        "ge": "Experten-Finder", "en": "Expert Finder", "hr": "Pronalazač stručnjaka",
+        "fr": "Recherche experts", "nl": "Expert zoeker", "pl": "Wyszukiwarka ekspertów",
+        "cz": "Vyhledávač odborníků", "sk": "Vyhľadávač odborníkov", "ru": "Поиск экспертов",
+        "gr": "Εύρεση ειδικών", "sw": "Expertsökare", "no": "Ekspertfinner",
+    }
+    context["experten_finder_label"] = experten_finder_labels.get(user_language, "Experten-Finder")
+    context["url_experten_finder"] = "experten-finder"
+
     # Partner Section Labels
     partner_labels = {
         'ge': 'Unsere Partner', 'en': 'Our Partners', 'hr': 'Naši partneri',

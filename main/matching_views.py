@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.views.decorators.csrf import csrf_exempt
 """
 Views fuer KI-Matching Seite - 12 Sprachen
 """
@@ -170,6 +171,7 @@ def matching_page(request):
 
 
 @require_POST
+@csrf_exempt
 def matching_api(request):
     """API-Endpoint fuer KI-Matching"""
     try:

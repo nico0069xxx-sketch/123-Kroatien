@@ -7,6 +7,7 @@ from . import address_views
 from . import glossary_views
 from .glossary_urls import glossary_urlpatterns
 from . import content_views
+from . import matching_views
 from pages.views import translate_all
 
 app_name = 'main'
@@ -33,6 +34,8 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
     path('owner/', views.owner, name='owner'),
     path('api/suche-v2/', views.smart_search, name='smart_search'),
+    path('experten-finder/', matching_views.matching_page, name='experten_finder'),
+    path('api/experten-finder/', matching_views.matching_api, name='experten_finder_api'),
     path('real-estate-agent/', views.real_estate_agent, name='real-estate-agent'),
     path('building-contractor/', views.building_contractor, name='building-contractor'),
     path('realestate-contractor-registration', views.realestate_contractor_registration, name='realestate-contractor-registration'),
