@@ -1,239 +1,56 @@
-# 123-Kroatien.eu - Real Estate Portal PRD
+# 123-Kroatien.eu - Immobilienportal PRD
 
 ## Original Problem Statement
-Django-basiertes Immobilienportal mit zwei Benutzergruppen (Gruppe A: Makler/Bauträger, Gruppe B: Professionals/Dienstleister). Das Portal unterstützt 12 Sprachen und benötigt moderne UI/UX-Überarbeitung.
+Multilinguales Immobilienportal für Kroatien mit 12 Sprachen (DE, EN, HR, FR, NL, PL, CZ, SK, RU, GR, SW, NO).
 
----
+## Architektur
+- **Framework**: Django Monolith
+- **Datenbank**: SQLite (dev) / PostgreSQL (prod)
+- **Sprachen**: 12 Sprachen mit übersetzten URLs
 
-## User Context
-- **User:** Nik (Deutsch, informelles "du")
-- **System:** Apple Mac M1, Terminal, Safari
-- **Lokaler Pfad:** `~/Desktop/real-estate-django-ALTmain`
-- **Emergent Pfad:** `/app/real-estate-django-main`
+## Completed (Session 23. Jan 2025)
 
----
+### ✅ P0 Critical Bug Fix: Globaler Sprachumschalter
+- **Problem**: Header-Sprachumschalter funktionierte nicht bei übersetzten URL-Slugs (z.B. `/glossar/` vs `/pojmovnik/`)
+- **Lösung**: 
+  1. `main/context_processors.py` - URL-Mapping für alle 12 Sprachen hinzugefügt
+  2. `templates/include/base.html` - JavaScript nutzt generierte `languageUrls`
+  3. `main/views.py` - `next` Parameter hat jetzt Priorität vor `HTTP_REFERER`
+- **Status**: GETESTET & FUNKTIONIERT ✅
+- **Commit**: e9c62d7 on feature/glossary
 
-## Git Workflow Rules (KRITISCH!)
+### Vorherige Session (Handoff)
+- Mehrsprachige Sitemap (12 Sprachen) mit SEO/JSON-LD
+- Mehrsprachiger Buyer Guide mit page-spezifischem Sprachumschalter
+- Session-Dauer auf 2 Wochen verlängert
+- KI-Status-Audit durchgeführt
 
-```
-BASELINE: 9ec9d9a on main — DO NOT BREAK
-WORKFLOW: Branch-only (feature/*, fix/*)
-GITHUB: Canonical history
-TIME MACHINE: Parallel backup (recovery only)
-```
+## Pending Issues
 
-### START (MUST):
-1. `cd ~/Desktop/real-estate-django-ALTmain`
-2. `git fetch --all`
-3. Verify: git status clean, branch is main, HEAD at/from 9ec9d9a
-4. Create feature/* or fix/* branch BEFORE any work
-5. Dirty tree → WIP commit or timestamped stash immediately
+### 🟠 P1: Nicht existierende KI-Features
+- "Expertenfinder" und "Chatbot" sind in der UI verlinkt, existieren aber nicht
+- **Entscheidung nötig**: Links entfernen oder Features bauen?
 
-### RULES (MUST):
-- Never work directly on main
-- Never delete/overwrite without Git history
-- Never commit secrets (.env), db.sqlite3, media/, backups
-- Never use iCloud as source/merge/restore
-- Model changes require migrations
-- GitHub Actions workflow changes via GitHub Web UI only
+### 🟠 P1: Fragile Django Migrations
+- `makemigrations` ist instabil (professional, referenceproject Models)
+- Blocker für zukünftige DB-Änderungen
 
-### END (MUST):
-- Run checks/tests if available
-- Commit changes
-- Push branch to GitHub
-- Update HANDOFF.md (done/next/risks)
-- Ensure git status clean
+### 🟡 P1: Sprint 4 Tasks
+- Topic Clustering auf Landing Pages
+- Compliance-Texte integrieren
+- UX/Akkordeon-Layout Animationen
 
----
+## Backlog / Technical Debt
 
-## 📍 PROJEKT-SITEMAP
+- **P0**: CSS Instabilität refactoren
+- **P0**: URL-Architektur überarbeiten (inkonsistente Übersetzungen)
+- **P1**: Glossar-Slugs für RU/GR (numerische Slugs)
+- **P1**: Registration URLs & Views konsolidieren
+- **P1**: Review/Rating System implementieren
 
-Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
-
-### Haupt-URLs
-| Bereich | URLs | Beschreibung |
-|---------|------|--------------|
-| Öffentlich | `/`, `/listing/`, `/contact/`, `/about/`, `/faq/` | Hauptseiten |
-| Glossar | `/{lang}/{country}/{glossar}/` | 12-sprachig, SEO-optimiert |
-| Makler-Portal | `/makler-dashboard/`, `/makler-portal/*` | Für Makler & Bauträger |
-| Professional Portal | `/portal/*` | Für Anwälte, Steuerberater, Architekten |
-| Directory | `/ge/kroatien/{kategorie}/` | Öffentliches Dienstleister-Verzeichnis |
-| Accounts | `/accounts/*` | Login, Register, Password-Reset |
-| Technisch | `/admin/`, `/sitemap.xml`, `/robots.txt` | Admin & SEO |
-
-### 12 unterstützte Sprachen
-`ge` (DE), `en`, `hr`, `fr`, `nl`, `pl`, `cz`, `sk`, `ru`, `gr`, `sw`, `no`
-
----
-
-## Prioritized Task List
-
-### 🔴 P0 - Critical / Blocker
-
-| Task | Status | Notes |
-|------|--------|-------|
-| Übersetzungs-Blocker lösen | ✅ DONE | Alle 12 Sprachen funktionieren |
-| Objektnummer sichtbar machen | ✅ DONE | 123K-Prefix implementiert |
-| Django Migrations instabil | ⚠️ BYPASSED | `makemigrations` schlägt fehl (professional_models Problem) |
-
-### 🟡 P1 - Important
-
-| Task | Status | Notes |
-|------|--------|-------|
-| Smart-404 Handler | ✅ DONE | Custom 404 mit Vorschlägen |
-| Redirect Middleware | ✅ DONE | DB-basierte 301-Redirects aktiv |
-| Sitemaps | ✅ DONE | `/sitemaps/glossary.xml` |
-| Hreflang Tags | ✅ DONE | Auf Glossar-Detailseiten |
-| Cookie Banner 12 Sprachen | ✅ DONE | Multilingual, URL-basierte Sprach-Erkennung |
-| Glossar Akkordeon-UI | ✅ DONE | Premium-Design mit Pagination |
-| FAQ Redesign | ✅ DONE | Öffentlich, multilingual aus JSON |
-| CSS-Animationen fixen | TODO | Akkordeon-Animationen haben CSS-Konflikte |
-| Sprint 4: Topic Clustering | TODO | Landing-Pages mit Compliance-Texten |
-| Login-System vereinfachen | TODO | Verschiedene Rollen haben Anmeldeprobleme |
-
-### 🟠 P2 - Backlog
-
-| Task | Status | Notes |
-|------|--------|-------|
-| CSS-Architektur stabilisieren | TODO | KRITISCH - sehr fragil, inline vs. global |
-| URL-Architektur refactoren | TODO | z.B. `/en/croatia/marktberichte/` nicht übersetzt |
-| Glossar-Slugs RU/GR | TODO | Numerisch statt Wörter |
-| Review/Rating System | TODO | |
-| Mobile View Optimierung | TODO | |
-| Legacy Code konsolidieren | TODO | z.B. zwei `partner_landing` Funktionen |
-
----
-
-## Completed Work
-
-### Aktuelle Session (Januar 2025 - Sitemap & KI):
-- ✅ Website-Sitemap mit Font Awesome Icons
-- ✅ 12-sprachige Sitemap mit dynamischen Übersetzungen
-- ✅ JSON-LD Structured Data für SEO/AI
-- ✅ Hreflang Tags für alle 12 Sprachen
-- ✅ Buyer-Guide Farbe: Grün → Blau
-- ✅ AGB Text sichtbar gemacht
-- ✅ AGB öffentlich zugänglich
-- ✅ Session Cookie auf 2 Wochen verlängert
-- ✅ Footer Sitemap-Link korrigiert
-- ✅ KI-Status-Report erstellt
-
-### Vorherige Session (Cookie Banner & SEO):
-- ✅ Cookie-Banner 12 Sprachen reaktiviert
-- ✅ FAQ-Seite öffentlich gemacht und redesigned
-- ✅ Glossar mit Premium-Akkordeon-UI
-- ✅ Smart-404 Handler implementiert
-- ✅ Redirect Middleware aktiviert
-- ✅ Sitemaps für Glossar erstellt
-- ✅ Hreflang Tags implementiert
-- ✅ `.env` Datei für lokale Entwicklung erstellt
-
-### Frühere Sessions:
-- ✅ Social Media Dokumentation für Gruppe B (`anleitung.html`)
-- ✅ Logo-Bug behoben (`professional.logo` → `professional.company_logo`)
-- ✅ 6 Dummy-Listings erstellt (ohne Bilder)
-- ✅ Listing Card Error behoben (`NoReverseMatch`)
-- ✅ Neue moderne Property-Detail-Seite (`single-detail-modern.html`)
-- ✅ OpenStreetMap eingebunden (Stadt-Ebene, bleibt so)
-- ✅ Übersetzungs-System für alle 12 Sprachen
-
----
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `KI_STATUS_REPORT.md` | **NEU** - Status aller KI-Funktionen |
-| `templates/main/sitemap.html` | **NEU** - 12-sprachige Sitemap mit JSON-LD |
-| `main/context_processors.py` | Lädt Übersetzungen + Cookie Banner Sprache |
-| `main/glossary_*.py` | Glossar-System (Models, Views, URLs) |
-| `main/listing_description_ai.py` | KI-Textgenerierung (Emergent) |
-| `main/middleware/*.py` | Redirect-Middleware |
-| `templates/include/base.html` | Haupt-Layout mit Cookie Banner |
-| `templates/glossary/*.html` | Glossar-Templates |
-| `templates/main/faq.html` | FAQ mit multilingual JSON |
-
----
-
-## KI-Funktionen Status
-
-| Feature | Status | API |
-|---------|--------|-----|
-| KI-Textgenerierung (Listings) | ✅ OK | Emergent OpenAI GPT-4o |
-| Professional AI Generator | ✅ OK | Emergent OpenAI GPT-4o |
-| Übersetzungsservice | ⚠️ Legacy | Direkt OpenAI (MIGRATION NÖTIG) |
-| Expertenfinder | ❌ Nicht implementiert | - |
-| KI Schnellsuche | ❓ Unklar | - |
-| Chatbot | ❌ Nicht implementiert | - |
-
----
-
-## Credentials
-
-| Role | URL | Username | Password |
-|------|-----|----------|----------|
-| Admin | `/nik-verwaltung-2026/` | Nik | Admin1234! |
-| Gruppe A (Makler) | `/accounts/login` | Nik | Admin1234! |
-| Gruppe B (Professional) | `/accounts/login` | archtiket | Architekt!123456789 |
-
----
-
-## Technical Architecture
-
-- **Framework:** Django 4.2.1 Monolith
-- **Python:** 3.8+
-- **Location:** `/app/real-estate-django-main`
-- **Database:** SQLite (Dev) / PostgreSQL (Prod)
-- **Translations:** 
-  - Dynamic: `json_content` JSONField auf Models
-  - Static Labels: `pages.Translation` Model, geladen via Context Processor
-  - Cookie Banner: Separate JSON-Dateien pro Sprache
-
-### Middleware (Aktiv)
-- `RedirectRegistryMiddleware` - DB-basierte 301-Redirects
-- `SmartRedirectMiddleware` - Intelligente URL-Umleitung
-- Custom 404 Handler - Smart-404 mit Vorschlägen
-
----
-
-## Bekannte Technische Schulden
-
-| Problem | Priorität | Details |
-|---------|-----------|---------|
-| **Django Migrations** | 🔴 Hoch | `makemigrations` schlägt fehl wegen NOT NULL in professional_models. Nur bypassed, nicht gelöst. |
-| **CSS-Konflikte** | 🟡 Mittel | Inline Styles vs. `styles.css`/`modern-theme.css`. Akkordeon-Animationen funktionieren nicht. |
-| **URL-Übersetzungen** | 🟡 Mittel | Einige Pfade nicht übersetzt (z.B. `/en/croatia/marktberichte/`) |
-| **Context Processor** | 🟡 Mittel | `main/context_processors.py` ist komplex und fehleranfällig geworden. |
-
----
-
-## Decisions Made
-
-- OpenStreetMap bleibt auf Stadt-Ebene (kein Straßen-Zoom) ✅
-- Objektnummer muss sichtbar sein, normale Größe ✅
-- Cookie Banner nutzt URL-Path für Sprach-Erkennung (Fallback auf Session) ✅
-
----
-
-## Session Zusammenfassung (23. Januar 2025)
-
-### Erledigt heute:
-- ✅ PROJEKT_SITEMAP.md (Entwickler-Doku) erstellt
-- ✅ Website-Sitemap `/sitemap` mit 12 Sprachen & JSON-LD SEO
-- ✅ Sitemap öffentlich gemacht, dann wieder geschützt
-- ✅ Session Cookie auf 2 Wochen verlängert
-- ✅ Footer Sitemap-Link repariert
-- ✅ AGB Text sichtbar gemacht & öffentlich
-- ✅ Buyer-Guide Farbe grün → blau
-- ✅ Buyer-Guide komplett in 12 Sprachen übersetzt
-- ✅ Buyer-Guide Sprach-Switcher am Ende der Seite
-- ✅ KI-Status-Report erstellt
-
-### Bekannte Probleme:
-- ⚠️ Header Sprach-Switcher führt zu falschen URLs bei sprachabhängigen Seiten
-- ⚠️ Django Migrations weiterhin instabil (professional_models)
-- ⚠️ Expertenfinder & Chatbot existieren NICHT im Code
-
----
-
-*Last Updated: 23. Januar 2025*
+## Key Files Reference
+- `main/context_processors.py` - Sprach-URL-Mapping
+- `main/views.py` - set_language_from_url View
+- `templates/include/base.html` - Header mit Sprachumschalter
+- `main/glossary_urls.py` - Glossar URL Patterns
+- `main/glossary_models.py` - GLOSSARY_URLS, COUNTRY_NAMES Konstanten
