@@ -1,5 +1,13 @@
 {% extends 'include/base.html' %}
 
+{% block hreflang %}
+{% for link in hreflang_links %}
+<link rel="alternate" hreflang="{% if link.lang == "ge" %}de{% elif link.lang == "cz" %}cs{% elif link.lang == "gr" %}el{% elif link.lang == "sw" %}sv{% else %}{{ link.lang }}{% endif %}" href="https://123-kroatien.eu{{ link.url }}" />
+{% endfor %}
+<link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu{{ term.get_absolute_url }}" />
+{% endblock hreflang %}
+
+
 {% block style %}
 <style>
 .term-detail-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 3rem 0; }

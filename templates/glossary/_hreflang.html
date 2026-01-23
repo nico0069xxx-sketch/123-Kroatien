@@ -1,0 +1,4 @@
+{% for alt in hreflang_alternatives %}
+<link rel="alternate" hreflang="{{ alt.hreflang }}" href="https://123-kroatien.eu{{ alt.url }}" />
+{% endfor %}
+<link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu{{ hreflang_default }}" />
