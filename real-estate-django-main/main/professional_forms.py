@@ -126,7 +126,7 @@ class ProfessionalRegistrationForm(forms.ModelForm):
             'oib_number',
             'website',
             'description',
-            'languages',
+            'spoken_languages',
             'profile_image',
             'company_logo',
         ]
@@ -143,7 +143,7 @@ class ProfessionalRegistrationForm(forms.ModelForm):
             'oib_number': forms.TextInput(attrs={'class': 'form-control'}),
             'website': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
-            'languages': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'z.B. Deutsch, Kroatisch, Englisch'}),
+            'spoken_languages': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'z.B. Deutsch, Kroatisch, Englisch'}),
             'profile_image': forms.FileInput(attrs={'class': 'form-control'}),
             'company_logo': forms.FileInput(attrs={'class': 'form-control'}),
         }
