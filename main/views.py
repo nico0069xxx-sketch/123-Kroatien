@@ -1083,8 +1083,7 @@ Telefon: {data.get('contact_telephone','')}
 # AI SMART-SEARCH VIEW
 # =============================================================================
 from main.chatbot import extract_search_criteria, is_property_search, smart_search_response, get_chatbot_response_with_search
-
-@login_required(login_url='main:login_required')
+@csrf_exempt
 def smart_search(request):
     """
     AI Smart-Search: Natürliche Sprache -> Immobiliensuche

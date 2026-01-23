@@ -32,6 +32,7 @@ urlpatterns = [
     path('send-owner-form/', views.send_owner_form, name='send-owner-form'),
     path('faq/', views.faq, name='faq'),
     path('owner/', views.owner, name='owner'),
+    path('api/suche-v2/', views.smart_search, name='smart_search'),
     path('real-estate-agent/', views.real_estate_agent, name='real-estate-agent'),
     path('building-contractor/', views.building_contractor, name='building-contractor'),
     path('realestate-contractor-registration', views.realestate_contractor_registration, name='realestate-contractor-registration'),
