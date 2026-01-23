@@ -24,81 +24,14 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary">🏠 Hauptseiten</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-home"></i> Hauptseiten</h5>
             <ul class="list-unstyled">
-              <li><a href="{% url 'main:home' %}">Startseite</a></li>
-              <li><a href="{% url 'main:listings' %}">Alle Immobilien</a></li>
-              <li><a href="{% url 'main:about' %}">Über uns</a></li>
-              <li><a href="{% url 'main:contact' %}">Kontakt</a></li>
-              <li><a href="{% url 'main:faq' %}">FAQ</a></li>
-              <li><a href="{% url 'main:service' %}">Service</a></li>
-              <li><a href="{% url 'main:blog' %}">Blog</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Für Eigentümer & Makler -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary">🏢 Für Eigentümer & Makler</h5>
-            <ul class="list-unstyled">
-              <li><a href="{% url 'main:owner' %}">Eigentümer-Info</a></li>
-              <li><a href="{% url 'main:real-estate-agent' %}">Immobilienmakler werden</a></li>
-              <li><a href="{% url 'main:building-contractor' %}">Bauunternehmen werden</a></li>
-              <li><a href="{% url 'main:makler_dashboard' %}">Makler-Portal (Login)</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dienstleister-Verzeichnis -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary">🗂️ Dienstleister Kroatien</h5>
-            <ul class="list-unstyled">
-              <li><a href="/ge/kroatien/immobilienmakler/">Immobilienmakler</a></li>
-              <li><a href="/ge/kroatien/bauunternehmen/">Bauunternehmen</a></li>
-              <li><a href="/ge/kroatien/rechtsanwaelte/">Rechtsanwälte</a></li>
-              <li><a href="/ge/kroatien/steuerberater/">Steuerberater</a></li>
-              <li><a href="/ge/kroatien/architekten/">Architekten</a></li>
-              <li><a href="{% url 'main:partner-landing-ge' %}">Partner werden</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Glossar -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary">📚 Immobilien-Glossar</h5>
-            <ul class="list-unstyled">
-              <li><a href="/ge/kroatien/glossar/">Glossar (Deutsch)</a></li>
-              <li><a href="/en/croatia/glossary/">Glossary (English)</a></li>
-              <li><a href="/hr/hrvatska/pojmovnik/">Pojmovnik (Hrvatski)</a></li>
-              <li class="mt-2"><strong>Spezial-Themen:</strong></li>
-              <li><a href="/ge/kroatien/glossar/investors/">Für Investoren</a></li>
-              <li><a href="/ge/kroatien/glossar/holiday-properties/">Ferienimmobilien</a></li>
-              <li><a href="/ge/kroatien/glossar/luxury-real-estate/">Luxusimmobilien</a></li>
-              <li><a href="/ge/kroatien/glossar/buyer-guide/">Käufer-Leitfaden</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Benutzer-Bereich -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary">👤 Benutzer-Bereich</h5>
-            <ul class="list-unstyled">
-              <li><a href="{% url 'account:login' %}">Anmelden</a></li>
-              <li><a href="{% url 'account:signup' %}">Registrieren</a></li>
-              <li><a href="{% url 'account:dashboard' %}">Mein Dashboard</a></li>
-              <li><a href="{% url 'account:password_reset_request' %}">Passwort vergessen</a></li>
+              <li><a href="/">Startseite</a></li>
+              <li><a href="/listing/">Alle Immobilien</a></li>
+              <li><a href="/about/">Über uns</a></li>
+              <li><a href="/contact/">Kontakt</a></li>
+              <li><a href="/faq/">FAQ</a></li>
+              <li><a href="/ge/blog-single-1">Blog</a></li>
             </ul>
           </div>
         </div>
@@ -108,59 +41,80 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary">📖 Rechtliches</h5>
+            <h5 class="card-title text-primary"><i class="fa fa-gavel"></i> Rechtliches</h5>
             <ul class="list-unstyled">
-              <li><a href="{% url 'main:imprint' %}">Impressum</a></li>
-              <li><a href="{% url 'main:data-protection' %}">Datenschutz</a></li>
-              <li><a href="{% url 'main:agb' %}">AGB</a></li>
-              <li><a href="{% url 'main:cancellation-policy' %}">Widerrufsrecht</a></li>
+              <li><a href="/imprint/">Impressum</a></li>
+              <li><a href="/data-protection/">Datenschutz</a></li>
+              <li><a href="/agb">AGB</a></li>
+              <li><a href="/cancellation-policy">Widerrufsrecht</a></li>
               <li><a href="/ge/kroatien/glossar/disclaimer/">Haftungsausschluss</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-    </div>
-
-    <!-- Sprachen-Übersicht -->
-    <div class="row mt-4">
-      <div class="col-12">
-        <div class="card shadow-sm">
+      <!-- Dienstleister Kroatien -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title text-primary">🌍 Verfügbare Sprachen</h5>
-            <div class="d-flex flex-wrap gap-2">
-              <a href="/ge/kroatien/glossar/" class="btn btn-outline-secondary btn-sm">🇩🇪 Deutsch</a>
-              <a href="/en/croatia/glossary/" class="btn btn-outline-secondary btn-sm">🇬🇧 English</a>
-              <a href="/hr/hrvatska/pojmovnik/" class="btn btn-outline-secondary btn-sm">🇭🇷 Hrvatski</a>
-              <a href="/fr/croatie/glossaire/" class="btn btn-outline-secondary btn-sm">🇫🇷 Français</a>
-              <a href="/nl/kroatie/woordenlijst/" class="btn btn-outline-secondary btn-sm">🇳🇱 Nederlands</a>
-              <a href="/pl/chorwacja/slownik/" class="btn btn-outline-secondary btn-sm">🇵🇱 Polski</a>
-              <a href="/cz/chorvatsko/glosar/" class="btn btn-outline-secondary btn-sm">🇨🇿 Čeština</a>
-              <a href="/sk/chorvatsko/slovnik/" class="btn btn-outline-secondary btn-sm">🇸🇰 Slovenčina</a>
-              <a href="/ru/horvatiya/glossarij/" class="btn btn-outline-secondary btn-sm">🇷🇺 Русский</a>
-              <a href="/gr/kroatia/glossari/" class="btn btn-outline-secondary btn-sm">🇬🇷 Ελληνικά</a>
-              <a href="/sw/kroatien/ordlista/" class="btn btn-outline-secondary btn-sm">🇸🇪 Svenska</a>
-              <a href="/no/kroatia/ordliste/" class="btn btn-outline-secondary btn-sm">🇳🇴 Norsk</a>
-            </div>
+            <h5 class="card-title text-primary"><i class="fa fa-briefcase"></i> Dienstleister Kroatien</h5>
+            <ul class="list-unstyled">
+              <li><a href="/ge/kroatien/immobilienmakler/">Immobilienmakler</a></li>
+              <li><a href="/ge/kroatien/bauunternehmen/">Bauunternehmen</a></li>
+              <li><a href="/ge/kroatien/rechtsanwaelte/">Rechtsanwälte</a></li>
+              <li><a href="/ge/kroatien/steuerberater/">Steuerberater</a></li>
+              <li><a href="/ge/kroatien/architekten/">Architekten</a></li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Technische Links -->
-    <div class="row mt-4">
-      <div class="col-12">
-        <div class="card shadow-sm bg-light">
+      <!-- Benutzer-Bereich -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h6 class="card-title text-muted">🔧 Für Suchmaschinen & Entwickler</h6>
-            <a href="/sitemap.xml" class="btn btn-outline-dark btn-sm me-2">sitemap.xml</a>
-            <a href="/robots.txt" class="btn btn-outline-dark btn-sm me-2">robots.txt</a>
-            <a href="/rss/listings/" class="btn btn-outline-dark btn-sm">RSS-Feed</a>
+            <h5 class="card-title text-primary"><i class="fa fa-user"></i> Benutzer-Bereich</h5>
+            <ul class="list-unstyled">
+              <li><a href="/ge/kroatien/partner-werden/">Partner werden</a></li>
+              <li><a href="/ge/ge/kroatien/registrierung/">Registrieren</a></li>
+              <li><a href="/accounts/login">Anmelden</a></li>
+              <li><a href="/makler-dashboard/">Makler-Portal</a></li>
+              <li><a href="/accounts/password-reset/">Passwort vergessen</a></li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
+      <!-- Service -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary"><i class="fa fa-cogs"></i> Service</h5>
+            <ul class="list-unstyled">
+              <li><a href="/ge/kroatien/glossar/">Immobilien-Glossar</a></li>
+              <li><a href="/ge/kroatien/glossar/buyer-guide/">Käufer Kurzleitfaden</a></li>
+              <li><a href="/ge/kroatien/marktberichte/">Marktberichte</a></li>
+              <li><a href="/ge/kroatien/wichtige-adressen/">Wichtige Adressen</a></li>
+              <li><a href="/ge/kroatien/nachrichten/">Nachrichten</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- KI -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary"><i class="fa fa-magic"></i> KI</h5>
+            <ul class="list-unstyled">
+              <li><a href="/#ki-suche">KI Immobilien Schnellsuche</a></li>
+              <li><span class="text-muted">Expertenfinder (derzeit nicht verfügbar)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 {% endblock %}

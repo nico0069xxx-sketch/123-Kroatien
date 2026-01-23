@@ -203,6 +203,7 @@ def cancellation_policy(request):
     return render(request, 'main/cancellation-policy.html')
 
 @login_required(login_url='main:login_required')
+@login_required(login_url='main:login_required')
 def sitemap(request):
     return render(request, 'main/sitemap.html')
 
