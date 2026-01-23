@@ -1,49 +1,74 @@
-{% extends 'include/base.html' %} 
-{% load static %} 
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+/* Hero Section */
+.faq-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 3rem 0; }
+.faq-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; margin-bottom: 0.5rem; }
+.faq-hero p { color: rgba(255,255,255,0.85); font-size: 1.1rem; }
+
+/* FAQ Cards */
+.faq-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden; transition: box-shadow 0.2s; }
+.faq-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.faq-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; cursor: pointer; background: linear-gradient(to right, #FAFAFA, #fff); }
+.faq-header h3 { font-size: 1.1rem; margin: 0; color: #1E293B; font-weight: 600; }
+.faq-header i { color: #94A3B8; transition: transform 0.3s ease; }
+.faq-card.expanded .faq-header i { transform: rotate(180deg); }
+.faq-content { display: none; padding: 1.25rem 1.5rem; border-top: 1px solid #E2E8F0; }
+.faq-card.expanded .faq-content { display: block; }
+.faq-content p { color: #475569; line-height: 1.7; margin-bottom: 1rem; }
+.faq-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #EA580C; font-weight: 600; text-decoration: none; transition: gap 0.2s; }
+.faq-link:hover { gap: 0.75rem; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .faq-hero { padding: 2rem 0; }
+    .faq-hero h1 { font-size: 1.75rem; }
+    .faq-header { padding: 1rem; }
+    .faq-header h3 { font-size: 1rem; }
+}
+</style>
+{% endblock style %}
 
 {% block body %}
-<div class="faqHeaderBg bg-theme-overlay">
-  <section class="section__breadcrumb">
+<section class="faq-hero">
     <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-8 text-center">
-          <ul class="list-inline">
-            <li class="list-inline-item">
-              <a style="font-weight: bold; font-size: 2rem" href="#" class="text-white">
-                {{faq_title}}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <h1>{{ faq_title }}</h1>
+        <p>Häufig gestellte Fragen rund um Immobilien in Kroatien</p>
     </div>
-  </section>
+</section>
+
+<div class="container py-4">
+    {% for faq in faqs %}
+    <div class="faq-card{% if forloop.first %} expanded{% endif %}">
+        <div class="faq-header">
+            <h3>{{ faq.q }}</h3>
+            <i class="fa fa-chevron-down"></i>
+        </div>
+        <div class="faq-content"{% if forloop.first %} style="display:block;"{% endif %}>
+            <p>{{ faq.a }}</p>
+            
+        </div>
+    </div>
+    {% empty %}
+    <p>Keine FAQs gefunden.</p>
+    {% endfor %}
 </div>
 
-<section class="bg-white">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-12">
-        <div class="title__leading">
-          <h2 class="text-capitalize text-danger">{{faq_title}}</h2>
-          
-          {% for faq in faqs %}
-          <details {% if forloop.first %}open{% endif %} style="margin-bottom: 20px;">
-            <summary style="font-weight: bold; color: #003167; cursor: pointer;">
-              <a href="{% url 'main:faq_detail' country=country slug=faq.slug %}" style="color: #003167; text-decoration: none;">
-                {{ faq.q }}
-              </a>
-            </summary>
-            <div class="faq__content" style="color: #003167; padding: 15px;">
-              <p>{{ faq.a }}</p>
-              <a href="{% url 'main:faq_detail' country=country slug=faq.slug %}" style="color: #c41e3a;">Mehr erfahren →</a>
-            </div>
-          </details>
-          {% endfor %}
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{% endblock %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".faq-card").forEach(function(card) {
+        card.querySelector(".faq-header").addEventListener("click", function() {
+            card.classList.toggle("expanded");
+            var content = card.querySelector(".faq-content");
+            if (card.classList.contains("expanded")) {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
+        });
+    });
+});
+</script>
+{% endblock body %}

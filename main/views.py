@@ -414,9 +414,22 @@ def delete_property(request, id):
     messages.success(request, "Property delete sucsessfully")
     return redirect('main:profile')
 
-@login_required(login_url='main:login_required')
+
 def faq(request):
-    return render(request, 'main/faq.html')
+    import json
+    import os
+    lang = request.session.get("site_language", "ge")
+    faq_file = f"main/faq_data_{lang}.json"
+    if not os.path.exists(faq_file):
+        faq_file = "main/faq_data.json"
+    try:
+        with open(faq_file, "r", encoding="utf-8") as f:
+            faqs = json.load(f)
+    except:
+        faqs = []
+    faq_titles = {"ge": "Häufig gestellte Fragen", "en": "Frequently Asked Questions", "hr": "Često postavljana pitanja", "fr": "Questions fréquentes", "nl": "Veelgestelde vragen", "pl": "Często zadawane pytania", "cz": "Často kladené dotazy", "sk": "Často kladené otázky", "ru": "Часто задаваемые вопросы", "gr": "Συχνές ερωτήσεις", "sw": "Vanliga frågor", "no": "Ofte stilte spørsmål"}
+    return render(request, "main/faq.html", {"faqs": faqs, "faq_title": faq_titles.get(lang, "FAQ"), "country": "kroatien", "lang": lang})
+
 
 @login_required(login_url='main:login_required')
 def owner(request):
