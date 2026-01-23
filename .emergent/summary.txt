@@ -1,171 +1,208 @@
 <analysis>**original_problem_statement:**
-The user's initial goal was to fix a minor UI bug. This evolved into a major feature request: building a comprehensive, SEO-optimized, multilingual real estate glossary for their Django portal, 123-Kroatien.eu. The user provided a highly detailed specification document outlining the requirements for the glossary, which is being implemented in phases.
+The user's initial request was to create a comprehensive overview of the Django project, which could also serve as a developer sitemap. This evolved into a series of tasks to build and refine a public-facing, fully multilingual sitemap for website visitors.
 
-This session focused on completing the foundational work (Sprint 1), fixing numerous template and routing issues, and then executing a production-grade implementation plan provided by the user. This plan included creating management commands for data import, generating translations for 11 new languages using an LLM, and preparing for SEO features like JSON-LD and Sitemaps.
+The agent's work included:
+1.  Creating a developer-focused sitemap document ().
+2.  Building a new, public-facing visitor sitemap from a nearly empty template ().
+3.  Debugging and fixing numerous broken or incorrect links and content sections on the new sitemap based on user feedback.
+4.  Making several login-protected pages (like Sitemap and AGB) public.
+5.  Extending the user's session duration to 2 weeks to improve their local testing workflow.
+6.  Investigating and reporting on the status of all AI-powered features (Expertenfinder, Chatbot, etc.), discovering that several linked features were never implemented.
+7.  Re-implementing the sitemap to be fully multilingual (12 languages), including SEO enhancements like JSON-LD.
+8.  Debugging the new multilingual sitemap's language switcher.
+9.  Re-implementing the Buyer Guide page to be fully translated into 12 languages and adding a page-specific language switcher as a workaround for a global navigation issue.
 
-**PRODUCT REQUIREMENTS (Glossary Feature):**
--   **(P0) Sprint 1 (Completed):** Data Models, Multilingual URL/Slug strategy, 301 redirects for aliases, Data Import Pipeline.
--   **(P1) Sprint 2 (Upcoming):** Enhance search logic, implement pagination and ordering.
--   **(P1) Sprint 3 (Upcoming):** Refine UX (Accordion layout), ensure mobile compatibility.
--   **(P1) Sprint 4 (Upcoming):** Topic clustering on landing pages, integrate compliance texts.
--   **(P0) SEO & Finalization (Upcoming):** Implement JSON-LD, Smart-404 pages, activate redirect middleware, and integrate Sitemaps.
+**PRODUCT REQUIREMENTS:**
+-   A developer-focused project overview document.
+-   A public, user-facing HTML sitemap that is accurate and well-structured.
+-   The sitemap and Buyer Guide must be fully functional and translated into all 12 project languages.
+-   An audit of the site's AI features.
 
 **User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du).
 
 **what currently exists?**
-The glossary is now fully functional with 38 terms across all 12 supported languages. All backend models, views, and URL routes are in place. All templates that were previously broken (due to RTF format issues) have been fixed.
-
-A robust data pipeline has been established:
--   A central  structure holds the canonical content for each language.
--   A management command () was created to generate translations for 11 languages from the German source file using the Emergent LLM Key (GPT-4o).
--   Management commands for seeding taxonomy categories (), importing glossary data (), and creating redirect aliases from synonyms () are fully implemented and have been used successfully.
--   The language switcher in the navigation now correctly handles the complex multilingual URL structure of the glossary.
--   UI translations for static text and category labels are now working across all 12 languages.
--   JSON-LD () has been implemented for glossary detail pages.
+The application is a Django monolith. A new, fully functional, SEO-optimized, and multilingual sitemap has been implemented at . The associated view has been made public, and the link in the footer is now correct. The Buyer Guide page is also fully multilingual. A key architectural flaw was discovered: the global language switcher in the header does not work for pages with translated URL slugs. User sessions have been configured to last for two weeks to ease local development testing. An audit revealed that the Expertenfinder and Chatbot features, despite being linked in the UI, do not exist in the codebase.
 
 **Last working item**:
-The agent and user successfully implemented and verified the JSON-LD schema for glossary detail pages. The very last action was the user confirming they were happy with the session's progress and the agent committing all the new work to the  branch.
-
--   Last item agent was working: Committing all completed work of the session (translation generation, import pipeline, UI translation fixes, JSON-LD).
--   Status: FINISHED
+-   Last item agent was working: Implementing a fully multilingual (12-language) Buyer Guide page. This involved translating all text content within the template and adding a page-specific language switcher at the bottom with correct, hardcoded URLs for each language. This was a workaround for the broken global header switcher.
+-   Status: COMPLETED
 -   Agent Testing Done: Y
--   Which testing method agent to use? NA
+-   Which testing method agent to use? The user has been testing manually.
 -   User Testing Done: Y
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Fragile Django Migrations (P0 - HIGH RISK)**
+-   **Issue 1: Global Header Language Switcher Fails on Translated URLs (P0 - CRITICAL)**
+-   **Issue 2: Non-Existent AI Features Linked in UI (P1 - HIGH)**
+-   **Issue 3: Fragile Django Migrations (P1 - HIGH RISK / Technical Debt)**
 
 **Issues Detail:**
--   **Issue 1: Fragile Django Migrations**
-    -   **Description**: The  command consistently fails due to errors in unrelated, older models (, ). This indicates a corrupt or unstable migration history. During this session, the agent had to bypass the migration system by manually creating the  table with SQL to proceed.
-    -   **Attempted fixes**: The agent tried to create a migration but was blocked by questions about unrelated models. The workaround was to create the M2M table for  manually.
+-   **Issue 1: Global Header Language Switcher Fails on Translated URLs**
+    -   **Description**: The main language switcher in the site header does not correctly redirect to the translated equivalent of the current page if the URL slugs are translated (e.g.,  in German vs.  in Croatian). It typically redirects to the root of a section (e.g., the glossary index) instead of the specific page (e.g., the buyer guide). This is a critical usability flaw for a multilingual site.
+    -   **Attempted fixes**: A page-specific language switcher was successfully implemented on the Buyer Guide page as a temporary workaround. The root cause in the global header was not addressed.
     -   **Next debug checklist**:
-        1.  Before making any new model changes, the agent must investigate the root cause of the migration failures.
-        2.  Check the models  and  for fields that were changed without creating/applying a proper migration. The error  is a strong clue.
-        3.  It might be necessary to temporarily comment out the problematic models/fields, create the required glossary migration, and then uncomment them.
-        4.  A more robust solution would be to fix the underlying data inconsistency (e.g., providing a default for the non-nullable fields) or to properly reset the migrations for the affected apps, though this is risky.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical blocker for any future database schema changes. Without a fix, the project cannot be reliably maintained or extended.
+        1.  The current system relies on  in the  parameter, which fails when path components are translated.
+        2.  A robust solution requires creating a mapping system. For any given page, the system must know the corresponding URLs for all 12 languages.
+        3.  This could be implemented via a new model, a dictionary in , or by adding a method to relevant models ().
+        4.  The context processor and  template must be updated to use this mapping to generate the correct URLs for the header dropdown.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a core functionality failure for a multilingual site. Fixing it will allow users to seamlessly switch languages on any page.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y (discovered this session)
+    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Blocked on other issue**: None.
+
+-   **Issue 2: Non-Existent AI Features Linked in UI**
+    -   **Description**: The agent's audit () confirmed that the Expertenfinder and Chatbot features do not exist in the codebase, although they are linked in the UI (e.g., footer). This leads to 404 errors or dead links.
+    -   **Attempted fixes**: The links on the new sitemap page were marked as in development or removed. The original links in other parts of the site (like the footer) remain.
+    -   **Next debug checklist**:
+        1.  Confirm with the user whether these features should be built or if the links should be removed globally.
+        2.  If removing, grep the entire  directory for Expertenfinder and the chatbot link to find all occurrences.
+        3.  If building, gather requirements from the user for these AI features.
+    -   **Why fix this issue and what will be achieved with the fix?**: Fixes broken user experience and removes dead links, which is bad for usability and SEO.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: Frontend.
+    -   **Blocked on other issue**: None.
+
+-   **Issue 3: Fragile Django Migrations**
+    -   **Description**: Inherited from a previous fork. The  command is unstable and at risk of failing due to issues in older models (, ). This is a critical blocker for any future database schema changes.
+    -   **Attempted fixes**: Bypassed in a previous session, but the root cause was not addressed.
+    -   **Next debug checklist**: Refer to the previous handoff summary for a detailed checklist. The core issue is likely a field that was made non-nullable without a default or a data migration.
+    -   **Why fix this issue and what will be achieved with the fix?**: The project cannot be reliably maintained or extended without a stable migration system.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Backend (by running  and ).
-    -   **Blocked on other issue**: None. This is a top-priority blocker itself.
+    -   **Should Test frontend/backend/both after fix?**: Backend.
+    -   **Blocked on other issue**: This is a blocker itself.
 
 **In progress Task List**:
--   None. The last set of tasks was completed and committed.
+-   None.
 
 **Upcoming and Future Tasks**
--   **Upcoming Tasks (From User's Detailed Spec):**
-    -   **(P0) D4: Smart-404 (UX Landing):** Implement a custom  view that returns an HTTP 404 status but renders a helpful template with search and suggestions, and a  meta tag.
-    -   **(P0) D5: Middleware Activation:** Activate the  and  in  in the correct order to handle managed redirects and glossary aliases.
-    -   **(P0) D6: Sitemap & Hreflang Integration:**
-        -   Create a sitemap index at .
-        -   Create per-language sitemaps for the glossary (e.g., ).
-        -   Ensure only published/approved terms are included.
-        -   Implement  tags on detail pages to link to all other *approved* language versions of the same term.
--   **Future Tasks (From previous session & Sprints 2-4):**
-    -   **(P1) Sprint 2**: Enhance search logic, implement pagination and ordering.
-    -   **(P1) Sprint 3**: Refine UX (Accordion layout), ensure mobile compatibility.
+-   **Upcoming Tasks:**
+    -   **(P0) Implement URL Mapping System:** Fix the global header language switcher (see Issue 1).
+    -   **(P1) Implement or Remove AI Features:** Build the Expertenfinder and Chatbot, or remove all dead links to them from the UI.
     -   **(P1) Sprint 4**: Topic clustering on landing pages, integrate compliance texts.
+    -   **(P1) Finalize Sprint 3 (UX/Akkordeon-Layout):** Fix the missing smooth animations on the glossary accordion UI.
+
+-   **Future Tasks (Technical Debt & Backlog):**
     -   **(P0) Critical CSS Instability**: Refactor the project's fragile CSS.
-    -   **(P0)** Refactor URL Architecture.
-    -   **(P1)** Finalize English Translation for Registration Form.
-    -   **(P1)** Consolidate Registration URLs & Views.
-    -   **(P1)** Implement a Review/Rating System.
+    -   **(P0) Refactor URL Architecture**: Systematically review and fix inconsistent URL translations (e.g., ).
+    -   **(P1) Data Quality**: Fix numeric slugs for Russian and Greek glossary terms.
+    -   **(P1) Consolidate Registration URLs & Views.**
+    -   **(P1) Implement a Review/Rating System.**
 
 **Completed work in this session**
--   **Template Repair**: Fixed 6+ templates that were saved in the wrong format (RTF) and had incorrect Django block names ( vs ).
--   **Multilingual Content Generation**: Created  management command, which used the Emergent LLM Key (GPT-4o) to translate 38 German glossary terms into 11 other languages, generating over 400 new translations.
--   **Data Pipeline & Import**:
-    -   Established a canonical data structure at .
-    -   Successfully seeded all taxonomy categories ().
-    -   Successfully imported all 38 terms across all 12 languages using an idempotent, 2-pass  command that also resolves .
-    -   Created and ran  to generate 39 alias redirects.
--   **Language Switching Fix**: Rewrote the  view to correctly handle the glossary's complex URL structure (), allowing seamless switching between language versions of glossary pages.
--   **UI Translations**: Implemented translations for static UI text (e.g., Back to Glossary, Categories) for all 12 languages.
--   **JSON-LD Implementation**: Successfully added  JSON-LD markup to the glossary detail pages for published/approved terms.
--   **Database Schema**: Bypassed a migration failure by manually creating the M2M table for .
+-   **Sitemap Creation & Refinement:**
+    -   Created a developer-focused sitemap document: .
+    -   Implemented a new, public, and visually structured visitor sitemap at .
+    -   Made the  page fully multilingual (12 languages) with dynamic text and language-aware URLs.
+    -   Added SEO enhancements to the sitemap, including a JSON-LD schema.
+-   **Bug Fixes & UX Improvements:**
+    -   Fixed numerous broken links on the sitemap page.
+    -   Made the AGB page public and fixed a bug that was hiding its text content.
+    -   Changed the color scheme of the Buyer Guide page from green to blue to match the site's branding.
+    -   Extended user session length to 2 weeks to improve the local development workflow.
+    -   Fixed the sitemap link in the global footer.
+-   **Multilingual Content:**
+    -   Implemented a fully translated (12 languages) Buyer Guide page.
+    -   Added a page-specific language switcher to the Buyer Guide page as a workaround for the broken global switcher.
+-   **AI & Code Audit:**
+    -   Audited all AI features and created a status report ().
+    -   Identified that Expertenfinder and Chatbot features were never implemented.
+
+**Known issue recurrence from previous fork**
+-   **Issue recurrence in previous fork**: Fragile Django Migrations.
+-   **Recurrence count**: 3
+-   **Status**: NOT STARTED (Remains a critical blocker).
 
 **Code Architecture**
--   **Framework**: Django monolith.
--   **New Data Structure**: A canonical data store now exists at . This is the source of truth for glossary content. The old  files for the glossary are now obsolete.
--   **New Management Commands**:
-    -   : Generates translations using an LLM.
-    -   : 2-pass importer for terms and their relations.
-    -   : Seeds  model.
-    -   : Creates  for 301 redirects.
--   **New Template Tags**:
-    -   : Contains a  filter to translate category labels on the fly.
--   **Admin Integration**: The glossary models are now fully integrated into the Django admin panel via imports in .
+-   **Framework**: Django monolith
+-   **Key Modified Files**:
+    -   : Created from a near-empty file into a fully-featured, multilingual sitemap.
+    -   : Heavily refactored to be fully multilingual with a page-specific language switcher.
+    -   : Removed  from  and  views.
+    -   : Added the  variable to the context for the  view to enable automatic language detection in the template.
+    -   : Added  and  to extend session lifetime.
+    -   : Corrected the  for the sitemap link.
 
 **Key Technical Concepts**
--   **Idempotent Management Commands**: Scripts for seeding and importing data are designed to be safely re-runnable.
--   **2-Pass Data Import**: The import script first creates all term objects (Pass 1) and then links the  ManyToManyField (Pass 2) to resolve dependencies.
--   **LLM-based Content Generation**: Used  library with an Emergent LLM Key to programmatically generate translations for 11 languages.
--   **Dynamic Multilingual Routing**: The application dynamically generates and resolves URLs for 12 languages, each with its own country and URL segment (e.g., , ).
-
-**key DB schema**
--   ****: 
--   ****: 
--   ****: 
--   ****: 
+-   **Django Multilingual Templating**: Extensive use of  blocks to serve translated content from a single template.
+-   **Django Context Processors**: Relied on variables like  and  being available globally in templates.
+-   **i18n URL Routing**: Debugged issues related to language prefixes in URLs and translated slugs ( vs. ). Discovered limitations of the current implementation.
+-   **JSON-LD**: Implemented Schema.org structured data for SEO and AI understanding of the sitemap.
 
 **All files of reference**
--   **Created/Modified (Key Files)**:
-    -    (12 files): The new canonical data source.
-    -   : Core 2-pass import script.
-    -   : LLM-based translation script.
-    -   : Category seeder.
-    -   : Alias creator.
-    -   : Added  M2M field.
-    -   : Heavily modified  and updated  context.
-    -   : Added UI translations for 9 new languages.
-    -    & : For translating category labels.
-    -   : Updated to use translation templatetag and include JSON-LD.
-    -   : New partial for JSON-LD schema.
-    -   : Updated to correctly load all 12 language URL patterns for the glossary.
-    -   : Updated to import and register all glossary-related models.
--   **User-Provided (Downloaded & Integrated)**:
-    -   
-    -   
-    -   
-    -   
-    -   
-    -   
-
-**Areas that need refactoring**:
--   **Django Migrations**: This is the highest priority. The system is unstable and prevents model changes.
--   **UI Translations**: The  dictionary in  and the  dictionary in  are hardcoded. A better long-term solution would be to use Django's standard i18n ( files) for UI strings.
+-   
+-   
+-   
+-   
+-   
+-    (created in agent's environment)
 
 **Critical Info for New Agent**
--   **MIGRATION SYSTEM IS BROKEN**: You **cannot** reliably run . It will ask questions about unrelated models. The workaround has been to create tables manually via SQL or to isolate the migration creation. This needs to be fixed properly before any further model development.
--   **Data Source**: The single source of truth for glossary content is now the set of files in . The old  are obsolete for glossary terms.
--   **Content Workflow**: Content changes should be made in the JSON files and re-imported. All generated translations have  and were bulk-updated to  for testing. In production, this would be a manual review step in the admin.
+-   **GLOBAL LANGUAGE SWITCHER IS BROKEN**: This is the most critical issue found in this session. The header language switcher CANNOT correctly handle pages with translated URL slugs. Do not try to use it for testing those pages. A workaround was implemented for the Buyer Guide (a page-specific switcher), which could be a model for other pages until a global fix is implemented.
+-   **AI FEATURES ARE MISSING**: The user believes features like Expertenfinder and a Chatbot exist. They do not. You will need to manage user expectations and either plan their implementation or remove the dead links.
+-   **USER'S LOCAL ENVIRONMENT**: The user is on a Mac and often has a different version of the code than the agent's environment. Be prepared to provide full code blocks for copy-pasting, as  commands or partial diffs can fail or cause confusion. The user is diligent about running usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
+
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system. commands when instructed.
+
+**documents and test reports created in this job**
+-    (in the agent's environment)
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. : User clarifies a compliment and confirms the final git commit was done.
-9.  : User expresses great satisfaction with the session and ends for the day.
-8.  : User confirms the multilingual language switcher is now working correctly.
-7.  : User confirms multilingual pages work but are empty, realizing translations are missing, and asks to save progress.
-6.  : User is thrilled with the import of all terms but notes the other languages don't show content yet.
-5.  : User points out a potential translation error for Categories in Czech. (Agent clarified this is correct).
-4.  : User correctly identifies that UI labels are not being translated. (This was then fixed).
-3.  : User provides a screenshot showing that category labels are not translated.
-2.  : User agrees to save progress before moving on.
-1.  : User confirms the language switcher is now working correctly after a fix.
+10.  - (The session is ending, it was a great finish, thanks and see you soon, don't forget the handoff.) - Status: Done.
+9.   - (Yes, that looks good, the language selection at the bottom works perfectly, just not the one at the top.) - Status: Acknowledged, issue documented.
+8.   - (No, when I switch from German to Croatian, I land on this wrong URL...) - Status: Resolved with a page-specific switcher.
+7.   - (Okay, the language selection is gone but it's in German and the 12 languages in the header lead to the glossary which is wrong.) - Status: Resolved by fixing the view context.
+6.   - (Yes, that's the right one now, but it's only in German, and the language selection at the top for de, en, and hr can be deleted.) - Status: Resolved.
+5.   - (Sorry, I hadn't uploaded the new code.) - Status: Resolved.
+4.   - (The design has changed and it's only shown in German...) - Status: Resolved by restoring the correct design and fixing translations.
+3.   - (1 and 2, I'll finish around 11 PM.) - User wants to commit and then translate the buyer guide. - Status: Done.
+2.   - (This is not yet translated...) - Status: In progress, led to the final task.
+1.   - (Yes, that all works now, but I'm not sure about the links, I have to check.) - Status: User confirmed most links are okay.
 
 **Project Health Check:**
--   **Broken**:
-    -   **Django Migration System**: Critically broken.  fails on unrelated models.
--   **Technical Debt**: High. The migration issue is a major liability. Hardcoded UI translations are a minor debt.
-
-**3rd Party Integrations**
--   **Emergent LLM Key (OpenAI GPT-4o)**: Used to generate glossary translations for 11 languages via the  library.
-
-**Testing status**
--   Testing agent used after significant changes: NO
--   Troubleshoot agent used after agent stuck in loop: NO
--   Test files created: []
--   Known regressions: None.
-
-**What agent forgot to execute**
--   The plan provided by the user included activating middleware and implementing sitemaps, which are still pending as Upcoming Tasks. This is not a mistake, as the session ended before these could be addressed. All other immediate tasks were completed.</analysis>
+-   **Broken**: The global language switching mechanism for i18n URLs is fundamentally flawed. The Django migration system remains fragile.
+-   **Mocked**: N/A
+-   **Technical Debt**: High. In addition to migrations and CSS, the lack of a centralized URL translation mapping system is a major architectural debt that is now causing critical bugs.</analysis>
