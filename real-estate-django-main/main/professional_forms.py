@@ -166,7 +166,7 @@ class ProfessionalRegistrationForm(forms.ModelForm):
         self.fields['oib_number'].label = labels['oib_number']
         self.fields['website'].label = labels['website']
         self.fields['description'].label = labels['description']
-        self.fields['languages'].label = labels['languages']
+        self.fields['spoken_languages'].label = labels['languages']
         self.fields['profile_image'].label = labels['profile_image']
         self.fields['company_logo'].label = labels['company_logo']
         
