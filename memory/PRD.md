@@ -106,7 +106,19 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 ## Completed Work
 
-### Letzte Session (Cookie Banner & SEO):
+### Aktuelle Session (Januar 2025 - Sitemap & KI):
+- ✅ Website-Sitemap mit Font Awesome Icons
+- ✅ 12-sprachige Sitemap mit dynamischen Übersetzungen
+- ✅ JSON-LD Structured Data für SEO/AI
+- ✅ Hreflang Tags für alle 12 Sprachen
+- ✅ Buyer-Guide Farbe: Grün → Blau
+- ✅ AGB Text sichtbar gemacht
+- ✅ AGB öffentlich zugänglich
+- ✅ Session Cookie auf 2 Wochen verlängert
+- ✅ Footer Sitemap-Link korrigiert
+- ✅ KI-Status-Report erstellt
+
+### Vorherige Session (Cookie Banner & SEO):
 - ✅ Cookie-Banner 12 Sprachen reaktiviert
 - ✅ FAQ-Seite öffentlich gemacht und redesigned
 - ✅ Glossar mit Premium-Akkordeon-UI
