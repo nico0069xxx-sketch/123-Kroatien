@@ -194,7 +194,6 @@ def imprint(request):
 def data_protection(request):
     return render(request, 'main/data-protection.html')
 
-@login_required(login_url='main:login_required')
 def agb(request):
     return render(request, 'main/agb.html')
 
