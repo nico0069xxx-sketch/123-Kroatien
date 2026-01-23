@@ -106,34 +106,24 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 ## Completed Work
 
-### Session vor diesem Fork:
+### Letzte Session (Cookie Banner & SEO):
+- ✅ Cookie-Banner 12 Sprachen reaktiviert
+- ✅ FAQ-Seite öffentlich gemacht und redesigned
+- ✅ Glossar mit Premium-Akkordeon-UI
+- ✅ Smart-404 Handler implementiert
+- ✅ Redirect Middleware aktiviert
+- ✅ Sitemaps für Glossar erstellt
+- ✅ Hreflang Tags implementiert
+- ✅ `.env` Datei für lokale Entwicklung erstellt
+
+### Frühere Sessions:
 - ✅ Social Media Dokumentation für Gruppe B (`anleitung.html`)
 - ✅ Logo-Bug behoben (`professional.logo` → `professional.company_logo`)
 - ✅ 6 Dummy-Listings erstellt (ohne Bilder)
 - ✅ Listing Card Error behoben (`NoReverseMatch`)
 - ✅ Neue moderne Property-Detail-Seite (`single-detail-modern.html`)
 - ✅ OpenStreetMap eingebunden (Stadt-Ebene, bleibt so)
-
----
-
-## Translation System Debug Checklist
-
-Der Übersetzungs-Blocker erfordert folgende Schritte:
-
-1. **Alle `page`-Werte in DB auflisten:**
-   ```bash
-   python3 manage.py shell -c "from pages.models import Translation; print(set(t.page for t in Translation.objects.all()))"
-   ```
-
-2. **`context_processors.py` analysieren:**
-   - Datei: `main/context_processors.py`
-   - Funktion: `get_my_translations`
-   - Problem: Lädt nicht alle benötigten Seiten
-
-3. **Query erweitern:** 
-   Alle Seiten hinzufügen die Labels für Detail-Seite haben (z.B. 'contact', etc.)
-
-4. **Testen:** Mit `?lang=fr` Parameter
+- ✅ Übersetzungs-System für alle 12 Sprachen
 
 ---
 
@@ -141,10 +131,13 @@ Der Übersetzungs-Blocker erfordert folgende Schritte:
 
 | File | Purpose |
 |------|---------|
-| `templates/main/single-detail-modern.html` | Neue Property-Detail-Seite (BLOCKER) |
-| `main/context_processors.py` | Lädt Übersetzungen (DEBUG HERE) |
-| `main/views.py` | `property_details` View |
-| `pages/models.py` | `Translation` Model |
+| `PROJEKT_SITEMAP.md` | **NEU** - Vollständige URL-Struktur & Projektübersicht |
+| `main/context_processors.py` | Lädt Übersetzungen + Cookie Banner Sprache |
+| `main/glossary_*.py` | Glossar-System (Models, Views, URLs) |
+| `main/middleware/*.py` | Redirect-Middleware |
+| `templates/include/base.html` | Haupt-Layout mit Cookie Banner |
+| `templates/glossary/*.html` | Glossar-Templates |
+| `templates/main/faq.html` | FAQ mit multilingual JSON |
 
 ---
 
