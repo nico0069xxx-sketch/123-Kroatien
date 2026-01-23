@@ -679,6 +679,13 @@ def set_language_from_url(request, user_language):
     
     request.session['site_language'] = user_language
     translation.activate(user_language)
+    
+    # Priorität 1: next Parameter (vom Sprachumschalter mit korrekter URL)
+    next_url = request.GET.get('next')
+    if next_url:
+        return HttpResponseRedirect(next_url)
+    
+    # Priorität 2: HTTP_REFERER mit URL-Übersetzung
     referer = request.META.get('HTTP_REFERER', '/')
     
     # Parse the referer URL
