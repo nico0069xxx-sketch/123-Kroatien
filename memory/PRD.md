@@ -215,4 +215,4 @@ Vollständige Dokumentation: `PROJEKT_SITEMAP.md`
 
 ---
 
-*Last Updated: Dezember 2024*
+*Last Updated: Januar 2025*
