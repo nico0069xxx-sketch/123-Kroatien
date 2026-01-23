@@ -7,22 +7,18 @@
     background: linear-gradient(135deg, var(--color-primary, #0F172A) 0%, #1E293B 100%);
     padding: 3rem 0;
 }
-
 .legal-hero h1 {
     font-family: var(--font-heading, 'Playfair Display', serif);
     font-size: 2.25rem;
     color: #fff;
     margin-bottom: 0.5rem;
 }
-
 .legal-hero p {
     color: rgba(255, 255, 255, 0.85);
 }
-
 .legal-content {
     padding: 3rem 0;
 }
-
 .guide-card {
     background: #fff;
     border-radius: 12px;
@@ -30,7 +26,6 @@
     padding: 2.5rem;
     margin-bottom: 2rem;
 }
-
 .guide-card h2 {
     font-family: var(--font-heading, 'Playfair Display', serif);
     font-size: 1.5rem;
@@ -39,11 +34,9 @@
     padding-bottom: 1rem;
     border-bottom: 2px solid #E2E8F0;
 }
-
 .guide-steps {
     counter-reset: step-counter;
 }
-
 .guide-step {
     position: relative;
     padding-left: 4rem;
@@ -51,13 +44,11 @@
     padding-bottom: 2rem;
     border-bottom: 1px solid #F1F5F9;
 }
-
 .guide-step:last-child {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
-
 .guide-step::before {
     counter-increment: step-counter;
     content: counter(step-counter);
@@ -75,28 +66,23 @@
     font-weight: 700;
     font-size: 1rem;
 }
-
 .guide-step h3 {
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-text, #0F172A);
     margin-bottom: 0.5rem;
 }
-
 .guide-step p {
     color: var(--color-text-secondary, #475569);
     line-height: 1.7;
     margin-bottom: 0;
 }
-
-/* Checklist */
 .checklist {
     background: #FEF3C7;
     border: 1px solid #FCD34D;
     border-radius: 12px;
     padding: 2rem;
 }
-
 .checklist h2 {
     font-family: var(--font-heading, 'Playfair Display', serif);
     font-size: 1.25rem;
@@ -106,13 +92,11 @@
     align-items: center;
     gap: 0.75rem;
 }
-
 .checklist ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
 .checklist li {
     position: relative;
     padding-left: 2rem;
@@ -120,67 +104,12 @@
     color: #78350F;
     line-height: 1.6;
 }
-
 .checklist li::before {
     content: "☐";
     position: absolute;
     left: 0;
     font-size: 1.125rem;
 }
-
-/* Language Tabs */
-.lang-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-
-.lang-tab {
-    padding: 0.5rem 1rem;
-    background: #F1F5F9;
-    border: 1px solid #E2E8F0;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-text, #0F172A);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.lang-tab:hover {
-    background: #E2E8F0;
-}
-
-.lang-tab.active {
-    background: var(--color-primary, #0F172A);
-    color: #fff;
-    border-color: var(--color-primary, #0F172A);
-}
-
-.lang-content {
-    display: none;
-}
-
-.lang-content.active {
-    display: block;
-}
-
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-secondary, #EA580C);
-    font-weight: 600;
-    text-decoration: none;
-    margin-top: 1rem;
-}
-
-.back-link:hover {
-    gap: 0.75rem;
-    text-decoration: none;
-}
-
 .disclaimer-note {
     background: #DBEAFE;
     border: 1px solid #93C5FD;
@@ -190,6 +119,15 @@
     font-size: 0.875rem;
     color: #1E40AF;
 }
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary, #EA580C);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1rem;
+}
 </style>
 {% endblock style %}
 
@@ -197,8 +135,8 @@
 <!-- Hero -->
 <section class="legal-hero">
     <div class="container">
-        <h1>Käufer-Leitfaden / Buyer Guide</h1>
-        <p>Leitfaden für ausländische Immobilienkäufer in Kroatien</p>
+        <h1>{% if language == 'hr' %}Vodič za kupce{% elif language == 'en' %}Buyer Guide{% elif language == 'fr' %}Guide de l'acheteur{% elif language == 'nl' %}Koopgids{% elif language == 'pl' %}Poradnik kupującego{% elif language == 'cz' %}Průvodce kupujícího{% elif language == 'sk' %}Sprievodca kupujúceho{% elif language == 'ru' %}Руководство покупателя{% elif language == 'gr' %}Οδηγός αγοραστή{% elif language == 'sw' %}Köpguide{% elif language == 'no' %}Kjøperguide{% else %}Käufer-Leitfaden{% endif %}</h1>
+        <p>{% if language == 'hr' %}Vodič za strane kupce nekretnina u Hrvatskoj{% elif language == 'en' %}Guide for foreign property buyers in Croatia{% elif language == 'fr' %}Guide pour les acheteurs étrangers en Croatie{% elif language == 'nl' %}Gids voor buitenlandse kopers in Kroatië{% elif language == 'pl' %}Poradnik dla zagranicznych nabywców w Chorwacji{% elif language == 'cz' %}Průvodce pro zahraniční kupce v Chorvatsku{% elif language == 'sk' %}Sprievodca pre zahraničných kupcov v Chorvátsku{% elif language == 'ru' %}Руководство для иностранных покупателей в Хорватии{% elif language == 'gr' %}Οδηγός για ξένους αγοραστές στην Κροατία{% elif language == 'sw' %}Guide för utländska köpare i Kroatien{% elif language == 'no' %}Guide for utenlandske kjøpere i Kroatia{% else %}Leitfaden für ausländische Immobilienkäufer in Kroatien{% endif %}</p>
     </div>
 </section>
 
@@ -207,262 +145,87 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 
-                <!-- Language Tabs -->
-                <div class="lang-tabs">
-                    <button class="lang-tab active" onclick="showLang('de')">Deutsch</button>
-                    <button class="lang-tab" onclick="showLang('en')">English</button>
-                    <button class="lang-tab" onclick="showLang('hr')">Hrvatski</button>
-                </div>
-                
-                <!-- German Content -->
-                <div id="lang-de" class="lang-content active">
-                    <div class="guide-card">
-                        <h2>10 Schritte zum Immobilienkauf in Kroatien</h2>
+                <div class="guide-card">
+                    <h2>{% if language == 'hr' %}10 koraka do kupnje nekretnine u Hrvatskoj{% elif language == 'en' %}10 Steps to Buying Property in Croatia{% elif language == 'fr' %}10 étapes pour acheter en Croatie{% elif language == 'nl' %}10 stappen om te kopen in Kroatië{% elif language == 'pl' %}10 kroków do zakupu w Chorwacji{% elif language == 'cz' %}10 kroků k nákupu v Chorvatsku{% elif language == 'sk' %}10 krokov ku kúpe v Chorvátsku{% elif language == 'ru' %}10 шагов к покупке в Хорватии{% elif language == 'gr' %}10 βήματα για αγορά στην Κροατία{% elif language == 'sw' %}10 steg till köp i Kroatien{% elif language == 'no' %}10 trinn til kjøp i Kroatia{% else %}10 Schritte zum Immobilienkauf in Kroatien{% endif %}</h2>
+                    
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Definirajte cilj{% elif language == 'en' %}Define Your Goal{% elif language == 'fr' %}Définir l'objectif{% elif language == 'nl' %}Doel bepalen{% elif language == 'pl' %}Określ cel{% elif language == 'cz' %}Definujte cíl{% elif language == 'sk' %}Definujte cieľ{% elif language == 'ru' %}Определите цель{% elif language == 'gr' %}Καθορίστε τον στόχο{% elif language == 'sw' %}Definiera mål{% elif language == 'no' %}Definer mål{% else %}Ziel definieren{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Razjasnite namjeravate li nekretninu koristiti kao investiciju, za odmor ili kao luksuznu nekretninu. To utječe na lokaciju, proračun i pravnu strukturu.{% elif language == 'en' %}Clarify whether you intend to use the property as an investment, holiday home, or luxury lifestyle property. This influences location, budget, and legal structuring.{% elif language == 'fr' %}Clarifiez si vous souhaitez utiliser le bien comme investissement, résidence de vacances ou propriété de luxe. Cela influence le lieu, le budget et la structure juridique.{% elif language == 'nl' %}Bepaal of u het pand wilt gebruiken als investering, vakantiehuis of luxe woning. Dit beïnvloedt locatie, budget en juridische structuur.{% elif language == 'pl' %}Wyjaśnij, czy zamierzasz wykorzystać nieruchomość jako inwestycję, dom wakacyjny czy luksusową nieruchomość. To wpływa na lokalizację, budżet i strukturę prawną.{% elif language == 'cz' %}Ujasněte si, zda chcete nemovitost využít jako investici, prázdninový dům nebo luxusní nemovitost. To ovlivňuje lokalitu, rozpočet a právní strukturu.{% elif language == 'sk' %}Ujasnite si, či chcete nehnuteľnosť využiť ako investíciu, prázdninový dom alebo luxusnú nehnuteľnosť. To ovplyvňuje lokalitu, rozpočet a právnu štruktúru.{% elif language == 'ru' %}Определите, будете ли вы использовать недвижимость как инвестицию, дом для отдыха или роскошную недвижимость. Это влияет на местоположение, бюджет и юридическую структуру.{% elif language == 'gr' %}Διευκρινίστε αν σκοπεύετε να χρησιμοποιήσετε το ακίνητο ως επένδυση, εξοχικό ή πολυτελή κατοικία. Αυτό επηρεάζει την τοποθεσία, τον προϋπολογισμό και τη νομική δομή.{% elif language == 'sw' %}Klargör om du tänker använda fastigheten som investering, fritidshus eller lyxbostad. Detta påverkar plats, budget och juridisk struktur.{% elif language == 'no' %}Avklar om du har tenkt å bruke eiendommen som investering, feriehus eller luksusbolig. Dette påvirker beliggenhet, budsjett og juridisk struktur.{% else %}Klären Sie, ob Sie die Immobilie als Investment, Feriendomizil oder Luxus-Lifestyle-Objekt nutzen möchten. Dies beeinflusst Standortwahl, Budget und rechtliche Strukturierung.{% endif %}</p>
+                        </div>
                         
-                        <div class="guide-steps">
-                            <div class="guide-step">
-                                <h3>Ziel definieren</h3>
-                                <p>Klären Sie, ob Sie die Immobilie als Investment, Feriendomizil oder Luxus-Lifestyle-Objekt nutzen möchten. Dies beeinflusst Standortwahl, Budget und rechtliche Strukturierung.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Standort & Mikrolage bewerten</h3>
-                                <p>Berücksichtigen Sie Faktoren wie Infrastruktur, Erreichbarkeit, lokale Dienstleistungen, Meeresnähe, Ausrichtung und zukünftige Entwicklungspläne.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Rechtliche Due Diligence</h3>
-                                <p>Lassen Sie Grundbuch, Belastungen, Zugangswege, Servituten und Eigentumshistorie von einem kroatischen Anwalt prüfen.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Zonierung & Baugenehmigungen</h3>
-                                <p>Prüfen Sie Flächenwidmungsplan, zulässige Nutzung, Baugenehmigung und etwaige Legalisierungsanforderungen.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Vorvertrag & Anzahlung (Kapara)</h3>
-                                <p>Der Vorvertrag sichert das Geschäft ab. Die Kapara (üblicherweise 10%) wird hinterlegt und verfällt bei Rücktritt des Käufers.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Zahlungsabwicklung</h3>
-                                <p>Nutzen Sie sichere Transferwege oder Treuhandkonten. Klären Sie Währungstransfer und Bankverbindungen vorab.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Steuern & Nebenkosten</h3>
-                                <p>Beachten Sie Grunderwerbsteuer (3%) oder Mehrwertsteuer (PDV 25%), Notarkosten, Anwaltsgebühren und Grundbucheintragsgebühren.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Übergabeprotokoll</h3>
-                                <p>Dokumentieren Sie den Zustand bei Übergabe inkl. Zählerstände, vorhandenes Inventar und eventuelle Mängel.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Vermietung (falls geplant)</h3>
-                                <p>Informieren Sie sich über Registrierungs- und Lizenzierungsanforderungen für Kurzzeitvermietung sowie die steuerlichen Pflichten.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Laufende Eigentümerschaft</h3>
-                                <p>Planen Sie Wartung, Versicherung, Hausverwaltung und laufende Compliance-Anforderungen.</p>
-                            </div>
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Procijenite lokaciju{% elif language == 'en' %}Evaluate Location{% elif language == 'fr' %}Évaluer la localisation{% elif language == 'nl' %}Locatie evalueren{% elif language == 'pl' %}Oceń lokalizację{% elif language == 'cz' %}Vyhodnoťte lokalitu{% elif language == 'sk' %}Vyhodnoťte lokalitu{% elif language == 'ru' %}Оцените местоположение{% elif language == 'gr' %}Αξιολογήστε την τοποθεσία{% elif language == 'sw' %}Utvärdera plats{% elif language == 'no' %}Vurder beliggenhet{% else %}Standort bewerten{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Razmotrite infrastrukturu, pristupačnost, lokalne usluge, blizinu mora, orijentaciju i buduće razvojne planove.{% elif language == 'en' %}Consider infrastructure, accessibility, local services, proximity to the sea, orientation, and future development plans.{% elif language == 'fr' %}Considérez l'infrastructure, l'accessibilité, les services locaux, la proximité de la mer, l'orientation et les plans de développement futurs.{% elif language == 'nl' %}Overweeg infrastructuur, bereikbaarheid, lokale diensten, nabijheid van de zee, oriëntatie en toekomstige ontwikkelingsplannen.{% elif language == 'pl' %}Rozważ infrastrukturę, dostępność, lokalne usługi, bliskość morza, orientację i przyszłe plany rozwoju.{% elif language == 'cz' %}Zvažte infrastrukturu, dostupnost, místní služby, blízkost moře, orientaci a budoucí rozvojové plány.{% elif language == 'sk' %}Zvážte infraštruktúru, dostupnosť, miestne služby, blízkosť mora, orientáciu a budúce rozvojové plány.{% elif language == 'ru' %}Рассмотрите инфраструктуру, доступность, местные услуги, близость к морю, ориентацию и будущие планы развития.{% elif language == 'gr' %}Εξετάστε την υποδομή, την προσβασιμότητα, τις τοπικές υπηρεσίες, την εγγύτητα στη θάλασσα, τον προσανατολισμό και τα μελλοντικά σχέδια ανάπτυξης.{% elif language == 'sw' %}Överväg infrastruktur, tillgänglighet, lokala tjänster, närhet till havet, orientering och framtida utvecklingsplaner.{% elif language == 'no' %}Vurder infrastruktur, tilgjengelighet, lokale tjenester, nærhet til havet, orientering og fremtidige utviklingsplaner.{% else %}Berücksichtigen Sie Faktoren wie Infrastruktur, Erreichbarkeit, lokale Dienstleistungen, Meeresnähe, Ausrichtung und zukünftige Entwicklungspläne.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Pravna analiza{% elif language == 'en' %}Legal Due Diligence{% elif language == 'fr' %}Due diligence juridique{% elif language == 'nl' %}Juridisch onderzoek{% elif language == 'pl' %}Analiza prawna{% elif language == 'cz' %}Právní prověrka{% elif language == 'sk' %}Právna previerka{% elif language == 'ru' %}Юридическая проверка{% elif language == 'gr' %}Νομικός έλεγχος{% elif language == 'sw' %}Juridisk granskning{% elif language == 'no' %}Juridisk gjennomgang{% else %}Rechtliche Due Diligence{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Neka hrvatski odvjetnik pregleda zemljišne knjige, terete, pristupna prava, služnosti i povijest vlasništva.{% elif language == 'en' %}Have a Croatian lawyer review land registry, encumbrances, access rights, easements, and ownership history.{% elif language == 'fr' %}Faites examiner par un avocat croate le registre foncier, les charges, les droits d'accès, les servitudes et l'historique de propriété.{% elif language == 'nl' %}Laat een Kroatische advocaat het kadaster, bezwaringen, toegangsrechten, erfdienstbaarheden en eigendomsgeschiedenis controleren.{% elif language == 'pl' %}Poproś chorwackiego prawnika o sprawdzenie księgi wieczystej, obciążeń, praw dostępu, służebności i historii własności.{% elif language == 'cz' %}Nechte chorvatského právníka zkontrolovat katastr, břemena, přístupová práva, věcná břemena a historii vlastnictví.{% elif language == 'sk' %}Nechajte chorvátskeho právnika skontrolovať kataster, ťarchy, prístupové práva, vecné bremená a históriu vlastníctva.{% elif language == 'ru' %}Попросите хорватского юриста проверить земельный реестр, обременения, права доступа, сервитуты и историю владения.{% elif language == 'gr' %}Ζητήστε από Κροάτη δικηγόρο να ελέγξει το κτηματολόγιο, τα βάρη, τα δικαιώματα πρόσβασης, τις δουλείες και το ιστορικό ιδιοκτησίας.{% elif language == 'sw' %}Låt en kroatisk advokat granska fastighetsregistret, inteckningar, tillträdesrättigheter, servitut och ägarhistorik.{% elif language == 'no' %}La en kroatisk advokat gjennomgå grunnboken, heftelser, adgangsrettigheter, servitutter og eierhistorikk.{% else %}Lassen Sie Grundbuch, Belastungen, Zugangswege, Servituten und Eigentumshistorie von einem kroatischen Anwalt prüfen.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Zoniranje i dozvole{% elif language == 'en' %}Zoning & Permits{% elif language == 'fr' %}Zonage et permis{% elif language == 'nl' %}Bestemmingsplan{% elif language == 'pl' %}Zagospodarowanie{% elif language == 'cz' %}Územní plán{% elif language == 'sk' %}Územný plán{% elif language == 'ru' %}Зонирование{% elif language == 'gr' %}Χωροταξία{% elif language == 'sw' %}Zonindelning{% elif language == 'no' %}Reguleringsplan{% else %}Zonierung & Baugenehmigungen{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Provjerite prostorni plan, dopuštenu uporabu, status građevinske dozvole i eventualne zahtjeve za legalizaciju.{% elif language == 'en' %}Verify zoning plan, permitted use, building permit status, and any legalization requirements.{% elif language == 'fr' %}Vérifiez le plan de zonage, l'utilisation permise, le statut du permis de construire et les exigences de légalisation.{% elif language == 'nl' %}Controleer het bestemmingsplan, toegestaan gebruik, bouwvergunningsstatus en legalisatievereisten.{% elif language == 'pl' %}Sprawdź plan zagospodarowania, dozwolone użytkowanie, status pozwolenia na budowę i wymagania legalizacyjne.{% elif language == 'cz' %}Ověřte územní plán, povolené využití, stav stavebního povolení a požadavky na legalizaci.{% elif language == 'sk' %}Overte územný plán, povolené využitie, stav stavebného povolenia a požiadavky na legalizáciu.{% elif language == 'ru' %}Проверьте план зонирования, разрешённое использование, статус разрешения на строительство и требования легализации.{% elif language == 'gr' %}Επαληθεύστε το χωροταξικό σχέδιο, την επιτρεπόμενη χρήση, την κατάσταση της οικοδομικής άδειας και τις απαιτήσεις νομιμοποίησης.{% elif language == 'sw' %}Verifiera zonindelningsplan, tillåten användning, bygglovsstatus och legaliseringskrav.{% elif language == 'no' %}Verifiser reguleringsplan, tillatt bruk, byggetillatelsestatus og legaliseringskrav.{% else %}Prüfen Sie Flächenwidmungsplan, zulässige Nutzung, Baugenehmigung und etwaige Legalisierungsanforderungen.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Predugovor i kapara{% elif language == 'en' %}Pre-contract & Deposit{% elif language == 'fr' %}Pré-contrat et acompte{% elif language == 'nl' %}Voorcontract{% elif language == 'pl' %}Umowa przedwstępna{% elif language == 'cz' %}Smlouva o smlouvě{% elif language == 'sk' %}Zmluva o zmluve{% elif language == 'ru' %}Предварительный договор{% elif language == 'gr' %}Προσύμφωνο{% elif language == 'sw' %}Förkontrakt{% elif language == 'no' %}Forhåndskontrakt{% else %}Vorvertrag & Anzahlung{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Predugovor osigurava posao. Kapara (obično 10%) se polaže i gubi ako se kupac povuče.{% elif language == 'en' %}The pre-contract secures the deal. The deposit (typically 10%) is forfeited if the buyer withdraws.{% elif language == 'fr' %}Le pré-contrat sécurise l'accord. L'acompte (généralement 10%) est perdu si l'acheteur se retire.{% elif language == 'nl' %}Het voorcontract beveiligt de deal. De aanbetaling (meestal 10%) vervalt als de koper zich terugtrekt.{% elif language == 'pl' %}Umowa przedwstępna zabezpiecza transakcję. Zaliczka (zwykle 10%) przepada w przypadku wycofania się kupującego.{% elif language == 'cz' %}Smlouva o smlouvě zajišťuje obchod. Záloha (obvykle 10%) propadá, pokud se kupující stáhne.{% elif language == 'sk' %}Zmluva o zmluve zabezpečuje obchod. Záloha (zvyčajne 10%) prepadá, ak sa kupujúci stiahne.{% elif language == 'ru' %}Предварительный договор закрепляет сделку. Залог (обычно 10%) утрачивается при отказе покупателя.{% elif language == 'gr' %}Το προσύμφωνο εξασφαλίζει τη συμφωνία. Η προκαταβολή (συνήθως 10%) χάνεται αν ο αγοραστής αποσυρθεί.{% elif language == 'sw' %}Förkontraktet säkrar affären. Handpenningen (vanligtvis 10%) förverkas om köparen drar sig ur.{% elif language == 'no' %}Forhåndskontrakten sikrer avtalen. Depositumet (vanligvis 10%) tapes hvis kjøperen trekker seg.{% else %}Der Vorvertrag sichert das Geschäft ab. Die Kapara (üblicherweise 10%) wird hinterlegt und verfällt bei Rücktritt des Käufers.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Tijek plaćanja{% elif language == 'en' %}Payment Flow{% elif language == 'fr' %}Flux de paiement{% elif language == 'nl' %}Betalingsflow{% elif language == 'pl' %}Przepływ płatności{% elif language == 'cz' %}Tok platby{% elif language == 'sk' %}Tok platby{% elif language == 'ru' %}Порядок оплаты{% elif language == 'gr' %}Ροή πληρωμής{% elif language == 'sw' %}Betalningsflöde{% elif language == 'no' %}Betalingsflyt{% else %}Zahlungsabwicklung{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Koristite sigurne metode prijenosa ili escrow račune. Unaprijed razjasnite deviznu razmjenu i bankovne aranžmane.{% elif language == 'en' %}Use secure transfer methods or escrow accounts. Clarify currency exchange and banking arrangements in advance.{% elif language == 'fr' %}Utilisez des méthodes de transfert sécurisées ou des comptes séquestres. Clarifiez le change de devises et les arrangements bancaires à l'avance.{% elif language == 'nl' %}Gebruik veilige overdrachtsmethoden of escrow-rekeningen. Verduidelijk valutawissel en bankafspraken vooraf.{% elif language == 'pl' %}Korzystaj z bezpiecznych metod transferu lub rachunków powierniczych. Wyjaśnij wcześniej wymianę walut i ustalenia bankowe.{% elif language == 'cz' %}Používejte bezpečné metody převodu nebo escrow účty. Předem si vyjasněte směnu měn a bankovní uspořádání.{% elif language == 'sk' %}Používajte bezpečné metódy prevodu alebo escrow účty. Vopred si vyjasnite výmenu mien a bankové usporiadanie.{% elif language == 'ru' %}Используйте безопасные методы перевода или эскроу-счета. Заранее уточните обмен валюты и банковские договорённости.{% elif language == 'gr' %}Χρησιμοποιήστε ασφαλείς μεθόδους μεταφοράς ή λογαριασμούς μεσεγγύησης. Διευκρινίστε εκ των προτέρων τη συναλλαγή συναλλάγματος και τις τραπεζικές ρυθμίσεις.{% elif language == 'sw' %}Använd säkra överföringsmetoder eller escrow-konton. Klargör valutaväxling och bankarrangemang i förväg.{% elif language == 'no' %}Bruk sikre overføringsmetoder eller escrow-kontoer. Avklar valutaveksling og bankordninger på forhånd.{% else %}Nutzen Sie sichere Transferwege oder Treuhandkonten. Klären Sie Währungstransfer und Bankverbindungen vorab.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Porezi i troškovi{% elif language == 'en' %}Taxes & Costs{% elif language == 'fr' %}Taxes et frais{% elif language == 'nl' %}Belastingen{% elif language == 'pl' %}Podatki{% elif language == 'cz' %}Daně{% elif language == 'sk' %}Dane{% elif language == 'ru' %}Налоги{% elif language == 'gr' %}Φόροι{% elif language == 'sw' %}Skatter{% elif language == 'no' %}Skatter{% else %}Steuern & Nebenkosten{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Računajte s porezom na promet (3%) ili PDV-om (25%), javnobilježničkim pristojbama, odvjetničkim naknadama i pristojbama za upis.{% elif language == 'en' %}Account for transfer tax (3%) or VAT (25%), notary fees, legal fees, and land registry fees.{% elif language == 'fr' %}Prévoyez la taxe de transfert (3%) ou TVA (25%), les frais de notaire, d'avocat et d'enregistrement.{% elif language == 'nl' %}Reken op overdrachtsbelasting (3%) of BTW (25%), notariskosten, juridische kosten en kadasterkosten.{% elif language == 'pl' %}Uwzględnij podatek od przeniesienia (3%) lub VAT (25%), opłaty notarialne, prawne i za wpis do rejestru.{% elif language == 'cz' %}Počítejte s daní z převodu (3%) nebo DPH (25%), notářskými poplatky, právními poplatky a poplatky za zápis.{% elif language == 'sk' %}Počítajte s daňou z prevodu (3%) alebo DPH (25%), notárskymi poplatkami, právnymi poplatkami a poplatkami za zápis.{% elif language == 'ru' %}Учитывайте налог на передачу (3%) или НДС (25%), нотариальные сборы, юридические сборы и сборы за регистрацию.{% elif language == 'gr' %}Υπολογίστε φόρο μεταβίβασης (3%) ή ΦΠΑ (25%), συμβολαιογραφικά τέλη, δικηγορικές αμοιβές και τέλη κτηματολογίου.{% elif language == 'sw' %}Räkna med överlåtelseskatt (3%) eller moms (25%), notarieavgifter, juridiska avgifter och lagfartsavgifter.{% elif language == 'no' %}Regn med overføringsskatt (3%) eller mva (25%), notargebyrer, advokatkostnader og tinglysingsgebyrer.{% else %}Beachten Sie Grunderwerbsteuer (3%) oder Mehrwertsteuer (25%), Notarkosten, Anwaltsgebühren und Grundbucheintragsgebühren.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Primopredaja{% elif language == 'en' %}Handover{% elif language == 'fr' %}Remise{% elif language == 'nl' %}Overdracht{% elif language == 'pl' %}Przekazanie{% elif language == 'cz' %}Předání{% elif language == 'sk' %}Odovzdanie{% elif language == 'ru' %}Передача{% elif language == 'gr' %}Παράδοση{% elif language == 'sw' %}Överlämning{% elif language == 'no' %}Overlevering{% else %}Übergabeprotokoll{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Dokumentirajte stanje pri primopredaji uključujući očitanja brojila, postojeći inventar i eventualne nedostatke.{% elif language == 'en' %}Document the condition at handover including meter readings, existing inventory, and any defects.{% elif language == 'fr' %}Documentez l'état à la remise, y compris les relevés de compteurs, l'inventaire existant et les défauts éventuels.{% elif language == 'nl' %}Documenteer de staat bij overdracht inclusief meterstanden, bestaande inventaris en eventuele gebreken.{% elif language == 'pl' %}Udokumentuj stan przy przekazaniu, w tym odczyty liczników, istniejący inwentarz i ewentualne wady.{% elif language == 'cz' %}Zdokumentujte stav při předání včetně odečtů měřidel, stávajícího inventáře a případných vad.{% elif language == 'sk' %}Zdokumentujte stav pri odovzdaní vrátane odčítania meračov, existujúceho inventára a prípadných nedostatkov.{% elif language == 'ru' %}Задокументируйте состояние при передаче, включая показания счётчиков, имеющийся инвентарь и любые дефекты.{% elif language == 'gr' %}Τεκμηριώστε την κατάσταση κατά την παράδοση, συμπεριλαμβανομένων των ενδείξεων μετρητών, του υπάρχοντος εξοπλισμού και τυχόν ελαττωμάτων.{% elif language == 'sw' %}Dokumentera skicket vid överlämning inklusive mätaravläsningar, befintligt inventarium och eventuella defekter.{% elif language == 'no' %}Dokumenter tilstanden ved overlevering inkludert måleravlesninger, eksisterende inventar og eventuelle mangler.{% else %}Dokumentieren Sie den Zustand bei Übergabe inkl. Zählerstände, vorhandenes Inventar und eventuelle Mängel.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Najam{% elif language == 'en' %}Rental{% elif language == 'fr' %}Location{% elif language == 'nl' %}Verhuur{% elif language == 'pl' %}Wynajem{% elif language == 'cz' %}Pronájem{% elif language == 'sk' %}Prenájom{% elif language == 'ru' %}Аренда{% elif language == 'gr' %}Ενοικίαση{% elif language == 'sw' %}Uthyrning{% elif language == 'no' %}Utleie{% else %}Vermietung{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Informirajte se o zahtjevima za registraciju i licenciranje kratkoročnog najma te o poreznim obvezama.{% elif language == 'en' %}Learn about registration and licensing requirements for short-term rentals and tax obligations.{% elif language == 'fr' %}Informez-vous sur les exigences d'enregistrement et de licence pour les locations courte durée et les obligations fiscales.{% elif language == 'nl' %}Informeer over registratie- en vergunningsvereisten voor korte termijn verhuur en belastingverplichtingen.{% elif language == 'pl' %}Dowiedz się o wymaganiach rejestracyjnych i licencyjnych dla wynajmu krótkoterminowego oraz obowiązkach podatkowych.{% elif language == 'cz' %}Informujte se o požadavcích na registraci a licencování krátkodobého pronájmu a daňových povinnostech.{% elif language == 'sk' %}Informujte sa o požiadavkách na registráciu a licencovanie krátkodobého prenájmu a daňových povinnostiach.{% elif language == 'ru' %}Узнайте о требованиях к регистрации и лицензированию краткосрочной аренды и налоговых обязательствах.{% elif language == 'gr' %}Ενημερωθείτε για τις απαιτήσεις εγγραφής και αδειοδότησης για βραχυχρόνιες μισθώσεις και τις φορολογικές υποχρεώσεις.{% elif language == 'sw' %}Lär dig om registrerings- och licenskrav för korttidsuthyrning och skatteförpliktelser.{% elif language == 'no' %}Lær om registrerings- og lisenskrav for korttidsutleie og skatteplikter.{% else %}Informieren Sie sich über Registrierungs- und Lizenzierungsanforderungen für Kurzzeitvermietung sowie die steuerlichen Pflichten.{% endif %}</p>
+                        </div>
+                        
+                        <div class="guide-step">
+                            <h3>{% if language == 'hr' %}Tekuće vlasništvo{% elif language == 'en' %}Ongoing Ownership{% elif language == 'fr' %}Propriété continue{% elif language == 'nl' %}Lopend eigendom{% elif language == 'pl' %}Bieżąca własność{% elif language == 'cz' %}Průběžné vlastnictví{% elif language == 'sk' %}Priebežné vlastníctvo{% elif language == 'ru' %}Текущее владение{% elif language == 'gr' %}Συνεχής ιδιοκτησία{% elif language == 'sw' %}Löpande ägande{% elif language == 'no' %}Løpende eierskap{% else %}Laufende Eigentümerschaft{% endif %}</h3>
+                            <p>{% if language == 'hr' %}Planirajte održavanje, osiguranje, upravljanje imovinom i tekuće zahtjeve usklađenosti.{% elif language == 'en' %}Plan for maintenance, insurance, property management, and ongoing compliance requirements.{% elif language == 'fr' %}Planifiez l'entretien, l'assurance, la gestion immobilière et les exigences de conformité continues.{% elif language == 'nl' %}Plan voor onderhoud, verzekering, vastgoedbeheer en doorlopende nalevingsvereisten.{% elif language == 'pl' %}Zaplanuj konserwację, ubezpieczenie, zarządzanie nieruchomością i bieżące wymagania dotyczące zgodności.{% elif language == 'cz' %}Plánujte údržbu, pojištění, správu nemovitostí a průběžné požadavky na dodržování předpisů.{% elif language == 'sk' %}Plánujte údržbu, poistenie, správu nehnuteľností a priebežné požiadavky na súlad.{% elif language == 'ru' %}Планируйте техническое обслуживание, страхование, управление недвижимостью и текущие требования соответствия.{% elif language == 'gr' %}Προγραμματίστε συντήρηση, ασφάλιση, διαχείριση ακινήτων και συνεχείς απαιτήσεις συμμόρφωσης.{% elif language == 'sw' %}Planera för underhåll, försäkring, fastighetsförvaltning och löpande efterlevnadskrav.{% elif language == 'no' %}Planlegg for vedlikehold, forsikring, eiendomsforvaltning og løpende samsvarskrav.{% else %}Planen Sie Wartung, Versicherung, Hausverwaltung und laufende Compliance-Anforderungen.{% endif %}</p>
                         </div>
                     </div>
-                    
-                    <!-- Checklist -->
-                    <div class="checklist">
-                        <h2><i class="fa fa-exclamation-triangle"></i> Kroatien Risiko-Checkliste</h2>
-                        <ul>
-                            <li>Grundbucheintrag stimmt mit Verkäufer überein</li>
-                            <li>Belastungen (Hypotheken/Servituten) geklärt</li>
-                            <li>Flächenwidmungsplan und zulässige Nutzung verifiziert</li>
-                            <li>Baugenehmigung/Legalität bestätigt (falls zutreffend)</li>
-                            <li>Zugangswege und Wegerechte geklärt</li>
-                            <li>Kurzzeitvermietungslizenz-Anforderungen geprüft</li>
-                            <li>Steuermodell geklärt (keine Beratung)</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="disclaimer-note">
-                        <i class="fa fa-info-circle"></i>
-                        <strong>Hinweis:</strong> Dieser Leitfaden dient nur zur Orientierung und ersetzt keine professionelle Rechts-, Steuer- oder Anlageberatung.
-                    </div>
                 </div>
                 
-                <!-- English Content -->
-                <div id="lang-en" class="lang-content">
-                    <div class="guide-card">
-                        <h2>10 Steps to Buying Property in Croatia</h2>
-                        
-                        <div class="guide-steps">
-                            <div class="guide-step">
-                                <h3>Define Your Goal</h3>
-                                <p>Clarify whether you intend to use the property as an investment, holiday home, or luxury lifestyle property. This influences location, budget, and legal structuring.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Evaluate Location & Micro-location</h3>
-                                <p>Consider infrastructure, accessibility, local services, proximity to the sea, orientation, and future development plans.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Legal Due Diligence</h3>
-                                <p>Have a Croatian lawyer review land registry, encumbrances, access rights, easements, and ownership history.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Zoning & Building Permits</h3>
-                                <p>Verify zoning plan, permitted use, building permit status, and any legalization requirements.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Pre-contract & Deposit (Kapara)</h3>
-                                <p>The pre-contract secures the deal. The Kapara (typically 10%) is deposited and forfeited if the buyer withdraws.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Payment Flow</h3>
-                                <p>Use secure transfer methods or escrow accounts. Clarify currency exchange and banking arrangements in advance.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Taxes & Acquisition Costs</h3>
-                                <p>Account for transfer tax (3%) or VAT (PDV 25%), notary fees, legal fees, and land registry fees.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Handover Protocol</h3>
-                                <p>Document the condition at handover including meter readings, existing inventory, and any defects.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Rental (if applicable)</h3>
-                                <p>Learn about registration and licensing requirements for short-term rentals and tax obligations.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Ongoing Ownership</h3>
-                                <p>Plan for maintenance, insurance, property management, and ongoing compliance requirements.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Checklist -->
-                    <div class="checklist">
-                        <h2><i class="fa fa-exclamation-triangle"></i> Croatia Risk Checklist</h2>
-                        <ul>
-                            <li>Land registry entry matches seller</li>
-                            <li>Encumbrances (mortgages/easements) clarified</li>
-                            <li>Zoning plan and permitted use verified</li>
-                            <li>Building permit/legality confirmed (where applicable)</li>
-                            <li>Access/right-of-way clarified</li>
-                            <li>Short-term rental licensing requirements checked</li>
-                            <li>Tax model clarified (non-advisory)</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="disclaimer-note">
-                        <i class="fa fa-info-circle"></i>
-                        <strong>Note:</strong> This guide is for orientation purposes only and does not replace professional legal, tax, or investment advice.
-                    </div>
+                <!-- Checklist -->
+                <div class="checklist">
+                    <h2><i class="fa fa-exclamation-triangle"></i> {% if language == 'hr' %}Kontrolna lista rizika{% elif language == 'en' %}Risk Checklist{% elif language == 'fr' %}Liste de contrôle des risques{% elif language == 'nl' %}Risicochecklist{% elif language == 'pl' %}Lista kontrolna ryzyka{% elif language == 'cz' %}Kontrolní seznam rizik{% elif language == 'sk' %}Kontrolný zoznam rizík{% elif language == 'ru' %}Контрольный список рисков{% elif language == 'gr' %}Λίστα ελέγχου κινδύνων{% elif language == 'sw' %}Riskchecklista{% elif language == 'no' %}Risikosjekkliste{% else %}Risiko-Checkliste{% endif %}</h2>
+                    <ul>
+                        <li>{% if language == 'hr' %}Upis u zemljišnu knjigu odgovara prodavatelju{% elif language == 'en' %}Land registry entry matches seller{% elif language == 'fr' %}L'inscription au registre foncier correspond au vendeur{% elif language == 'nl' %}Kadasterinschrijving komt overeen met verkoper{% elif language == 'pl' %}Wpis do księgi wieczystej odpowiada sprzedającemu{% elif language == 'cz' %}Zápis v katastru odpovídá prodávajícímu{% elif language == 'sk' %}Zápis v katastri zodpovedá predávajúcemu{% elif language == 'ru' %}Запись в реестре соответствует продавцу{% elif language == 'gr' %}Η εγγραφή κτηματολογίου αντιστοιχεί στον πωλητή{% elif language == 'sw' %}Fastighetsregisterpost matchar säljaren{% elif language == 'no' %}Grunnbokoppføring stemmer med selger{% else %}Grundbucheintrag stimmt mit Verkäufer überein{% endif %}</li>
+                        <li>{% if language == 'hr' %}Tereti razjašnjeni{% elif language == 'en' %}Encumbrances clarified{% elif language == 'fr' %}Charges clarifiées{% elif language == 'nl' %}Bezwaringen verduidelijkt{% elif language == 'pl' %}Obciążenia wyjaśnione{% elif language == 'cz' %}Břemena vyjasněna{% elif language == 'sk' %}Ťarchy vyjasnené{% elif language == 'ru' %}Обременения выяснены{% elif language == 'gr' %}Βάρη διευκρινισμένα{% elif language == 'sw' %}Belastningar klarlagda{% elif language == 'no' %}Heftelser avklart{% else %}Belastungen geklärt{% endif %}</li>
+                        <li>{% if language == 'hr' %}Prostorni plan provjeren{% elif language == 'en' %}Zoning plan verified{% elif language == 'fr' %}Plan de zonage vérifié{% elif language == 'nl' %}Bestemmingsplan geverifieerd{% elif language == 'pl' %}Plan zagospodarowania zweryfikowany{% elif language == 'cz' %}Územní plán ověřen{% elif language == 'sk' %}Územný plán overený{% elif language == 'ru' %}План зонирования проверен{% elif language == 'gr' %}Χωροταξικό σχέδιο επαληθευμένο{% elif language == 'sw' %}Zonindelningsplan verifierad{% elif language == 'no' %}Reguleringsplan verifisert{% else %}Flächenwidmungsplan verifiziert{% endif %}</li>
+                        <li>{% if language == 'hr' %}Građevinska dozvola potvrđena{% elif language == 'en' %}Building permit confirmed{% elif language == 'fr' %}Permis de construire confirmé{% elif language == 'nl' %}Bouwvergunning bevestigd{% elif language == 'pl' %}Pozwolenie na budowę potwierdzone{% elif language == 'cz' %}Stavební povolení potvrzeno{% elif language == 'sk' %}Stavebné povolenie potvrdené{% elif language == 'ru' %}Разрешение на строительство подтверждено{% elif language == 'gr' %}Οικοδομική άδεια επιβεβαιωμένη{% elif language == 'sw' %}Bygglov bekräftat{% elif language == 'no' %}Byggetillatelse bekreftet{% else %}Baugenehmigung bestätigt{% endif %}</li>
+                        <li>{% if language == 'hr' %}Pristup razjašnjen{% elif language == 'en' %}Access clarified{% elif language == 'fr' %}Accès clarifié{% elif language == 'nl' %}Toegang verduidelijkt{% elif language == 'pl' %}Dostęp wyjaśniony{% elif language == 'cz' %}Přístup vyjasněn{% elif language == 'sk' %}Prístup vyjasnený{% elif language == 'ru' %}Доступ уточнён{% elif language == 'gr' %}Πρόσβαση διευκρινισμένη{% elif language == 'sw' %}Tillträde klarlagt{% elif language == 'no' %}Adgang avklart{% else %}Zugangswege geklärt{% endif %}</li>
+                        <li>{% if language == 'hr' %}Licenciranje najma provjereno{% elif language == 'en' %}Rental licensing checked{% elif language == 'fr' %}Licence de location vérifiée{% elif language == 'nl' %}Verhuurlicentie gecontroleerd{% elif language == 'pl' %}Licencja wynajmu sprawdzona{% elif language == 'cz' %}Licence pronájmu zkontrolována{% elif language == 'sk' %}Licencia prenájmu skontrolovaná{% elif language == 'ru' %}Лицензия на аренду проверена{% elif language == 'gr' %}Άδεια ενοικίασης ελεγμένη{% elif language == 'sw' %}Uthyrningslicens kontrollerad{% elif language == 'no' %}Utleielisens kontrollert{% else %}Vermietungslizenz geprüft{% endif %}</li>
+                        <li>{% if language == 'hr' %}Porezni model razjašnjen{% elif language == 'en' %}Tax model clarified{% elif language == 'fr' %}Modèle fiscal clarifié{% elif language == 'nl' %}Belastingmodel verduidelijkt{% elif language == 'pl' %}Model podatkowy wyjaśniony{% elif language == 'cz' %}Daňový model vyjasněn{% elif language == 'sk' %}Daňový model vyjasnený{% elif language == 'ru' %}Налоговая модель уточнена{% elif language == 'gr' %}Φορολογικό μοντέλο διευκρινισμένο{% elif language == 'sw' %}Skattemodell klarlagd{% elif language == 'no' %}Skattemodell avklart{% else %}Steuermodell geklärt{% endif %}</li>
+                    </ul>
                 </div>
                 
-                <!-- Croatian Content -->
-                <div id="lang-hr" class="lang-content">
-                    <div class="guide-card">
-                        <h2>10 koraka do kupnje nekretnine u Hrvatskoj</h2>
-                        
-                        <div class="guide-steps">
-                            <div class="guide-step">
-                                <h3>Definirajte svoj cilj</h3>
-                                <p>Razjasnite namjeravate li nekretninu koristiti kao investiciju, za odmor ili kao luksuznu nekretninu za život. To utječe na lokaciju, proračun i pravnu strukturu.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Procijenite lokaciju i mikrolokaciju</h3>
-                                <p>Razmotrite infrastrukturu, pristupačnost, lokalne usluge, blizinu mora, orijentaciju i buduće razvojne planove.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Pravna dubinska analiza</h3>
-                                <p>Neka hrvatski odvjetnik pregleda zemljišne knjige, terete, pristupna prava, služnosti i povijest vlasništva.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Zoniranje i građevinske dozvole</h3>
-                                <p>Provjerite prostorni plan, dopuštenu uporabu, status građevinske dozvole i eventualne zahtjeve za legalizaciju.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Predugovor i kapara</h3>
-                                <p>Predugovor osigurava posao. Kapara (obično 10%) se polaže i gubi ako se kupac povuče.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Tijek plaćanja</h3>
-                                <p>Koristite sigurne metode prijenosa ili escrow račune. Unaprijed razjasnite deviznu razmjenu i bankovne aranžmane.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Porezi i troškovi stjecanja</h3>
-                                <p>Računajte s porezom na promet (3%) ili PDV-om (25%), javnobilježničkim pristojbama, odvjetničkim naknadama i pristojbama za upis u zemljišne knjige.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Primopredajni zapisnik</h3>
-                                <p>Dokumentirajte stanje pri primopredaji uključujući očitanja brojila, postojeći inventar i eventualne nedostatke.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Najam (ako je primjenjivo)</h3>
-                                <p>Informirajte se o zahtjevima za registraciju i licenciranje kratkoročnog najma te o poreznim obvezama.</p>
-                            </div>
-                            
-                            <div class="guide-step">
-                                <h3>Tekuće vlasništvo</h3>
-                                <p>Planirajte održavanje, osiguranje, upravljanje imovinom i tekuće zahtjeve usklađenosti.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Checklist -->
-                    <div class="checklist">
-                        <h2><i class="fa fa-exclamation-triangle"></i> Kontrolna lista rizika za Hrvatsku</h2>
-                        <ul>
-                            <li>Upis u zemljišnu knjigu odgovara prodavatelju</li>
-                            <li>Tereti (hipoteke/služnosti) razjašnjeni</li>
-                            <li>Prostorni plan i dopuštena uporaba provjereni</li>
-                            <li>Građevinska dozvola/legalnost potvrđena (gdje je primjenjivo)</li>
-                            <li>Pristup/pravo prolaza razjašnjeno</li>
-                            <li>Zahtjevi za licenciranje kratkoročnog najma provjereni</li>
-                            <li>Porezni model razjašnjen (bez savjetovanja)</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="disclaimer-note">
-                        <i class="fa fa-info-circle"></i>
-                        <strong>Napomena:</strong> Ovaj vodič služi samo za orijentaciju i ne zamjenjuje profesionalne pravne, porezne ili investicijske savjete.
-                    </div>
+                <div class="disclaimer-note">
+                    <i class="fa fa-info-circle"></i>
+                    <strong>{% if language == 'hr' %}Napomena{% elif language == 'en' %}Note{% elif language == 'fr' %}Note{% elif language == 'nl' %}Opmerking{% elif language == 'pl' %}Uwaga{% elif language == 'cz' %}Poznámka{% elif language == 'sk' %}Poznámka{% elif language == 'ru' %}Примечание{% elif language == 'gr' %}Σημείωση{% elif language == 'sw' %}Notera{% elif language == 'no' %}Merk{% else %}Hinweis{% endif %}:</strong>
+                    {% if language == 'hr' %}Ovaj vodič služi samo za orijentaciju i ne zamjenjuje profesionalne pravne, porezne ili investicijske savjete.{% elif language == 'en' %}This guide is for orientation purposes only and does not replace professional legal, tax, or investment advice.{% elif language == 'fr' %}Ce guide est uniquement à titre indicatif et ne remplace pas les conseils juridiques, fiscaux ou d'investissement professionnels.{% elif language == 'nl' %}Deze gids is alleen ter oriëntatie en vervangt geen professioneel juridisch, fiscaal of beleggingsadvies.{% elif language == 'pl' %}Ten poradnik służy jedynie orientacji i nie zastępuje profesjonalnej porady prawnej, podatkowej lub inwestycyjnej.{% elif language == 'cz' %}Tento průvodce slouží pouze k orientaci a nenahrazuje profesionální právní, daňové nebo investiční poradenství.{% elif language == 'sk' %}Tento sprievodca slúži len na orientáciu a nenahrádza profesionálne právne, daňové alebo investičné poradenstvo.{% elif language == 'ru' %}Это руководство носит исключительно ориентировочный характер и не заменяет профессиональные юридические, налоговые или инвестиционные консультации.{% elif language == 'gr' %}Αυτός ο οδηγός είναι μόνο για ενημερωτικούς σκοπούς και δεν αντικαθιστά επαγγελματικές νομικές, φορολογικές ή επενδυτικές συμβουλές.{% elif language == 'sw' %}Denna guide är endast för orienteringssyften och ersätter inte professionell juridisk, skatte- eller investeringsrådgivning.{% elif language == 'no' %}Denne guiden er kun for orienteringsformål og erstatter ikke profesjonell juridisk, skatte- eller investeringsrådgivning.{% else %}Dieser Leitfaden dient nur zur Orientierung und ersetzt keine professionelle Rechts-, Steuer- oder Anlageberatung.{% endif %}
                 </div>
                 
-                <a href="{{ glossary_base_url }}" class="back-link">
-                    <i class="fa fa-arrow-left"></i> {{ t.back_to_glossary }}
+                <a href="/{{ language }}/{{ country_name }}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% else %}glossar{% endif %}/" class="back-link">
+                    <i class="fa fa-arrow-left"></i> {% if language == 'hr' %}Natrag na pojmovnik{% elif language == 'en' %}Back to glossary{% elif language == 'fr' %}Retour au glossaire{% elif language == 'nl' %}Terug naar woordenlijst{% elif language == 'pl' %}Powrót do słownika{% elif language == 'cz' %}Zpět na glosář{% elif language == 'sk' %}Späť na slovník{% elif language == 'ru' %}Назад к глоссарию{% elif language == 'gr' %}Επιστροφή στο γλωσσάριο{% elif language == 'sw' %}Tillbaka till ordlistan{% elif language == 'no' %}Tilbake til ordlisten{% else %}Zurück zum Glossar{% endif %}
                 </a>
             </div>
         </div>
     </div>
 </section>
-
-<script>
-function showLang(lang) {
-    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.lang-tab').forEach(el => el.classList.remove('active'));
-    
-    document.getElementById('lang-' + lang).classList.add('active');
-    event.target.classList.add('active');
-}
-</script>
 {% endblock body %}
