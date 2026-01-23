@@ -115,5 +115,68 @@ def get_my_translations(request):
     context['url_lawyer'] = CATEGORY_URLS['lawyer'].get(user_language, 'rechtsanwaelte')
     context['url_tax_advisor'] = CATEGORY_URLS['tax_advisor'].get(user_language, 'steuerberater')
     context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
+    
+    # === SPRACH-URLs für Sprachumschalter ===
+    # Generiere für die aktuelle Seite die korrekten URLs in allen Sprachen
+    context['language_urls_json'] = get_language_urls_for_path(current_path, user_language)
 
     return context
+
+
+def get_language_urls_for_path(current_path: str, current_lang: str) -> str:
+    """
+    Generiert ein JSON-Objekt mit den korrekten URLs für alle Sprachen.
+    
+    Unterstützte Seiten-Typen:
+    - Glossar-Index: /{lang}/{country}/{glossar}/
+    - Glossar-Detail: /{lang}/{country}/{glossar}/{slug}/
+    - Buyer-Guide: /{lang}/{country}/{glossar}/buyer-guide/
+    - Disclaimer: /{lang}/{country}/{glossar}/disclaimer/
+    - Investors: /{lang}/{country}/{glossar}/investors/
+    - Holiday: /{lang}/{country}/{glossar}/holiday-properties/
+    - Luxury: /{lang}/{country}/{glossar}/luxury-real-estate/
+    - Sitemap: /sitemap/
+    - Statische Seiten ohne Sprachpräfix: /contact/, /about/, etc.
+    """
+    urls = {}
+    
+    # Pattern für Glossar-Seiten erkennen
+    # z.B. /ge/kroatien/glossar/buyer-guide/
+    glossary_pattern = re.compile(
+        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(GLOSSARY_URLS.values()) + r')/?(.*)$'
+    )
+    
+    match = glossary_pattern.match(current_path)
+    
+    if match:
+        # Es ist eine Glossar-bezogene Seite
+        source_lang = match.group(1)
+        source_country = match.group(2)
+        source_glossary_slug = match.group(3)
+        remainder = match.group(4).strip('/')
+        
+        for lang in ALL_LANGUAGES:
+            country = COUNTRY_NAMES.get(lang, 'kroatien')
+            glossary = GLOSSARY_URLS.get(lang, 'glossar')
+            
+            if remainder:
+                # Sub-Seite (buyer-guide, disclaimer, investors, etc.)
+                # Diese haben feste Slugs die nicht übersetzt werden
+                urls[lang] = f"/{lang}/{country}/{glossary}/{remainder}/"
+            else:
+                # Glossar-Index
+                urls[lang] = f"/{lang}/{country}/{glossary}/"
+    
+    elif current_path == '/sitemap/' or current_path == '/sitemap':
+        # Sitemap hat keine Sprachpräfixe - bleibt immer gleich
+        for lang in ALL_LANGUAGES:
+            urls[lang] = '/sitemap/'
+    
+    else:
+        # Statische Seiten oder unbekannte Pfade
+        # Fallback: Sprache in Session setzen, aber auf gleicher Seite bleiben
+        # (für Seiten ohne übersetzte URLs wie /contact/, /about/, etc.)
+        for lang in ALL_LANGUAGES:
+            urls[lang] = current_path if current_path else '/'
+    
+    return json.dumps(urls)
