@@ -185,83 +185,21 @@ def get_all_language_urlpatterns():
         ))
         
         # ========================================
-        # DIENSTLEISTER (nur DE, EN, HR haben Daten)
-        # Aber URLs müssen für alle Sprachen funktionieren
+        # DIENSTLEISTER - Generische Category Route
+        # Funktioniert für alle Sprachen da professional_views
+        # die Kategorie selbst aus CATEGORY_URLS auflöst
         # ========================================
-        
-        # Immobilienmakler
-        realtor_segment = REALTOR_URLS.get(lang_code, "immobilienmakler")
         patterns.append(path(
-            f"{lang_code}/{country_slug}/{realtor_segment}/",
+            f"{lang_code}/{country_slug}/<str:category>/",
             professional_views.professional_list,
-            {"country": country_slug, "category_override": "immobilienmakler"},
-            name=f"realtor-list-{lang_code}",
+            {"country": country_slug},
+            name=f"professional-list-{lang_code}",
         ))
         patterns.append(path(
-            f"{lang_code}/{country_slug}/{realtor_segment}/<str:slug>/",
+            f"{lang_code}/{country_slug}/<str:category>/<str:slug>/",
             professional_views.professional_detail,
-            {"country": country_slug, "category_override": "immobilienmakler"},
-            name=f"realtor-detail-{lang_code}",
-        ))
-        
-        # Bauunternehmen
-        contractor_segment = CONTRACTOR_URLS.get(lang_code, "bauunternehmen")
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{contractor_segment}/",
-            professional_views.professional_list,
-            {"country": country_slug, "category_override": "bauunternehmen"},
-            name=f"contractor-list-{lang_code}",
-        ))
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{contractor_segment}/<str:slug>/",
-            professional_views.professional_detail,
-            {"country": country_slug, "category_override": "bauunternehmen"},
-            name=f"contractor-detail-{lang_code}",
-        ))
-        
-        # Rechtsanwälte
-        lawyer_segment = LAWYER_URLS.get(lang_code, "rechtsanwaelte")
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{lawyer_segment}/",
-            professional_views.professional_list,
-            {"country": country_slug, "category_override": "rechtsanwaelte"},
-            name=f"lawyer-list-{lang_code}",
-        ))
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{lawyer_segment}/<str:slug>/",
-            professional_views.professional_detail,
-            {"country": country_slug, "category_override": "rechtsanwaelte"},
-            name=f"lawyer-detail-{lang_code}",
-        ))
-        
-        # Steuerberater
-        tax_segment = TAX_ADVISOR_URLS.get(lang_code, "steuerberater")
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{tax_segment}/",
-            professional_views.professional_list,
-            {"country": country_slug, "category_override": "steuerberater"},
-            name=f"tax-advisor-list-{lang_code}",
-        ))
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{tax_segment}/<str:slug>/",
-            professional_views.professional_detail,
-            {"country": country_slug, "category_override": "steuerberater"},
-            name=f"tax-advisor-detail-{lang_code}",
-        ))
-        
-        # Architekten
-        architect_segment = ARCHITECT_URLS.get(lang_code, "architekten")
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{architect_segment}/",
-            professional_views.professional_list,
-            {"country": country_slug, "category_override": "architekten"},
-            name=f"architect-list-{lang_code}",
-        ))
-        patterns.append(path(
-            f"{lang_code}/{country_slug}/{architect_segment}/<str:slug>/",
-            professional_views.professional_detail,
-            {"country": country_slug, "category_override": "architekten"},
-            name=f"architect-detail-{lang_code}",
+            {"country": country_slug},
+            name=f"professional-detail-{lang_code}",
         ))
     
     return patterns
