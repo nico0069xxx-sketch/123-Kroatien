@@ -2,13 +2,17 @@
 """
 Generiert mehrsprachige URLs für alle 12 Sprachen.
 
-Dieses Modul generiert URLs für:
-- Dienstleister (alle 5 Kategorien)
-- Partner-Werden Seiten
-- Registrierung
+WICHTIG: Die generischen <str:category>/ URLs müssen NACH dem Glossar
+eingebunden werden, da sie sonst das Glossar überlagern!
 
-WICHTIG: Diese URLs müssen VOR den generischen <str:category>/ URLs
-in main/urls.py eingebunden werden!
+Verwendung in main/urls.py:
+```
+from .all_language_urls import specific_language_urlpatterns, generic_category_urlpatterns
+
+urlpatterns = [
+    # ... statische URLs ...
+] + glossary_urlpatterns + specific_language_urlpatterns + generic_category_urlpatterns
+```
 """
 
 from django.urls import path
@@ -42,9 +46,10 @@ REGISTRATION_URLS = {
 }
 
 
-def get_all_language_urlpatterns():
+def get_specific_language_urlpatterns():
     """
-    Generiert URL-Patterns für alle Sprachen dynamisch.
+    Generiert SPEZIFISCHE URL-Patterns für alle Sprachen.
+    Diese müssen VOR den generischen <str:category>/ URLs stehen.
     """
     patterns = []
     
@@ -90,12 +95,20 @@ def get_all_language_urlpatterns():
             {"country": country_slug},
             name=f"professional-reg-{lang_code}",
         ))
-        
-        # ========================================
-        # DIENSTLEISTER - Generische Category Route
-        # Funktioniert für alle Sprachen da professional_views
-        # die Kategorie selbst aus CATEGORY_URLS auflöst
-        # ========================================
+    
+    return patterns
+
+
+def get_generic_category_urlpatterns():
+    """
+    Generiert GENERISCHE <str:category>/ URL-Patterns für alle Sprachen.
+    Diese MÜSSEN ZULETZT stehen, da sie alles matchen!
+    """
+    patterns = []
+    
+    for lang_code, country_slug in COUNTRY_NAMES.items():
+        # Diese URLs fangen alle /{lang}/{country}/{irgendwas}/ ab
+        # Sie müssen NACH spezifischen URLs (Glossar, Experten-Finder, etc.) stehen
         patterns.append(path(
             f"{lang_code}/{country_slug}/<str:category>/",
             professional_views.professional_list,
@@ -113,4 +126,9 @@ def get_all_language_urlpatterns():
 
 
 # URL-Patterns für Import
-all_language_urlpatterns = get_all_language_urlpatterns()
+specific_language_urlpatterns = get_specific_language_urlpatterns()
+generic_category_urlpatterns = get_generic_category_urlpatterns()
+
+# Für Abwärtskompatibilität (falls jemand all_language_urlpatterns importiert)
+# ACHTUNG: Diese Reihenfolge ist FALSCH wenn Glossar dazwischen soll!
+all_language_urlpatterns = specific_language_urlpatterns + generic_category_urlpatterns
