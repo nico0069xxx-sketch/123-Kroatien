@@ -55,7 +55,30 @@ COUNTRY_NAMES = {
 }
 
 def set_language(request):
-    lang = request.session.get('site_language', 'ge')
+    """
+    Bestimmt die aktuelle Sprache:
+    1. Zuerst aus der URL (z.B. /en/about/ -> 'en')
+    2. Dann aus der Session
+    3. Fallback: 'ge' (Deutsch)
+    """
+    # Versuche Sprache aus URL zu extrahieren
+    path = request.path
+    url_lang = None
+    
+    # Pattern: /{lang}/... wobei lang ein 2-Buchstaben Code ist
+    if len(path) >= 4 and path[0] == '/' and path[3] == '/':
+        potential_lang = path[1:3]
+        if potential_lang in ALL_LANGUAGES:
+            url_lang = potential_lang
+    
+    # Sprache bestimmen: URL > Session > Default
+    if url_lang:
+        lang = url_lang
+        # Session aktualisieren, damit sie konsistent bleibt
+        request.session['site_language'] = lang
+    else:
+        lang = request.session.get('site_language', 'ge')
+    
     activate(lang)
     return {'language': lang}
 
