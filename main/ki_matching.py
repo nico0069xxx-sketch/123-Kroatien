@@ -110,7 +110,7 @@ def find_matching_professionals(kriterien, max_results=5):
     # Nach Sprache filtern (optional)
     sprache = kriterien.get('sprache', 'unklar')
     if sprache and sprache != 'unklar':
-        queryset = queryset.filter(languages_spoken__icontains=sprache)
+        queryset = queryset.filter(spoken_languages__icontains=sprache)
     
     return queryset[:max_results]
 
@@ -143,11 +143,11 @@ def get_professional_matches(anfrage, language='ge'):
             'type': p.get_professional_type_display(),
             'city': p.city,
             'region': p.get_region_display(),
-            'languages': p.languages_spoken,
+            'languages': p.spoken_languages,
             'website': p.website or '',
             'phone': p.phone or '',
             'email': p.email,
-            'logo_url': p.logo.url if p.logo else None,
+            'logo_url': p.company_logo.url if p.company_logo else None,
         })
     
     return {

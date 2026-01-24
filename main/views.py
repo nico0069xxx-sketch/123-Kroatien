@@ -194,7 +194,6 @@ def imprint(request):
 def data_protection(request):
     return render(request, 'main/data-protection.html')
 
-@login_required(login_url='main:login_required')
 def agb(request):
     return render(request, 'main/agb.html')
 
@@ -202,7 +201,6 @@ def agb(request):
 def cancellation_policy(request):
     return render(request, 'main/cancellation-policy.html')
 
-@login_required(login_url='main:login_required')
 def sitemap(request):
     return render(request, 'main/sitemap.html')
 
@@ -414,9 +412,24 @@ def delete_property(request, id):
     messages.success(request, "Property delete sucsessfully")
     return redirect('main:profile')
 
-@login_required(login_url='main:login_required')
+
 def faq(request):
-    return render(request, 'main/faq.html')
+    import json
+    import os
+    lang = request.session.get("site_language", "ge")
+    faq_file = f"main/faq_data_{lang}.json"
+    if not os.path.exists(faq_file):
+        faq_file = "main/faq_data.json"
+    try:
+        with open(faq_file, "r", encoding="utf-8") as f:
+            faqs = json.load(f)
+    except:
+        faqs = []
+    faq_titles = {"ge": "Häufig gestellte Fragen", "en": "Frequently Asked Questions", "hr": "Često postavljana pitanja", "fr": "Questions fréquentes", "nl": "Veelgestelde vragen", "pl": "Często zadawane pytania", "cz": "Často kladené dotazy", "sk": "Často kladené otázky", "ru": "Часто задаваемые вопросы", "gr": "Συχνές ερωτήσεις", "sw": "Vanliga frågor", "no": "Ofte stilte spørsmål"}
+    faq_subtitles = {"ge": "Häufig gestellte Fragen rund um Immobilien in Kroatien", "en": "Frequently asked questions about real estate in Croatia", "hr": "Često postavljana pitanja o nekretninama u Hrvatskoj", "fr": "Questions fréquentes sur l'immobilier en Croatie", "nl": "Veelgestelde vragen over onroerend goed in Kroatië", "pl": "Często zadawane pytania dotyczące nieruchomości w Chorwacji", "cz": "Často kladené dotazy o nemovitostech v Chorvatsku", "sk": "Často kladené otázky o nehnuteľnostiach v Chorvátsku", "ru": "Часто задаваемые вопросы о недвижимости в Хорватии", "gr": "Συχνές ερωτήσεις για ακίνητα στην Κροατία", "sw": "Vanliga frågor om fastigheter i Kroatien", "no": "Ofte stilte spørsmål om eiendom i Kroatia"}
+
+    return render(request, "main/faq.html", {"faqs": faqs, "faq_title": faq_titles.get(lang, "FAQ"), "faq_subtitle": faq_subtitles.get(lang, ""), "country": "kroatien", "lang": lang})
+
 
 @login_required(login_url='main:login_required')
 def owner(request):
@@ -659,12 +672,70 @@ def loginRequired(request):
 
 
 def set_language_from_url(request, user_language):
+    from .glossary_models import COUNTRY_NAMES, GLOSSARY_URLS
+    import re
+    
     request.session['site_language'] = user_language
     translation.activate(user_language)
+    
+    # Priorität 1: next Parameter (vom Sprachumschalter mit korrekter URL)
+    next_url = request.GET.get('next')
+    if next_url:
+        return HttpResponseRedirect(next_url)
+    
+    
+    # Priorität 2: HTTP_REFERER mit URL-Übersetzung
     referer = request.META.get('HTTP_REFERER', '/')
-    # Replace language prefix in URL
-    import re
-    new_url = re.sub(r'^(https?://[^/]+)?/(ge|en|hr|fr|gr|pl|cz|ru|sw|nb|sl|nl)/', f'/{user_language}/', referer)
+    
+    # Parse the referer URL
+    path_match = re.match(r'^(https?://[^/]+)?/([a-z]{2})/([^/]+)/([^/]+)/?(.*)$', referer)
+    
+    if path_match:
+        source_lang = path_match.group(2)
+        source_country = path_match.group(3)
+        source_segment = path_match.group(4)
+        rest = path_match.group(5)
+        
+        # Check if this is a glossary page
+        if source_segment in GLOSSARY_URLS.values():
+            target_country = COUNTRY_NAMES.get(user_language, 'kroatien')
+            target_segment = GLOSSARY_URLS.get(user_language, 'glossar')
+            
+            if rest:
+                # Detail page - try to find equivalent slug
+                slug = rest.rstrip('/')
+                from .glossary_models import GlossaryTermTranslation
+                try:
+                    source_trans = GlossaryTermTranslation.objects.select_related('term').filter(
+                        language=source_lang,
+                        slug=slug,
+                        status__in=['approved', 'published']
+                    ).first()
+                    if source_trans:
+                        target_trans = GlossaryTermTranslation.objects.filter(
+                            term=source_trans.term,
+                            language=user_language,
+                            status__in=['approved', 'published']
+                        ).first()
+                        if target_trans:
+                            return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/{target_trans.slug}/')
+                except Exception:
+                    pass
+                # Fallback to glossary index
+                return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
+            else:
+                # Index page
+                return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
+        
+        # Not glossary - just replace language and country
+        target_country = COUNTRY_NAMES.get(user_language, source_country)
+        new_url = f'/{user_language}/{target_country}/{source_segment}/'
+        if rest:
+            new_url += rest
+        return HttpResponseRedirect(new_url)
+    
+    # Simple language prefix replacement as fallback
+    new_url = re.sub(r'^(https?://[^/]+)?/(ge|en|hr|fr|gr|pl|cz|ru|sw|no|sk|nl)/', f'/{user_language}/', referer)
     if new_url == referer:
         new_url = f'/{user_language}/'
     return HttpResponseRedirect(new_url)
@@ -1011,8 +1082,7 @@ Telefon: {data.get('contact_telephone','')}
 # AI SMART-SEARCH VIEW
 # =============================================================================
 from main.chatbot import extract_search_criteria, is_property_search, smart_search_response, get_chatbot_response_with_search
-
-@login_required(login_url='main:login_required')
+@csrf_exempt
 def smart_search(request):
     """
     AI Smart-Search: Natürliche Sprache -> Immobiliensuche

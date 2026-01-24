@@ -1,0 +1,43 @@
+{% extends 'include/base.html' %}
+
+{% block style %}
+<style>
+.legal-hero { background: linear-gradient(135deg, #1E293B 0%, #334155 100%); padding: 3rem 0; }
+.legal-hero h1 { color: #fff; font-size: 2rem; }
+.legal-content { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 2rem; margin-top: -1rem; position: relative; z-index: 10; max-width: 800px; margin-left: auto; margin-right: auto; }
+.legal-content h2 { color: #1E293B; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.5rem; }
+.legal-content p { color: #475569; line-height: 1.8; margin-bottom: 1rem; }
+.legal-content ul { color: #475569; line-height: 1.8; margin: 1rem 0; padding-left: 1.5rem; }
+.legal-content li { margin-bottom: 0.5rem; }
+.legal-updated { color: #94A3B8; font-size: 0.875rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="legal-hero">
+    <div class="container">
+        <h1>Rechtliche Hinweise & Haftungsausschluss</h1>
+    </div>
+</section>
+
+<div class="container" style="padding: 0 1rem 3rem;">
+    <div class="legal-content">
+        <h2>1. Allgemeine Hinweise</h2>
+        <p>Die auf dieser Website bereitgestellten Informationen dienen ausschließlich allgemeinen Informationszwecken. Sie stellen keine Rechts-, Steuer- oder Finanzberatung dar.</p>
+        
+        <h2>2. Keine Rechtsberatung</h2>
+        <p>Die Inhalte unseres Immobilien-Glossars und anderer Informationsseiten ersetzen nicht die individuelle Beratung durch einen qualifizierten Rechtsanwalt, Notar oder Steuerberater. Für den Immobilienkauf in Kroatien empfehlen wir dringend, professionelle Beratung in Anspruch zu nehmen.</p>
+        
+        <h2>3. Aktualität der Informationen</h2>
+        <p>Wir bemühen uns, alle Informationen aktuell und korrekt zu halten. Gesetze und Vorschriften können sich jedoch ändern. Wir übernehmen keine Gewähr für die Aktualität, Richtigkeit und Vollständigkeit der bereitgestellten Informationen.</p>
+        
+        <h2>4. Haftungsausschluss</h2>
+        <p>Die Nutzung der auf dieser Website bereitgestellten Informationen erfolgt auf eigenes Risiko. Wir haften nicht für Schäden, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen entstehen.</p>
+        
+        <h2>5. Externe Links</h2>
+        <p>Unsere Website kann Links zu externen Websites enthalten. Wir haben keinen Einfluss auf deren Inhalte und übernehmen keine Verantwortung dafür.</p>
+        
+        <p class="legal-updated">Letzte Aktualisierung: Januar 2025</p>
+    </div>
+</div>
+{% endblock %}

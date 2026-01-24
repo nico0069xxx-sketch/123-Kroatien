@@ -1,0 +1,248 @@
+[
+  {
+    "canonical_key": "servitut",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Servitut",
+      "slug": "servitut",
+      "short_def": "Grundbuchlich gesichertes Nutzungsrecht zugunsten Dritter.",
+      "long_def": "Ein Servitut ist eine Dienstbarkeit, die im Grundbuch eingetragen wird und bestimmten Personen oder Grundstücken Nutzungsrechte einräumt, etwa Wegerechte oder Leitungsrechte. Servitute können Nutzung und Wert einer Immobilie beeinflussen.",
+      "synonyms": [
+        "Dienstbarkeit"
+      ],
+      "keywords": [
+        "Wegerecht",
+        "Leitungsrecht"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "dienstbarkeit",
+      "grundbuch",
+      "belastung-grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "uebergabeprotokoll",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Übergabeprotokoll",
+      "slug": "uebergabeprotokoll",
+      "short_def": "Dokumentierte Übergabe einer Immobilie an den Käufer.",
+      "long_def": "Das Übergabeprotokoll dokumentiert den Zustand der Immobilie zum Zeitpunkt der Übergabe. Es enthält Angaben zu Mängeln, Zählerständen, Schlüsseln und Ausstattung und dient der rechtlichen Absicherung beider Parteien.",
+      "synonyms": [
+        "Übergabedokument"
+      ],
+      "keywords": [
+        "Übergabe",
+        "Zustand"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "closing",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "umsatzsteuer-pdv",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Umsatzsteuer (PDV)",
+      "slug": "umsatzsteuer-pdv",
+      "short_def": "Mehrwertsteuer auf bestimmte Immobiliengeschäfte.",
+      "long_def": "Die Umsatzsteuer (PDV) kann beim Kauf neuer Immobilien oder bei gewerblicher Nutzung anfallen. In Kroatien beträgt der reguläre Satz 25 Prozent. Ob PDV oder Grunderwerbsteuer anfällt, hängt von Art und Alter der Immobilie ab.",
+      "synonyms": [
+        "Mehrwertsteuer"
+      ],
+      "keywords": [
+        "PDV",
+        "Steuern"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "vermietung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "rental",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Vermietung",
+      "slug": "vermietung",
+      "short_def": "Überlassung einer Immobilie gegen Entgelt.",
+      "long_def": "Die Vermietung umfasst die zeitweise Überlassung einer Immobilie gegen Entgelt. In Kroatien sind steuerliche, rechtliche und genehmigungsrechtliche Vorgaben zu beachten, insbesondere bei touristischer Kurzzeitvermietung.",
+      "synonyms": [
+        "Mietverhältnis"
+      ],
+      "keywords": [
+        "Miete",
+        "Ertrag"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "rendite",
+      "umsatzsteuer-pdv",
+      "steuerpflicht"
+    ]
+  },
+  {
+    "canonical_key": "vorvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Vorvertrag",
+      "slug": "vorvertrag",
+      "short_def": "Vorläufige vertragliche Bindung vor dem Kaufvertrag.",
+      "long_def": "Ein Vorvertrag regelt die wesentlichen Punkte eines geplanten Immobilienkaufs vor Abschluss des endgültigen Kaufvertrags. Er enthält meist Kaufpreis, Zahlungsmodalitäten und eine Kapara.",
+      "synonyms": [
+        "Reservierungsvertrag"
+      ],
+      "keywords": [
+        "Kapara",
+        "Kaufprozess"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "widmungsplan",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Widmungsplan",
+      "slug": "widmungsplan",
+      "short_def": "Plan zur zulässigen Nutzung von Grundstücken.",
+      "long_def": "Der Widmungsplan ist ein Instrument der Raumordnung und legt fest, wie Grundstücke genutzt werden dürfen. Er bildet die Grundlage für Baugenehmigungen und Investitionsentscheidungen.",
+      "synonyms": [
+        "Raumordnungsplan"
+      ],
+      "keywords": [
+        "Flächenwidmung",
+        "Bauzone"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "flaechenwidmung",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "zins",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Zins",
+      "slug": "zins",
+      "short_def": "Kosten für geliehenes Kapital.",
+      "long_def": "Der Zins bezeichnet das Entgelt für die Nutzung von Fremdkapital. Bei Immobilienfinanzierungen beeinflussen Zinssätze maßgeblich die Gesamtkosten und die Rentabilität einer Investition.",
+      "synonyms": [
+        "Zinssatz"
+      ],
+      "keywords": [
+        "Kredit",
+        "Finanzierung"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "finanzierung",
+      "rendite"
+    ]
+  }
+]

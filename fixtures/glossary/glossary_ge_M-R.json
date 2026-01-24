@@ -1,0 +1,214 @@
+[
+  {
+    "canonical_key": "marktwert",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Marktwert",
+      "slug": "marktwert",
+      "short_def": "Preis, der im freien Markt erzielbar ist.",
+      "long_def": "Der Marktwert beschreibt den wahrscheinlich erzielbaren Preis einer Immobilie bei einem Verkauf unter normalen Marktbedingungen. Er ergibt sich aus Angebot, Nachfrage, Lage, Zustand und rechtlichen Rahmenbedingungen.",
+      "synonyms": [
+        "Verkehrswert"
+      ],
+      "keywords": [
+        "Bewertung",
+        "Preis",
+        "Immobilienmarkt"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "immobilienbewertung",
+      "rendite",
+      "investition"
+    ]
+  },
+  {
+    "canonical_key": "miteigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Miteigentum",
+      "slug": "miteigentum",
+      "short_def": "Gemeinsames Eigentum mehrerer Parteien.",
+      "long_def": "Beim Miteigentum gehört eine Immobilie mehreren Personen zu bestimmten Anteilen. Entscheidungen über Nutzung, Verkauf oder Belastung erfordern je nach Konstellation die Zustimmung aller Miteigentümer.",
+      "synonyms": [
+        "Gemeinschaftseigentum"
+      ],
+      "keywords": [
+        "Eigentumsanteile",
+        "Rechte"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "alleineigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "notar",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Notar",
+      "slug": "notar",
+      "short_def": "Öffentlicher Amtsträger für Vertragsbeurkundungen.",
+      "long_def": "Der Notar begleitet in Kroatien Immobilienkäufe durch Beglaubigung von Unterschriften und Beurkundung von Verträgen. Er stellt die formale Rechtssicherheit des Kaufprozesses sicher.",
+      "synonyms": [
+        "Notariat"
+      ],
+      "keywords": [
+        "Beurkundung",
+        "Kaufvertrag"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "oib-nummer",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "tax",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "OIB-Nummer",
+      "slug": "oib-nummer",
+      "short_def": "Persönliche kroatische Steueridentifikationsnummer.",
+      "long_def": "Die OIB-Nummer ist eine eindeutige Steueridentifikationsnummer, die in Kroatien für nahezu alle rechtlichen und steuerlichen Vorgänge erforderlich ist, einschließlich Immobilienkauf und Eigentumseintragung.",
+      "synonyms": [
+        "Steuer-ID Kroatien"
+      ],
+      "keywords": [
+        "Steuern",
+        "Registrierung"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "rendite",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Rendite",
+      "slug": "rendite",
+      "short_def": "Ertrag einer Immobilieninvestition im Verhältnis zum Einsatz.",
+      "long_def": "Die Rendite misst den finanziellen Ertrag einer Immobilie im Verhältnis zum eingesetzten Kapital. Sie berücksichtigt Mieteinnahmen, Kosten, Steuern und potenzielle Wertsteigerungen.",
+      "synonyms": [
+        "Ertrag"
+      ],
+      "keywords": [
+        "Cashflow",
+        "Investition"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "investition",
+      "immobilienbewertung",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "steuerpflicht",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "ge",
+      "title": "Steuerpflicht",
+      "slug": "steuerpflicht",
+      "short_def": "Verpflichtung zur Zahlung von Steuern.",
+      "long_def": "Die Steuerpflicht beschreibt die gesetzliche Verpflichtung zur Abführung von Steuern. Beim Immobilienbesitz in Kroatien können Erwerbs-, Besitz- und Ertragssteuern anfallen.",
+      "synonyms": [
+        "Besteuerungspflicht"
+      ],
+      "keywords": [
+        "Steuern",
+        "Abgaben"
+      ],
+      "faqs": [],
+      "status": "approved"
+    },
+    "related_terms": [
+      "oib-nummer",
+      "doppelbesteuerungsabkommen"
+    ]
+  }
+]

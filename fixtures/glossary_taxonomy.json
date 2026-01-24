@@ -1,0 +1,12 @@
+[
+  {"model": "main.termcategory", "pk": 1, "fields": {"group": "audience", "key": "investor", "label": "Investoren", "label_en": "Investors", "label_hr": "Investitori", "order": 10}},
+  {"model": "main.termcategory", "pk": 2, "fields": {"group": "audience", "key": "holiday-buyer", "label": "Ferienkäufer", "label_en": "Holiday Buyers", "label_hr": "Kupci odmor", "order": 20}},
+  {"model": "main.termcategory", "pk": 3, "fields": {"group": "audience", "key": "luxury", "label": "Luxus", "label_en": "Luxury", "label_hr": "Luksuz", "order": 30}},
+  {"model": "main.termcategory", "pk": 4, "fields": {"group": "topic", "key": "legal", "label": "Recht & Grundbuch", "label_en": "Legal", "label_hr": "Pravo", "order": 10}},
+  {"model": "main.termcategory", "pk": 5, "fields": {"group": "topic", "key": "tax", "label": "Steuern", "label_en": "Taxes", "label_hr": "Porezi", "order": 20}},
+  {"model": "main.termcategory", "pk": 6, "fields": {"group": "topic", "key": "purchase-process", "label": "Kaufprozess", "label_en": "Purchase Process", "label_hr": "Proces kupnje", "order": 30}},
+  {"model": "main.termcategory", "pk": 7, "fields": {"group": "topic", "key": "rental", "label": "Vermietung", "label_en": "Rental", "label_hr": "Najam", "order": 40}},
+  {"model": "main.termcategory", "pk": 8, "fields": {"group": "asset_type", "key": "apartment", "label": "Wohnung", "label_en": "Apartment", "label_hr": "Stan", "order": 10}},
+  {"model": "main.termcategory", "pk": 9, "fields": {"group": "asset_type", "key": "villa", "label": "Villa", "label_en": "Villa", "label_hr": "Vila", "order": 20}},
+  {"model": "main.termcategory", "pk": 10, "fields": {"group": "asset_type", "key": "house", "label": "Haus", "label_en": "House", "label_hr": "Kuća", "order": 30}}
+]

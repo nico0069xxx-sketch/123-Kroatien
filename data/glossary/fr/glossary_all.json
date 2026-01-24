@@ -1,0 +1,1432 @@
+[
+  {
+    "canonical_key": "abgeschlossenes-bauwerk",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Bâtiment achevé",
+      "slug": "batiment-acheve",
+      "short_def": "Propriété légalement approuvée et complètement terminée.",
+      "long_def": "Un bâtiment achevé est une propriété qui dispose d’un permis de construire valide, construite conformément à celui-ci et officiellement considérée comme terminée. En Croatie, la légalité de la construction est une condition pour l’enregistrement de propriété, le financement, la location et la revente.",
+      "synonyms": [
+        "bâtiment terminé",
+        "construction légale"
+      ],
+      "keywords": [
+        "légalité de la construction",
+        "réception",
+        "permis"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "nutzungsbewilligung",
+      "legalisierung"
+    ]
+  },
+  {
+    "canonical_key": "abschreibung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Amortissement",
+      "slug": "amortissement",
+      "short_def": "Répartition fiscale des coûts immobiliers sur plusieurs années.",
+      "long_def": "L'amortissement permet aux investisseurs de répartir fiscalement les coûts d'acquisition ou de construction d'un bien immobilier sur une période définie. En Croatie, différentes options d'amortissement s'appliquent selon l'utilisation, notamment en cas de location ou d'utilisation commerciale.",
+      "synonyms": [
+        "dépréciation",
+        "répartition fiscale"
+      ],
+      "keywords": [
+        "fiscalité",
+        "revenu",
+        "investissement"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "steuerpflicht",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "alleineigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Propriété exclusive",
+      "slug": "propriete-exclusive",
+      "short_def": "Pleine propriété d'un bien immobilier par une seule partie.",
+      "long_def": "En cas de propriété exclusive, un bien immobilier est assigné à 100 % à une personne physique ou morale. Il n'y a pas de parts de copropriété d'autres tiers. Cette forme de propriété simplifie les processus décisionnels, la vente et les charges au registre foncier.",
+      "synonyms": [
+        "Propriété individuelle"
+      ],
+      "keywords": [
+        "Propriété",
+        "Registre foncier",
+        "Bien immobilier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "miteigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "anzahlung-kapara",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Acompte (Kapara)",
+      "slug": "acompte-kapara",
+      "short_def": "Dépôt de garantie contractuel pour l'achat de biens immobiliers.",
+      "long_def": "La Kapara est un acompte couramment utilisé en Croatie, versé lors de la signature d'un précontrat ou d'un contrat d'achat. Il assure la sécurité des deux parties contractantes. Selon la conception du contrat, il est confisqué en cas de rétractation ou doit être remboursé au double.",
+      "synonyms": [
+        "Dépôt de garantie"
+      ],
+      "keywords": [
+        "contrat d'achat",
+        "précontrat",
+        "sécurité"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "vorvertrag",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "baugenehmigung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Permis de construire",
+      "slug": "permis-de-construire",
+      "short_def": "Autorisation officielle pour la construction d'un bâtiment.",
+      "long_def": "Le permis de construire confirme qu'un projet de construction respecte les règlements d'urbanisme et de construction en vigueur. En Croatie, les biens immobiliers sans permis de construire valide sont considérés comme juridiquement risqués et peuvent empêcher l'utilisation, la vente ou le financement.",
+      "synonyms": [
+        "Autorisation de construire"
+      ],
+      "keywords": [
+        "construction",
+        "autorisation",
+        "légalité"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "legalisierung",
+      "nutzungsbewilligung",
+      "widmungsplan"
+    ]
+  },
+  {
+    "canonical_key": "bebaubarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Constructibilité",
+      "slug": "constructibilite",
+      "short_def": "Possibilité légale de construire sur un terrain.",
+      "long_def": "La constructibilité décrit si et dans quelle mesure un terrain peut être construit. Elle résulte de l'affectation des sols, du plan de zonage et des règlements locaux de construction, et constitue un facteur de valeur central pour les terrains.",
+      "synonyms": [
+        "Permis de construire"
+      ],
+      "keywords": [
+        "Terrain",
+        "Construction",
+        "Zonage",
+        "Urbanisme"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "baukoeffizient",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "belastung-grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Charge (registre foncier)",
+      "slug": "charge-registre-foncier",
+      "short_def": "Restriction ou obligation inscrite dans le registre foncier.",
+      "long_def": "Les charges comme les hypothèques, servitudes ou droits de domicile sont inscrites dans le registre foncier croate. Elles peuvent affecter l'utilisation, la valeur et la disponibilité d'un bien immobilier et doivent être vérifiées avant tout achat.",
+      "synonyms": [
+        "Charge du registre"
+      ],
+      "keywords": [
+        "Hypothèque",
+        "Servitude",
+        "Risque"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "hypothek",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "closing",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Clôture",
+      "slug": "cloture",
+      "short_def": "Finalisation légale d'un achat immobilier.",
+      "long_def": "La clôture désigne l'étape finale de l'achat immobilier, où se déroulent le paiement, la signature du contrat et le transfert de propriété. En Croatie, ce processus est généralement accompagné par un notaire.",
+      "synonyms": [
+        "Finalisation d'achat",
+        "Conclure la vente"
+      ],
+      "keywords": [
+        "Transfert de propriété",
+        "Notaire",
+        "Achat immobilier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "grundbuch",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "due-diligence",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Due Diligence",
+      "slug": "due-diligence",
+      "short_def": "Examen juridique et économique complet des biens immobiliers.",
+      "long_def": "La due diligence comprend l'examen des droits de propriété, de la légalité de construction, des charges, des taxes et des possibilités d'utilisation. Elle est essentielle en Croatie pour minimiser les risques juridiques et financiers avant l'achat.",
+      "synonyms": [
+        "Diligence raisonnable"
+      ],
+      "keywords": [
+        "Risque",
+        "Examen",
+        "Légal"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "baugenehmigung",
+      "steuern"
+    ]
+  },
+  {
+    "canonical_key": "dienstbarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Servitude",
+      "slug": "servitude",
+      "short_def": "Droit d'usage inscrit au registre foncier en faveur de tiers.",
+      "long_def": "Une servitude est un droit inscrit au registre foncier qui permet ou impose certaines utilisations à une autre personne ou propriété, telles que les droits de passage ou les droits de canalisation. Elle peut influencer la valeur marchande.",
+      "synonyms": [
+        "Servitude"
+      ],
+      "keywords": [
+        "droit de passage",
+        "droit de canalisation",
+        "registre foncier",
+        "utilisation",
+        "propriété"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "doppelbesteuerungsabkommen",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "international"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Convention de double imposition",
+      "slug": "convention-de-double-imposition",
+      "short_def": "Accord pour éviter une double imposition fiscale.",
+      "long_def": "Les conventions de double imposition déterminent quel pays a le droit de taxer les revenus immobiliers. Pour les investisseurs internationaux en Croatie, elles sont essentielles pour éviter la double imposition.",
+      "synonyms": [
+        "CDI"
+      ],
+      "keywords": [
+        "Impôts internationaux",
+        "Fiscalité",
+        "Immobilier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "eigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Propriété",
+      "slug": "propriete",
+      "short_def": "Autorité légale sur un bien immobilier.",
+      "long_def": "La propriété désigne le droit complet de disposer d'un bien immobilier, de l'utiliser, de le grever ou de le vendre. En Croatie, la propriété immobilière est établie uniquement par l'enregistrement au registre foncier.",
+      "synonyms": [
+        "Propriété immobilière"
+      ],
+      "keywords": [
+        "registre foncier",
+        "propriétaire",
+        "droit"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "alleineigentum",
+      "miteigentum"
+    ]
+  },
+  {
+    "canonical_key": "eigentumsuebertragung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Transfert de propriété",
+      "slug": "transfert-de-propriete",
+      "short_def": "Transfert légal de propriété à l'acheteur.",
+      "long_def": "En Croatie, le transfert de propriété se fait par inscription du nouveau propriétaire au cadastre. Cela nécessite un contrat de vente valide et la preuve du paiement du prix d'achat.",
+      "synonyms": [
+        "Mutation de propriété"
+      ],
+      "keywords": [
+        "Cadastre",
+        "Contrat de vente",
+        "Finalisation"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "erschliessung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Viabilisation",
+      "slug": "viabilisation",
+      "short_def": "Raccordement d'un terrain à l'infrastructure.",
+      "long_def": "La viabilisation couvre le raccordement d'un terrain à l'infrastructure publique, y compris routes, électricité, eau et assainissement. Le degré de viabilisation influence considérablement la constructibilité et la valeur marchande.",
+      "synonyms": [
+        "Raccordement aux services publics"
+      ],
+      "keywords": [
+        "Terrain",
+        "Infrastructure",
+        "Construction"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "grundstueck",
+      "baukosten"
+    ]
+  },
+  {
+    "canonical_key": "finanzierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Financement",
+      "slug": "financement",
+      "short_def": "Financement immobilier par fonds propres ou crédits.",
+      "long_def": "Le financement décrit la fourniture de fonds propres et de crédits pour l'achat ou la construction d'un bien immobilier. En Croatie, un financement est possible pour les étrangers, mais soumis à certaines conditions.",
+      "synonyms": [
+        "prêt immobilier"
+      ],
+      "keywords": [
+        "crédit",
+        "banque",
+        "fonds propres"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "hypothek",
+      "rendite",
+      "bank"
+    ]
+  },
+  {
+    "canonical_key": "flaechenwidmung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Affectation des sols",
+      "slug": "affectation-des-sols",
+      "short_def": "Détermination de l'usage autorisé des parcelles.",
+      "long_def": "L'affectation des sols définit comment un terrain peut être utilisé, par exemple comme terrain à bâtir, espace vert ou zone touristique. Elle fait partie de la planification de l'aménagement du territoire et constitue la base de toute décision de construction.",
+      "synonyms": [
+        "Destination",
+        "Classification"
+      ],
+      "keywords": [
+        "Aménagement",
+        "Zone de construction",
+        "Urbanisme"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Registre foncier",
+      "slug": "registre-foncier",
+      "short_def": "Registre public pour la propriété et les charges.",
+      "long_def": "Le registre foncier croate est un registre public dans lequel sont inscrits les droits de propriété, les charges et les droits sur les biens immobiliers. Seuls les droits enregistrés sont considérés comme juridiquement contraignants.",
+      "synonyms": [
+        "Cadastre"
+      ],
+      "keywords": [
+        "Propriété",
+        "Hypothèque",
+        "Servitude"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "eigentum",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "grundstueck",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Terrain",
+      "slug": "terrain",
+      "short_def": "Terrain non bâti ou constructible.",
+      "long_def": "Un terrain est une parcelle de terre délimitée, qui peut être bâtie ou non. Son utilisation et sa construction dépendent de l'affectation, de la viabilisation et des réglementations de construction.",
+      "synonyms": [
+        "Parcelle"
+      ],
+      "keywords": [
+        "Terrain",
+        "Construction",
+        "Viabilisation",
+        "Usage"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "flaechenwidmung",
+      "erschliessung"
+    ]
+  },
+  {
+    "canonical_key": "hypothek",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Hypothèque",
+      "slug": "hypotheque",
+      "short_def": "Droit de gage enregistré dans le registre foncier.",
+      "long_def": "L'hypothèque est un droit de gage inscrit au registre foncier en faveur d'un prêteur. Elle sert à garantir les prêts et constitue une charge importante pour le bien immobilier.",
+      "synonyms": [
+        "Droit de gage immobilier"
+      ],
+      "keywords": [
+        "Crédit",
+        "Charge",
+        "Banque"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "immobilienbewertung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Évaluation immobilière",
+      "slug": "evaluation-immobiliere",
+      "short_def": "Détermination de la valeur immobilière de marché.",
+      "long_def": "L'évaluation immobilière permet de déterminer la valeur marchande actuelle d'un bien immobilier. En Croatie, les évaluations prennent en compte l'emplacement, l'état, les possibilités d'utilisation, la situation juridique et l'environnement de marché. Elle est pertinente pour les décisions d'achat, les financements et les analyses d'investissement.",
+      "synonyms": [
+        "Estimation de la valeur du marché"
+      ],
+      "keywords": [
+        "valeur de marché",
+        "évaluation",
+        "rendement"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "rendite",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "immobilienkauf",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Achat immobilier",
+      "slug": "achat-immobilier",
+      "short_def": "Acquisition de propriété d'un bien immobilier.",
+      "long_def": "L'achat immobilier en Croatie comprend la signature du contrat, le paiement du prix et l'inscription au cadastre. Pour les acheteurs étrangers, il est crucial de connaître les particularités juridiques, fiscales et formelles.",
+      "synonyms": [
+        "Acquisition immobilière"
+      ],
+      "keywords": [
+        "Contrat de vente",
+        "Cadastre",
+        "Clôture"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "investition",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Investissement",
+      "slug": "investissement",
+      "short_def": "Placement financier visant la valorisation ou le rendement.",
+      "long_def": "Un investissement immobilier vise des revenus récurrents, une valorisation ou les deux. En Croatie, l'emplacement, l'usage, le cadre fiscal et la sécurité juridique jouent un rôle central.",
+      "synonyms": [
+        "Placement financier",
+        "Investissement immobilier"
+      ],
+      "keywords": [
+        "Rendement",
+        "Valorisation",
+        "Placement",
+        "Immobilier",
+        "Croatie"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "immobilienbewertung",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "kaufvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Contrat d'achat",
+      "slug": "contrat-d-achat",
+      "short_def": "Accord légal sur l'acquisition immobilière.",
+      "long_def": "Le contrat d'achat établit les droits et obligations de l'acheteur et du vendeur. En Croatie, il doit répondre à certaines exigences formelles et constitue la base pour le paiement du prix d'achat et le transfert de propriété.",
+      "synonyms": [
+        "Contrat immobilier"
+      ],
+      "keywords": [
+        "contrat",
+        "notaire",
+        "kapara"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "legalisierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Légalisation",
+      "slug": "legalisation",
+      "short_def": "Reconnaissance légale rétroactive d'une construction.",
+      "long_def": "La légalisation désigne la procédure d'approbation rétroactive d'un bâtiment construit sans permis de construire valide. En Croatie, elle est soumise à des conditions strictes et n'est pas toujours possible.",
+      "synonyms": [
+        "Post-approbation"
+      ],
+      "keywords": [
+        "Légalité de la construction",
+        "Permis de construire",
+        "Régularisation"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "abgeschlossenes-bauwerk",
+      "nutzungsbewilligung"
+    ]
+  },
+  {
+    "canonical_key": "luxusimmobilie",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "villa",
+        "apartment"
+      ]
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Bien Immobilier de Luxe",
+      "slug": "bien-immobilier-de-luxe",
+      "short_def": "Propriété de qualité supérieure avec équipements haut de gamme.",
+      "long_def": "Les biens immobiliers de luxe se distinguent par un emplacement exclusif, une qualité de construction haut de gamme, un design exceptionnel, une grande intimité et des caractéristiques spéciales. En Croatie, ils se trouvent souvent sur le littoral ou sur les îles.",
+      "synonyms": [
+        "Propriété de Prestige"
+      ],
+      "keywords": [
+        "Villa",
+        "Prestige",
+        "Exclusif",
+        "Élite",
+        "Haut de gamme"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "investition",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "marktwert",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Valeur marchande",
+      "slug": "valeur-marchande",
+      "short_def": "Prix réalisable sur le marché libre.",
+      "long_def": "La valeur marchande décrit le prix probablement réalisable d'un bien immobilier lors d'une vente dans des conditions normales du marché. Elle résulte de l'offre, la demande, l'emplacement, l'état et les conditions juridiques.",
+      "synonyms": [
+        "Valeur vénale",
+        "Montant de marché"
+      ],
+      "keywords": [
+        "Évaluation",
+        "Prix",
+        "Marché immobilier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "immobilienbewertung",
+      "rendite",
+      "investition"
+    ]
+  },
+  {
+    "canonical_key": "miteigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Copropriété",
+      "slug": "copropriete",
+      "short_def": "Propriété commune de plusieurs parties.",
+      "long_def": "Dans la copropriété, un bien appartient à plusieurs personnes selon des parts déterminées. Les décisions concernant l'utilisation, la vente ou l'engagement nécessitent, selon le cas, l'approbation de tous les copropriétaires.",
+      "synonyms": [
+        "Propriété commune"
+      ],
+      "keywords": [
+        "parts de propriété",
+        "droits",
+        "copropriétaires",
+        "décisions",
+        "approbation"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "alleineigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "notar",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Notaire",
+      "slug": "notaire",
+      "short_def": "Fonctionnaire public pour l'authentification des contrats.",
+      "long_def": "En Croatie, le notaire accompagne les achats immobiliers par l'authentification des signatures et l'authentification des contrats. Il assure la sécurité juridique formelle du processus d'achat.",
+      "synonyms": [
+        "Notariat"
+      ],
+      "keywords": [
+        "Authentification",
+        "Contrat d'achat",
+        "Sécurité juridique"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "oib-nummer",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "tax",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Numéro OIB",
+      "slug": "numero-oib",
+      "short_def": "Numéro d'identification fiscale personnel croate.",
+      "long_def": "Le numéro OIB est un identifiant fiscal unique nécessaire en Croatie pour presque toutes les opérations légales et fiscales, y compris l'achat de biens immobiliers et l'enregistrement de la propriété.",
+      "synonyms": [
+        "ID fiscale Croatie"
+      ],
+      "keywords": [
+        "fiscalité",
+        "enregistrement",
+        "immobilier",
+        "Croatie"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "rendite",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Rendement",
+      "slug": "rendement",
+      "short_def": "Revenu d'un investissement immobilier par rapport au capital investi.",
+      "long_def": "Le rendement mesure le revenu financier d'un bien immobilier par rapport au capital investi, en tenant compte des revenus locatifs, des coûts, des impôts et des valorisations potentielles.",
+      "synonyms": [
+        "Revenu"
+      ],
+      "keywords": [
+        "Cashflow",
+        "Investissement",
+        "Immobilier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "investition",
+      "immobilienbewertung",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "steuerpflicht",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Obligation fiscale",
+      "slug": "obligation-fiscale",
+      "short_def": "Obligation de payer des impôts.",
+      "long_def": "L'obligation fiscale décrit l'obligation légale de payer des impôts. La possession de biens immobiliers en Croatie peut entraîner des impôts sur l'acquisition, la possession et les revenus.",
+      "synonyms": [
+        "Obligation d'imposition"
+      ],
+      "keywords": [
+        "Impôts",
+        "Fiscalité",
+        "Abattement"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "oib-nummer",
+      "doppelbesteuerungsabkommen"
+    ]
+  },
+  {
+    "canonical_key": "servitut",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Servitude",
+      "slug": "servitude-2",
+      "short_def": "Droit d'usage notarié au profit de tiers.",
+      "long_def": "Une servitude est un droit d'usage inscrit au registre foncier, accordant à certaines personnes ou propriétés des droits d'usage, tels que des droits de passage ou des droits de conduites. Les servitudes peuvent influencer l'utilisation et la valeur d'un bien immobilier.",
+      "synonyms": [
+        "Droit d'usage",
+        "Prérogative foncière"
+      ],
+      "keywords": [
+        "Droit de passage",
+        "Droit de conduite",
+        "Registre foncier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "dienstbarkeit",
+      "grundbuch",
+      "belastung-grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "uebergabeprotokoll",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Procès-verbal de remise",
+      "slug": "proces-verbal-de-remise",
+      "short_def": "Document de la remise d'un bien immobilier à l'acheteur.",
+      "long_def": "Le procès-verbal de remise documente l'état du bien au moment de la remise. Il comprend des informations sur les défauts, les relevés de compteurs, les clés et l'équipement, et sert à la sécurisation juridique des deux parties.",
+      "synonyms": [
+        "Document de remise"
+      ],
+      "keywords": [
+        "remise",
+        "état",
+        "bien immobilier",
+        "document",
+        "sécurité juridique"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "closing",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "umsatzsteuer-pdv",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Taxe sur la Valeur Ajoutée (TVA)",
+      "slug": "taxe-sur-la-valeur-ajoutee-tva",
+      "short_def": "Taxe sur la valeur ajoutée pour certaines transactions immobilières.",
+      "long_def": "La taxe sur la valeur ajoutée (TVA) peut s'appliquer lors de l'achat de nouveaux biens immobiliers ou à usage commercial. En Croatie, le taux standard est de 25 %. Le choix entre TVA et taxe de transfert immobilier dépend du type et de l'âge du bien.",
+      "synonyms": [
+        "Taxe sur la valeur ajoutée"
+      ],
+      "keywords": [
+        "TVA",
+        "fiscalité",
+        "immobilier",
+        "Croatie",
+        "biens neufs"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "vermietung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "rental",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Location",
+      "slug": "location",
+      "short_def": "Cession d'un bien immobilier contre rémunération.",
+      "long_def": "La location implique la cession temporaire d'un bien immobilier contre rémunération. En Croatie, il est important de respecter les exigences fiscales, légales et d'autorisation, en particulier pour les locations touristiques de courte durée.",
+      "synonyms": [
+        "Bail",
+        "Louer"
+      ],
+      "keywords": [
+        "Location",
+        "Revenu",
+        "Immobilier",
+        "Bail",
+        "Cession"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "umsatzsteuer-pdv",
+      "steuerpflicht"
+    ]
+  },
+  {
+    "canonical_key": "vorvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Avant-contrat",
+      "slug": "avant-contrat",
+      "short_def": "Engagement contractuel temporaire avant le contrat d'achat.",
+      "long_def": "Un avant-contrat établit les points essentiels d'un achat immobilier planifié avant la signature du contrat d'achat final. Il comprend généralement le prix d'achat, les modalités de paiement et une Kapara.",
+      "synonyms": [
+        "Contrat de réservation"
+      ],
+      "keywords": [
+        "Kapara",
+        "achat immobilier",
+        "processus d'achat"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "widmungsplan",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Plan d'affectation",
+      "slug": "plan-d-affectation",
+      "short_def": "Plan de l'utilisation admissible des terrains.",
+      "long_def": "Le plan d'affectation est un outil d'urbanisme qui détermine l'utilisation des terrains. Il sert de base pour les permis de construire et les décisions d'investissement.",
+      "synonyms": [
+        "Plan de zonage"
+      ],
+      "keywords": [
+        "affectation des sols",
+        "zone de construction",
+        "urbanisme",
+        "planification territoriale"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "flaechenwidmung",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "zins",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "fr",
+      "title": "Intérêt",
+      "slug": "interet",
+      "short_def": "Coût du capital emprunté.",
+      "long_def": "L'intérêt désigne la rémunération pour l'utilisation de capitaux extérieurs. Dans le financement immobilier, les taux d'intérêt influencent fortement les coûts totaux et la rentabilité d'un investissement.",
+      "synonyms": [
+        "Taux d'intérêt",
+        "Intérêts"
+      ],
+      "keywords": [
+        "Prêt",
+        "Financement",
+        "Immobilier"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "rendite"
+    ]
+  }
+]

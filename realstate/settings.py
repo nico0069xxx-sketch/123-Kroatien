@@ -96,6 +96,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    
+    # Custom Redirect Middleware
+    'main.middleware.redirect_registry_middleware.RedirectRegistryMiddleware',
+    'main.middleware.smart_redirect_middleware.SmartRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'realstate.urls'
@@ -263,3 +267,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # SICHERHEIT: Passwort-Reset Token nur 1 Stunde gueltig
 PASSWORD_RESET_TIMEOUT = 3600
+SESSION_COOKIE_AGE = 1209600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1209600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1209600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

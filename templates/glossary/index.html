@@ -1,0 +1,135 @@
+{% extends 'include/base.html' %}
+
+{% block style %}
+<style>
+/* Hero Section */
+.glossary-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 3rem 0; }
+.glossary-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; margin-bottom: 0.5rem; }
+.glossary-hero p { color: rgba(255,255,255,0.85); font-size: 1.1rem; }
+
+/* Filter Section */
+.glossary-filters { background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 1.5rem; margin-top: -2rem; position: relative; z-index: 10; margin-bottom: 2rem; }
+.glossary-search input { width: 100%; padding: 1rem 1.25rem; border: 2px solid #E2E8F0; border-radius: 10px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+.glossary-search input:focus { outline: none; border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+.filter-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+.filter-select { flex: 1; min-width: 180px; padding: 0.875rem; border: 2px solid #E2E8F0; border-radius: 10px; font-size: 0.95rem; background: #fff; cursor: pointer; transition: border-color 0.2s; }
+.filter-select:focus { outline: none; border-color: #3B82F6; }
+
+/* Akkordeon Cards */
+.term-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+.term-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+.term-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; cursor: pointer; background: linear-gradient(to right, #FAFAFA, #fff); }
+.term-header h3 { font-size: 1.1rem; margin: 0; color: #1E293B; font-weight: 600; }
+.term-header i { color: #94A3B8; transition: transform 0.3s ease; }
+.term-card.expanded .term-header i { transform: rotate(180deg) !important; }
+.term-content { display: none; }
+.term-card.expanded .term-content { display: block !important; padding: 1.25rem 1.5rem; border-top: 1px solid #E2E8F0; }
+.term-content p { color: #475569; line-height: 1.7; margin-bottom: 1rem; }
+.term-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #EA580C; font-weight: 600; text-decoration: none; transition: gap 0.2s; }
+.term-link:hover { gap: 0.75rem; }
+
+/* Disclaimer */
+.glossary-disclaimer { background: linear-gradient(to right, #FEF3C7, #FFF7ED); border: 1px solid #FCD34D; border-radius: 12px; padding: 1.25rem; margin-top: 2rem; color: #92400E; display: flex; align-items: flex-start; gap: 0.75rem; }
+.glossary-disclaimer i { font-size: 1.25rem; margin-top: 2px; }
+
+/* Pagination */
+.pagination { gap: 0.25rem; }
+.page-link { border-radius: 8px !important; border: none; color: #475569; padding: 0.5rem 1rem; }
+.page-item.active .page-link { background: #EA580C; color: #fff; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .glossary-hero { padding: 2rem 0; }
+    .glossary-hero h1 { font-size: 1.75rem; }
+    .glossary-filters { margin-top: -1rem; padding: 1rem; }
+    .filter-row { flex-direction: column; }
+    .filter-select { min-width: 100%; }
+    .term-header { padding: 1rem; }
+    .term-header h3 { font-size: 1rem; }
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<section class="glossary-hero">
+    <div class="container">
+        <h1>{{ t.glossary_title }}</h1>
+        <p>{{ t.glossary_subtitle }}</p>
+    </div>
+</section>
+
+<div class="container py-4">
+    <div class="glossary-filters">
+        <form method="GET">
+            <div class="glossary-search">
+                <input type="text" name="q" value="{{ q }}" placeholder="{{ t.search_placeholder }}">
+            </div>
+            <div class="filter-row">
+                <select name="audience" class="filter-select" onchange="this.form.submit()">
+                    <option value="">{{ t.filter_audience }}: {{ t.all }}</option>
+                    {% for cat in audience_cats %}
+                    <option value="{{ cat.key }}" {% if audience == cat.key %}selected{% endif %}>{{ cat.label }}</option>
+                    {% endfor %}
+                </select>
+                <select name="topic" class="filter-select" onchange="this.form.submit()">
+                    <option value="">{{ t.filter_topic }}: {{ t.all }}</option>
+                    {% for cat in topic_cats %}
+                    <option value="{{ cat.key }}" {% if topic == cat.key %}selected{% endif %}>{{ cat.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+
+    {% if total_count %}<p class="mb-3"><strong>{{ total_count }}</strong> {{ t.results_count }}</p>{% endif %}
+
+    {% for term in page_obj %}
+    <div class="term-card" onclick="this.classList.toggle('expanded')">
+        <div class="term-header">
+            <h3>{{ term.title }}</h3>
+            <i class="fa fa-chevron-down"></i>
+        </div>
+        <div class="term-content">
+            <p>{{ term.short_def }}</p>
+            <a href="{{ glossary_base_url }}{{ term.slug }}/" class="term-link">{{ t.learn_more }} <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+    {% empty %}
+    <p>{{ t.no_results }}</p>
+    {% endfor %}
+
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="Glossary pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ q }}&audience={{ audience|default:'' }}&topic={{ topic|default:'' }}">«</a></li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}&q={{ q }}&audience={{ audience|default:'' }}&topic={{ topic|default:'' }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ q }}&audience={{ audience|default:'' }}&topic={{ topic|default:'' }}">»</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    <div class="glossary-disclaimer">
+        <i class="fa fa-info-circle"></i>
+        <span>{{ t.disclaimer_short }}</span>
+    </div>
+</div>
+
+<script>document.addEventListener("DOMContentLoaded", function() {
+document.querySelectorAll(".term-card").forEach(function(card) {
+    card.addEventListener("click", function() {
+        this.classList.toggle("expanded");
+    });});
+});});
+</script>
+
+{% endblock body %}

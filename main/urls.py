@@ -4,7 +4,10 @@ from . import professional_views
 from . import xml_views
 from . import makler_views
 from . import address_views
+from . import glossary_views
+from .glossary_urls import glossary_urlpatterns
 from . import content_views
+from . import matching_views
 from pages.views import translate_all
 
 app_name = 'main'
@@ -30,6 +33,9 @@ urlpatterns = [
     path('send-owner-form/', views.send_owner_form, name='send-owner-form'),
     path('faq/', views.faq, name='faq'),
     path('owner/', views.owner, name='owner'),
+    path('api/suche-v2/', views.smart_search, name='smart_search'),
+    path('experten-finder/', matching_views.matching_page, name='experten_finder'),
+    path('api/experten-finder/', matching_views.matching_api, name='experten_finder_api'),
     path('real-estate-agent/', views.real_estate_agent, name='real-estate-agent'),
     path('building-contractor/', views.building_contractor, name='building-contractor'),
     path('realestate-contractor-registration', views.realestate_contractor_registration, name='realestate-contractor-registration'),
@@ -85,7 +91,13 @@ urlpatterns = [
     # German URLs - specific URLs FIRST
     path('ge/kroatien/partner-werden/', views.partner_landing, {'lang': 'ge'}, name='partner-landing-ge'),
     path('ge/kroatien/registrierung/', professional_views.professional_registration, {'country': 'kroatien'}, name='professional-reg-ge'),
+    
+    # GLOSSAR URLs (DE) - VOR <str:category>!
+    path('ge/kroatien/glossar/', glossary_views.glossary_index, {'lang': 'ge', 'country': 'kroatien'}, name='glossary-index-ge'),
+    path('ge/kroatien/glossar/<str:slug>/', glossary_views.glossary_detail, {'lang': 'ge', 'country': 'kroatien'}, name='glossary-detail-ge'),
+    
     path('ge/kroatien/<str:category>/', professional_views.professional_list, {'country': 'kroatien'}, name='professional-list-ge'),
+
     path('ge/kroatien/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'kroatien'}, name='professional-detail-ge'),
     
     # Croatian URLs - specific URLs FIRST
@@ -94,3 +106,4 @@ urlpatterns = [
     path('hr/hrvatska/<str:category>/', professional_views.professional_list, {'country': 'hrvatska'}, name='professional-list-hr'),
     path('hr/hrvatska/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'hrvatska'}, name='professional-detail-hr'),
 ]
+

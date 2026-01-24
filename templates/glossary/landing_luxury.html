@@ -1,0 +1,59 @@
+{% extends 'include/base.html' %}
+
+{% block style %}
+<style>
+.landing-hero { background: linear-gradient(135deg, #1C1917 0%, #44403C 100%); padding: 4rem 0; }
+.landing-hero h1 { color: #F5F5DC; font-size: 2.5rem; margin-bottom: 1rem; font-weight: 300; letter-spacing: 1px; }
+.landing-hero p { color: rgba(255,255,255,0.8); font-size: 1.25rem; max-width: 600px; }
+.landing-intro { padding: 3rem 0; background: #FAFAF9; }
+.landing-intro p { color: #475569; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 0 auto; }
+.terms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; padding: 3rem 0; }
+.term-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: all 0.3s; border: 1px solid #E7E5E4; }
+.term-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.term-card h3 { color: #1C1917; margin-bottom: 0.75rem; }
+.term-card h3 a { color: inherit; text-decoration: none; }
+.term-card h3 a:hover { color: #A16207; }
+.term-card p { color: #64748B; font-size: 0.95rem; line-height: 1.6; }
+.cta-section { background: #1C1917; padding: 3rem 0; text-align: center; }
+.cta-section h2 { color: #F5F5DC; margin-bottom: 1rem; font-weight: 300; }
+.cta-section p { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: linear-gradient(135deg, #D4AF37, #B8860B); color: #1C1917; padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+.cta-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="landing-hero">
+    <div class="container">
+        <h1>Luxusimmobilien-Glossar</h1>
+        <p>Exklusives Fachwissen für den Erwerb von Premium-Immobilien in Kroatien.</p>
+    </div>
+</section>
+
+<section class="landing-intro">
+    <div class="container">
+        <p>Der Kauf einer Luxusimmobilie in Kroatien erfordert fundiertes Wissen über lokale Besonderheiten. Unser spezialisiertes Glossar erklärt alle relevanten Begriffe für anspruchsvolle Käufer – von exklusiven Lagen bis zu besonderen rechtlichen Aspekten.</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="terms-grid">
+        {% for term in terms %}
+        <div class="term-card">
+            <h3><a href="/{{ lang_code }}/kroatien/glossar/{{ term.slug }}/">{{ term.title }}</a></h3>
+            <p>{{ term.short_def }}</p>
+        </div>
+        {% empty %}
+        <p>Noch keine Begriffe in dieser Kategorie.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<section class="cta-section">
+    <div class="container">
+        <h2>Entdecken Sie Luxus</h2>
+        <p>Unsere exklusiven Premium-Immobilien an der kroatischen Küste.</p>
+        <a href="/{{ lang_code }}/kroatien/immobilien/" class="cta-btn">Luxusimmobilien ansehen</a>
+    </div>
+</section>
+{% endblock %}

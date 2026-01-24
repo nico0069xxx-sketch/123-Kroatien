@@ -1,0 +1,77 @@
+{% extends 'include/base.html' %}
+
+{% block hreflang %}
+{% for link in hreflang_links %}
+<link rel="alternate" hreflang="{% if link.lang == "ge" %}de{% elif link.lang == "cz" %}cs{% elif link.lang == "gr" %}el{% elif link.lang == "sw" %}sv{% else %}{{ link.lang }}{% endif %}" href="https://123-kroatien.eu{{ link.url }}" />
+{% endfor %}
+<link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu{{ term.get_absolute_url }}" />
+{% endblock hreflang %}
+
+
+{% block style %}
+<style>
+.term-detail-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 3rem 0; }
+.term-detail-hero h1 { color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; }
+.term-breadcrumb { color: rgba(255,255,255,0.7); margin-bottom: 1rem; }
+.term-breadcrumb a { color: #60A5FA; text-decoration: none; }
+.term-breadcrumb a:hover { text-decoration: underline; }
+.term-content { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 2rem; margin-top: -2rem; position: relative; z-index: 10; }
+.term-short-def { font-size: 1.25rem; color: #334155; border-left: 4px solid #3B82F6; padding-left: 1rem; margin-bottom: 2rem; }
+.term-long-def { color: #475569; line-height: 1.8; }
+.term-long-def h2 { color: #1E293B; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
+.term-long-def ul { margin: 1rem 0; padding-left: 1.5rem; }
+.term-long-def li { margin-bottom: 0.5rem; }
+.term-meta { background: #F8FAFC; border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
+.term-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.term-category-tag { background: #E0E7FF; color: #3730A3; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.875rem; }
+.related-terms { margin-top: 3rem; }
+.related-terms h3 { color: #1E293B; margin-bottom: 1rem; }
+.related-term-link { display: inline-block; background: #F1F5F9; color: #334155; padding: 0.5rem 1rem; border-radius: 8px; margin: 0.25rem; text-decoration: none; transition: all 0.2s; }
+.related-term-link:hover { background: #3B82F6; color: #fff; }
+</style>
+{% endblock style %}
+
+{% block body %}
+{% include "glossary/_jsonld_defined_term.html" %}
+<section class="term-detail-hero">
+    <div class="container">
+        <nav class="term-breadcrumb">
+            <a href="{{ glossary_base_url }}">{{ t.back_to_glossary }}</a> &rsaquo; {{ term.title }}
+        </nav>
+        <h1>{{ term.title }}</h1>
+    </div>
+</section>
+
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 0 1rem 3rem;">
+    <div class="term-content">
+        <p class="term-short-def">{{ term.short_def }}</p>
+        
+        {% if term.long_def %}
+        <div class="term-long-def">
+            {{ term.long_def|safe }}
+        </div>
+        {% endif %}
+        
+        <div class="term-meta">
+            <strong>{{ t.categories_label|default:"Kategorien" }}:</strong>
+            <div class="term-categories">
+                {% load glossary_tags %}
+                {% for cat in term.term.categories.all %}
+                <span class="term-category-tag">{{ cat.label|translate_category:lang }}</span>
+                {% empty %}
+                <span class="term-category-tag">{{ t.general_label|default:"Allgemein" }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        
+        {% if related_terms %}
+        <div class="related-terms">
+            <h3>{{ t.related_terms }}</h3>
+            {% for related in related_terms %}
+            <a href="{{ glossary_base_url }}{{ related.slug }}/" class="related-term-link">{{ related.title }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

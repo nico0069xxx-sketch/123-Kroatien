@@ -1,0 +1,21 @@
+{% if translation.term.is_published and translation.status == "approved" or translation.term.is_published and translation.status == "published" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  "@id": "{{ canonical_url }}",
+  "url": "{{ canonical_url }}",
+  "name": "{{ translation.title|escapejs }}",
+  "description": "{{ translation.long_def|default:translation.short_def|striptags|escapejs }}",
+  "inDefinedTermSet": {
+    "@type": "DefinedTermSet",
+    "name": "Croatia Real Estate Glossary",
+    "url": "{{ glossary_index_url }}"
+  }{% if related_urls %},
+  "isRelatedTo": [
+    {% for u in related_urls %}"{{ u }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]{% endif %}
+}
+</script>
+{% endif %}

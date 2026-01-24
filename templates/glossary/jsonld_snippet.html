@@ -1,0 +1,25 @@
+{# templates/glossary/_jsonld_defined_term.html #}
+{# Renders JSON-LD for a glossary term (DefinedTerm). #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  "@id": "{{ canonical_url }}",
+  "url": "{{ canonical_url }}",
+  "name": {{ t.title|json_script:"_tmp_title" }},
+  "description": {{ (t.long_def|default:t.short_def)|json_script:"_tmp_desc" }},
+  "inDefinedTermSet": {
+    "@type": "DefinedTermSet",
+    "name": "Croatia Real Estate Glossary",
+    "url": "{{ glossary_index_url }}"
+  }{% if related_urls %},
+  "isRelatedTo": [
+    {% for u in related_urls %}"{{ u }}"{% if not forloop.last %},{% endif %}{% endfor %}
+  ]{% endif %}
+}
+</script>
+
+{# Note:
+- canonical_url and glossary_index_url should be absolute URLs.
+- related_urls should be a list of absolute URLs for related terms in same language (fallback ge).
+#}

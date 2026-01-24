@@ -1,0 +1,1418 @@
+[
+  {
+    "canonical_key": "abgeschlossenes-bauwerk",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Afgerond Bouwwerk",
+      "slug": "afgerond-bouwwerk",
+      "short_def": "Wettelijk goedgekeurd en volledig afgerond onroerend goed.",
+      "long_def": "Een afgerond bouwwerk is een eigendom dat beschikt over een geldige bouwvergunning, volgens die vergunning is gebouwd en officieel als voltooid wordt beschouwd. In Kroatië is de wettelijke bouwlegaliteit een vereiste voor eigendomsregistratie, financiering, verhuur en wederverkoop.",
+      "synonyms": [
+        "voltooid gebouw",
+        "legaal bouwwerk"
+      ],
+      "keywords": [
+        "bouwlegaliteit",
+        "goedkeuring",
+        "vergunning"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "nutzungsbewilligung",
+      "legalisierung"
+    ]
+  },
+  {
+    "canonical_key": "abschreibung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Afschrijving",
+      "slug": "afschrijving",
+      "short_def": "Fiscale spreiding van eigendomskosten over meerdere jaren.",
+      "long_def": "De afschrijving stelt investeerders in staat om de aanschaf- of productiekosten van een eigendom fiscaal over een bepaalde periode te spreiden. In Kroatië gelden er verschillende afschrijvingsmogelijkheden, afhankelijk van het gebruik, vooral bij verhuur of commercieel gebruik.",
+      "synonyms": [
+        "AfA"
+      ],
+      "keywords": [
+        "belasting",
+        "rendement",
+        "investering"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "steuerpflicht",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "alleineigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Volledig Eigendom",
+      "slug": "volledig-eigendom",
+      "short_def": "Volledig eigendom van een pand door één enkele partij.",
+      "long_def": "Bij volledig eigendom is een onroerend goed 100 procent toegewezen aan een natuurlijke of rechtspersoon. Er zijn geen gedeelde eigendomsbelangen van derden. Deze eigendomsvorm vereenvoudigt besluitvormingsprocessen, verkoop en hypotheekvermeldingen in het kadaster.",
+      "synonyms": [
+        "Alleeneigendom"
+      ],
+      "keywords": [
+        "Eigendom",
+        "Kadaster",
+        "Onroerend Goed"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "miteigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "anzahlung-kapara",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Aanzegging (Kapara)",
+      "slug": "aanzegging-kapara",
+      "short_def": "Contractuele borgsom bij vastgoedkoop.",
+      "long_def": "De Kapara is een in Kroatië gebruikelijke aanbetaling die wordt gedaan bij het afsluiten van een voor- of koopcontract. Het biedt zekerheid voor beide contractpartijen. Afhankelijk van de contractvoorwaarden vervalt het bij annulering of moet het dubbel worden terugbetaald.",
+      "synonyms": [
+        "Borgsom koopcontract"
+      ],
+      "keywords": [
+        "Koopcontract",
+        "Voorcontract",
+        "Zekerheid"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "vorvertrag",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "baugenehmigung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Bouwvergunning",
+      "slug": "bouwvergunning",
+      "short_def": "Officiële toestemming voor de bouw van een bouwwerk.",
+      "long_def": "De bouwvergunning bevestigt dat een bouwproject voldoet aan de geldende bouw- en ruimtelijke ordeningsvoorschriften. Onroerend goed zonder geldige bouwvergunning wordt in Kroatië als juridisch risicovol beschouwd en kan gebruik, verkoop of financiering belemmeren.",
+      "synonyms": [
+        "Bouwtoestemming"
+      ],
+      "keywords": [
+        "Bouw",
+        "Vergunning",
+        "Legaliteit"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "legalisierung",
+      "nutzungsbewilligung",
+      "widmungsplan"
+    ]
+  },
+  {
+    "canonical_key": "bebaubarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Bebouwbaarheid",
+      "slug": "bebouwbaarheid",
+      "short_def": "Juridische mogelijkheid om een perceel te bebouwen.",
+      "long_def": "Bebouwbaarheid beschrijft of en in welke mate een perceel mag worden bebouwd. Dit wordt bepaald door bestemmingsplannen, bouwverordeningen en lokale voorschriften, en is een centrale waardefactor voor percelen.",
+      "synonyms": [
+        "Bouwtoelaatbaarheid"
+      ],
+      "keywords": [
+        "Perceel",
+        "Bouw",
+        "Bestemming"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "baukoeffizient",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "belastung-grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Last (Kadaster)",
+      "slug": "last-kadaster",
+      "short_def": "In het kadaster geregistreerde beperking of verplichting.",
+      "long_def": "Lasten zoals hypotheken, erfdienstbaarheden of woonrechten worden in het Kroatische kadaster geregistreerd. Ze kunnen het gebruik, de waarde en de beschikbaarheid van een onroerend goed aanzienlijk beïnvloeden en moeten voor elke aankoop worden onderzocht.",
+      "synonyms": [
+        "Kadasterlast"
+      ],
+      "keywords": [
+        "Hypotheek",
+        "Erfdienstbaarheid",
+        "Risico"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "hypothek",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "closing",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Afsluiting",
+      "slug": "afsluiting",
+      "short_def": "Juridische afronding van een vastgoedkoop.",
+      "long_def": "De afsluiting is de laatste stap in de vastgoedkoop waarbij betaling, contractondertekening en eigendomsoverdracht plaatsvinden. In Kroatië wordt dit proces meestal notarieel begeleid.",
+      "synonyms": [
+        "Koopafsluiting"
+      ],
+      "keywords": [
+        "Eigendomsoverdracht",
+        "Notaris",
+        "Vastgoedkoop"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "grundbuch",
+      "notar"
+    ]
+  },
+  {
+    "canonical_key": "due-diligence",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "risk"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Due Diligence",
+      "slug": "due-diligence",
+      "short_def": "Uitgebreide wettelijke en economische vastgoedcontrole.",
+      "long_def": "Due Diligence omvat de controle van eigendom, bouwlegaliteit, lasten, belastingen en gebruiksmogelijkheden. Dit is in Kroatië essentieel om juridische en financiële risico's voor aankoop te minimaliseren.",
+      "synonyms": [
+        "Zorgvuldigheidsonderzoek"
+      ],
+      "keywords": [
+        "Risico",
+        "Controle",
+        "Wet"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "baugenehmigung",
+      "steuern"
+    ]
+  },
+  {
+    "canonical_key": "dienstbarkeit",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Erfdienstbaarheid (Servituut)",
+      "slug": "erfdienstbaarheid-servituut",
+      "short_def": "In het kadaster opgenomen gebruiksrecht ten gunste van derden.",
+      "long_def": "Een erfdienstbaarheid is een recht dat in het kadaster is opgenomen en dat een persoon of onroerend goed bepaalde gebruiksrechten toekent of voorschrijft, zoals recht van overpad of leidingrechten. Dit kan de marktwaarde beïnvloeden.",
+      "synonyms": [
+        "Servituut"
+      ],
+      "keywords": [
+        "recht van overpad",
+        "leidingrechten",
+        "kadaster"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "doppelbesteuerungsabkommen",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax",
+        "international"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Dubbelbelastingverdrag",
+      "slug": "dubbelbelastingverdrag",
+      "short_def": "Overeenkomst om dubbele belastingheffing te voorkomen.",
+      "long_def": "Dubbelbelastingverdragen bepalen welke staat het belastingrecht over inkomsten uit onroerend goed bezit. Voor internationale investeerders in Kroatië zijn ze cruciaal om dubbele belastingheffing te vermijden.",
+      "synonyms": [
+        "DBV"
+      ],
+      "keywords": [
+        "Internationale belastingen",
+        "Belastingheffing",
+        "Kroatië"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "eigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Eigendom",
+      "slug": "eigendom",
+      "short_def": "Wettelijk beschermd beheer van een onroerend goed.",
+      "long_def": "Eigendom beschrijft het uitgebreide recht om over een onroerend goed te beschikken, het te gebruiken, te belasten of te vervreemden. In Kroatië ontstaat eigendom van onroerend goed pas bij de inschrijving in het kadaster.",
+      "synonyms": [
+        "Onroerende eigendom"
+      ],
+      "keywords": [
+        "Kadaster",
+        "Eigenaar",
+        "Recht"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "alleineigentum",
+      "miteigentum"
+    ]
+  },
+  {
+    "canonical_key": "eigentumsuebertragung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Eigendomsoverdracht",
+      "slug": "eigendomsoverdracht",
+      "short_def": "Juridische overgang van eigendom naar de koper.",
+      "long_def": "In Kroatië vindt de eigendomsoverdracht plaats door inschrijving van de nieuwe eigenaar in het kadaster. Vereist zijn een geldig koopcontract en bewijs van betaling.",
+      "synonyms": [
+        "Eigendomsoverschrijving"
+      ],
+      "keywords": [
+        "Kadaster",
+        "Koopcontract",
+        "Aktepassering"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "grundbuch",
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "erschliessung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Ontsluiting",
+      "slug": "ontsluiting",
+      "short_def": "Aansluiting van een perceel op infrastructuur.",
+      "long_def": "Ontsluiting omvat de aansluiting van een perceel op openbare infrastructuur zoals wegen, elektriciteit, water en riolering. De mate van ontsluiting beïnvloedt de bebouwbaarheid en de marktwaarde aanzienlijk.",
+      "synonyms": [
+        "Infrastructuuraansluiting"
+      ],
+      "keywords": [
+        "Perceel",
+        "Infrastructuur",
+        "Bouw"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "grundstueck",
+      "baukosten"
+    ]
+  },
+  {
+    "canonical_key": "finanzierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Financiering",
+      "slug": "financiering",
+      "short_def": "Financiering van onroerend goed met vreemd of eigen vermogen.",
+      "long_def": "De financiering beschrijft het verstrekken van eigen en vreemd vermogen voor de aankoop of bouw van onroerend goed. In Kroatië is financiering voor buitenlanders mogelijk, maar aan bepaalde voorwaarden verbonden.",
+      "synonyms": [
+        "Vastgoedlening"
+      ],
+      "keywords": [
+        "Lening",
+        "Bank",
+        "Eigen vermogen"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "hypothek",
+      "rendite",
+      "bank"
+    ]
+  },
+  {
+    "canonical_key": "flaechenwidmung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Bestemming van gronden",
+      "slug": "bestemming-van-gronden",
+      "short_def": "Vaststelling van het toegestane gebruik van percelen.",
+      "long_def": "De bestemming van gronden bepaalt hoe een perceel mag worden gebruikt, zoals als bouwgrond, groenland of toeristische zone. Het is onderdeel van de ruimtelijke ordening en basis voor elke bouwbeslissing.",
+      "synonyms": [
+        "Bestemming"
+      ],
+      "keywords": [
+        "Ruimtelijke ordening",
+        "Bouwzone",
+        "Gebruik"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "widmungsplan",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "grundbuch",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Kadaster",
+      "slug": "kadaster",
+      "short_def": "Openbaar register voor eigendom en lasten.",
+      "long_def": "Het Kroatische kadaster is een openbaar register waarin eigendomsverhoudingen, lasten en rechten op onroerend goed zijn ingeschreven. Alleen ingeschreven rechten worden als juridisch bindend beschouwd.",
+      "synonyms": [
+        "Grondboek"
+      ],
+      "keywords": [
+        "Eigendom",
+        "Hypotheek",
+        "Erfdienstbaarheid"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "belastung-grundbuch",
+      "eigentum",
+      "dienstbarkeit"
+    ]
+  },
+  {
+    "canonical_key": "grundstueck",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Perceel",
+      "slug": "perceel",
+      "short_def": "Onoverdekte of bebouwbare grond.",
+      "long_def": "Een perceel is een afgegrensd stuk grond dat bebouwd of onbebouwd kan zijn. Gebruik en bebouwing hangen af van bestemmingsplannen, infrastructuur en bouwvoorschriften.",
+      "synonyms": [
+        "Kavel"
+      ],
+      "keywords": [
+        "Grond",
+        "Bouwgrond",
+        "Perceel"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "bebaubarkeit",
+      "flaechenwidmung",
+      "erschliessung"
+    ]
+  },
+  {
+    "canonical_key": "hypothek",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "finance",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Hypotheek",
+      "slug": "hypotheek",
+      "short_def": "In de kadastrale registratie gedekte pandrecht.",
+      "long_def": "De hypotheek is een in de kadastrale registratie ingeschreven pandrecht ten gunste van een kredietverstrekker. Het dient als zekerheid voor leningen en vormt een aanzienlijke last op het vastgoed.",
+      "synonyms": [
+        "Pandrecht"
+      ],
+      "keywords": [
+        "Krediet",
+        "Last",
+        "Bank"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "belastung-grundbuch",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "immobilienbewertung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Vastgoedwaardering",
+      "slug": "vastgoedwaardering",
+      "short_def": "Bepaling van de marktconforme waarde van onroerend goed.",
+      "long_def": "De vastgoedwaardering dient voor de bepaling van de huidige marktwaarde van een onroerend goed. In Kroatië houden waarderingen rekening met locatie, staat, gebruiksmogelijkheden, juridische situatie en marktomgeving. Dit is van belang voor aankoopbeslissingen, financieringen en investeringsanalyses.",
+      "synonyms": [
+        "Marktwaardebepaling"
+      ],
+      "keywords": [
+        "Marktwaarde",
+        "Waardering",
+        "Rendement"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "rendite",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "immobilienkauf",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Vastgoedkoop",
+      "slug": "vastgoedkoop",
+      "short_def": "Verwerving van eigendom van een onroerend goed.",
+      "long_def": "De vastgoedkoop in Kroatië omvat het sluiten van een contract, de betaling van de koopprijs en de registratie in het kadaster. Voor buitenlandse kopers zijn er juridische, fiscale en formele bijzonderheden.",
+      "synonyms": [
+        "Vastgoedaankoop",
+        "Onroerend goed verwerving"
+      ],
+      "keywords": [
+        "Koopcontract",
+        "Kadaster",
+        "Afronding"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "investition",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Investering",
+      "slug": "investering",
+      "short_def": "Kapitaalbelegging met het doel van waardestijging of rendement.",
+      "long_def": "Een vastgoedinvestering is gericht op lopende inkomsten, waardevermeerdering of beide. In Kroatië spelen locatie, gebruik, fiscale kaders en juridische zekerheid een centrale rol.",
+      "synonyms": [
+        "Kapitaalbelegging"
+      ],
+      "keywords": [
+        "Rendement",
+        "Waardevermeerdering",
+        "Vastgoed",
+        "Locatie",
+        "Inkomsten"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "immobilienbewertung",
+      "due-diligence"
+    ]
+  },
+  {
+    "canonical_key": "kaufvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Koopovereenkomst",
+      "slug": "koopovereenkomst",
+      "short_def": "Juridische overeenkomst voor de aankoop van onroerend goed.",
+      "long_def": "De koopovereenkomst regelt de rechten en plichten van koper en verkoper. In Kroatië moet deze aan bepaalde formele eisen voldoen en vormt de basis voor de betaling van de koopprijs en de eigendomsoverdracht.",
+      "synonyms": [
+        "Vastgoedkoopovereenkomst"
+      ],
+      "keywords": [
+        "Overeenkomst",
+        "Notaris",
+        "Kapara"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "closing",
+      "eigentumsuebertragung"
+    ]
+  },
+  {
+    "canonical_key": "legalisierung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Legalisatie",
+      "slug": "legalisatie",
+      "short_def": "Achteraf juridische erkenning van een bouwwerk.",
+      "long_def": "Legalisatie verwijst naar de procedure voor de achteraf goedkeuring van een bouwwerk zonder geldige bouwvergunning. In Kroatië is het gebonden aan strenge voorwaarden en niet altijd mogelijk.",
+      "synonyms": [
+        "Na-goedkeuring"
+      ],
+      "keywords": [
+        "Bouwlegaliteit",
+        "Vergunning",
+        "Bouwwetgeving",
+        "Kroatië"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "baugenehmigung",
+      "abgeschlossenes-bauwerk",
+      "nutzungsbewilligung"
+    ]
+  },
+  {
+    "canonical_key": "luxusimmobilie",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": [
+        "villa",
+        "apartment"
+      ]
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Luxe vastgoed",
+      "slug": "luxe-vastgoed",
+      "short_def": "Hoogwaardig vastgoed met bovengemiddelde voorzieningen.",
+      "long_def": "Luxe vastgoed onderscheidt zich door een exclusieve locatie, hoge bouwkwaliteit, design, privacy en bijzondere voorzieningen. In Kroatië zijn ze vaak te vinden aan de kust of op eilanden.",
+      "synonyms": [
+        "Premium vastgoed"
+      ],
+      "keywords": [
+        "Villa",
+        "Premium",
+        "Exclusief",
+        "Kroatië",
+        "Design"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "marktwert",
+      "investition",
+      "rendite"
+    ]
+  },
+  {
+    "canonical_key": "marktwert",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "valuation"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Marktwaarde",
+      "slug": "marktwaarde",
+      "short_def": "Prijs die op de vrije markt behaald kan worden.",
+      "long_def": "De marktwaarde beschrijft de waarschijnlijk haalbare prijs van een onroerend goed bij verkoop onder normale marktomstandigheden. Het wordt bepaald door aanbod, vraag, locatie, staat en juridische kaders.",
+      "synonyms": [
+        "Verkeerswaarde"
+      ],
+      "keywords": [
+        "Beoordeling",
+        "Prijs",
+        "Vastgoedmarkt"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "immobilienbewertung",
+      "rendite",
+      "investition"
+    ]
+  },
+  {
+    "canonical_key": "miteigentum",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Medeigendom",
+      "slug": "medeigendom",
+      "short_def": "Gemeenschappelijk eigendom van meerdere partijen.",
+      "long_def": "Bij medeigendom behoort een onroerend goed in bepaalde delen aan meerdere personen. Beslissingen over gebruik, verkoop of belasting vereisen, afhankelijk van de situatie, de goedkeuring van alle mede-eigenaars.",
+      "synonyms": [
+        "Gemeenschappijke eigendom"
+      ],
+      "keywords": [
+        "Eigendomsaandelen",
+        "Rechten",
+        "Gezamenlijk bezit"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "alleineigentum",
+      "grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "notar",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Notaris",
+      "slug": "notaris",
+      "short_def": "Openbare ambtenaar voor contractnotarieel.",
+      "long_def": "De notaris begeleidt in Kroatië de aankoop van onroerend goed door middel van ondertekening van handtekeningen en legalisering van contracten. Hij zorgt voor de formele juridische zekerheid van het aankoopproces.",
+      "synonyms": [
+        "Notariaat"
+      ],
+      "keywords": [
+        "Notariële akte",
+        "Koopcontract",
+        "Eigendomsoverdracht",
+        "Verificatie",
+        "Juridische zekerheid"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "kaufvertrag",
+      "closing"
+    ]
+  },
+  {
+    "canonical_key": "oib-nummer",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "tax",
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "OIB-nummer",
+      "slug": "oib-nummer",
+      "short_def": "Persoonlijk Kroatisch fiscaal identificatienummer.",
+      "long_def": "De OIB-nummer is een unieke fiscale identificatienummer, vereist in Kroatië voor bijna alle juridische en fiscale transacties, waaronder de aankoop van onroerend goed en eigendomsregistratie.",
+      "synonyms": [
+        "Fiscaal ID Kroatië"
+      ],
+      "keywords": [
+        "Belastingen",
+        "Registratie",
+        "Kroatië"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "rendite",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "valuation",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Rendement",
+      "slug": "rendement",
+      "short_def": "Opbrengst van een vastgoedinvestering in verhouding tot de inzet.",
+      "long_def": "Het rendement meet de financiële opbrengst van een vastgoed ten opzichte van het geïnvesteerde kapitaal. Het houdt rekening met huurinkomsten, kosten, belastingen en potentiële waardestijgingen.",
+      "synonyms": [
+        "Opbrengst"
+      ],
+      "keywords": [
+        "Cashflow",
+        "Investering",
+        "Waardevermeerdering"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "investition",
+      "immobilienbewertung",
+      "vermietung"
+    ]
+  },
+  {
+    "canonical_key": "steuerpflicht",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Belastingplicht",
+      "slug": "belastingplicht",
+      "short_def": "Verplichting tot betaling van belastingen.",
+      "long_def": "De belastingplicht beschrijft de wettelijke verplichting om belasting te betalen. Bij eigendom van onroerend goed in Kroatië kunnen aankoop-, eigendoms- en opbrengstbelastingen van toepassing zijn.",
+      "synonyms": [
+        "Belastingverplichting"
+      ],
+      "keywords": [
+        "Belastingen",
+        "Afdrachten",
+        "Onroerend goed"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "oib-nummer",
+      "doppelbesteuerungsabkommen"
+    ]
+  },
+  {
+    "canonical_key": "servitut",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "legal"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Dienstbaarheid",
+      "slug": "dienstbaarheid",
+      "short_def": "In het kadaster geregistreerd gebruiksrecht ten gunste van derden.",
+      "long_def": "Een dienstbaarheid is een recht dat in het kadaster wordt ingeschreven en bepaalde personen of percelen gebruiksrechten verleent, zoals weg- of leidingrechten. Dienstbaarheden kunnen het gebruik en de waarde van een eigendom beïnvloeden.",
+      "synonyms": [
+        "erfdienstbaarheid"
+      ],
+      "keywords": [
+        "wegerecht",
+        "leidingrecht",
+        "gebruiksrecht"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "dienstbarkeit",
+      "grundbuch",
+      "belastung-grundbuch"
+    ]
+  },
+  {
+    "canonical_key": "uebergabeprotokoll",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Overdrachtsprotocol",
+      "slug": "overdrachtsprotocol",
+      "short_def": "Gedocumenteerde overdracht van een onroerend goed aan de koper.",
+      "long_def": "Het overdrachtsprotocol documenteert de staat van het onroerend goed op het moment van overdracht. Het bevat informatie over gebreken, meterstanden, sleutels en uitrusting en dient ter juridische zekerheid voor beide partijen.",
+      "synonyms": [
+        "Overdrachtsdocument"
+      ],
+      "keywords": [
+        "Overdracht",
+        "Staat",
+        "Meterstanden",
+        "Sleutels",
+        "Uitrusting"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "closing",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "umsatzsteuer-pdv",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "tax"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Btw (PDV)",
+      "slug": "btw-pdv",
+      "short_def": "Belasting over de toegevoegde waarde bij bepaalde vastgoedtransacties.",
+      "long_def": "De btw (PDV) kan bij de aankoop van nieuwe eigendommen of bij commercieel gebruik van toepassing zijn. In Kroatië bedraagt het reguliere tarief 25 procent. Of PDV of overdrachtsbelasting geldt, hangt af van het type en de leeftijd van het onroerend goed.",
+      "synonyms": [
+        "Belasting over de toegevoegde waarde"
+      ],
+      "keywords": [
+        "PDV",
+        "belasting",
+        "vastgoed",
+        "Kroatië",
+        "btw"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "steuerpflicht",
+      "immobilienkauf"
+    ]
+  },
+  {
+    "canonical_key": "vermietung",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer"
+      ],
+      "topic": [
+        "rental",
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Verhuur",
+      "slug": "verhuur",
+      "short_def": "Het verhuren van een onroerend goed tegen vergoeding.",
+      "long_def": "Verhuur omvat de tijdelijke terbeschikkingstelling van een onroerend goed tegen betaling. In Kroatië moeten fiscale, juridische en vergunningseisen worden nageleefd, vooral bij toeristische kortetermijnverhuur.",
+      "synonyms": [
+        "Huurrelatie"
+      ],
+      "keywords": [
+        "Huur",
+        "Inkomsten",
+        "Onroerend goed"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "rendite",
+      "umsatzsteuer-pdv",
+      "steuerpflicht"
+    ]
+  },
+  {
+    "canonical_key": "vorvertrag",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "holiday-buyer",
+        "luxury"
+      ],
+      "topic": [
+        "purchase-process"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Voorcontract",
+      "slug": "voorcontract",
+      "short_def": "Tijdelijke contractuele binding voorafgaand aan de aankoopovereenkomst.",
+      "long_def": "Een voorcontract behandelt de essentiële punten van een geplande vastgoedkoop vóór de definitieve koopovereenkomst. Vaak omvat het de aankoopprijs, betalingsvoorwaarden en een kapara.",
+      "synonyms": [
+        "Reserveringsovereenkomst"
+      ],
+      "keywords": [
+        "Kapara",
+        "Aankoopproces",
+        "Vastgoedkozijn"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "anzahlung-kapara",
+      "kaufvertrag"
+    ]
+  },
+  {
+    "canonical_key": "widmungsplan",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor",
+        "luxury"
+      ],
+      "topic": [
+        "legal",
+        "building-permits"
+      ],
+      "asset_type": [
+        "land"
+      ]
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Bestemmingsplan",
+      "slug": "bestemmingsplan",
+      "short_def": "Plan voor het toegestane gebruik van percelen.",
+      "long_def": "Het bestemmingsplan is een ruimtelijk ordeningsinstrument en bepaalt hoe percelen mogen worden gebruikt. Het vormt de basis voor bouwvergunningen en investeringsbeslissingen.",
+      "synonyms": [
+        "Ruimtelijk ordeningsplan"
+      ],
+      "keywords": [
+        "bestemming",
+        "bouwzone",
+        "grondgebruik"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "flaechenwidmung",
+      "bebaubarkeit",
+      "grundstueck"
+    ]
+  },
+  {
+    "canonical_key": "zins",
+    "is_published": true,
+    "categories": {
+      "audience": [
+        "investor"
+      ],
+      "topic": [
+        "finance"
+      ],
+      "asset_type": []
+    },
+    "translation": {
+      "language": "nl",
+      "title": "Rente",
+      "slug": "rente",
+      "short_def": "Kosten voor geleend kapitaal.",
+      "long_def": "De rente is de vergoeding voor het gebruik van vreemd kapitaal. Bij vastgoedfinancieringen beïnvloeden rentetarieven de totale kosten en de rentabiliteit van een investering sterk.",
+      "synonyms": [
+        "Rentetarief"
+      ],
+      "keywords": [
+        "Krediet",
+        "Financiering",
+        "Investering"
+      ],
+      "faqs": [],
+      "status": "needs_review"
+    },
+    "related_terms": [
+      "finanzierung",
+      "rendite"
+    ]
+  }
+]

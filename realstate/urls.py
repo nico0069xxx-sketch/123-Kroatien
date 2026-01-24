@@ -4,8 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from main.views import set_language_from_url, news_page
+from main.views import set_language_from_url, news_page, sitemap as html_sitemap
 from main.xml_views import rss_listings, xml_sitemap, robots_txt, xml_sitemap, robots_txt, rss_listings
+from django.contrib.sitemaps.views import sitemap
+from main.glossary_sitemaps import get_glossary_sitemaps
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -13,6 +15,20 @@ urlpatterns = [
         # SEO (öffentlich zugänglich)
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
+    path('sitemaps/glossary.xml', sitemap, {'sitemaps': get_glossary_sitemaps()},    	name='glossary-sitemap'),
+    path('sitemap', html_sitemap, name='sitemap-html'),
+    path('ge/sitemap', html_sitemap, name='sitemap-ge'),
+    path('en/sitemap', html_sitemap, name='sitemap-en'),
+    path('hr/sitemap', html_sitemap, name='sitemap-hr'),
+    path('fr/sitemap', html_sitemap, name='sitemap-fr'),
+    path('nl/sitemap', html_sitemap, name='sitemap-nl'),
+    path('pl/sitemap', html_sitemap, name='sitemap-pl'),
+    path('cz/sitemap', html_sitemap, name='sitemap-cz'),
+    path('sk/sitemap', html_sitemap, name='sitemap-sk'),
+    path('ru/sitemap', html_sitemap, name='sitemap-ru'),
+    path('gr/sitemap', html_sitemap, name='sitemap-gr'),
+    path('sw/sitemap', html_sitemap, name='sitemap-sw'),
+    path('no/sitemap', html_sitemap, name='sitemap-no'),
     path('rss/listings/', rss_listings, {'lang': 'ge'}, name='rss_listings'),
     path('en/rss/listings/', rss_listings, {'lang': 'en'}, name='rss_en'),
     path('hr/rss/listings/', rss_listings, {'lang': 'hr'}, name='rss_hr'),
@@ -47,6 +63,8 @@ urlpatterns += [
 # Professional Detail URLs (ohne i18n prefix)
 from main import professional_views, views
 from main import address_views, content_views
+from main import glossary_views
+from main.glossary_urls import glossary_urlpatterns
 urlpatterns += [
     # MARKT - muss VOR Professional URLs stehen
     path("ge/kroatien/marktberichte/", content_views.market_report_list, {"country": "kroatien"}, name="market-reports-ge-direct"),
@@ -58,6 +76,10 @@ urlpatterns += [
     
     path("ge/kroatien/partner-werden/", views.partner_landing, {"lang": "ge"}, name="partner-landing-ge-direct"),
     path("hr/hrvatska/postanite-partner/", views.partner_landing, {"lang": "hr"}, name="partner-landing-hr-direct"),
+    
+    # GLOSSAR URLs für alle 12 Sprachen - VOR <str:category>!
+    *glossary_urlpatterns,
+    
     path("ge/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-ge-direct"),
     path("ge/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-ge-direct"),
     path("hr/hrvatska/<str:category>/", professional_views.professional_list, {"country": "hrvatska"}, name="professional-list-hr-direct"),
@@ -70,3 +92,5 @@ path('portal/', include('main.professional_portal_urls')),
     path('', include('main.urls')),
     prefix_default_language=True,
 )
+
+handler404 = 'main.views_404.smart_404_handler'

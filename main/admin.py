@@ -137,3 +137,15 @@ class LeadAdmin(admin.ModelAdmin):
 
 from main.professional_models import Lead
 
+
+# Glossar Admin
+from main.glossary_admin import *
+
+# RedirectRule Admin
+from main.redirect_rule_model import RedirectRule
+
+@admin.register(RedirectRule)
+class RedirectRuleAdmin(admin.ModelAdmin):
+    list_display = ['source_path', 'target_url', 'status_code', 'is_active']
+    list_filter = ['is_active', 'status_code']
+    search_fields = ['source_path', 'target_url', 'note']

@@ -1,0 +1,100 @@
+{
+  "taxonomies": [
+    {
+      "group": "audience",
+      "key": "investor",
+      "label": "Investoren",
+      "order": 10
+    },
+    {
+      "group": "audience",
+      "key": "holiday-buyer",
+      "label": "Ferienkäufer & Vermietung",
+      "order": 20
+    },
+    {
+      "group": "audience",
+      "key": "luxury",
+      "label": "Luxus & Premium",
+      "order": 30
+    },
+    {
+      "group": "topic",
+      "key": "legal",
+      "label": "Recht & Grundbuch",
+      "order": 10
+    },
+    {
+      "group": "topic",
+      "key": "tax",
+      "label": "Steuern",
+      "order": 20
+    },
+    {
+      "group": "topic",
+      "key": "purchase-process",
+      "label": "Kaufprozess & Closing",
+      "order": 30
+    },
+    {
+      "group": "topic",
+      "key": "rental",
+      "label": "Vermietung & Betrieb",
+      "order": 40
+    },
+    {
+      "group": "topic",
+      "key": "valuation",
+      "label": "Bewertung",
+      "order": 50
+    },
+    {
+      "group": "topic",
+      "key": "finance",
+      "label": "Finanzierung",
+      "order": 60
+    },
+    {
+      "group": "topic",
+      "key": "building-permits",
+      "label": "Bau & Genehmigungen",
+      "order": 70
+    },
+    {
+      "group": "asset_type",
+      "key": "apartment",
+      "label": "Apartment/Wohnung",
+      "order": 10
+    },
+    {
+      "group": "asset_type",
+      "key": "villa",
+      "label": "Villa",
+      "order": 20
+    },
+    {
+      "group": "asset_type",
+      "key": "house",
+      "label": "Haus",
+      "order": 30
+    },
+    {
+      "group": "asset_type",
+      "key": "land",
+      "label": "Grundstück",
+      "order": 40
+    },
+    {
+      "group": "asset_type",
+      "key": "hotel",
+      "label": "Hotel/Resort",
+      "order": 50
+    },
+    {
+      "group": "asset_type",
+      "key": "marina",
+      "label": "Marina",
+      "order": 60
+    }
+  ]
+}
