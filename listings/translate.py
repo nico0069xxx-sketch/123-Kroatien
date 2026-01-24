@@ -1,8 +1,12 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from translate import Translator
+import os
+from dotenv import load_dotenv
 
-chat = ChatOpenAI(openai_api_key="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")
+load_dotenv()
+
+chat = ChatOpenAI(openai_api_key=os.getenv('OPENAI_API_KEY'))
 
 def detect_language(obj):
     messages = [
