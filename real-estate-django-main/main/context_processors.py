@@ -191,9 +191,12 @@ def get_language_urls_for_path(current_path: str, current_lang: str) -> str:
                 urls[lang] = f"/{lang}/{country}/{glossary}/"
     
     elif current_path == '/sitemap/' or current_path == '/sitemap':
-        # Sitemap hat keine Sprachpräfixe - bleibt immer gleich
+        # Sitemap unterstützt jetzt Sprachpräfixe
         for lang in ALL_LANGUAGES:
-            urls[lang] = '/sitemap/'
+            if lang == 'ge':
+                urls[lang] = '/sitemap/'  # Default Sprache ohne Präfix
+            else:
+                urls[lang] = f'/{lang}/sitemap/'
     
     else:
         # Statische Seiten oder unbekannte Pfade
