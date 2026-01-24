@@ -37,7 +37,8 @@ urlpatterns = [
     path('data-protection/', views.data_protection, name='data-protection'),
     path('agb', views.agb, name='agb'),
     path('cancellation-policy', views.cancellation_policy, name='cancellation-policy'),
-    path('sitemap', views.sitemap, name='sitemap'),
+    path('sitemap/', views.sitemap, name='sitemap'),
+    path('sitemap', views.sitemap, name='sitemap-no-slash'),  # Redirect für URLs ohne Slash
     path('service', views.service, name='service'),
     # temporary
     path('login-required/', views.loginRequired, name='login_required'),
