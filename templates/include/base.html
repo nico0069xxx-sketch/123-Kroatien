@@ -376,17 +376,7 @@
             // Sprach-URLs für den Sprachumschalter (dynamisch vom Server generiert)
             var languageUrls = {{ language_urls_json|safe|default:'{}' }};
 
-            function changelanguage(value) {
-                // Prüfen ob wir eine spezifische URL für diese Sprache haben
-                if (languageUrls && languageUrls[value]) {
-                    // Sprache in Session setzen UND zur korrekten übersetzten URL navigieren
-                    window.location.href = "/set-language/" + value + "/?next=" + encodeURIComponent(languageUrls[value]);
-                } else {
-                    // Fallback: Aktuelle URL als Parameter übergeben
-                    var currentPath = window.location.pathname + window.location.search;
-                    window.location.href = "/set-language/" + value + "/?next=" + encodeURIComponent(currentPath);
-                }
-            }
+            function changelanguage(value) { var path = window.location.pathname; if (path.indexOf("sitemap") !== -1) { window.location.href = "/set-language/" + value + "/?next=/sitemap"; } else { window.location.href = "/set-language/" + value + "/"; } }
 
         </script>
         {% block js %}{% endblock js %}

@@ -683,6 +683,7 @@ def set_language_from_url(request, user_language):
     if next_url:
         return HttpResponseRedirect(next_url)
     
+    
     # Priorität 2: HTTP_REFERER mit URL-Übersetzung
     referer = request.META.get('HTTP_REFERER', '/')
     

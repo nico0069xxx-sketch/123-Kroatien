@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from main.views import set_language_from_url, news_page
+from main.views import set_language_from_url, news_page, sitemap as html_sitemap
 from main.xml_views import rss_listings, xml_sitemap, robots_txt, xml_sitemap, robots_txt, rss_listings
 from django.contrib.sitemaps.views import sitemap
 from main.glossary_sitemaps import get_glossary_sitemaps
@@ -16,6 +16,19 @@ urlpatterns = [
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
     path('sitemaps/glossary.xml', sitemap, {'sitemaps': get_glossary_sitemaps()},    	name='glossary-sitemap'),
+    path('sitemap', html_sitemap, name='sitemap-html'),
+    path('ge/sitemap', html_sitemap, name='sitemap-ge'),
+    path('en/sitemap', html_sitemap, name='sitemap-en'),
+    path('hr/sitemap', html_sitemap, name='sitemap-hr'),
+    path('fr/sitemap', html_sitemap, name='sitemap-fr'),
+    path('nl/sitemap', html_sitemap, name='sitemap-nl'),
+    path('pl/sitemap', html_sitemap, name='sitemap-pl'),
+    path('cz/sitemap', html_sitemap, name='sitemap-cz'),
+    path('sk/sitemap', html_sitemap, name='sitemap-sk'),
+    path('ru/sitemap', html_sitemap, name='sitemap-ru'),
+    path('gr/sitemap', html_sitemap, name='sitemap-gr'),
+    path('sw/sitemap', html_sitemap, name='sitemap-sw'),
+    path('no/sitemap', html_sitemap, name='sitemap-no'),
     path('rss/listings/', rss_listings, {'lang': 'ge'}, name='rss_listings'),
     path('en/rss/listings/', rss_listings, {'lang': 'en'}, name='rss_en'),
     path('hr/rss/listings/', rss_listings, {'lang': 'hr'}, name='rss_hr'),
