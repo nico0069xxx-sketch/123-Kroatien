@@ -10,6 +10,28 @@ Multilinguales Immobilienportal für Kroatien mit 12 Sprachen (DE, EN, HR, FR, N
 
 ---
 
+## Completed (Session 24. Januar 2026)
+
+### ✅ P0 Bug Fix: Sitemap 12-Sprachen Übersetzungen
+- **Problem**: Sitemap zeigte nur 3 Sprachen (DE, EN, HR), alle anderen zeigten deutschen Text
+- **Lösung**: 
+  1. `templates/main/sitemap.html` – Alle `{% if %}` Blöcke auf 12 Sprachen erweitert
+  2. Dienstleister-Links (Immobilienmakler, etc.) mit direkten Übersetzungen versehen
+- **Status**: IMPLEMENTIERT ✅
+
+### ✅ Bug Fix: Header-Sprachumschalter vereinfacht
+- **Problem**: Komplexe `languageUrls` Logik verursachte gemischte Sprachen
+- **Lösung**: `changelanguage()` Funktion auf einfache `/set-language/xx/` Weiterleitung reduziert
+- **Datei**: `templates/include/base.html`
+- **Status**: IMPLEMENTIERT ✅
+
+### ✅ URL Fix: Sitemap mit Trailing Slash
+- **Problem**: `/sitemap` vs `/sitemap/` Inkonsistenz
+- **Lösung**: Beide Varianten in `main/urls.py` registriert
+- **Status**: IMPLEMENTIERT ✅
+
+---
+
 ## Completed (Session 23. Januar 2026)
 
 ### ✅ P0 Bug Fix: Globaler Sprachumschalter
