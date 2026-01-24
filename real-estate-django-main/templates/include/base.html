@@ -285,19 +285,9 @@
                 //$('.btn-select').attr('value', 'en');
             }
 
-            // Sprach-URLs für den Sprachumschalter (dynamisch vom Server generiert)
-            var languageUrls = {{ language_urls_json|safe|default:'{}' }};
-
+            // Sprachumschalter - einfache Version die zuverlässig funktioniert
             function changelanguage(value) {
-                // Prüfen ob wir eine spezifische URL für diese Sprache haben
-                if (languageUrls && languageUrls[value]) {
-                    // Sprache in Session setzen UND zur korrekten übersetzten URL navigieren
-                    window.location.href = "/set-language/" + value + "/?next=" + encodeURIComponent(languageUrls[value]);
-                } else {
-                    // Fallback: Aktuelle URL als Parameter übergeben
-                    var currentPath = window.location.pathname + window.location.search;
-                    window.location.href = "/set-language/" + value + "/?next=" + encodeURIComponent(currentPath);
-                }
+                window.location.href = "/set-language/" + value + "/";
             }
 
         </script>
