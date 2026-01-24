@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-chat = ChatOpenAI(openai_api_key=os.getenv('OPENAI_API_KEY'))
+api_key = os.getenv('OPENAI_API_KEY')
+chat = ChatOpenAI(openai_api_key=api_key) if api_key else None
 
 def detect_language(obj):
     messages = [
