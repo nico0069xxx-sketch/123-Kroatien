@@ -1,11 +1,14 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from main.views import set_language_from_url
 from main.xml_views import rss_listings, xml_sitemap, robots_txt
+
+# Alle unterstützten Sprachen
+SUPPORTED_LANGUAGES = ['en', 'ge', 'fr', 'gr', 'hr', 'pl', 'cz', 'ru', 'sw', 'no', 'sk', 'nl']
 
 # URLs ohne Sprachpräfix (Admin, API, technische Routen)
 urlpatterns = [
@@ -22,11 +25,15 @@ urlpatterns = [
     
     # Professional Portal
     path('portal/', include('main.professional_portal_urls')),
+    
+    # Haupt-App URLs (ohne Präfix = Default Sprache Deutsch)
+    path('', include('main.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# URLs MIT Sprachpräfix (/en/, /de/, /hr/, etc.)
-urlpatterns += i18n_patterns(
-    path('', include('main.urls')),
-    prefix_default_language=False,  # /about/ für Deutsch (default), /en/about/ für English
-)
+# URLs MIT Sprachpräfix für alle 12 Sprachen (/en/, /hr/, /fr/, etc.)
+# Jede Sprache bekommt ihre eigenen URL-Patterns
+for lang in SUPPORTED_LANGUAGES:
+    urlpatterns.append(
+        path(f'{lang}/', include('main.urls'))
+    )
 
