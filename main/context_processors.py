@@ -92,7 +92,7 @@ def get_my_translations(request):
 
     context = {}
     # Lade alle Übersetzungen für die aktuelle Seite, navbar, footer und home
-    translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details') | Translation.objects.filter(page='home') | Translation.objects.filter(page='contact') | Translation.objects.filter(page='chatbot')
+    translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details') | Translation.objects.filter(page='home') | Translation.objects.filter(page='contact') | Translation.objects.filter(page='chatbot') | Translation.objects.filter(page='cookie')
     for t in translations:
         if user_language == 'en': context[t.name] = t.english_content
         elif user_language == 'ge': context[t.name] = t.german_content
