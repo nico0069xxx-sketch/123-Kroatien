@@ -1,4 +1,4 @@
-# Handoff - 24. Januar 2026 (Update)
+# Handoff - 24. Januar 2026 (Final)
 
 ## ✅ Erledigt (diese Session)
 - Globaler Sprachumschalter für 12 Sprachen (P0 Bug)
@@ -9,40 +9,24 @@
 - Cookie-Banner Übersetzungen
 - Logo-Styling fix (object-fit: contain)
 - **Security: translate.py nutzt jetzt .env statt hardcodierten Key**
-- Migrations sind stabil (getestet)
 
-## ✅ Alles funktioniert
-- Sprachumschalter (alle 12 Sprachen)
-- Chatbot mit Dienstleister-Empfehlungen
-- Expertenfinder mit KI-Matching
-- KI-Immobiliensuche
-- Cookie-Banner
+## ⚠️ OFFEN: Sitemap 12-Sprach-Übersetzungen
+Die Sitemap-Links sind nur in DE/EN/HR übersetzt:
+- Immobilienmakler, Bauunternehmen, etc.
+- Partner werden, Registrieren, Anmelden
+- Glossar, Marktberichte, Nachrichten
+- KI Schnellsuche, Expertenfinder
+- "Sprachen" Label
 
-## 🟠 Nächste Schritte (nice to have)
-1. Tote Links aufräumen (Sitemap prüfen)
-2. KI_STATUS_REPORT.md aktualisieren
-3. Mobile Ansicht prüfen
-4. SEO Check (Meta-Tags)
-5. Alle 12 Sprachen durchklicken
+**MUSS für alle 12 Sprachen übersetzt werden!**
 
 ## 📁 Wichtige Dateien
 - `main/context_processors.py` - Übersetzungen & URL-Mapping
 - `main/chatbot.py` - Chatbot mit KI-Matching
 - `main/chatbot_views.py` - API gibt auch Professionals zurück
 - `main/ki_matching.py` - Expertenfinder Logik
-- `main/matching_views.py` - Expertenfinder Views
+- `templates/main/sitemap.html` - BRAUCHT 12 SPRACHEN!
 - `listings/translate.py` - Übersetzungen (jetzt sicher!)
-- `templates/chatbot_widget.html` - Chatbot UI mit Karten
 
 ## 🔑 Branch
 `feature/glossary` - alle Commits gepusht
-
-## 📊 Commits heute
-- e9c62d7 - Sprachumschalter Fix
-- 6d63108 - Hero + Regex
-- d352930 - Chatbot + KI-Suche  
-- f4381e6 - Expertenfinder
-- 684c5ab - Cookie-Banner
-- daa4d8f - Handoff v1
-- b505716 - Chatbot Karten + Styling
-- 00d0196 - Security Fix translate.py
