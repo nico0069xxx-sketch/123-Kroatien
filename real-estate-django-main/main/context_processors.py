@@ -199,10 +199,18 @@ def get_language_urls_for_path(current_path: str, current_lang: str) -> str:
                 urls[lang] = f'/{lang}/sitemap/'
     
     else:
-        # Statische Seiten oder unbekannte Pfade
-        # Fallback: Sprache in Session setzen, aber auf gleicher Seite bleiben
-        # (für Seiten ohne übersetzte URLs wie /contact/, /about/, etc.)
+        # Statische Seiten (/contact/, /about/, /faq/, etc.)
+        # Entferne bestehendes Sprachpräfix falls vorhanden
+        clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
+        if not clean_path or clean_path == '':
+            clean_path = '/'
+        
         for lang in ALL_LANGUAGES:
-            urls[lang] = current_path if current_path else '/'
+            if lang == 'ge':
+                # Deutsche URLs ohne Präfix (Default)
+                urls[lang] = clean_path
+            else:
+                # Andere Sprachen mit Präfix
+                urls[lang] = f'/{lang}{clean_path}'
     
     return json.dumps(urls)
