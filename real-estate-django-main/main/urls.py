@@ -5,11 +5,11 @@ from . import xml_views
 from . import makler_views
 from pages.views import translate_all
 from .glossary_urls import glossary_urlpatterns
-from .all_language_urls import all_language_urlpatterns
+from .all_language_urls import specific_language_urlpatterns, generic_category_urlpatterns
 
 app_name = 'main'
 
-urlpatterns = all_language_urlpatterns + [
+urlpatterns = [
     path('', views.home, name='home'),
     path('listing/', views.listings, name='listing'),
     path('listings/', views.listings, name='listings'),  # Alias
