@@ -6,6 +6,7 @@ from . import makler_views
 from . import address_views
 from . import glossary_views
 from .glossary_urls import glossary_urlpatterns
+from .content_urls import content_urlpatterns
 from . import content_views
 from . import matching_views
 from pages.views import translate_all
@@ -105,5 +106,5 @@ urlpatterns = [
     path('hr/hrvatska/registracija/', professional_views.professional_registration, {'country': 'hrvatska'}, name='professional-reg-hr'),
     path('hr/hrvatska/<str:category>/', professional_views.professional_list, {'country': 'hrvatska'}, name='professional-list-hr'),
     path('hr/hrvatska/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'hrvatska'}, name='professional-detail-hr'),
-]
+] + content_urlpatterns
 
