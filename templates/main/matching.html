@@ -103,7 +103,7 @@ function sucheExperten() {
                 
                 // Logo/Bild
                 if (p.logo_url) {
-                    html += '<img src="' + p.logo_url + '" style="width:60px;height:60px;object-fit:cover;border-radius:10px;margin-right:15px;">';
+                    html += '<img src="' + p.logo_url + '" style="width:60px;height:60px;object-fit:contain;border-radius:10px;margin-right:15px;">';
                 } else {
                     html += '<div style="width:60px;height:60px;background:#003167;border-radius:10px;margin-right:15px;display:flex;align-items:center;justify-content:center;">';
                     html += '<i class="fa fa-user fa-2x" style="color:white;"></i></div>';

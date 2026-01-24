@@ -230,6 +230,26 @@ function sendMessage() {
         
         // Normale Antwort
         messagesDiv.innerHTML += '<div class="message bot-message">👤 ' + data.response + '</div>';
+
+        // Professional-Karten anzeigen wenn vorhanden
+        if (data.professionals && data.professionals.length > 0) {
+            var proHtml = '<div class="message bot-message" style="padding:10px;">';
+            data.professionals.forEach(function(p) {
+                proHtml += '<div style="display:flex;align-items:center;background:#f8f9fa;border-radius:10px;padding:10px;margin:5px 0;">';
+                if (p.logo_url) {
+                    proHtml += '<img src="' + p.logo_url + '" style="width:50px;height:50px;border-radius:8px;object-fit:contain;">';
+                } else {
+                    proHtml += '<div style="width:50px;height:50px;background:#003167;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;">👤</div>';
+                }
+                proHtml += '<div style="margin-left:10px;flex:1;">';
+                proHtml += '<strong>' + p.name + '</strong><br>';
+                proHtml += '<small>📍 ' + p.city + '</small><br>';
+                proHtml += '<small style="color:#003167;">🏷️ ' + p.type + '</small>';
+                proHtml += '</div></div>';
+            });
+            proHtml += '</div>';
+            messagesDiv.innerHTML += proHtml;
+        }
         
         // Suchergebnisse anzeigen wenn vorhanden
         if (data.is_search && data.results && data.results.length > 0) {
