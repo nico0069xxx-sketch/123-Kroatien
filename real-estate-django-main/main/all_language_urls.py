@@ -3,24 +3,26 @@
 Generiert ALLE mehrsprachigen URLs für alle 12 Sprachen.
 
 Dieses Modul konsolidiert:
-- News URLs
-- Adressen URLs  
-- Marktberichte URLs
 - Dienstleister URLs (Professional)
 - Experten-Finder URLs
-- Rechtliche Seiten (AGB, Widerruf, etc.)
+- Partner-Werden URLs
+- Registrierungs URLs
 
-Alle URLs werden dynamisch für alle 12 Sprachen generiert.
+Hinweis: News, Adressen und Marktberichte müssen separat in content_urls.py
+sein falls diese Views vorhanden sind.
 """
 
 from django.urls import path
 from . import views
-from . import content_views
-from . import address_views
 from . import professional_views
-from . import matching_views
-from . import glossary_views
 from .glossary_models import COUNTRY_NAMES
+
+# Prüfe ob matching_views existiert
+try:
+    from . import matching_views
+    HAS_MATCHING = True
+except ImportError:
+    HAS_MATCHING = False
 
 # ============================================
 # URL-SEGMENT ÜBERSETZUNGEN
