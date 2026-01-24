@@ -673,16 +673,16 @@ def loginRequired(request):
 
 def set_language_from_url(request, user_language):
     from .glossary_models import COUNTRY_NAMES, GLOSSARY_URLS
+    from .context_processors import NEWS_URLS, ADDRESS_URLS, MARKET_URLS
     import re
     
     request.session['site_language'] = user_language
     translation.activate(user_language)
     
-    # Priorität 1: next Parameter (vom Sprachumschalter mit korrekter URL)
+    # Priorität 1: next Parameter
     next_url = request.GET.get('next')
     if next_url:
         return HttpResponseRedirect(next_url)
-    
     
     # Priorität 2: HTTP_REFERER mit URL-Übersetzung
     referer = request.META.get('HTTP_REFERER', '/')
@@ -696,39 +696,55 @@ def set_language_from_url(request, user_language):
         source_segment = path_match.group(4)
         rest = path_match.group(5)
         
+        target_country = COUNTRY_NAMES.get(user_language, 'kroatien')
+        
         # Check if this is a glossary page
         if source_segment in GLOSSARY_URLS.values():
-            target_country = COUNTRY_NAMES.get(user_language, 'kroatien')
             target_segment = GLOSSARY_URLS.get(user_language, 'glossar')
-            
             if rest:
-                # Detail page - try to find equivalent slug
                 slug = rest.rstrip('/')
                 from .glossary_models import GlossaryTermTranslation
                 try:
                     source_trans = GlossaryTermTranslation.objects.select_related('term').filter(
-                        language=source_lang,
-                        slug=slug,
-                        status__in=['approved', 'published']
+                        language=source_lang, slug=slug, status__in=['approved', 'published']
                     ).first()
                     if source_trans:
                         target_trans = GlossaryTermTranslation.objects.filter(
-                            term=source_trans.term,
-                            language=user_language,
-                            status__in=['approved', 'published']
+                            term=source_trans.term, language=user_language, status__in=['approved', 'published']
                         ).first()
                         if target_trans:
                             return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/{target_trans.slug}/')
                 except Exception:
                     pass
-                # Fallback to glossary index
                 return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
             else:
-                # Index page
                 return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
         
-        # Not glossary - just replace language and country
-        target_country = COUNTRY_NAMES.get(user_language, source_country)
+        # Check if this is a news page
+        if source_segment in NEWS_URLS.values():
+            target_segment = NEWS_URLS.get(user_language, 'nachrichten')
+            new_url = f'/{user_language}/{target_country}/{target_segment}/'
+            if rest:
+                new_url += rest
+            return HttpResponseRedirect(new_url)
+        
+        # Check if this is an address page
+        if source_segment in ADDRESS_URLS.values():
+            target_segment = ADDRESS_URLS.get(user_language, 'wichtige-adressen')
+            new_url = f'/{user_language}/{target_country}/{target_segment}/'
+            if rest:
+                new_url += rest
+            return HttpResponseRedirect(new_url)
+        
+        # Check if this is a market reports page
+        if source_segment in MARKET_URLS.values():
+            target_segment = MARKET_URLS.get(user_language, 'marktberichte')
+            new_url = f'/{user_language}/{target_country}/{target_segment}/'
+            if rest:
+                new_url += rest
+            return HttpResponseRedirect(new_url)
+        
+        # Not a special page - just replace language and country
         new_url = f'/{user_language}/{target_country}/{source_segment}/'
         if rest:
             new_url += rest
@@ -739,6 +755,7 @@ def set_language_from_url(request, user_language):
     if new_url == referer:
         new_url = f'/{user_language}/'
     return HttpResponseRedirect(new_url)
+
 
 
 def agent(request, id):

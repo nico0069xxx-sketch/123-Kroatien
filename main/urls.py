@@ -13,7 +13,7 @@ from pages.views import translate_all
 
 app_name = 'main'
 
-urlpatterns = [
+urlpatterns = content_urlpatterns + [
     path('', views.home, name='home'),
     path('listing/', views.listings, name='listing'),
     path('listings/', views.listings, name='listings'),
@@ -106,5 +106,5 @@ urlpatterns = [
     path('hr/hrvatska/registracija/', professional_views.professional_registration, {'country': 'hrvatska'}, name='professional-reg-hr'),
     path('hr/hrvatska/<str:category>/', professional_views.professional_list, {'country': 'hrvatska'}, name='professional-list-hr'),
     path('hr/hrvatska/<str:category>/<str:slug>/', professional_views.professional_detail, {'country': 'hrvatska'}, name='professional-detail-hr'),
-] + content_urlpatterns
+] 
 

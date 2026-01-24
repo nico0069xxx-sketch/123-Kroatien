@@ -14,6 +14,29 @@ GLOSSARY_URLS = {
     "ru": "glossarij", "gr": "glossari", "sw": "ordlista", "no": "ordliste",
 }
 
+# URL-Pfade für News in allen Sprachen
+NEWS_URLS = {
+    "ge": "nachrichten", "en": "news", "hr": "vijesti", "fr": "actualites",
+    "nl": "nieuws", "pl": "wiadomosci", "cz": "zpravy", "sk": "spravy",
+    "ru": "novosti", "gr": "nea", "sw": "nyheter", "no": "nyheter",
+}
+
+# URL-Pfade für Wichtige Adressen in allen Sprachen
+ADDRESS_URLS = {
+    "ge": "wichtige-adressen", "en": "important-addresses", "hr": "vazne-adrese",
+    "fr": "adresses-importantes", "nl": "belangrijke-adressen", "pl": "wazne-adresy",
+    "cz": "dulezite-adresy", "sk": "dolezite-adresy", "ru": "vazhnye-adresa",
+    "gr": "simantikes-dieythynseis", "sw": "viktiga-adresser", "no": "viktige-adresser",
+}
+
+# URL-Pfade für Marktberichte in allen Sprachen
+MARKET_URLS = {
+    "ge": "marktberichte", "en": "market-reports", "hr": "trzisni-izvjestaji",
+    "fr": "rapports-marche", "nl": "marktverslagen", "pl": "raporty-rynkowe",
+    "cz": "trzni-zpravy", "sk": "trhove-spravy", "ru": "rynochnye-otchety",
+    "gr": "anafores-agoras", "sw": "marknadsrapporter", "no": "markedsrapporter",
+}
+
 # URL-Pfade für Dienstleister in allen Sprachen
 CATEGORY_URLS = {
     "real_estate_agent": {
@@ -61,20 +84,16 @@ def set_language(request):
     2. Dann aus der Session
     3. Fallback: 'ge' (Deutsch)
     """
-    # Versuche Sprache aus URL zu extrahieren
     path = request.path
     url_lang = None
     
-    # Pattern: /{lang}/... wobei lang ein 2-Buchstaben Code ist
     if len(path) >= 4 and path[0] == '/' and path[3] == '/':
         potential_lang = path[1:3]
         if potential_lang in ALL_LANGUAGES:
             url_lang = potential_lang
     
-    # Sprache bestimmen: URL > Session > Default
     if url_lang:
         lang = url_lang
-        # Session aktualisieren, damit sie konsistent bleibt
         request.session['site_language'] = lang
     else:
         lang = request.session.get('site_language', 'ge')
@@ -86,8 +105,6 @@ def set_language(request):
 def get_my_translations(request):
     current_path = request.path
     
-    # Sprachcode aus Pfad entfernen (z.B. /ge/about/ -> /about/)
-    import re
     clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
     if clean_path == '':
         clean_path = '/'
@@ -114,7 +131,6 @@ def get_my_translations(request):
     user_language = request.session.get('site_language', 'ge')
 
     context = {}
-    # Lade alle Übersetzungen für die aktuelle Seite, navbar, footer und home
     translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details') | Translation.objects.filter(page='home') | Translation.objects.filter(page='contact')
     for t in translations:
         if user_language == 'en': context[t.name] = t.english_content
@@ -129,9 +145,8 @@ def get_my_translations(request):
         elif user_language == 'no': context[t.name] = t.norway_content
         elif user_language == 'sk': context[t.name] = t.slovak_content
         elif user_language == 'nl': context[t.name] = t.dutch_content
-        else: context[t.name] = t.german_content  # Fallback zu Deutsch
+        else: context[t.name] = t.german_content
 
-    # URL-Variablen für Dienstleister hinzufügen
     context['country_name'] = COUNTRY_NAMES.get(user_language, 'kroatien')
     context['url_realtor'] = CATEGORY_URLS['real_estate_agent'].get(user_language, 'immobilienmakler')
     context['url_contractor'] = CATEGORY_URLS['construction_company'].get(user_language, 'bauunternehmen')
@@ -139,8 +154,6 @@ def get_my_translations(request):
     context['url_tax_advisor'] = CATEGORY_URLS['tax_advisor'].get(user_language, 'steuerberater')
     context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
     
-    # === SPRACH-URLs für Sprachumschalter ===
-    # Generiere für die aktuelle Seite die korrekten URLs in allen Sprachen
     context['language_urls_json'] = get_language_urls_for_path(current_path, user_language)
 
     return context
@@ -152,47 +165,96 @@ def get_language_urls_for_path(current_path: str, current_lang: str) -> str:
     """
     urls = {}
     
-    # Pattern für Glossar-Seiten erkennen
+    # Pattern für Glossar-Seiten
     glossary_pattern = re.compile(
         r'^/([a-z]{2})/([^/]+)/(' + '|'.join(GLOSSARY_URLS.values()) + r')/?(.*)$'
     )
     
-    match = glossary_pattern.match(current_path)
+    # Pattern für News-Seiten
+    news_pattern = re.compile(
+        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(NEWS_URLS.values()) + r')/?(.*)$'
+    )
     
+    # Pattern für Adressen-Seiten
+    address_pattern = re.compile(
+        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(ADDRESS_URLS.values()) + r')/?(.*)$'
+    )
+    
+    # Pattern für Marktberichte-Seiten
+    market_pattern = re.compile(
+        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(MARKET_URLS.values()) + r')/?(.*)$'
+    )
+    
+    # Glossar-Seiten
+    match = glossary_pattern.match(current_path)
     if match:
-        # Es ist eine Glossar-bezogene Seite
-        source_lang = match.group(1)
-        source_country = match.group(2)
-        source_glossary_slug = match.group(3)
         remainder = match.group(4).strip('/')
-        
         for lang in ALL_LANGUAGES:
             country = COUNTRY_NAMES.get(lang, 'kroatien')
             glossary = GLOSSARY_URLS.get(lang, 'glossar')
-            
             if remainder:
                 urls[lang] = f"/{lang}/{country}/{glossary}/{remainder}/"
             else:
                 urls[lang] = f"/{lang}/{country}/{glossary}/"
+        return json.dumps(urls)
     
-    elif current_path == '/sitemap/' or current_path == '/sitemap':
-        # Sitemap unterstützt jetzt Sprachpräfixe
+    # News-Seiten
+    match = news_pattern.match(current_path)
+    if match:
+        remainder = match.group(4).strip('/')
+        for lang in ALL_LANGUAGES:
+            country = COUNTRY_NAMES.get(lang, 'kroatien')
+            news = NEWS_URLS.get(lang, 'nachrichten')
+            if remainder:
+                urls[lang] = f"/{lang}/{country}/{news}/{remainder}/"
+            else:
+                urls[lang] = f"/{lang}/{country}/{news}/"
+        return json.dumps(urls)
+    
+    # Adressen-Seiten
+    match = address_pattern.match(current_path)
+    if match:
+        remainder = match.group(4).strip('/')
+        for lang in ALL_LANGUAGES:
+            country = COUNTRY_NAMES.get(lang, 'kroatien')
+            address = ADDRESS_URLS.get(lang, 'wichtige-adressen')
+            if remainder:
+                urls[lang] = f"/{lang}/{country}/{address}/{remainder}/"
+            else:
+                urls[lang] = f"/{lang}/{country}/{address}/"
+        return json.dumps(urls)
+    
+    # Marktberichte-Seiten
+    match = market_pattern.match(current_path)
+    if match:
+        remainder = match.group(4).strip('/')
+        for lang in ALL_LANGUAGES:
+            country = COUNTRY_NAMES.get(lang, 'kroatien')
+            market = MARKET_URLS.get(lang, 'marktberichte')
+            if remainder:
+                urls[lang] = f"/{lang}/{country}/{market}/{remainder}/"
+            else:
+                urls[lang] = f"/{lang}/{country}/{market}/"
+        return json.dumps(urls)
+    
+    # Sitemap
+    if current_path == '/sitemap/' or current_path == '/sitemap':
         for lang in ALL_LANGUAGES:
             if lang == 'ge':
-                urls[lang] = '/sitemap/'  # Default Sprache ohne Präfix
+                urls[lang] = '/sitemap/'
             else:
                 urls[lang] = f'/{lang}/sitemap/'
+        return json.dumps(urls)
     
-    else:
-        # Statische Seiten (/contact/, /about/, /faq/, etc.)
-        clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
-        if not clean_path or clean_path == '':
-            clean_path = '/'
-        
-        for lang in ALL_LANGUAGES:
-            if lang == 'ge':
-                urls[lang] = clean_path
-            else:
-                urls[lang] = f'/{lang}{clean_path}'
+    # Statische Seiten
+    clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
+    if not clean_path or clean_path == '':
+        clean_path = '/'
+    
+    for lang in ALL_LANGUAGES:
+        if lang == 'ge':
+            urls[lang] = clean_path
+        else:
+            urls[lang] = f'/{lang}{clean_path}'
     
     return json.dumps(urls)
