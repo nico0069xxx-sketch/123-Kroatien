@@ -1,134 +1,2085 @@
 <analysis>**original_problem_statement:**
-The user's initial request was to create a comprehensive overview of the Django project, which could also serve as a developer sitemap. This evolved into a series of tasks to build and refine a public-facing, fully multilingual sitemap for website visitors.
+The user, Nik, is developing a large, multilingual Django-based real estate portal. The session's goals were to address a critical bug with the global language switcher and investigate/fix several other reported issues and missing AI features.
 
-The agent's work included:
-1.  Creating a developer-focused sitemap document ().
-2.  Building a new, public-facing visitor sitemap from a nearly empty template ().
-3.  Debugging and fixing numerous broken or incorrect links and content sections on the new sitemap based on user feedback.
-4.  Making several login-protected pages (like Sitemap and AGB) public.
-5.  Extending the user's session duration to 2 weeks to improve their local testing workflow.
-6.  Investigating and reporting on the status of all AI-powered features (Expertenfinder, Chatbot, etc.), discovering that several linked features were never implemented.
-7.  Re-implementing the sitemap to be fully multilingual (12 languages), including SEO enhancements like JSON-LD.
-8.  Debugging the new multilingual sitemap's language switcher.
-9.  Re-implementing the Buyer Guide page to be fully translated into 12 languages and adding a page-specific language switcher as a workaround for a global navigation issue.
+The key user instructions for this session were:
+- Adhere to a strict Git workflow (feature branches, clean commits, no secrets).
+- The user is on a Mac M1 and requires explicit, step-by-step terminal commands.
+- The user's name is Nik, and he prefers the informal du.
 
 **PRODUCT REQUIREMENTS:**
--   A developer-focused project overview document.
--   A public, user-facing HTML sitemap that is accurate and well-structured.
--   The sitemap and Buyer Guide must be fully functional and translated into all 12 project languages.
--   An audit of the site's AI features.
+- A fully functional global language switcher that correctly handles translated URL slugs.
+- All AI features (Chatbot, Expert Finder, AI Search) should be functional.
+- The website should be stable, with no broken links or missing content (e.g., on the cookie banner or hero section).
+- Public-facing pages like the sitemap should not require a login.
+- Code should be secure, with no hardcoded API keys.
 
-**User's preferred language**: German. The next agent **MUST** continue to communicate with the user (Nik) in informal German (du).
+**User's preferred language**: German. The user's name is Nik, and he prefers the informal du. The next agent **MUST** continue to communicate in this manner.
 
 **what currently exists?**
-The application is a Django monolith. A new, fully functional, SEO-optimized, and multilingual sitemap has been implemented at . The associated view has been made public, and the link in the footer is now correct. The Buyer Guide page is also fully multilingual. A key architectural flaw was discovered: the global language switcher in the header does not work for pages with translated URL slugs. User sessions have been configured to last for two weeks to ease local development testing. An audit revealed that the Expertenfinder and Chatbot features, despite being linked in the UI, do not exist in the codebase.
+The project is a large Django monolith. The critical bug with the global language switcher has been fixed. Several AI features, previously thought to be non-existent, were located and made functional: the Chatbot, the KI-Immobiliensuche (AI Property Search), and the Expertenfinder (Expert Finder). The Chatbot has been enhanced to display interactive professional cards instead of just text. A major security risk was resolved by removing a hardcoded OpenAI API key from  and making it use the  file. The sitemap page has been made public, and several broken links on it have been fixed. However, a significant regression was discovered: the sitemap page is no longer fully translated for all 12 languages.
 
 **Last working item**:
--   Last item agent was working: Implementing a fully multilingual (12-language) Buyer Guide page. This involved translating all text content within the template and adding a page-specific language switcher at the bottom with correct, hardcoded URLs for each language. This was a workaround for the broken global header switcher.
--   Status: COMPLETED
--   Agent Testing Done: Y
--   Which testing method agent to use? The user has been testing manually.
--   User Testing Done: Y
+- Last item agent was working: The agent was attempting to fix a regression where the  page was no longer showing translations for all 12 languages (e.g., French links appeared in German). The user was convinced this had been working perfectly before.
+- Status: IN PROGRESS
+- Agent Testing Done: N
+- Which testing method agent to use? manual testing by user
+- User Testing Done: Y (User discovered the regression).
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Global Header Language Switcher Fails on Translated URLs (P0 - CRITICAL)**
--   **Issue 2: Non-Existent AI Features Linked in UI (P1 - HIGH)**
+-   **Issue 1: Sitemap is not fully multilingual (P0 - CRITICAL REGRESSION)**
+-   **Issue 2: Chatbot gives generic answers (P2 - Medium)**
 -   **Issue 3: Fragile Django Migrations (P1 - HIGH RISK / Technical Debt)**
+-   **Issue 4: Expertenfinder results styling (P2 - Low)**
 
 **Issues Detail:**
--   **Issue 1: Global Header Language Switcher Fails on Translated URLs**
-    -   **Description**: The main language switcher in the site header does not correctly redirect to the translated equivalent of the current page if the URL slugs are translated (e.g.,  in German vs.  in Croatian). It typically redirects to the root of a section (e.g., the glossary index) instead of the specific page (e.g., the buyer guide). This is a critical usability flaw for a multilingual site.
-    -   **Attempted fixes**: A page-specific language switcher was successfully implemented on the Buyer Guide page as a temporary workaround. The root cause in the global header was not addressed.
+-   **Issue 1: Sitemap is not fully multilingual**
+    -   **Description**: After fixing other issues, the user noticed that link texts on the  page are only translated for German, English, and Croatian. All other languages (e.g., French) show the German text. The user is certain this was fully functional before the session.
+    -   **Attempted fixes**: The agent tried reverting  and  to a known-good commit (), but this did not resolve the issue. The root cause appears to be that the template itself contains  blocks for only three languages, and a change in the context processor logic may have exposed this flaw. The session ended before this could be fully resolved, and the file was reverted to its state from commit .
     -   **Next debug checklist**:
-        1.  The current system relies on  in the  parameter, which fails when path components are translated.
-        2.  A robust solution requires creating a mapping system. For any given page, the system must know the corresponding URLs for all 12 languages.
-        3.  This could be implemented via a new model, a dictionary in , or by adding a method to relevant models ().
-        4.  The context processor and  template must be updated to use this mapping to generate the correct URLs for the header dropdown.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a core functionality failure for a multilingual site. Fixing it will allow users to seamlessly switch languages on any page.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y (discovered this session)
-    -   **Should Test frontend/backend/both after fix?**: Both.
+        1.  Analyze  and  from commit .
+        2.  The most robust solution is to refactor  to generate the link texts for all 12 languages, similar to how other parts of the site work. This will likely involve creating a dictionary of translations (like the one the agent started building in the last session) and using it to populate the template, rather than massive  blocks.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical regression that breaks the user experience for 10 out of 12 languages on a key navigation page.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: Y (Appeared during this session).
+    -   **Should Test frontend/backend/both after fix?**: Frontend.
     -   **Blocked on other issue**: None.
 
--   **Issue 2: Non-Existent AI Features Linked in UI**
-    -   **Description**: The agent's audit () confirmed that the Expertenfinder and Chatbot features do not exist in the codebase, although they are linked in the UI (e.g., footer). This leads to 404 errors or dead links.
-    -   **Attempted fixes**: The links on the new sitemap page were marked as in development or removed. The original links in other parts of the site (like the footer) remain.
+-   **Issue 2: Chatbot gives generic answers**
+    -   **Description**: The user noted that when asking the chatbot for a professional (e.g., suche ein haus am meer), it sometimes gives a generic text response instead of showing the professional card directly.
     -   **Next debug checklist**:
-        1.  Confirm with the user whether these features should be built or if the links should be removed globally.
-        2.  If removing, grep the entire  directory for Expertenfinder and the chatbot link to find all occurrences.
-        3.  If building, gather requirements from the user for these AI features.
-    -   **Why fix this issue and what will be achieved with the fix?**: Fixes broken user experience and removes dead links, which is bad for usability and SEO.
+        1.  Examine the logic in , specifically the  and  functions.
+        2.  The logic might be too simplistic or the keyword list in  might need refinement to better distinguish between a professional search and a general query.
+    -   **Why fix this issue and what will be achieved with the fix?**: This will improve the chatbot's usability and make it a more powerful tool for users.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: Both (Backend logic, Frontend display).
+    -   **Blocked on other issue**: None.
+
+-   **Issue 3: Fragile Django Migrations**
+    -   **Description**: Inherited from a previous fork.  is at risk of failing due to issues in older models.
+    -   **Attempted fixes**: The agent ran  in the dev environment, and it passed with No changes detected. However, this doesn't guarantee the issue is solved on the user's local machine or that it won't reappear with the next model change. The underlying technical debt was not addressed.
+    -   **Why fix this issue and what will be achieved with the fix?**: The project cannot be reliably maintained or extended without a stable migration system.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Backend.
+    -   **Blocked on other issue**: This is a blocker for future database work.
+
+-   **Issue 4: Expertenfinder results styling**
+    -   **Description**: After getting the Expertenfinder to work, the user noted the results display looks a bit weird. The main issue with the logo being cropped was fixed, but other minor styling inconsistencies might exist.
+    -   **Next debug checklist**:
+        1.  Review the HTML/CSS generated in  for the professional cards.
+        2.  Check for alignment, spacing, and font consistency.
+    -   **Why fix this issue and what will be achieved with the fix?**: A polished UI improves user trust and experience.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: Frontend.
     -   **Blocked on other issue**: None.
 
--   **Issue 3: Fragile Django Migrations**
-    -   **Description**: Inherited from a previous fork. The  command is unstable and at risk of failing due to issues in older models (, ). This is a critical blocker for any future database schema changes.
-    -   **Attempted fixes**: Bypassed in a previous session, but the root cause was not addressed.
-    -   **Next debug checklist**: Refer to the previous handoff summary for a detailed checklist. The core issue is likely a field that was made non-nullable without a default or a data migration.
-    -   **Why fix this issue and what will be achieved with the fix?**: The project cannot be reliably maintained or extended without a stable migration system.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Backend.
-    -   **Blocked on other issue**: This is a blocker itself.
-
 **In progress Task List**:
 -   None.
 
 **Upcoming and Future Tasks**
--   **Upcoming Tasks:**
-    -   **(P0) Implement URL Mapping System:** Fix the global header language switcher (see Issue 1).
-    -   **(P1) Implement or Remove AI Features:** Build the Expertenfinder and Chatbot, or remove all dead links to them from the UI.
-    -   **(P1) Sprint 4**: Topic clustering on landing pages, integrate compliance texts.
-    -   **(P1) Finalize Sprint 3 (UX/Akkordeon-Layout):** Fix the missing smooth animations on the glossary accordion UI.
+- **Upcoming Tasks:**
+  - (P0) Fully translate  for all 12 languages (see Issue 1).
+  - (P1) Improve Chatbot response logic to be less generic.
+  - (P2) Refine the UI styling of the Expertenfinder results card.
+  - (P2) Update the outdated  to reflect that the Chatbot and Expertenfinder are implemented and functional.
 
--   **Future Tasks (Technical Debt & Backlog):**
-    -   **(P0) Critical CSS Instability**: Refactor the project's fragile CSS.
-    -   **(P0) Refactor URL Architecture**: Systematically review and fix inconsistent URL translations (e.g., ).
-    -   **(P1) Data Quality**: Fix numeric slugs for Russian and Greek glossary terms.
-    -   **(P1) Consolidate Registration URLs & Views.**
-    -   **(P1) Implement a Review/Rating System.**
+- **Future Tasks (from previous handoff):**
+  - (P0) Refactor the project's fragile CSS.
+  - (P0) Refactor URL Architecture: Systematically review and fix inconsistent URL translations.
+  - (P1) Data Quality: Fix numeric slugs for Russian and Greek glossary terms.
+  - (P1) Consolidate Registration URLs & Views.
+  - (P1) Implement a Review/Rating System.
+  - (P1) Sprint 4: Topic clustering on landing pages, integrate compliance texts.
+  - (P1) Finalize Sprint 3 (UX/Akkordeon-Layout): Fix missing smooth animations on the glossary accordion UI.
 
 **Completed work in this session**
--   **Sitemap Creation & Refinement:**
-    -   Created a developer-focused sitemap document: .
-    -   Implemented a new, public, and visually structured visitor sitemap at .
-    -   Made the  page fully multilingual (12 languages) with dynamic text and language-aware URLs.
-    -   Added SEO enhancements to the sitemap, including a JSON-LD schema.
--   **Bug Fixes & UX Improvements:**
-    -   Fixed numerous broken links on the sitemap page.
-    -   Made the AGB page public and fixed a bug that was hiding its text content.
-    -   Changed the color scheme of the Buyer Guide page from green to blue to match the site's branding.
-    -   Extended user session length to 2 weeks to improve the local development workflow.
-    -   Fixed the sitemap link in the global footer.
--   **Multilingual Content:**
-    -   Implemented a fully translated (12 languages) Buyer Guide page.
-    -   Added a page-specific language switcher to the Buyer Guide page as a workaround for the broken global switcher.
--   **AI & Code Audit:**
-    -   Audited all AI features and created a status report ().
-    -   Identified that Expertenfinder and Chatbot features were never implemented.
+- **P0 Bug Fix: Global Language Switcher:** Fixed the header language switcher to correctly handle translated URLs by creating a URL mapping system in  and updating the  view to prioritize the  parameter.
+- **AI Features Activation & Fixes:**
+  - **Chatbot:** Fixed the API endpoint, added missing context translations, and enhanced the frontend widget () and backend view () to display interactive professional cards instead of just text.
+  - **KI-Immobiliensuche (AI Property Search):** Added the missing API route () and made the view public (, removed ).
+  - **Expertenfinder (Expert Finder):** Fully activated the feature by adding missing URL routes, context variables, and fixing multiple s (, ) and the API request key in  and .
+- **Content & Translation Fixes:**
+  - Restored missing 12-language translations for the homepage Hero section by re-adding them to .
+  - Fixed the Cookie Banner by adding its missing translations to the context processor.
+- **Sitemap Fixes:**
+  - Made the sitemap page public by removing  decorators from the view in .
+  - Corrected broken links and activated the link to the now-functional Expertenfinder.
+- **Security:**
+  - Removed a hardcoded OpenAI API key from  and configured it to use  with Usage: dotenv [OPTIONS] COMMAND [ARGS]...
+
+  This script is used to set, get or unset values from a .env file.
+
+Options:
+  -f, --file PATH                 Location of the .env file, defaults to .env
+                                  file in current working directory.
+  -q, --quote [always|never|auto]
+                                  Whether to quote or not the variable values.
+                                  Default mode is always. This does not affect
+                                  parsing.
+  -e, --export BOOLEAN            Whether to write the dot file as an
+                                  executable bash script.
+  --version                       Show the version and exit.
+  --help                          Show this message and exit.
+
+Commands:
+  get    Retrieve the value for the given key.
+  list   Display all the stored key/value.
+  run    Run command with environment variables present.
+  set    Store the given key/value.
+  unset  Removes the given key..
+- **Styling:**
+  - Fixed cropped logos in the Chatbot and Expertenfinder by changing CSS  to .
+- **Documentation:**
+  - Created and maintained a  file throughout the session.
 
 **Known issue recurrence from previous fork**
 -   **Issue recurrence in previous fork**: Fragile Django Migrations.
--   **Recurrence count**: 3
--   **Status**: NOT STARTED (Remains a critical blocker).
+-   **Recurrence count**: 4
+-   **Status**: NOT STARTED (Remains a high-risk item, although  passed in the agent's environment).
 
 **Code Architecture**
 -   **Framework**: Django monolith
 -   **Key Modified Files**:
-    -   : Created from a near-empty file into a fully-featured, multilingual sitemap.
-    -   : Heavily refactored to be fully multilingual with a page-specific language switcher.
-    -   : Removed  from  and  views.
-    -   : Added the  variable to the context for the  view to enable automatic language detection in the template.
-    -   : Added  and  to extend session lifetime.
-    -   : Corrected the  for the sitemap link.
+    -   : Heavily modified to implement the language URL mapping system and re-integrate missing translations for Hero, Chatbot, and Cookie Banner. Reverted at the end of the session to a known-good state () to debug sitemap issues.
+    -   : Updated the  JavaScript function to use the new URL mapping.
+    -   : Modified , , and  views.
+    -   : Added routes for  and  APIs.
+    -   : Fixed API URL and added JS logic to render professional cards.
+    -   : Modified to return a structured JSON response including a  list.
+    -    & : Fixed attribute errors and made APIs public.
+    -   : Security fix to remove a hardcoded API key.
+    -   : Multiple edits and reverts. Currently reverted to commit .
+- **Branch:** All work was done on the  branch.
 
 **Key Technical Concepts**
--   **Django Multilingual Templating**: Extensive use of  blocks to serve translated content from a single template.
--   **Django Context Processors**: Relied on variables like  and  being available globally in templates.
--   **i18n URL Routing**: Debugged issues related to language prefixes in URLs and translated slugs ( vs. ). Discovered limitations of the current implementation.
--   **JSON-LD**: Implemented Schema.org structured data for SEO and AI understanding of the sitemap.
+-   Django Context Processors for global template variables.
+-   Django i18n URL routing and translation management.
+-   JavaScript  API for calling backend endpoints.
+-   Dynamic DOM manipulation with JavaScript to display API results.
+-   Git history investigation (commit fa72bf9ead2c35e5fa13110b578f788b188a1bff
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 20:58:01 2026 +0000
+
+    auto-commit for 9a06e046-c1fa-48a5-889e-f71751ceb8d1
+
+diff --git a/memory/PRD.md b/memory/PRD.md
+index 2747719..32f74ef 100644
+--- a/memory/PRD.md
++++ b/memory/PRD.md
+@@ -8,38 +8,78 @@ Multilinguales Immobilienportal für Kroatien mit 12 Sprachen (DE, EN, HR, FR, N
+ - **Datenbank**: SQLite (dev) / PostgreSQL (prod)
+ - **Sprachen**: 12 Sprachen mit übersetzten URLs
+ 
+-## Completed (Session 23. Jan 2025)
++---
+ 
+-### ✅ P0 Critical Bug Fix: Globaler Sprachumschalter
++## Completed (Session 23. Januar 2026)
++
++### ✅ P0 Bug Fix: Globaler Sprachumschalter
+ - **Problem**: Header-Sprachumschalter funktionierte nicht bei übersetzten URL-Slugs (z.B. `/glossar/` vs `/pojmovnik/`)
+ - **Lösung**: 
+-  1. `main/context_processors.py` - URL-Mapping für alle 12 Sprachen hinzugefügt
+-  2. `templates/include/base.html` - JavaScript nutzt generierte `languageUrls`
+-  3. `main/views.py` - `next` Parameter hat jetzt Priorität vor `HTTP_REFERER`
++  1. `main/context_processors.py` – URL-Mapping für alle 12 Sprachen hinzugefügt
++  2. `main/views.py` – `next` Parameter hat jetzt Priorität vor `HTTP_REFERER`
++  3. `templates/include/base.html` – JavaScript nutzt generierte `languageUrls`
++- **Commits**: 
++  - `e9c62d7` – Sprachumschalter Fix
++  - `6d63108` – Hero-Übersetzungen + Regex-Fix
++- **Status**: GETESTET & FUNKTIONIERT ✅
++
++### ✅ Bug Fix: Regex-Reihenfolge für Glossar-URLs
++- **Problem**: `glossar` matchte vor `glossary`, was zu `/y/buyer-guide/` URLs führte
++- **Lösung**: Glossar-Slugs nach Länge sortiert (längste zuerst)
+ - **Status**: GETESTET & FUNKTIONIERT ✅
+-- **Commit**: e9c62d7 on feature/glossary
+ 
+-### Vorherige Session (Handoff)
+-- Mehrsprachige Sitemap (12 Sprachen) mit SEO/JSON-LD
+-- Mehrsprachiger Buyer Guide mit page-spezifischem Sprachumschalter
+-- Session-Dauer auf 2 Wochen verlängert
+-- KI-Status-Audit durchgeführt
++### ✅ Bug Fix: Hero-Section Übersetzungen wiederhergestellt
++- **Problem**: Hero-Texte (Tagline, Title, Subtitle) waren leer
++- **Ursache**: Template verwendete `{{hero_tagline}}` aber die Übersetzungen fehlten im context_processors.py
++- **Lösung**: Alle 12 Sprachen wieder in `get_my_translations()` hinzugefügt
++- **Status**: GETESTET & FUNKTIONIERT ✅
++
++### ✅ Bug Fix: Professional Form
++- **Problem**: `languages` Feld existierte nicht im Model
++- **Lösung**: Geändert zu `spoken_languages`
++- **Status**: GETESTET & FUNKTIONIERT ✅
++
++---
+ 
+ ## Pending Issues
+ 
+ ### 🟠 P1: Nicht existierende KI-Features
+-- "Expertenfinder" und "Chatbot" sind in der UI verlinkt, existieren aber nicht
+-- **Entscheidung nötig**: Links entfernen oder Features bauen?
++- **Status**: Laut KI_STATUS_REPORT.md existieren "Expertenfinder" und "Chatbot" nicht im Code
++- **Betroffene Stellen**: 
++  - `templates/main/sitemap.html` – Expertenfinder als "derzeit nicht verfügbar" markiert
++  - Möglicherweise weitere Links in Header/Footer (in Niks lokaler Version)
++- **Entscheidung nötig**: Links entfernen oder Features implementieren?
+ 
+ ### 🟠 P1: Fragile Django Migrations
+-- `makemigrations` ist instabil (professional, referenceproject Models)
+-- Blocker für zukünftige DB-Änderungen
++- **Problem**: `makemigrations` war instabil in früheren Sessions
++- **Aktueller Status**: In meiner Umgebung funktioniert es – Problem evtl. nur lokal bei Nik
++- **Betroffene Models**: `professional`, `referenceproject`
++
++### 🟠 P1: Legacy API Key in translate.py
++- **Datei**: `listings/translate.py`
++- **Problem**: Verwendet hardcodierten OpenAI Key statt Emergent Integrations
++- **Empfehlung**: Migration auf Emergent LLM Key
+ 
+ ### 🟡 P1: Sprint 4 Tasks
+ - Topic Clustering auf Landing Pages
+ - Compliance-Texte integrieren
+ - UX/Akkordeon-Layout Animationen
+ 
++---
++
++## KI-Features Status (aus KI_STATUS_REPORT.md)
++
++| Feature | Status | API |
++|---------|--------|-----|
++| KI-Textgenerierung | ✅ OK | Emergent |
++| Professional AI | ✅ OK | Emergent |
++| Übersetzung | ⚠️ Legacy Key | Direkt OpenAI |
++| Expertenfinder | ❌ Nicht implementiert | - |
++| KI Schnellsuche | ❓ Unklar | - |
++| Chatbot | ❌ Nicht implementiert | - |
++
++---
++
+ ## Backlog / Technical Debt
+ 
+ - **P0**: CSS Instabilität refactoren
+@@ -48,9 +88,43 @@ Multilinguales Immobilienportal für Kroatien mit 12 Sprachen (DE, EN, HR, FR, N
+ - **P1**: Registration URLs & Views konsolidieren
+ - **P1**: Review/Rating System implementieren
+ 
++---
++
+ ## Key Files Reference
+-- `main/context_processors.py` - Sprach-URL-Mapping
+-- `main/views.py` - set_language_from_url View
+-- `templates/include/base.html` - Header mit Sprachumschalter
+-- `main/glossary_urls.py` - Glossar URL Patterns
+-- `main/glossary_models.py` - GLOSSARY_URLS, COUNTRY_NAMES Konstanten
++
++### Sprachumschalter
++- `main/context_processors.py` – `get_language_urls_for_path()`, Hero-Übersetzungen
++- `main/views.py` – `set_language_from_url()` View
++- `templates/include/base.html` – JavaScript `changelanguage()` Funktion
++
++### Glossar System
++- `main/glossary_urls.py` – URL Patterns für 12 Sprachen
++- `main/glossary_models.py` – `GLOSSARY_URLS`, `COUNTRY_NAMES` Konstanten
++- `main/glossary_views.py` – Views für Index, Detail, Landing Pages
++
++### KI Features
++- `main/listing_description_ai.py` – KI-Textgenerierung (funktioniert)
++- `main/professional_ai_generator.py` – Professional AI (funktioniert)
++- `listings/translate.py` – Übersetzungen (Legacy Key!)
++- `KI_STATUS_REPORT.md` – Vollständiger Audit
++
++---
++
++## Git Workflow (Nik's Setup)
++
++- **BASELINE**: `9ec9d9a` on main – DO NOT BREAK
++- **WORKFLOW**: Branch-only (`feature/*`, `fix/*`)
++- **AKTUELLER BRANCH**: `feature/glossary`
++- **Letzte Commits**:
++  - `6d63108` – Hero-Übersetzungen + Regex-Fix
++  - `e9c62d7` – Sprachumschalter Fix
++  - `b93b3a4` – 12-language buyer guide
++
++---
++
++## User Context
++
++- **Name**: Nik
++- **Sprache**: Deutsch (informell "du")
++- **System**: Apple Mac M1, Safari, Terminal
++- **Lokales Verzeichnis**: `~/Desktop/real-estate-django-ALTmain`, commit fa72bf9ead2c35e5fa13110b578f788b188a1bff
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 20:58:01 2026 +0000
+
+    auto-commit for 9a06e046-c1fa-48a5-889e-f71751ceb8d1
+
+commit 1ed2e453381e5ecaa37b79679a47fcda15b6115e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 19:59:54 2026 +0000
+
+    auto-commit for bbe7b8ec-0c07-4ffa-806f-771d8e470380
+
+commit cf5c615baceb5b28c1164a9feb20269f37398882
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:58:52 2026 +0000
+
+    auto-commit for cff7a351-8a41-494f-9b73-f2c11099da50
+
+commit 22cd3f681e00917e9481ff121b3af20751ba3119
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:58:36 2026 +0000
+
+    auto-commit for 3c8035da-e810-405c-b434-5e7efe4f399f
+
+commit 6efbfb101e5cdcf110f97066bb6ea24a8a0138d8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:56:55 2026 +0000
+
+    auto-commit for 3d879031-c465-4871-8ad0-532d5f56ccb4
+
+commit e95a6a548152532de9b3e5332bf664905f705bff
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:56:38 2026 +0000
+
+    auto-commit for d273906d-0917-4a2b-b3ce-4b1109f63a10
+
+commit 66cfc7cf06a1605c3c61dd2c8e046b8f1797c2b0
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:56:13 2026 +0000
+
+    auto-commit for d720f3be-aadd-49ff-a01a-607b769aa8f1
+
+commit 4533223dd33fee0032c2963eb29a8581a28b7d53
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:54:53 2026 +0000
+
+    auto-commit for 6a05998b-8192-4576-b658-eb734b62bdc0
+
+commit 964dc076d43893ceb8480ba8aef8112e75cf5084
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:38:42 2026 +0000
+
+    auto-commit for 01a26dcc-50e1-49c6-9055-2245839ac618
+
+commit 1bfacf4e87ba401aadb1534ec547c9888f30dcae
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 18:04:01 2026 +0000
+
+    auto-commit for e29079f9-6930-463b-93eb-e702a12c57e5
+
+commit fc824f337673af8196526f7e68298095a3105521
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 15:20:17 2026 +0000
+
+    auto-commit for e2cdfdc1-9f8f-4466-869b-67cf2b7ac326
+
+commit d9e2aef44b59b8dba24453eb4006bd00f61f37af
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 15:20:10 2026 +0000
+
+    auto-commit for 3d6f041f-c5d3-4063-9897-d946b5dcd147
+
+commit d2c6ff5ccfe4309b53c17c6b1c7ea08a18a6142d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 15:19:55 2026 +0000
+
+    auto-commit for 24afe33c-589d-4405-8498-de737c430e2c
+
+commit f78e19bf19e6f814cccca1776b26847800d45e8e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 15:19:32 2026 +0000
+
+    auto-commit for 6c0c4156-f8f6-4ee5-9dd7-53f929a4334f
+
+commit 2260b4a7b54ecbf292fa3525f10b3767ca26c43a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 15:17:18 2026 +0000
+
+    auto-commit for 24dcaf19-4ca3-41e2-a5fb-ea246d547d95
+
+commit b6942597f05b8bb0b78e712886c4538d28bdd9ec
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 12:06:09 2026 +0000
+
+    auto-commit for fcec64c0-fbf0-48b7-aa81-433b08f367c7
+
+commit 1fef3951e97d12fd281a095b5b8ab027791d9728
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 12:05:55 2026 +0000
+
+    auto-commit for cf0eacb4-348f-41a2-a157-8f4d92813a6f
+
+commit 8d9ab22c977a14b0477723bccb745dd2fe01536a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 12:05:39 2026 +0000
+
+    auto-commit for 6233cae3-c776-4559-8bab-b507da36d6c5
+
+commit b910bda42aee9c25f50316977ddb2f8254889567
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 23 12:05:03 2026 +0000
+
+    auto-commit for 67f9ae7e-aee7-47e9-affc-46c47c6142a3
+
+commit d0163a073e71bd6b02f56b8931f7e848b6e4a289
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 22 20:17:51 2026 +0000
+
+    auto-commit for 0ceb66e8-ee88-430c-8337-a6bfe9457b18
+
+commit 02502c3134215807ce30a27bd6068884fc7806d1
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 22 18:03:58 2026 +0000
+
+    auto-commit for dd0b3066-ab97-47ec-bfe8-f7306320cd4a
+
+commit 3ad360aca4b6507d1cc22f120266e32ae55822ad
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:49:53 2026 +0000
+
+    auto-commit for 3c7f2481-1faa-4645-baa7-dd2453b95421
+
+commit 6176765091bbb27cef1ef2228f0251c6d404dd8d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:49:44 2026 +0000
+
+    auto-commit for 46443e57-95b6-47f4-a5c1-53339ed55472
+
+commit a89adfc3375f3cbc686689d535c37e7bf52c1e4c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:49:33 2026 +0000
+
+    auto-commit for 5a284b3e-1d6d-484f-a563-4d2613e70135
+
+commit 28b300cad36624e2480f277efefeadde64ca0c3d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:49:03 2026 +0000
+
+    auto-commit for 56fe2501-cd05-4b88-a7ec-d8b00d4ab0cb
+
+commit 9c552fa4d6304a827c90cf0e4b8c28866ec261a5
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:47:25 2026 +0000
+
+    auto-commit for b5e83df2-22fc-4035-9e0c-92d2ef523df3
+
+commit 64cfe95005b4a41c4af17a3bd3c72cd3655ddd75
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:45:36 2026 +0000
+
+    auto-commit for d2a41990-b45d-447c-9f1b-b463ffbc55f4
+
+commit 31349646163ecc9cf2409709711d2ba4c0bee70c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:44:08 2026 +0000
+
+    auto-commit for a0644d81-69c0-4680-b2c7-14428a98cd50
+
+commit 8eb215ec80cc692aeed0875881dd22c18f1cbb7f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:42:46 2026 +0000
+
+    auto-commit for 54540e73-9c05-4a02-bc67-71e7fd7b8ecb
+
+commit 31e659eaf3b84bfb882dd5a418b653ee87ff9122
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:42:20 2026 +0000
+
+    auto-commit for 0f696d13-8f99-4d54-bf0d-b11334532e3f
+
+commit 22bb1d97484d2721421d39004d8ca1d394d2ac91
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 21 15:41:32 2026 +0000
+
+    auto-commit for 05189f11-6dd5-428b-b084-76444a646945
+
+commit 9e4112fa1da86d58dd3eeab56a52dd60dd5118e9
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 15:57:13 2026 +0000
+
+    auto-commit for 718ca4e5-82a1-48b2-b4de-97e7b2f84ac6
+
+commit a382d5c7400dd3f9027c781d4e8aa861de052702
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:31:37 2026 +0000
+
+    auto-commit for f8950f14-a798-4d1f-89d5-d83bc38c381c
+
+commit e624f5b8a026070f768c8a904eb0e3549558a8e1
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:31:05 2026 +0000
+
+    auto-commit for bdf355c3-e081-49f2-8943-84d9feaa8394
+
+commit b06a4c2ffae32e9a3d041a13392235f358ad239c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:29:58 2026 +0000
+
+    auto-commit for bcace70d-d0ec-4da8-ba2d-ced62c54a4be
+
+commit 0388833b0d9b7fe2947e5ec98b95d9b0b0a46e6e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:29:43 2026 +0000
+
+    auto-commit for dd154b75-e6a1-44c0-b454-120e69554ecb
+
+commit 6a781876ec0ee4375de3f32e360e302d2c7ff567
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:29:35 2026 +0000
+
+    auto-commit for 73b2d24c-fd90-4a9b-b416-9dbe1da8cf5f
+
+commit fa444d14b17bee3b1dc9bba59782b9bf7d32128a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:29:25 2026 +0000
+
+    auto-commit for 2cbe1bb2-7145-49e4-bcbc-3a5651f382d9
+
+commit 9abe94a00d859d26bb7aab1639d38de24b6e373e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 12:29:08 2026 +0000
+
+    auto-commit for 3a74e1e0-7371-4efb-97ba-d231c23a9486
+
+commit 8b84d580ced08a83a6107c24fce1fc8a49522a6f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 11:59:30 2026 +0000
+
+    auto-commit for 4625537e-5683-4a4c-bd8b-40b5b74f7d32
+
+commit 8924d6e8a1e28cdfa881cd7a6f7c6eda8f48501f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 20 11:16:29 2026 +0000
+
+    auto-commit for 76423ea1-7955-4ebd-a352-0b92b0a0666d
+
+commit 182d8c8874a43959e2c2d6900a0d67385410d4c8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 21:24:49 2026 +0000
+
+    auto-commit for 97c99da7-45ac-4715-b697-99517a9e78ca
+
+commit 8cf1bdebd061d852961d4b0ea83491329349a6d4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 21:12:45 2026 +0000
+
+    auto-commit for 4f836fdc-bcb5-4a28-81ce-b3d38ddf4c95
+
+commit 810a56791bd6b4899d31641494c956b6b0b91674
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 21:08:54 2026 +0000
+
+    auto-commit for 6183c55f-88c5-43db-8a8c-06e4afac2c3b
+
+commit c12094e8641a3ae582b0dc1fa5f06a72da7e1969
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 20:56:18 2026 +0000
+
+    auto-commit for 5ed859ed-7e58-4e18-a7c3-a473e7af8135
+
+commit 6e7ca477a36ea42b20f7d11069ccc70f8212f129
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 20:37:43 2026 +0000
+
+    auto-commit for 1cf76fee-61c8-4927-a502-7606a8954995
+
+commit fd550b777f2a6d3b54c093e0d01804ba8c9a313f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:49:10 2026 +0000
+
+    auto-commit for 520822d6-0046-468d-aef7-f30e0ab68a0e
+
+commit eb88457578c37007d72b1759a214f94b4bdf4098
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:36:31 2026 +0000
+
+    auto-commit for 43c5ef61-239f-4f25-8650-e4e0d3b5a94c
+
+commit b5f099916e19d24bc90750f5ee6ed83631d99794
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:36:17 2026 +0000
+
+    auto-commit for 899c0516-a975-411e-9197-76a3e8cb1f3a
+
+commit 07e704febfabc5b124422f4498817fe0e17a5d47
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:34:57 2026 +0000
+
+    auto-commit for d9c353f8-5da2-4ef6-8a4f-d02cac9bd128
+
+commit c019feb4fa11de8efe3a4575a6b02feceeda1ad4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:34:24 2026 +0000
+
+    Auto-commit before changes
+
+commit 1c099c1f4abbc4072563f5be79c5a1b26a3306e7
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:22:50 2026 +0000
+
+    auto-commit for fbe23d5e-36ae-4449-8fbe-e4a0eed1fb52
+
+commit 759c15591e9b0db8ee784b535d874a3c21d9be76
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 19:22:28 2026 +0000
+
+    auto-commit for d4e377ef-a5f7-4c3d-94ef-334f94aefc8b
+
+commit 06e27096cbd420772fb5b14a75f5557504970b13
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:38:59 2026 +0000
+
+    auto-commit for 61490431-fd73-4c10-a81e-f85ea8e5168e
+
+commit b8458d6f8cf371468bc86c9c8e391e1596b9547a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:32:56 2026 +0000
+
+    auto-commit for ff7c90f3-ee17-481b-ad0d-03bd2313ce6b
+
+commit f7810c7163d59117268e041e733a24129bde583d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:23:38 2026 +0000
+
+    auto-commit for a2a0daec-18b2-49da-8e8f-80cb5d9b699d
+
+commit cdc9727302e23de71fbdcdc1b270b6587feef814
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:23:23 2026 +0000
+
+    auto-commit for 837f4149-9497-4a19-99e3-5534851e1436
+
+commit d43eb94b703c92b2ff2a23d79fa10f033cfffe6c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:11:25 2026 +0000
+
+    auto-commit for 951adaa2-7b1d-49a2-a00e-0cfdf68fb203
+
+commit 2abb85bfe0d656ae2be80884adc83516014d5efb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:11:13 2026 +0000
+
+    auto-commit for 971816f9-cf7d-4312-819b-9355748aeecf
+
+commit 30b564d1f76d14ea3e0ca89fb1c677f0e8ce2f7c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:11:01 2026 +0000
+
+    auto-commit for f1b62110-3861-4242-8432-348c21c711a7
+
+commit 7767add4eb1f16dadb3b5cfbfe41e6c53c5585a2
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 18:08:56 2026 +0000
+
+    auto-commit for d692a04b-e44e-4eab-88d0-ee953580731e
+
+commit 4949c54f7309472489491fd912e64d2a9baa60bb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 15:17:17 2026 +0000
+
+    auto-commit for 3e3eab4f-be10-4293-8adf-cdde3d08d869
+
+commit 78e091b9fd319ba8b0a0c553efdd77e78fc6162a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 13:06:42 2026 +0000
+
+    auto-commit for 9bc0f9e2-7b9d-47e6-8124-3cc32062b7f6
+
+commit cab10d9e0f78971431089f8b31921dd2916f2326
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 13:06:21 2026 +0000
+
+    auto-commit for 97525cbc-45b7-4e75-a167-993b444b8ec4
+
+commit f6845305c363562fa9bf005caeb731248a517288
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 13:05:52 2026 +0000
+
+    auto-commit for ad6e565a-fec0-4b1f-a496-2a5461f5509b
+
+commit fc9cbd0e5b402369a51cabb5c65af05d2a691e09
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 13:05:18 2026 +0000
+
+    auto-commit for 62e0b343-f391-4d24-8178-196035df4e69
+
+commit 5a1d4934c05113ca0ede361be344e040d6848a27
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 12:02:58 2026 +0000
+
+    auto-commit for 7eb7ad6f-3cd2-4f5c-9c7f-7818c32fa0e5
+
+commit 503ba994b2094f6d3a8126527a177dab901d0fd2
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 12:02:34 2026 +0000
+
+    auto-commit for 3b1f226f-9c34-4d31-85c8-a6473c899c78
+
+commit 93d9660b1b2fb10559ebc8a813cd3d758474709d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 12:02:11 2026 +0000
+
+    auto-commit for e2d484ec-a66a-4d6d-96e6-ba53802b5008
+
+commit 8d9a5eea0ec3ebeb718277e4893dd7d7de337e6b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 12:01:46 2026 +0000
+
+    auto-commit for 3962ef3a-3b9b-41ec-abb1-96f81e862518
+
+commit a489413fdbe46cd42c220a20bb334e20c0aa1170
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 12:00:23 2026 +0000
+
+    auto-commit for 2f1733ae-8aa0-4520-a60e-a610ddd25235
+
+commit 889009b18c7d86d5cdf181d8f77a27e2c1a02e55
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 11:59:54 2026 +0000
+
+    auto-commit for 452cf268-f2c0-45a1-b549-8002d9fc5b8c
+
+commit 2ad59640a24489e29e7bc8919899bb393194d861
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 11:59:42 2026 +0000
+
+    auto-commit for 40d90c63-e2cc-473d-9028-96c43065a2ab
+
+commit b0e52d44313339c9c0653b81290dcca3c19352bb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 11:58:45 2026 +0000
+
+    auto-commit for f6602ea0-f8e9-448f-9704-e7b86d121b6a
+
+commit af68ffa268aa9105646fdc6abb722bf846aae6de
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 10:23:26 2026 +0000
+
+    auto-commit for 46b6e743-edc6-46dd-91eb-3fa5c2e164dc
+
+commit ad34b2e61568a223dc0c06a77c00cff089f9f4cc
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 10:21:10 2026 +0000
+
+    auto-commit for 36df369a-bfba-4c34-a31c-a03ec19f079d
+
+commit 6b348eae625a38af85a1d8e18a9e8ff8fedfd83c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 10:20:57 2026 +0000
+
+    auto-commit for c95b0fd9-0aec-4f86-88ab-ed596cec1398
+
+commit 04004cdf2619af0ef0b258c5a4ed6282775476ac
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 10:20:32 2026 +0000
+
+    auto-commit for 51ef99ac-1bc8-4148-9247-4e1ce197d48b
+
+commit 4cdf33d3805604f17accdd43abd0192319a1ff50
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 10:19:57 2026 +0000
+
+    auto-commit for 6230d3ff-9631-41cb-8f8d-cbfb2b4841df
+
+commit c45b8edf8b927b5735f74ff71560dbe6dbc67626
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 09:34:32 2026 +0000
+
+    auto-commit for 1a713e61-fb54-4153-ae54-4822aba12289
+
+commit 0e42ed9bfdd135cb48ad56a008ee3c4b2f80d6ec
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 09:34:04 2026 +0000
+
+    auto-commit for 2fbe0a18-02fa-421a-b857-5dedd8ee6ad6
+
+commit 929c2c41bf182c0771bd4a40787a2d0439b5e1af
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 09:32:59 2026 +0000
+
+    auto-commit for 3c08ae98-7fb3-49ca-985c-994d79d72f54
+
+commit 29e6784df0b7469890660e7a62a56b256133106c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 09:32:42 2026 +0000
+
+    auto-commit for 5eb9ccb9-01c8-4e7a-bb61-b4ba2fc64e4e
+
+commit 8435edf1ae580b4cfeb2944b140a2f62728edd64
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 19 07:03:33 2026 +0000
+
+    auto-commit for 37a19651-b56a-459f-923c-c58cca97668d
+
+commit 9d05fe9b97bbec58814536080410acac2651dcf8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 18 08:50:49 2026 +0000
+
+    auto-commit for 0c50b826-84f6-45e3-9234-878c46caf32a
+
+commit f96f137b4e49837d8fa4218e8e4e45fafb9f9bae
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 18 08:50:43 2026 +0000
+
+    auto-commit for bf327103-0249-4d7b-8d56-cb81f472b403
+
+commit 3ca2ce2856139829e5849f5032ef772c133abbbe
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 18 08:50:15 2026 +0000
+
+    auto-commit for 45d7df01-8ea5-482b-b1ca-5d5c0f9e7b4b
+
+commit 7bc8b6ae3a95ff2815a42c6e7136a15da6f0b630
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 18 08:49:48 2026 +0000
+
+    auto-commit for cec75474-c593-42ea-85dc-dea5fefd562e
+
+commit bb1f72a3bd5a34a30c74b7df00f79867e37dc065
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 18 08:47:18 2026 +0000
+
+    auto-commit for 88b76b28-cdbc-46f4-b1b3-93af4422c73f
+
+commit 88b4f7658f7e37a7ec514e6bc6f3c66a3a3d6790
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 18 08:46:39 2026 +0000
+
+    auto-commit for 47a916c1-194f-4ca6-b808-079bb5ddf4a6
+
+commit ce914d35f529cae74dafea559f2e5d0dddd89b3e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 17 15:10:43 2026 +0000
+
+    auto-commit for f61b1dcf-b155-4e78-8c6b-ebf03c9c30d1
+
+commit cfce92cd0600e3fd504b1cf945ee940375656faa
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 17 08:56:53 2026 +0000
+
+    auto-commit for 8e652422-5db4-4f33-ad38-7a78de78cd0f
+
+commit 9daf8aa24eaf22a4d83a7f7d04c3fc2e577e7698
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 17 08:56:40 2026 +0000
+
+    auto-commit for 5d20003d-8d15-405f-b678-e11fd85bb569
+
+commit d5d0dfc08c614f5f78e5068ea3a0a04caa9ee3bb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 17 08:55:41 2026 +0000
+
+    auto-commit for b41ee192-6811-44e5-8612-a65b8fc69794
+
+commit c2ce25f47e4dd77305b66432885b4cd44ffb800d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 17 08:42:11 2026 +0000
+
+    auto-commit for 06d94aee-b703-4f22-8471-24c5d47e9074
+
+commit b4b922a9853215a8cd196d32b350838da1ba1ec0
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 17 08:41:36 2026 +0000
+
+    Auto-commit before changes
+
+commit dcebccf33cb795cc56352fb6d953c12528ae3835
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 15:16:20 2026 +0000
+
+    auto-commit for 891eab73-1623-4a48-8a61-37c49cff8d44
+
+commit 03ef304758c546476c8b357724cc1bdc43ebfc43
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 10:32:47 2026 +0000
+
+    auto-commit for eb45be21-3f63-438e-b727-e93264ad8370
+
+commit 51821f17d8723e5139a11e90a64f1ecdbf27c185
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 09:45:45 2026 +0000
+
+    auto-commit for 6afca99d-b824-48d7-bf64-c984747e368b
+
+commit dae34f4407dd8bfc9076d36a6a9164455bfb6b42
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 09:45:35 2026 +0000
+
+    auto-commit for a0859403-1682-4b7a-babd-0de2f0f95cb0
+
+commit 839743ca3315fa55564bd4742495e37bab2fe673
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 09:37:19 2026 +0000
+
+    auto-commit for d42815ee-23c1-4a19-add5-7f86c805f794
+
+commit 8867acd81a84a6b72ecd27cf031ad7f2c00140a7
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 09:37:07 2026 +0000
+
+    auto-commit for 2fdb8f6c-6163-4871-9d41-a2e930380306
+
+commit 0dc1d85a92c698953e3679123f4a92caf5a08d38
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 09:31:34 2026 +0000
+
+    auto-commit for cdb4fe58-abb9-48ba-919c-500521f34708
+
+commit 9b01a881ec2289af07eb11cde29d56621f9e6d14
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 08:52:11 2026 +0000
+
+    auto-commit for feb2e491-2b20-4549-9719-f5838045b515
+
+commit fbf5f58859bef7f6444ff5dfa596a9b3a417e556
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 08:51:51 2026 +0000
+
+    auto-commit for 7500f688-6438-4f93-ae25-d8a154c56097
+
+commit 52cbddcbbed74b655b23ff2ef2f1f09c6d91712d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 08:51:44 2026 +0000
+
+    auto-commit for 47a5abd3-e6f6-4068-8d6d-947d3f173d52
+
+commit b6e915c777e98acd1c32da2f12045a0745f449c8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 16 08:50:52 2026 +0000
+
+    auto-commit for 9af89e2e-7297-4b28-8558-e8d7c49ab85a
+
+commit bac9b5b8b93c59917e337d00b24261d425e7ec18
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 23:59:38 2026 +0000
+
+    Auto-generated changes
+
+commit 2fb5be9fc9f7aa247eecf3b2c7273a281307d83e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:44:59 2026 +0000
+
+    auto-commit for 3b1d5f7b-82a5-4aa3-b8eb-b4940d9e15a5
+
+commit 58639c1465f74360645f34a196e429e4f478a8a2
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:44:44 2026 +0000
+
+    auto-commit for 7350a518-3ea6-4e54-850a-2c4e35b31303
+
+commit e46caeb1faee1ed2f297cba97866f83bdbc1ad49
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:44:19 2026 +0000
+
+    auto-commit for 674cd596-0455-44a9-acdb-899763fc7964
+
+commit e8593232ef24c90fba172d6ab82329a730d14c1e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:44:09 2026 +0000
+
+    auto-commit for 0f805018-83db-496b-bf5d-c156efe181d8
+
+commit 5adc668e605c2ceaafa5024cc9da716b299c37f4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:43:19 2026 +0000
+
+    auto-commit for ec0eb77b-00f5-4ec3-b9f2-4b5df4115d1f
+
+commit 21f5b7e5d76676110a9a7e9c7846608db2b6d7fe
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:40:17 2026 +0000
+
+    auto-commit for 3d60bde5-5aab-471d-81a9-95cf6e2d73e6
+
+commit 702f7e48d1f800a06e836f4fa9b0a5d677a29628
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:37:21 2026 +0000
+
+    auto-commit for 675c4898-2afb-429b-8733-377624bc3400
+
+commit 9888b5823705eeefa739ed18df2459b26825585e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:33:05 2026 +0000
+
+    auto-commit for d527acca-c19f-4ba4-b41f-465cf79400b2
+
+commit 9cc84712f096a9a7de663f3b6dfd4694c16278f4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:28:11 2026 +0000
+
+    auto-commit for 4343ab26-b331-4dfd-af9c-bfdb2514f504
+
+commit 6d750687df6016d651d9afbdedb1b31f0a955a17
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:27:13 2026 +0000
+
+    auto-commit for f36daf97-6ce8-4854-98a3-66b49ce9f710
+
+commit 58f56e1db70d5bb62e3258b5d038670385021300
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:25:23 2026 +0000
+
+    auto-commit for 3b6b0b29-3241-4d95-820a-9ad636b0282b
+
+commit 492f2d39b9dc1395f094392cc0d4872ee9da64c8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 21:15:43 2026 +0000
+
+    auto-commit for 819ac9e7-0575-4a13-8fad-023ec1a27942
+
+commit 795e4e4fd83952ecdb8788e6dd9bf33dd6254a3b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:57:03 2026 +0000
+
+    Auto-generated changes
+
+commit 01501ae0b9c1f6400bed0851790c98774fad6983
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:46:43 2026 +0000
+
+    auto-commit for b98393fd-da46-4ddb-924b-a9a3145238dc
+
+commit 1e20e1b52a6a5733897a91f123fcf1b65af0dc9c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:46:30 2026 +0000
+
+    auto-commit for cbb9662c-8c27-4be1-a93b-96c535e685d8
+
+commit 7f60d525c49d149ab564bb9f129b87b2d082508a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:45:55 2026 +0000
+
+    auto-commit for 7d18ecbb-4d51-4507-939a-f470f8670655
+
+commit 53df7ab5e56cd2977445ed4bdc8d8e6f1f0d5b80
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:45:04 2026 +0000
+
+    auto-commit for f2a47674-e903-4976-a05b-217e1a73769b
+
+commit 4426aaaac44247ec81b83b5503094bdf261af918
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:44:40 2026 +0000
+
+    auto-commit for f3000e88-4130-4245-b608-7430e1b79e94
+
+commit 0674423046ff0ce8734aad477dc69e6b99b3b418
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:44:17 2026 +0000
+
+    auto-commit for ca45c735-3c9c-4aff-98c1-8a9ee332849f
+
+commit 006931cd16d514d57272c79e8a589d6b389c9246
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:44:06 2026 +0000
+
+    auto-commit for 5130ca37-c2a3-48f7-81f3-ac26ed8d1ac9
+
+commit 4129d4b13b8fce57f5ae355a144966aace3766ea
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:43:50 2026 +0000
+
+    auto-commit for b0fe606b-1a5b-4794-be03-4a6558f616da
+
+commit fa317b47959aafff1a3803d25b02e965109354a6
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:43:02 2026 +0000
+
+    auto-commit for 87ec37d5-47df-443e-9246-a622970f1282
+
+commit 9b6e71f6e13aa8a84e5249e1e3f4b70d12dc6e25
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:42:30 2026 +0000
+
+    auto-commit for 391feb37-eee8-4666-b04a-329b49d86737
+
+commit 3109d9485e3ed05286c4a71d58dc4a8cbe39b534
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 20:33:33 2026 +0000
+
+    auto-commit for fc61c39c-0984-449d-9e2a-c7175d662b85
+
+commit d507dad82fcafc0ec2f46165847f7b6975082bf3
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:23:26 2026 +0000
+
+    Auto-generated changes
+
+commit 76c48731269c761caeffb4521e3e58abd99169fb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:07:18 2026 +0000
+
+    auto-commit for 9c199bd7-15f2-463b-9da4-ba83e572aa12
+
+commit c51eee36189b3f19305e6f8c2acc71a52d3cf3ae
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:06:59 2026 +0000
+
+    auto-commit for 50a1fb2a-e387-472b-befe-22d75de7491a
+
+commit f8dd86c9e3713dd433f622aed17ffcafee3c98c8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:06:39 2026 +0000
+
+    auto-commit for ced1772f-b5fa-4ea4-9d5f-83a0299bd234
+
+commit 2d2b76605a8ae46b604758e3fe0279f7ee143788
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:06:14 2026 +0000
+
+    auto-commit for cb3feb93-dbdf-4fba-a6ed-342aa17a3ffc
+
+commit e5ff5c8789fcefa02512a83b973f309d42763b64
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:05:49 2026 +0000
+
+    auto-commit for b3590864-df91-446d-952f-bf34eceb0c39
+
+commit b1e3185c1d5887771055d0997536d4d3807d21e9
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:05:00 2026 +0000
+
+    auto-commit for b913c6d0-937b-46b8-91cd-c325611b79de
+
+commit bcee1a73a1414009c76320e5e5693fbfa37a9d03
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:04:52 2026 +0000
+
+    auto-commit for bfa2843d-9f93-44c3-87a5-250507189342
+
+commit a16179dc8bbb7d04cb6e8b60febadeea62a91ee9
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:04:03 2026 +0000
+
+    auto-commit for 3594f597-c4da-4ddb-ab0e-593cd6f1b6a3
+
+commit ca780322d4ce5d1fbb734da898719765452244ee
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:03:51 2026 +0000
+
+    auto-commit for d589e69d-c85c-4d63-92de-c78a2029ce43
+
+commit 9898fbe6f63444afe2f1a23869d21b59a843c02f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:03:34 2026 +0000
+
+    auto-commit for 7a389bb2-47b6-4f75-9a7d-1aa0348e228e
+
+commit d889119800f81f067a2d7b5ce127d637ec3583c5
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 15 18:01:52 2026 +0000
+
+    auto-commit for 3c00510b-e630-4a58-a2cd-73e07e34ca0f
+
+commit 83f1c54f2c46dfb95ef8e5941ae8a394e9c83d70
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:15:13 2026 +0000
+
+    auto-commit for 0550426d-6988-4fa7-8313-e26bee879592
+
+commit 2998720c2df31844c74276fe909520594e8b9c59
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:14:43 2026 +0000
+
+    auto-commit for a19c55a8-a208-4ac1-a6ac-aa9e814c7f57
+
+commit c99f24ecdac866505bf2cc05e33615ab1d4a0199
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:13:08 2026 +0000
+
+    auto-commit for df241c45-c0db-499f-a9ab-58d7b1bab792
+
+commit 9c5de726b4529bdca1d8892ec555a6fe0bc42320
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:12:51 2026 +0000
+
+    auto-commit for 0079dcd2-5b0c-464a-9e05-063de397b849
+
+commit 0771f0c5b1f3f538e04c30c22219f283962938bd
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:12:34 2026 +0000
+
+    auto-commit for a274951f-6311-4b31-a525-742b467f4679
+
+commit 0b21192556623afed320ec3698d0e9ed721ea6dd
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:12:01 2026 +0000
+
+    auto-commit for 3992cfad-5e08-4031-9595-1ca2ced104be
+
+commit abea018acababe4b1737e29fcbf6812e28aab6b8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:10:59 2026 +0000
+
+    auto-commit for 097f5718-abc1-4d01-9fea-bbf790bf1bfb
+
+commit cf0a3a3fbf4012dd43d0beca54253254dfb2f6e4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 14 11:02:29 2026 +0000
+
+    auto-commit for 6e4f27f1-a344-4c8a-840f-9528e6646bd2
+
+commit b9e078a75dc037ac94358c3d646da5e29dc511b0
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:17:35 2026 +0000
+
+    auto-commit for 02c11170-1242-4142-a3f0-e064a6554d54
+
+commit 0c5357317208ee8769fe8c732a93926b107d5ee4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:16:54 2026 +0000
+
+    auto-commit for dad849e7-1724-4130-ae15-19fc3e356b03
+
+commit 6f864aaa8340faed8b3c5314b0f82b5600c3f576
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:15:58 2026 +0000
+
+    auto-commit for a6b14771-7299-4b48-8b1f-dcac7855041a
+
+commit f8e62e58ae2a855809dd3124e3865a15dc632b65
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:15:42 2026 +0000
+
+    auto-commit for 4ac2012c-f75a-4c57-a380-00b6d54db41f
+
+commit 2a6188b9aad7efc48a4c6c2163975e80ae23943b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:15:14 2026 +0000
+
+    auto-commit for 4fc9e589-cd75-4484-b4e5-d7a3d1b0d133
+
+commit 27e979a33fc729891a0017bf84f283dbc48a7eda
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:12:53 2026 +0000
+
+    auto-commit for dcb49df0-132f-4320-a57a-cd70ef2d7d37
+
+commit c3c1331de4a5323dcd63d0217b7028766cc2ff3b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:12:26 2026 +0000
+
+    auto-commit for 53379ae3-f1b3-4028-94d8-bddb6d56b835
+
+commit 6db25aec4544dbb705227000954d17741db9973d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:07:39 2026 +0000
+
+    auto-commit for 7cb5ee74-966d-41e0-ac3b-abd776f491fa
+
+commit 45d902ee04dc6535cd27aab4611e2eb32cb483c6
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:07:03 2026 +0000
+
+    auto-commit for baae6e81-c886-4415-b9f3-1c56fb852002
+
+commit 0c4cf676b0b4d76801ef4d709e8a7a485436eb23
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:05:45 2026 +0000
+
+    auto-commit for d0e0bf16-a41f-4a9f-9bf3-4175b31c1797
+
+commit 4be580aaafc5cdc30a0e8afbd0dc6e05d97a47d9
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:05:37 2026 +0000
+
+    auto-commit for d3a8c13b-fb00-425c-9446-d67f5f018551
+
+commit 66f43123ca02ef6aa389d28bc918f4bd0d4bc7b5
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:05:25 2026 +0000
+
+    auto-commit for e5df4d9c-efcd-4120-8b20-5ce2c4fd6804
+
+commit 8956545332bfcaac46861b6161d5162bca5f7787
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:05:08 2026 +0000
+
+    auto-commit for 99864e27-af8e-40b1-be5f-a625afd78a71
+
+commit 652d8d6ee978180b646fd4fb7f188b9a8b267010
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:04:24 2026 +0000
+
+    auto-commit for ddb45eaa-bc85-4687-9205-520514fde355
+
+commit 8d3e3946c00c984a5e9107684bbe7c019f351aeb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:03:57 2026 +0000
+
+    auto-commit for 0db43103-a41f-4539-943a-e721bd643236
+
+commit cd33077dc90c8fa582b37ecc752b296be7ec76e2
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:03:41 2026 +0000
+
+    auto-commit for 3d68bf84-0200-42ba-bd3e-f4139c9e03ae
+
+commit 57e88b166bc7781df0eeca4e7f48a2674c15fedf
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:03:10 2026 +0000
+
+    auto-commit for 8438aa60-8d5f-4b95-bbde-41867ad3613d
+
+commit 43d70c46674c5f212c530930301597e72cc89d97
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:02:46 2026 +0000
+
+    auto-commit for 5fb25fa8-40fa-42e8-9c75-c0d87e696c76
+
+commit 2cff50fc69c7f6a9247aca12e558475b58689380
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:02:33 2026 +0000
+
+    auto-commit for c1e2561c-517e-4ca3-b46c-78e16161cbdd
+
+commit 7055b3207b4a16660702cb356fff105cf8b73bda
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:02:14 2026 +0000
+
+    auto-commit for 120bcd74-ff50-4e58-81bb-0a8ca50a43c2
+
+commit 7ef44f322a8543319c3ae853929e714a99a3b167
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:01:59 2026 +0000
+
+    auto-commit for 25dec6fa-1a28-4024-b95a-c279df4b5624
+
+commit 7bd329276547408490794ab5ed88b9d12f9e3e06
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 12:01:31 2026 +0000
+
+    auto-commit for e0a7f3c4-2209-4509-b160-4e8f9bc50829
+
+commit 496061a878be548ca535c09b254c93fc0fce861e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 10:59:25 2026 +0000
+
+    auto-commit for 5f74ea94-e143-469a-82d2-cc41a78c0e0b
+
+commit cb5658ee539457b0d8af3e76f6e491bf8824bd9d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 13 10:58:19 2026 +0000
+
+    Auto-commit before changes
+
+commit 1b51695190db42464926276c08000e8a829bdd92
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 12 22:16:22 2026 +0000
+
+    Auto-generated changes
+
+commit 5e25abe20697bc1941f2dfa94e566088490bf260
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 12 21:23:58 2026 +0000
+
+    auto-commit for e1b660f0-ff5b-4d4e-8cab-d97e10369f94
+
+commit 0b7d13d436c80c105d775d4302f116984f4f6c5b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 12 13:57:32 2026 +0000
+
+    auto-commit for aae54050-d27b-4f74-8b4a-f1791babd4f9
+
+commit 561b3d48fbb7eacca7d68b4881efb9a025b0df6c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 12 08:52:35 2026 +0000
+
+    auto-commit for fb0f0e72-5b18-44ec-a215-49e0946923d9
+
+commit 7ed667eb41e49d228476fb737e149d5d4f8eee16
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 12 08:52:27 2026 +0000
+
+    auto-commit for 0efec7fd-e513-46f5-b865-3853abbea18c
+
+commit 8c3f0390550ffcd1fe5076b0c2b03bb12db93694
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 12 08:49:50 2026 +0000
+
+    auto-commit for 019a4d6d-0de1-4e32-b5e7-4fd984d7e79d
+
+commit 9336032bcea5877aea47af25f8c71a3851d9e4f4
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:48:50 2026 +0000
+
+    auto-commit for 2e4977bd-3066-4883-9bd2-b5d3879fc153
+
+commit 4e12be23b7706331972fdcd3635e7994204107aa
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:47:03 2026 +0000
+
+    auto-commit for 5cf52499-2834-4c1e-a631-6c737b376e02
+
+commit eff45f850ec729dc4bb915710224918e1504ada8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:46:42 2026 +0000
+
+    auto-commit for 4e2db109-53b8-4fa0-bd9d-9394ccd6f4a9
+
+commit 21869341ba6d170345924052a56f991b98844092
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:46:27 2026 +0000
+
+    auto-commit for 6d6e4ff2-1ea6-4e22-bc34-3e52db6475b9
+
+commit 73190c3836f01c0f85dca87fdc3a3e9148ad0890
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:43:57 2026 +0000
+
+    auto-commit for b620c382-0633-4def-9c0c-fa80c99696a0
+
+commit 7cb88f91cd4b93a093ae75c0e25bdfb2b40f281a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:43:49 2026 +0000
+
+    auto-commit for 3b7328ad-5b30-4dbd-86bd-459e41ea41e7
+
+commit c21499def5dd3d79dbc3d7a315469b1be7ffcd14
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 17:32:06 2026 +0000
+
+    Auto-generated changes
+
+commit c8c24864bd61a9d9da3c7c1ea9b21f90276db874
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 00:36:24 2026 +0000
+
+    Auto-generated changes
+
+commit b6842659896cc41b864c8c9126fd3a9d79a9240d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 11 00:35:34 2026 +0000
+
+    Auto-generated changes
+
+commit bb5c9186d345c01f1099c2ebfa77ba7c3e0a6379
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 22:03:34 2026 +0000
+
+    Auto-generated changes
+
+commit 02a2dee7c03642f9b3000adc7d3d9753856cb236
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 21:17:42 2026 +0000
+
+    auto-commit for c389c53a-de37-4cca-b75d-53bc05f9f755
+
+commit a1b540e757f1c685b87c896289b06f000a5d97c7
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 21:17:33 2026 +0000
+
+    auto-commit for 29cbe932-40e0-4648-a94b-1f3e6daa99df
+
+commit e2c23d5f3fa430eeb56f12942b2d49b740f3c07a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 21:16:49 2026 +0000
+
+    auto-commit for aa946fd7-147d-4187-8863-386c52bce1fd
+
+commit 411695e28744c9ae6a7fbcb89dfe0a706a37d4ad
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 21:16:29 2026 +0000
+
+    auto-commit for e4d56b3d-ce79-4d50-97ce-cfae747991c6
+
+commit 11f84a32c8adbb7a875aa64ef5735663f41d854e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 21:16:09 2026 +0000
+
+    auto-commit for 38b6d764-64d2-4fd2-971b-f1b3ece01c4a
+
+commit bd212bc72efbc6e02b15860f7fd338d444fcce29
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 20:26:57 2026 +0000
+
+    auto-commit for 00d09fde-3670-4b83-a4d1-f67069245b79
+
+commit 210430ae94adbf233919dc6a2c0320395181b656
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 19:59:07 2026 +0000
+
+    auto-commit for d9d1318c-7aa2-4d3e-8023-4df75737bf5e
+
+commit a29566604befad2d1ed40fc32df6551e9021faf8
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 19:43:21 2026 +0000
+
+    auto-commit for 066351e2-375d-485b-b456-9e4b0e3ac40a
+
+commit e6df26f3fde1fdfd208fe5d598315d1b546fd235
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 19:22:47 2026 +0000
+
+    auto-commit for c1b82734-5b3e-4382-9f90-c2580517de41
+
+commit fd9ee7e6f0ed43c7363ea0e8228fc1e9c3af50b7
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 18:45:15 2026 +0000
+
+    auto-commit for fc3e583f-ad5c-4ed3-a624-053b7c81402f
+
+commit 8850dea8abe5ee9a57543eb7c78359686a746f38
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 18:23:12 2026 +0000
+
+    auto-commit for 028a1799-dcf7-4b37-8417-58c95ce11c22
+
+commit 38a29fbbd620f118923fea6669afbe53ab8d892e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 17:52:10 2026 +0000
+
+    auto-commit for ddd42a48-2b47-4f3a-8449-4dcf65dc00fb
+
+commit 3451d459ff73f79ae8eeea86b7c49f2196dba82f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sat Jan 10 17:51:45 2026 +0000
+
+    auto-commit for e9e8e79d-d171-4148-97f7-b1d57d5850ea
+
+commit 33463c3219f9c4e79aebe301ef9e9c60684556b0
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 22:51:43 2026 +0000
+
+    Auto-generated changes
+
+commit ca61d7e2c3a7cbf75dff74a882f6bd8fd2514ef0
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 22:50:42 2026 +0000
+
+    auto-commit for e8124085-482a-426f-ad79-317ca6db0e3b
+
+commit 494426fd5d2c80c027c21daa513c9e7769218e74
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 22:43:06 2026 +0000
+
+    Auto-generated changes
+
+commit 9a58dc15e6d34a37895acd2d9ff580d558de6f3b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 21:38:36 2026 +0000
+
+    auto-commit for fe7edbc2-236b-4e1c-836e-8dbf55d5d398
+
+commit eb4094e6141b3685d6b017bfecc12c1231b30f48
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 21:37:05 2026 +0000
+
+    auto-commit for c48640c1-0dbb-4417-b605-bc11f52b10da
+
+commit 35ef2ce0f7db8b52a3ab9aa3b90bad1aa1898c00
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 21:21:08 2026 +0000
+
+    auto-commit for 652b74ac-e297-4681-8748-eeaee2536514
+
+commit 1473d6cfc90bd0e2b9b5785e90f4ee136f22995e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 21:20:52 2026 +0000
+
+    auto-commit for 3fb442f5-60dc-457e-b154-f2d9766ae589
+
+commit b1e2ef57a05107538dfe7c5afb8501c28fc60623
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 21:00:03 2026 +0000
+
+    auto-commit for d7e0dcda-89f4-4da0-93d1-47e7e7584bd1
+
+commit 2216d73f6b78eae5fab702916e5861a14abe01fc
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 20:43:54 2026 +0000
+
+    auto-commit for 9ed425b5-07d9-4be5-9cc5-7f23a6bff938
+
+commit 7013bdc2758333f2a6f9d0cd08d8fa526e35fdc3
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 20:43:27 2026 +0000
+
+    auto-commit for 80bde17f-52d0-424c-b7e9-1c85f475b159
+
+commit 020cbaf316e0b3f3bd9e92dcc6e89f1104378be3
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 20:23:24 2026 +0000
+
+    Auto-generated changes
+
+commit de1633b30a6f8b08fd8e19d20aa078a03b71d201
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 20:22:50 2026 +0000
+
+    auto-commit for 8e648740-4e8b-4fd2-9709-c727ff2a38a6
+
+commit 69457b2ffe962fbf20fb9e97f522a8aa01954603
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 20:16:44 2026 +0000
+
+    auto-commit for 0bcd3ab8-c8f6-4af2-95c2-6ce9c00de1a5
+
+commit 2d09fa565e066a83f1cce670cbf148385f1796ca
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 20:15:01 2026 +0000
+
+    auto-commit for 35363d3a-6439-4952-a8f7-87e25733f693
+
+commit efdb6b45decd0990984510dddd253557e3ce5899
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 19:31:35 2026 +0000
+
+    auto-commit for 63efe86f-d8ef-4a34-b714-1901d9bad168
+
+commit 64a90ad4bda1710d4c8f19431db2ba8249faa319
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 19:31:06 2026 +0000
+
+    auto-commit for 45166383-c4c5-447c-a57e-3f7e8e6ffe5f
+
+commit 721fbf0038d6d2b7eaa6abddf8ac4783d9130664
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 19:30:17 2026 +0000
+
+    auto-commit for 8f5c2dba-5985-4628-88bf-67336fee37cd
+
+commit fc334f75146a162fab321be0da18db00098bee90
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 19:30:02 2026 +0000
+
+    auto-commit for 381652f7-8b6e-4512-9470-ee5388bfbcec
+
+commit 6ea6bcae6550c72596cb91975af117e6cd0fc62a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 19:29:47 2026 +0000
+
+    auto-commit for 3c12ad19-ecb8-4d88-8343-febce506b328
+
+commit 1cea99cd419401adca9c5539eb14cc7e90da6835
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 19:23:45 2026 +0000
+
+    Auto-generated changes
+
+commit 1a9d2f11b800d02cf109991ae83ceb81efab7749
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 18:14:49 2026 +0000
+
+    Auto-generated changes
+
+commit 7a4e24c52f5f148ec5b34a7573bbe23688b34fac
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 16:04:14 2026 +0000
+
+    auto-commit for d3505ab8-bff0-43ca-a55b-0fd4b87b5e63
+
+commit 6475cee5c29126b5859bf7de648fb6c2228a184a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 13:40:08 2026 +0000
+
+    Auto-generated changes
+
+commit 84c2a9d7b9f41a31e4a3903d4426322b9f0c5db6
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 12:10:22 2026 +0000
+
+    Auto-generated changes
+
+commit 846c11aef994782aaf253f087e14f25af54deaba
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Fri Jan 9 11:04:06 2026 +0000
+
+    Auto-generated changes
+
+commit 41385dacfa82a7e205df8bb79a8a2e3279081b40
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 21:15:17 2026 +0000
+
+    Auto-generated changes
+
+commit 5cf2288fd310cbdf8ff01d28b58547c83071c727
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 21:13:25 2026 +0000
+
+    Auto-generated changes
+
+commit 07ed4c07dfbdb67d80a3e47c96b9fd5ea30c213f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 20:17:43 2026 +0000
+
+    Auto-generated changes
+
+commit 998fb477348e586598e71df2d4d2ab2ea0361e29
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 17:00:25 2026 +0000
+
+    Auto-generated changes
+
+commit 21ab01e38872fd1d45ab4f4fe429b80e76d225c6
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 16:48:08 2026 +0000
+
+    auto-commit for 414d2bae-c9c7-4460-85e1-16af85b52ea1
+
+commit c47f4fdb408521be5529fcb3658d30f4eff3cbbd
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 16:47:55 2026 +0000
+
+    auto-commit for ddb7b540-c0e0-4db0-906b-253bc6284af4
+
+commit 01f041da799315da6381d661a1056f9682d86cdf
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 16:47:19 2026 +0000
+
+    auto-commit for 832b6099-3b3b-4c89-b2be-0b207dc9eea9
+
+commit e8eef17ac43b76e3c4e81100c915194c600df546
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 16:43:39 2026 +0000
+
+    auto-commit for 9d4758c2-8027-4e1e-b1d9-39819c2de221
+
+commit 1cdf2af839d0b66d91012976a25613e4c82ad448
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 16:39:37 2026 +0000
+
+    Auto-generated changes
+
+commit ffb71ef2262c43e22cc80be59d6e3fec5b69b1e2
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 13:24:19 2026 +0000
+
+    auto-commit for 1548979b-13e4-4231-b95d-4076214e9bff
+
+commit 770eaae7f1940ab8f5d0168cbdf16b5f536bb703
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 13:20:10 2026 +0000
+
+    Auto-generated changes
+
+commit 52513b4c757781d6e5ce599facae6c3074e8b904
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Thu Jan 8 01:23:02 2026 +0000
+
+    Auto-generated changes
+
+commit 2003df23044b194ea1321ae2ce0cba9fc12051af
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 7 22:03:40 2026 +0000
+
+    Auto-generated changes
+
+commit 7d4aab254340338124b58717eea5da42ee06f1fc
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 7 20:57:45 2026 +0000
+
+    Auto-generated changes
+
+commit 2436732d0bc240a8867e4b20988b0d043bf11c7a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Jan 7 16:45:07 2026 +0000
+
+    Auto-generated changes
+
+commit f8f6231b7c682125e2b075531289dd1725cd9d53
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Tue Jan 6 19:31:25 2026 +0000
+
+    Auto-generated changes
+
+commit c201d5baa82c693fbda97299db82d6c541851b33
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 22:20:55 2026 +0000
+
+    Auto-generated changes
+
+commit 965edfe83543945da23acf8dd8cf3409b4c15860
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:37:03 2026 +0000
+
+    auto-commit for 5fff4e84-1e40-4a10-8e22-add05ca575fc
+
+commit c414759b8247543600be31d674b096cc89f42b44
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:31:17 2026 +0000
+
+    auto-commit for fa9fbdf5-0a60-44e3-a6cc-2828b446c94c
+
+commit e038ea4387b6f83a81738b5943e214e899159044
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:31:07 2026 +0000
+
+    auto-commit for 149fbe6a-99e7-4b33-b2e5-a9af98eb6405
+
+commit db839af591e04e04ea4301aa8c9c5e1a3da8759b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:31:00 2026 +0000
+
+    auto-commit for 89505452-06cb-4856-81db-5d3bf761ead9
+
+commit dd26c2d6ca9f198c4d62f5268d873985b5bf9e21
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:30:08 2026 +0000
+
+    auto-commit for 2d7eb65d-1be1-42ce-8455-fda5a7320702
+
+commit fd478d96e14ae9c20d8772a01b861bdacc0fac04
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:29:58 2026 +0000
+
+    auto-commit for d237f4fd-101e-4d29-b2ab-b76928c2718b
+
+commit 2c19b49459c9e4a0a4362cfa34c05e6845a1d191
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:29:47 2026 +0000
+
+    auto-commit for d78df3e6-540d-4c66-9c19-7aff1879689d
+
+commit e515a169768f1ee21ecfaa5be4544ce68e54466c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:29:36 2026 +0000
+
+    auto-commit for 5cb07b69-812c-4c93-8745-81685d9c9312
+
+commit 4b73fe4757b6bf1b97753a7ff18b4e9008491a02
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:29:13 2026 +0000
+
+    auto-commit for 7e21800d-c2d1-4751-9db7-d73554eec3a6
+
+commit 1199121be24e36decc62ae6ceec39ddca98dd2be
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:20:41 2026 +0000
+
+    auto-commit for eadd0742-f3ad-4ef8-886d-6dc2c33d24a0
+
+commit 7445997e21a5c218365ea22cff10026bd0a25138
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:20:02 2026 +0000
+
+    auto-commit for 0d08b9d2-0b01-4aa3-8217-084f3e88a51d
+
+commit a1c6159ee571566743ca748e1d4da43cc61fa60f
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:18:29 2026 +0000
+
+    auto-commit for 64757210-3183-4233-bec2-65091dd10a92
+
+commit 807489841a06efb2fe5cea62eeb45db37523e3ff
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:14:06 2026 +0000
+
+    auto-commit for 6d91cc81-bb16-412f-b176-cf52bbfd8a49
+
+commit 1b4743767e9f34e66b7a86ae9c458000cb1f3476
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 19:07:08 2026 +0000
+
+    Auto-generated changes
+
+commit c0c76fc9912f36f03460dce491bb4fdefc3d2f83
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 18:47:09 2026 +0000
+
+    auto-commit for 5f36ee30-390e-4630-ba14-c0f080753f9b
+
+commit ab8da2f19f1fbd487e3bdd55c75d389e9a0fcc5d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Mon Jan 5 12:21:31 2026 +0000
+
+    auto-commit for 76ef0754-e6c3-4aca-b928-68bb232ffbee
+
+commit 9333fd2a73184ca3f02e97e79022bb81d4bcec86
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:49:43 2026 +0000
+
+    auto-commit for 36d03724-c9da-42c3-9625-c91720c9d265
+
+commit 6cd7d7d255a62743d729f19df063bd02618cc48c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:49:06 2026 +0000
+
+    auto-commit for 7e59a4e8-5b52-4c96-a7c4-054320b6fbf4
+
+commit 88201a77e1c8328a6bb5dddc6a175f887d0815fb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:48:15 2026 +0000
+
+    auto-commit for 10c122c7-661c-4230-ad56-81edc135801e
+
+commit f8cfc9bc6fb2d3ba7801e3ffbe6d13148ee38494
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:48:00 2026 +0000
+
+    auto-commit for 807b477b-79b6-4079-b587-120f9bbe282a
+
+commit 6b2867dbfc46d83b813aebf44a9f59db804657da
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:47:08 2026 +0000
+
+    auto-commit for 0dde38ae-8a39-4d00-bc28-4f00eefae0b2
+
+commit 72b2a286ae2f67b5b1428f8dd768bbecb1966721
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:46:53 2026 +0000
+
+    auto-commit for eb31d3a5-be6f-43ed-8aff-98a4467e095a
+
+commit b0b6680d80e72d314010d2852cac804cfda7e1e1
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:42:27 2026 +0000
+
+    auto-commit for 5fa9b511-f140-48a9-9997-015221d3fc4d
+
+commit ea4f5321bcd91d43cdd0400c1c53ae3adb25e2cb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:41:42 2026 +0000
+
+    auto-commit for aed28eb3-bba8-4408-80c2-c725172237e6
+
+commit 5e9dc0da3fa26f2467c0cbeaf298dfc07bff5b7c
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:41:00 2026 +0000
+
+    auto-commit for 35f77442-fdac-435a-9657-07848846150d
+
+commit 0087b0c0194cddf3c2b468c7c3f37aac72fdfba6
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:40:15 2026 +0000
+
+    auto-commit for aa820160-aa58-4d5c-85f4-2ef4f05f4bb7
+
+commit 566c071968c7d67e4de6ee0767d5b9603258bbe9
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:40:02 2026 +0000
+
+    auto-commit for 9b4dbc46-0991-417f-aa9d-83bc7cc84f57
+
+commit 5b54065284f7cd60e604f08653bfb22046a832e3
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:39:54 2026 +0000
+
+    auto-commit for 08481990-e53f-4805-8c66-a839d5099e23
+
+commit f31f86051ff73d78113b8a8f6b0df40dcaaf76eb
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:39:46 2026 +0000
+
+    auto-commit for 319d5c80-798d-4f87-9fe3-61b2a15c50a6
+
+commit 6d008af807473db22c6e8989e14c2ecc4851e865
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:39:18 2026 +0000
+
+    auto-commit for bfba432b-ace2-4355-b364-afd14c7018e5
+
+commit efd3d2bf907233458056e3720ca39acad78dd234
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:37:42 2026 +0000
+
+    auto-commit for 77a681cf-9c29-455a-b8f4-f8dc154f63b6
+
+commit 173fb9083e1a160a062b3b6733fda412343011de
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:37:24 2026 +0000
+
+    auto-commit for 9be6adea-9d6d-4807-a147-a894a48e0e3a
+
+commit ed4710ac6598b8bc64eb177ebc2e4c2f13b11bb1
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:36:53 2026 +0000
+
+    auto-commit for e8df09ee-e70f-43ec-95c9-015ca565a256
+
+commit d75244db9f093d0855939190f5e06789734b6500
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:36:13 2026 +0000
+
+    auto-commit for 0606d04b-e9b0-4c5f-9979-d83afb9c6b35
+
+commit 9ca2b4c6ce14c8fc5ff59d31a411d9a35bb5d90d
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:36:03 2026 +0000
+
+    auto-commit for aaa301d9-8bad-4ea1-8a02-d6ecba2d3c1a
+
+commit 02f7124659e61c278b2efa07806aebe4785f8ab3
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:35:33 2026 +0000
+
+    auto-commit for 0ee93c7d-b7cc-4fac-8081-d729d8376784
+
+commit c6b48cdf0d4faf2e9870f62ba35653b38e2c7d5e
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:35:10 2026 +0000
+
+    auto-commit for fee5e935-1720-4de6-9841-5cf5abc3cfeb
+
+commit a1cf990158e07169668f43f4a3dd5a41b5c66a3a
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:32:44 2026 +0000
+
+    auto-commit for 6b671a12-0e7a-4c2e-8585-e3c992241612
+
+commit f701b05490c16f0aebe705f67c6b60987c52b408
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:32:30 2026 +0000
+
+    auto-commit for 96a6d144-de8d-4363-88cf-79f19dc423aa
+
+commit 5495b0eef428cba03f5c75445bc3975d98a1a6da
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:32:05 2026 +0000
+
+    auto-commit for c6a59c9b-f7dc-48d1-a161-a17ce1de82b0
+
+commit ff79664581c8a533a2fe666c99e39c276b7e73fd
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:31:34 2026 +0000
+
+    auto-commit for 6b84fa30-ff07-4bdf-87da-b42383698d1c
+
+commit 75c2feda4acb7135eda8a7dfd034a3b0465f3cb1
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:31:07 2026 +0000
+
+    auto-commit for 2f780723-4d09-4c6f-a5f6-9b275ccc809a
+
+commit bfa203c150ab4a70e564bcfbe14eaa4d4c1a7242
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:30:55 2026 +0000
+
+    auto-commit for 666e1203-69d7-414a-b5bf-656f419ecc8f
+
+commit 906a4c4e8a5a8717cfbc9ca4f3c9f128eccc431b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 19:30:41 2026 +0000
+
+    auto-commit for 73896d19-ac16-457f-b3b4-e6c849862837
+
+commit 03132cf8da1a531473d0d8122cca86afa010832b
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 18:32:25 2026 +0000
+
+    auto-commit for 8efaab55-fd16-4667-b555-3c2da5586194
+
+commit c4aeebd7918073f0b14bb182fec38ba0bd607256
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Sun Jan 4 18:23:24 2026 +0000
+
+    auto-commit for 5c6a3609-9232-467b-89f6-779917b82a7f
+
+commit 6806ad1046216c3dfda13592bc16308f6ce79701
+Author: emergent-agent-e1 <github@emergent.sh>
+Date:   Wed Dec 24 11:54:16 2025 +0000
+
+    Initial commit, ) to debug regressions.
+
+**key DB schema**
+-   : Stores site-wide text translations, categorized by a  field (e.g., 'home', 'chatbot', 'cookie'). This is crucial for fixing content issues.
+-   : Stores data for service providers (realtors, lawyers, etc.), which are displayed by the Expertenfinder and Chatbot.
+
+**changes in tech stack**
+-   None.
 
 **All files of reference**
 -   
@@ -136,73 +2087,63 @@ The application is a Django monolith. A new, fully functional, SEO-optimized, an
 -   
 -   
 -   
--    (created in agent's environment)
+-   
+-   
+-   
+-   
+-   
+-   
+-   
+
+**Areas that need refactoring**:
+-   : This file has grown very large with many hardcoded translation dictionaries. These should be migrated to the  table in the database for better maintainability.
+-   : The template relies on extensive  blocks. This is brittle and difficult to maintain. It should be refactored to use a more dynamic approach.
+
+**key api endpoints**
+-   : Backend for the customer-facing chatbot.
+-   : Endpoint for the AI-powered property search on the homepage.
+-   : Backend for the expert-finding feature.
+-   : Sets the user's language in the session.
 
 **Critical Info for New Agent**
--   **GLOBAL LANGUAGE SWITCHER IS BROKEN**: This is the most critical issue found in this session. The header language switcher CANNOT correctly handle pages with translated URL slugs. Do not try to use it for testing those pages. A workaround was implemented for the Buyer Guide (a page-specific switcher), which could be a model for other pages until a global fix is implemented.
--   **AI FEATURES ARE MISSING**: The user believes features like Expertenfinder and a Chatbot exist. They do not. You will need to manage user expectations and either plan their implementation or remove the dead links.
--   **USER'S LOCAL ENVIRONMENT**: The user is on a Mac and often has a different version of the code than the agent's environment. Be prepared to provide full code blocks for copy-pasting, as  commands or partial diffs can fail or cause confusion. The user is diligent about running usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
-           <command> [<args>]
-
-These are common Git commands used in various situations:
-
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
-
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
-
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
-
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
-
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
-
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system. commands when instructed.
+-   **User Context**: The user (Nik) is on a Mac M1, uses the terminal, and needs explicit, copy-pasteable commands. He is very hands-on and tests changes immediately.
+-   **Sitemap Translation is Broken**: This is the most critical pending issue. The user is frustrated because they believe it was fully translated into 12 languages before, but now it only works for 3. The agent reverted the file  to commit  but the issue persisted, pointing to a more complex problem, likely in . Do not assume the current sitemap file is correct.
+-   **AI Features Exist**: Contrary to the initial handoff summary, the Chatbot, Expertenfinder, and KI-Suche features were already implemented. They were just broken or disconnected. The  file is outdated and needs to be updated.
+-   **Working Branch**: All work was committed to the  branch.
 
 **documents and test reports created in this job**
--    (in the agent's environment)
+-   
+-   The agent also made updates to  (though this file is not directly in the user's workspace).
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  - (The session is ending, it was a great finish, thanks and see you soon, don't forget the handoff.) - Status: Done.
-9.   - (Yes, that looks good, the language selection at the bottom works perfectly, just not the one at the top.) - Status: Acknowledged, issue documented.
-8.   - (No, when I switch from German to Croatian, I land on this wrong URL...) - Status: Resolved with a page-specific switcher.
-7.   - (Okay, the language selection is gone but it's in German and the 12 languages in the header lead to the glossary which is wrong.) - Status: Resolved by fixing the view context.
-6.   - (Yes, that's the right one now, but it's only in German, and the language selection at the top for de, en, and hr can be deleted.) - Status: Resolved.
-5.   - (Sorry, I hadn't uploaded the new code.) - Status: Resolved.
-4.   - (The design has changed and it's only shown in German...) - Status: Resolved by restoring the correct design and fixing translations.
-3.   - (1 and 2, I'll finish around 11 PM.) - User wants to commit and then translate the buyer guide. - Status: Done.
-2.   - (This is not yet translated...) - Status: In progress, led to the final task.
-1.   - (Yes, that all works now, but I'm not sure about the links, I have to check.) - Status: User confirmed most links are okay.
+1.  **User**: Thanks, it was a pleasure, see you soon! (Acknowledges session end)
+2.  **User**: The sitemap was 100% perfectly translated into all 12 languages. (Insists the feature was working before)
+3.  **User**: (Provides screenshot) Everything I've circled in red is not translated. (Pinpoints the sitemap bug)
+4.  **User**: Unfortunately not, and many languages are affected. (Confirms sitemap translation is still broken)
+5.  **User**: The privacy cookie banner is broken, it doesn't show any text. (Reports a new bug, which was then fixed)
+6.  **User**:  (Recurring joke asking the agent to start the server)
+7.  **User**: (Provides git output) revert: Sitemap to working state. (Following instructions)
+8.  **User**: The session is over, shouldn't we revert to the old state? What do you think? (Suggests reverting due to the new sitemap bug and lack of time)
+9.  **User**: Yes, all languages must work as they did yesterday. (Reiterates expectation for sitemap translations)
+10. **User**: When I go to a page from the sitemap, it says Only logged in users can view this page. (Reports bug after sitemap was made public, which was then fixed)
 
 **Project Health Check:**
--   **Broken**: The global language switching mechanism for i18n URLs is fundamentally flawed. The Django migration system remains fragile.
+-   **Broken**: The translations on  are broken for 10 of 12 languages.
 -   **Mocked**: N/A
--   **Technical Debt**: High. In addition to migrations and CSS, the lack of a centralized URL translation mapping system is a major architectural debt that is now causing critical bugs.</analysis>
+-   **Technical Debt**: High. Includes fragile Django migrations, a large  file with hardcoded translations, and inconsistent i18n implementation across templates.
+
+**3rd Party Integrations**
+-   **OpenAI**: Used by the Chatbot, AI Property Search, and Expert Finder. The  file that was using a hardcoded key has been fixed to load the key from the  file.
+
+**Testing status**
+-   Testing agent used after significant changes: NO
+-   Troubleshoot agent used after agent stuck in loop: NO
+-   Test files created: []
+-   Known regressions: The  translations are not working for 10 out of 12 languages.
+
+**Credentials to test flow:**
+-   No explicit credentials were shared. The user mentioned logging in as Nik to test previously protected pages.
+
+**What agent forgot to execute**
+- The agent did not update the  file after discovering and fixing the missing AI features.
+- The root cause of the sitemap translation regression was not fully resolved, but this was a mutual decision with the user to postpone due to time constraints, not an oversight.</analysis>
