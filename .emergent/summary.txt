@@ -1,184 +1,136 @@
 <analysis>**original_problem_statement:**
-The user, Nik, is developing a large, multilingual Django-based real estate portal. The session's goals were to address a critical regression where the sitemap page was not translated for all 12 languages, fix the associated language switcher bugs, and resolve CI/CD pipeline failures.
+The user, Nik, is developing a large, 12-language Django real estate portal. The initial goal was to fix a critical regression where sitemap links led to 404 errors for most languages. This evolved into a massive session focused on identifying and eliminating systemic issues related to multilingual URL routing and hardcoded translations throughout the Django templates and JavaScript code.
 
-The key user instructions for this session were:
-- Adhere to a strict Git workflow (feature branches, clean commits, no secrets).
-- The user is on a Mac M1 and requires explicit, step-by-step terminal commands.
-- The user's name is Nik, and he prefers the informal du. A new, detailed  file was created with specific instructions for future agents.
+The user requires a specific workflow:
+- The agent must provide explicit, copy-pasteable terminal commands for the user to execute on his local Mac M1 machine.
+- The agent works in a separate cloud environment, requiring frequent queries (, , etc.) to understand the user's local codebase state.
+- All communication must be in German, using the informal du.
+- A critical file, , outlines the project architecture and workflow rules.
 
 **PRODUCT REQUIREMENTS:**
-- A fully functional global language switcher that correctly handles translated URL slugs and maintains the user's language context across all pages.
-- A fully translated sitemap page, where both the content and the links work correctly for all 12 supported languages.
-- A stable CI/CD pipeline that passes all checks.
-- Code should be secure, with no hardcoded API keys.
+- A fully functional, multilingual site where all links and features work correctly for all 12 supported languages.
+- A consistent and predictable URL architecture that properly handles language prefixes.
+- A robust system for translations that avoids hardcoding text in templates, making the site more maintainable.
 
-**User's preferred language**: German. The user's name is Nik, and he prefers the informal du. The next agent **MUST** read the new  file and continue to communicate in this manner.
+**User's preferred language**: German. The user's name is Nik, and he prefers the informal du. The next agent **MUST** continue to communicate in this manner.
 
 **what currently exists?**
-The project is a large Django monolith. The critical bug with the sitemap page not displaying translations for 10 out of 12 languages has been fixed. This involved a multi-step debugging process that corrected the sitemap template, the global header's JavaScript language switcher, and the Django URL routing to handle language prefixes correctly. A CI/CD failure related to a missing OpenAI API key was also resolved. All changes have been merged into the  branch. However, the fix for the sitemap links has exposed a deeper architectural problem: many links from the sitemap now lead to 404 errors or the wrong language page because the site's overall URL structure is not consistently internationalized.
+The project is a complex Django monolith. In this session, a huge amount of technical debt was paid down. All critical URL routing issues for static pages, registration, and sitemap links have been resolved for all 12 languages.
+
+A new, robust pattern has been established: instead of hardcoding translations in templates with massive  blocks, translations are now centralized in dictionaries within new context processors in . This pattern has been applied to the sitemap, search filters, 2FA setup page, and the buyer's guide page, significantly improving maintainability.
+
+Additionally, multiple instances of hardcoded  URLs in JavaScript  calls (for AI search and other APIs) and  links have been found and replaced with dynamic  variables, making these features fully multilingual.
 
 **Last working item**:
-- Last item agent was working: Fixing broken links on the sitemap. After adding language prefixes () to all links within , the user discovered that many of the destination pages do not exist under these prefixed URLs (e.g.,  might lead to a 404, while  works but shows German). This points to a major inconsistency in the project's URL architecture.
-- Status: IN PROGRESS
-- Agent Testing Done: N
-- Which testing method agent to use? manual testing by user
-- User Testing Done: Y (User confirmed many links are broken).
+- Last item agent was working: The agent and user successfully refactored the  template, moving all hardcoded translation blocks into a new context processor. This was the last of a series of successful refactoring tasks. The user was extremely satisfied with the progress and the session concluded on a high note.
+- Status: COMPLETED
+- Agent Testing Done: Y (Agent provided  commands and user verified browser output).
+- User Testing Done: Y (User confirmed functionality multiple times throughout the session).
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Inconsistent URL Architecture Causes Broken Links (P0 - CRITICAL BLOCKER)**
--   **Issue 2: Hardcoded Translations in Templates (P1 - HIGH / Technical Debt)**
--   **Issue 3: Fragile Django Migrations (P1 - HIGH RISK / Technical Debt)**
--   **Issue 4: Chatbot gives generic answers (P2 - Medium)**
--   **Issue 5: Expertenfinder results styling (P2 - Low)**
+-   **Issue 1: Fragile Django Migrations (P2 - Technical Debt)**
+-   **Issue 2: Chatbot and UI styling issues (P2 - Backlog)**
 
 **Issues Detail:**
--   **Issue 1: Inconsistent URL Architecture Causes Broken Links**
-    -   **Description**: After fixing the sitemap display, language prefixes were added to all its links. However, many pages (, , , etc.) are not configured to handle these prefixes, resulting in 404 errors or redirection to the default German page. This breaks navigation for 11 out of 12 languages.
-    -   **Attempted fixes**: The session ended as this issue was discovered. The root cause is that some parts of the app use  for URLs and some do not.
-    -   **Next debug checklist**:
-        1.  Systematically review  and .
-        2.  Decide on a consistent strategy: either all public-facing URLs should be prefixed with a language code, or none should be.
-        3.  Refactor the URL configurations to be consistent. This is a significant task. A temporary fix might be to remove the language prefixes from the sitemap links again to restore basic functionality, but this would undo the desired multilingual navigation.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical blocker for a multilingual site. Fixing it will make the site navigable in all supported languages.
+-   **Issue 1: Fragile Django Migrations**
+    -   **Description**: Inherited from a previous fork.  is at risk of failing. This was not addressed in this session as the focus was on frontend and routing fixes.
+    -   **Attempted fixes**: None in this session.
+    -   **Next debug checklist**: Investigate the state of Django models and the migration history to understand the source of the fragility.
+    -   **Why fix this issue and what will be achieved with the fix?**: To allow for safe database schema changes in the future.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Should Test frontend/backend/both after fix?**: Backend.
     -   **Blocked on other issue**: None.
 
--   **Issue 2: Hardcoded Translations in Templates**
-    -   **Description**: The fix for  involved adding hundreds of lines of  blocks. This is brittle, hard to maintain, and increases technical debt.
-    -   **Next debug checklist**: Refactor  to pull translations from the  model in the database, similar to how other parts of the site should work.
-    -   **Why fix this issue and what will be achieved with the fix?**: Improves maintainability and reduces code duplication and the risk of errors.
+-   **Issue 2: Chatbot and UI styling issues**
+    -   **Description**: Inherited backlog items (generic chatbot answers, Expertenfinder results styling). Not addressed in this session.
     -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
+    -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: Frontend.
-    -   **Blocked on other issue**: None.
-
--   **Issue 3: Fragile Django Migrations**
-    -   **Description**: Inherited from a previous fork.  is at risk of failing. Not addressed in this session.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
-
--   **Issue 4: Chatbot gives generic answers**
-    -   **Description**: From previous handoff. Not addressed in this session.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-
--   **Issue 5: Expertenfinder results styling**
-    -   **Description**: From previous handoff. Not addressed in this session.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
 
 **In progress Task List**:
--   None.
+- None. All tasks in this session were completed and merged.
 
 **Upcoming and Future Tasks**
 - **Upcoming Tasks:**
-  - (P0) Systematically refactor the project's URL architecture to be consistent with internationalization prefixes (see Issue 1).
-  - (P1) Migrate hardcoded translations from  to the database.
-  - (P2) Improve Chatbot response logic.
-  - (P2) Refine the UI styling of the Expertenfinder results card.
-  - (P2) Update the outdated .
-
-- **Future Tasks (from previous handoff):**
-  - (P0) Refactor the project's fragile CSS.
-  - (P1) Data Quality: Fix numeric slugs for Russian and Greek glossary terms.
-  - (P1) Consolidate Registration URLs & Views.
-  - (P1) Implement a Review/Rating System.
-  - (P1) Finalize Sprint 3 (UX/Akkordeon-Layout): Fix missing smooth animations on the glossary accordion UI.
+    - **P1: Refactor remaining templates:** The user expressed a strong desire to continue refactoring. The next logical step is to apply the new context processor pattern to other templates that may still contain hardcoded translations (e.g., , , other pages).
+    - **P2: Add language-specific SEO meta-data to other pages:** The  page was refactored to include dynamic, translated JSON-LD schema data. This successful pattern should be extended to other key pages (Homepage, Glossar, etc.) to improve multilingual SEO.
+- **Future Tasks:**
+    - **P2: Address inherited technical debt:** Fragile migrations and generic UI styling issues remain in the backlog.
+    - **P2: Investigate hardcoded text in :** The agent found hardcoded German text in the Schema.org JSON-LD block within . This should be moved to a context processor to be fully multilingual.
 
 **Completed work in this session**
-- **Sitemap Display Fixed:**  was updated to correctly display translated text for all 12 languages, resolving the critical regression.
-- **Global Language Switcher Fixed:** The JavaScript  function in  was completely refactored to handle language changes correctly across the entire site, especially on the sitemap, by using the  parameter to ensure the user stays on the correct page.
-- **Norsk 404 Error on Sitemap Resolved:** A bug causing a 404 error when switching to Norwegian was fixed by adding explicit URL patterns for the sitemap for all 12 languages in , outside of Django's .
-- **CI/CD Pipeline Fixed:** Resolved a recurring test failure by making the OpenAI API key loading in  robust to handle environments where the key is absent. The user also added the  to GitHub secrets.
-- **Documentation Created:** A comprehensive  was created with detailed instructions, architectural warnings, and workflow rules for future agents. A  was also created.
-- **Code Merged:** All work was committed to the  branch, and the user successfully merged the Pull Request into the  branch.
-
-**Known issue recurrence from previous fork**
--   **Issue recurrence in previous fork**: Fragile Django Migrations.
--   **Recurrence count**: 5
--   **Status**: NOT STARTED
+- **Fixed All Critical URL/Routing Bugs:**
+  - Resolved 404s for static pages (imprint, agb, etc.) and registration pages by adding explicit URL patterns for all 12 languages in .
+  - Fixed sitemap 404s by adding URL variants with trailing slashes.
+- **Made Static Pages Multilingual:** Fixed views (, , ) to correctly detect the language from the URL and, crucially, update  to ensure all template translations render correctly.
+- **Fixed Hardcoded API URLs:** Replaced dozens of hardcoded  API endpoints in JavaScript  calls and  links across multiple templates (, , , etc.) with dynamic  variables, making AI Search and other features fully multilingual.
+- **Refactored Major Templates:**
+  - : Removed all  blocks and moved translations to a new context processor.
+  - : Replaced hardcoded German search filter placeholders with a new context processor.
+  - : Refactored to use a context processor for all text.
+  - : Refactored the entire page (30+ translation blocks) to use a new context processor.
+- **Fixed Missing Database Translations:** Scanned the  table, identified 6 records with missing translations for 5 languages (CZ, NO, SW, SK, NL), and added them via a Django shell script.
+- **Updated Agent Briefing:** Significantly updated  with all new architectural patterns and learnings from the session.
 
 **Code Architecture**
--   **Framework**: Django monolith
--   **Branch**: Work was done on  and is now merged into . The user is on .
--   **Key Architectural Insight**: There is a critical conflict in URL handling.  uses , which automatically adds language prefixes to URLs. However, many URLs are defined outside this block or in  without prefixes, leading to widespread inconsistencies.
--   **Key Modified Files**:
-    -   : Added translations for 12 languages and language prefixes to all  attributes.
-    -   : Rewrote the  JavaScript function to be more robust.
-    -   : Added 12 new URL patterns for the sitemap (e.g., ) outside of .
-    -   : Modified to safely handle a missing .
--   **New Files**:
-    -   : Contains critical project context and workflow rules. **MUST READ**.
-    -   : Session summary.
+- **Framework**: Django monolith.
+- **Key Pattern Established**: A major shift from hardcoding translations in templates to centralizing them in Python dictionaries within dedicated context processors ().
+- **Context Processors**: Several new context processors were added to provide translated strings to templates: , , , .
+- **URL Routing**: The complex URL structure in  and  is now much more stable. The pattern is to define language-prefixed static-like pages outside of  and use it for the rest of the app.
+- **Views**: A key fix was established for views outside : they must now manually activate the language and set  to ensure context processors work correctly.
 
 **Key Technical Concepts**
--   Django i18n URL routing (, ).
--   Interaction between different  files ( vs ).
--   Client-side vs. Server-side redirection for language switching.
--   GitHub Actions for CI/CD and secrets management.
+- Django Context Processors (Heavily used to refactor templates)
+- Django URL Routing (, )
+- Django Templates (Refactoring  logic)
+- Django Shell (Used for scripting database updates)
+- Remote-control workflow (providing bash commands to the user)
 
 **key DB schema**
--   : This existing model is the correct place for site-wide translations, but was bypassed in the  fix, which instead used hardcoded  blocks. This should be used in the future to reduce technical debt.
-
-**changes in tech stack**
--   None.
+-   : The table holding database-driven translations. It was queried and updated to fix missing translations.
 
 **All files of reference**
--    (MUST READ)
--   
--   
--   
--   
--   
--   
-
-**Areas that need refactoring**:
--   **URL Architecture**: The entire URL routing system needs to be audited and made consistent regarding language prefixes. This is the highest priority refactoring task.
--   ****: The template is now extremely difficult to maintain due to hardcoded translations for 12 languages. These must be moved to the  model in the database.
-
-**key api endpoints**
--   : The endpoint responsible for changing the session language. Its behavior was central to the debugging process.
+-    (**MUST READ** - updated with new patterns)
+-    (Heavily modified, contains all new translation dictionaries)
+-    (Modified to register new context processors)
+-    (Modified to correctly set session language)
+-    (Modified to fix static page routing)
+-   Refactored Templates: , , , 
+-   Other Fixed Templates: , , , and others.
 
 **Critical Info for New Agent**
--   **READ AGENT_BRIEFING.md**: The user and previous agent created a detailed briefing file. It is the new source of truth for workflow, architectural problems, and user context. You **MUST** read it first.
--   **URL Architecture is Broken**: The most critical issue is the inconsistent use of language prefixes in URLs. The recent sitemap fix exposed this by making all sitemap links prefixed, many of which now lead to 404s. Do not attempt small fixes; this requires a strategic approach to refactor the entire URL structure.
--   **User Workflow**: The user (Nik, informal du) is on a Mac M1 and requires explicit, copy-pasteable terminal commands for every step. He tests changes immediately. Adhere strictly to the Git workflow defined in .
+-   **Follow the Workflow**: You are a guide for Nik. Provide clear, single, copy-pasteable  commands. Do not assume file state;  or  first. All communication is in informal German (du).
+-   **Embrace the New Pattern**: The primary architectural pattern going forward is to **centralize translations in context processors**, not hardcode them in templates. When you see a large  block, the task is to refactor it.
+-   **Check JavaScript and Links**: Be vigilant for hardcoded  prefixes in  calls and  attributes. These must be replaced with dynamic  or JavaScript variables.
+-   **The  is Key**: For views outside , remember to set  to make the context processors work. This was a critical fix.
+-   **Read **: It has been updated with these new patterns and is your most important guide.
 
 **documents and test reports created in this job**
--   
--   
+- /app/real-estate-django-ALTmain/AGENT_BRIEFING.md (Updated)
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Confirms sitemap links are broken (404s, wrong language).
-2.  **Agent**: Explains this is a larger URL architecture problem and suggests committing the progress on the sitemap display fix.
-3.  **User**: Agrees the sitemap display and language switchers are now working correctly.
-4.  **Agent**: Provides git commands to commit and push the fix.
-5.  **User**: Pushes successfully and asks for help improving the instructions for future agents to avoid recurring issues.
-6.  **Agent**: Provides a comprehensive  template covering architecture, workflow, and known issues.
-7.  **User**: Asks the agent to create this file in the project.
-8.  **Agent/User**: Create, commit, and push  and .
-9.  **User/Agent**: Debug and fix a CI/CD failure related to the . The user adds the key to GitHub secrets, and the agent makes the code more robust. The PR is successfully merged.
-10. **User/Agent**: Conclude the session with a casual chat about email scraping tools. The main task is considered done, despite the newly discovered URL issue.
+1. **User**: Confirms the search filter fix works perfectly.
+2. **Agent**: Asks if user wants to commit and merge.
+3. **User**: Confirms merge and asks to continue in German.
+4. **Agent**: Apologizes and agrees. Finishes with a summary and improvement suggestion.
+5. **User**: Agrees with the suggestion to refactor more templates and wants to remove a button.
+6. **Agent**: Starts the refactoring process for the header/footer.
+7. **User**: Says  needs refactoring and they need to pause the session but will be back later.
+8. **Agent**: Acknowledges and ends the session part 1.
+9. **User**: Returns to the session, ready to continue.
+10. **Agent/User**: Together, they successfully refactor , commit, merge, and celebrate the end of a highly productive session. The user is extremely happy.
 
 **Project Health Check:**
--   **Broken**: Navigation from the sitemap to other pages is broken for most languages due to an inconsistent URL internationalization strategy.
+-   **Broken**: No critical features are broken.
 -   **Mocked**: N/A
--   **Technical Debt**: Very High. The inconsistent URL architecture is a P0 blocker. The hardcoded translations in  have significantly increased the debt. The fragile migrations issue from previous sessions still exists.
+-   **Technical Debt**: Significantly reduced. The remaining debt consists of older, unaddressed issues like fragile migrations and the need to refactor more templates to the new, cleaner standard.
 
 **3rd Party Integrations**
--   **OpenAI**: Used by  and other AI features. The CI/CD pipeline now has the  configured as a GitHub Secret.
+-   **OpenAI**: Used for AI features. No changes in this session, but API calls were made multilingual.
 
 **Testing status**
--   Testing agent used after significant changes: NO
--   Troubleshoot agent used after agent stuck in loop: NO
--   Test files created: []
--   Known regressions: While the sitemap *page* is fixed, the *links on it* are now broken for most languages. This is a new, critical regression.
-
-**Credentials to test flow:**
--   The  has been added to the project's GitHub secrets for CI/CD purposes.
-
-**What agent forgot to execute**
--   The agent did not update the  file.
--   The root cause of the broken sitemap links (inconsistent URL architecture) was identified but not fixed, as it was deemed a larger, separate task. The session ended with the links in a broken state.</analysis>
+- Testing agent used after significant changes: NO (User performed all testing manually in his browser)
+- Troubleshoot agent used after agent stuck in loop: NO
+- Test files created: []
+- Known regressions: None from this session. All regressions from the start of the session were fixed.</analysis>
