@@ -29,6 +29,48 @@
 {% endblock %}
 
 {% block body %}
+<!-- HowTo Schema for AI/GEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "{{ bg_title|escapejs }}",
+  "description": "{{ bg_subtitle|escapejs }}",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "{{ bg_step1_title|escapejs }}",
+      "text": "{{ bg_step1_text|escapejs }}"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "{{ bg_step2_title|escapejs }}",
+      "text": "{{ bg_step2_text|escapejs }}"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "{{ bg_step3_title|escapejs }}",
+      "text": "{{ bg_step3_text|escapejs }}"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "{{ bg_step4_title|escapejs }}",
+      "text": "{{ bg_step4_text|escapejs }}"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "{{ bg_step5_title|escapejs }}",
+      "text": "{{ bg_step5_text|escapejs }}"
+    }
+  ]
+}
+</script>
+
 <section class="guide-hero">
     <div class="container">
         <h1>{{ bg_title }}</h1>
