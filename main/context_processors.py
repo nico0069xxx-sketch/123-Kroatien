@@ -933,3 +933,102 @@ def get_search_filter_translations(request):
     
     filter_trans = SEARCH_FILTER_TRANSLATIONS.get(user_language, SEARCH_FILTER_TRANSLATIONS["ge"])
     return filter_trans
+
+
+# 2FA Setup Übersetzungen
+TWO_FA_TRANSLATIONS = {
+    "ge": {
+        "2fa_title": "Sichere Anmeldung - Schützen Sie Ihr Konto",
+        "2fa_instruction": "Scannen Sie diesen QR-Code mit einer Authenticator-App (z.B. Google Authenticator). Danach geben Sie bei jeder Anmeldung einen 6-stelligen Code aus der App ein.",
+        "2fa_manual": "Oder geben Sie diesen Code manuell ein:",
+        "2fa_activate": "Aktivieren",
+        "2fa_placeholder": "6-stelliger Code",
+    },
+    "en": {
+        "2fa_title": "Secure Login - Protect Your Account",
+        "2fa_instruction": "Scan this QR code with an authenticator app (e.g. Google Authenticator). After that, you will enter a 6-digit code from the app each time you log in.",
+        "2fa_manual": "Or enter this code manually:",
+        "2fa_activate": "Activate",
+        "2fa_placeholder": "6-digit code",
+    },
+    "hr": {
+        "2fa_title": "Sigurna prijava - Zaštitite svoj račun",
+        "2fa_instruction": "Skenirajte ovaj QR kod s aplikacijom za autentifikaciju (npr. Google Authenticator). Nakon toga ćete pri svakoj prijavi unijeti 6-znamenkasti kod iz aplikacije.",
+        "2fa_manual": "Ili ručno unesite ovaj kod:",
+        "2fa_activate": "Aktiviraj",
+        "2fa_placeholder": "6-znamenkasti kod",
+    },
+    "fr": {
+        "2fa_title": "Connexion sécurisée - Protégez votre compte",
+        "2fa_instruction": "Scannez ce code QR avec une application d'authentification (ex. Google Authenticator). Ensuite, vous entrerez un code à 6 chiffres à chaque connexion.",
+        "2fa_manual": "Ou entrez ce code manuellement:",
+        "2fa_activate": "Activer",
+        "2fa_placeholder": "Code à 6 chiffres",
+    },
+    "nl": {
+        "2fa_title": "Veilig inloggen - Bescherm uw account",
+        "2fa_instruction": "Scan deze QR-code met een authenticator-app (bijv. Google Authenticator). Daarna voert u bij elke login een 6-cijferige code in.",
+        "2fa_manual": "Of voer deze code handmatig in:",
+        "2fa_activate": "Activeren",
+        "2fa_placeholder": "6-cijferige code",
+    },
+    "pl": {
+        "2fa_title": "Bezpieczne logowanie - Chroń swoje konto",
+        "2fa_instruction": "Zeskanuj ten kod QR aplikacją uwierzytelniającą (np. Google Authenticator). Następnie przy każdym logowaniu wprowadzisz 6-cyfrowy kod.",
+        "2fa_manual": "Lub wprowadź ten kod ręcznie:",
+        "2fa_activate": "Aktywuj",
+        "2fa_placeholder": "6-cyfrowy kod",
+    },
+    "cz": {
+        "2fa_title": "Bezpečné přihlášení - Chraňte svůj účet",
+        "2fa_instruction": "Naskenujte tento QR kód pomocí ověřovací aplikace (např. Google Authenticator). Poté při každém přihlášení zadáte 6místný kód.",
+        "2fa_manual": "Nebo zadejte tento kód ručně:",
+        "2fa_activate": "Aktivovat",
+        "2fa_placeholder": "6místný kód",
+    },
+    "sk": {
+        "2fa_title": "Bezpečné prihlásenie - Chráňte svoj účet",
+        "2fa_instruction": "Naskenujte tento QR kód pomocou overovacej aplikácie (napr. Google Authenticator). Potom pri každom prihlásení zadáte 6-miestny kód.",
+        "2fa_manual": "Alebo zadajte tento kód ručne:",
+        "2fa_activate": "Aktivovať",
+        "2fa_placeholder": "6-miestny kód",
+    },
+    "ru": {
+        "2fa_title": "Безопасный вход - Защитите свой аккаунт",
+        "2fa_instruction": "Отсканируйте этот QR-код приложением для аутентификации (например, Google Authenticator). После этого при каждом входе вы будете вводить 6-значный код.",
+        "2fa_manual": "Или введите этот код вручную:",
+        "2fa_activate": "Активировать",
+        "2fa_placeholder": "6-значный код",
+    },
+    "gr": {
+        "2fa_title": "Ασφαλής σύνδεση - Προστατέψτε τον λογαριασμό σας",
+        "2fa_instruction": "Σαρώστε αυτόν τον κωδικό QR με μια εφαρμογή ελέγχου ταυτότητας (π.χ. Google Authenticator). Μετά θα εισάγετε έναν 6ψήφιο κωδικό σε κάθε σύνδεση.",
+        "2fa_manual": "Ή εισάγετε αυτόν τον κωδικό χειροκίνητα:",
+        "2fa_activate": "Ενεργοποίηση",
+        "2fa_placeholder": "6ψήφιος κωδικός",
+    },
+    "sw": {
+        "2fa_title": "Säker inloggning - Skydda ditt konto",
+        "2fa_instruction": "Skanna denna QR-kod med en autentiseringsapp (t.ex. Google Authenticator). Därefter anger du en 6-siffrig kod vid varje inloggning.",
+        "2fa_manual": "Eller ange denna kod manuellt:",
+        "2fa_activate": "Aktivera",
+        "2fa_placeholder": "6-siffrig kod",
+    },
+    "no": {
+        "2fa_title": "Sikker pålogging - Beskytt kontoen din",
+        "2fa_instruction": "Skann denne QR-koden med en autentiseringsapp (f.eks. Google Authenticator). Deretter skriver du inn en 6-sifret kode ved hver pålogging.",
+        "2fa_manual": "Eller skriv inn denne koden manuelt:",
+        "2fa_activate": "Aktiver",
+        "2fa_placeholder": "6-sifret kode",
+    },
+}
+
+
+def get_2fa_translations(request):
+    """Stellt 2FA-Übersetzungen für Templates bereit"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in TWO_FA_TRANSLATIONS else None
+    user_language = url_lang or request.session.get("site_language", "ge")
+    
+    twofa_trans = TWO_FA_TRANSLATIONS.get(user_language, TWO_FA_TRANSLATIONS["ge"])
+    return twofa_trans
