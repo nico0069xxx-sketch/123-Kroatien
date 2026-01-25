@@ -193,23 +193,14 @@
         </div>
       </div>
 
-      <!-- Dienstleister / Service Providers -->
+      <!-- Dienstleister / Service Providers - NUR für DE/HR -->
+      {% if language == 'ge' or language == 'hr' %}
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
               <i class="fa fa-briefcase"></i>
               {% if language == 'hr' %}Pružatelji usluga
-              {% elif language == 'en' %}Service Providers
-              {% elif language == 'fr' %}Prestataires de services
-              {% elif language == 'nl' %}Dienstverleners
-              {% elif language == 'pl' %}Usługodawcy
-              {% elif language == 'cz' %}Poskytovatelé služeb
-              {% elif language == 'sk' %}Poskytovatelia služieb
-              {% elif language == 'ru' %}Поставщики услуг
-              {% elif language == 'gr' %}Πάροχοι υπηρεσιών
-              {% elif language == 'sw' %}Tjänsteleverantörer
-              {% elif language == 'no' %}Tjenesteleverandører
               {% else %}Dienstleister Kroatien
               {% endif %}
             </h5>
@@ -223,8 +214,10 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
-      <!-- Benutzer-Bereich / User Area -->
+      <!-- Benutzer-Bereich / User Area - NUR für DE/HR -->
+      {% if language == 'ge' or language == 'hr' %}
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
@@ -254,6 +247,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
       <!-- Service -->
       <div class="col-lg-4 col-md-6 mb-4">

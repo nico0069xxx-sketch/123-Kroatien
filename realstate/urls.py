@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from main.views import set_language_from_url, news_page, sitemap as html_sitemap
+from main.views import set_language_from_url, news_page, sitemap as html_sitemap, imprint, agb, cancellation_policy
 from main.xml_views import rss_listings, xml_sitemap, robots_txt
 from django.contrib.sitemaps.views import sitemap
 from main.glossary_sitemaps import get_glossary_sitemaps
@@ -16,6 +16,8 @@ urlpatterns = [
     path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
     path('sitemaps/glossary.xml', sitemap, {'sitemaps': get_glossary_sitemaps()}, name='glossary-sitemap'),
     path('sitemap', html_sitemap, name='sitemap-html'),
+    
+    # Sitemap für alle 12 Sprachen (ohne Slash)
     path('ge/sitemap', html_sitemap, name='sitemap-ge'),
     path('en/sitemap', html_sitemap, name='sitemap-en'),
     path('hr/sitemap', html_sitemap, name='sitemap-hr'),
@@ -28,10 +30,69 @@ urlpatterns = [
     path('gr/sitemap', html_sitemap, name='sitemap-gr'),
     path('sw/sitemap', html_sitemap, name='sitemap-sw'),
     path('no/sitemap', html_sitemap, name='sitemap-no'),
+    
+    # Sitemap für alle 12 Sprachen (MIT Slash)
+    path('ge/sitemap/', html_sitemap, name='sitemap-ge-slash'),
+    path('en/sitemap/', html_sitemap, name='sitemap-en-slash'),
+    path('hr/sitemap/', html_sitemap, name='sitemap-hr-slash'),
+    path('fr/sitemap/', html_sitemap, name='sitemap-fr-slash'),
+    path('nl/sitemap/', html_sitemap, name='sitemap-nl-slash'),
+    path('pl/sitemap/', html_sitemap, name='sitemap-pl-slash'),
+    path('cz/sitemap/', html_sitemap, name='sitemap-cz-slash'),
+    path('sk/sitemap/', html_sitemap, name='sitemap-sk-slash'),
+    path('ru/sitemap/', html_sitemap, name='sitemap-ru-slash'),
+    path('gr/sitemap/', html_sitemap, name='sitemap-gr-slash'),
+    path('sw/sitemap/', html_sitemap, name='sitemap-sw-slash'),
     path('no/sitemap/', html_sitemap, name='sitemap-no-slash'),
+    
+    # Statische Seiten: IMPRINT für alle 12 Sprachen
+    path('ge/imprint/', imprint, name='imprint-ge'),
+    path('en/imprint/', imprint, name='imprint-en'),
+    path('hr/imprint/', imprint, name='imprint-hr'),
+    path('fr/imprint/', imprint, name='imprint-fr'),
+    path('nl/imprint/', imprint, name='imprint-nl'),
+    path('pl/imprint/', imprint, name='imprint-pl'),
+    path('cz/imprint/', imprint, name='imprint-cz'),
+    path('sk/imprint/', imprint, name='imprint-sk'),
+    path('ru/imprint/', imprint, name='imprint-ru'),
+    path('gr/imprint/', imprint, name='imprint-gr'),
+    path('sw/imprint/', imprint, name='imprint-sw'),
+    path('no/imprint/', imprint, name='imprint-no'),
+    
+    # Statische Seiten: AGB für alle 12 Sprachen
+    path('ge/agb/', agb, name='agb-ge'),
+    path('en/agb/', agb, name='agb-en'),
+    path('hr/agb/', agb, name='agb-hr'),
+    path('fr/agb/', agb, name='agb-fr'),
+    path('nl/agb/', agb, name='agb-nl'),
+    path('pl/agb/', agb, name='agb-pl'),
+    path('cz/agb/', agb, name='agb-cz'),
+    path('sk/agb/', agb, name='agb-sk'),
+    path('ru/agb/', agb, name='agb-ru'),
+    path('gr/agb/', agb, name='agb-gr'),
+    path('sw/agb/', agb, name='agb-sw'),
+    path('no/agb/', agb, name='agb-no'),
+    
+    # Statische Seiten: CANCELLATION-POLICY für alle 12 Sprachen
+    path('ge/cancellation-policy/', cancellation_policy, name='cancellation-policy-ge'),
+    path('en/cancellation-policy/', cancellation_policy, name='cancellation-policy-en'),
+    path('hr/cancellation-policy/', cancellation_policy, name='cancellation-policy-hr'),
+    path('fr/cancellation-policy/', cancellation_policy, name='cancellation-policy-fr'),
+    path('nl/cancellation-policy/', cancellation_policy, name='cancellation-policy-nl'),
+    path('pl/cancellation-policy/', cancellation_policy, name='cancellation-policy-pl'),
+    path('cz/cancellation-policy/', cancellation_policy, name='cancellation-policy-cz'),
+    path('sk/cancellation-policy/', cancellation_policy, name='cancellation-policy-sk'),
+    path('ru/cancellation-policy/', cancellation_policy, name='cancellation-policy-ru'),
+    path('gr/cancellation-policy/', cancellation_policy, name='cancellation-policy-gr'),
+    path('sw/cancellation-policy/', cancellation_policy, name='cancellation-policy-sw'),
+    path('no/cancellation-policy/', cancellation_policy, name='cancellation-policy-no'),
+    
+    # RSS Feeds
     path('rss/listings/', rss_listings, {'lang': 'ge'}, name='rss_listings'),
     path('en/rss/listings/', rss_listings, {'lang': 'en'}, name='rss_en'),
     path('hr/rss/listings/', rss_listings, {'lang': 'hr'}, name='rss_hr'),
+    
+    # Admin & CKEditor
     path('nik-verwaltung-2026/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/', include('realstate.chatbot_urls')),
@@ -76,6 +137,12 @@ from main.content_urls import content_urlpatterns
 # Content URLs (News, Adressen, Marktberichte) für alle 12 Sprachen
 urlpatterns += content_urlpatterns
 
+# Registrierung NUR für DE und HR
+urlpatterns += [
+    path("ge/kroatien/registrierung/", professional_views.professional_registration, {'country': 'kroatien'}, name="registration-ge"),
+    path("hr/hrvatska/registracija/", professional_views.professional_registration, {'country': 'hrvatska'}, name="registration-hr"),
+]
+
 # Spezifische URLs
 urlpatterns += [
     path("ge/kroatien/partner-werden/", views.partner_landing, {"lang": "ge"}, name="partner-landing-ge-direct"),
@@ -99,7 +166,7 @@ urlpatterns += [
     # GLOSSAR URLs für alle 12 Sprachen
     *glossary_urlpatterns,
     
-    # Generische Professional URLs für DE und HR
+    # Generische Professional URLs für alle 12 Sprachen
     path("ge/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-ge-direct"),
     path("ge/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-ge-direct"),
     path("hr/hrvatska/<str:category>/", professional_views.professional_list, {"country": "hrvatska"}, name="professional-list-hr-direct"),

@@ -186,8 +186,14 @@ def blog_single_2(request):
 def blog_single_3(request):
     return render(request, 'main/blog-single-3.html')
 
-@login_required(login_url='main:login_required')
 def imprint(request):
+    # Sprache aus URL aktivieren und in Session setzen
+    path = request.path
+    lang_code = path.split('/')[1] if len(path.split('/')) > 1 else 'ge'
+    if lang_code in ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']:
+        translation.activate(lang_code)
+        request.LANGUAGE_CODE = lang_code
+        request.session['site_language'] = lang_code
     return render(request, 'main/imprint.html')
 
 @login_required(login_url='main:login_required')
@@ -195,13 +201,33 @@ def data_protection(request):
     return render(request, 'main/data-protection.html')
 
 def agb(request):
+    # Sprache aus URL aktivieren und in Session setzen
+    path = request.path
+    lang_code = path.split('/')[1] if len(path.split('/')) > 1 else 'ge'
+    if lang_code in ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']:
+        translation.activate(lang_code)
+        request.LANGUAGE_CODE = lang_code
+        request.session['site_language'] = lang_code
     return render(request, 'main/agb.html')
 
-@login_required(login_url='main:login_required')
 def cancellation_policy(request):
+    # Sprache aus URL aktivieren und in Session setzen
+    path = request.path
+    lang_code = path.split('/')[1] if len(path.split('/')) > 1 else 'ge'
+    if lang_code in ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']:
+        translation.activate(lang_code)
+        request.LANGUAGE_CODE = lang_code
+        request.session['site_language'] = lang_code
     return render(request, 'main/cancellation-policy.html')
 
 def sitemap(request):
+    # Sprache aus URL aktivieren und in Session setzen
+    path = request.path
+    lang_code = path.split('/')[1] if len(path.split('/')) > 1 else 'ge'
+    if lang_code in ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']:
+        translation.activate(lang_code)
+        request.LANGUAGE_CODE = lang_code
+        request.session['site_language'] = lang_code
     return render(request, 'main/sitemap.html')
 
 @login_required(login_url='main:login_required')
