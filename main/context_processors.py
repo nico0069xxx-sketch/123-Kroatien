@@ -823,3 +823,113 @@ def get_sitemap_translations(request):
     
     sitemap_trans = SITEMAP_TRANSLATIONS.get(user_language, SITEMAP_TRANSLATIONS["ge"])
     return {f"sm_{k}": v for k, v in sitemap_trans.items()}
+
+# Suchfilter Übersetzungen
+SEARCH_FILTER_TRANSLATIONS = {
+    "ge": {
+        "filter_area_from": "Wohnfläche ab",
+        "filter_location": "Standort",
+        "filter_rooms": "Zimmer",
+        "filter_bathrooms": "Bäder",
+        "filter_price_from": "Preis von",
+        "filter_price_to": "Preis bis",
+    },
+    "en": {
+        "filter_area_from": "Area from",
+        "filter_location": "Location",
+        "filter_rooms": "Rooms",
+        "filter_bathrooms": "Bathrooms",
+        "filter_price_from": "Price from",
+        "filter_price_to": "Price to",
+    },
+    "hr": {
+        "filter_area_from": "Površina od",
+        "filter_location": "Lokacija",
+        "filter_rooms": "Sobe",
+        "filter_bathrooms": "Kupaonice",
+        "filter_price_from": "Cijena od",
+        "filter_price_to": "Cijena do",
+    },
+    "fr": {
+        "filter_area_from": "Surface dès",
+        "filter_location": "Emplacement",
+        "filter_rooms": "Pièces",
+        "filter_bathrooms": "Salles de bain",
+        "filter_price_from": "Prix dès",
+        "filter_price_to": "Prix jusqu'à",
+    },
+    "nl": {
+        "filter_area_from": "Oppervlakte vanaf",
+        "filter_location": "Locatie",
+        "filter_rooms": "Kamers",
+        "filter_bathrooms": "Badkamers",
+        "filter_price_from": "Prijs vanaf",
+        "filter_price_to": "Prijs tot",
+    },
+    "pl": {
+        "filter_area_from": "Powierzchnia od",
+        "filter_location": "Lokalizacja",
+        "filter_rooms": "Pokoje",
+        "filter_bathrooms": "Łazienki",
+        "filter_price_from": "Cena od",
+        "filter_price_to": "Cena do",
+    },
+    "cz": {
+        "filter_area_from": "Plocha od",
+        "filter_location": "Lokalita",
+        "filter_rooms": "Pokoje",
+        "filter_bathrooms": "Koupelny",
+        "filter_price_from": "Cena od",
+        "filter_price_to": "Cena do",
+    },
+    "sk": {
+        "filter_area_from": "Plocha od",
+        "filter_location": "Lokalita",
+        "filter_rooms": "Izby",
+        "filter_bathrooms": "Kúpeľne",
+        "filter_price_from": "Cena od",
+        "filter_price_to": "Cena do",
+    },
+    "ru": {
+        "filter_area_from": "Площадь от",
+        "filter_location": "Расположение",
+        "filter_rooms": "Комнаты",
+        "filter_bathrooms": "Ванные",
+        "filter_price_from": "Цена от",
+        "filter_price_to": "Цена до",
+    },
+    "gr": {
+        "filter_area_from": "Εμβαδόν από",
+        "filter_location": "Τοποθεσία",
+        "filter_rooms": "Δωμάτια",
+        "filter_bathrooms": "Μπάνια",
+        "filter_price_from": "Τιμή από",
+        "filter_price_to": "Τιμή έως",
+    },
+    "sw": {
+        "filter_area_from": "Yta från",
+        "filter_location": "Plats",
+        "filter_rooms": "Rum",
+        "filter_bathrooms": "Badrum",
+        "filter_price_from": "Pris från",
+        "filter_price_to": "Pris till",
+    },
+    "no": {
+        "filter_area_from": "Areal fra",
+        "filter_location": "Sted",
+        "filter_rooms": "Rom",
+        "filter_bathrooms": "Bad",
+        "filter_price_from": "Pris fra",
+        "filter_price_to": "Pris til",
+    },
+}
+
+
+def get_search_filter_translations(request):
+    """Stellt Suchfilter-Übersetzungen für Templates bereit"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in SEARCH_FILTER_TRANSLATIONS else None
+    user_language = url_lang or request.session.get("site_language", "ge")
+    
+    filter_trans = SEARCH_FILTER_TRANSLATIONS.get(user_language, SEARCH_FILTER_TRANSLATIONS["ge"])
+    return filter_trans
