@@ -45,6 +45,9 @@ def cache_response(message, language, response):
 # =============================================================================
 FAQ_DATA_CACHE = {}
 
+# Glossar-Cache für Chatbot
+GLOSSARY_DATA_CACHE = {}
+
 # Mapping: Sprachcode -> Dateiname
 LANGUAGE_FILE_MAP = {
     'ge': 'faq_data.json',      # Deutsch = Hauptdatei (BUGFIX!)
@@ -82,6 +85,77 @@ def load_faq_data(language='ge'):
     except Exception as e:
         print(f"FAQ laden fehlgeschlagen: {e}")
         return []
+
+
+# =============================================================================
+# GLOSSAR-DATEN FÜR CHATBOT LADEN (aus Datenbank)
+# =============================================================================
+def load_glossary_data(language='ge'):
+    """Lädt die Glossar-Daten aus der Datenbank für eine bestimmte Sprache"""
+    if language in GLOSSARY_DATA_CACHE:
+        return GLOSSARY_DATA_CACHE[language]
+    
+    try:
+        from main.glossary_models import GlossaryTermTranslation
+        
+        glossary_entries = GlossaryTermTranslation.objects.filter(
+            language=language,
+            status__in=['approved', 'published'],
+            term__is_published=True
+        ).select_related('term').values(
+            'title', 'short_def', 'long_def', 'synonyms', 'keywords'
+        )
+        
+        data = list(glossary_entries)
+        GLOSSARY_DATA_CACHE[language] = data
+        return data
+        
+    except Exception as e:
+        print(f"Glossar laden fehlgeschlagen: {e}")
+        return []
+
+def find_relevant_glossary(message, glossary_data, max_results=3):
+    """
+    Findet relevante Glossar-Einträge basierend auf Keyword-Matching.
+    KOSTENLOS - kein API-Call nötig!
+    """
+    message_lower = message.lower()
+    scored_entries = []
+    
+    for entry in glossary_data:
+        score = 0
+        title = entry.get('title', '').lower()
+        short_def = entry.get('short_def', '').lower()
+        long_def = entry.get('long_def', '').lower()
+        synonyms = entry.get('synonyms', []) or []
+        keywords = entry.get('keywords', []) or []
+        
+        # Wörter aus der Nachricht extrahieren
+        words = message_lower.split()
+        for word in words:
+            if len(word) > 3:
+                # Titel-Match (höchste Priorität)
+                if word in title:
+                    score += 5
+                # Synonym-Match
+                for syn in synonyms:
+                    if word in str(syn).lower():
+                        score += 4
+                # Keyword-Match
+                for kw in keywords:
+                    if word in str(kw).lower():
+                        score += 3
+                # Definition-Match
+                if word in short_def:
+                    score += 2
+                if word in long_def:
+                    score += 1
+        
+        if score > 0:
+            scored_entries.append((score, entry))
+    
+    scored_entries.sort(key=lambda x: x[0], reverse=True)
+    return [entry for score, entry in scored_entries[:max_results]]
 
 # =============================================================================
 # KOSTEN-OPTIMIERUNG: Relevante FAQs finden (ohne API-Call)
@@ -162,6 +236,9 @@ CHATBOT-KOMPATIBILITÄT:
 FAQ-WISSEN (nutze diese Informationen):
 {faq_context}
 
+GLOSSAR-WISSEN (Fachbegriffe zum Immobilienkauf in Kroatien):
+{glossar_context}
+
 Beantworte die Frage des Nutzers basierend auf diesem Wissen. Halte dich STRIKT an die Antwort-Struktur."""
 
 def get_chatbot_response(message, language='ge'):
@@ -233,6 +310,10 @@ def get_chatbot_response(message, language='ge'):
     
     # SCHRITT 3: Relevante FAQs finden (KOSTENLOS)
     relevant_faqs = find_relevant_faqs(message, faq_data, max_results=5)
+
+    # SCHRITT 3b: Glossar-Daten laden und relevante Einträge finden
+    glossary_data = load_glossary_data(language)
+    relevant_glossary = find_relevant_glossary(message, glossary_data, max_results=3)
     
     # SCHRITT 4: GPT aufrufen mit Master-Prompt
     try:
@@ -260,10 +341,22 @@ def get_chatbot_response(message, language='ge'):
                 faq_context += f"FRAGE: {faq.get('q', '')}\nANTWORT: {faq.get('a', '')}\n\n"
         else:
             faq_context = "Keine direkt relevanten FAQs gefunden. Nutze dein allgemeines Wissen über Immobilien in Kroatien."
+
+        # Glossar-Kontext erstellen
+        if relevant_glossary:
+            glossar_context = "RELEVANTE GLOSSAR-BEGRIFFE:\n\n"
+            for entry in relevant_glossary:
+                glossar_context += f"BEGRIFF: {entry.get('title', '')}\nDEFINITION: {entry.get('short_def', '')}\n"
+                if entry.get('long_def'):
+                    glossar_context += f"DETAILS: {entry.get('long_def', '')[:500]}\n"
+                glossar_context += "\n"
+        else:
+            glossar_context = "Keine direkt relevanten Glossar-Begriffe gefunden."
         
         system_prompt = MASTER_SYSTEM_PROMPT.format(
             lang_instruction=lang_instruction,
-            faq_context=faq_context
+            faq_context=faq_context,
+            glossar_context=glossar_context
         )
         
         response = client.chat.completions.create(
