@@ -120,6 +120,7 @@ TEMPLATES = [
                 'main.context_processors.get_sitemap_translations',
                 'main.context_processors.get_search_filter_translations',
                 'main.context_processors.get_2fa_translations',
+                'main.context_processors.get_buyer_guide_translations',
             ],
         },
     },
