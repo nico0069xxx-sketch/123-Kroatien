@@ -1,41 +1,10 @@
 from django.utils.translation import activate
 from pages.models import Translation
-from django.urls import reverse
-import re
-import json
 
-# Alle unterstützten Sprachen
-ALL_LANGUAGES = ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']
+# Cookie Banner Übersetzungen (alle 12 Sprachen)
+COOKIE_TRANSLATIONS = {"ge": {"cookie_title": "Cookie-Einstellungen", "cookie_text": "Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung zu bieten.", "cookie_necessary": "Notwendige Cookies", "cookie_necessary_desc": "Für die Grundfunktionen erforderlich.", "cookie_analytics": "Analyse-Cookies", "cookie_analytics_desc": "Helfen uns zu verstehen, wie Besucher unsere Website nutzen.", "cookie_marketing": "Marketing-Cookies", "cookie_marketing_desc": "Werden für relevante Werbung verwendet.", "cookie_settings": "Einstellungen", "cookie_reject": "Ablehnen", "cookie_accept": "Alle akzeptieren", "cookie_save": "Speichern", "cookie_privacy": "Datenschutz"}, "en": {"cookie_title": "Cookie Settings", "cookie_text": "We use cookies to provide you with the best experience.", "cookie_necessary": "Necessary Cookies", "cookie_necessary_desc": "Required for basic functionality.", "cookie_analytics": "Analytics Cookies", "cookie_analytics_desc": "Help us understand how visitors use our website.", "cookie_marketing": "Marketing Cookies", "cookie_marketing_desc": "Used for relevant advertising.", "cookie_settings": "Settings", "cookie_reject": "Reject", "cookie_accept": "Accept All", "cookie_save": "Save", "cookie_privacy": "Privacy"}, "hr": {"cookie_title": "Postavke kolacica", "cookie_text": "Koristimo kolacice za najbolje iskustvo.", "cookie_necessary": "Neophodni kolacici", "cookie_necessary_desc": "Potrebni za osnovne funkcije.", "cookie_analytics": "Analiticni kolacici", "cookie_analytics_desc": "Pomazu razumjeti koristenje.", "cookie_marketing": "Marketinski kolacici", "cookie_marketing_desc": "Za relevantne oglase.", "cookie_settings": "Postavke", "cookie_reject": "Odbij", "cookie_accept": "Prihvati sve", "cookie_save": "Spremi", "cookie_privacy": "Privatnost"}, "fr": {"cookie_title": "Parametres cookies", "cookie_text": "Nous utilisons des cookies.", "cookie_necessary": "Cookies necessaires", "cookie_necessary_desc": "Requis.", "cookie_analytics": "Cookies analytiques", "cookie_analytics_desc": "Comprendre utilisation.", "cookie_marketing": "Cookies marketing", "cookie_marketing_desc": "Publicites.", "cookie_settings": "Parametres", "cookie_reject": "Refuser", "cookie_accept": "Accepter", "cookie_save": "Enregistrer", "cookie_privacy": "Confidentialite"}, "nl": {"cookie_title": "Cookie-instellingen", "cookie_text": "Wij gebruiken cookies.", "cookie_necessary": "Noodzakelijk", "cookie_necessary_desc": "Vereist.", "cookie_analytics": "Analytisch", "cookie_analytics_desc": "Begrip gebruik.", "cookie_marketing": "Marketing", "cookie_marketing_desc": "Advertenties.", "cookie_settings": "Instellingen", "cookie_reject": "Weigeren", "cookie_accept": "Accepteren", "cookie_save": "Opslaan", "cookie_privacy": "Privacy"}, "pl": {"cookie_title": "Ustawienia cookies", "cookie_text": "Uzywamy cookies.", "cookie_necessary": "Niezbedne", "cookie_necessary_desc": "Wymagane.", "cookie_analytics": "Analityczne", "cookie_analytics_desc": "Zrozumienie.", "cookie_marketing": "Marketingowe", "cookie_marketing_desc": "Reklamy.", "cookie_settings": "Ustawienia", "cookie_reject": "Odrzuc", "cookie_accept": "Akceptuj", "cookie_save": "Zapisz", "cookie_privacy": "Prywatnosc"}, "cz": {"cookie_title": "Nastaveni cookies", "cookie_text": "Pouzivame cookies.", "cookie_necessary": "Nezbytne", "cookie_necessary_desc": "Nutne.", "cookie_analytics": "Analyticke", "cookie_analytics_desc": "Pochopeni.", "cookie_marketing": "Marketingove", "cookie_marketing_desc": "Reklamy.", "cookie_settings": "Nastaveni", "cookie_reject": "Odmitnout", "cookie_accept": "Prijmout", "cookie_save": "Ulozit", "cookie_privacy": "Soukromi"}, "sk": {"cookie_title": "Nastavenia cookies", "cookie_text": "Pouzivame cookies.", "cookie_necessary": "Nevyhnutne", "cookie_necessary_desc": "Potrebne.", "cookie_analytics": "Analyticke", "cookie_analytics_desc": "Pochopenie.", "cookie_marketing": "Marketingove", "cookie_marketing_desc": "Reklamy.", "cookie_settings": "Nastavenia", "cookie_reject": "Odmietnut", "cookie_accept": "Prijat", "cookie_save": "Ulozit", "cookie_privacy": "Sukromie"}, "ru": {"cookie_title": "Nastroiki cookie", "cookie_text": "My ispolzuem cookie.", "cookie_necessary": "Neobhodimye", "cookie_necessary_desc": "Trebuetsja.", "cookie_analytics": "Analiticheskie", "cookie_analytics_desc": "Ponimanie.", "cookie_marketing": "Marketingovye", "cookie_marketing_desc": "Reklama.", "cookie_settings": "Nastroiki", "cookie_reject": "Otklonjit", "cookie_accept": "Prinjat", "cookie_save": "Sohranit", "cookie_privacy": "Konfidencialnost"}, "gr": {"cookie_title": "Rythmiseis cookies", "cookie_text": "Chrisimopoioume cookies.", "cookie_necessary": "Aparaitita", "cookie_necessary_desc": "Apaitountai.", "cookie_analytics": "Analytika", "cookie_analytics_desc": "Katanoisi.", "cookie_marketing": "Marketing", "cookie_marketing_desc": "Diafimisi.", "cookie_settings": "Rythmiseis", "cookie_reject": "Aporripsi", "cookie_accept": "Apodoxi", "cookie_save": "Apothikeusi", "cookie_privacy": "Aporrito"}, "sw": {"cookie_title": "Cookie-installningar", "cookie_text": "Vi anvander cookies.", "cookie_necessary": "Nodvandiga", "cookie_necessary_desc": "Kravs.", "cookie_analytics": "Analytiska", "cookie_analytics_desc": "Forstaelse.", "cookie_marketing": "Marknadsforing", "cookie_marketing_desc": "Annonser.", "cookie_settings": "Installningar", "cookie_reject": "Avvisa", "cookie_accept": "Acceptera", "cookie_save": "Spara", "cookie_privacy": "Integritet"}, "no": {"cookie_title": "Cookie-innstillinger", "cookie_text": "Vi bruker cookies.", "cookie_necessary": "Nodvendige", "cookie_necessary_desc": "Pakreves.", "cookie_analytics": "Analytiske", "cookie_analytics_desc": "Forstaelse.", "cookie_marketing": "Markedsforing", "cookie_marketing_desc": "Annonser.", "cookie_settings": "Innstillinger", "cookie_reject": "Avvis", "cookie_accept": "Godta", "cookie_save": "Lagre", "cookie_privacy": "Personvern"}}
 
-# Glossar-Pfad je Sprache
-GLOSSARY_URLS = {
-    "ge": "glossar", "en": "glossary", "hr": "pojmovnik", "fr": "glossaire",
-    "nl": "woordenlijst", "pl": "slownik", "cz": "glosar", "sk": "slovnik",
-    "ru": "glossarij", "gr": "glossari", "sw": "ordlista", "no": "ordliste",
-}
 
-# URL-Pfade für News in allen Sprachen
-NEWS_URLS = {
-    "ge": "nachrichten", "en": "news", "hr": "vijesti", "fr": "actualites",
-    "nl": "nieuws", "pl": "wiadomosci", "cz": "zpravy", "sk": "spravy",
-    "ru": "novosti", "gr": "nea", "sw": "nyheter", "no": "nyheter",
-}
-
-# URL-Pfade für Wichtige Adressen in allen Sprachen
-ADDRESS_URLS = {
-    "ge": "wichtige-adressen", "en": "important-addresses", "hr": "vazne-adrese",
-    "fr": "adresses-importantes", "nl": "belangrijke-adressen", "pl": "wazne-adresy",
-    "cz": "dulezite-adresy", "sk": "dolezite-adresy", "ru": "vazhnye-adresa",
-    "gr": "simantikes-dieythynseis", "sw": "viktiga-adresser", "no": "viktige-adresser",
-}
-
-# URL-Pfade für Marktberichte in allen Sprachen
-MARKET_URLS = {
-    "ge": "marktberichte", "en": "market-reports", "hr": "trzisni-izvjestaji",
-    "fr": "rapports-marche", "nl": "marktverslagen", "pl": "raporty-rynkowe",
-    "cz": "trzni-zpravy", "sk": "trhove-spravy", "ru": "rynochnye-otchety",
-    "gr": "anafores-agoras", "sw": "marknadsrapporter", "no": "markedsrapporter",
-}
 
 # URL-Pfade für Dienstleister in allen Sprachen
 CATEGORY_URLS = {
@@ -78,26 +47,7 @@ COUNTRY_NAMES = {
 }
 
 def set_language(request):
-    """
-    Bestimmt die aktuelle Sprache:
-    1. Zuerst aus der URL (z.B. /en/about/ -> 'en')
-    2. Dann aus der Session
-    3. Fallback: 'ge' (Deutsch)
-    """
-    path = request.path
-    url_lang = None
-    
-    if len(path) >= 4 and path[0] == '/' and path[3] == '/':
-        potential_lang = path[1:3]
-        if potential_lang in ALL_LANGUAGES:
-            url_lang = potential_lang
-    
-    if url_lang:
-        lang = url_lang
-        request.session['site_language'] = lang
-    else:
-        lang = request.session.get('site_language', 'ge')
-    
+    lang = request.session.get('site_language', 'ge')
     activate(lang)
     return {'language': lang}
 
@@ -105,6 +55,8 @@ def set_language(request):
 def get_my_translations(request):
     current_path = request.path
     
+    # Sprachcode aus Pfad entfernen (z.B. /ge/about/ -> /about/)
+    import re
     clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
     if clean_path == '':
         clean_path = '/'
@@ -128,9 +80,13 @@ def get_my_translations(request):
     elif '/edit-agent/' in clean_path: page = 'signup'
     elif '/faq/' in clean_path: page = 'faq'
 
-    user_language = request.session.get('site_language', 'ge')
+    # Sprache aus URL oder Session
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in ["ge", "en", "hr", "fr", "nl", "pl", "cz", "sk", "ru", "gr", "sw", "no"] else None
+    user_language = url_lang or request.session.get("site_language", "ge")
 
     context = {}
+    # Lade alle Übersetzungen für die aktuelle Seite, navbar, footer und home
     translations = Translation.objects.filter(page=page) | Translation.objects.filter(page='navbar') | Translation.objects.filter(page='footer') | Translation.objects.filter(page='listings') | Translation.objects.filter(page='property details') | Translation.objects.filter(page='home') | Translation.objects.filter(page='contact')
     for t in translations:
         if user_language == 'en': context[t.name] = t.english_content
@@ -145,8 +101,9 @@ def get_my_translations(request):
         elif user_language == 'no': context[t.name] = t.norway_content
         elif user_language == 'sk': context[t.name] = t.slovak_content
         elif user_language == 'nl': context[t.name] = t.dutch_content
-        else: context[t.name] = t.german_content
+        else: context[t.name] = t.german_content  # Fallback zu Deutsch
 
+    # URL-Variablen für Dienstleister hinzufügen
     context['country_name'] = COUNTRY_NAMES.get(user_language, 'kroatien')
     context['url_realtor'] = CATEGORY_URLS['real_estate_agent'].get(user_language, 'immobilienmakler')
     context['url_contractor'] = CATEGORY_URLS['construction_company'].get(user_language, 'bauunternehmen')
@@ -154,107 +111,180 @@ def get_my_translations(request):
     context['url_tax_advisor'] = CATEGORY_URLS['tax_advisor'].get(user_language, 'steuerberater')
     context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
     
-    context['language_urls_json'] = get_language_urls_for_path(current_path, user_language)
+    # URL für Experten-Finder (12 Sprachen)
+    EXPERTEN_FINDER_URLS = {
+        'ge': 'experten-finder', 'en': 'expert-finder', 'hr': 'pronalazac-strucnjaka',
+        'fr': 'recherche-experts', 'nl': 'expert-zoeken', 'pl': 'wyszukiwarka-ekspertow',
+        'cz': 'vyhledavac-expertu', 'sk': 'vyhladavac-expertov', 'ru': 'poisk-ekspertov',
+        'gr': 'anazhthsh-eidikwn', 'sw': 'expertsokare', 'no': 'ekspertsoker'
+    }
+    context['url_experten_finder'] = EXPERTEN_FINDER_URLS.get(user_language, 'experten-finder')
+    
+    # Label für Experten-Finder (12 Sprachen)
+    EXPERTEN_FINDER_LABELS = {
+        'ge': 'Experten-Finder', 'en': 'Expert Finder', 'hr': 'Pronalazac strucnjaka',
+        'fr': 'Recherche experts', 'nl': 'Expert zoeken', 'pl': 'Wyszukiwarka ekspertow',
+        'cz': 'Vyhledavac expertu', 'sk': 'Vyhladavac expertov', 'ru': 'Poisk ekspertov',
+        'gr': 'Anazhthsh eidikwn', 'sw': 'Expertsokare', 'no': 'Ekspertsoker'
+    }
+    context['experten_finder_label'] = EXPERTEN_FINDER_LABELS.get(user_language, 'Experten-Finder')
+    
+    # URL für Marktberichte
+    MARKET_URLS = {
+        'ge': 'marktberichte', 'en': 'market-reports', 'hr': 'trzisna-izvjesca',
+        'fr': 'rapports-immobiliers', 'nl': 'marktrapporten', 'pl': 'raporty-rynkowe',
+        'cz': 'trzni-zpravy', 'sk': 'trhove-spravy', 'ru': 'rynochnye-otchety',
+        'gr': 'anafores-agoras', 'sw': 'marknadsrapporter', 'no': 'markedsrapporter'
+    }
+    context['url_market_reports'] = MARKET_URLS.get(user_language, 'marktberichte')
+    
+    # URL für Wichtige Adressen
+    ADDRESS_URLS = {
+        'ge': 'wichtige-adressen', 'en': 'important-addresses', 'hr': 'vazne-adrese',
+        'fr': 'adresses-importantes', 'nl': 'belangrijke-adressen', 'pl': 'wazne-adresy',
+        'cz': 'dulezite-adresy', 'sk': 'dolezite-adresy', 'ru': 'vazhnye-adresa',
+        'gr': 'simantikes-diefthinseis', 'sw': 'viktiga-adresser', 'no': 'viktige-adresser'
+    }
+    context['url_addresses'] = ADDRESS_URLS.get(user_language, 'wichtige-adressen')
 
+    # Chatbot-Übersetzungen immer laden (für alle Seiten)
+    chatbot_translations = Translation.objects.filter(page='chatbot')
+    for t in chatbot_translations:
+        if user_language == 'en': context[t.name] = t.english_content
+        elif user_language == 'hr': context[t.name] = t.croatian_content
+        elif user_language == 'fr': context[t.name] = t.french_content
+        elif user_language == 'gr': context[t.name] = t.greek_content
+        elif user_language == 'pl': context[t.name] = t.polish_content
+        elif user_language == 'cz': context[t.name] = t.czech_content
+        elif user_language == 'ru': context[t.name] = t.russian_content
+        elif user_language == 'sw': context[t.name] = t.swedish_content
+        elif user_language == 'no': context[t.name] = t.norway_content
+        elif user_language == 'sk': context[t.name] = t.slovak_content
+        elif user_language == 'nl': context[t.name] = t.dutch_content
+        else: context[t.name] = t.german_content
+
+
+    # News URLs
+    news_urls = {
+        'ge': '/ge/kroatien/nachrichten/',
+        'en': '/en/croatia/news/',
+        'hr': '/hr/hrvatska/vijesti/',
+        'fr': '/fr/croatie/actualites/',
+        'nl': '/nl/kroatie/nieuws/',
+        'pl': '/pl/chorwacja/wiadomosci/',
+        'cz': '/cz/chorvatsko/zpravy/',
+        'sk': '/sk/chorvatsko/spravy/',
+        'ru': '/ru/horvatiya/novosti/',
+        'gr': '/gr/kroatia/nea/',
+        'sw': '/sw/kroatien/nyheter/',
+        'no': '/no/kroatia/nyheter/',
+    }
+    context['news_url'] = news_urls.get(user_language, '/ge/kroatien/nachrichten/')
+    
+    # News Label
+    news_labels = {
+        'ge': 'Nachrichten',
+        'en': 'News',
+        'hr': 'Vijesti',
+        'fr': 'Actualités',
+        'nl': 'Nieuws',
+        'pl': 'Wiadomości',
+        'cz': 'Zprávy',
+        'sk': 'Správy',
+        'ru': 'Новости',
+        'gr': 'Νέα',
+        'sw': 'Nyheter',
+        'no': 'Nyheter',
+    }
+    context['news_label'] = news_labels.get(user_language, 'Nachrichten')
+
+    # Partner Section Labels
+    partner_labels = {
+        'ge': 'Unsere Partner',
+        'en': 'Our Partners',
+        'hr': 'Naši partneri',
+        'fr': 'Nos partenaires',
+        'nl': 'Onze partners',
+        'pl': 'Nasi partnerzy',
+        'cz': 'Naši partneři',
+        'sk': 'Naši partneri',
+        'ru': 'Наши партнеры',
+        'gr': 'Οι συνεργάτες μας',
+        'sw': 'Våra partners',
+        'no': 'Våre partnere',
+    }
+    context['our_partners'] = partner_labels.get(user_language, 'Unsere Partner')
+    
+    # Partner Subtitle Labels
+    partner_subtitle = {
+        'ge': 'Verifizierte Partner aus Kroatien',
+        'en': 'Verified partners from Croatia',
+        'hr': 'Verificirani partneri iz Hrvatske',
+        'fr': 'Partenaires vérifiés de Croatie',
+        'nl': 'Geverifieerde partners uit Kroatië',
+        'pl': 'Zweryfikowani partnerzy z Chorwacji',
+        'cz': 'Ověření partneři z Chorvatska',
+        'sk': 'Overení partneri z Chorvátska',
+        'ru': 'Проверенные партнеры из Хорватии',
+        'gr': 'Επαληθευμένοι συνεργάτες από την Κροατία',
+        'sw': 'Verifierade partners från Kroatien',
+        'no': 'Verifiserte partnere fra Kroatia',
+    }
+    context['partner_subtitle'] = partner_subtitle.get(user_language, 'Verifizierte Partner aus Kroatien')
+
+    # Hero Section - Tagline
+    hero_tagline = {
+        'ge': 'KROATIEN - ADRIA - MITTELMEER',
+        'en': 'CROATIA - ADRIATIC - MEDITERRANEAN',
+        'hr': 'HRVATSKA - JADRAN - MEDITERAN',
+        'fr': 'CROATIE - ADRIATIQUE - MÉDITERRANÉE',
+        'nl': 'KROATIË - ADRIATISCHE ZEE - MIDDELLANDSE ZEE',
+        'pl': 'CHORWACJA - ADRIATYK - MORZE ŚRÓDZIEMNE',
+        'cz': 'CHORVATSKO - JADRAN - STŘEDOMOŘÍ',
+        'sk': 'CHORVÁTSKO - JADRAN - STREDOMORIE',
+        'ru': 'ХОРВАТИЯ - АДРИАТИКА - СРЕДИЗЕМНОМОРЬЕ',
+        'gr': 'ΚΡΟΑΤΊΑ - ΑΔΡΙΑΤΙΚΉ - ΜΕΣΌΓΕΙΟΣ',
+        'sw': 'KROATIEN - ADRIATISKA HAVET - MEDELHAVET',
+        'no': 'KROATIA - ADRIATERHAVET - MIDDELHAVET',
+    }
+    context['hero_tagline'] = hero_tagline.get(user_language, 'KROATIEN - ADRIA - MITTELMEER')
+
+    # Hero Section - Title
+    hero_title = {
+        'ge': 'Exklusive Immobilien<br>an der kroatischen Küste',
+        'en': 'Exclusive Properties<br>on the Croatian Coast',
+        'hr': 'Ekskluzivne nekretnine<br>na hrvatskoj obali',
+        'fr': 'Propriétés exclusives<br>sur la côte croate',
+        'nl': 'Exclusief vastgoed<br>aan de Kroatische kust',
+        'pl': 'Ekskluzywne nieruchomości<br>na chorwackim wybrzeżu',
+        'cz': 'Exkluzivní nemovitosti<br>na chorvatském pobřeží',
+        'sk': 'Exkluzívne nehnuteľnosti<br>na chorvátskom pobreží',
+        'ru': 'Эксклюзивная недвижимость<br>на хорватском побережье',
+        'gr': 'Αποκλειστικά ακίνητα<br>στην κροατική ακτή',
+        'sw': 'Exklusiva fastigheter<br>vid den kroatiska kusten',
+        'no': 'Eksklusive eiendommer<br>ved den kroatiske kysten',
+    }
+    context['hero_title'] = hero_title.get(user_language, 'Exklusive Immobilien<br>an der kroatischen Küste')
+
+    # Hero Section - Subtitle
+    hero_subtitle = {
+        'ge': 'Verifizierte Immobilienmakler und persönliche Beratung für Ihre Traumimmobilie.',
+        'en': 'Verified real estate agents and personal advice for your dream property.',
+        'hr': 'Verificirani agenti za nekretnine i osobno savjetovanje za vašu nekretninu iz snova.',
+        'fr': 'Agents immobiliers vérifiés et conseils personnalisés pour votre propriété de rêve.',
+        'nl': 'Geverifieerde makelaars en persoonlijk advies voor uw droomwoning.',
+        'pl': 'Zweryfikowani agenci nieruchomości i osobiste doradztwo dla wymarzonej nieruchomości.',
+        'cz': 'Ověření realitní makléři a osobní poradenství pro vaši vysněnou nemovitost.',
+        'sk': 'Overení realitní makléri a osobné poradenstvo pre vašu vysnívanú nehnuteľnosť.',
+        'ru': 'Проверенные агенты по недвижимости и персональные консультации для вашей мечты.',
+        'gr': 'Επαληθευμένοι μεσίτες και προσωπικές συμβουλές για το ακίνητο των ονείρων σας.',
+        'sw': 'Verifierade fastighetsmäklare och personlig rådgivning för din drömbostad.',
+        'no': 'Verifiserte eiendomsmeglere og personlig rådgivning for drømmeeiendommen din.',
+    }
+    context['hero_subtitle'] = hero_subtitle.get(user_language, 'Verifizierte Immobilienmakler und persönliche Beratung für Ihre Traumimmobilie.')
+
+    # Cookie Banner
+    cookie_trans = COOKIE_TRANSLATIONS.get(user_language, COOKIE_TRANSLATIONS["ge"])
+    context.update(cookie_trans)
     return context
 
-
-def get_language_urls_for_path(current_path: str, current_lang: str) -> str:
-    """
-    Generiert ein JSON-Objekt mit den korrekten URLs für alle Sprachen.
-    """
-    urls = {}
-    
-    # Pattern für Glossar-Seiten
-    glossary_pattern = re.compile(
-        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(GLOSSARY_URLS.values()) + r')/?(.*)$'
-    )
-    
-    # Pattern für News-Seiten
-    news_pattern = re.compile(
-        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(NEWS_URLS.values()) + r')/?(.*)$'
-    )
-    
-    # Pattern für Adressen-Seiten
-    address_pattern = re.compile(
-        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(ADDRESS_URLS.values()) + r')/?(.*)$'
-    )
-    
-    # Pattern für Marktberichte-Seiten
-    market_pattern = re.compile(
-        r'^/([a-z]{2})/([^/]+)/(' + '|'.join(MARKET_URLS.values()) + r')/?(.*)$'
-    )
-    
-    # Glossar-Seiten
-    match = glossary_pattern.match(current_path)
-    if match:
-        remainder = match.group(4).strip('/')
-        for lang in ALL_LANGUAGES:
-            country = COUNTRY_NAMES.get(lang, 'kroatien')
-            glossary = GLOSSARY_URLS.get(lang, 'glossar')
-            if remainder:
-                urls[lang] = f"/{lang}/{country}/{glossary}/{remainder}/"
-            else:
-                urls[lang] = f"/{lang}/{country}/{glossary}/"
-        return json.dumps(urls)
-    
-    # News-Seiten
-    match = news_pattern.match(current_path)
-    if match:
-        remainder = match.group(4).strip('/')
-        for lang in ALL_LANGUAGES:
-            country = COUNTRY_NAMES.get(lang, 'kroatien')
-            news = NEWS_URLS.get(lang, 'nachrichten')
-            if remainder:
-                urls[lang] = f"/{lang}/{country}/{news}/{remainder}/"
-            else:
-                urls[lang] = f"/{lang}/{country}/{news}/"
-        return json.dumps(urls)
-    
-    # Adressen-Seiten
-    match = address_pattern.match(current_path)
-    if match:
-        remainder = match.group(4).strip('/')
-        for lang in ALL_LANGUAGES:
-            country = COUNTRY_NAMES.get(lang, 'kroatien')
-            address = ADDRESS_URLS.get(lang, 'wichtige-adressen')
-            if remainder:
-                urls[lang] = f"/{lang}/{country}/{address}/{remainder}/"
-            else:
-                urls[lang] = f"/{lang}/{country}/{address}/"
-        return json.dumps(urls)
-    
-    # Marktberichte-Seiten
-    match = market_pattern.match(current_path)
-    if match:
-        remainder = match.group(4).strip('/')
-        for lang in ALL_LANGUAGES:
-            country = COUNTRY_NAMES.get(lang, 'kroatien')
-            market = MARKET_URLS.get(lang, 'marktberichte')
-            if remainder:
-                urls[lang] = f"/{lang}/{country}/{market}/{remainder}/"
-            else:
-                urls[lang] = f"/{lang}/{country}/{market}/"
-        return json.dumps(urls)
-    
-    # Sitemap
-    if current_path == '/sitemap/' or current_path == '/sitemap':
-        for lang in ALL_LANGUAGES:
-            if lang == 'ge':
-                urls[lang] = '/sitemap/'
-            else:
-                urls[lang] = f'/{lang}/sitemap/'
-        return json.dumps(urls)
-    
-    # Statische Seiten
-    clean_path = re.sub(r'^/[a-z]{2}/', '/', current_path)
-    if not clean_path or clean_path == '':
-        clean_path = '/'
-    
-    for lang in ALL_LANGUAGES:
-        if lang == 'ge':
-            urls[lang] = clean_path
-        else:
-            urls[lang] = f'/{lang}{clean_path}'
-    
-    return json.dumps(urls)

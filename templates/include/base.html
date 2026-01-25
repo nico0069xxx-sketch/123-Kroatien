@@ -376,7 +376,7 @@
             // Sprach-URLs für den Sprachumschalter (dynamisch vom Server generiert)
             var languageUrls = {{ language_urls_json|safe|default:'{}' }};
 
-            function changelanguage(value) { if (typeof languageUrls !== "undefined" && languageUrls[value]) { window.location.href = languageUrls[value]; return; } window.location.href = "/set-language/" + value + "/"; }
+            function changelanguage(value) { var path = window.location.pathname; if (path.indexOf("sitemap") !== -1) { window.location.href = "/set-language/" + value + "/?next=/sitemap"; } else { window.location.href = "/set-language/" + value + "/"; } }
 
         </script>
         {% block js %}{% endblock js %}
