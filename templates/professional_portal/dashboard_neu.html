@@ -409,7 +409,7 @@
             {% if professional.slug %}
             <div class="profile-url-box">
                 <div class="label">{% if lang == 'hr' %}Vaš profil{% else %}Ihr Profil{% endif %}</div>
-                <a href="/ge/kroatien/{{ professional.get_professional_type_display|lower }}/{{ professional.slug }}/" target="_blank">
+                <a href="/{{ language }}/{{ country_name }}/{{ professional.get_professional_type_display|lower }}/{{ professional.slug }}/" target="_blank">
                     <i class="fa fa-external-link"></i> {% if lang == 'hr' %}Pogledaj profil{% else %}Profil ansehen{% endif %}
                 </a>
             </div>

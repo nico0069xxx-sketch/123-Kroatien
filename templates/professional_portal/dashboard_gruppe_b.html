@@ -37,7 +37,7 @@
 {% if professional.slug %}
 <div class="info-row">
 <span class="info-label">Profil-URL:</span><br>
-<a href="/ge/kroatien/architekten/{{ professional.slug }}/" class="profile-link" target="_blank">/architekten/{{ professional.slug }}/</a>
+<a href="/{{ language }}/{{ country_name }}/architekten/{{ professional.slug }}/" class="profile-link" target="_blank">/architekten/{{ professional.slug }}/</a>
 </div>
 {% endif %}
 <a href="{% url 'professional_portal:edit_profile' %}" class="btn-dashboard">Profil bearbeiten</a>

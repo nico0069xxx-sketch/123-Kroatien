@@ -288,7 +288,7 @@ function sendMessage() {
                     resultsHtml += '<small>📍 ' + item.location + '</small><br>';
                     resultsHtml += '<span class="search-result-price">€ ' + item.price.toLocaleString() + '</span>';
                     resultsHtml += '</div>';
-                    resultsHtml += '<a href="/ge/property-details/' + item.id + '/" class="search-result-btn">→</a>';
+                    resultsHtml += '<a href="/{{ language }}/property-details/' + item.id + '/" class="search-result-btn">→</a>';
                     resultsHtml += '</div>';
                 });
             }

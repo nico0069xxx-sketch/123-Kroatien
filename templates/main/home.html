@@ -306,7 +306,7 @@
                         <p>Agent, arhitekt, odvjetnik ili porezni savjetnik? Registrirajte se BESPLATNO i dosegnite tisuće klijenata!</p>
                     </div>
                     <div class="col-lg-4 col-md-5 text-md-right">
-                                                 <a href="/ge/kroatien/partner-werden/" class="btn btn-cta pulse">
+                                                 <a href="/{{ language }}/{{ country_name }}/partner-werden/" class="btn btn-cta pulse">
                             <i class="fa fa-star"></i> Registrirajte se besplatno
                         </a>
                     </div>
@@ -546,12 +546,12 @@
                        <div class="partner-carousel" id="partnerCarousel">
                         {% if partners_with_logo %}
                             {% for partner in partners_with_logo %}
-                            <a href="/ge/kroatien/{{ partner.professional_type }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
+                            <a href="/{{ language }}/{{ country_name }}/{{ partner.professional_type }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
                                 <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
                             </a>
                             {% endfor %}
                             {% for partner in partners_with_logo %}
-                            <a href="/ge/kroatien/{{ partner.professional_type }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
+                            <a href="/{{ language }}/{{ country_name }}/{{ partner.professional_type }}/{{ partner.slug }}/" class="partner-logo-item" title="{{ partner.name }}">
                                 <img src="{{ partner.company_logo.url }}" alt="{{ partner.name }}" class="partner-logo-img">
                             </a>
                             {% endfor %}
