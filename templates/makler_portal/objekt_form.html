@@ -196,7 +196,7 @@ function generiereKIText() {
         badezimmer: document.querySelector('[name="bathrooms"]').value
     };
     
-    fetch('/ge/api/m/gen/', {
+    fetch('/{{ language }}/api/m/gen/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value},
         body: JSON.stringify(data)

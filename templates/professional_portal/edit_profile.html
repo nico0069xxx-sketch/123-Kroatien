@@ -372,7 +372,7 @@ function generateKI() {
     loading.style.display = 'block';
     results.innerHTML = '';
     
-    fetch('/ge/portal/ki-beschreibung/')
+    fetch('/{{ language }}/portal/ki-beschreibung/')
         .then(response => response.json())
         .then(data => {
             loading.style.display = 'none';

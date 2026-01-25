@@ -74,7 +74,7 @@ function sucheExperten() {
     keineErgebnisse.style.display = 'none';
     zusammenfassung.style.display = 'none';
     
-    fetch('/ge/api/experten-finder/', {
+    fetch('/{{ language }}/api/experten-finder/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

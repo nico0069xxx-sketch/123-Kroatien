@@ -205,7 +205,7 @@ function generiereKI(id) {
     }
     btn.classList.add("ki-glow");
     
-    fetch('/ge/api/m/gen/' + id + '/', {
+    fetch('/{{ language }}/api/m/gen/' + id + '/', {
         method: 'POST', 
         headers: {'X-CSRFToken': '{{ csrf_token }}'}
     })
