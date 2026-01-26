@@ -156,5 +156,23 @@ Allow: /
 Sitemap: https://123-kroatien.eu/sitemap.xml
 Disallow: /admin/
 Disallow: /nik-verwaltung-2026/
+
+# AI Crawlers - GEO
+Llms-txt: https://123-kroatien.eu/llms.txt
 """
     return HttpResponse(content, content_type='text/plain')
+
+
+def llms_txt(request):
+    """Serve llms.txt for AI crawlers (GEO - Generative Engine Optimization)"""
+    import os
+    from django.conf import settings
+    
+    llms_path = os.path.join(settings.BASE_DIR, 'llms.txt')
+    try:
+        with open(llms_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = "# 123-kroatien.eu\n\n> Immobilienportal für Kroatien"
+    
+    return HttpResponse(content, content_type='text/plain; charset=utf-8')
