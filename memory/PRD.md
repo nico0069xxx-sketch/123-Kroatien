@@ -1,98 +1,113 @@
 # 123-KROATIEN.EU - Projekt Status
 
 ## Original Problem Statement
-Der Benutzer (Nik) entwickelt ein 12-sprachiges Django Real Estate Portal. Ziele:
-- GEO (Generative Engine Optimization) für AI-Suchmaschinen
-- Intelligenter Chatbot mit Glossar-Integration
-- Saubere FAQ-Sektion
+12-sprachiges Django Real Estate Portal für Kroatien mit GEO (Generative Engine Optimization), intelligentem Chatbot und Dienstleister-Registrierung.
 
 ## Kommunikation
 - **Sprache:** Deutsch, informell ("du")
+- **User:** Nik
 - **Workflow:** Einzelne, kopierbare Bash-Befehle
 - **System:** Mac M1, lokales Django-Projekt
 
 ---
 
-## ✅ Erledigte Aufgaben (Diese Session)
+## ✅ Session 26./27. Januar 2026 - Erledigte Aufgaben
 
 ### 1. Dummy-Listings ausgeblendet
-- IDs 2, 3, 4, 5, 6, 7 auf `is_published=False` gesetzt
-- Nur ID 1 ("Villa am Meer", Test Makler, 450.000€) wird angezeigt
+- IDs 2-7 auf `is_published=False` gesetzt
+- Nur ID 1 ("Villa am Meer", 450.000€) sichtbar
 
-### 2. Badge "Zu verkaufen" gefixt
-- Problem: `{{listing.json_content.property_status}}` war leer
-- Lösung: Template geändert auf Bedingung mit übersetzten Variablen
-- Script: `fix_badge.py`
+### 2. Automatische Listing-Übersetzung
+- `get_or_create_translation()` Funktion in `main/views.py`
+- Übersetzt Titel, Beschreibung und Property Type
+- Speichert in DB für nächsten Besuch
+- Nutzt OpenAI API
 
-### 3. Filter-Übersetzungen hinzugefügt
-- Neue Variablen: `filter_property_status`, `filter_for_sale`, `filter_For_Rent`
-- Für alle 12 Sprachen in `main/context_processors.py`
-- Script: `fix_filter_translations.py`
+### 3. Badge "Kaufen/Mieten" 
+- Alle 12 Sprachen in `main/context_processors.py`
+- Template gefixt in `templates/main/home.html`
+
+### 4. Property Type Übersetzung
+- Mapping für alle Typen (Haus→Dom, Villa→Willa, etc.)
+- In allen 12 Sprachen
+
+### 5. CTA-Banner nur für HR
+- `{% if language == 'hr' %}` Bedingung
+- Button umbenannt zu "Uvodni pristup"
+
+### 6. Info-Box HR vs. International
+- Neue Translation-Objekte: `home_platform_title`, `home_platform_text`
+- Text: "Verifizierte Makler finden" + Plattform-Beschreibung
+- Automatisch in alle 11 Sprachen übersetzt
+
+### 7. Wechselnde CTA-Texte (Footer)
+- 12 rotierende Texte über Kroatien-Immobilien
+- 9 Sekunden Anzeigedauer
+- 1.2s sanfte Überblendung
+- Alle 12 Sprachen (132 Übersetzungen)
+- Feste Höhe - kein Springen
+
+### 8. Partner-Landing-Seite komplett neu
+- `templates/main/partner_landing.html`
+- Neuer kroatischer Text vom Kunden
+- Hero mit "UVODNA FAZA" Badge
+- Statistiken (80+, 12, 12, 100%)
+- 4 Info-Karten mit Icons
+- 12 Länder mit Flaggen-Emojis
+- 5 Provider-Kategorien
+- CTA zur Registrierung
+
+### 9. GitHub Push
+- Branch: `feature/session-26-jan-updates`
+- Merge-Konflikt in `realstate/urls.py` gelöst
+- PR bereit zum Mergen
 
 ---
 
-## 🔄 In Arbeit
+## 📁 Geänderte Dateien
 
-### Automatische Listing-Übersetzung
-- **Problem:** Listings werden nur für DE, EN, FR übersetzt. PL, CZ, SK, RU, SW, NO zeigen Deutsch.
-- **Ursache:** Die `_content` Felder in der DB sind leer, der Fallback zeigt Deutsch.
-- **Lösung:** View ändern für on-demand Übersetzung mit OpenAI
-- **Script:** Vorbereitet in `/app/memory/SOLUTION_AUTO_TRANSLATE.md`
-- **Status:** Script erstellt, wartet auf Ausführung durch Benutzer
+### Templates
+- `templates/main/home.html` - Badge, CTA-Banner, rotierende Texte
+- `templates/main/partner_landing.html` - Komplett neu
+
+### Backend
+- `main/views.py` - Auto-Translate Funktion, Property Type Mapping
+- `main/context_processors.py` - Filter-Übersetzungen
+
+### Datenbank (Translation Model)
+- `home_platform_title` + `home_platform_text` (11 Sprachen)
+- `cta_rotating_1` bis `cta_rotating_12` (je 11 Sprachen)
 
 ---
 
-## 📋 Backlog (Priorisiert)
+## 📋 Backlog
 
 ### P1 - Hoch
-- [ ] Preisfilter korrigieren: Sale bis 15M€, Rent ab 300€
-- [ ] Auto-Translate Script ausführen und testen
+- [ ] Registrierungsformular prüfen (`professional_registration.html`)
+- [ ] Footer-Links auf richtige URLs zeigen lassen
 
 ### P2 - Mittel
-- [ ] Glossar erweitern (weitere Begriffe)
-- [ ] Schema.org auf anderen Seiten (RealEstateListing)
-- [ ] `base.html` Schema mehrsprachig machen
+- [ ] Glossar erweitern
+- [ ] Schema.org auf anderen Seiten
+- [ ] Chatbot-Styling
 
 ### P3 - Niedrig (Technische Schulden)
-- [ ] Django Migrations reparieren (sqlite3.OperationalError)
-- [ ] Chatbot-Styling verbessern
-- [ ] "White Listing" Feature für Premium-Objekte
+- [ ] Django Migrations reparieren
+- [ ] "White Listing" Feature
 
 ---
 
-## 🏗️ Architektur
+## 🔗 Wichtige URLs
 
-### Dateien (Geändert in dieser Session)
-- `main/context_processors.py` - Filter-Übersetzungen hinzugefügt
-- `templates/main/home.html` - Badge gefixt
-
-### Dateien (Vorbereitet für Änderung)
-- `main/views.py` - Auto-Translate Logik (Script ready)
-
-### Wichtige Modelle
-- `listings.models.Listing` - Hauptmodell für Immobilien
-  - `property_status`: "Zu verkaufen" / "Zu mieten"
-  - `german_content`, `english_content`, etc.: JSON mit übersetzten Inhalten
-  - `is_published`: Boolean für Sichtbarkeit
-
-### Übersetzungs-System
-- `main/translation_service.py` - OpenAI-basierte Übersetzung
-- `main/templatetags/translate_filters.py` - Template-Filter für on-the-fly Übersetzung
-
----
-
-## 🔑 Credentials (Im Projekt)
-- OpenAI API Key: In `.env` als `OPENAI_API_KEY`
-- Emergent LLM Key: Hardcoded in `listing_description_ai.py`
+- Partner-Landing (HR): `/hr/hrvatska/postanite-partner/`
+- Registrierung (HR): `/hr/hrvatska/registracija/`
+- Partner-Landing (DE): `/ge/kroatien/partner-werden/`
+- Registrierung (DE): `/ge/kroatien/registrierung/`
 
 ---
 
 ## ⚠️ Bekannte Probleme
 
 ### Fragile Migrations
-- `makemigrations` riskant - DB Schema evtl. nicht synchron
-- Workaround: `.update()` statt `.delete()` verwenden
-
-### TextEdit Korruption
-- Niks TextEdit-App kann Templates beschädigen
-- Workaround: Python-Scripts für Dateiänderungen verwenden
+- `makemigrations` riskant
+- Workaround: `.update()` statt `.delete()`
