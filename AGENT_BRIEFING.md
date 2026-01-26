@@ -148,3 +148,8 @@ Dienstleister für alle sichtbar	Block mit {% if language == 'ge' or language ==
 - `/robots.txt` - Mit Llms-txt Verweis
 - `/ge/faq/` - FAQ-Seite mit FAQPage Schema
 - `/ge/kroatien/glossar/buyer-guide/` - Buyer Guide mit HowTo Schema
+
+### Article Schema (Marktberichte) - Januar 2026
+- **Datei:** `templates/main/market_report_detail.html`
+- **Schema:** `@type: Article` mit headline, author, publisher, datePublished
+- **Bug Fix:** URL-Format in `market_report_list.html` korrigiert (report → reports, region-year → region/year)
