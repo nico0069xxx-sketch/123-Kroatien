@@ -32,6 +32,26 @@
 {% endblock style %}
 
 {% block body %}
+<!-- FAQ Schema for AI/GEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for faq in faqs %}
+    {
+      "@type": "Question",
+      "name": "{{ faq.q|escapejs }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ faq.a|escapejs }}"
+      }
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
 <section class="faq-hero">
     <div class="container">
         <h1>{{ faq_title }}</h1>
@@ -48,7 +68,6 @@
         </div>
         <div class="faq-content"{% if forloop.first %} style="display:block;"{% endif %}>
             <p>{{ faq.a }}</p>
-            
         </div>
     </div>
     {% empty %}
