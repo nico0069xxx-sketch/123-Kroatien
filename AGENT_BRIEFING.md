@@ -115,3 +115,36 @@ Sprachwechsel kaputt	Prüfe changelanguage() in base.html und set_language_from_
 Falsche Sprache angezeigt	View muss request.session['site_language'] setzen
 API gibt falsche Sprache	JavaScript fetch() muss {{ language }} nutzen, nicht /ge/
 Dienstleister für alle sichtbar	Block mit {% if language == 'ge' or language == 'hr' %} umschließen
+
+## 🤖 GEO (Generative Engine Optimization) - Januar 2026
+
+### Implementierte Features
+| Feature | Datei | Beschreibung |
+|---------|-------|--------------|
+| `llms.txt` | `/llms.txt`, `main/xml_views.py` | AI-Crawler Dokumentation (12 Sprachen) |
+| robots.txt Update | `main/xml_views.py` | Llms-txt Verweis hinzugefügt |
+| FAQ Schema | `templates/main/faq.html` | `FAQPage` Schema.org Markup |
+| HowTo Schema | `templates/legal/buyer_guide.html` | `HowTo` Schema für Buyer Guide |
+| Glossar Schema | `templates/glossary/_jsonld_defined_term.html` | `DefinedTerm` Schema (war vorhanden) |
+| Organization Schema | `templates/include/base.html` | Platzhalter-Telefon entfernt |
+
+### Chatbot + Glossar Integration
+- **Datei:** `main/chatbot.py`
+- **Funktion:** `load_glossary_data()` + `find_relevant_glossary()`
+- **Cache:** `GLOSSARY_DATA_CACHE`
+- **Prompt:** `{glossar_context}` in MASTER_SYSTEM_PROMPT
+- 39 Glossar-Begriffe fließen jetzt in Chatbot-Antworten ein
+
+### FAQ Cleanup
+- **Vorher:** 62 FAQs pro Sprache
+- **Nachher:** 10 FAQs (nur Portal-bezogen)
+- **Dateien:** `main/faq_data*.json` (alle 12 Sprachen)
+- **Grund:** Kauf-Themen werden jetzt über Glossar abgedeckt
+
+### GEO-Architektur
+
+### Wichtige URLs
+- `/llms.txt` - AI-Crawler Dokumentation
+- `/robots.txt` - Mit Llms-txt Verweis
+- `/ge/faq/` - FAQ-Seite mit FAQPage Schema
+- `/ge/kroatien/glossar/buyer-guide/` - Buyer Guide mit HowTo Schema
