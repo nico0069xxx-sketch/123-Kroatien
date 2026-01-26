@@ -2,6 +2,41 @@
 {% load static %}
 
 {% block body %}
+<!-- Article Schema for AI/GEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ report.region_name }} {{ trans.report_label }} {{ report.year }}",
+  "description": "Immobilien-Marktbericht für {{ report.region_name }}, Kroatien - {{ report.year }}. Aktuelle Preisentwicklungen, Trends und Marktanalysen.",
+  "datePublished": "{{ report.year }}-01-01",
+  "dateModified": "{{ report.year }}-01-01",
+  "author": {
+    "@type": "Organization",
+    "name": "123-Kroatien.eu",
+    "url": "https://123-kroatien.eu"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "123-Kroatien.eu",
+    "url": "https://123-kroatien.eu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://123-kroatien.eu/static/images/logo-black2.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://123-kroatien.eu/{{ lang }}/{{ country_name }}/{{ url_paths.reports }}/{{ report.slug }}/"
+  },
+  "about": {
+    "@type": "Place",
+    "name": "{{ report.region_name }}, Kroatien"
+  },
+  "keywords": "Immobilien, Marktbericht, {{ report.region_name }}, Kroatien, {{ report.year }}, Immobilienpreise"
+}
+</script>
+
 <div class="faqHeaderBg bg-theme-overlay">
   <section class="section__breadcrumb">
     <div class="container">
