@@ -300,6 +300,54 @@ def get_my_translations(request):
         'no': 'Verifiserte eiendomsmeglere og personlig rådgivning for drømmeeiendommen din.',
     }
     context['hero_subtitle'] = hero_subtitle.get(user_language, 'Verifizierte Immobilienmakler und persönliche Beratung für Ihre Traumimmobilie.')
+# CTA Professional Banner (Home)
+    cta_professional_title = {
+        'ge': 'Sind Sie Immobilienexperte?',
+        'en': 'Are you a real estate expert?',
+        'hr': 'Jeste li stručnjak za nekretnine?',
+        'fr': 'Êtes-vous un expert immobilier?',
+        'nl': 'Bent u een vastgoedexpert?',
+        'pl': 'Czy jesteś ekspertem od nieruchomości?',
+        'cz': 'Jste realitní expert?',
+        'sk': 'Ste realitný expert?',
+        'ru': 'Вы эксперт по недвижимости?',
+        'gr': 'Είστε ειδικός ακινήτων;',
+        'sw': 'Är du fastighetsexpert?',
+        'no': 'Er du eiendomsekspert?',
+    }
+    context['cta_professional_title'] = cta_professional_title.get(user_language, 'Sind Sie Immobilienexperte?')
+
+    cta_professional_text = {
+        'ge': 'Makler, Architekt, Anwalt oder Steuerberater? Registrieren Sie sich KOSTENLOS und erreichen Sie tausende Kunden!',
+        'en': 'Agent, architect, lawyer or tax advisor? Register for FREE and reach thousands of clients!',
+        'hr': 'Agent, arhitekt, odvjetnik ili porezni savjetnik? Registrirajte se BESPLATNO i dosegnite tisuće klijenata!',
+        'fr': 'Agent, architecte, avocat ou conseiller fiscal? Inscrivez-vous GRATUITEMENT et atteignez des milliers de clients!',
+        'nl': 'Makelaar, architect, advocaat of belastingadviseur? Registreer GRATIS en bereik duizenden klanten!',
+        'pl': 'Agent, architekt, prawnik lub doradca podatkowy? Zarejestruj się ZA DARMO i dotrzyj do tysięcy klientów!',
+        'cz': 'Agent, architekt, právník nebo daňový poradce? Zaregistrujte se ZDARMA a oslovte tisíce klientů!',
+        'sk': 'Agent, architekt, právnik alebo daňový poradca? Zaregistrujte sa ZADARMO a oslovte tisíce klientov!',
+        'ru': 'Агент, архитектор, юрист или налоговый консультант? Зарегистрируйтесь БЕСПЛАТНО и привлеките тысячи клиентов!',
+        'gr': 'Πράκτορας, αρχιτέκτονας, δικηγόρος ή φοροτεχνικός; Εγγραφείτε ΔΩΡΕΑΝ και προσεγγίστε χιλιάδες πελάτες!',
+        'sw': 'Mäklare, arkitekt, advokat eller skatterådgivare? Registrera dig GRATIS och nå tusentals kunder!',
+        'no': 'Megler, arkitekt, advokat eller skatterådgiver? Registrer deg GRATIS og nå tusenvis av kunder!',
+    }
+    context['cta_professional_text'] = cta_professional_text.get(user_language, 'Makler, Architekt, Anwalt oder Steuerberater? Registrieren Sie sich KOSTENLOS und erreichen Sie tausende Kunden!')
+
+    cta_professional_button = {
+        'ge': 'Kostenlos registrieren',
+        'en': 'Register for free',
+        'hr': 'Uvodni pristup',
+        'fr': 'Inscription gratuite',
+        'nl': 'Gratis registreren',
+        'pl': 'Zarejestruj się za darmo',
+        'cz': 'Registrovat zdarma',
+        'sk': 'Registrovať zadarmo',
+        'ru': 'Зарегистрироваться бесплатно',
+        'gr': 'Εγγραφή δωρεάν',
+        'sw': 'Registrera gratis',
+        'no': 'Registrer gratis',
+    }
+    context['cta_professional_button'] = cta_professional_button.get(user_language, 'Kostenlos registrieren')
 
     # Cookie Banner
     cookie_trans = COOKIE_TRANSLATIONS.get(user_language, COOKIE_TRANSLATIONS["ge"])
@@ -833,6 +881,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Bäder",
         "filter_price_from": "Preis von",
         "filter_price_to": "Preis bis",
+        "filter_property_status": "Kaufen/Mieten",
+        "filter_for_sale": "Kaufen",
+        "filter_For_Rent": "Mieten",
     },
     "en": {
         "filter_area_from": "Area from",
@@ -841,6 +892,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Bathrooms",
         "filter_price_from": "Price from",
         "filter_price_to": "Price to",
+        "filter_property_status": "Buy/Rent",
+        "filter_for_sale": "Buy",
+        "filter_For_Rent": "Rent",
     },
     "hr": {
         "filter_area_from": "Površina od",
@@ -849,6 +903,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Kupaonice",
         "filter_price_from": "Cijena od",
         "filter_price_to": "Cijena do",
+        "filter_property_status": "Kupi/Najam",
+        "filter_for_sale": "Kupi",
+        "filter_For_Rent": "Najam",
     },
     "fr": {
         "filter_area_from": "Surface dès",
@@ -857,6 +914,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Salles de bain",
         "filter_price_from": "Prix dès",
         "filter_price_to": "Prix jusqu'à",
+        "filter_property_status": "Acheter/Louer",
+        "filter_for_sale": "Acheter",
+        "filter_For_Rent": "Louer",
     },
     "nl": {
         "filter_area_from": "Oppervlakte vanaf",
@@ -865,6 +925,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Badkamers",
         "filter_price_from": "Prijs vanaf",
         "filter_price_to": "Prijs tot",
+        "filter_property_status": "Kopen/Huren",
+        "filter_for_sale": "Kopen",
+        "filter_For_Rent": "Huren",
     },
     "pl": {
         "filter_area_from": "Powierzchnia od",
@@ -873,6 +936,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Łazienki",
         "filter_price_from": "Cena od",
         "filter_price_to": "Cena do",
+        "filter_property_status": "Kupno/Wynajem",
+        "filter_for_sale": "Kupno",
+        "filter_For_Rent": "Wynajem",
     },
     "cz": {
         "filter_area_from": "Plocha od",
@@ -881,6 +947,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Koupelny",
         "filter_price_from": "Cena od",
         "filter_price_to": "Cena do",
+        "filter_property_status": "Koupit/Pronájem",
+        "filter_for_sale": "Koupit",
+        "filter_For_Rent": "Pronájem",
     },
     "sk": {
         "filter_area_from": "Plocha od",
@@ -889,6 +958,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Kúpeľne",
         "filter_price_from": "Cena od",
         "filter_price_to": "Cena do",
+        "filter_property_status": "Kúpiť/Prenájom",
+        "filter_for_sale": "Kúpiť",
+        "filter_For_Rent": "Prenájom",
     },
     "ru": {
         "filter_area_from": "Площадь от",
@@ -897,6 +969,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Ванные",
         "filter_price_from": "Цена от",
         "filter_price_to": "Цена до",
+        "filter_property_status": "Купить/Аренда",
+        "filter_for_sale": "Купить",
+        "filter_For_Rent": "Аренда",
     },
     "gr": {
         "filter_area_from": "Εμβαδόν από",
@@ -905,6 +980,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Μπάνια",
         "filter_price_from": "Τιμή από",
         "filter_price_to": "Τιμή έως",
+        "filter_property_status": "Αγορά/Ενοικίαση",
+        "filter_for_sale": "Αγορά",
+        "filter_For_Rent": "Ενοικίαση",
     },
     "sw": {
         "filter_area_from": "Yta från",
@@ -913,6 +991,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Badrum",
         "filter_price_from": "Pris från",
         "filter_price_to": "Pris till",
+        "filter_property_status": "Köpa/Hyra",
+        "filter_for_sale": "Köpa",
+        "filter_For_Rent": "Hyra",
     },
     "no": {
         "filter_area_from": "Areal fra",
@@ -921,6 +1002,9 @@ SEARCH_FILTER_TRANSLATIONS = {
         "filter_bathrooms": "Bad",
         "filter_price_from": "Pris fra",
         "filter_price_to": "Pris til",
+        "filter_property_status": "Kjøpe/Leie",
+        "filter_for_sale": "Kjøpe",
+        "filter_For_Rent": "Leie",
     },
 }
 

@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
-from main.views import set_language_from_url, news_page, sitemap as html_sitemap, imprint, agb, cancellation_policy
+from main.views import set_language_from_url, news_page, sitemap as html_sitemap, imprint, agb, cancellation_policy, home
 from main.xml_views import rss_listings, xml_sitemap, robots_txt
 from django.contrib.sitemaps.views import sitemap
 from main.glossary_sitemaps import get_glossary_sitemaps
@@ -86,6 +86,9 @@ urlpatterns = [
     path('gr/cancellation-policy/', cancellation_policy, name='cancellation-policy-gr'),
     path('sw/cancellation-policy/', cancellation_policy, name='cancellation-policy-sw'),
     path('no/cancellation-policy/', cancellation_policy, name='cancellation-policy-no'),
+    
+    # Norwegische Startseite (explizit, da i18n_patterns Problem mit 'no')
+    path('no/', home, name='home-no'),
     
     # RSS Feeds
     path('rss/listings/', rss_listings, {'lang': 'ge'}, name='rss_listings'),
