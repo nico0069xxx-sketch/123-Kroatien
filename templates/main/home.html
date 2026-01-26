@@ -297,23 +297,25 @@
     </form>
 
     <!-- DIENSTLEISTER CTA BANNER -->
+    {% if language == "hr" %}
     <section class="cta-professionals">
         <div class="container">
             <div class="cta-box">
                 <div class="row align-items-center">
                     <div class="col-lg-8 col-md-7">
-                        <h2>Jeste li stručnjak za nekretnine?</h2>
-                        <p>Agent, arhitekt, odvjetnik ili porezni savjetnik? Registrirajte se BESPLATNO i dosegnite tisuće klijenata!</p>
+                        <h2>{{cta_professional_title}}</h2>
+                        <p>{{cta_professional_text}}</p>
                     </div>
                     <div class="col-lg-4 col-md-5 text-md-right">
                                                  <a href="/{{ language }}/{{ country_name }}/partner-werden/" class="btn btn-cta pulse">
-                            <i class="fa fa-star"></i> Registrirajte se besplatno
+                            <i class="fa fa-star"></i> {{cta_professional_button}}
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    {% endif %}
     <!-- END CTA BANNER -->
 
 
@@ -338,8 +340,13 @@
                         <div class="iconDiv">
                             <i class="fa fa-comments-o myIcon" aria-hidden="true"></i>
                         </div>
+                        {% if language == "hr" %}
                         <h6 class="mb-4">{{home_register_free}}</h6>
                         <p class="">{{home_register_text}}</p>
+                        {% else %}
+                        <h6 class="mb-4">{{home_platform_title}}</h6>
+                        <p class="">{{home_platform_text}}</p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
@@ -393,7 +400,7 @@
                                         {% comment %} <div class="bg-mycolor ribbon text-capitalize">{{home_featured}}</div> {% endcomment %}
                                         <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.png' %}{% endif %}" alt=""
                                             class="img-fluid w100 img-transition">
-                                        <div class="info" style="background-color: #db0000;"> {{listing.json_content.property_status}}
+                                        <div class="info" style="background-color: #db0000;">{% if listing.property_status == "Zu verkaufen" or listing.property_status == "Sale" %}{{filter_for_sale}}{% elif listing.property_status == "Zu mieten" or listing.property_status == "Rent" %}{{filter_For_Rent}}{% else %}{{listing.property_status}}{% endif %}
                                         </div>
                                     </div>
                                 </a>
@@ -455,8 +462,8 @@
                                     <ul class="list-inline my-auto ml-auto">
                                         <li class="list-inline-item">
                         
-                                            <h6>$
-                                                {{listing.json_content.property_price}} €
+                                            <h6>
+                                                {{listing.json_content.property_price|floatformat:0}} €
                                             </h6>
                                         </li>
                         
@@ -877,10 +884,41 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-9">
-                    <h2 class="text-uppercase text-light">{{StartJourney}}</h2>
-                    <p class="text-capitalize text-light">{{ReliableTransparent}}
-                    </p>
+                    <h2 class="text-uppercase text-light" style="letter-spacing: 3px; word-spacing: 8px;">{{StartJourney}}</h2>
+                    <p class="text-light" id="rotating-cta-text" style="height: 80px; overflow: hidden; transition: opacity 1.2s ease; font-size: 1.25rem; display: flex; align-items: center;">{{ReliableTransparent}}</p>
                 </div>
+                <script>
+                (function() {
+                    const texts = [
+                        "{{ReliableTransparent|escapejs}}",
+                        "{{cta_rotating_1|escapejs}}",
+                        "{{cta_rotating_2|escapejs}}",
+                        "{{cta_rotating_3|escapejs}}",
+                        "{{cta_rotating_4|escapejs}}",
+                        "{{cta_rotating_5|escapejs}}",
+                        "{{cta_rotating_6|escapejs}}",
+                        "{{cta_rotating_7|escapejs}}",
+                        "{{cta_rotating_8|escapejs}}",
+                        "{{cta_rotating_9|escapejs}}",
+                        "{{cta_rotating_10|escapejs}}",
+                        "{{cta_rotating_11|escapejs}}",
+                        "{{cta_rotating_12|escapejs}}"
+                    ];
+                    let currentIndex = 0;
+                    const element = document.getElementById('rotating-cta-text');
+                    
+                    function rotateText() {
+                        element.style.opacity = '0';
+                        setTimeout(() => {
+                            currentIndex = (currentIndex + 1) % texts.length;
+                            element.textContent = texts[currentIndex];
+                            element.style.opacity = '1';
+                        }, 1200);
+                    }
+                    
+                    setInterval(rotateText, 9000);
+                })();
+                </script>
                 {% comment %} <div class="col-lg-3">
                     <a href="#" class="btn btn-light text-uppercase ">{{requestquote}}
                         <i class="fa fa-angle-right ml-3 arrow-btn "></i></a>

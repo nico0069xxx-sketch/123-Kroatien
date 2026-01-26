@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from listings.models import Listing
 from django.contrib import messages
 from django.utils import translation
-from main.translation_service import translate_text
 from django.http import HttpResponse
 import feedparser
 from django.http import HttpResponseRedirect
@@ -53,70 +52,6 @@ def translate_faq_headings(html, lang):
     return html
 
 
-
-def get_or_create_translation(listing, lang_code, field_name):
-    """Holt Übersetzung aus DB oder erstellt sie mit OpenAI"""
-    import json
-    existing = getattr(listing, field_name, None)
-    if existing:
-        try:
-            return json.loads(existing)
-        except:
-            pass
-    
-    # Property Type Übersetzungen
-    property_type_translations = {
-        'Deutsch': {'House': 'Haus', 'Apartment': 'Wohnung', 'Villa': 'Villa', 'Property': 'Grundstück', 'New Building': 'Neubau', 'Office': 'Büro'},
-        'Englisch': {'House': 'House', 'Apartment': 'Apartment', 'Villa': 'Villa', 'Property': 'Property', 'New Building': 'New Building', 'Office': 'Office', 'Haus': 'House', 'Wohnung': 'Apartment', 'Grundstück': 'Property', 'Neubau': 'New Building', 'Büro': 'Office'},
-        'Französisch': {'House': 'Maison', 'Apartment': 'Appartement', 'Villa': 'Villa', 'Property': 'Terrain', 'New Building': 'Neuf', 'Office': 'Bureau', 'Haus': 'Maison', 'Wohnung': 'Appartement'},
-        'Griechisch': {'House': 'Σπίτι', 'Apartment': 'Διαμέρισμα', 'Villa': 'Βίλα', 'Property': 'Ακίνητο', 'New Building': 'Νεόδμητο', 'Office': 'Γραφείο', 'Haus': 'Σπίτι', 'Wohnung': 'Διαμέρισμα'},
-        'Kroatisch': {'House': 'Kuća', 'Apartment': 'Stan', 'Villa': 'Vila', 'Property': 'Zemljište', 'New Building': 'Novogradnja', 'Office': 'Ured', 'Haus': 'Kuća', 'Wohnung': 'Stan'},
-        'Polnisch': {'House': 'Dom', 'Apartment': 'Mieszkanie', 'Villa': 'Willa', 'Property': 'Działka', 'New Building': 'Nowe budownictwo', 'Office': 'Biuro', 'Haus': 'Dom', 'Wohnung': 'Mieszkanie'},
-        'Tschechisch': {'House': 'Dům', 'Apartment': 'Byt', 'Villa': 'Vila', 'Property': 'Pozemek', 'New Building': 'Novostavba', 'Office': 'Kancelář', 'Haus': 'Dům', 'Wohnung': 'Byt'},
-        'Russisch': {'House': 'Дом', 'Apartment': 'Квартира', 'Villa': 'Вилла', 'Property': 'Участок', 'New Building': 'Новостройка', 'Office': 'Офис', 'Haus': 'Дом', 'Wohnung': 'Квартира'},
-        'Schwedisch': {'House': 'Hus', 'Apartment': 'Lägenhet', 'Villa': 'Villa', 'Property': 'Tomt', 'New Building': 'Nybygge', 'Office': 'Kontor', 'Haus': 'Hus', 'Wohnung': 'Lägenhet'},
-        'Norwegisch': {'House': 'Hus', 'Apartment': 'Leilighet', 'Villa': 'Villa', 'Property': 'Tomt', 'New Building': 'Nybygg', 'Office': 'Kontor', 'Haus': 'Hus', 'Wohnung': 'Leilighet'},
-        'Slowakisch': {'House': 'Dom', 'Apartment': 'Byt', 'Villa': 'Vila', 'Property': 'Pozemok', 'New Building': 'Novostavba', 'Office': 'Kancelária', 'Haus': 'Dom', 'Wohnung': 'Byt'},
-        'Niederländisch': {'House': 'Huis', 'Apartment': 'Appartement', 'Villa': 'Villa', 'Property': 'Grond', 'New Building': 'Nieuwbouw', 'Office': 'Kantoor', 'Haus': 'Huis', 'Wohnung': 'Appartement'},
-    }
-    
-    lang_names = {
-        'german_content': 'Deutsch', 'english_content': 'Englisch',
-        'french_content': 'Französisch', 'greek_content': 'Griechisch',
-        'croatian_content': 'Kroatisch', 'polish_content': 'Polnisch',
-        'czech_content': 'Tschechisch', 'russian_content': 'Russisch',
-        'swedish_content': 'Schwedisch', 'norway_content': 'Norwegisch',
-        'slovak_content': 'Slowakisch', 'dutch_content': 'Niederländisch',
-    }
-    target_lang = lang_names.get(field_name, 'Englisch')
-    
-    try:
-        translated_title = translate_text(listing.property_title or '', target_lang)
-        translated_desc = translate_text(listing.property_description or '', target_lang)
-        
-        if translated_title and translated_desc:
-            json_content = {
-                "property_title": translated_title,
-                "property_description": translated_desc,
-                "property_type": property_type_translations.get(target_lang, {}).get(listing.property_type, listing.property_type),
-                "property_status": listing.property_status,
-                "address": listing.address,
-                "bathrooms": float(listing.bathrooms) if listing.bathrooms else 0,
-                "bedrooms": listing.bedrooms,
-                "floors": listing.floors,
-                "area": listing.area,
-                "size": float(listing.size) if listing.size else 0,
-                "property_price": listing.property_price
-            }
-            setattr(listing, field_name, json.dumps(json_content, ensure_ascii=False))
-            listing.save(update_fields=[field_name])
-            print(f"✅ Übersetzung erstellt: {field_name}")
-            return json_content
-    except Exception as e:
-        print(f"❌ Fehler: {e}")
-    return listing.get_json()
-
-
 def home(request):
     # Sprache aus URL-Pfad extrahieren
     path = request.path
@@ -127,18 +62,18 @@ def home(request):
     user_language = request.session.get('site_language', 'ge')
     latest_8_listings = Listing.objects.filter(is_published=True).order_by('-list_date')[:8]
     for listing in latest_8_listings:
-        if user_language == 'ge': listing.json_content = get_or_create_translation(listing, "ge", "german_content")
-        elif user_language == 'fr': listing.json_content = get_or_create_translation(listing, "fr", "french_content")
-        elif user_language == 'gr': listing.json_content = get_or_create_translation(listing, "gr", "greek_content")
-        elif user_language == 'hr': listing.json_content = get_or_create_translation(listing, "hr", "croatian_content")
-        elif user_language == 'pl': listing.json_content = get_or_create_translation(listing, "pl", "polish_content")
-        elif user_language == 'cz': listing.json_content = get_or_create_translation(listing, "cz", "czech_content")
-        elif user_language == 'ru': listing.json_content = get_or_create_translation(listing, "ru", "russian_content")
-        elif user_language == 'sw': listing.json_content = get_or_create_translation(listing, "sw", "swedish_content")
-        elif user_language == 'no': listing.json_content = get_or_create_translation(listing, "no", "norway_content")
-        elif user_language == 'sk': listing.json_content = get_or_create_translation(listing, "sk", "slovak_content")
-        elif user_language == 'nl': listing.json_content = get_or_create_translation(listing, "nl", "dutch_content")
-        else: listing.json_content = get_or_create_translation(listing, "en", "english_content")
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
 
     lang = request.session.get('site_language', 'ge')
     # Partner-Logos: Verifizierte Professionals mit Logo
@@ -214,18 +149,18 @@ def agency_details(request):
     listings = Listing.objects.filter(realtor=agent)
     user_language = request.session.get('site_language', 'en')
     for listing in listings:
-        if user_language == 'ge': listing.json_content = get_or_create_translation(listing, "ge", "german_content")
-        elif user_language == 'fr': listing.json_content = get_or_create_translation(listing, "fr", "french_content")
-        elif user_language == 'gr': listing.json_content = get_or_create_translation(listing, "gr", "greek_content")
-        elif user_language == 'hr': listing.json_content = get_or_create_translation(listing, "hr", "croatian_content")
-        elif user_language == 'pl': listing.json_content = get_or_create_translation(listing, "pl", "polish_content")
-        elif user_language == 'cz': listing.json_content = get_or_create_translation(listing, "cz", "czech_content")
-        elif user_language == 'ru': listing.json_content = get_or_create_translation(listing, "ru", "russian_content")
-        elif user_language == 'sw': listing.json_content = get_or_create_translation(listing, "sw", "swedish_content")
-        elif user_language == 'no': listing.json_content = get_or_create_translation(listing, "no", "norway_content")
-        elif user_language == 'sk': listing.json_content = get_or_create_translation(listing, "sk", "slovak_content")
-        elif user_language == 'nl': listing.json_content = get_or_create_translation(listing, "nl", "dutch_content")
-        else: listing.json_content = get_or_create_translation(listing, "en", "english_content")
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
     
     lang = request.session.get('site_language', 'ge')
     context = {
@@ -413,18 +348,18 @@ def listings(request):
         else:
             listings_two_dimensional[len(listings_two_dimensional) - 1].append(listing)
         num += 1
-        if user_language == 'ge': listing.json_content = get_or_create_translation(listing, "ge", "german_content")
-        elif user_language == 'fr': listing.json_content = get_or_create_translation(listing, "fr", "french_content")
-        elif user_language == 'gr': listing.json_content = get_or_create_translation(listing, "gr", "greek_content")
-        elif user_language == 'hr': listing.json_content = get_or_create_translation(listing, "hr", "croatian_content")
-        elif user_language == 'pl': listing.json_content = get_or_create_translation(listing, "pl", "polish_content")
-        elif user_language == 'cz': listing.json_content = get_or_create_translation(listing, "cz", "czech_content")
-        elif user_language == 'ru': listing.json_content = get_or_create_translation(listing, "ru", "russian_content")
-        elif user_language == 'sw': listing.json_content = get_or_create_translation(listing, "sw", "swedish_content")
-        elif user_language == 'no': listing.json_content = get_or_create_translation(listing, "no", "norway_content")
-        elif user_language == 'sk': listing.json_content = get_or_create_translation(listing, "sk", "slovak_content")
-        elif user_language == 'nl': listing.json_content = get_or_create_translation(listing, "nl", "dutch_content")
-        else: listing.json_content = get_or_create_translation(listing, "en", "english_content")
+        if user_language == 'ge': listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == 'fr': listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == 'gr': listing.json_content = json.loads(listing.greek_content) if listing.greek_content else listing.get_json()
+        elif user_language == 'hr': listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == 'pl': listing.json_content = json.loads(listing.polish_content) if listing.polish_content else listing.get_json()
+        elif user_language == 'cz': listing.json_content = json.loads(listing.czech_content) if listing.czech_content else listing.get_json()
+        elif user_language == 'ru': listing.json_content = json.loads(listing.russian_content) if listing.russian_content else listing.get_json()
+        elif user_language == 'sw': listing.json_content = json.loads(listing.swedish_content) if listing.swedish_content else listing.get_json()
+        elif user_language == 'no': listing.json_content = json.loads(listing.norway_content) if listing.norway_content else listing.get_json()
+        elif user_language == 'sk': listing.json_content = json.loads(listing.slovak_content) if listing.slovak_content else listing.get_json()
+        elif user_language == 'nl': listing.json_content = json.loads(listing.dutch_content) if listing.dutch_content else listing.get_json()
+        else: listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
     lang = request.session.get('site_language', 'ge')
     context = {
         'listings': listings,
@@ -857,10 +792,10 @@ def agent(request, id):
         listings = Listing.objects.filter(realtor=agent_obj)
     
     for listing in listings:
-        if user_language == "ge": listing.json_content = get_or_create_translation(listing, "ge", "german_content")
-        elif user_language == "hr": listing.json_content = get_or_create_translation(listing, "hr", "croatian_content")
-        elif user_language == "fr": listing.json_content = get_or_create_translation(listing, "fr", "french_content")
-        elif user_language == "en": listing.json_content = get_or_create_translation(listing, "en", "english_content")
+        if user_language == "ge": listing.json_content = json.loads(listing.german_content) if listing.german_content else listing.get_json()
+        elif user_language == "hr": listing.json_content = json.loads(listing.croatian_content) if listing.croatian_content else listing.get_json()
+        elif user_language == "fr": listing.json_content = json.loads(listing.french_content) if listing.french_content else listing.get_json()
+        elif user_language == "en": listing.json_content = json.loads(listing.english_content) if listing.english_content else listing.get_json()
         else: listing.json_content = listing.get_json()
     
     lang = request.session.get('site_language', 'ge')
