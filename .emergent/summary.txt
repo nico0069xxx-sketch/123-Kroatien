@@ -1,136 +1,129 @@
 <analysis>**original_problem_statement:**
-The user, Nik, is developing a large, 12-language Django real estate portal. The initial goal was to fix a critical regression where sitemap links led to 404 errors for most languages. This evolved into a massive session focused on identifying and eliminating systemic issues related to multilingual URL routing and hardcoded translations throughout the Django templates and JavaScript code.
+The user, Nik, is developing a large, 12-language Django real estate portal. The primary goals are to optimize the site for AI-driven search engines (Generative Engine Optimization - GEO), enhance the intelligence of the site's chatbot by integrating it with the detailed Glossar (glossary), and clean up the generic FAQ section.
 
-The user requires a specific workflow:
-- The agent must provide explicit, copy-pasteable terminal commands for the user to execute on his local Mac M1 machine.
-- The agent works in a separate cloud environment, requiring frequent queries (, , etc.) to understand the user's local codebase state.
-- All communication must be in German, using the informal du.
-- A critical file, , outlines the project architecture and workflow rules.
+A critical requirement of the workflow is that the agent must provide explicit, single, copy-pasteable terminal commands for the user to execute on his local Mac M1 machine. All communication must be in informal German (du). A key project file, , outlines the project architecture and workflow rules, and must be adhered to.
 
 **PRODUCT REQUIREMENTS:**
-- A fully functional, multilingual site where all links and features work correctly for all 12 supported languages.
-- A consistent and predictable URL architecture that properly handles language prefixes.
-- A robust system for translations that avoids hardcoding text in templates, making the site more maintainable.
+- The portal must be highly visible and citable as an authoritative source by AI search engines.
+- A clear distinction between portal-related questions (FAQ) and in-depth real estate topics (Glossar).
+- An intelligent chatbot that can answer complex user questions by drawing from the rich, structured content within the Glossar.
+- All GEO features must be implemented across all 12 languages where applicable.
 
 **User's preferred language**: German. The user's name is Nik, and he prefers the informal du. The next agent **MUST** continue to communicate in this manner.
 
 **what currently exists?**
-The project is a complex Django monolith. In this session, a huge amount of technical debt was paid down. All critical URL routing issues for static pages, registration, and sitemap links have been resolved for all 12 languages.
-
-A new, robust pattern has been established: instead of hardcoding translations in templates with massive  blocks, translations are now centralized in dictionaries within new context processors in . This pattern has been applied to the sitemap, search filters, 2FA setup page, and the buyer's guide page, significantly improving maintainability.
-
-Additionally, multiple instances of hardcoded  URLs in JavaScript  calls (for AI search and other APIs) and  links have been found and replaced with dynamic  variables, making these features fully multilingual.
+The project is a complex Django monolith with a comprehensive GEO strategy, including an  file and Schema.org markup. The chatbot is integrated with the database-backed Glossar for intelligent responses, and the FAQ has been streamlined. In this session, a persistent 404 error on the Norwegian homepage () was fixed, along with several frontend bugs on the homepage (), including incorrect price formatting and a hardcoded banner that is now multilingual. The logic for loading translated property content was also fixed in the  view.
 
 **Last working item**:
-- Last item agent was working: The agent and user successfully refactored the  template, moving all hardcoded translation blocks into a new context processor. This was the last of a series of successful refactoring tasks. The user was extremely satisfied with the progress and the session concluded on a high note.
-- Status: COMPLETED
-- Agent Testing Done: Y (Agent provided  commands and user verified browser output).
-- User Testing Done: Y (User confirmed functionality multiple times throughout the session).
+- Last item agent was working: Hiding untranslated dummy property listings on the homepage. The agent executed a script to set  on these listings. However, the user reported that the dummy listings are still visible.
+- Status: IN PROGRESS
+- Agent Testing Done: N
+- Which testing method agent to use? Manual testing by user. The agent should first guide the user to perform a hard refresh (Cmd+Shift+R) and restart the server to rule out caching. If the issue persists, the agent needs to debug the  view logic in .
+- User Testing Done: N (User confirmed the fix did not work as expected).
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Fragile Django Migrations (P2 - Technical Debt)**
--   **Issue 2: Chatbot and UI styling issues (P2 - Backlog)**
+-   **Issue 1: Dummy listings still visible after being unpublished (P0)**
+-   **Issue 2: Fragile Django Migrations (P2 - Technical Debt)**
+-   **Issue 3: Chatbot and UI styling issues (P2 - Backlog)**
 
 **Issues Detail:**
--   **Issue 1: Fragile Django Migrations**
-    -   **Description**: Inherited from a previous fork.  is at risk of failing. This was not addressed in this session as the focus was on frontend and routing fixes.
-    -   **Attempted fixes**: None in this session.
-    -   **Next debug checklist**: Investigate the state of Django models and the migration history to understand the source of the fragility.
-    -   **Why fix this issue and what will be achieved with the fix?**: To allow for safe database schema changes in the future.
+-   **Issue 1: Dummy listings still visible after being unpublished**
+    -   **Description**: Dummy listings (IDs 2, 3, 4, 5) remain on the homepage despite a successful database update to set their  flag to . The  view is supposed to filter for .
+    -   **Attempted fixes**: An ORM update was executed: .
+    -   **Next debug checklist**:
+        1.  Instruct user to do a hard refresh (Cmd+Shift+R) in Safari and restart the local Django server to eliminate caching issues.
+        2.  Verify the database state with .
+        3.  Review the  view in  to ensure the query  is being executed correctly and not being overridden.
+    -   **Why fix this issue and what will be achieved with the fix?**: To ensure only active, properly translated properties are shown to users, maintaining site quality and professionalism.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: Frontend.
+
+-   **Issue 2: Fragile Django Migrations**
+    -   **Description**: Inherited technical debt.  is at risk of failing. An attempt to delete objects in this session failed with a , confirming that the database schema may be out of sync with the models.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: Backend.
-    -   **Blocked on other issue**: None.
 
--   **Issue 2: Chatbot and UI styling issues**
-    -   **Description**: Inherited backlog items (generic chatbot answers, Expertenfinder results styling). Not addressed in this session.
+-   **Issue 3: Chatbot and UI styling issues**
+    -   **Description**: Inherited backlog items (generic chatbot answers, Expertenfinder results styling). Not addressed.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: Frontend.
 
 **In progress Task List**:
-- None. All tasks in this session were completed and merged.
+-   None.
 
 **Upcoming and Future Tasks**
-- **Upcoming Tasks:**
-    - **P1: Refactor remaining templates:** The user expressed a strong desire to continue refactoring. The next logical step is to apply the new context processor pattern to other templates that may still contain hardcoded translations (e.g., , , other pages).
-    - **P2: Add language-specific SEO meta-data to other pages:** The  page was refactored to include dynamic, translated JSON-LD schema data. This successful pattern should be extended to other key pages (Homepage, Glossar, etc.) to improve multilingual SEO.
-- **Future Tasks:**
-    - **P2: Address inherited technical debt:** Fragile migrations and generic UI styling issues remain in the backlog.
-    - **P2: Investigate hardcoded text in :** The agent found hardcoded German text in the Schema.org JSON-LD block within . This should be moved to a context processor to be fully multilingual.
+-   **Upcoming Tasks:**
+    -   **P1: Correct Price Filter Ranges:** The user noted the price ranges in the search filter on  are incorrect (Sale should go up to 15M€, Rent should start at 300€). This requires updating the JavaScript variables (, , , ) in .
+    -   **P2: Refine and extend Glossar:** Review the existing 39 terms and consider adding more based on common user questions that were removed from the FAQs.
+    -   **P2: Enhance Schema.org on other pages:** Apply relevant schemas to other content types, such as  for property detail pages.
+-   **Future Tasks:**
+    -   **P2: White Listing feature:** A feature for premium/highlighted placement of real estate objects was requested by the user but postponed as a larger, future task.
+    -   **P2: Address inherited technical debt:** Fragile migrations and generic UI styling issues remain in the backlog.
+    -   **P2: Make  schema multilingual:** The  schema in  still has hardcoded German text.
 
 **Completed work in this session**
-- **Fixed All Critical URL/Routing Bugs:**
-  - Resolved 404s for static pages (imprint, agb, etc.) and registration pages by adding explicit URL patterns for all 12 languages in .
-  - Fixed sitemap 404s by adding URL variants with trailing slashes.
-- **Made Static Pages Multilingual:** Fixed views (, , ) to correctly detect the language from the URL and, crucially, update  to ensure all template translations render correctly.
-- **Fixed Hardcoded API URLs:** Replaced dozens of hardcoded  API endpoints in JavaScript  calls and  links across multiple templates (, , , etc.) with dynamic  variables, making AI Search and other features fully multilingual.
-- **Refactored Major Templates:**
-  - : Removed all  blocks and moved translations to a new context processor.
-  - : Replaced hardcoded German search filter placeholders with a new context processor.
-  - : Refactored to use a context processor for all text.
-  - : Refactored the entire page (30+ translation blocks) to use a new context processor.
-- **Fixed Missing Database Translations:** Scanned the  table, identified 6 records with missing translations for 5 languages (CZ, NO, SW, SK, NL), and added them via a Django shell script.
-- **Updated Agent Briefing:** Significantly updated  with all new architectural patterns and learnings from the session.
+-   **GitHub Cleanup:** Guided user to close or merge 4 outdated Pull Requests, cleaning up the repository.
+-   **Fixed Norwegian Homepage (404 Error):**
+    -   Diagnosed that  was not creating a route for the  root URL.
+    -   Fixed by adding an explicit path for the Norwegian homepage in .
+-   **Fixed Homepage Template Bugs ():**
+    -   **Price Formatting:** Corrected an issue where prices were displayed with both dollar and euro signs (e.g., ). The dollar sign was removed and number formatting was added.
+    -   **Hardcoded Banner Translation:** A hardcoded Call to Action banner was made fully multilingual by replacing static text with Django template variables.
+-   **Added New Translations:**
+    -   Added the required translation strings for the new CTA banner variables to  for all 12 languages.
+-   **Fixed Property Translation Logic:**
+    -   Modified the  view in  to correctly extract the language from the URL path, ensuring that the appropriate translations for listings are loaded.
+-   **Diagnosed Dummy Content Issue:**
+    -   Identified that dummy listings were appearing in German on all language versions because their respective translation fields (, etc.) were empty.
 
 **Code Architecture**
-- **Framework**: Django monolith.
-- **Key Pattern Established**: A major shift from hardcoding translations in templates to centralizing them in Python dictionaries within dedicated context processors ().
-- **Context Processors**: Several new context processors were added to provide translated strings to templates: , , , .
-- **URL Routing**: The complex URL structure in  and  is now much more stable. The pattern is to define language-prefixed static-like pages outside of  and use it for the rest of the app.
-- **Views**: A key fix was established for views outside : they must now manually activate the language and set  to ensure context processors work correctly.
+-   **Framework**: Django monolith.
+-   **Internationalization (i18n)**: A mix of Django's  for core routes and explicit, language-prefixed static routes in . Content is translated via language-specific fields in models and served through context processors.
+-   **Views ()**: The  view now correctly determines the language from the URL path, sets it in the session, and dynamically loads translated JSON content for property listings.
 
 **Key Technical Concepts**
-- Django Context Processors (Heavily used to refactor templates)
-- Django URL Routing (, )
-- Django Templates (Refactoring  logic)
-- Django Shell (Used for scripting database updates)
-- Remote-control workflow (providing bash commands to the user)
+-   Django URL routing (, )
+-   Django Views and session management
+-   Django Context Processors for multilingual content
+-   Django ORM (, )
+-   Debugging database schema vs. ORM discrepancies
 
 **key DB schema**
--   : The table holding database-driven translations. It was queried and updated to fix missing translations.
+-   : Contains the core property data. It uses separate fields for translations, e.g., , , , which store JSON strings of the translated data. A boolean field  controls visibility.
 
 **All files of reference**
--    (**MUST READ** - updated with new patterns)
--    (Heavily modified, contains all new translation dictionaries)
--    (Modified to register new context processors)
--    (Modified to correctly set session language)
--    (Modified to fix static page routing)
--   Refactored Templates: , , , 
--   Other Fixed Templates: , , , and others.
+-   : Modified to add an explicit route for the Norwegian homepage ().
+-   : Modified to fix price formatting and make the CTA banner multilingual.
+-   : Modified to add new translation variables for the CTA banner.
+-   : The  view was modified to correctly detect the language from the URL.
+-   : The  model is defined here; its structure is key to the translation issue.
+-   : The primary source of truth for project rules and architecture.
 
 **Critical Info for New Agent**
--   **Follow the Workflow**: You are a guide for Nik. Provide clear, single, copy-pasteable  commands. Do not assume file state;  or  first. All communication is in informal German (du).
--   **Embrace the New Pattern**: The primary architectural pattern going forward is to **centralize translations in context processors**, not hardcode them in templates. When you see a large  block, the task is to refactor it.
--   **Check JavaScript and Links**: Be vigilant for hardcoded  prefixes in  calls and  attributes. These must be replaced with dynamic  or JavaScript variables.
--   **The  is Key**: For views outside , remember to set  to make the context processors work. This was a critical fix.
--   **Read **: It has been updated with these new patterns and is your most important guide.
-
-**documents and test reports created in this job**
-- /app/real-estate-django-ALTmain/AGENT_BRIEFING.md (Updated)
+-   **Workflow is Key**: You MUST provide single, copy-pasteable  commands and communicate in informal German (du). Nik is a non-technical user.
+-   **Database State is Fragile**: Do not attempt to run  or perform destructive operations like  without careful consideration. The database schema appears to be out of sync with the models, as evidenced by a  during the session. Using  is a safer alternative for modifications.
+-   **User's Editor**: The user's  app corrupted a template file by saving it as a full HTML document. Avoid guiding the user to use it. Using Python scripts to perform file edits proved to be a reliable alternative.
+-   **Caching**: The current pending issue (dummy listings still visible) might be a simple browser or server cache problem. Always suggest a hard refresh (Cmd+Shift+R) and a server restart as the first debugging steps.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1. **User**: Confirms the search filter fix works perfectly.
-2. **Agent**: Asks if user wants to commit and merge.
-3. **User**: Confirms merge and asks to continue in German.
-4. **Agent**: Apologizes and agrees. Finishes with a summary and improvement suggestion.
-5. **User**: Agrees with the suggestion to refactor more templates and wants to remove a button.
-6. **Agent**: Starts the refactoring process for the header/footer.
-7. **User**: Says  needs refactoring and they need to pause the session but will be back later.
-8. **Agent**: Acknowledges and ends the session part 1.
-9. **User**: Returns to the session, ready to continue.
-10. **Agent/User**: Together, they successfully refactor , commit, merge, and celebrate the end of a highly productive session. The user is extremely happy.
+1.  **User:** Reports the dummy objects are still visible after the fix was applied and that the session is over. Asks for a handover.
+2.  **Agent:** Asks user to test the fix in the browser.
+3.  **User:** Confirms the manual object is now also in German, indicating a translation logic issue.
+4.  **Agent:** Proposes checking the database for translation content.
+5.  **User:** Provides output showing only listing ID 1 has translations.
+6.  **Agent:** Explains the issue (dummies lack translations) and proposes deleting them.
+7.  **User:** Shares traceback from the failed delete command, revealing a database schema error.
+8.  **Agent:** Proposes a safer workaround: hide the objects by setting .
+9.  **User:** Confirms the update command ran successfully.
+10. **Agent:** Asks the user to test again, expecting the dummy objects to be gone.
 
 **Project Health Check:**
--   **Broken**: No critical features are broken.
+-   **Broken**: The homepage is showing untranslated dummy content that should be hidden.
 -   **Mocked**: N/A
--   **Technical Debt**: Significantly reduced. The remaining debt consists of older, unaddressed issues like fragile migrations and the need to refactor more templates to the new, cleaner standard.
+-   **Technical Debt**: A significant issue with Django migrations/database schema exists, which prevented a simple delete operation and makes model changes risky.
 
 **3rd Party Integrations**
--   **OpenAI**: Used for AI features. No changes in this session, but API calls were made multilingual.
-
-**Testing status**
-- Testing agent used after significant changes: NO (User performed all testing manually in his browser)
-- Troubleshoot agent used after agent stuck in loop: NO
-- Test files created: []
-- Known regressions: None from this session. All regressions from the start of the session were fixed.</analysis>
+-   **OpenAI**: Used by the chatbot (). No changes in this session.</analysis>

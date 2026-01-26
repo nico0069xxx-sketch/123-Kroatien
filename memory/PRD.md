@@ -1,98 +1,79 @@
-# 123-KROATIEN.EU - Project Requirements & Status
+# 123-Kroatien.eu - Product Requirements Document
 
 ## Original Problem Statement
-Multilingual (12 languages) Django real estate portal for Croatian properties. The platform connects European buyers from 12 countries with certified Croatian real estate agents and construction companies.
+Nik entwickelt ein 12-sprachiges Django Immobilienportal für Kroatien. Das Portal soll für AI-Suchmaschinen (GEO) optimiert sein und einen intelligenten Chatbot mit Glossar-Integration bieten.
 
-**Business Model:**
-- Properties: Exclusively Croatian real estate
-- Sellers: Only certified Croatian agents and construction companies
-- Buyers: Prospects from 12 European countries
-- Languages: ge, en, hr, fr, nl, pl, cz, sk, ru, gr, sw, no
+## User Context
+- **Name:** Nik (duzen, Deutsch sprechen)
+- **System:** Apple Mac M1, Terminal, Safari
+- **Skill-Level:** Laie - JEDEN Befehl einzeln und kopierbar geben
+- **Repository:** https://github.com/nico0069xxx-sketch/123-Kroatien
 
-## Current State: PRE-LAUNCH
-The portal is not yet live. All development is done locally and pushed to GitHub.
-
----
+## Core Architecture
+- **Framework:** Django Monolith (KEIN React/Vue Frontend)
+- **Datenbank:** SQLite (dev), PostgreSQL (prod)
+- **12 Sprachen:** ge, en, hr, fr, nl, pl, cz, sk, ru, gr, sw, no
 
 ## What's Been Implemented
 
-### GEO (Generative Engine Optimization) - January 2026
-| Feature | Status | Files |
-|---------|--------|-------|
-| `llms.txt` for AI crawlers | ✅ Done | `llms.txt`, `main/xml_views.py`, `realstate/urls.py` |
-| `robots.txt` with Llms-txt reference | ✅ Done | `main/xml_views.py` |
-| FAQ Schema (`FAQPage`) | ✅ Done | `templates/main/faq.html` |
-| HowTo Schema (Buyer Guide) | ✅ Done | `templates/legal/buyer_guide.html` |
-| Organization Schema (fixed) | ✅ Done | `templates/include/base.html` |
-| Glossar `DefinedTerm` Schema | ✅ Was existing | `templates/glossary/_jsonld_defined_term.html` |
+### Session 26. Januar 2026:
+- ✅ GitHub PRs aufgeräumt (4 PRs geschlossen)
+- ✅ Norwegisch-Startseite `/no/` gefixt (explizite Route)
+- ✅ Preis-Format korrigiert (`$ 350000 €` → `350000 €`)
+- ✅ CTA-Banner für 12 Sprachen übersetzt
+- ✅ URL-Struktur für alle Sprachen validiert
 
-### Chatbot Integration - January 2026
-| Feature | Status | Files |
-|---------|--------|-------|
-| Glossar integration in Chatbot | ✅ Done | `main/chatbot.py` |
-| FAQ Cleanup (62 → 10) | ✅ Done | `main/faq_data*.json` (all 12 languages) |
+### Frühere Sessions:
+- ✅ GEO-Strategie implementiert (llms.txt, Schema.org)
+- ✅ Chatbot mit Glossar-Integration
+- ✅ FAQ Cleanup (62 → 10 Fragen)
+- ✅ Article Schema für Marktberichte
 
-### Previous Sessions (per Handoff)
-- Fixed all critical URL/routing bugs for 12 languages
-- Refactored templates to use context processors instead of hardcoded translations
-- Fixed hardcoded `/ge/` API URLs in JavaScript
-- Fixed missing database translations
+## Prioritized Backlog
 
----
+### P0 - Critical Bugs:
+1. **Dummy-Listings erscheinen trotz is_published=False**
+   - IDs: 2, 3, 4, 5
+   - Query in `main/views.py` Zeile 59 prüfen
+   - Möglicherweise Cache-Problem
 
-## Architecture
+### P1 - High Priority:
+1. Übersetzungs-Generator für leere Listing-Felder
+2. Glossar erweitern (basierend auf entfernten FAQ-Themen)
 
-### Tech Stack
-- **Framework**: Django Monolith (NO React/Vue)
-- **Database**: SQLite (dev), PostgreSQL (prod)
-- **Languages**: 12 (ge, en, hr, fr, nl, pl, cz, sk, ru, gr, sw, no)
+### P2 - Medium Priority:
+1. Fragile Django Migrations fixen (`listing_id` Spalte fehlt)
+2. Schema.org auf weitere Seiten ausweiten (RealEstateListing)
+3. base.html Schema mehrsprachig machen
 
-### Key Patterns
-1. **Translations**: Centralized in context processors (`main/context_processors.py`)
-2. **URL Routing**: Static pages OUTSIDE `i18n_patterns`, dynamic pages inside
-3. **Session Language**: Views must set `request.session['site_language']` for context processors
-4. **JavaScript**: Always use `{{ language }}` template variable, never hardcode `/ge/`
+### P3 - Backlog:
+1. White Listing Feature für Makler/Bauunternehmen
+2. Chatbot UI Styling verbessern
+3. Expertenfinder Ergebnisse Styling
 
-### Key Files
-- `AGENT_BRIEFING.md` - **MUST READ** for any agent
-- `realstate/urls.py` - Main URL routing
-- `main/urls.py` - App URLs
-- `main/context_processors.py` - Translation dictionaries
-- `main/chatbot.py` - Chatbot with FAQ + Glossar integration
-- `main/glossary_models.py` - Glossar database models
+## Key Files Reference
+- `realstate/urls.py` - Haupt-URL-Routing
+- `main/urls.py` - App-URLs
+- `main/views.py` - Home View mit Listing-Übersetzungslogik
+- `main/context_processors.py` - Template-Variablen
+- `templates/main/home.html` - Startseite Template
+- `listings/models.py` - Listing Model mit Übersetzungsfeldern
+- `AGENT_BRIEFING.md` - Projekt-Dokumentation
 
----
+## Technical Notes
 
-## P0 - Next Priority Tasks
-- None critical
+### Listing-Übersetzungen:
+- Jedes Listing hat Felder: `german_content`, `english_content`, `french_content`, etc.
+- Diese Felder enthalten JSON mit übersetztem Titel, Beschreibung, etc.
+- Wenn Feld leer → Fallback auf `get_json()` (Deutsch)
+- View setzt `listing.json_content` basierend auf `user_language`
 
-## P1 - Should Do
-- Article Schema for Marktberichte (market reports)
-- Add more Glossar terms as needed
+### URL-Struktur:
+- Statische Seiten: `/ge/sitemap/`, `/ge/imprint/`, etc.
+- Dynamische Seiten mit Land-Slug: `/ge/kroatien/glossar/`, `/fr/croatie/actualites/`
+- Sprach-spezifische URL-Segmente definiert in `main/content_urls.py` und `main/glossary_models.py`
 
-## P2 - Backlog
-- Fragile Django Migrations (investigate)
-- Chatbot/UI Styling improvements
-- Hardcoded German text in `base.html` Schema.org JSON-LD block
-
----
-
-## User Context
-- **Name**: Nik (use informal German "du")
-- **System**: Apple Mac M1, Terminal, Safari
-- **Skill Level**: Laie - provide single, copy-pasteable commands
-- **Workflow**: Branch-only (feature/*, fix/*), never commit to main directly
-
-## Workflow Rules
-1. Always create new branch before work
-2. Always merge via GitHub Pull Request
-3. Always `git checkout main && git pull origin main` after merge
-4. Server restart: `python3 manage.py runserver`
-
----
-
-## Testing Notes
-- All features tested locally via browser
-- FAQ page: `http://127.0.0.1:8000/ge/faq/`
-- Chatbot: Available on homepage
-- Glossar: 39 terms in database (German)
+### Bekannte Architektur-Regeln:
+- Views außerhalb i18n_patterns MÜSSEN `request.session['site_language']` setzen
+- JavaScript fetch() MUSS `{{ language }}` nutzen, nicht hardcoded `/ge/`
+- Dienstleister-Bereich nur für DE und HR
