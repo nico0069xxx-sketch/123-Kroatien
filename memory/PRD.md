@@ -1,79 +1,98 @@
-# 123-Kroatien.eu - Product Requirements Document
+# 123-KROATIEN.EU - Projekt Status
 
 ## Original Problem Statement
-Nik entwickelt ein 12-sprachiges Django Immobilienportal für Kroatien. Das Portal soll für AI-Suchmaschinen (GEO) optimiert sein und einen intelligenten Chatbot mit Glossar-Integration bieten.
+Der Benutzer (Nik) entwickelt ein 12-sprachiges Django Real Estate Portal. Ziele:
+- GEO (Generative Engine Optimization) für AI-Suchmaschinen
+- Intelligenter Chatbot mit Glossar-Integration
+- Saubere FAQ-Sektion
 
-## User Context
-- **Name:** Nik (duzen, Deutsch sprechen)
-- **System:** Apple Mac M1, Terminal, Safari
-- **Skill-Level:** Laie - JEDEN Befehl einzeln und kopierbar geben
-- **Repository:** https://github.com/nico0069xxx-sketch/123-Kroatien
+## Kommunikation
+- **Sprache:** Deutsch, informell ("du")
+- **Workflow:** Einzelne, kopierbare Bash-Befehle
+- **System:** Mac M1, lokales Django-Projekt
 
-## Core Architecture
-- **Framework:** Django Monolith (KEIN React/Vue Frontend)
-- **Datenbank:** SQLite (dev), PostgreSQL (prod)
-- **12 Sprachen:** ge, en, hr, fr, nl, pl, cz, sk, ru, gr, sw, no
+---
 
-## What's Been Implemented
+## ✅ Erledigte Aufgaben (Diese Session)
 
-### Session 26. Januar 2026:
-- ✅ GitHub PRs aufgeräumt (4 PRs geschlossen)
-- ✅ Norwegisch-Startseite `/no/` gefixt (explizite Route)
-- ✅ Preis-Format korrigiert (`$ 350000 €` → `350000 €`)
-- ✅ CTA-Banner für 12 Sprachen übersetzt
-- ✅ URL-Struktur für alle Sprachen validiert
+### 1. Dummy-Listings ausgeblendet
+- IDs 2, 3, 4, 5, 6, 7 auf `is_published=False` gesetzt
+- Nur ID 1 ("Villa am Meer", Test Makler, 450.000€) wird angezeigt
 
-### Frühere Sessions:
-- ✅ GEO-Strategie implementiert (llms.txt, Schema.org)
-- ✅ Chatbot mit Glossar-Integration
-- ✅ FAQ Cleanup (62 → 10 Fragen)
-- ✅ Article Schema für Marktberichte
+### 2. Badge "Zu verkaufen" gefixt
+- Problem: `{{listing.json_content.property_status}}` war leer
+- Lösung: Template geändert auf Bedingung mit übersetzten Variablen
+- Script: `fix_badge.py`
 
-## Prioritized Backlog
+### 3. Filter-Übersetzungen hinzugefügt
+- Neue Variablen: `filter_property_status`, `filter_for_sale`, `filter_For_Rent`
+- Für alle 12 Sprachen in `main/context_processors.py`
+- Script: `fix_filter_translations.py`
 
-### P0 - Critical Bugs:
-1. **Dummy-Listings erscheinen trotz is_published=False**
-   - IDs: 2, 3, 4, 5
-   - Query in `main/views.py` Zeile 59 prüfen
-   - Möglicherweise Cache-Problem
+---
 
-### P1 - High Priority:
-1. Übersetzungs-Generator für leere Listing-Felder
-2. Glossar erweitern (basierend auf entfernten FAQ-Themen)
+## 🔄 In Arbeit
 
-### P2 - Medium Priority:
-1. Fragile Django Migrations fixen (`listing_id` Spalte fehlt)
-2. Schema.org auf weitere Seiten ausweiten (RealEstateListing)
-3. base.html Schema mehrsprachig machen
+### Automatische Listing-Übersetzung
+- **Problem:** Listings werden nur für DE, EN, FR übersetzt. PL, CZ, SK, RU, SW, NO zeigen Deutsch.
+- **Ursache:** Die `_content` Felder in der DB sind leer, der Fallback zeigt Deutsch.
+- **Lösung:** View ändern für on-demand Übersetzung mit OpenAI
+- **Script:** Vorbereitet in `/app/memory/SOLUTION_AUTO_TRANSLATE.md`
+- **Status:** Script erstellt, wartet auf Ausführung durch Benutzer
 
-### P3 - Backlog:
-1. White Listing Feature für Makler/Bauunternehmen
-2. Chatbot UI Styling verbessern
-3. Expertenfinder Ergebnisse Styling
+---
 
-## Key Files Reference
-- `realstate/urls.py` - Haupt-URL-Routing
-- `main/urls.py` - App-URLs
-- `main/views.py` - Home View mit Listing-Übersetzungslogik
-- `main/context_processors.py` - Template-Variablen
-- `templates/main/home.html` - Startseite Template
-- `listings/models.py` - Listing Model mit Übersetzungsfeldern
-- `AGENT_BRIEFING.md` - Projekt-Dokumentation
+## 📋 Backlog (Priorisiert)
 
-## Technical Notes
+### P1 - Hoch
+- [ ] Preisfilter korrigieren: Sale bis 15M€, Rent ab 300€
+- [ ] Auto-Translate Script ausführen und testen
 
-### Listing-Übersetzungen:
-- Jedes Listing hat Felder: `german_content`, `english_content`, `french_content`, etc.
-- Diese Felder enthalten JSON mit übersetztem Titel, Beschreibung, etc.
-- Wenn Feld leer → Fallback auf `get_json()` (Deutsch)
-- View setzt `listing.json_content` basierend auf `user_language`
+### P2 - Mittel
+- [ ] Glossar erweitern (weitere Begriffe)
+- [ ] Schema.org auf anderen Seiten (RealEstateListing)
+- [ ] `base.html` Schema mehrsprachig machen
 
-### URL-Struktur:
-- Statische Seiten: `/ge/sitemap/`, `/ge/imprint/`, etc.
-- Dynamische Seiten mit Land-Slug: `/ge/kroatien/glossar/`, `/fr/croatie/actualites/`
-- Sprach-spezifische URL-Segmente definiert in `main/content_urls.py` und `main/glossary_models.py`
+### P3 - Niedrig (Technische Schulden)
+- [ ] Django Migrations reparieren (sqlite3.OperationalError)
+- [ ] Chatbot-Styling verbessern
+- [ ] "White Listing" Feature für Premium-Objekte
 
-### Bekannte Architektur-Regeln:
-- Views außerhalb i18n_patterns MÜSSEN `request.session['site_language']` setzen
-- JavaScript fetch() MUSS `{{ language }}` nutzen, nicht hardcoded `/ge/`
-- Dienstleister-Bereich nur für DE und HR
+---
+
+## 🏗️ Architektur
+
+### Dateien (Geändert in dieser Session)
+- `main/context_processors.py` - Filter-Übersetzungen hinzugefügt
+- `templates/main/home.html` - Badge gefixt
+
+### Dateien (Vorbereitet für Änderung)
+- `main/views.py` - Auto-Translate Logik (Script ready)
+
+### Wichtige Modelle
+- `listings.models.Listing` - Hauptmodell für Immobilien
+  - `property_status`: "Zu verkaufen" / "Zu mieten"
+  - `german_content`, `english_content`, etc.: JSON mit übersetzten Inhalten
+  - `is_published`: Boolean für Sichtbarkeit
+
+### Übersetzungs-System
+- `main/translation_service.py` - OpenAI-basierte Übersetzung
+- `main/templatetags/translate_filters.py` - Template-Filter für on-the-fly Übersetzung
+
+---
+
+## 🔑 Credentials (Im Projekt)
+- OpenAI API Key: In `.env` als `OPENAI_API_KEY`
+- Emergent LLM Key: Hardcoded in `listing_description_ai.py`
+
+---
+
+## ⚠️ Bekannte Probleme
+
+### Fragile Migrations
+- `makemigrations` riskant - DB Schema evtl. nicht synchron
+- Workaround: `.update()` statt `.delete()` verwenden
+
+### TextEdit Korruption
+- Niks TextEdit-App kann Templates beschädigen
+- Workaround: Python-Scripts für Dateiänderungen verwenden
