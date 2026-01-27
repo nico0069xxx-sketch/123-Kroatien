@@ -108,19 +108,21 @@
 ## 📋 Backlog für nächste Session
 
 ### P1 - Hoch
-- [ ] PR auf GitHub mergen (falls noch nicht geschehen)
 - [ ] Registrierungsformular: Funktion testen (Daten speichern, E-Mail senden)
 - [ ] Footer-Links prüfen und korrigieren
+- [ ] ReferenceProject DB Schema reparieren (Migration)
 
 ### P2 - Mittel
 - [ ] Glossar erweitern (weitere Begriffe)
 - [ ] Schema.org auf anderen Seiten
 - [ ] Chatbot-Styling verbessern
+- [ ] XML-Import mit echtem Makler-Feed testen
 
 ### P3 - Niedrig
-- [ ] Django Migrations reparieren (technische Schulden)
+- [ ] Django Migrations generell reparieren (technische Schulden)
 - [ ] "White Listing" Feature für Premium-Objekte
 - [ ] Python-Scripts aufräumen (fix_*.py Dateien im Root löschen)
+- [ ] CSS/JS Bundles minifizieren (styles.css 484KB, index.bundle.js 553KB)
 
 ---
 
