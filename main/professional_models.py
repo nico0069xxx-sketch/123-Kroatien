@@ -365,16 +365,26 @@ class Lead(models.Model):
 
 # Reference projects for professionals
 class ReferenceProject(models.Model):
+    """Referenzprojekte für Professionals - angepasst an DB Schema"""
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, related_name='reference_projects')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    project_type = models.CharField(max_length=100, blank=True, null=True)
+    image_1 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_2 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_3 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_4 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_5 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
+    image_6 = models.ImageField(upload_to='professionals/references/', blank=True, null=True)
     year = models.PositiveIntegerField(blank=True, null=True)
     location = models.CharField(max_length=200, blank=True, null=True)
+    sort_order = models.PositiveIntegerField(default=0)
+    is_featured = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['-year', '-created']
+        ordering = ['sort_order', '-year', '-created']
     
     def __str__(self):
         return f"{self.title} - {self.professional.name}"

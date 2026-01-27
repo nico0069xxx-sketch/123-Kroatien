@@ -498,7 +498,7 @@ def professional_detail(request, country, category, slug):
     
     # Referenzprojekte laden
     from main.professional_models import ReferenceProject
-    reference_projects = []  # TEMP DEAKTIVIERT
+    reference_projects = ReferenceProject.objects.filter(professional=professional).order_by('sort_order', '-created')
 
     # Spezialgebiete als Liste
     specializations_list = []
