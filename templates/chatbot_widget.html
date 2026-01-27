@@ -1,5 +1,5 @@
 <div id="chatbot-widget">
-    <button id="chatbot-toggle" onclick="toggleChatbot()">👤</button>
+    <button id="chatbot-toggle" onclick="toggleChatbot()">{{chatbot_button_text}}</button>
     <div id="chatbot-window" style="display:none;">
         <div id="chatbot-header">
             <h3>{{chatbot_title}}</h3>
@@ -20,20 +20,28 @@
     position: fixed;
     bottom: 90px;
     right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    padding: 12px 20px;
+    border-radius: 30px;
     background: linear-gradient(135deg, #0D47A1, #0A3A7E);
     border: none;
-    font-size: 30px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
     z-index: 9999;
-    transition: transform 0.3s;
+    transition: all 0.3s ease;
+    animation: gentle-bounce 2.5s ease-in-out infinite;
 }
 
 #chatbot-toggle:hover {
-    transform: scale(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 71, 161, 0.5);
+}
+
+@keyframes gentle-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 
 #chatbot-window {
