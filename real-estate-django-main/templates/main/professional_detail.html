@@ -80,7 +80,7 @@
           
           {% if professional.service_regions %}
           <h3 style="color: #003167;">{{ trans.regions }}</h3>
-          <p>{{ professional.service_regions }}</p>
+          <p>{{ professional.get_service_regions_display|join:", " }}</p>
           {% endif %}
           
           {% if professional.registration_number %}
@@ -109,7 +109,7 @@
           <h2>{{ professional.name }}</h2>
           <p><strong>{{ trans.languages }}:</strong> {{ professional.get_spoken_languages_display|join:", " }}</p>
           {% if professional.service_regions %}
-          <p><strong>{{ trans.regions }}:</strong> {{ professional.service_regions }}</p>
+          <p><strong>{{ trans.regions }}:</strong> {{ professional.get_service_regions_display|join:", " }}</p>
           {% endif %}
         </div>
         {% endif %}
