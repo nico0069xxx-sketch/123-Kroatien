@@ -166,7 +166,7 @@
 
                                 {% else %}
                                 <li><a href="{% url 'account:login' %}" title="">{{ nav_login }}</a></li>
-                                <li><a href="{% url 'account:signup' %}" title="">{{ nav_register }}</a></li>
+                                <li><a href="{% if language == 'hr' %}/hr/hrvatska/postanite-partner/{% else %}/ge/kroatien/partner-werden/{% endif %}" title="">{{ nav_register }}</a></li>
                                 {% endif %}
                                 <li>
                                     <select class="lang-drop" onchange="changelanguage(this.value);">

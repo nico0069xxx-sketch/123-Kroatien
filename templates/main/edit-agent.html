@@ -15,7 +15,7 @@
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="{% url 'account:signup' %}" class="text-white">
+                            <a href="{% if language == 'hr' %}/hr/hrvatska/postanite-partner/{% else %}/ge/kroatien/partner-werden/{% endif %}" class="text-white">
                                 Edit
                             </a>
                         </li>

@@ -34,7 +34,7 @@
                             <li><a href="{% url 'account:logout' %}" class="text-white">{{ nav_logout }}</a></li>
                             {% else %}
                             <li><a href="{% url 'account:login' %}" class="text-white">{{Login}}</a></li>
-                            <li><a href="{% url 'account:signup' %}" class="text-white">{{FreeRegistration}}</a></li>
+                            <li><a href="{% if language == 'hr' %}/hr/hrvatska/postanite-partner/{% else %}/ge/kroatien/partner-werden/{% endif %}" class="text-white">{{FreeRegistration}}</a></li>
                             {% endif %}
                         </ul>
                     </div>

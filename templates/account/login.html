@@ -59,7 +59,7 @@
                         </form>
                     </div>
                 </div>
-                <p class="text-center mt-4">{{Dont_Have_Account}} <a href="{% url 'account:signup' %}">{{Sign_Up}}</a></p>
+                <p class="text-center mt-4">{{Dont_Have_Account}} <a href="{% if language == 'hr' %}/hr/hrvatska/postanite-partner/{% else %}/ge/kroatien/partner-werden/{% endif %}">{{Sign_Up}}</a></p>
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@ from . import password_reset
 app_name = 'account'
 urlpatterns = [
     path('login', views.login_view, name='login'),
-    path('register', views.register, name='signup'),
+    # ENTFERNT: path('register', views.register, name='signup'),  # Ersetzt durch /ge/kroatien/partner-werden/
     path('logout', views.logout_view, name='logout'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('agents/<str:pk>/', views.agents, name='agents'),
