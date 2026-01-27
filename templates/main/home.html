@@ -5,11 +5,11 @@
     <!-- HERO SECTION -->
     <div class="hero-section" style="position: relative; height: 70vh; min-height: 500px; overflow: hidden;">
         <div class="hero-slider">
-            <img src="/static/images/1.png" class="hero-slide active" alt="Kroatien">
-            <img src="/static/images/2.png" class="hero-slide" alt="Kroatien">
-            <img src="/static/images/3.png" class="hero-slide" alt="Kroatien">
-            <img src="/static/images/4.png" class="hero-slide" alt="Kroatien">
-            <img src="/static/images/5.png" class="hero-slide" alt="Kroatien">
+            <img src="/static/images/1.webp" class="hero-slide active" alt="Kroatien">
+            <img src="/static/images/2.webp" class="hero-slide" alt="Kroatien">
+            <img src="/static/images/3.webp" class="hero-slide" alt="Kroatien">
+            <img src="/static/images/4.webp" class="hero-slide" alt="Kroatien">
+            <img src="/static/images/5.webp" class="hero-slide" alt="Kroatien">
         </div>
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(15,23,42,0.4) 0%, rgba(15,23,42,0.2) 40%, rgba(15,23,42,0.7) 100%); z-index: 2;"></div>
         <div style="position: absolute; bottom: 15%; left: 0; right: 0; z-index: 10; padding: 0 2rem;">
@@ -404,7 +404,7 @@
                                 <a href="{% url 'main:property_details' listing.id %}">
                                     <div class="card__image-header h-250">
                                         {% comment %} <div class="bg-mycolor ribbon text-capitalize">{{home_featured}}</div> {% endcomment %}
-                                        <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.png' %}{% endif %}" alt=""
+                                        <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.webp' %}{% endif %}" alt=""
                                             class="img-fluid w100 img-transition">
                                         <div class="info" style="background-color: #db0000;">{% if listing.property_status == "Zu verkaufen" or listing.property_status == "Sale" %}{{filter_for_sale}}{% elif listing.property_status == "Zu mieten" or listing.property_status == "Rent" %}{{filter_For_Rent}}{% else %}{{listing.property_status}}{% endif %}
                                         </div>
@@ -451,7 +451,7 @@
                                 </div>
                                 <div class="card__image-footer">
                                     <figure>
-                                       <img {% if listing.realtor and listing.realtor.id %}onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'"{% endif %} src="{% if listing.realtor and listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
+                                       <img {% if listing.realtor and listing.realtor.id %}onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'"{% endif %} src="{% if listing.realtor and listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.webp' %}{% endif %}" alt=""
                                         
                                             class="img-fluid rounded-circle">
                                     </figure>
@@ -668,7 +668,7 @@
                     </div>
                     <div class="testimonial__block-users">
                         <div class="testimonial__block-users-img">
-                            <img src="{% static 'images/p1.png' %}" alt="" class="img-fluid">
+                            <img src="{% static 'images/p1.webp' %}" alt="" class="img-fluid">
                         </div>
                         <div class="testimonial__block-users-name" style="color: #013565;">
                             jhon doe <br>
@@ -686,7 +686,7 @@
                     </div>
                     <div class="testimonial__block-users">
                         <div class="testimonial__block-users-img">
-                            <img src="{% static 'images/p2.png' %}" alt="" class="img-fluid">
+                            <img src="{% static 'images/p2.webp' %}" alt="" class="img-fluid">
                         </div>
                         <div class="testimonial__block-users-name" style="color: #013565;">
                             jhon doe <br>
@@ -704,7 +704,7 @@
                     </div>
                     <div class="testimonial__block-users">
                         <div class="testimonial__block-users-img">
-                            <img src="{% static 'images/p3.png' %}" alt="" class="img-fluid">
+                            <img src="{% static 'images/p3.webp' %}" alt="" class="img-fluid">
                         </div>
                         <div class="testimonial__block-users-name" style="color: #013565;">
                             jhon doe <br>
@@ -722,7 +722,7 @@
                     </div>
                     <div class="testimonial__block-users">
                         <div class="testimonial__block-users-img">
-                            <img src="{% static 'images/p4.png' %}" alt="" class="img-fluid">
+                            <img src="{% static 'images/p4.webp' %}" alt="" class="img-fluid">
                         </div>
                         <div class="testimonial__block-users-name" style="color: #013565;">
                             jhon doe <br>
@@ -740,7 +740,7 @@
                     </div>
                     <div class="testimonial__block-users">
                         <div class="testimonial__block-users-img">
-                            <img src="{% static 'images/p5.png' %}" alt="" class="img-fluid">
+                            <img src="{% static 'images/p5.webp' %}" alt="" class="img-fluid">
                         </div>
                         <div class="testimonial__block-users-name" style="color: #013565;">
                             jhon doe <br>
@@ -821,7 +821,7 @@
                         </div>
                         <div class="card__image-footer">
                             {% comment %} <figure>
-                                <img src="{% static 'images/p4.png' %}" alt="" class="img-fluid rounded-circle">
+                                <img src="{% static 'images/p4.webp' %}" alt="" class="img-fluid rounded-circle">
                             </figure>
                             <ul class="list-inline my-auto">
                                 <li class="list-inline-item">

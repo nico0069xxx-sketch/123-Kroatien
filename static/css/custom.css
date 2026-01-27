@@ -62,23 +62,23 @@ v.topbar {
 }
 
 .registrationBg {
-  background-image: url("../images/bg15.png");
+  background-image: url("../images/bg15.webp");
 }
 
 .imprintBg {
-  background-image: url("../images/bg10.png");
+  background-image: url("../images/bg10.webp");
 }
 
 .agbBg{
-  background-image: url("../images/bg12.png");
+  background-image: url("../images/bg12.webp");
 }
 
 .cancelPolicyBg {
-  background-image: url("../images/bg13.png");
+  background-image: url("../images/bg13.webp");
 }
 
 .sitemapBg {
-  background-image: url("../images/bg14.png");
+  background-image: url("../images/bg14.webp");
 }
 
 .nav-item .bgColor.active {
