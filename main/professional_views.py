@@ -1,3 +1,4 @@
+
 import json
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
@@ -420,6 +421,8 @@ def get_lang_from_request(request, country):
 def professional_list(request, country, category):
     lang = get_lang_from_request(request, country)
     
+    professional = get_object_or_404(Professional, slug=slug, is_active=True)
+    
     # Finde den professional_type aus der URL-Kategorie
     professional_type = None
     for ptype, urls in CATEGORY_URLS.items():
@@ -432,7 +435,7 @@ def professional_list(request, country, category):
     
     professionals = Professional.objects.filter(
         professional_type=professional_type,
-        is_active=True
+
     ).order_by("name")
     
     trans = TRANSLATIONS.get(lang, TRANSLATIONS["ge"])
@@ -464,6 +467,7 @@ def professional_detail(request, country, category, slug):
     
     professional = get_object_or_404(Professional, slug=slug, is_active=True)
     
+    
     # Hole sprachspezifischen Content
     try:
         content = ProfessionalContent.objects.get(professional=professional, language=lang)
@@ -494,11 +498,8 @@ def professional_detail(request, country, category, slug):
     
     # Referenzprojekte laden
     from main.professional_models import ReferenceProject
-    reference_projects = ReferenceProject.objects.filter(
-        professional=professional, 
-        is_active=True
-    ).order_by('sort_order', '-created')
-    
+    reference_projects = []  # TEMP DEAKTIVIERT
+
     # Spezialgebiete als Liste
     specializations_list = []
     if professional.specializations:
