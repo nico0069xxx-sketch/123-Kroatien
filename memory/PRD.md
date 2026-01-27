@@ -1,9 +1,23 @@
-# 123-Kroatien.eu - Projekt-Dokumentation
+# 123-KROATIEN.EU - AGENT BRIEFING
 
-## Übersicht
-Mehrsprachiges Immobilienportal (12 Sprachen) für den kroatischen Markt mit KI-Features.
+## 🔒 BASELINE & WORKFLOW
+- **BASELINE:** 7cf4ec0 on main
+- **WORKFLOW:** Branch-only (feature/*, fix/*)
+- **GITHUB:** Canonical history (Source of Truth)
+- **TIME MACHINE:** Parallel backup (recovery only, NEVER merge from iCloud)
 
-## Sprachen
+## 👤 USER CONTEXT
+- **Name:** Nik (bitte duzen, Deutsch sprechen)
+- **System:** Apple Mac M1, Terminal, Safari
+- **Skill-Level:** Laie - JEDEN Befehl einzeln und kopierbar geben
+- **Server-Neustart:** IMMER explizit sagen wann nötig: python3 manage.py runserver
+
+## 🏗️ PROJEKT-ARCHITEKTUR
+- **Django Monolith** (KEIN React/Vue Frontend)
+- **Datenbank:** SQLite (dev), PostgreSQL (prod)
+- **12 Sprachen:** ge, en, hr, fr, nl, pl, cz, sk, ru, gr, sw, no
+
+### Sprach-Slugs (WICHTIG!)
 | Code | Sprache | Land-Slug |
 |------|---------|-----------|
 | ge | Deutsch | kroatien |
@@ -19,72 +33,62 @@ Mehrsprachiges Immobilienportal (12 Sprachen) für den kroatischen Markt mit KI-
 | sw | Svenska | kroatien |
 | no | Norsk | kroatia |
 
-## Implementierte Features
+### ⚠️ KRITISCHE ARCHITEKTUR-REGELN
 
-### Session Januar 2025
+#### 1. URL-Architektur
+- **Statische Seiten** (sitemap, imprint, agb, etc.) werden DIREKT in `realstate/urls.py` definiert (AUSSERHALB von i18n_patterns)
+- **Dynamische Seiten** nutzen i18n_patterns am Ende von `realstate/urls.py`
+- Bei URL-Änderungen IMMER in `realstate/urls.py` UND `main/urls.py` prüfen
+- **Reihenfolge wichtig:** Spezifische URLs VOR generischen `<str:category>/` Routes!
 
-#### Registrierung & Navigation
-- ✅ Alte `/accounts/register` Route entfernt
-- ✅ Footer-Links auf Partner-Landing umgeleitet (HR → postanite-partner, andere → partner-werden)
-- ✅ CTA-Button auf HR-Homepage gefixt
+#### 2. Sprache in Views KORREKT setzen
+Wenn Views außerhalb von i18n_patterns definiert sind, MUSS die Sprache manuell gesetzt werden.
 
-#### Chatbot
-- ✅ Neuer Button "Frag unseren Experten" (Pill-Form, 12 Sprachen)
-- ✅ Bounce-Animation
-- ✅ Glossar-Integration (39 Begriffe)
+#### 3. Übersetzungen in Templates
+- Bei Template-Übersetzungen IMMER alle 12 Sprachen prüfen
+- `{{ language }}` Variable kommt aus `main/context_processors.py`
 
-#### KI-Suche
-- ✅ Neuer Titel "KI - Immobilien in Kroatien finden" (12 Sprachen)
-- ✅ Typewriter-Animation mit Beispielen (12 Sprachen)
-- ✅ Inline-Fehlermeldung in Rot (kein Layout-Sprung)
+#### 4. JavaScript API-Aufrufe
+- NIEMALS hardcoded `/ge/api/...` verwenden!
+- IMMER `{{ language }}` Template-Variable nutzen
 
-#### UI/Design
-- ✅ CSS-Fix: myCard Icons zentriert
-- ✅ HR CTA-Button: Umlaufender Lichtpunkt-Animation
+#### 5. Dienstleister-Bereich
+- Registrierung, Makler-Portal nur für DE und HR verfügbar
 
-#### Performance
-- ✅ Automatische Bildkomprimierung bei Upload (WebP, max 1920x1080, 82%)
-- ✅ XML-Import mit Bild-Download und Komprimierung (OpenImmo + Simple XML)
-- ✅ Bestehende Bilder komprimiert: **23 MB → 2 MB** (90% gespart)
+## 📁 WICHTIGE DATEIEN
+- `realstate/urls.py` - Haupt-URL-Routing
+- `main/urls.py` - App-URLs
+- `main/context_processors.py` - Globale Template-Variablen
+- `listings/image_utils.py` - Automatische Bildkomprimierung (WebP)
+- `main/xml_import.py` - XML-Import mit Bild-Download (OpenImmo + Simple)
+- `main/chatbot.py` - KI-Chatbot mit Glossar-Integration
 
-## Architektur
+## 🖼️ BILDKOMPRIMIERUNG (Januar 2026)
+- **Automatisch bei Upload:** Alle ImageFields in Listing, Agent, Professional, Realtor
+- **Format:** WebP | **Max:** 1920x1080px | **Qualität:** 82%
+- **XML-Import:** Bilder werden heruntergeladen UND komprimiert
 
-### Technologie
-- **Backend:** Django (Python)
-- **Datenbank:** SQLite (dev), PostgreSQL (prod)
-- **Bildverarbeitung:** Pillow (automatische Komprimierung zu WebP)
+## 🤖 GEO (Generative Engine Optimization)
+- `llms.txt` - AI-Crawler Dokumentation (12 Sprachen)
+- FAQ Schema, HowTo Schema, Glossar Schema implementiert
+- 39 Glossar-Begriffe fließen in Chatbot-Antworten ein
 
-### Wichtige Dateien
-- `listings/image_utils.py` - Bildkomprimierung
-- `main/xml_import.py` - XML-Import (OpenImmo + Simple)
-- `main/chatbot.py` - KI-Chatbot mit Glossar
-- `main/context_processors.py` - Übersetzungen
+## ✅ START CHECKLISTE
 
-### Übersetzungssystem
-- **UI-Texte:** `pages.models.Translation` (name, page, 12 Sprachfelder)
-- **Listing-Inhalte:** JSON-Felder pro Sprache im Listing-Model
-- **On-Demand:** OpenAI-Übersetzung wenn Übersetzung fehlt
+## 🚫 VERBOTEN
+- Niemals direkt auf main arbeiten
+- Niemals .env, db.sqlite3, media/ committen
+- Niemals hardcoded /ge/ in JavaScript fetch() verwenden
 
-## Offene Punkte
+## 📋 OFFENE PUNKTE
 
 ### P1 (Hoch)
-- XML-Import testen mit echtem Makler-Feed
+- XML-Import mit echtem Makler-Feed testen
 
 ### P2 (Mittel)
 - Glossar erweitern
-- Fragile Django Migrations (technische Schulden)
+- Fragile Django Migrations
+- Automatische Sitemap-Aktualisierung
 
 ### P3 (Niedrig)
-- Automatische Sitemap-Aktualisierung bei neuen Listings
 - base.html Schema mehrsprachig machen
-
-## Credentials
-- Projekt läuft lokal auf Mac M1
-- GitHub: github.com/nico0069xxx-sketch/123-Kroatien
-- OpenAI API Key in `.env`
-
-## Workflow
-1. Immer Branch erstellen: `git checkout -b feature/beschreibung`
-2. Nie direkt auf main arbeiten
-3. Nach Änderungen: `git add . && git commit -m "..." && git push`
-4. Merge: `git checkout main && git merge feature/... && git push origin main`
