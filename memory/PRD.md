@@ -146,24 +146,32 @@
 
 ---
 
-## 📋 Backlog für nächste Session
+## 📋 Nächste Session - Content Structuring & GEO Optimierung
 
-### P1 - Hoch
+### GEPLANT für nächste Session (Reihenfolge)
+1. [ ] **Quick Fix:** Sprach-Code Bug `sl` → `sk` in base.html (Zeile 95)
+2. [ ] **Hero-Texte übersetzen:** Context Processor für home.html Hero-Sektion (12 Sprachen)
+3. [ ] **Sitemap Refactoring:** URL-Duplizierung eliminieren mit Context Processor
+4. [ ] **Meta-Tags dynamisch:** og:title, og:description in base.html befüllen
+5. [ ] **Breadcrumbs:** Strukturierte Navigation für SEO + UX
+
+### Backlog P1 - Hoch
 - [ ] Registrierungsformular: Funktion testen (Daten speichern, E-Mail senden)
 - [ ] Footer-Links prüfen und korrigieren
-- [ ] ReferenceProject DB Schema reparieren (Migration)
-
-### P2 - Mittel
-- [ ] Glossar erweitern (weitere Begriffe)
-- [ ] Schema.org auf anderen Seiten
-- [ ] Chatbot-Styling verbessern
 - [ ] XML-Import mit echtem Makler-Feed testen
 
-### P3 - Niedrig
+### Backlog P2 - Mittel
+- [ ] Glossar erweitern (weitere Begriffe)
+- [ ] Schema.org auf Listings und Professional-Detail Seiten
+- [ ] Chatbot-Styling verbessern
+- [ ] Typo korrigieren: "Appartment" → "Apartment" in home.html
+
+### Backlog P3 - Niedrig
 - [ ] Django Migrations generell reparieren (technische Schulden)
 - [ ] "White Listing" Feature für Premium-Objekte
 - [ ] Python-Scripts aufräumen (fix_*.py Dateien im Root löschen)
 - [ ] CSS/JS Bundles minifizieren (styles.css 484KB, index.bundle.js 553KB)
+- [ ] Glossar-Translations nach context_processors.py verschieben
 
 ---
 
