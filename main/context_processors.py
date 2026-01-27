@@ -1722,3 +1722,123 @@ def get_professional_detail_translations(request):
     
     pd_trans = PROFESSIONAL_DETAIL_TRANSLATIONS.get(user_language, PROFESSIONAL_DETAIL_TRANSLATIONS["ge"])
     return pd_trans
+
+
+# Navigation Mega Menu Übersetzungen
+NAV_MENU_TRANSLATIONS = {
+    "ge": {
+        "nav_property_types": "Immobilienarten",
+        "nav_popular_regions": "Beliebte Regionen",
+        "nav_price": "Preis",
+        "nav_real_estate": "Immobilien",
+        "nav_planning_law": "Planung und Recht",
+        "nav_find_expert": "Finden Sie den passenden Experten",
+        "nav_search_now": "Jetzt suchen",
+    },
+    "en": {
+        "nav_property_types": "Property Types",
+        "nav_popular_regions": "Popular Regions",
+        "nav_price": "Price",
+        "nav_real_estate": "Real Estate",
+        "nav_planning_law": "Planning and Law",
+        "nav_find_expert": "Find the right expert",
+        "nav_search_now": "Search now",
+    },
+    "hr": {
+        "nav_property_types": "Vrste nekretnina",
+        "nav_popular_regions": "Popularne regije",
+        "nav_price": "Cijena",
+        "nav_real_estate": "Nekretnine",
+        "nav_planning_law": "Planiranje i pravo",
+        "nav_find_expert": "Pronadite pravog strucnjaka",
+        "nav_search_now": "Trazi sada",
+    },
+    "fr": {
+        "nav_property_types": "Types de biens",
+        "nav_popular_regions": "Regions populaires",
+        "nav_price": "Prix",
+        "nav_real_estate": "Immobilier",
+        "nav_planning_law": "Planification et droit",
+        "nav_find_expert": "Trouvez le bon expert",
+        "nav_search_now": "Rechercher",
+    },
+    "nl": {
+        "nav_property_types": "Soorten vastgoed",
+        "nav_popular_regions": "Populaire regios",
+        "nav_price": "Prijs",
+        "nav_real_estate": "Vastgoed",
+        "nav_planning_law": "Planning en recht",
+        "nav_find_expert": "Vind de juiste expert",
+        "nav_search_now": "Zoek nu",
+    },
+    "pl": {
+        "nav_property_types": "Rodzaje nieruchomosci",
+        "nav_popular_regions": "Popularne regiony",
+        "nav_price": "Cena",
+        "nav_real_estate": "Nieruchomosci",
+        "nav_planning_law": "Planowanie i prawo",
+        "nav_find_expert": "Znajdz odpowiedniego eksperta",
+        "nav_search_now": "Szukaj teraz",
+    },
+    "cz": {
+        "nav_property_types": "Typy nemovitosti",
+        "nav_popular_regions": "Popularni regiony",
+        "nav_price": "Cena",
+        "nav_real_estate": "Nemovitosti",
+        "nav_planning_law": "Planovani a pravo",
+        "nav_find_expert": "Najdete spravneho experta",
+        "nav_search_now": "Hledat",
+    },
+    "sk": {
+        "nav_property_types": "Typy nehnutelnosti",
+        "nav_popular_regions": "Popularne regiony",
+        "nav_price": "Cena",
+        "nav_real_estate": "Nehnutelnosti",
+        "nav_planning_law": "Planovanie a pravo",
+        "nav_find_expert": "Najdite spravneho experta",
+        "nav_search_now": "Hladat",
+    },
+    "ru": {
+        "nav_property_types": "Tipy nedvizhimosti",
+        "nav_popular_regions": "Populyarnye regiony",
+        "nav_price": "Cena",
+        "nav_real_estate": "Nedvizhimost",
+        "nav_planning_law": "Planirovanie i pravo",
+        "nav_find_expert": "Naydite podkhodyashchego eksperta",
+        "nav_search_now": "Iskat",
+    },
+    "gr": {
+        "nav_property_types": "Typoi akineton",
+        "nav_popular_regions": "Dimofilis perioches",
+        "nav_price": "Timi",
+        "nav_real_estate": "Akinita",
+        "nav_planning_law": "Schediasmos kai dikaio",
+        "nav_find_expert": "Vreite ton swsto eidiko",
+        "nav_search_now": "Anazitisi",
+    },
+    "sw": {
+        "nav_property_types": "Fastighetstyper",
+        "nav_popular_regions": "Populara regioner",
+        "nav_price": "Pris",
+        "nav_real_estate": "Fastigheter",
+        "nav_planning_law": "Planering och juridik",
+        "nav_find_expert": "Hitta ratt expert",
+        "nav_search_now": "Sok nu",
+    },
+    "no": {
+        "nav_property_types": "Eiendomstyper",
+        "nav_popular_regions": "Populaere regioner",
+        "nav_price": "Pris",
+        "nav_real_estate": "Eiendom",
+        "nav_planning_law": "Planlegging og jus",
+        "nav_find_expert": "Finn riktig ekspert",
+        "nav_search_now": "Sok na",
+    },
+}
+
+
+def get_nav_menu_translations(request):
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in NAV_MENU_TRANSLATIONS else None
+    user_language = url_lang or request.session.get("site_language", "ge")
+    return NAV_MENU_TRANSLATIONS.get(user_language, NAV_MENU_TRANSLATIONS["ge"])

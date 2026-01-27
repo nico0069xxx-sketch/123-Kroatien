@@ -56,6 +56,7 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/modern-theme.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/nav-modern.css' %}" rel="stylesheet" type="text/css">
     
     <!-- Elegante Typografie für Premium-Immobilien -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,190 +129,20 @@
 </head>
 
 <body>
-    <!-- Mobile Nav Overlay -->
-    <div class="nav-overlay" id="navOverlay"></div>
-        {% if user.is_authenticated %}
-        {% if messages %}
-
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-        {% endfor %}
-        {% endif %}
-        {% endif %}
- 
-        <div class="topbar bg-topnav d-none d-sm-block">
-            <div class="container ">
-                <div class="row">
-                    <div class="col-sm-12 col-md-5">
-                        <div class="topbar-left">
-                            <div class="topbar-text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-7">
-                        <div class="list-unstyled topbar-right">
-
-                            <ul class="topbar-link">
-                                {% if user.is_authenticated %}
-                                
-                                <li><a {% if user.agent %}href="{% url "main:agent" user.agent.id %}"{% else %}href="#"{% endif %}>{{user.username}}</a></li>
-                                <li><a href="{% url 'account:logout' %}" title="">{{ nav_logout }}</a></li>
-
-                                {% else %}
-                                <li><a href="{% url 'account:login' %}" title="">{{ nav_login }}</a></li>
-                                <li><a href="{% if language == 'hr' %}/hr/hrvatska/postanite-partner/{% else %}/ge/kroatien/partner-werden/{% endif %}" title="">{{ nav_register }}</a></li>
-                                {% endif %}
-                                <li>
-                                    <select class="lang-drop" onchange="changelanguage(this.value);">
-                                        <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
-                                        <option value="ge" {% if language == 'ge' %}selected{% endif %}>German</option>
-                                        <option value="fr" {% if language == 'fr' %}selected{% endif %}>French</option>
-                                        <option value="gr" {% if language == 'gr' %}selected{% endif %}>Greek</option>
-                                        <option value="hr" {% if language == 'hr' %}selected{% endif %}>Croatian</option>
-                                        <option value="pl" {% if language == 'pl' %}selected{% endif %}>Polish</option>
-                                        <option value="cz" {% if language == 'cz' %}selected{% endif %}>Czech</option>
-                                        <option value="ru" {% if language == 'ru' %}selected{% endif %}>Russian</option>
-                                        <option value="sw" {% if language == 'sw' %}selected{% endif %}>Swedish</option>
-                                        <option value="no" {% if language == 'no' %}selected{% endif %}>Norway</option>
-                                        <option value="sk" {% if language == 'sk' %}selected{% endif %}>Slovak</option>
-                                        <option value="nl" {% if language == 'nl' %}selected{% endif %}>Dutch</option>
-                                    </select>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- END NAVBAR TOP -->
-        <nav class="navbar navbar-nav navbar-hover navbar-expand-lg navbar-soft">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img src="{% static 'images/logo-black2.png' %}" alt="logo" class="img-fluid" style="width: 270px;">
-                </a>
-                <button class="navbar-toggler rightNav" type="button" data-toggle="collapse" data-target="#main_nav99">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="main_nav99">
-                    <ul class="navbar-nav mx-auto">
-                        <!-- KAUFEN -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown">{{ nav_buy }}</a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale">{{ dropdown_house }}</a></li>
-                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=apartment">{{ dropdown_apartment }}</a></li>
-                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=new">{{ dropdown_new_building }}</a></li>
-                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=land">{{ dropdown_land }}</a></li>
-                            </ul>
-                        </li>
-                        <!-- MIETEN -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown">{{ nav_rent }}</a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=rent">{{ dropdown_house }}</a></li>
-                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=rent&type=apartment">{{ dropdown_apartment }}</a></li>
-                            </ul>
-                        </li>
-                        <!-- VERKAUFEN -->
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'main:owner' %}">{{ nav_sell }}</a>
-                        </li>
-                        <!-- DIENSTLEISTER -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">{{ nav_services }}</a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a></li>
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a></li>
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a></li>
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a></li>
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ url_experten_finder }}/" style="color:#c9a227;font-weight:bold;"><i class="fa fa-magic"></i> {{ experten_finder_label }}</a></li>
-                            </ul>
-                        </li>
-                        <!-- MARKT -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">{{ nav_market }}</a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_market_reports }}/">{{ dropdown_market_reports }}</a></li>
-                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_addresses }}/">{{ dropdown_addresses }}</a></li>
-                                        <li><a class="dropdown-item" href="{{ news_url }}">📰 {{ news_label }}</a></li>
-                            </ul>
-                        </li>
-                        <!-- SPRACHE -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                <i class="fa fa-globe"></i> {% if language == 'ge' %}DE{% elif language == 'en' %}EN{% elif language == 'hr' %}HR{% elif language == 'fr' %}FR{% elif language == 'pl' %}PL{% elif language == 'cz' %}CZ{% elif language == 'ru' %}RU{% elif language == 'gr' %}GR{% elif language == 'sw' %}SW{% elif language == 'no' %}NO{% elif language == 'sk' %}SK{% elif language == 'nl' %}NL{% else %}DE{% endif %}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ge')">🇩🇪 Deutsch</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('en')">🇬🇧 English</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('hr')">🇭🇷 Hrvatski</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('fr')">🇫🇷 Français</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('nl')">🇳🇱 Nederlands</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('pl')">🇵🇱 Polski</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('cz')">🇨🇿 Čeština</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('sk')">🇸🇰 Slovenčina</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ru')">🇷🇺 Русский</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('gr')">🇬🇷 Ελληνικά</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('sw')">🇸🇪 Svenska</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('no')">🇳🇴 Norsk</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-
-                    <!-- Search bar.// -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="btn btn-danger text-capitalize dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-plus-circle mr-1"></i> {{ nav_register_service }}
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
-                                <li align="left"><a class="dropdown-item" href="{% url 'main:real-estate-agent' %}">{{ dropdown_realtor }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="{% url 'main:building-contractor' %}">{{ dropdown_contractor }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="{% url 'main:owner' %}">{{ dropdown_owner }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/registrierung/">{{ dropdown_lawyer }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/registrierung/">{{ dropdown_tax_advisor }}</a></li>
-                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/registrierung/">{{ dropdown_architect }}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <!-- Search content bar.// -->
-                    <div class="top-search navigation-shadow">
-                        <div class="container">
-                            <div class="input-group ">
-                                <form action="#">
-
-                                    <div class="row no-gutters mt-3">
-                                        <div class="col">
-                                            <input class="form-control border-secondary border-right-0 rounded-0"
-                                                type="search" value="" placeholder="Search " id="example-search-input4">
-                                        </div>
-                                        <div class="col-auto">
-                                            <a class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"
-                                                href="/search-result.html">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Search content bar.// -->
-                </div> <!-- navbar-collapse.// -->
-            </div>
-        </nav>
+    {% include 'include/nav_modern.html' %}
+    
+    {% if user.is_authenticated %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endif %}
         {% block body %}
         {% endblock body%}
 

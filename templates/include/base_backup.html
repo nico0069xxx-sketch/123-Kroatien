@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    {% block hreflang %}
+    <!-- Hreflang Tags - Internationale SEO (12 Sprachen) -->
+    <link rel="alternate" hreflang="de" href="https://123-kroatien.eu/ge/" />
+    <link rel="alternate" hreflang="en" href="https://123-kroatien.eu/en/" />
+    <link rel="alternate" hreflang="hr" href="https://123-kroatien.eu/hr/" />
+    <link rel="alternate" hreflang="fr" href="https://123-kroatien.eu/fr/" />
+    <link rel="alternate" hreflang="nl" href="https://123-kroatien.eu/nl/" />
+    <link rel="alternate" hreflang="pl" href="https://123-kroatien.eu/pl/" />
+    <link rel="alternate" hreflang="cs" href="https://123-kroatien.eu/cz/" />
+    <link rel="alternate" hreflang="sk" href="https://123-kroatien.eu/sk/" />
+    <link rel="alternate" hreflang="ru" href="https://123-kroatien.eu/ru/" />
+    <link rel="alternate" hreflang="el" href="https://123-kroatien.eu/gr/" />
+    <link rel="alternate" hreflang="sv" href="https://123-kroatien.eu/sw/" />
+    <link rel="alternate" hreflang="no" href="https://123-kroatien.eu/no/" />
+    <link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu/ge/" />
+    {% endblock hreflang %}
+    
+    <!-- RSS Feed Discovery -->
+    <link rel="alternate" type="application/rss+xml" title="123-Kroatien.eu - Immobilien RSS" href="/rss/listings/" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://123-kroatien.eu{{ request.path }}" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rethouse - Real Estate HTML Template">
+    <meta name="keywords" content="Real Estate, Property, Directory Listing, Marketing, Agency" />
+    <meta name="author" content="mardianto - retenvi.com">
+    <title>123 - KROATIEN</title>
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    <!-- favicon.ico in the root directory -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
+
+    <meta name="theme-color" content="#0F172A">
+    <!-- Font Awesome 4.7 - Multiple CDN sources for reliability -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/modern-theme.css' %}" rel="stylesheet" type="text/css">
+    
+    <!-- Elegante Typografie für Premium-Immobilien -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    {% block extra_head %}{% endblock extra_head %}
+    
+    {% block style %}{% endblock style %}
+
+    <!-- Schema.org - Organization (AI + SEO optimiert) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "123-Kroatien.eu",
+        "alternateName": "Immobilienmarktplatz Kroatien",
+        "description": "Der führende Immobilienmarktplatz für Kroatien. Finden Sie Häuser, Wohnungen, Villen und Grundstücke an der Adria. Spezialisiert auf Immobilien in Kroatien seit 2020.",
+        "url": "https://123-kroatien.eu",
+        "logo": "https://123-kroatien.eu/static/images/logo-black2.png",
+        "image": "https://123-kroatien.eu/static/images/logo-black2.png",
+        "email": "info@123-kroatien.eu",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Croatia",
+            "alternateName": ["Kroatien", "Hrvatska", "Croatie"]
+        },
+        "serviceType": ["Real Estate Sales", "Property Rentals", "Real Estate Consulting"],
+        "priceRange": "€€€",
+        "knowsLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+        "slogan": "Ihr Immobilienmarktplatz für Kroatien",
+        "foundingDate": "2020",
+        "sameAs": [
+            "https://www.facebook.com/123kroatien",
+            "https://www.instagram.com/123kroatien"
+        ],
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://123-kroatien.eu/ge/listings/?search={search_term}",
+            "query-input": "required name=search_term"
+        }
+    }
+    </script>
+    
+    <!-- Schema.org - WebSite (für Sitelinks Search Box) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "123-Kroatien.eu - Immobilienmarktplatz Kroatien",
+        "alternateName": "123 Kroatien",
+        "url": "https://123-kroatien.eu",
+        "description": "Der führende Immobilienmarktplatz für Kroatien. Häuser, Wohnungen, Villen und Grundstücke an der Adria.",
+        "inLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+        "publisher": {
+            "@type": "Organization",
+            "name": "123-Kroatien.eu"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://123-kroatien.eu/ge/listings/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+</head>
+
+<body>
+    <!-- Mobile Nav Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+        {% if user.is_authenticated %}
+        {% if messages %}
+
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+        {% endfor %}
+        {% endif %}
+        {% endif %}
+ 
+        <div class="topbar bg-topnav d-none d-sm-block">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="topbar-left">
+                            <div class="topbar-text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div class="list-unstyled topbar-right">
+
+                            <ul class="topbar-link">
+                                {% if user.is_authenticated %}
+                                
+                                <li><a {% if user.agent %}href="{% url "main:agent" user.agent.id %}"{% else %}href="#"{% endif %}>{{user.username}}</a></li>
+                                <li><a href="{% url 'account:logout' %}" title="">{{ nav_logout }}</a></li>
+
+                                {% else %}
+                                <li><a href="{% url 'account:login' %}" title="">{{ nav_login }}</a></li>
+                                <li><a href="{% if language == 'hr' %}/hr/hrvatska/postanite-partner/{% else %}/ge/kroatien/partner-werden/{% endif %}" title="">{{ nav_register }}</a></li>
+                                {% endif %}
+                                <li>
+                                    <select class="lang-drop" onchange="changelanguage(this.value);">
+                                        <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
+                                        <option value="ge" {% if language == 'ge' %}selected{% endif %}>German</option>
+                                        <option value="fr" {% if language == 'fr' %}selected{% endif %}>French</option>
+                                        <option value="gr" {% if language == 'gr' %}selected{% endif %}>Greek</option>
+                                        <option value="hr" {% if language == 'hr' %}selected{% endif %}>Croatian</option>
+                                        <option value="pl" {% if language == 'pl' %}selected{% endif %}>Polish</option>
+                                        <option value="cz" {% if language == 'cz' %}selected{% endif %}>Czech</option>
+                                        <option value="ru" {% if language == 'ru' %}selected{% endif %}>Russian</option>
+                                        <option value="sw" {% if language == 'sw' %}selected{% endif %}>Swedish</option>
+                                        <option value="no" {% if language == 'no' %}selected{% endif %}>Norway</option>
+                                        <option value="sk" {% if language == 'sk' %}selected{% endif %}>Slovak</option>
+                                        <option value="nl" {% if language == 'nl' %}selected{% endif %}>Dutch</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- END NAVBAR TOP -->
+        <nav class="navbar navbar-nav navbar-hover navbar-expand-lg navbar-soft">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'images/logo-black2.png' %}" alt="logo" class="img-fluid" style="width: 270px;">
+                </a>
+                <button class="navbar-toggler rightNav" type="button" data-toggle="collapse" data-target="#main_nav99">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main_nav99">
+                    <ul class="navbar-nav mx-auto">
+                        <!-- KAUFEN -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown">{{ nav_buy }}</a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale">{{ dropdown_house }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=apartment">{{ dropdown_apartment }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=new">{{ dropdown_new_building }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=sale&type=land">{{ dropdown_land }}</a></li>
+                            </ul>
+                        </li>
+                        <!-- MIETEN -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="" data-toggle="dropdown">{{ nav_rent }}</a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=rent">{{ dropdown_house }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main:listings' %}?status=rent&type=apartment">{{ dropdown_apartment }}</a></li>
+                            </ul>
+                        </li>
+                        <!-- VERKAUFEN -->
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'main:owner' %}">{{ nav_sell }}</a>
+                        </li>
+                        <!-- DIENSTLEISTER -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">{{ nav_services }}</a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ url_experten_finder }}/" style="color:#c9a227;font-weight:bold;"><i class="fa fa-magic"></i> {{ experten_finder_label }}</a></li>
+                            </ul>
+                        </li>
+                        <!-- MARKT -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">{{ nav_market }}</a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_market_reports }}/">{{ dropdown_market_reports }}</a></li>
+                                <li><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/{{ url_addresses }}/">{{ dropdown_addresses }}</a></li>
+                                        <li><a class="dropdown-item" href="{{ news_url }}">📰 {{ news_label }}</a></li>
+                            </ul>
+                        </li>
+                        <!-- SPRACHE -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                <i class="fa fa-globe"></i> {% if language == 'ge' %}DE{% elif language == 'en' %}EN{% elif language == 'hr' %}HR{% elif language == 'fr' %}FR{% elif language == 'pl' %}PL{% elif language == 'cz' %}CZ{% elif language == 'ru' %}RU{% elif language == 'gr' %}GR{% elif language == 'sw' %}SW{% elif language == 'no' %}NO{% elif language == 'sk' %}SK{% elif language == 'nl' %}NL{% else %}DE{% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up">
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ge')">🇩🇪 Deutsch</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('en')">🇬🇧 English</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('hr')">🇭🇷 Hrvatski</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('fr')">🇫🇷 Français</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('nl')">🇳🇱 Nederlands</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('pl')">🇵🇱 Polski</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('cz')">🇨🇿 Čeština</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('sk')">🇸🇰 Slovenčina</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('ru')">🇷🇺 Русский</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('gr')">🇬🇷 Ελληνικά</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('sw')">🇸🇪 Svenska</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="changelanguage('no')">🇳🇴 Norsk</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+                    <!-- Search bar.// -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="btn btn-danger text-capitalize dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-plus-circle mr-1"></i> {{ nav_register_service }}
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-left animate fade-up" align="right">
+                                <li align="left"><a class="dropdown-item" href="{% url 'main:real-estate-agent' %}">{{ dropdown_realtor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="{% url 'main:building-contractor' %}">{{ dropdown_contractor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="{% url 'main:owner' %}">{{ dropdown_owner }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/registrierung/">{{ dropdown_lawyer }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/registrierung/">{{ dropdown_tax_advisor }}</a></li>
+                                <li align="left"><a class="dropdown-item" href="/{{ language }}/{{ country_name }}/registrierung/">{{ dropdown_architect }}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- Search content bar.// -->
+                    <div class="top-search navigation-shadow">
+                        <div class="container">
+                            <div class="input-group ">
+                                <form action="#">
+
+                                    <div class="row no-gutters mt-3">
+                                        <div class="col">
+                                            <input class="form-control border-secondary border-right-0 rounded-0"
+                                                type="search" value="" placeholder="Search " id="example-search-input4">
+                                        </div>
+                                        <div class="col-auto">
+                                            <a class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"
+                                                href="/search-result.html">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search content bar.// -->
+                </div> <!-- navbar-collapse.// -->
+            </div>
+        </nav>
+        {% block body %}
+        {% endblock body%}
+
+        {% include 'include/footer.html' %}
+
+        <!-- SCROLL TO TOP -->
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        <!-- END SCROLL TO TOP -->
+        <script src="{% static 'js/index.bundle.js' %}"></script>
+        <script src="{% static 'js/forms.js'%}"></script>
+        <script type="text/javascript">
+            //test for getting url value from attr
+            // var img1 = $('.test').attr("data-thumbnail");
+            // console.log(img1);
+
+            //test for iterating over child elements
+            var langArray = [];
+            $('.vodiapicker option').each(function () {
+                var img = $(this).attr("data-thumbnail");
+                var text = this.innerText;
+                var value = $(this).val();
+                var item = '<li><img src="' + img + '" alt="" value="' + value + '"/><span>' + text + '</span></li>';
+                langArray.push(item);
+            })
+
+            $('#a').html(langArray);
+
+            //Set the button value to the first el of the array
+            $('.btn-select').html(langArray[0]);
+            $('.btn-select').attr('value', 'en');
+
+            //change button stuff on click
+            $('#a li').click(function () {
+                var img = $(this).find('img').attr("src");
+                var value = $(this).find('img').attr('value');
+                var text = this.innerText;
+                var item = '<li><img src="' + img + '" alt="" /><span>' + text + '</span></li>';
+                $('.btn-select').html(item);
+                $('.btn-select').attr('value', value);
+                $(".b").toggle();
+                //console.log(value);
+            });
+
+            $(".btn-select").click(function () {
+                $(".b").toggle();
+            });
+
+            //check local storage for the lang
+            var sessionLang = localStorage.getItem('lang');
+            if (sessionLang) {
+                //find an item with value of sessionLang
+                var langIndex = langArray.indexOf(sessionLang);
+                $('.btn-select').html(langArray[langIndex]);
+                $('.btn-select').attr('value', sessionLang);
+            } else {
+                var langIndex = langArray.indexOf('ch');
+                console.log(langIndex);
+                $('.btn-select').html(langArray[langIndex]);
+                //$('.btn-select').attr('value', 'en');
+            }
+
+            // Sprach-URLs für den Sprachumschalter (dynamisch vom Server generiert)
+            var languageUrls = {{ language_urls_json|safe|default:'{}' }};
+
+            function changelanguage(value) { var path = window.location.pathname; if (path.indexOf("sitemap") !== -1) { window.location.href = "/set-language/" + value + "/?next=/sitemap"; } else { window.location.href = "/set-language/" + value + "/"; } }
+
+        </script>
+        {% block js %}{% endblock js %}
+        {% include "chatbot_widget.html" %}
+
+<script>
+$(document).ready(function() {
+    $("#main_nav99").on("show.bs.collapse", function() {
+        $("#navOverlay").addClass("active");
+    });
+    $("#main_nav99").on("hide.bs.collapse", function() {
+        $("#navOverlay").removeClass("active");
+    });
+    $("#navOverlay").on("click", function() {
+        $("#main_nav99").collapse("hide");
+    });
+});
+</script>
+
+
+    {% include "include/cookie_banner.html" %}
+
+    </body>
+
+</html>

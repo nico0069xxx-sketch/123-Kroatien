@@ -1,0 +1,224 @@
+{% load static %}
+<!-- Modern Navigation - Mega Menu Style -->
+<nav class="modern-nav">
+    <div class="modern-nav-inner">
+        <!-- Logo -->
+        <a href="/" class="modern-nav-logo">
+            <img src="{% static 'images/logo-black2.png' %}" alt="123-Kroatien.eu">
+        </a>
+
+        <!-- Main Navigation Links -->
+        <ul class="modern-nav-links" id="modernNavLinks">
+            <!-- Kaufen - Mega Menu -->
+            <li>
+                <a href="{% url 'main:listings' %}?status=sale">{{ nav_buy }}</a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-menu-column">
+                            <h4>{{ nav_property_types }}</h4>
+                            <a href="{% url 'main:listings' %}?status=sale">{{ dropdown_house }}</a>
+                            <a href="{% url 'main:listings' %}?status=sale&type=apartment">{{ dropdown_apartment }}</a>
+                            <a href="{% url 'main:listings' %}?status=sale&type=new">{{ dropdown_new_building }}</a>
+                            <a href="{% url 'main:listings' %}?status=sale&type=land">{{ dropdown_land }}</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>{{ nav_popular_regions }}</h4>
+                            <a href="{% url 'main:listings' %}?status=sale&region=istrien">Istrien</a>
+                            <a href="{% url 'main:listings' %}?status=sale&region=dalmatien">Dalmatien</a>
+                            <a href="{% url 'main:listings' %}?status=sale&region=kvarner">Kvarner Bucht</a>
+                            <a href="{% url 'main:listings' %}?status=sale&region=zagreb">Zagreb</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>{{ nav_price }}</h4>
+                            <a href="{% url 'main:listings' %}?status=sale&price_max=200000">Bis 200.000 EUR</a>
+                            <a href="{% url 'main:listings' %}?status=sale&price_min=200000&price_max=500000">200.000 - 500.000 EUR</a>
+                            <a href="{% url 'main:listings' %}?status=sale&price_min=500000">Ab 500.000 EUR</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Mieten -->
+            <li>
+                <a href="{% url 'main:listings' %}?status=rent">{{ nav_rent }}</a>
+                <div class="modern-dropdown">
+                    <a href="{% url 'main:listings' %}?status=rent">{{ dropdown_house }}</a>
+                    <a href="{% url 'main:listings' %}?status=rent&type=apartment">{{ dropdown_apartment }}</a>
+                </div>
+            </li>
+
+            <!-- Verkaufen -->
+            <li>
+                <a href="{% url 'main:owner' %}">{{ nav_sell }}</a>
+            </li>
+
+            <!-- Dienstleister - Mega Menu -->
+            <li>
+                <a href="#">{{ nav_services }}</a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-menu-column">
+                            <h4>{{ nav_real_estate }}</h4>
+                            <a href="/{{ language }}/{{ country_name }}/{{ url_realtor }}/">{{ dropdown_realtor }}</a>
+                            <p>Finden Sie qualifizierte Makler</p>
+                            <a href="/{{ language }}/{{ country_name }}/{{ url_contractor }}/">{{ dropdown_contractor }}</a>
+                            <p>Bauunternehmen in Kroatien</p>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>{{ nav_planning_law }}</h4>
+                            <a href="/{{ language }}/{{ country_name }}/{{ url_architect }}/">{{ dropdown_architect }}</a>
+                            <p>Architektur und Design</p>
+                            <a href="/{{ language }}/{{ country_name }}/{{ url_lawyer }}/">{{ dropdown_lawyer }}</a>
+                            <p>Rechtliche Beratung</p>
+                            <a href="/{{ language }}/{{ country_name }}/{{ url_tax_advisor }}/">{{ dropdown_tax_advisor }}</a>
+                            <p>Steuerliche Beratung</p>
+                        </div>
+                        <div class="mega-menu-column mega-menu-highlight">
+                            <h4>{{ experten_finder_label }}</h4>
+                            <p>{{ nav_find_expert }} fuer Ihr Vorhaben</p>
+                            <a href="/{{ language }}/{{ url_experten_finder }}/" class="highlight-btn">{{ nav_search_now }}</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Markt -->
+            <li>
+                <a href="#">{{ nav_market }}</a>
+                <div class="modern-dropdown">
+                    <a href="/{{ language }}/{{ country_name }}/{{ url_market_reports }}/">{{ dropdown_market_reports }}</a>
+                    <a href="/{{ language }}/{{ country_name }}/{{ url_addresses }}/">{{ dropdown_addresses }}</a>
+                    <a href="{{ news_url }}">{{ news_label }}</a>
+                    <div class="modern-dropdown-divider"></div>
+                    <a href="/{{ language }}/{{ country_name }}/{{ url_glossary }}/">Glossar</a>
+                </div>
+            </li>
+        </ul>
+
+        <!-- Right Side -->
+        <div class="modern-nav-right">
+            <!-- Language Selector - All 12 Languages -->
+            <div class="modern-lang-select">
+                <button class="modern-lang-btn">
+                    {% if language == 'ge' %}DE{% elif language == 'en' %}EN{% elif language == 'hr' %}HR{% elif language == 'fr' %}FR{% elif language == 'pl' %}PL{% elif language == 'cz' %}CZ{% elif language == 'ru' %}RU{% elif language == 'gr' %}GR{% elif language == 'sw' %}SV{% elif language == 'no' %}NO{% elif language == 'sk' %}SK{% elif language == 'nl' %}NL{% else %}DE{% endif %}
+                </button>
+                <div class="modern-lang-dropdown">
+                    <a href="javascript:void(0)" onclick="changelanguage('ge')">Deutsch</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('en')">English</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('hr')">Hrvatski</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('fr')">Francais</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('nl')">Nederlands</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('pl')">Polski</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('cz')">Cestina</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('sk')">Slovencina</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('ru')">Russkij</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('gr')">Ellinika</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('sw')">Svenska</a>
+                    <a href="javascript:void(0)" onclick="changelanguage('no')">Norsk</a>
+                </div>
+            </div>
+
+            <!-- Login -->
+            {% if user.is_authenticated %}
+            <a href="{% if user.agent %}{% url 'main:agent' user.agent.id %}{% else %}#{% endif %}" class="modern-nav-login">{{ user.username }}</a>
+            <a href="{% url 'account:logout' %}" class="modern-nav-login">{{ nav_logout }}</a>
+            {% else %}
+            <a href="{% url 'account:login' %}" class="modern-nav-login">{{ nav_login }}</a>
+            {% endif %}
+
+            <!-- Share Button - Icon Only -->
+            <button class="modern-share-btn" onclick="openShareModal()" title="Teilen">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+            </button>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="modern-menu-toggle" onclick="toggleMobileMenu()">
+                <span id="menuIcon">&#9776;</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Share Modal -->
+<div class="share-modal-overlay" id="shareModal">
+    <div class="share-modal">
+        <h3>Seite teilen</h3>
+        <div class="share-options">
+            <a href="#" class="share-option" id="shareWhatsApp" target="_blank">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span>WhatsApp</span>
+            </a>
+            <a href="#" class="share-option" id="shareFacebook" target="_blank">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <span>Facebook</span>
+            </a>
+            <a href="#" class="share-option" id="shareTwitter" target="_blank">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span>X</span>
+            </a>
+            <a href="#" class="share-option" id="shareEmail">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#003167"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>E-Mail</span>
+            </a>
+            <a href="#" class="share-option" id="shareCopy">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#666666"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <span>Link</span>
+            </a>
+        </div>
+        <button class="share-close" onclick="closeShareModal()">Schliessen</button>
+    </div>
+</div>
+
+<script>
+function toggleMobileMenu() {
+    const nav = document.getElementById('modernNavLinks');
+    const icon = document.getElementById('menuIcon');
+    nav.classList.toggle('active');
+    icon.innerHTML = nav.classList.contains('active') ? '&#10005;' : '&#9776;';
+}
+
+function openShareModal() {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(document.title);
+    
+    document.getElementById('shareWhatsApp').href = 'https://wa.me/?text=' + title + '%20' + url;
+    document.getElementById('shareFacebook').href = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+    document.getElementById('shareTwitter').href = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title;
+    document.getElementById('shareEmail').href = 'mailto:?subject=' + title + '&body=' + url;
+    document.getElementById('shareCopy').onclick = function(e) {
+        e.preventDefault();
+        navigator.clipboard.writeText(window.location.href);
+        this.querySelector('span').textContent = 'Kopiert!';
+        setTimeout(() => { this.querySelector('span').textContent = 'Link'; }, 2000);
+    };
+    
+    document.getElementById('shareModal').classList.add('active');
+}
+
+function closeShareModal() {
+    document.getElementById('shareModal').classList.remove('active');
+}
+
+document.getElementById('shareModal').addEventListener('click', function(e) {
+    if (e.target === this) closeShareModal();
+});
+
+// Mobile dropdown toggle
+document.querySelectorAll('.modern-nav-links > li > a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 1100) {
+            const parent = this.parentElement;
+            if (parent.querySelector('.mega-menu') || parent.querySelector('.modern-dropdown')) {
+                e.preventDefault();
+                parent.classList.toggle('dropdown-open');
+            }
+        }
+    });
+});
+</script>
