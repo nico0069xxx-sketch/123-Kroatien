@@ -1,6 +1,18 @@
 {% extends 'include/base.html' %}
 {% load static %}
 {% block body %}
+<style>
+
+/* Fix für ZATVORENO Checkboxen */
+td input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #003167; margin-left: 15px; position: relative; top: -5px;
+}
+</style>
+
+
 
 <div style="background-position: center 0%" class="registrationBg bg-theme-overlay">
   <section class="section__breadcrumb">
@@ -204,10 +216,12 @@
                 <div class="col-md-6 mb-3">
                   <label for="id_profile_image" class="form-label fw-bold">{% if lang == "hr" %}Profilna slika{% else %}Profilbild{% endif %} <span class="text-danger">*</span></label>
                   {{ form.profile_image }}
+                  <small class="text-muted d-block mt-1">JPG, PNG, WEBP</small>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="id_company_logo" class="form-label">{% if lang == "hr" %}Logo tvrtke{% else %}Firmenlogo{% endif %}</label>
                   {{ form.company_logo }}
+                  <small class="text-muted d-block mt-1">JPG, PNG, SVG</small>
                 </div>
               </div>
               
@@ -308,6 +322,111 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeSelect) typeSelect.addEventListener('change', updateForm);
     updateForm();
     translateSpecs();
+});
+</script>
+
+
+
+
+<style>
+/* Kroatische File-Buttons */
+.hr-file-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+.hr-file-btn {
+    background: linear-gradient(135deg, #003167 0%, #0066cc 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+.hr-file-btn:hover {
+    background: linear-gradient(135deg, #002050 0%, #0055aa 100%);
+}
+.hr-file-name {
+    color: #666;
+    font-style: italic;
+}
+.hr-file-name.selected {
+    color: #28a745;
+    font-style: normal;
+}
+.hr-delete-btn {
+    display: none;
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+.hr-delete-btn.visible {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input[type="file"]').forEach(function(input) {
+        // Wrapper erstellen
+        var wrapper = document.createElement('div');
+        wrapper.className = 'hr-file-wrapper';
+        
+        // Label für Button
+        var label = document.createElement('label');
+        label.className = 'hr-file-btn';
+        label.innerHTML = '<i class="fas fa-upload"></i> Odaberi datoteku';
+        label.htmlFor = input.id;
+        
+        // Dateiname
+        var nameEl = document.createElement('span');
+        nameEl.className = 'hr-file-name';
+        nameEl.textContent = 'Nije odabrana datoteka';
+        
+        // Lösch-Button
+        var delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'hr-delete-btn';
+        delBtn.innerHTML = '<i class="fas fa-times"></i> Ukloni';
+        
+        // Input verstecken
+        input.style.display = 'none';
+        
+        // Nach dem Input einfügen
+        input.parentNode.insertBefore(wrapper, input.nextSibling);
+        wrapper.appendChild(label);
+        wrapper.appendChild(nameEl);
+        wrapper.appendChild(delBtn);
+        
+        // Change Event
+        input.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                nameEl.textContent = this.files[0].name;
+                nameEl.className = 'hr-file-name selected';
+                delBtn.className = 'hr-delete-btn visible';
+            }
+        });
+        
+        // Delete Event
+        delBtn.addEventListener('click', function() {
+            input.value = '';
+            nameEl.textContent = 'Nije odabrana datoteka';
+            nameEl.className = 'hr-file-name';
+            delBtn.className = 'hr-delete-btn';
+        });
+    });
 });
 </script>
 
