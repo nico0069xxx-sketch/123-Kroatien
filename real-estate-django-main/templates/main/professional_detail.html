@@ -30,11 +30,11 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card" style="border-color: #003167;">
-          {% if professional.logo %}
-          <img src="{{ professional.logo.url }}" class="card-img-top p-3" alt="{{ professional.name }}">
+          {% if professional.company_logo %}
+          <img src="{{ professional.company_logo.url }}" class="card-img-top p-3" alt="{{ professional.name }}">
           {% endif %}
-          {% if professional.portrait %}
-          <img src="{{ professional.portrait.url }}" class="card-img-top p-3" alt="{{ professional.name }}">
+          {% if professional.portrait_photo %}
+          <img src="{{ professional.portrait_photo.url }}" class="card-img-top p-3" alt="{{ professional.name }}">
           {% endif %}
           <div class="card-body">
             <h5 style="color: #003167;">{{ trans.contact }}</h5>
@@ -76,7 +76,7 @@
           {% endif %}
           
           <h3 style="color: #003167;">{{ trans.languages }}</h3>
-          <p>{{ professional.languages_spoken }}</p>
+          <p>{{ professional.get_spoken_languages_display|join:", " }}</p>
           
           {% if professional.service_regions %}
           <h3 style="color: #003167;">{{ trans.regions }}</h3>
@@ -107,7 +107,7 @@
         {% else %}
         <div class="profile-content" style="color: #003167;">
           <h2>{{ professional.name }}</h2>
-          <p><strong>{{ trans.languages }}:</strong> {{ professional.languages_spoken }}</p>
+          <p><strong>{{ trans.languages }}:</strong> {{ professional.get_spoken_languages_display|join:", " }}</p>
           {% if professional.service_regions %}
           <p><strong>{{ trans.regions }}:</strong> {{ professional.service_regions }}</p>
           {% endif %}
