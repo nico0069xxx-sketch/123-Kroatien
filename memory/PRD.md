@@ -92,3 +92,94 @@ Wenn Views außerhalb von i18n_patterns definiert sind, MUSS die Sprache manuell
 
 ### P3 (Niedrig)
 - base.html Schema mehrsprachig machen
+
+---
+
+## SPRACH-SYSTEM (12 Sprachen)
+
+### Sprach-Codes & Laender-Slugs
+| Code | Sprache | Land-Slug (URL) |
+|------|---------|-----------------|
+| ge | Deutsch | kroatien |
+| en | English | croatia |
+| hr | Hrvatski | hrvatska |
+| fr | Francais | croatie |
+| nl | Nederlands | kroatie |
+| pl | Polski | chorwacja |
+| cz | Cestina | chorvatsko |
+| sk | Slovencina | chorvatsko |
+| ru | Russkij | horvatiya |
+| gr | Ellinika | kroatia |
+| sw | Svenska | kroatien |
+| no | Norsk | kroatia |
+
+### Uebersetzungs-Systematik
+
+#### 1. Context Processors (Statische UI-Texte) - EMPFOHLEN fuer feste Texte
+**Datei:** main/context_processors.py
+**Kosten:** Keine (hardcodiert)
+**Performance:** Sehr schnell (aus Dictionary)
+**Verwendung:** UI-Labels, Buttons, Formulare, Navigation
+
+Beispiele:
+- COOKIE_TRANSLATIONS - Cookie Banner
+- SITEMAP_TRANSLATIONS - Sitemap-Seite
+- SEARCH_FILTER_TRANSLATIONS - Suchfilter
+- TWO_FA_TRANSLATIONS - 2FA Setup
+- BUYER_GUIDE_TRANSLATIONS - Kaeufer-Leitfaden
+
+**Template-Nutzung:**
+{{ sm_home }}  --> Sitemap: "Startseite"
+{{ bg_title }}  --> Buyer Guide: "Kaeuferleitfaden"
+{{ cookie_accept }}  --> Cookie: "Alle akzeptieren"
+
+#### 2. Translation Model (DB-basiert) - Fuer verwaltbare Inhalte
+**Datei:** pages/models.py -> Translation
+**Kosten:** Keine (manuell gepflegt)
+**Performance:** Schnell (DB-Query, cachebar)
+**Verwendung:** Navbar, Footer, Home-Texte
+
+**Felder:** german_content, english_content, croatian_content, etc.
+
+**Template-Nutzung:**
+{{ navbar_home }}  --> aus Translation Model
+{{ footer_contact }}
+
+#### 3. StaticContent Model (DB + KI) - Fuer groessere Textbloecke
+**Datei:** main/models.py -> StaticContent
+**Kosten:** Einmalig bei KI-Uebersetzung
+**Performance:** Schnell (DB-Query)
+**Verwendung:** Laengere statische Texte die zentral verwaltet werden sollen
+
+**Felder:** german, english, croatian, etc.
+**Methode:** get_translation(lang_code)
+
+#### 4. On-Demand KI-Uebersetzung - NUR fuer dynamische Inhalte
+**Datei:** main/translation_service.py
+**Kosten:** Pro API-Call (OpenAI)
+**Performance:** Langsamer (API-Aufruf, dann DB-Cache)
+**Verwendung:** Listing-Beschreibungen, Property Titles
+
+**Workflow:**
+1. Nutzer wechselt Sprache
+2. System prueft ob Uebersetzung in DB existiert
+3. Falls nein: KI uebersetzt, speichert in DB
+4. Falls ja: Laedt aus DB (keine API-Kosten)
+
+### Sprache aus URL ermitteln
+path_parts = request.path.strip("/").split("/")
+url_lang = path_parts[0] if path_parts[0] in ["ge", "en", "hr", ...] else None
+user_language = url_lang or request.session.get("site_language", "ge")
+
+### Wichtige Dateien
+- main/context_processors.py - Alle Context Processors
+- main/translation_service.py - KI-Uebersetzung (OpenAI)
+- main/static_translation_service.py - Batch-Uebersetzung fuer StaticContent
+- pages/models.py - Translation Model
+- main/models.py - StaticContent Model
+
+### Regeln
+1. UI-Texte (Buttons, Labels) -> Context Processor (hardcodiert)
+2. Verwaltbare Texte (Navbar, Footer) -> Translation Model
+3. Dynamische Inhalte (Listings) -> On-Demand KI mit DB-Cache
+4. NIEMALS KI fuer statische UI-Texte verwenden (teuer + langsam)

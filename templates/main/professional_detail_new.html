@@ -29,7 +29,7 @@
           </span>
           {% if professional.is_verified %}
           <span class="badge" style="background: #28a745; padding: 8px 15px; font-size: 14px;">
-            <i class="fa fa-check-circle"></i> Verifiziert
+            <i class="fa fa-check-circle"></i> {{ pd_verified }}
           </span>
           {% endif %}
           {% if professional.founded_year %}
@@ -69,7 +69,7 @@
   <div class="container">
     <ol class="breadcrumb mb-0" style="background: transparent;">
       <li class="breadcrumb-item"><a href="/" style="color: #003167;">Home</a></li>
-      <li class="breadcrumb-item"><a href="/{{ lang }}/{{ country_name }}/{{ url_path }}/" style="color: #003167;">{{ trans.back_to_list }}</a></li>
+      <li class="breadcrumb-item"><a href="/{{ lang }}/{{ country_name }}/{{ url_path }}/" style="color: #003167;">{{ pd_back_to_list }}</a></li>
       <li class="breadcrumb-item active" style="color: #c41e3a;">{{ professional.name }}</li>
     </ol>
   </div>
@@ -85,7 +85,7 @@
         <!-- UEBER UNS -->
         <div class="card shadow-sm mb-4">
           <div class="card-header" style="background: #003167; color: white;">
-            <h5 class="mb-0" style="color: white;"><i class="fa fa-info-circle"></i> Ueber uns</h5>
+            <h5 class="mb-0" style="color: white;"><i class="fa fa-info-circle"></i> {{ pd_about_us }}</h5>
           </div>
           <div class="card-body">
             {% if professional.description_de %}
@@ -93,11 +93,11 @@
             {% elif content and content.profile_summary %}
             <p style="font-size: 16px; line-height: 1.8; color: #333;">{{ content.profile_summary }}</p>
             {% else %}
-            <p class="text-muted">Keine Beschreibung vorhanden.</p>
+            <p class="text-muted">{{ pd_no_description }}</p>
             {% endif %}
             
             {% if professional.specializations %}
-            <h6 class="mt-4 mb-3" style="color: #003167;"><i class="fa fa-star"></i> Spezialgebiete</h6>
+            <h6 class="mt-4 mb-3" style="color: #003167;"><i class="fa fa-star"></i> {{ pd_specializations }}</h6>
             <div>
               {% for spec in specializations_list %}
               <span class="badge badge-light mr-2 mb-2" style="padding: 8px 12px; font-size: 13px; background: #f0f0f0; color: #333;">{{ spec }}</span>
@@ -206,7 +206,7 @@
         <!-- KONTAKT-KARTE -->
         <div class="card shadow-sm mb-4 sticky-top" style="top: 20px;">
           <div class="card-header" style="background: #c41e3a; color: white;">
-            <h5 class="mb-0"><i class="fa fa-address-card"></i> Kontakt</h5>
+            <h5 class="mb-0"><i class="fa fa-address-card"></i> {{ pd_contact }}</h5>
           </div>
           <div class="card-body">
             {% if professional.company_name %}
@@ -232,7 +232,7 @@
             
             {% if professional.is_verified %}
             <div class="alert alert-success mt-3 mb-0">
-              <i class="fa fa-check-circle"></i> <strong>Verifizierter Anbieter</strong>
+              <i class="fa fa-check-circle"></i> <strong>{{ pd_verified_provider }}</strong>
             </div>
             {% endif %}
           </div>
@@ -240,24 +240,24 @@
           <!-- KONTAKTFORMULAR -->
           {% if professional.show_contact_form %}
           <div class="card-footer" style="background: #f8f9fa;">
-            <h6 class="mb-3"><i class="fa fa-paper-plane"></i> Nachricht senden</h6>
+            <h6 class="mb-3"><i class="fa fa-paper-plane"></i> {{ pd_send_message }}</h6>
             <form id="contact-form">
               <input type="hidden" id="professional-id" value="{{ professional.id }}">
               <input type="hidden" id="professional-email" value="{{ professional.email }}">
               <div class="form-group">
-                <input type="text" class="form-control" id="contact-name" placeholder="Ihr Name" required>
+                <input type="text" class="form-control" id="contact-name" placeholder="{{ pd_your_name }}" required>
               </div>
               <div class="form-group">
-                <input type="email" class="form-control" id="contact-email" placeholder="Ihre E-Mail" required>
+                <input type="email" class="form-control" id="contact-email" placeholder="{{ pd_your_email }}" required>
               </div>
               <div class="form-group">
-                <input type="tel" class="form-control" id="contact-phone" placeholder="Ihre Telefonnummer">
+                <input type="tel" class="form-control" id="contact-phone" placeholder="{{ pd_your_phone }}">
               </div>
               <div class="form-group">
-                <textarea class="form-control" id="contact-message" rows="3" placeholder="Ihre Nachricht" required></textarea>
+                <textarea class="form-control" id="contact-message" rows="3" placeholder="{{ pd_your_message }}" required></textarea>
               </div>
               <button type="submit" class="btn btn-block" style="background: #c41e3a; color: white;">
-                <i class="fa fa-paper-plane"></i> Absenden
+                <i class="fa fa-paper-plane"></i> {{ pd_send }}
               </button>
               <div id="contact-status" class="mt-2"></div>
             </form>
@@ -315,12 +315,12 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
             status.innerHTML = '<div class="alert alert-danger">' + result.message + '</div>';
         }
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa fa-paper-plane"></i> Absenden';
+        btn.innerHTML = '<i class="fa fa-paper-plane"></i> {{ pd_send }}';
     })
     .catch(error => {
         status.innerHTML = '<div class="alert alert-danger">Fehler beim Senden</div>';
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa fa-paper-plane"></i> Absenden';
+        btn.innerHTML = '<i class="fa fa-paper-plane"></i> {{ pd_send }}';
     });
 });
 </script>
