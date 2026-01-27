@@ -1,5 +1,6 @@
 """
 XML Import Schnittstellen für 123-Kroatien.eu
+Mit automatischer Bildkomprimierung
 """
 
 import xml.etree.ElementTree as ET
@@ -7,6 +8,7 @@ from django.db import transaction
 from listings.models import Listing
 from accounts.models import Agent
 from main.professional_models import Professional
+from listings.image_utils import download_and_compress_image
 import requests
 import logging
 
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class OpenImmoImporter:
-    """OpenImmo XML Import"""
+    """OpenImmo XML Import mit Bildunterstützung"""
     
     OBJEKTART_MAPPING = {
         'zimmer': 'Apartment', 'wohnung': 'Apartment', 'haus': 'House',
@@ -66,6 +68,54 @@ class OpenImmoImporter:
         except ValueError:
             return default
     
+    def extract_images(self, immobilie_elem):
+        """Extrahiert Bild-URLs aus OpenImmo <anhaenge> Element"""
+        images = []
+        
+        # OpenImmo Standard: <anhaenge><anhang>
+        anhaenge = immobilie_elem.find('.//anhaenge')
+        if anhaenge is not None:
+            for anhang in anhaenge.findall('anhang'):
+                # Typ prüfen (BILD, GRUNDRISS, etc.)
+                anhang_art = anhang.get('gruppe', '').upper()
+                
+                # Nur Bilder importieren
+                if anhang_art in ['BILD', 'FOTO', 'AUSSENANSICHT', 'INNENANSICHT', 'TITELBILD', '']:
+                    # Pfad oder URL finden
+                    daten = anhang.find('daten')
+                    if daten is not None:
+                        pfad = daten.find('pfad')
+                        if pfad is not None and pfad.text:
+                            images.append({
+                                'url': pfad.text.strip(),
+                                'titel': self._get_text(anhang, 'anhangtitel'),
+                                'typ': anhang_art or 'BILD'
+                            })
+        
+        # Alternative: Direkte <bild> Tags
+        for bild in immobilie_elem.findall('.//bild'):
+            url = bild.get('url') or bild.text
+            if url:
+                images.append({
+                    'url': url.strip(),
+                    'titel': bild.get('titel', ''),
+                    'typ': 'BILD'
+                })
+        
+        # Alternative: <fotos> Container
+        fotos = immobilie_elem.find('.//fotos')
+        if fotos is not None:
+            for foto in fotos.findall('foto'):
+                url = foto.get('url') or self._get_text(foto, 'url') or foto.text
+                if url:
+                    images.append({
+                        'url': url.strip(),
+                        'titel': foto.get('titel', ''),
+                        'typ': 'FOTO'
+                    })
+        
+        return images
+    
     def extract_property(self, immobilie_elem):
         data = {}
         
@@ -108,6 +158,9 @@ class OpenImmoImporter:
             data['title'] = self._get_text(freitexte, 'objekttitel')
             data['description'] = self._get_text(freitexte, 'objektbeschreibung')
         
+        # Bilder extrahieren
+        data['_images'] = self.extract_images(immobilie_elem)
+        
         return data
     
     @transaction.atomic
@@ -129,20 +182,25 @@ class OpenImmoImporter:
             except Exception as e:
                 error_count += 1
                 errors.append(str(e))
+                logger.error(f"Import-Fehler: {e}")
         
         return success_count, error_count, errors
     
     def _create_listing(self, data):
-        data.setdefault('title', 'Immobilie')
-        data.setdefault('type', 'Other')
-        data.setdefault('status', 'For Sale')
+        # Bilder separat behandeln
+        images = data.pop('_images', [])
+        
+        data.setdefault('property_title', data.pop('title', 'Immobilie'))
+        data.setdefault('property_type', data.pop('type', 'Other'))
+        data.setdefault('property_status', data.pop('status', 'For Sale'))
+        data.setdefault('property_price', data.pop('price', 0))
+        data.setdefault('property_description', data.pop('description', ''))
         data.setdefault('bedrooms', 1)
         data.setdefault('bathrooms', 1)
         data.setdefault('floors', 1)
         data.setdefault('garage', 0)
         data.setdefault('size', 0)
         data.setdefault('area', 0)
-        data.setdefault('price', 0)
         data.setdefault('country', 'Kroatien')
         data.setdefault('is_published', True)
         
@@ -151,11 +209,45 @@ class OpenImmoImporter:
         elif self.agent:
             data['realtor'] = self.agent
         
-        return Listing.objects.create(**data)
+        # Listing erstellen (ohne Bilder)
+        listing = Listing(**data)
+        listing.save()
+        
+        # Bilder herunterladen, komprimieren und speichern
+        photo_fields = ['photo_main', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5', 'photo_6']
+        
+        for i, img_data in enumerate(images[:7]):  # Max 7 Bilder
+            url = img_data.get('url', '')
+            if not url:
+                continue
+            
+            try:
+                # Bild herunterladen und komprimieren
+                compressed_image = download_and_compress_image(
+                    url=url,
+                    filename=f"listing_{listing.id}_photo_{i}"
+                )
+                
+                if compressed_image:
+                    field_name = photo_fields[i]
+                    getattr(listing, field_name).save(compressed_image.name, compressed_image, save=False)
+                    
+                    # Beschriftung speichern wenn vorhanden
+                    caption_field = f"{field_name}_caption"
+                    if hasattr(listing, caption_field) and img_data.get('titel'):
+                        setattr(listing, caption_field, img_data['titel'])
+                    
+                    logger.info(f"Bild {i+1}/{len(images)} für Listing {listing.id} importiert")
+                    
+            except Exception as e:
+                logger.error(f"Fehler beim Bildimport von {url}: {e}")
+        
+        listing.save()
+        return listing
 
 
 class SimpleXMLImporter:
-    """Einfaches XML fuer WordPress-Seiten kroatischer Makler"""
+    """Einfaches XML fuer WordPress-Seiten kroatischer Makler mit Bildunterstützung"""
     
     FIELD_MAPPINGS = {
         'title': ['title', 'naziv', 'naslov', 'name', 'objekttitel'],
@@ -168,6 +260,8 @@ class SimpleXMLImporter:
         'type': ['type', 'tip', 'vrsta', 'objektart'],
         'status': ['status', 'stanje', 'prodaja_najam'],
     }
+    
+    IMAGE_FIELD_NAMES = ['image', 'slika', 'bild', 'foto', 'photo', 'picture', 'img']
     
     TYPE_MAPPING = {
         'stan': 'Apartment', 'kuca': 'House', 'vila': 'Villa',
@@ -212,6 +306,40 @@ class SimpleXMLImporter:
                     return child.text.strip()
         return None
     
+    def extract_images(self, prop_elem):
+        """Extrahiert Bild-URLs aus verschiedenen XML-Formaten"""
+        images = []
+        
+        # Container-Elemente durchsuchen
+        image_containers = ['images', 'slike', 'bilder', 'fotos', 'photos', 'gallery', 'galerija']
+        
+        for container_name in image_containers:
+            container = prop_elem.find(container_name)
+            if container is not None:
+                for child in container:
+                    url = child.get('url') or child.get('src') or child.text
+                    if url:
+                        images.append({'url': url.strip(), 'titel': child.get('title', '')})
+        
+        # Direkte Bild-Tags durchsuchen
+        for img_name in self.IMAGE_FIELD_NAMES:
+            # Einzelnes Bild
+            img_elem = prop_elem.find(img_name)
+            if img_elem is not None:
+                url = img_elem.get('url') or img_elem.get('src') or img_elem.text
+                if url:
+                    images.append({'url': url.strip(), 'titel': img_elem.get('title', '')})
+            
+            # Nummerierte Bilder (image1, image2, etc.)
+            for i in range(1, 10):
+                img_elem = prop_elem.find(f"{img_name}{i}") or prop_elem.find(f"{img_name}_{i}")
+                if img_elem is not None:
+                    url = img_elem.get('url') or img_elem.get('src') or img_elem.text
+                    if url:
+                        images.append({'url': url.strip(), 'titel': img_elem.get('title', '')})
+        
+        return images
+    
     def extract_property(self, prop_elem):
         data = {}
         data['title'] = self._find_field(prop_elem, 'title')
@@ -245,6 +373,9 @@ class SimpleXMLImporter:
         status = self._find_field(prop_elem, 'status')
         data['status'] = self.STATUS_MAPPING.get(status.lower() if status else '', 'For Sale')
         
+        # Bilder extrahieren
+        data['_images'] = self.extract_images(prop_elem)
+        
         return data
     
     @transaction.atomic
@@ -273,20 +404,25 @@ class SimpleXMLImporter:
             except Exception as e:
                 error_count += 1
                 errors.append(str(e))
+                logger.error(f"Import-Fehler: {e}")
         
         return success_count, error_count, errors
     
     def _create_listing(self, data):
-        data.setdefault('title', 'Nekretnina')
-        data.setdefault('type', 'Other')
-        data.setdefault('status', 'For Sale')
+        # Bilder separat behandeln
+        images = data.pop('_images', [])
+        
+        data.setdefault('property_title', data.pop('title', 'Nekretnina'))
+        data.setdefault('property_type', data.pop('type', 'Other'))
+        data.setdefault('property_status', data.pop('status', 'For Sale'))
+        data.setdefault('property_price', data.pop('price', 0))
+        data.setdefault('property_description', data.pop('description', ''))
         data.setdefault('bedrooms', 1)
         data.setdefault('bathrooms', 1)
         data.setdefault('floors', 1)
         data.setdefault('garage', 0)
         data.setdefault('size', 0)
         data.setdefault('area', 0)
-        data.setdefault('price', 0)
         data.setdefault('country', 'Kroatien')
         data.setdefault('is_published', True)
         
@@ -295,12 +431,45 @@ class SimpleXMLImporter:
         elif self.agent:
             data['realtor'] = self.agent
         
-        return Listing.objects.create(**data)
+        # Listing erstellen (ohne Bilder)
+        listing = Listing(**data)
+        listing.save()
+        
+        # Bilder herunterladen, komprimieren und speichern
+        photo_fields = ['photo_main', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5', 'photo_6']
+        
+        for i, img_data in enumerate(images[:7]):
+            url = img_data.get('url', '')
+            if not url:
+                continue
+            
+            try:
+                compressed_image = download_and_compress_image(
+                    url=url,
+                    filename=f"listing_{listing.id}_photo_{i}"
+                )
+                
+                if compressed_image:
+                    field_name = photo_fields[i]
+                    getattr(listing, field_name).save(compressed_image.name, compressed_image, save=False)
+                    
+                    caption_field = f"{field_name}_caption"
+                    if hasattr(listing, caption_field) and img_data.get('titel'):
+                        setattr(listing, caption_field, img_data['titel'])
+                    
+                    logger.info(f"Bild {i+1}/{len(images)} für Listing {listing.id} importiert")
+                    
+            except Exception as e:
+                logger.error(f"Fehler beim Bildimport von {url}: {e}")
+        
+        listing.save()
+        return listing
 
 
 def import_from_url(url, importer_class, professional_id=None, agent_id=None):
+    """Importiert Listings von einer XML-URL"""
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, timeout=60)
         response.raise_for_status()
         importer = importer_class(professional_id=professional_id, agent_id=agent_id)
         return importer.import_from_string(response.text)
