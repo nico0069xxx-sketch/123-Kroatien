@@ -108,7 +108,7 @@
                     </h5>
                     <div class="input-group">
                         <input type="text" id="smart-search-input" class="form-control form-control-lg" 
-                               placeholder="{{ smart_search_placeholder }}"
+                               placeholder=""
                                style="border-radius: 10px 0 0 10px; border: none; padding: 15px;">
                         <div class="input-group-append">
                             <button id="smart-search-btn" class="btn btn-danger btn-lg" style="border-radius: 0 10px 10px 0; padding: 15px 30px;">
@@ -119,6 +119,9 @@
                     <div id="smart-search-loading" class="text-center mt-3" style="display: none;">
                         <i class="fa fa-spinner fa-spin text-white"></i>
                         <span class="text-white ml-2">{{ smart_search_loading }}</span>
+                    </div>
+                    <div id="smart-search-error" class="text-center mt-3" style="display: none;">
+                        <span style="color: #ff6b6b; font-weight: 500;"></span>
                     </div>
                 </div>
             </div>
@@ -1133,6 +1136,7 @@ function performSmartSearch() {
             listings.innerHTML = '';
             
             if (data.results && data.results.length > 0) {
+                message.style.color = '#003167';
                 data.results.forEach(item => {
                     const card = `
                         <div class="col-md-4 mb-4">
@@ -1154,10 +1158,16 @@ function performSmartSearch() {
                     `;
                     listings.innerHTML += card;
                 });
+                results.style.display = 'block';
+                results.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Zeige Fehlermeldung inline in der Suchbox
+                const errorDiv = document.getElementById('smart-search-error');
+                errorDiv.querySelector('span').textContent = data.message;
+                errorDiv.style.display = 'block';
+                // Verstecke nach 5 Sekunden
+                setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
             }
-            
-            results.style.display = 'block';
-            results.scrollIntoView({ behavior: 'smooth' });
         } else {
             alert(data.message || 'Fehler bei der Suche');
         }
@@ -1182,6 +1192,108 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+// Typewriter Animation für KI-Suche (12 Sprachen)
+(function() {
+    const lang = '{{ language }}' || 'ge';
+    
+    const translations = {
+        ge: {
+            base: "Beschreibe Deine Traumimmobilie... z.B. ",
+            examples: ["Haus am Meer mit Pool unter 500.000 €", "Apartment in Split mit Meerblick", "Villa mit Garten in Istrien", "Baugrundstück nahe Zadar", "Penthouse in Dubrovnik mit Terrasse", "Ferienhaus auf der Insel Krk"]
+        },
+        en: {
+            base: "Describe your dream property... e.g. ",
+            examples: ["House by the sea with pool under €500,000", "Apartment in Split with sea view", "Villa with garden in Istria", "Building plot near Zadar", "Penthouse in Dubrovnik with terrace", "Holiday home on the island of Krk"]
+        },
+        hr: {
+            base: "Opišite svoju nekretninu iz snova... npr. ",
+            examples: ["Kuća uz more s bazenom ispod 500.000 €", "Stan u Splitu s pogledom na more", "Vila s vrtom u Istri", "Građevinsko zemljište blizu Zadra", "Penthouse u Dubrovniku s terasom", "Kuća za odmor na otoku Krku"]
+        },
+        fr: {
+            base: "Décrivez votre propriété de rêve... ex. ",
+            examples: ["Maison en bord de mer avec piscine moins de 500.000 €", "Appartement à Split avec vue mer", "Villa avec jardin en Istrie", "Terrain à bâtir près de Zadar", "Penthouse à Dubrovnik avec terrasse", "Maison de vacances sur l'île de Krk"]
+        },
+        nl: {
+            base: "Beschrijf je droomwoning... bijv. ",
+            examples: ["Huis aan zee met zwembad onder €500.000", "Appartement in Split met zeezicht", "Villa met tuin in Istrië", "Bouwgrond nabij Zadar", "Penthouse in Dubrovnik met terras", "Vakantiehuis op het eiland Krk"]
+        },
+        pl: {
+            base: "Opisz swoją wymarzoną nieruchomość... np. ",
+            examples: ["Dom nad morzem z basenem poniżej 500.000 €", "Apartament w Splicie z widokiem na morze", "Willa z ogrodem w Istrii", "Działka budowlana koło Zadaru", "Penthouse w Dubrowniku z tarasem", "Dom wakacyjny na wyspie Krk"]
+        },
+        cz: {
+            base: "Popište svou vysněnou nemovitost... např. ",
+            examples: ["Dům u moře s bazénem pod 500.000 €", "Byt ve Splitu s výhledem na moře", "Vila se zahradou v Istrii", "Stavební pozemek u Zadaru", "Penthouse v Dubrovníku s terasou", "Rekreační dům na ostrově Krk"]
+        },
+        sk: {
+            base: "Opíšte svoju vysnívanú nehnuteľnosť... napr. ",
+            examples: ["Dom pri mori s bazénom pod 500.000 €", "Byt v Splite s výhľadom na more", "Vila so záhradou v Istrii", "Stavebný pozemok pri Zadare", "Penthouse v Dubrovníku s terasou", "Rekreačný dom na ostrove Krk"]
+        },
+        ru: {
+            base: "Опишите недвижимость вашей мечты... напр. ",
+            examples: ["Дом у моря с бассейном до 500.000 €", "Квартира в Сплите с видом на море", "Вилла с садом в Истрии", "Участок под застройку рядом с Задаром", "Пентхаус в Дубровнике с террасой", "Дом для отдыха на острове Крк"]
+        },
+        gr: {
+            base: "Περιγράψτε το ακίνητο των ονείρων σας... π.χ. ",
+            examples: ["Σπίτι δίπλα στη θάλασσα με πισίνα κάτω από 500.000 €", "Διαμέρισμα στο Σπλιτ με θέα στη θάλασσα", "Βίλα με κήπο στην Ίστρια", "Οικόπεδο κοντά στο Ζαντάρ", "Ρετιρέ στο Ντουμπρόβνικ με βεράντα", "Εξοχικό στο νησί Κρκ"]
+        },
+        sw: {
+            base: "Beskriv din drömfastighet... t.ex. ",
+            examples: ["Hus vid havet med pool under 500.000 €", "Lägenhet i Split med havsutsikt", "Villa med trädgård i Istrien", "Tomt nära Zadar", "Penthouse i Dubrovnik med terrass", "Semesterhus på ön Krk"]
+        },
+        no: {
+            base: "Beskriv drømmeeiendommen din... f.eks. ",
+            examples: ["Hus ved sjøen med basseng under 500.000 €", "Leilighet i Split med havutsikt", "Villa med hage i Istria", "Byggetomt nær Zadar", "Penthouse i Dubrovnik med terrasse", "Feriehus på øya Krk"]
+        }
+    };
+    
+    const t = translations[lang] || translations['ge'];
+    const baseText = t.base;
+    const examples = t.examples;
+    
+    const input = document.getElementById('smart-search-input');
+    if (!input) return;
+    
+    let exampleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    
+    function typeWriter() {
+        const fullText = baseText + examples[exampleIndex];
+        
+        if (!isDeleting) {
+            charIndex++;
+            if (charIndex > fullText.length) {
+                isDeleting = true;
+                setTimeout(typeWriter, 2000);
+                return;
+            }
+        } else {
+            charIndex--;
+            if (charIndex < baseText.length) {
+                isDeleting = false;
+                exampleIndex = (exampleIndex + 1) % examples.length;
+                setTimeout(typeWriter, 500);
+                return;
+            }
+        }
+        
+        input.setAttribute('placeholder', fullText.substring(0, charIndex));
+        setTimeout(typeWriter, isDeleting ? 30 : 50);
+    }
+    
+    input.addEventListener('focus', function() {
+        if (this.value === '') this.setAttribute('placeholder', baseText);
+    });
+    
+    input.addEventListener('blur', function() {
+        if (this.value === '') { charIndex = 0; isDeleting = false; typeWriter(); }
+    });
+    
+    typeWriter();
+})();
+
 </script>
 {% endblock body %}
 
