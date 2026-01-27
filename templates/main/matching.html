@@ -119,17 +119,9 @@ function sucheExperten() {
                 html += '<small class="text-muted"><i class="fa fa-map-marker"></i> ' + p.city + ', ' + p.region + '</small>';
                 html += '</p>';
                 
-                // Kontakt-Buttons
+                // Profil-Button (führt zur Detailseite)
                 html += '<div class="btn-group btn-group-sm">';
-                if (p.email) {
-                    html += '<a href="mailto:' + p.email + '" class="btn btn-outline-primary"><i class="fa fa-envelope"></i> {{ texte.contact }}</a>';
-                }
-                if (p.phone) {
-                    html += '<a href="tel:' + p.phone + '" class="btn btn-outline-secondary"><i class="fa fa-phone"></i> ' + p.phone + '</a>';
-                }
-                if (p.website) {
-                    html += '<a href="' + p.website + '" target="_blank" class="btn btn-outline-info"><i class="fa fa-globe"></i> {{ texte.website }}</a>';
-                }
+                html += '<a href="/{{ language }}/{{ country_name }}/' + p.type_slug + '/' + p.slug + '/" class="btn btn-primary"><i class="fa fa-user"></i> {{ texte.view_profile }}</a>';
                 html += '</div>';
                 
                 html += '</div></div></div></div>';

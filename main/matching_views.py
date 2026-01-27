@@ -24,6 +24,7 @@ TEXTE = {
         'contact': 'Kontaktieren',
         'website': 'Webseite',
         'error_short': 'Bitte beschreiben Sie Ihr Anliegen ausfuehrlicher.',
+        'view_profile': 'Profil ansehen',
     },
     'en': {
         'title': 'Expert Finder',
@@ -36,6 +37,7 @@ TEXTE = {
         'contact': 'Contact',
         'website': 'Website',
         'error_short': 'Please describe your request in more detail.',
+        'view_profile': 'View profile',
     },
     'hr': {
         'title': 'Pronalazac strucnjaka',
@@ -48,6 +50,7 @@ TEXTE = {
         'contact': 'Kontaktiraj',
         'website': 'Web stranica',
         'error_short': 'Molimo opisite svoj zahtjev detaljnije.',
+        'view_profile': 'Pogledaj profil',
     },
     'fr': {
         'title': 'Recherche d\'experts',
@@ -60,6 +63,7 @@ TEXTE = {
         'contact': 'Contacter',
         'website': 'Site web',
         'error_short': 'Veuillez decrire votre demande plus en detail.',
+        'view_profile': 'Voir le profil',
     },
     'nl': {
         'title': 'Expert zoeken',
@@ -72,6 +76,7 @@ TEXTE = {
         'contact': 'Contact',
         'website': 'Website',
         'error_short': 'Beschrijf uw vraag uitgebreider.',
+        'view_profile': 'Bekijk profiel',
     },
     'pl': {
         'title': 'Wyszukiwarka ekspertow',
@@ -84,6 +89,7 @@ TEXTE = {
         'contact': 'Kontakt',
         'website': 'Strona www',
         'error_short': 'Prosze opisac swoja potrzebe bardziej szczegolowo.',
+        'view_profile': 'Zobacz profil',
     },
     'cz': {
         'title': 'Vyhledavac expertu',
@@ -96,6 +102,7 @@ TEXTE = {
         'contact': 'Kontaktovat',
         'website': 'Webova stranka',
         'error_short': 'Popiste prosim svuj pozadavek podrobneji.',
+        'view_profile': 'Zobrazit profil',
     },
     'sk': {
         'title': 'Vyhladavac expertov',
@@ -108,6 +115,7 @@ TEXTE = {
         'contact': 'Kontaktovat',
         'website': 'Webova stranka',
         'error_short': 'Popiste prosim svoju poziadavku podrobnejsie.',
+        'view_profile': 'Zobrazit profil',
     },
     'ru': {
         'title': 'Poisk ekspertov',
@@ -120,6 +128,7 @@ TEXTE = {
         'contact': 'Svjazatsja',
         'website': 'Sajt',
         'error_short': 'Pozhalujsta, opishite vash zapros podrobnee.',
+        'view_profile': 'Posmotret profil',
     },
     'gr': {
         'title': 'Anazhthsh eidikwn',
@@ -132,6 +141,7 @@ TEXTE = {
         'contact': 'Epikoinwnia',
         'website': 'Istoselida',
         'error_short': 'Parakalw perigrapste to aithma sas pio analytika.',
+        'view_profile': 'Provoli profil',
     },
     'sw': {
         'title': 'Expertsokare',
@@ -144,6 +154,7 @@ TEXTE = {
         'contact': 'Kontakta',
         'website': 'Webbplats',
         'error_short': 'Beskriv ditt arende mer utforligt.',
+        'view_profile': 'Visa profil',
     },
     'no': {
         'title': 'Ekspertsoker',
@@ -156,6 +167,7 @@ TEXTE = {
         'contact': 'Kontakt',
         'website': 'Nettsted',
         'error_short': 'Vennligst beskriv ditt behov mer detaljert.',
+        'view_profile': 'Se profil',
     },
 }
 

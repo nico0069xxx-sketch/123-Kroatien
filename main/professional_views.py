@@ -477,7 +477,7 @@ def professional_detail(request, country, category, slug):
     
     # Übersetzte Felder
     translated_region = translate_region(professional.region, lang)
-    translated_languages = translate_languages(professional.languages, lang)
+    translated_languages = translate_languages(professional.spoken_languages, lang)
     
     # Service-Regionen übersetzen (kommagetrennt)
     translated_service_regions = ""

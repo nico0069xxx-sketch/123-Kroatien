@@ -136,11 +136,23 @@ def get_professional_matches(anfrage, language='ge'):
     # 3. Ergebnisse formatieren
     prof_list = []
     for p in professionals:
+        # URL-Kategorie Mapping
+        category_mapping = {
+            'real_estate_agent': 'immobilienmakler',
+            'construction_company': 'bauunternehmer',
+            'lawyer': 'rechtsanwaelte',
+            'tax_advisor': 'steuerberater',
+            'architect': 'architekten',
+        }
+        category_slug = category_mapping.get(p.professional_type, 'dienstleister')
+        
         prof_list.append({
             'id': str(p.id),
             'name': p.name,
             'company': p.company_name or '',
             'type': p.get_professional_type_display(),
+            'type_slug': category_slug,
+            'slug': p.slug,
             'city': p.city,
             'region': p.get_region_display(),
             'languages': p.spoken_languages,
