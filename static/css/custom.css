@@ -11,7 +11,7 @@ v.topbar {
   text-decoration: none;
 }
 .img-header {
-  width: 12px;
+  width: 8px;
 }
 
 .bg-outline-mybtn {
@@ -269,7 +269,7 @@ v.topbar {
 }
 
 #a img, .btn-select img{
-  width: 12px;
+  width: 8px;
   
 }
 
@@ -509,9 +509,19 @@ body, html {
 
 /* KÖNIGSKLASSE CTA Banner für Dienstleister */
 .cta-professionals {
-    background: linear-gradient(135deg, #1e3a5f 0%, #c02333 100%);
+    background: linear-gradient(135deg, #1e3a5f 0%, #2a4a6f 25%, #1e3a5f 50%, #c02333 75%, #1e3a5f 100%);
+    background-size: 400% 400%;
+    animation: cta-gradient-shift 5s ease-in-out infinite;
     padding: 40px 0;
     margin: 30px 0;
+}
+
+@keyframes cta-gradient-shift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 100%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 0%; }
+    100% { background-position: 0% 50%; }
 }
 
 .cta-professionals .cta-box {
@@ -547,12 +557,50 @@ body, html {
     transition: all 0.3s ease;
 }
 
+
+
 .cta-professionals .btn-cta:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     background: #fff;
     color: #1e3a5f;
 }
+
+/* Button Light-Orbit Animation */
+.btn-cta-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-light-track {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid transparent;
+    border-radius: 55px;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.light-dot {
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 40%, transparent 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.5);
+    offset-path: path("M 45,-3 L 185,-3 Q 218,-3 218,27 Q 218,57 185,57 L 45,57 Q -5,57 -5,27 Q -5,-3 45,-3");
+    offset-distance: 0%;
+    animation: follow-path 14s ease-in-out infinite;
+}
+
+@keyframes follow-path {
+    0% { offset-distance: 0%; }
+    85% { offset-distance: 100%; }
+    100% { offset-distance: 100%; }
+}
+
 
 .cta-professionals .btn-cta i {
     margin-right: 8px;
