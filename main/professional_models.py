@@ -1,4 +1,5 @@
 from django.db import models
+from listings.image_utils import compress_image
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 import uuid

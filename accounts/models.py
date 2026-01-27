@@ -1,4 +1,5 @@
 from django.db import models
+from listings.image_utils import compress_image
 from django.contrib.auth.models import User
 import uuid
 # Create your models here.
@@ -56,6 +57,21 @@ class Agent(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
+
+    def save(self, *args, **kwargs):
+        """Komprimiert Bilder automatisch beim Speichern."""
+        image_fields = ['profile_image', 'company_logo', 'portrait_photo']
+        for field_name in image_fields:
+            image = getattr(self, field_name, None)
+            if image and hasattr(image, 'file'):
+                try:
+                    if hasattr(image.file, 'content_type'):
+                        compressed = compress_image(image)
+                        setattr(self, field_name, compressed)
+                except Exception as e:
+                    print(f"Komprimierung von {field_name} fehlgeschlagen: {e}")
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return str(self.user.username)
     
@@ -72,6 +88,21 @@ class OTPVerification(models.Model):
     otp = models.CharField(max_length=6)
     sent_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
+
+
+    def save(self, *args, **kwargs):
+        """Komprimiert Bilder automatisch beim Speichern."""
+        image_fields = ['profile_image', 'company_logo', 'portrait_photo']
+        for field_name in image_fields:
+            image = getattr(self, field_name, None)
+            if image and hasattr(image, 'file'):
+                try:
+                    if hasattr(image.file, 'content_type'):
+                        compressed = compress_image(image)
+                        setattr(self, field_name, compressed)
+                except Exception as e:
+                    print(f"Komprimierung von {field_name} fehlgeschlagen: {e}")
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username

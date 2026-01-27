@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from accounts.models import Agent
 import json
+from .image_utils import compress_image
 # Create your models here.
 
 class Listing(models.Model):
@@ -81,6 +82,28 @@ class Listing(models.Model):
     slovak_content = models.TextField(blank=True)
     dutch_content = models.TextField(blank=True)
     
+    
+    def save(self, *args, **kwargs):
+        """Überschreibt save() um Bilder automatisch zu komprimieren."""
+        # Liste aller Bildfelder
+        image_fields = [
+            'company_logo', 'portrait_photo', 'photo_main',
+            'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5', 'photo_6'
+        ]
+        
+        for field_name in image_fields:
+            image = getattr(self, field_name, None)
+            if image and hasattr(image, 'file'):
+                try:
+                    # Nur neue Uploads komprimieren (nicht bereits gespeicherte)
+                    if hasattr(image.file, 'content_type'):
+                        compressed = compress_image(image)
+                        setattr(self, field_name, compressed)
+                except Exception as e:
+                    print(f"Komprimierung von {field_name} fehlgeschlagen: {e}")
+        
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.property_title
     
