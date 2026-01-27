@@ -7,7 +7,34 @@
 - **Sprache:** Deutsch, informell ("du")
 - **User:** Nik
 - **Workflow:** Einzelne, kopierbare Bash-Befehle für Mac M1 Terminal
-- **GitHub Branch:** `feature/session-26-jan-updates` → PR bereit zum Mergen
+- **GitHub Branch:** `fix/professional-detail-500-error` → gemergt in main
+
+---
+
+## ✅ Session 27. Januar 2026 - Professional Detail Page Fix
+
+### P0 Bug Fix: 500 Error auf Professional Detail Page
+- **Problem:** `/ge/kroatien/steuerberater/steuer-plus/` warf FieldError
+- **Ursache:** Queries auf nicht existierende Felder (`is_active`, `sort_order` auf ReferenceProject)
+- **Geänderte Dateien:**
+  - `main/professional_views.py` - Zeilen 467-503 korrigiert
+  - `templates/main/professional_detail.html` - Feldnamen korrigiert
+
+### Durchgeführte Fixes:
+| Problem | Lösung |
+|---------|--------|
+| `professional` Variable nicht definiert | `get_object_or_404()` Zeile wieder eingefügt |
+| Komma fehlte bei Query | `professional=professional, language=lang` |
+| `is_active` Filter auf ReferenceProject | Filter entfernt (Feld existiert nicht im Model) |
+| `sort_order` in order_by() | Entfernt (Feld existiert nicht im Model) |
+| DB Schema Mismatch ReferenceProject | `reference_projects = []` temporär gesetzt |
+| Template: `professional.logo` | → `professional.company_logo` |
+| Template: `professional.portrait` | → `professional.portrait_photo` |
+| Template: `professional.languages_spoken` | → `professional.get_spoken_languages_display` |
+
+### ⚠️ Temporär deaktiviert:
+- **Referenzprojekte** sind deaktiviert wegen DB Schema Mismatch
+- Kann später aktiviert werden wenn Migration repariert wird
 
 ---
 
