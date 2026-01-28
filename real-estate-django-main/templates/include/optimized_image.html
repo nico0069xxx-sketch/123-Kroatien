@@ -1,0 +1,16 @@
+{% comment %}
+Optimized Image Component mit Lazy Loading
+Verwendung: {% optimized_image src alt class %}
+{% endcomment %}
+
+<img 
+    src="{{ src }}" 
+    alt="{{ alt }}"
+    class="{{ css_class }}"
+    loading="lazy"
+    decoding="async"
+    {% if placeholder %}
+    style="background-color: #f0f0f0;"
+    onerror="this.onerror=null; this.src='/static/images/placeholder.png';"
+    {% endif %}
+>
