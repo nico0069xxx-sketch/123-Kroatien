@@ -3,6 +3,45 @@
 {% block body %}
 {% load i18n %}
 
+<!-- Schema.org ItemList für Suchergebnisse -->
+{% if listings %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Immobilien in Kroatien",
+    "description": "Aktuelle Immobilienangebote an der kroatischen Adriaküste",
+    "numberOfItems": {{ listings|length }},
+    "itemListElement": [
+        {% for listing in listings %}
+        {
+            "@type": "ListItem",
+            "position": {{ forloop.counter }},
+            "item": {
+                "@type": "RealEstateListing",
+                "name": "{{ listing.property_title }}",
+                "url": "https://123-kroatien.eu/property-details/{{ listing.id }}/",
+                {% if listing.photo_main %}
+                "image": "https://123-kroatien.eu{{ listing.photo_main.url }}",
+                {% endif %}
+                "offers": {
+                    "@type": "Offer",
+                    "price": "{{ listing.property_price }}",
+                    "priceCurrency": "EUR"
+                },
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "{{ listing.city }}",
+                    "addressCountry": "HR"
+                }
+            }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+
 <div class="clearfix"></div>
 
 <!-- LISTING LIST -->
