@@ -864,3 +864,106 @@ def sitemap_translations(request):
     
     # Kombiniere alles
     return {**translations, **url_segments}
+
+
+# ============================================
+# SEO META TAGS (Open Graph & Twitter Cards)
+# ============================================
+
+SEO_META_TRANSLATIONS = {
+    "ge": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Immobilien Kroatien | Häuser, Wohnungen & Villen an der Adria",
+        "meta_default_description": "Finden Sie Ihre Traumimmobilie in Kroatien. Verifizierte Makler, exklusive Villen, Häuser und Wohnungen an der Adriaküste. Persönliche Beratung in 12 Sprachen.",
+        "meta_default_keywords": "Immobilien Kroatien, Haus kaufen Kroatien, Villa Kroatien, Wohnung Adria, Ferienhaus Kroatien, Makler Kroatien",
+    },
+    "en": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Croatia Real Estate | Houses, Apartments & Villas on the Adriatic",
+        "meta_default_description": "Find your dream property in Croatia. Verified agents, exclusive villas, houses and apartments on the Adriatic coast. Personal consultation in 12 languages.",
+        "meta_default_keywords": "Croatia real estate, buy house Croatia, villa Croatia, apartment Adriatic, holiday home Croatia, real estate agent Croatia",
+    },
+    "hr": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Nekretnine Hrvatska | Kuće, Stanovi i Vile na Jadranu",
+        "meta_default_description": "Pronađite svoju nekretninu iz snova u Hrvatskoj. Verificirani agenti, ekskluzivne vile, kuće i stanovi na jadranskoj obali. Osobno savjetovanje na 12 jezika.",
+        "meta_default_keywords": "nekretnine Hrvatska, kupiti kuću Hrvatska, vila Hrvatska, stan Jadran, kuća za odmor Hrvatska, agent za nekretnine Hrvatska",
+    },
+    "fr": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Immobilier Croatie | Maisons, Appartements & Villas sur l'Adriatique",
+        "meta_default_description": "Trouvez votre propriété de rêve en Croatie. Agents vérifiés, villas exclusives, maisons et appartements sur la côte adriatique. Conseil personnalisé en 12 langues.",
+        "meta_default_keywords": "immobilier Croatie, acheter maison Croatie, villa Croatie, appartement Adriatique, maison de vacances Croatie, agent immobilier Croatie",
+    },
+    "nl": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Vastgoed Kroatië | Huizen, Appartementen & Villa's aan de Adriatische Zee",
+        "meta_default_description": "Vind uw droomwoning in Kroatië. Geverifieerde makelaars, exclusieve villa's, huizen en appartementen aan de Adriatische kust. Persoonlijk advies in 12 talen.",
+        "meta_default_keywords": "vastgoed Kroatië, huis kopen Kroatië, villa Kroatië, appartement Adriatische Zee, vakantiehuis Kroatië, makelaar Kroatië",
+    },
+    "pl": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Nieruchomości Chorwacja | Domy, Mieszkania i Wille nad Adriatykiem",
+        "meta_default_description": "Znajdź wymarzoną nieruchomość w Chorwacji. Zweryfikowani agenci, ekskluzywne wille, domy i mieszkania na wybrzeżu Adriatyku. Osobiste doradztwo w 12 językach.",
+        "meta_default_keywords": "nieruchomości Chorwacja, kupić dom Chorwacja, willa Chorwacja, mieszkanie Adriatyk, dom wakacyjny Chorwacja, agent nieruchomości Chorwacja",
+    },
+    "cz": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Nemovitosti Chorvatsko | Domy, Byty a Vily na Jadranu",
+        "meta_default_description": "Najděte svou vysněnou nemovitost v Chorvatsku. Ověření makléři, exkluzivní vily, domy a byty na jadranském pobřeží. Osobní poradenství ve 12 jazycích.",
+        "meta_default_keywords": "nemovitosti Chorvatsko, koupit dům Chorvatsko, vila Chorvatsko, byt Jadran, rekreační dům Chorvatsko, realitní makléř Chorvatsko",
+    },
+    "sk": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Nehnuteľnosti Chorvátsko | Domy, Byty a Vily na Jadrane",
+        "meta_default_description": "Nájdite svoju vysnívanú nehnuteľnosť v Chorvátsku. Overení makléri, exkluzívne vily, domy a byty na jadranskom pobreží. Osobné poradenstvo v 12 jazykoch.",
+        "meta_default_keywords": "nehnuteľnosti Chorvátsko, kúpiť dom Chorvátsko, vila Chorvátsko, byt Jadran, rekreačný dom Chorvátsko, realitný maklér Chorvátsko",
+    },
+    "ru": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Недвижимость Хорватия | Дома, Квартиры и Виллы на Адриатике",
+        "meta_default_description": "Найдите недвижимость своей мечты в Хорватии. Проверенные агенты, эксклюзивные виллы, дома и квартиры на побережье Адриатики. Персональные консультации на 12 языках.",
+        "meta_default_keywords": "недвижимость Хорватия, купить дом Хорватия, вилла Хорватия, квартира Адриатика, дом для отдыха Хорватия, агент недвижимости Хорватия",
+    },
+    "gr": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Ακίνητα Κροατία | Σπίτια, Διαμερίσματα & Βίλες στην Αδριατική",
+        "meta_default_description": "Βρείτε το ακίνητο των ονείρων σας στην Κροατία. Πιστοποιημένοι μεσίτες, αποκλειστικές βίλες, σπίτια και διαμερίσματα στην ακτή της Αδριατικής. Προσωπική συμβουλευτική σε 12 γλώσσες.",
+        "meta_default_keywords": "ακίνητα Κροατία, αγορά σπιτιού Κροατία, βίλα Κροατία, διαμέρισμα Αδριατική, εξοχικό Κροατία, μεσίτης Κροατία",
+    },
+    "sw": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Fastigheter Kroatien | Hus, Lägenheter & Villor vid Adriatiska havet",
+        "meta_default_description": "Hitta din drömfastighet i Kroatien. Verifierade mäklare, exklusiva villor, hus och lägenheter vid Adriatiska kusten. Personlig rådgivning på 12 språk.",
+        "meta_default_keywords": "fastigheter Kroatien, köpa hus Kroatien, villa Kroatien, lägenhet Adriatiska havet, semesterhus Kroatien, fastighetsmäklare Kroatien",
+    },
+    "no": {
+        "meta_site_name": "123-Kroatien.eu",
+        "meta_default_title": "Eiendom Kroatia | Hus, Leiligheter & Villaer ved Adriaterhavet",
+        "meta_default_description": "Finn drømmeeiendommen din i Kroatia. Verifiserte meglere, eksklusive villaer, hus og leiligheter ved Adriaterhavskysten. Personlig rådgivning på 12 språk.",
+        "meta_default_keywords": "eiendom Kroatia, kjøpe hus Kroatia, villa Kroatia, leilighet Adriaterhavet, feriehus Kroatia, eiendomsmegler Kroatia",
+    },
+}
+
+
+def seo_meta_tags(request):
+    """
+    Liefert SEO Meta-Tags (Open Graph, Twitter Cards) für alle Seiten.
+    Einzelne Seiten können diese überschreiben via Template-Blocks.
+    """
+    user_language = request.session.get('site_language', 'ge')
+    meta = SEO_META_TRANSLATIONS.get(user_language, SEO_META_TRANSLATIONS['ge'])
+    
+    # Aktuelle URL für og:url
+    current_url = request.build_absolute_uri()
+    
+    return {
+        'meta_site_name': meta['meta_site_name'],
+        'meta_title': meta['meta_default_title'],
+        'meta_description': meta['meta_default_description'],
+        'meta_keywords': meta['meta_default_keywords'],
+        'meta_url': current_url,
+        'meta_image': 'https://123-kroatien.eu/static/images/og-image.jpg',
+        'meta_type': 'website',
+        'meta_twitter_card': 'summary_large_image',
+    }
