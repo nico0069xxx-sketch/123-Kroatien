@@ -114,6 +114,7 @@ TEMPLATES = [
                 'main.context_processors.sitemap_translations',
                 'main.context_processors.seo_meta_tags',
                 'main.context_processors.breadcrumbs',
+                'main.context_processors.hreflang_tags',
             ],
         },
     },
