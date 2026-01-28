@@ -232,6 +232,11 @@
                 </div> <!-- navbar-collapse.// -->
             </div>
         </nav>
+        
+        {% block breadcrumbs %}
+        {% include 'include/breadcrumbs.html' %}
+        {% endblock breadcrumbs %}
+        
         {% block body %}
         {% endblock body%}
 
