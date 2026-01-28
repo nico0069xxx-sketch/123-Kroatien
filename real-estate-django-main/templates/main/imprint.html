@@ -1,4 +1,28 @@
 {% extends 'include/base.html' %} {% load static %} {% block body %}
+
+<!-- Schema.org WPHeader für Legal Page -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Impressum - 123-Kroatien.eu",
+    "description": "Rechtliche Angaben und Impressum von 123-Kroatien.eu gemäß § 5 TMG",
+    "url": "{{ request.build_absolute_uri }}",
+    "isPartOf": {
+        "@type": "WebSite",
+        "name": "123-Kroatien.eu",
+        "url": "https://123-kroatien.eu"
+    },
+    "about": {
+        "@type": "Organization",
+        "name": "123-Kroatien.eu",
+        "url": "https://123-kroatien.eu",
+        "logo": "https://123-kroatien.eu/static/images/logo-full.png"
+    },
+    "inLanguage": "de"
+}
+</script>
+
 <header>
   <div class="imprintBg bg-theme-overlay">
     <section class="section__breadcrumb">
