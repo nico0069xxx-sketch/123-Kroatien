@@ -154,11 +154,9 @@ def home(request):
     }
     return render(request, 'main/home.html', context)
 
-@login_required(login_url='main:login_required')
 def about(request):
     return render(request, 'main/about-us.html')
 
-@login_required(login_url='main:login_required')
 def contact(request):
     return render(request, 'main/contact.html')
 

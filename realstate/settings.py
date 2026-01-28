@@ -123,6 +123,8 @@ TEMPLATES = [
                 'main.context_processors.get_buyer_guide_translations',
                 'main.context_processors.get_professional_detail_translations',
                 'main.context_processors.get_nav_menu_translations',
+                'main.context_processors.get_breadcrumbs',
+                'main.context_processors.get_og_meta_tags',
             ],
         },
     },

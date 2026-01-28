@@ -1842,3 +1842,106 @@ def get_nav_menu_translations(request):
     url_lang = path_parts[0] if path_parts and path_parts[0] in NAV_MENU_TRANSLATIONS else None
     user_language = url_lang or request.session.get("site_language", "ge")
     return NAV_MENU_TRANSLATIONS.get(user_language, NAV_MENU_TRANSLATIONS["ge"])
+
+
+# =============================================================================
+# BREADCRUMB SCHEMA (GEO/SEO)
+# =============================================================================
+
+BREADCRUMB_TRANSLATIONS = {
+    "ge": {"home": "Startseite", "listings": "Immobilien", "about": "Über uns", "contact": "Kontakt", "faq": "FAQ", "glossary": "Glossar", "news": "News", "professionals": "Experten"},
+    "en": {"home": "Home", "listings": "Properties", "about": "About us", "contact": "Contact", "faq": "FAQ", "glossary": "Glossary", "news": "News", "professionals": "Experts"},
+    "hr": {"home": "Početna", "listings": "Nekretnine", "about": "O nama", "contact": "Kontakt", "faq": "FAQ", "glossary": "Pojmovnik", "news": "Vijesti", "professionals": "Stručnjaci"},
+    "fr": {"home": "Accueil", "listings": "Immobilier", "about": "À propos", "contact": "Contact", "faq": "FAQ", "glossary": "Glossaire", "news": "Actualités", "professionals": "Experts"},
+    "nl": {"home": "Home", "listings": "Vastgoed", "about": "Over ons", "contact": "Contact", "faq": "FAQ", "glossary": "Woordenlijst", "news": "Nieuws", "professionals": "Experts"},
+    "pl": {"home": "Strona główna", "listings": "Nieruchomości", "about": "O nas", "contact": "Kontakt", "faq": "FAQ", "glossary": "Słownik", "news": "Aktualności", "professionals": "Eksperci"},
+    "cz": {"home": "Domů", "listings": "Nemovitosti", "about": "O nás", "contact": "Kontakt", "faq": "FAQ", "glossary": "Slovník", "news": "Novinky", "professionals": "Odborníci"},
+    "sk": {"home": "Domov", "listings": "Nehnuteľnosti", "about": "O nás", "contact": "Kontakt", "faq": "FAQ", "glossary": "Slovník", "news": "Novinky", "professionals": "Odborníci"},
+    "ru": {"home": "Главная", "listings": "Недвижимость", "about": "О нас", "contact": "Контакт", "faq": "FAQ", "glossary": "Глоссарий", "news": "Новости", "professionals": "Эксперты"},
+    "gr": {"home": "Αρχική", "listings": "Ακίνητα", "about": "Σχετικά", "contact": "Επικοινωνία", "faq": "FAQ", "glossary": "Γλωσσάρι", "news": "Νέα", "professionals": "Ειδικοί"},
+    "sw": {"home": "Hem", "listings": "Fastigheter", "about": "Om oss", "contact": "Kontakt", "faq": "FAQ", "glossary": "Ordlista", "news": "Nyheter", "professionals": "Experter"},
+    "no": {"home": "Hjem", "listings": "Eiendommer", "about": "Om oss", "contact": "Kontakt", "faq": "FAQ", "glossary": "Ordliste", "news": "Nyheter", "professionals": "Eksperter"},
+}
+
+COUNTRY_SLUGS = {
+    "ge": "kroatien", "en": "croatia", "hr": "hrvatska", "fr": "croatie",
+    "nl": "kroatie", "pl": "chorwacja", "cz": "chorvatsko", "sk": "chorvatsko",
+    "ru": "horvatiya", "gr": "kroatia", "sw": "kroatien", "no": "kroatia",
+}
+
+
+def get_breadcrumbs(request):
+    """Generiert Breadcrumb-Daten für Schema.org und UI"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in BREADCRUMB_TRANSLATIONS else "ge"
+    user_language = url_lang or request.session.get("site_language", "ge")
+    
+    translations = BREADCRUMB_TRANSLATIONS.get(user_language, BREADCRUMB_TRANSLATIONS["ge"])
+    country_slug = COUNTRY_SLUGS.get(user_language, "kroatien")
+    base_url = "https://123-kroatien.eu"
+    
+    breadcrumbs = [{"name": translations["home"], "url": f"{base_url}/{user_language}/"}]
+    
+    # Pfad analysieren und Breadcrumbs aufbauen
+    if len(path_parts) > 1:
+        section = path_parts[1] if len(path_parts) > 1 else ""
+        
+        # Mapping von URL-Segmenten zu Breadcrumb-Keys
+        section_map = {
+            "immobilien": "listings", "properties": "listings", "nekretnine": "listings",
+            "about": "about", "contact": "contact", "faq": "faq",
+            "glossar": "glossary", "glossary": "glossary", "pojmovnik": "glossary",
+            "news": "news", "vijesti": "news", "professionals": "professionals",
+            country_slug: None,  # Länder-Slug überspringen
+        }
+        
+        if section in section_map and section_map[section]:
+            key = section_map[section]
+            breadcrumbs.append({
+                "name": translations.get(key, section.title()),
+                "url": f"{base_url}/{user_language}/{section}/"
+            })
+    
+    return {
+        "breadcrumbs": breadcrumbs,
+        "breadcrumbs_json": breadcrumbs,
+    }
+
+
+# =============================================================================
+# OPEN GRAPH / SOCIAL MEDIA META TAGS (GEO/SEO)
+# =============================================================================
+
+OG_TRANSLATIONS = {
+    "ge": {"site_name": "123-Kroatien.eu", "title": "Immobilien in Kroatien", "description": "Der führende Immobilienmarktplatz für Kroatien. Finden Sie Häuser, Wohnungen, Villen und Grundstücke an der Adria."},
+    "en": {"site_name": "123-Kroatien.eu", "title": "Real Estate in Croatia", "description": "The leading real estate marketplace for Croatia. Find houses, apartments, villas and land on the Adriatic coast."},
+    "hr": {"site_name": "123-Kroatien.eu", "title": "Nekretnine u Hrvatskoj", "description": "Vodeće tržište nekretnina za Hrvatsku. Pronađite kuće, stanove, vile i zemljišta na Jadranskoj obali."},
+    "fr": {"site_name": "123-Kroatien.eu", "title": "Immobilier en Croatie", "description": "Le principal marché immobilier pour la Croatie. Trouvez maisons, appartements, villas et terrains sur la côte adriatique."},
+    "nl": {"site_name": "123-Kroatien.eu", "title": "Vastgoed in Kroatië", "description": "De toonaangevende vastgoedmarkt voor Kroatië. Vind huizen, appartementen, villa's en grond aan de Adriatische kust."},
+    "pl": {"site_name": "123-Kroatien.eu", "title": "Nieruchomości w Chorwacji", "description": "Wiodący rynek nieruchomości w Chorwacji. Znajdź domy, mieszkania, wille i działki na wybrzeżu Adriatyku."},
+    "cz": {"site_name": "123-Kroatien.eu", "title": "Nemovitosti v Chorvatsku", "description": "Přední trh s nemovitostmi v Chorvatsku. Najděte domy, byty, vily a pozemky na Jaderském pobřeží."},
+    "sk": {"site_name": "123-Kroatien.eu", "title": "Nehnuteľnosti v Chorvátsku", "description": "Popredný trh s nehnuteľnosťami v Chorvátsku. Nájdite domy, byty, vily a pozemky na pobreží Jadranu."},
+    "ru": {"site_name": "123-Kroatien.eu", "title": "Недвижимость в Хорватии", "description": "Ведущий рынок недвижимости Хорватии. Найдите дома, квартиры, виллы и участки на Адриатическом побережье."},
+    "gr": {"site_name": "123-Kroatien.eu", "title": "Ακίνητα στην Κροατία", "description": "Η κορυφαία αγορά ακινήτων για την Κροατία. Βρείτε σπίτια, διαμερίσματα, βίλες και οικόπεδα στην Αδριατική."},
+    "sw": {"site_name": "123-Kroatien.eu", "title": "Fastigheter i Kroatien", "description": "Den ledande fastighetsmarknaden för Kroatien. Hitta hus, lägenheter, villor och tomter vid Adriatiska kusten."},
+    "no": {"site_name": "123-Kroatien.eu", "title": "Eiendom i Kroatia", "description": "Det ledende eiendomsmarkedet for Kroatia. Finn hus, leiligheter, villaer og tomter ved Adriaterhavskysten."},
+}
+
+
+def get_og_meta_tags(request):
+    """Generiert Open Graph und Twitter Meta Tags für Social Media"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in OG_TRANSLATIONS else "ge"
+    user_language = url_lang or request.session.get("site_language", "ge")
+    
+    translations = OG_TRANSLATIONS.get(user_language, OG_TRANSLATIONS["ge"])
+    current_url = f"https://123-kroatien.eu{request.path}"
+    
+    return {
+        "og_title": translations["title"],
+        "og_description": translations["description"],
+        "og_site_name": translations["site_name"],
+        "og_url": current_url,
+        "og_image": "https://123-kroatien.eu/static/images/og-image.jpg",
+        "twitter_card": "summary_large_image",
+    }
