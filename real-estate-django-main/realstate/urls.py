@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from main.views import set_language_from_url
-from main.xml_views import rss_listings, xml_sitemap, robots_txt
+from main.xml_views import rss_listings, xml_sitemap, robots_txt, llms_txt
 
 # Alle unterstützten Sprachen
 SUPPORTED_LANGUAGES = ['en', 'ge', 'fr', 'gr', 'hr', 'pl', 'cz', 'ru', 'sw', 'no', 'sk', 'nl']
@@ -18,10 +18,11 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('accounts.urls')),
     
-    # XML/RSS Feeds (ohne Sprachpräfix)
+    # XML/RSS Feeds & AI Crawler Files (ohne Sprachpräfix)
     path('rss/listings/', rss_listings, name='rss_listings'),
     path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
     path('robots.txt', robots_txt, name='robots_txt'),
+    path('llms.txt', llms_txt, name='llms_txt'),
     
     # Professional Portal
     path('portal/', include('main.professional_portal_urls')),
