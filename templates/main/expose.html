@@ -334,7 +334,7 @@
             <div>
                 <h1>{{ listing.property_title }}</h1>
                 <span class="status-badge">
-                    {% if listing.property_status == 'Sale' %}{{ trans.sale }}{% else %}{{ trans.rent }}{% endif %}
+                    {% if listing.property_status == 'Sale' or listing.property_status == 'Zu verkaufen' or 'sale' in listing.property_status|lower or 'verkauf' in listing.property_status|lower %}{{ trans.sale }}{% else %}{{ trans.rent }}{% endif %}
                 </span>
             </div>
             <div style="text-align: right;">

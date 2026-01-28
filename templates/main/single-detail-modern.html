@@ -213,7 +213,7 @@ textarea{min-height:80px;resize:vertical}
 <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> {{ btn_send_message|default:"Senden" }}</button>
 </form>
 <a href="tel:+385123456789" class="btn btn-secondary"><i class="fa fa-phone"></i> {{ Contact|default:"Anrufen" }}</a>
-<a href="/{{ language }}/expose/{{ listing.id }}/" target="_blank" class="btn btn-secondary"><i class="fa fa-file-pdf"></i> Exposé</a>
+<a href="/{{ language }}/expose/{{ listing.id }}/" target="_blank" class="btn btn-secondary"><i class="fa fa-file-pdf"></i> {{ expose_label }}</a>
 </div>
 </aside>
 </div>

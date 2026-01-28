@@ -2101,3 +2101,30 @@ def get_property_status_translated(request):
     url_lang = path_parts[0] if path_parts and path_parts[0] in PROPERTY_STATUS_TRANSLATIONS else "ge"
     user_language = url_lang or request.session.get("site_language", "ge")
     return {"status_translations": PROPERTY_STATUS_TRANSLATIONS.get(user_language, PROPERTY_STATUS_TRANSLATIONS["ge"])}
+
+
+# =============================================================================
+# EXPOSÉ BUTTON LABEL (12 Sprachen)
+# =============================================================================
+
+EXPOSE_LABELS = {
+    "ge": "Exposé",
+    "en": "Brochure",
+    "hr": "Prospekt",
+    "fr": "Exposé",
+    "nl": "Brochure",
+    "pl": "Prospekt",
+    "cz": "Prospekt",
+    "sk": "Prospekt",
+    "ru": "Буклет",
+    "gr": "Φυλλάδιο",
+    "sw": "Broschyr",
+    "no": "Brosjyre",
+}
+
+
+def get_expose_label(request):
+    """Übersetztes Exposé-Label"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in EXPOSE_LABELS else "ge"
+    return {"expose_label": EXPOSE_LABELS.get(url_lang, "Exposé")}

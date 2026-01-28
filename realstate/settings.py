@@ -128,6 +128,7 @@ TEMPLATES = [
                 'main.context_processors.get_property_detail_labels',
                 'main.context_processors.get_country_name_translated',
                 'main.context_processors.get_property_status_translated',
+                'main.context_processors.get_expose_label',
             ],
         },
     },
