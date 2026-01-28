@@ -4,6 +4,40 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+<!-- Schema.org ItemList für Dienstleister -->
+{% if professionals %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "{{ title }}",
+    "description": "{{ subtitle }}",
+    "numberOfItems": {{ professionals|length }},
+    "itemListElement": [
+        {% for professional in professionals %}
+        {
+            "@type": "ListItem",
+            "position": {{ forloop.counter }},
+            "item": {
+                "@type": "{% if profession == 'realtor' %}RealEstateAgent{% else %}LocalBusiness{% endif %}",
+                "name": "{{ professional.name }}",
+                "url": "https://123-kroatien.eu/{{ language }}/{{ country }}/{{ category_slug }}/{{ professional.slug }}/",
+                {% if professional.company_logo %}
+                "image": "https://123-kroatien.eu{{ professional.company_logo.url }}",
+                {% endif %}
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "{{ professional.city }}",
+                    "addressCountry": "HR"
+                }
+            }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+
 <section class="professional-list-section py-5">
     <div class="container">
         <!-- Header -->
