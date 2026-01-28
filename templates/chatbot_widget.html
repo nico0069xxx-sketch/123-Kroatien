@@ -207,6 +207,21 @@
 <script>
 var currentLanguage = '{{language}}' || 'ge';
 
+var countrySlugMap = {
+    'ge': 'kroatien',
+    'en': 'croatia',
+    'hr': 'hrvatska',
+    'fr': 'croatie',
+    'nl': 'kroatie',
+    'pl': 'chorwacja',
+    'cz': 'chorvatsko',
+    'sk': 'chorvatsko',
+    'ru': 'horvatiya',
+    'gr': 'kroatia',
+    'sw': 'kroatien',
+    'no': 'kroatia'
+};
+
 function toggleChatbot() {
     var window = document.getElementById('chatbot-window');
     window.style.display = window.style.display === 'none' ? 'flex' : 'none';
@@ -238,8 +253,9 @@ function sendMessage() {
 
         if (data.professionals && data.professionals.length > 0) {
             var proHtml = '<div class="message bot-message" style="padding:10px;">';
+            var countrySlug = countrySlugMap[currentLanguage] || 'kroatien';
             data.professionals.forEach(function(p) {
-                var profileUrl = '/' + currentLanguage + '/' + p.type_slug + '/' + p.slug + '/';
+                var profileUrl = '/' + currentLanguage + '/' + countrySlug + '/' + p.type_slug + '/' + p.slug + '/';
                 proHtml += '<a href="' + profileUrl + '" style="display:flex;align-items:center;background:#f8f9fa;border-radius:10px;padding:10px;margin:5px 0;text-decoration:none;color:inherit;transition:background 0.2s;" onmouseover="this.style.background=\'#e8f4fc\'" onmouseout="this.style.background=\'#f8f9fa\'">';
                 if (p.logo_url) {
                     proHtml += '<img src="' + p.logo_url + '" style="width:50px;height:50px;border-radius:8px;object-fit:contain;">';
