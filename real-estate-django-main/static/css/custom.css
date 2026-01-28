@@ -468,3 +468,33 @@ canvas {
     }
 }
 
+
+/* ============================================
+   GLOSSARY AUTO-LINK STYLES
+   ============================================ */
+
+.glossary-link {
+    color: #0066cc;
+    text-decoration: none;
+    border-bottom: 1px dotted #0066cc;
+    transition: all 0.2s ease;
+}
+
+.glossary-link:hover {
+    color: #004499;
+    border-bottom-style: solid;
+    background-color: rgba(0, 102, 204, 0.05);
+}
+
+/* Tooltip styling */
+.glossary-link[title] {
+    cursor: help;
+}
+
+/* Highlight style (für Previews) */
+mark.glossary-term {
+    background-color: rgba(255, 193, 7, 0.3);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
