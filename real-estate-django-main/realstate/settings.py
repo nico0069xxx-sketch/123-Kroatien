@@ -111,6 +111,7 @@ TEMPLATES = [
                 'main.context_processors.set_language',
                 'main.context_processors.get_my_translations',
                 'main.context_processors.hero_translations',
+                'main.context_processors.sitemap_translations',
             ],
         },
     },
