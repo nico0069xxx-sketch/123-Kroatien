@@ -1,5 +1,55 @@
 {% extends 'include/base.html' %} {% load static %} {% block body %}
 
+<!-- Schema.org FAQPage für SEO -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Wer ist 123-Kroatien.eu?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "123-Kroatien.eu ist das Ergebnis eines langjährigen kroatischen Netzwerks, das in den frühen 2000er Jahren von Immobilienexperte Jörg Allmannsberger gegründet wurde. Mit einer Zulassung als Immobilienmakler nach Paragraf 34C seit 1994 in der Immobilienbranche verfügt er über umfangreiches Fachwissen im kroatischen Immobilienmarkt."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Welche Vorteile bietet die Nutzung von 123-Kroatien.eu für Immobiliensuchende in Kroatien?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "123-Kroatien.eu bietet eine umfangreiche Immobilienauswahl, transparente Informationen mit detaillierten Beschreibungen und Fotos, eine benutzerfreundliche Suche, verifizierte Makler und persönliche Beratung in 12 Sprachen."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Können EU-Bürger problemlos Immobilien in Kroatien erwerben?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ja, seit dem EU-Beitritt Kroatiens können EU-Bürger ohne Einschränkungen Immobilien in Kroatien erwerben. Der Kaufprozess ist transparent und wird von lokalen Notaren und Anwälten begleitet."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Welche Regionen in Kroatien sind besonders beliebt für Immobilienkäufe?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Besonders beliebt sind Istrien, Dalmatien (Split, Dubrovnik), die Kvarner Bucht (Rijeka, Opatija), und die Inseln. Diese Regionen bieten eine Kombination aus mediterranem Klima, schöner Natur und guter Infrastruktur."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Welche Kosten fallen beim Immobilienkauf in Kroatien an?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Beim Immobilienkauf fallen typischerweise an: Grunderwerbsteuer (3%), Notargebühren (ca. 1%), Anwaltskosten, Maklerprovision (3-6%) und ggf. Übersetzungskosten. 123-Kroatien.eu bietet hierzu eine transparente Beratung."
+            }
+        }
+    ]
+}
+</script>
+
 <div class="faqHeaderBg bg-theme-overlay">
   <section class="section__breadcrumb">
     <div class="container">
