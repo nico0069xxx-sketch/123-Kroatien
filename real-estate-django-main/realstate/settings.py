@@ -110,6 +110,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.set_language',
                 'main.context_processors.get_my_translations',
+                'main.context_processors.hero_translations',
             ],
         },
     },
