@@ -176,45 +176,111 @@ def rss_listings(request):
 
 def xml_sitemap(request):
     """
-    XML Sitemap für Suchmaschinen
+    XML Sitemap für Suchmaschinen - Erweitert für alle 12 Sprachen + Glossar
+    Mit xhtml:link für Hreflang-Unterstützung
     """
     listings = Listing.objects.filter(is_published=True)
     professionals = Professional.objects.filter(is_active=True)
     
+    # Alle unterstützten Sprachen
+    LANGUAGES = ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']
+    
+    # Land-Slugs pro Sprache
+    COUNTRY_SLUGS = {
+        'ge': 'kroatien', 'en': 'croatia', 'hr': 'hrvatska', 'fr': 'croatie',
+        'nl': 'kroatie', 'pl': 'chorwacja', 'cz': 'chorvatsko', 'sk': 'chorvatsko',
+        'ru': 'horvatiya', 'gr': 'kroatia', 'sw': 'kroatien', 'no': 'kroatia'
+    }
+    
+    # Glossar-Slugs pro Sprache
+    GLOSSARY_SLUGS = {
+        'ge': 'glossar', 'en': 'glossary', 'hr': 'pojmovnik', 'fr': 'glossaire',
+        'nl': 'woordenlijst', 'pl': 'slownik', 'cz': 'glosar', 'sk': 'slovnik',
+        'ru': 'glossarij', 'gr': 'glossari', 'sw': 'ordlista', 'no': 'ordliste'
+    }
+    
     urls = []
     
-    # Static pages
-    static_pages = ['', 'about/', 'contact/', 'listing/', 'faq/', 'blog/']
-    for page in static_pages:
+    # Homepage für alle Sprachen
+    for lang in LANGUAGES:
+        lang_prefix = '' if lang == 'ge' else f'{lang}/'
         urls.append(f"""
-        <url>
-            <loc>https://123-kroatien.eu/{page}</loc>
-            <changefreq>weekly</changefreq>
-            <priority>0.8</priority>
-        </url>""")
+    <url>
+        <loc>https://123-kroatien.eu/{lang_prefix}</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>""")
     
-    # Listings
+    # Statische Seiten für alle Sprachen
+    static_pages = ['about/', 'contact/', 'listing/', 'faq/', 'sitemap/']
+    for page in static_pages:
+        for lang in LANGUAGES:
+            lang_prefix = '' if lang == 'ge' else f'{lang}/'
+            urls.append(f"""
+    <url>
+        <loc>https://123-kroatien.eu/{lang_prefix}{page}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>""")
+    
+    # Glossar-Hauptseiten für alle Sprachen
+    for lang in LANGUAGES:
+        country = COUNTRY_SLUGS.get(lang, 'kroatien')
+        glossary = GLOSSARY_SLUGS.get(lang, 'glossar')
+        urls.append(f"""
+    <url>
+        <loc>https://123-kroatien.eu/{lang}/{country}/{glossary}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>""")
+    
+    # Dienstleister-Kategorien für DE und HR
+    service_categories = {
+        'ge': ['immobilienmakler', 'bauunternehmen', 'rechtsanwaelte', 'steuerberater', 'architekten'],
+        'hr': ['agencije-za-nekretnine', 'gradevinske-tvrtke', 'odvjetnici', 'porezni-savjetnici', 'arhitekti'],
+    }
+    for lang, categories in service_categories.items():
+        country = COUNTRY_SLUGS.get(lang, 'kroatien')
+        for cat in categories:
+            urls.append(f"""
+    <url>
+        <loc>https://123-kroatien.eu/{lang}/{country}/{cat}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>""")
+    
+    # Listings (Immobilien)
     for listing in listings:
         urls.append(f"""
-        <url>
-            <loc>https://123-kroatien.eu/property-details/{listing.id}/</loc>
-            <lastmod>{listing.list_date.strftime('%Y-%m-%d')}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.9</priority>
-        </url>""")
+    <url>
+        <loc>https://123-kroatien.eu/property-details/{listing.id}/</loc>
+        <lastmod>{listing.list_date.strftime('%Y-%m-%d')}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>""")
     
-    # Professionals
+    # Professionals (Dienstleister)
     for prof in professionals:
         urls.append(f"""
-        <url>
-            <loc>https://123-kroatien.eu/agent/{prof.id}/</loc>
-            <changefreq>monthly</changefreq>
-            <priority>0.7</priority>
-        </url>""")
+    <url>
+        <loc>https://123-kroatien.eu/agent/{prof.id}/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>""")
+    
+    # Technische Seiten
+    tech_pages = ['llms.txt', 'robots.txt']
+    for page in tech_pages:
+        urls.append(f"""
+    <url>
+        <loc>https://123-kroatien.eu/{page}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>""")
     
     sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {''.join(urls)}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">{''.join(urls)}
 </urlset>"""
     
     return HttpResponse(sitemap, content_type='application/xml')
