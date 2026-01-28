@@ -1290,3 +1290,73 @@ def breadcrumbs(request):
         'breadcrumbs': breadcrumb_items,
         'breadcrumb_schema_json': json.dumps(breadcrumb_schema, ensure_ascii=False),
     }
+
+
+# ============================================
+# HREFLANG TAGS (Internationalisierung)
+# ============================================
+
+# ISO-639-1 Sprachcodes für hreflang
+HREFLANG_CODES = {
+    'ge': 'de',      # Deutsch
+    'en': 'en',      # English
+    'hr': 'hr',      # Hrvatski
+    'fr': 'fr',      # Français
+    'nl': 'nl',      # Nederlands
+    'pl': 'pl',      # Polski
+    'cz': 'cs',      # Čeština
+    'sk': 'sk',      # Slovenčina
+    'ru': 'ru',      # Русский
+    'gr': 'el',      # Ελληνικά
+    'sw': 'sv',      # Svenska
+    'no': 'no',      # Norsk
+}
+
+
+def hreflang_tags(request):
+    """
+    Generiert hreflang-Tags für alle 12 Sprachen.
+    Wichtig für internationale SEO - zeigt Google welche Sprachversionen existieren.
+    """
+    path = request.path
+    
+    # Aktuelle Sprache aus Pfad ermitteln
+    path_parts = path.strip('/').split('/')
+    current_lang = path_parts[0] if path_parts and path_parts[0] in ALL_LANGUAGES else 'ge'
+    
+    # Pfad ohne Sprachpräfix
+    if current_lang in ALL_LANGUAGES and path_parts and path_parts[0] == current_lang:
+        path_without_lang = '/' + '/'.join(path_parts[1:])
+    else:
+        path_without_lang = path
+    
+    # Sicherstellen dass der Pfad mit / endet
+    if path_without_lang and not path_without_lang.endswith('/'):
+        path_without_lang += '/'
+    if path_without_lang == '':
+        path_without_lang = '/'
+    
+    # Hreflang-Links generieren
+    hreflang_links = []
+    
+    for site_lang, iso_code in HREFLANG_CODES.items():
+        if site_lang == 'ge':
+            # Deutsch ist default, kein Präfix
+            url = f"https://123-kroatien.eu{path_without_lang}"
+        else:
+            url = f"https://123-kroatien.eu/{site_lang}{path_without_lang}"
+        
+        hreflang_links.append({
+            'lang': iso_code,
+            'url': url,
+        })
+    
+    # x-default (für Nutzer ohne passende Sprache)
+    hreflang_links.append({
+        'lang': 'x-default',
+        'url': f"https://123-kroatien.eu{path_without_lang}",
+    })
+    
+    return {
+        'hreflang_links': hreflang_links,
+    }
