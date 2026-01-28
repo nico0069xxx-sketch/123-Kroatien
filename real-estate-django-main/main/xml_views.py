@@ -325,3 +325,42 @@ Visit https://123-kroatien.eu for more information.
 """
     
     return HttpResponse(content, content_type='text/plain; charset=utf-8')
+
+
+def humans_txt(request):
+    """
+    humans.txt - Zeigt wer hinter der Website steckt (Trust Signal)
+    https://humanstxt.org/
+    """
+    import os
+    from django.conf import settings
+    
+    humans_path = os.path.join(settings.BASE_DIR, 'static', 'humans.txt')
+    
+    try:
+        with open(humans_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = """/* TEAM */
+Founder: Jörg Allmannsberger
+Site: https://123-kroatien.eu
+"""
+    
+    return HttpResponse(content, content_type='text/plain; charset=utf-8')
+
+
+def security_txt(request):
+    """
+    security.txt - Sicherheitskontakt nach RFC 9116
+    https://securitytxt.org/
+    """
+    content = """# Security Policy for 123-Kroatien.eu
+# https://securitytxt.org/
+
+Contact: mailto:security@123-kroatien.eu
+Contact: https://123-kroatien.eu/contact/
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: de, en, hr
+Canonical: https://123-kroatien.eu/.well-known/security.txt
+"""
+    return HttpResponse(content, content_type='text/plain; charset=utf-8')
