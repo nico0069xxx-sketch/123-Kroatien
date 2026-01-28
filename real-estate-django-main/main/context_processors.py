@@ -967,3 +967,326 @@ def seo_meta_tags(request):
         'meta_type': 'website',
         'meta_twitter_card': 'summary_large_image',
     }
+
+
+# ============================================
+# BREADCRUMB TRANSLATIONS
+# ============================================
+
+BREADCRUMB_LABELS = {
+    "ge": {
+        "home": "Startseite",
+        "listing": "Immobilien",
+        "listings": "Immobilien",
+        "about": "Über uns",
+        "contact": "Kontakt",
+        "faq": "FAQ",
+        "blog": "Blog",
+        "imprint": "Impressum",
+        "data-protection": "Datenschutz",
+        "agb": "AGB",
+        "cancellation-policy": "Widerrufsrecht",
+        "sitemap": "Sitemap",
+        "service": "Service",
+        "makler-dashboard": "Makler-Portal",
+        "glossar": "Glossar",
+        "glossary": "Glossar",
+        "disclaimer": "Haftungsausschluss",
+        "buyer-guide": "Käuferleitfaden",
+        "immobilienmakler": "Immobilienmakler",
+        "bauunternehmen": "Bauunternehmen",
+        "rechtsanwaelte": "Rechtsanwälte",
+        "steuerberater": "Steuerberater",
+        "architekten": "Architekten",
+        "partner-werden": "Partner werden",
+        "registrierung": "Registrierung",
+        "experten-finder": "Expertenfinder",
+        "marktberichte": "Marktberichte",
+        "wichtige-adressen": "Wichtige Adressen",
+        "nachrichten": "Nachrichten",
+        "kroatien": "Kroatien",
+    },
+    "en": {
+        "home": "Home",
+        "listing": "Properties",
+        "listings": "Properties",
+        "about": "About Us",
+        "contact": "Contact",
+        "faq": "FAQ",
+        "blog": "Blog",
+        "imprint": "Imprint",
+        "data-protection": "Privacy Policy",
+        "agb": "Terms & Conditions",
+        "cancellation-policy": "Cancellation Policy",
+        "sitemap": "Sitemap",
+        "service": "Service",
+        "makler-dashboard": "Agent Portal",
+        "glossar": "Glossary",
+        "glossary": "Glossary",
+        "disclaimer": "Disclaimer",
+        "buyer-guide": "Buyer Guide",
+        "real-estate-agents": "Real Estate Agents",
+        "construction-companies": "Construction Companies",
+        "lawyers": "Lawyers",
+        "tax-advisors": "Tax Advisors",
+        "architects": "Architects",
+        "become-partner": "Become Partner",
+        "registration": "Registration",
+        "expert-finder": "Expert Finder",
+        "market-reports": "Market Reports",
+        "important-addresses": "Important Addresses",
+        "news": "News",
+        "croatia": "Croatia",
+    },
+    "hr": {
+        "home": "Početna",
+        "listing": "Nekretnine",
+        "listings": "Nekretnine",
+        "about": "O nama",
+        "contact": "Kontakt",
+        "faq": "Česta pitanja",
+        "blog": "Blog",
+        "imprint": "Impressum",
+        "data-protection": "Zaštita podataka",
+        "agb": "Uvjeti korištenja",
+        "cancellation-policy": "Pravo na odustanak",
+        "sitemap": "Mapa stranica",
+        "service": "Usluge",
+        "makler-dashboard": "Portal za agente",
+        "glossar": "Pojmovnik",
+        "pojmovnik": "Pojmovnik",
+        "disclaimer": "Odricanje odgovornosti",
+        "buyer-guide": "Vodič za kupce",
+        "agencije-za-nekretnine": "Agencije za nekretnine",
+        "gradevinske-tvrtke": "Građevinske tvrtke",
+        "odvjetnici": "Odvjetnici",
+        "porezni-savjetnici": "Porezni savjetnici",
+        "arhitekti": "Arhitekti",
+        "postanite-partner": "Postanite partner",
+        "registracija": "Registracija",
+        "pronalazac-strucnjaka": "Tražilica stručnjaka",
+        "trzisni-izvjestaji": "Tržišni izvještaji",
+        "vazne-adrese": "Važne adrese",
+        "vijesti": "Vijesti",
+        "hrvatska": "Hrvatska",
+    },
+    "fr": {
+        "home": "Accueil",
+        "listing": "Propriétés",
+        "listings": "Propriétés",
+        "about": "À propos",
+        "contact": "Contact",
+        "faq": "FAQ",
+        "blog": "Blog",
+        "imprint": "Mentions légales",
+        "data-protection": "Politique de confidentialité",
+        "agb": "Conditions générales",
+        "cancellation-policy": "Droit de rétractation",
+        "sitemap": "Plan du site",
+        "service": "Services",
+        "makler-dashboard": "Portail agents",
+        "glossar": "Glossaire",
+        "glossaire": "Glossaire",
+        "disclaimer": "Avertissement",
+        "buyer-guide": "Guide de l'acheteur",
+        "agents-immobiliers": "Agents immobiliers",
+        "entreprises-construction": "Entreprises de construction",
+        "avocats": "Avocats",
+        "conseillers-fiscaux": "Conseillers fiscaux",
+        "architectes": "Architectes",
+        "devenir-partenaire": "Devenir partenaire",
+        "inscription": "Inscription",
+        "recherche-experts": "Recherche d'experts",
+        "rapports-marche": "Rapports de marché",
+        "adresses-importantes": "Adresses importantes",
+        "actualites": "Actualités",
+        "croatie": "Croatie",
+    },
+    "nl": {
+        "home": "Home",
+        "listing": "Vastgoed",
+        "listings": "Vastgoed",
+        "about": "Over ons",
+        "contact": "Contact",
+        "faq": "FAQ",
+        "sitemap": "Sitemap",
+        "makler-dashboard": "Makelaarsportaal",
+        "woordenlijst": "Woordenlijst",
+        "disclaimer": "Disclaimer",
+        "buyer-guide": "Koopgids",
+        "makelaars": "Makelaars",
+        "bouwbedrijven": "Bouwbedrijven",
+        "advocaten": "Advocaten",
+        "belastingadviseurs": "Belastingadviseurs",
+        "architecten": "Architecten",
+        "partner-worden": "Partner worden",
+        "registratie": "Registratie",
+        "expert-zoeker": "Expertzoeker",
+        "marktverslagen": "Marktverslagen",
+        "belangrijke-adressen": "Belangrijke adressen",
+        "nieuws": "Nieuws",
+        "kroatie": "Kroatië",
+    },
+    "pl": {
+        "home": "Strona główna",
+        "listing": "Nieruchomości",
+        "sitemap": "Mapa strony",
+        "slownik": "Słownik",
+        "agenci-nieruchomosci": "Agenci nieruchomości",
+        "firmy-budowlane": "Firmy budowlane",
+        "prawnicy": "Prawnicy",
+        "doradcy-podatkowi": "Doradcy podatkowi",
+        "architekci": "Architekci",
+        "zostan-partnerem": "Zostań partnerem",
+        "rejestracja": "Rejestracja",
+        "chorwacja": "Chorwacja",
+    },
+    "cz": {
+        "home": "Domů",
+        "listing": "Nemovitosti",
+        "sitemap": "Mapa stránek",
+        "glosar": "Glosář",
+        "realitni-makleri": "Realitní makléři",
+        "stavebni-firmy": "Stavební firmy",
+        "pravnici": "Právníci",
+        "danovi-poradci": "Daňoví poradci",
+        "architekti": "Architekti",
+        "stanat-se-partnerem": "Staňte se partnerem",
+        "registrace": "Registrace",
+        "chorvatsko": "Chorvatsko",
+    },
+    "sk": {
+        "home": "Domov",
+        "listing": "Nehnuteľnosti",
+        "sitemap": "Mapa stránok",
+        "slovnik": "Slovník",
+        "realitni-makleri": "Realitní makléri",
+        "stavebne-firmy": "Stavebné firmy",
+        "pravnici": "Právnici",
+        "danovi-poradcovia": "Daňoví poradcovia",
+        "architekti": "Architekti",
+        "stat-sa-partnerom": "Staňte sa partnerom",
+        "registracia": "Registrácia",
+        "chorvatsko": "Chorvátsko",
+    },
+    "ru": {
+        "home": "Главная",
+        "listing": "Недвижимость",
+        "sitemap": "Карта сайта",
+        "glossarij": "Глоссарий",
+        "agenty-nedvizhimosti": "Агенты недвижимости",
+        "stroitelnye-kompanii": "Строительные компании",
+        "advokaty": "Адвокаты",
+        "nalogovye-konsultanty": "Налоговые консультанты",
+        "arhitektory": "Архитекторы",
+        "stat-partnerom": "Стать партнером",
+        "registratsiya": "Регистрация",
+        "horvatiya": "Хорватия",
+    },
+    "gr": {
+        "home": "Αρχική",
+        "listing": "Ακίνητα",
+        "sitemap": "Χάρτης ιστοτόπου",
+        "glossari": "Γλωσσάριο",
+        "mesites-akiniton": "Μεσίτες ακινήτων",
+        "kataskevestikes-etaireies": "Κατασκευαστικές εταιρείες",
+        "dikigoroi": "Δικηγόροι",
+        "forologikoi-symvouloi": "Φορολογικοί σύμβουλοι",
+        "architektons": "Αρχιτέκτονες",
+        "gineite-synergatis": "Γίνετε συνεργάτης",
+        "eggraphi": "Εγγραφή",
+        "kroatia": "Κροατία",
+    },
+    "sw": {
+        "home": "Hem",
+        "listing": "Fastigheter",
+        "sitemap": "Webbplatskarta",
+        "ordlista": "Ordlista",
+        "fastighetsmaklare": "Fastighetsmäklare",
+        "byggforetag": "Byggföretag",
+        "advokater": "Advokater",
+        "skatteradgivare": "Skatterådgivare",
+        "arkitekter": "Arkitekter",
+        "bli-partner": "Bli partner",
+        "registrering": "Registrering",
+        "kroatien": "Kroatien",
+    },
+    "no": {
+        "home": "Hjem",
+        "listing": "Eiendommer",
+        "sitemap": "Nettstedkart",
+        "ordliste": "Ordliste",
+        "eiendomsmeglere": "Eiendomsmeglere",
+        "byggefirmaer": "Byggefirmaer",
+        "advokater": "Advokater",
+        "skatteradgivere": "Skatterådgivere",
+        "arkitekter": "Arkitekter",
+        "bli-partner": "Bli partner",
+        "registrering": "Registrering",
+        "kroatia": "Kroatia",
+    },
+}
+
+
+def breadcrumbs(request):
+    """
+    Generiert Breadcrumbs basierend auf dem aktuellen URL-Pfad.
+    Liefert sowohl die Breadcrumb-Liste als auch JSON-LD Schema für SEO.
+    """
+    user_language = request.session.get('site_language', 'ge')
+    labels = BREADCRUMB_LABELS.get(user_language, BREADCRUMB_LABELS['ge'])
+    
+    path = request.path.strip('/')
+    parts = path.split('/') if path else []
+    
+    # Breadcrumb-Liste aufbauen
+    breadcrumb_items = []
+    current_url = ''
+    
+    # Startseite immer als erstes
+    breadcrumb_items.append({
+        'name': labels.get('home', 'Home'),
+        'url': f'/{user_language}/' if user_language != 'ge' else '/',
+        'position': 1,
+    })
+    
+    position = 2
+    for i, part in enumerate(parts):
+        if not part:
+            continue
+            
+        # Sprachcode überspringen (ge, en, hr, etc.)
+        if part in ALL_LANGUAGES:
+            continue
+        
+        current_url += f'/{part}'
+        
+        # Label finden (aus Dict oder kapitalisieren)
+        label = labels.get(part, part.replace('-', ' ').title())
+        
+        breadcrumb_items.append({
+            'name': label,
+            'url': current_url + '/',
+            'position': position,
+        })
+        position += 1
+    
+    # JSON-LD Schema für Breadcrumbs generieren
+    breadcrumb_schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": item['position'],
+                "name": item['name'],
+                "item": f"https://123-kroatien.eu{item['url']}"
+            }
+            for item in breadcrumb_items
+        ]
+    }
+    
+    return {
+        'breadcrumbs': breadcrumb_items,
+        'breadcrumb_schema_json': json.dumps(breadcrumb_schema, ensure_ascii=False),
+    }
