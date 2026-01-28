@@ -1,0 +1,23 @@
+{% comment %}
+Star Rating Display Component
+Verwendung: {% star_rating 4.5 %}
+{% endcomment %}
+
+<div class="star-rating" itemscope itemtype="https://schema.org/AggregateRating">
+    <meta itemprop="ratingValue" content="{{ rating }}">
+    <meta itemprop="bestRating" content="{{ max_rating }}">
+    
+    {% for star in full_stars %}
+    <i class="fa fa-star text-warning"></i>
+    {% endfor %}
+    
+    {% if half_star %}
+    <i class="fa fa-star-half-o text-warning"></i>
+    {% endif %}
+    
+    {% for star in empty_stars %}
+    <i class="fa fa-star-o text-muted"></i>
+    {% endfor %}
+    
+    <span class="rating-text ms-1">({{ rating }}/{{ max_rating }})</span>
+</div>
