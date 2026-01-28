@@ -112,7 +112,7 @@ def get_my_translations(request):
     context['url_architect'] = CATEGORY_URLS['architect'].get(user_language, 'architekten')
     
     # URL für Experten-Finder (12 Sprachen)
-   EXPERTEN_FINDER_URLS = {
+    EXPERTEN_FINDER_URLS = {
         'ge': 'experten-finder', 'en': 'expert-finder', 'hr': 'pronalazac-strucnjaka',
         'fr': 'recherche-experts', 'nl': 'expert-zoeker', 'pl': 'wyszukiwarka-ekspertow',
         'cz': 'vyhledavac-odborniku', 'sk': 'vyhladavac-odbornikov', 'ru': 'poisk-ekspertov',
