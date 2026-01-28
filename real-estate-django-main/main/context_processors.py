@@ -1360,3 +1360,152 @@ def hreflang_tags(request):
     return {
         'hreflang_links': hreflang_links,
     }
+
+
+# ============================================
+# FAQ PAGE TRANSLATIONS
+# ============================================
+
+FAQ_TRANSLATIONS = {
+    "ge": {
+        "faq_title": "Häufig gestellte Fragen (FAQ)",
+        "faq_who_title": "Wer ist 123-Kroatien.eu?",
+        "faq_benefits_title": "Welche Vorteile bietet die Nutzung von 123-Kroatien.eu?",
+        "faq_find_title": "Wie finde ich die passende Immobilie auf 123-Kroatien.eu?",
+        "faq_service_title": "Welche Dienstleistungen bietet 123-Kroatien.eu neben der Immobiliensuche?",
+        "faq_contact_title": "Wie kann ich mit 123-Kroatien.eu in Kontakt treten?",
+        "faq_eu_citizens_title": "Können EU-Bürger problemlos Immobilien in Kroatien erwerben?",
+        "faq_costs_title": "Welche Kosten fallen beim Immobilienkauf in Kroatien an?",
+        "faq_regions_title": "Welche Regionen in Kroatien sind besonders beliebt?",
+    },
+    "en": {
+        "faq_title": "Frequently Asked Questions (FAQ)",
+        "faq_who_title": "Who is 123-Kroatien.eu?",
+        "faq_benefits_title": "What are the benefits of using 123-Kroatien.eu?",
+        "faq_find_title": "How do I find the right property on 123-Kroatien.eu?",
+        "faq_service_title": "What services does 123-Kroatien.eu offer besides property search?",
+        "faq_contact_title": "How can I contact 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Can EU citizens easily buy property in Croatia?",
+        "faq_costs_title": "What are the costs of buying property in Croatia?",
+        "faq_regions_title": "Which regions in Croatia are particularly popular?",
+    },
+    "hr": {
+        "faq_title": "Često postavljana pitanja (FAQ)",
+        "faq_who_title": "Tko je 123-Kroatien.eu?",
+        "faq_benefits_title": "Koje su prednosti korištenja 123-Kroatien.eu?",
+        "faq_find_title": "Kako pronaći pravu nekretninu na 123-Kroatien.eu?",
+        "faq_service_title": "Koje usluge nudi 123-Kroatien.eu osim pretrage nekretnina?",
+        "faq_contact_title": "Kako mogu kontaktirati 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Mogu li građani EU jednostavno kupiti nekretninu u Hrvatskoj?",
+        "faq_costs_title": "Koji su troškovi kupnje nekretnine u Hrvatskoj?",
+        "faq_regions_title": "Koje su regije u Hrvatskoj posebno popularne?",
+    },
+    "fr": {
+        "faq_title": "Questions fréquemment posées (FAQ)",
+        "faq_who_title": "Qui est 123-Kroatien.eu?",
+        "faq_benefits_title": "Quels sont les avantages d'utiliser 123-Kroatien.eu?",
+        "faq_find_title": "Comment trouver le bon bien sur 123-Kroatien.eu?",
+        "faq_service_title": "Quels services 123-Kroatien.eu propose-t-il en plus de la recherche immobilière?",
+        "faq_contact_title": "Comment contacter 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Les citoyens de l'UE peuvent-ils facilement acheter un bien en Croatie?",
+        "faq_costs_title": "Quels sont les coûts d'achat d'un bien en Croatie?",
+        "faq_regions_title": "Quelles régions de Croatie sont particulièrement populaires?",
+    },
+    "nl": {
+        "faq_title": "Veelgestelde vragen (FAQ)",
+        "faq_who_title": "Wie is 123-Kroatien.eu?",
+        "faq_benefits_title": "Wat zijn de voordelen van 123-Kroatien.eu?",
+        "faq_find_title": "Hoe vind ik het juiste vastgoed op 123-Kroatien.eu?",
+        "faq_service_title": "Welke diensten biedt 123-Kroatien.eu naast vastgoedzoekopdrachten?",
+        "faq_contact_title": "Hoe kan ik contact opnemen met 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Kunnen EU-burgers gemakkelijk vastgoed kopen in Kroatië?",
+        "faq_costs_title": "Wat zijn de kosten van het kopen van vastgoed in Kroatië?",
+        "faq_regions_title": "Welke regio's in Kroatië zijn bijzonder populair?",
+    },
+    "pl": {
+        "faq_title": "Często zadawane pytania (FAQ)",
+        "faq_who_title": "Kim jest 123-Kroatien.eu?",
+        "faq_benefits_title": "Jakie są korzyści z korzystania z 123-Kroatien.eu?",
+        "faq_find_title": "Jak znaleźć odpowiednią nieruchomość na 123-Kroatien.eu?",
+        "faq_service_title": "Jakie usługi oferuje 123-Kroatien.eu oprócz wyszukiwania nieruchomości?",
+        "faq_contact_title": "Jak mogę skontaktować się z 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Czy obywatele UE mogą łatwo kupić nieruchomość w Chorwacji?",
+        "faq_costs_title": "Jakie są koszty zakupu nieruchomości w Chorwacji?",
+        "faq_regions_title": "Które regiony Chorwacji są szczególnie popularne?",
+    },
+    "cz": {
+        "faq_title": "Často kladené otázky (FAQ)",
+        "faq_who_title": "Kdo je 123-Kroatien.eu?",
+        "faq_benefits_title": "Jaké jsou výhody používání 123-Kroatien.eu?",
+        "faq_find_title": "Jak najít správnou nemovitost na 123-Kroatien.eu?",
+        "faq_service_title": "Jaké služby nabízí 123-Kroatien.eu kromě vyhledávání nemovitostí?",
+        "faq_contact_title": "Jak mohu kontaktovat 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Mohou občané EU snadno koupit nemovitost v Chorvatsku?",
+        "faq_costs_title": "Jaké jsou náklady na koupi nemovitosti v Chorvatsku?",
+        "faq_regions_title": "Které regiony Chorvatska jsou obzvláště oblíbené?",
+    },
+    "sk": {
+        "faq_title": "Často kladené otázky (FAQ)",
+        "faq_who_title": "Kto je 123-Kroatien.eu?",
+        "faq_benefits_title": "Aké sú výhody používania 123-Kroatien.eu?",
+        "faq_find_title": "Ako nájsť správnu nehnuteľnosť na 123-Kroatien.eu?",
+        "faq_service_title": "Aké služby ponúka 123-Kroatien.eu okrem vyhľadávania nehnuteľností?",
+        "faq_contact_title": "Ako môžem kontaktovať 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Môžu občania EÚ ľahko kúpiť nehnuteľnosť v Chorvátsku?",
+        "faq_costs_title": "Aké sú náklady na kúpu nehnuteľnosti v Chorvátsku?",
+        "faq_regions_title": "Ktoré regióny Chorvátska sú obzvlášť obľúbené?",
+    },
+    "ru": {
+        "faq_title": "Часто задаваемые вопросы (FAQ)",
+        "faq_who_title": "Кто такой 123-Kroatien.eu?",
+        "faq_benefits_title": "Каковы преимущества использования 123-Kroatien.eu?",
+        "faq_find_title": "Как найти подходящую недвижимость на 123-Kroatien.eu?",
+        "faq_service_title": "Какие услуги предлагает 123-Kroatien.eu помимо поиска недвижимости?",
+        "faq_contact_title": "Как связаться с 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Могут ли граждане ЕС легко купить недвижимость в Хорватии?",
+        "faq_costs_title": "Каковы расходы на покупку недвижимости в Хорватии?",
+        "faq_regions_title": "Какие регионы Хорватии особенно популярны?",
+    },
+    "gr": {
+        "faq_title": "Συχνές ερωτήσεις (FAQ)",
+        "faq_who_title": "Ποιος είναι ο 123-Kroatien.eu;",
+        "faq_benefits_title": "Ποια είναι τα οφέλη από τη χρήση του 123-Kroatien.eu;",
+        "faq_find_title": "Πώς βρίσκω το σωστό ακίνητο στο 123-Kroatien.eu;",
+        "faq_service_title": "Ποιες υπηρεσίες προσφέρει το 123-Kroatien.eu εκτός από αναζήτηση ακινήτων;",
+        "faq_contact_title": "Πώς μπορώ να επικοινωνήσω με το 123-Kroatien.eu;",
+        "faq_eu_citizens_title": "Μπορούν οι πολίτες της ΕΕ να αγοράσουν εύκολα ακίνητο στην Κροατία;",
+        "faq_costs_title": "Ποιο είναι το κόστος αγοράς ακινήτου στην Κροατία;",
+        "faq_regions_title": "Ποιες περιοχές της Κροατίας είναι ιδιαίτερα δημοφιλείς;",
+    },
+    "sw": {
+        "faq_title": "Vanliga frågor (FAQ)",
+        "faq_who_title": "Vem är 123-Kroatien.eu?",
+        "faq_benefits_title": "Vilka är fördelarna med att använda 123-Kroatien.eu?",
+        "faq_find_title": "Hur hittar jag rätt fastighet på 123-Kroatien.eu?",
+        "faq_service_title": "Vilka tjänster erbjuder 123-Kroatien.eu förutom fastighetssökning?",
+        "faq_contact_title": "Hur kan jag kontakta 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Kan EU-medborgare enkelt köpa fastighet i Kroatien?",
+        "faq_costs_title": "Vilka är kostnaderna för att köpa fastighet i Kroatien?",
+        "faq_regions_title": "Vilka regioner i Kroatien är särskilt populära?",
+    },
+    "no": {
+        "faq_title": "Vanlige spørsmål (FAQ)",
+        "faq_who_title": "Hvem er 123-Kroatien.eu?",
+        "faq_benefits_title": "Hva er fordelene med å bruke 123-Kroatien.eu?",
+        "faq_find_title": "Hvordan finner jeg riktig eiendom på 123-Kroatien.eu?",
+        "faq_service_title": "Hvilke tjenester tilbyr 123-Kroatien.eu i tillegg til eiendomssøk?",
+        "faq_contact_title": "Hvordan kan jeg kontakte 123-Kroatien.eu?",
+        "faq_eu_citizens_title": "Kan EU-borgere enkelt kjøpe eiendom i Kroatia?",
+        "faq_costs_title": "Hva er kostnadene ved å kjøpe eiendom i Kroatia?",
+        "faq_regions_title": "Hvilke regioner i Kroatia er spesielt populære?",
+    },
+}
+
+
+def faq_translations(request):
+    """
+    Liefert FAQ-Übersetzungen für die FAQ-Seite.
+    """
+    user_language = request.session.get('site_language', 'ge')
+    translations = FAQ_TRANSLATIONS.get(user_language, FAQ_TRANSLATIONS['ge'])
+    return translations
