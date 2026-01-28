@@ -2,6 +2,35 @@
 {% load static %}
 {% block body %}
 
+<!-- Schema.org Article für Blog Posts -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ blog.title|default:'Immobilien Blog Kroatien' }}",
+    "description": "{{ blog.excerpt|default:'Aktuelle Informationen und Tipps zum Immobilienkauf in Kroatien' }}",
+    "image": "{{ blog.image.url|default:'/static/images/logo-full.png' }}",
+    "author": {
+        "@type": "Organization",
+        "name": "123-Kroatien.eu"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "123-Kroatien.eu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://123-kroatien.eu/static/images/logo-full.png"
+        }
+    },
+    "datePublished": "{{ blog.published_date|default:'2025-01-01' }}",
+    "dateModified": "{{ blog.modified_date|default:'2025-01-01' }}",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.build_absolute_uri }}"
+    }
+}
+</script>
+
         <!-- END NAVBAR -->
         <!-- BREADCRUMB -->
         <div class="myHeaderBg bg-theme-overlay">
