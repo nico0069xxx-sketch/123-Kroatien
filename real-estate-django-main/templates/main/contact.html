@@ -1,4 +1,47 @@
 {% extends 'include/base.html' %} {% load static %} {% block body %}
+
+<!-- Schema.org ContactPage + LocalBusiness für lokale SEO -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Kontakt - 123-Kroatien.eu",
+    "description": "Kontaktieren Sie uns für Ihre Immobiliensuche in Kroatien. Persönliche Beratung in 12 Sprachen.",
+    "url": "{{ request.build_absolute_uri }}",
+    "mainEntity": {
+        "@type": "RealEstateAgent",
+        "name": "123-Kroatien.eu",
+        "url": "https://123-kroatien.eu",
+        "logo": "https://123-kroatien.eu/static/images/logo-full.png",
+        "image": "https://123-kroatien.eu/static/images/logo-full.png",
+        "description": "Ihr Partner für Immobilien in Kroatien - Villen, Häuser und Apartments an der Adriaküste",
+        "priceRange": "€€€",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Croatia",
+            "alternateName": ["Kroatien", "Hrvatska", "Croatie"]
+        },
+        "contactPoint": [
+            {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "availableLanguage": ["German", "English", "Croatian", "French", "Dutch", "Polish", "Czech", "Slovak", "Russian", "Greek", "Swedish", "Norwegian"],
+                "hoursAvailable": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "09:00",
+                    "closes": "18:00"
+                }
+            }
+        ],
+        "sameAs": [
+            "https://facebook.com/123kroatien",
+            "https://instagram.com/123kroatien"
+        ]
+    }
+}
+</script>
+
 <div class="myHeaderBg bg-theme-overlay">
   <section class="section__breadcrumb">
     <div class="container">
