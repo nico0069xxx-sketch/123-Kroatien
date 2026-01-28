@@ -131,7 +131,7 @@ textarea{min-height:80px;resize:vertical}
 {% if listing.photo_6 %}<div class="gallery-slide" onclick="openLightbox(6)"><img src="{{ listing.photo_6.url }}" alt="7"></div>{% endif %}
 </div>
 <div class="gallery-overlay">
-<span class="badge">{% if listing.property_status == "Sale" %}{{ status_translations.Sale }}{% else %}{{ status_translations.Rent }}{% endif %}</span>
+<span class="badge">{% if listing.property_status == "Sale" or listing.property_status == "Zu verkaufen" or "sale" in listing.property_status|lower or "verkauf" in listing.property_status|lower %}{{ status_translations.Sale }}{% else %}{{ status_translations.Rent }}{% endif %}</span>
 <h1>{{ listing.json_content.property_title }}</h1>
 <p class="gallery-location"><i class="fa fa-map-marker"></i> {{ listing.json_content.city|default:listing.location }}, {{ country_name_translated }}</p>
 </div>

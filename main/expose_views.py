@@ -29,6 +29,11 @@ def expose_view(request, listing_id):
     
     # Sprache aus Session
     lang = request.session.get('site_language', 'ge')
+    lang = request.session.get("site_language", "ge")
+
+    # KI-übersetzten Content laden
+    from main.ai_listing_helper import get_listing_content_with_ai
+    listing.json_content = get_listing_content_with_ai(listing, lang)
     
     # QR-Code zur Online-Ansicht generieren
     online_url = f"https://123-kroatien.eu/{lang}/property-details/{listing_id}/"

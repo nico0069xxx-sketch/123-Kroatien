@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>{{ trans.title }} - {{ listing.property_title }}</title>
+    <title>{{ trans.title }} - {{ listing.json_content.property_title|default:listing.property_title }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -332,7 +332,7 @@
         <!-- Header -->
         <div class="expose-header">
             <div>
-                <h1>{{ listing.property_title }}</h1>
+                <h1>{{ listing.json_content.property_title|default:listing.property_title }}</h1>
                 <span class="status-badge">
                     {% if listing.property_status == 'Sale' or listing.property_status == 'Zu verkaufen' or 'sale' in listing.property_status|lower or 'verkauf' in listing.property_status|lower %}{{ trans.sale }}{% else %}{{ trans.rent }}{% endif %}
                 </span>
@@ -344,7 +344,7 @@
         
         <!-- Main Image -->
         {% if listing.photo_main %}
-        <img src="{{ listing.photo_main.url }}" alt="{{ listing.property_title }}" class="main-image">
+        <img src="{{ listing.photo_main.url }}" alt="{{ listing.json_content.property_title|default:listing.property_title }}" class="main-image">
         {% endif %}
         
         <!-- Key Facts -->
@@ -371,7 +371,7 @@
         <div class="two-columns">
             <div>
                 <h3 class="section-title">{{ trans.description }}</h3>
-                <p class="description">{{ listing.property_description|default:"—"|linebreaks }}</p>
+                <p class="description">{{ listing.json_content.property_description|default:listing.property_description|default:"—"|linebreaks }}</p>
             </div>
             
             <div class="agent-card">
@@ -388,7 +388,7 @@
         
         <!-- Gallery -->
         {% if images|length > 1 %}
-        <h3 class="section-title">Bilder</h3>
+        <h3 class="section-title">{{ trans.features|default:"Bilder" }}</h3>
         <div class="gallery">
             {% for img in images|slice:":8" %}
             <img src="{{ img }}" alt="Bild {{ forloop.counter }}">
