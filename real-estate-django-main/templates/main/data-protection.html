@@ -1,4 +1,28 @@
 {% extends 'include/base.html' %} {% load static %} {% block body %}
+
+<!-- Schema.org für Datenschutz-Seite -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Datenschutzerklärung - 123-Kroatien.eu",
+    "description": "Datenschutzerklärung und Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO",
+    "url": "{{ request.build_absolute_uri }}",
+    "isPartOf": {
+        "@type": "WebSite",
+        "name": "123-Kroatien.eu",
+        "url": "https://123-kroatien.eu"
+    },
+    "about": {
+        "@type": "Organization",
+        "name": "123-Kroatien.eu",
+        "url": "https://123-kroatien.eu"
+    },
+    "inLanguage": "de",
+    "lastReviewed": "2025-01-01"
+}
+</script>
+
 <header>
   <div class="myHeaderBg bg-theme-overlay">
     <section class="section__breadcrumb">
