@@ -963,7 +963,7 @@ def seo_meta_tags(request):
         'meta_description': meta['meta_default_description'],
         'meta_keywords': meta['meta_default_keywords'],
         'meta_url': current_url,
-        'meta_image': 'https://123-kroatien.eu/static/images/og-image.jpg',
+        'meta_image': 'https://123-kroatien.eu/static/images/logo-full.png',
         'meta_type': 'website',
         'meta_twitter_card': 'summary_large_image',
     }
