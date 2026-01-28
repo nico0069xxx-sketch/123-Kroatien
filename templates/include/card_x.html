@@ -5,7 +5,7 @@
             <div class="col-md-4 col-lg-5 col-xl-4">
                 <div class="card__image-header h-250">
                     <a href="{% url 'main:property_details' listing.id %}">
-                        <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.png' %}{% endif %}" alt=""
+                        <img src="{% if listing.photo_main %}{{listing.photo_main.url}}{% else %}{% static 'images/news1.png' %}{% endif %}" alt="" loading="lazy"
                             class="img-fluid w100 img-transition">
                     </a>
                     <div class="info" style="background-color: #db0000;">{{listing.json_content.property_status}}</div>
@@ -49,7 +49,7 @@
                 <div class="card__image__footer">
                     <figure>
                         {% if listing.realtor %}
-                        <img onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'" src="{% if listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
+                        <img loading="lazy" onclick="window.location.href='{% url "main:agent" listing.realtor.id %}'" src="{% if listing.realtor.profile_image %}{{listing.realtor.profile_image.url}}{% else %}{% static 'images/p2.png' %}{% endif %}" alt=""
                             class="img-fluid rounded-circle">
                         {% else %}
                         <img src="{% static 'images/p2.png' %}" alt="" class="img-fluid rounded-circle">
