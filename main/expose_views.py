@@ -27,9 +27,10 @@ def expose_view(request, listing_id):
     """Exposé-Ansicht mit Rate-Limiting"""
     listing = get_object_or_404(Listing, id=listing_id, is_published=True)
     
-    # Sprache aus Session
-    lang = request.session.get('site_language', 'ge')
-    lang = request.session.get("site_language", "ge")
+    # Sprache aus URL extrahieren (nicht Session)
+    path_parts = request.path.strip("/").split("/")
+    valid_langs = ["ge", "en", "hr", "fr", "nl", "pl", "cz", "sk", "ru", "gr", "sw", "no"]
+    lang = path_parts[0] if path_parts and path_parts[0] in valid_langs else "ge"
 
     # KI-übersetzten Content laden
     from main.ai_listing_helper import get_listing_content_with_ai
