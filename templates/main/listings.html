@@ -3,6 +3,30 @@
 {% block body %}
 {% load i18n %}
 
+
+<!-- Schema.org - ItemList (GEO Königsklasse - Immobilien-Karussell) -->
+{% if listings %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Immobilien in Kroatien",
+    "description": "Aktuelle Immobilienangebote in Kroatien - Häuser, Wohnungen, Villen und Grundstücke",
+    "numberOfItems": "{{ listings|length }}",
+    "itemListElement": [
+        {% for listing in listings|slice:":10" %}
+        {
+            "@type": "ListItem",
+            "position": {{ forloop.counter }},
+            "url": "https://123-kroatien.eu/{{ language }}/property/{{ listing.slug }}/",
+            "name": "{{ listing.property_title|truncatechars:60 }}",
+            "image": "{% if listing.photo_main %}https://123-kroatien.eu{{ listing.photo_main.url }}{% endif %}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
 <div class="clearfix"></div>
 
 <!-- LISTING LIST -->

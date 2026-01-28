@@ -5,6 +5,42 @@
 {% load translate_filters %}
 {% block body %}
 
+
+<!-- Schema.org - RealEstateListing (GEO Königsklasse) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": "{{ listing.property_title }}",
+    "description": "{{ listing.property_description|truncatechars:200 }}",
+    "url": "https://123-kroatien.eu{{ request.path }}",
+    "datePosted": "{{ listing.created_date|date:\"Y-m-d\" }}",
+    "image": ["{% if listing.photo_main %}https://123-kroatien.eu{{ listing.photo_main.url }}{% endif %}"],
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ listing.city }}",
+        "addressRegion": "{{ listing.region }}",
+        "addressCountry": "HR"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "{{ listing.latitude|default:\"45.1\" }}",
+        "longitude": "{{ listing.longitude|default:\"15.2\" }}"
+    },
+    "offers": {
+        "@type": "Offer",
+        "price": "{{ listing.property_price }}",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+    },
+    "numberOfRooms": "{{ listing.bedrooms|default:\"0\" }}",
+    "floorSize": {
+        "@type": "QuantitativeValue",
+        "value": "{{ listing.interior_size|default:\"0\" }}",
+        "unitCode": "MTK"
+    }
+}
+</script>
     <div class="clearfix"></div>
 
     <style>

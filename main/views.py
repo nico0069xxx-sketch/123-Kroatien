@@ -300,7 +300,6 @@ def sitemap(request):
 def service(request):
     return render(request, 'main/service.html')
 
-@login_required(login_url='main:login_required')
 def listings(request): 
     listings = Listing.objects.filter(is_published=True)
 
@@ -439,7 +438,6 @@ def listings(request):
 
 
 
-@login_required(login_url='main:login_required')
 def single_details(request, id):
     from main.ai_listing_helper import get_listing_content_with_ai
     user_language = request.session.get('site_language', 'en')

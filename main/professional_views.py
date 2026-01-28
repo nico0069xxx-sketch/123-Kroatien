@@ -80,7 +80,11 @@ def translate_languages(languages_str, lang):
         return ""
     lang_trans = LANGUAGE_TRANSLATIONS.get(lang, LANGUAGE_TRANSLATIONS["ge"])
     # Versuche die gespeicherten Sprachen zu übersetzen
-    parts = [p.strip() for p in languages_str.split(",")]
+    # Handle both string and list input
+    if isinstance(languages_str, list):
+        parts = [p.strip() for p in languages_str]
+    else:
+        parts = [p.strip() for p in languages_str.split(",")]
     translated = []
     # Mapping von deutschen Namen zu Codes
     de_to_code = {"Deutsch": "de", "Englisch": "en", "Kroatisch": "hr", "Italienisch": "it", "Französisch": "fr", "Slowenisch": "sl", "Ungarisch": "hu"}
@@ -420,8 +424,6 @@ def get_lang_from_request(request, country):
 
 def professional_list(request, country, category):
     lang = get_lang_from_request(request, country)
-    
-    professional = get_object_or_404(Professional, slug=slug, is_active=True)
     
     # Finde den professional_type aus der URL-Kategorie
     professional_type = None

@@ -2,6 +2,37 @@
 {% load static %}
 {% block title %}{{ listing.json_content.property_title }}{% endblock %}
 {% block body %}
+
+<!-- Schema.org - RealEstateListing (GEO Königsklasse) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": "{{ listing.json_content.property_title }}",
+    "description": "{{ listing.json_content.description|truncatechars:200 }}",
+    "url": "https://123-kroatien.eu{{ request.path }}",
+    "datePosted": "{{ listing.created_date|date:'Y-m-d' }}",
+    "image": ["{% if listing.photo_main %}https://123-kroatien.eu{{ listing.photo_main.url }}{% endif %}"],
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ listing.city }}",
+        "addressRegion": "{{ listing.region }}",
+        "addressCountry": "HR"
+    },
+    "offers": {
+        "@type": "Offer",
+        "price": "{{ listing.property_price }}",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+    },
+    "numberOfRooms": "{{ listing.bedrooms|default:'0' }}",
+    "floorSize": {
+        "@type": "QuantitativeValue",
+        "value": "{{ listing.interior_size|default:'0' }}",
+        "unitCode": "MTK"
+    }
+}
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 :root{--primary:#003167;--primary-light:#0056b3;--accent:#db0000;--bg:#F9F8F6;--bg-white:#fff;--text:#0A0A0A;--text-muted:#64748B;--border:#E2E2E2;--shadow:0 4px 20px rgba(0,0,0,.08)}
