@@ -3,6 +3,7 @@ from . import views
 from . import professional_views
 from . import xml_views
 from . import makler_views
+from . import expose_views
 from . import address_views
 from . import glossary_views
 from .glossary_urls import glossary_urlpatterns
@@ -25,6 +26,7 @@ urlpatterns = content_urlpatterns + [
     path('edit-property/<int:id>/', views.edit_property, name='edit_property'),
     path('delete-property/<int:id>/', views.delete_property, name='delete_property'),
     path('property-details/<int:id>/', views.single_details, name='property_details'),
+    path('expose/<int:listing_id>/', expose_views.expose_view, name='expose'),
     path('blog/single/', views.blog_single, name="blog_single"),
     path('blog-single-1', views.blog_single_1, name="blog-single-1"),
     path('blog-single-2', views.blog_single_2, name="blog-single-2"),

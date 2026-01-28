@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{{ trans.title }} - {{ listing.property_title }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+        
+        .expose-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .expose-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 3px solid #003167;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .expose-header h1 {
+            color: #003167;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .expose-header .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #db0000;
+        }
+        
+        .expose-header .status-badge {
+            background: #003167;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        /* Main Image */
+        .main-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        /* Key Facts */
+        .key-facts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .fact-box {
+            background: #f5f7fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .fact-box .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #003167;
+        }
+        
+        .fact-box .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        /* Two Column Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        /* Description */
+        .section-title {
+            color: #003167;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .description {
+            text-align: justify;
+            font-size: 14px;
+        }
+        
+        /* Agent Contact */
+        .agent-card {
+            background: #f5f7fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .agent-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        
+        .agent-card .agent-name {
+            font-weight: 600;
+            color: #003167;
+            font-size: 16px;
+        }
+        
+        .agent-card .agent-company {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .agent-card .contact-line {
+            font-size: 13px;
+            margin: 5px 0;
+        }
+        
+        .agent-card .contact-line i {
+            width: 20px;
+            color: #003167;
+        }
+        
+        /* Image Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .gallery img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        /* Footer */
+        .expose-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+        
+        .qr-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .qr-section img {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .qr-section .qr-text {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .branding {
+            text-align: right;
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .branding a {
+            color: #003167;
+            text-decoration: none;
+        }
+        
+        /* Action Buttons - nicht beim Drucken */
+        .action-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-print {
+            background: #003167;
+            color: #fff;
+        }
+        
+        .btn-print:hover {
+            background: #004a99;
+        }
+        
+        .btn-share {
+            background: #25D366;
+            color: #fff;
+        }
+        
+        .btn-share:hover {
+            background: #1ea952;
+        }
+        
+        /* Share Dropdown */
+        .share-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .share-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            min-width: 180px;
+            z-index: 1001;
+        }
+        
+        .share-menu.active {
+            display: block;
+        }
+        
+        .share-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        
+        .share-menu a:hover {
+            background: #f5f5f5;
+        }
+        
+        .share-menu a:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .share-menu a:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .action-buttons { display: none !important; }
+            .expose-container { padding: 0; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .main-image { height: 250px; }
+            .gallery img { height: 80px; }
+        }
+        
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="action-btn btn-print" onclick="window.print()">
+            <i class="fa fa-print"></i> {{ trans.print }}
+        </button>
+        <div class="share-dropdown">
+            <button class="action-btn btn-share" onclick="toggleShareMenu()">
+                <i class="fa fa-share-alt"></i> {{ trans.share }}
+            </button>
+            <div class="share-menu" id="shareMenu">
+                <a href="https://wa.me/?text={{ listing.property_title|urlencode }}%20-%20{{ online_url|urlencode }}" target="_blank">
+                    <i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp
+                </a>
+                <a href="mailto:?subject={{ listing.property_title|urlencode }}&body={{ online_url|urlencode }}" target="_blank">
+                    <i class="fa fa-envelope" style="color:#EA4335"></i> E-Mail
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ online_url|urlencode }}" target="_blank">
+                    <i class="fab fa-facebook" style="color:#1877F2"></i> Facebook
+                </a>
+                <a href="#" onclick="copyLink(); return false;">
+                    <i class="fa fa-link" style="color:#333"></i> Link kopieren
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="expose-container">
+        <!-- Header -->
+        <div class="expose-header">
+            <div>
+                <h1>{{ listing.property_title }}</h1>
+                <span class="status-badge">
+                    {% if listing.property_status == 'Sale' %}{{ trans.sale }}{% else %}{{ trans.rent }}{% endif %}
+                </span>
+            </div>
+            <div style="text-align: right;">
+                <div class="price">{{ listing.property_price|floatformat:0 }} €</div>
+            </div>
+        </div>
+        
+        <!-- Main Image -->
+        {% if listing.photo_main %}
+        <img src="{{ listing.photo_main.url }}" alt="{{ listing.property_title }}" class="main-image">
+        {% endif %}
+        
+        <!-- Key Facts -->
+        <div class="key-facts">
+            <div class="fact-box">
+                <div class="value">{{ listing.interior_size|default:"—" }} m²</div>
+                <div class="label">{{ trans.size }}</div>
+            </div>
+            <div class="fact-box">
+                <div class="value">{{ listing.lot_size|default:"—" }} m²</div>
+                <div class="label">{{ trans.plot }}</div>
+            </div>
+            <div class="fact-box">
+                <div class="value">{{ listing.bedrooms|default:"—" }}</div>
+                <div class="label">{{ trans.bedrooms }}</div>
+            </div>
+            <div class="fact-box">
+                <div class="value">{{ listing.bathrooms|default:"—" }}</div>
+                <div class="label">{{ trans.bathrooms }}</div>
+            </div>
+        </div>
+        
+        <!-- Two Columns -->
+        <div class="two-columns">
+            <div>
+                <h3 class="section-title">{{ trans.description }}</h3>
+                <p class="description">{{ listing.property_description|default:"—"|linebreaks }}</p>
+            </div>
+            
+            <div class="agent-card">
+                <h3 class="section-title">{{ trans.contact }}</h3>
+                {% if listing.realtor.profile_image %}
+                <img src="{{ listing.realtor.profile_image.url }}" alt="{{ listing.realtor.name }}">
+                {% endif %}
+                <div class="agent-name">{{ listing.realtor.name|default:"—" }}</div>
+                <div class="agent-company">{{ listing.company_name|default:"" }}</div>
+                <div class="contact-line"><i class="fa fa-phone"></i> {{ listing.realtor.phone|default:"—" }}</div>
+                <div class="contact-line"><i class="fa fa-envelope"></i> {{ listing.realtor.email|default:"—" }}</div>
+            </div>
+        </div>
+        
+        <!-- Gallery -->
+        {% if images|length > 1 %}
+        <h3 class="section-title">Bilder</h3>
+        <div class="gallery">
+            {% for img in images|slice:":8" %}
+            <img src="{{ img }}" alt="Bild {{ forloop.counter }}">
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- Footer -->
+        <div class="expose-footer">
+            <div class="qr-section">
+                <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+                <div class="qr-text">
+                    {{ trans.scan_qr }}<br>
+                    <small style="color:#003167;">{{ online_url }}</small>
+                </div>
+            </div>
+            <div class="branding">
+                {{ trans.generated }}<br>
+                <a href="https://123-kroatien.eu" target="_blank"><strong>123-kroatien.eu</strong></a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleShareMenu() {
+            document.getElementById('shareMenu').classList.toggle('active');
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText('{{ online_url }}');
+            alert('Link kopiert!');
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.share-dropdown')) {
+                document.getElementById('shareMenu').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
