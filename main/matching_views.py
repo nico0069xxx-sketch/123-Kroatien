@@ -172,13 +172,19 @@ TEXTE = {
 }
 
 
-def matching_page(request):
+def matching_page(request, lang=None):
     """KI-Matching Seite"""
-    lang = request.session.get('site_language', 'ge')
+    # Sprache aus URL extrahieren
+    path_parts = request.path.strip('/').split('/')
+    valid_langs = ['ge', 'en', 'hr', 'fr', 'nl', 'pl', 'cz', 'sk', 'ru', 'gr', 'sw', 'no']
+    url_lang = path_parts[0] if path_parts and path_parts[0] in valid_langs else 'ge'
+    
+    # Session aktualisieren
+    request.session['site_language'] = url_lang
     
     return render(request, 'main/matching.html', {
-        'lang': lang,
-        'texte': TEXTE.get(lang, TEXTE['ge']),
+        'lang': url_lang,
+        'texte': TEXTE.get(url_lang, TEXTE['ge']),
     })
 
 
