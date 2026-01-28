@@ -151,6 +151,15 @@ textarea{min-height:80px;resize:vertical}
 <div class="content">
 <main>
 <a href="{% url 'main:listing' %}" class="back-link"><i class="fa fa-arrow-left"></i> {{ nav_back|default:"Zurueck" }}</a>
+
+<!-- Visuelle Breadcrumbs Navigation -->
+<nav class="breadcrumbs-nav" style="margin-bottom:20px;font-size:14px;color:var(--text-muted);">
+    <a href="/{{ language }}/" style="color:var(--primary);text-decoration:none;">{{ breadcrumbs.0.name|default:"Startseite" }}</a>
+    <span style="margin:0 8px;">›</span>
+    <a href="/{{ language }}/listings/" style="color:var(--primary);text-decoration:none;">{{ label_listings|default:"Immobilien" }}</a>
+    <span style="margin:0 8px;">›</span>
+    <span style="color:var(--text-muted);">{{ listing.json_content.property_title|truncatechars:40 }}</span>
+</nav>
 <div class="price-section">
 <div class="price-tag">EUR {{ listing.json_content.property_price }}</div>
 <div class="prop-id">{{ label_property_id|default:"ID" }}: 123K-{{ listing.property_id|default:listing.id }}</div>
