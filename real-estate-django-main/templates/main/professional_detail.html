@@ -2,6 +2,49 @@
 {% load static %}
 
 {% block body %}
+<!-- Schema.org RealEstateAgent / LocalBusiness für SEO/GEO -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "{% if professional.profession == 'realtor' %}RealEstateAgent{% else %}LocalBusiness{% endif %}",
+    "name": "{{ professional.name }}",
+    "description": "{{ professional.description|truncatewords:50|default:'' }}",
+    "url": "{{ request.build_absolute_uri }}",
+    {% if professional.company_logo %}
+    "logo": "{{ request.scheme }}://{{ request.get_host }}{{ professional.company_logo.url }}",
+    "image": "{{ request.scheme }}://{{ request.get_host }}{{ professional.company_logo.url }}",
+    {% elif professional.portrait_photo %}
+    "image": "{{ request.scheme }}://{{ request.get_host }}{{ professional.portrait_photo.url }}",
+    {% endif %}
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ professional.city|default:'' }}",
+        "addressRegion": "{{ professional.get_region_display|default:'' }}",
+        "addressCountry": "HR"
+    },
+    {% if professional.phone %}
+    "telephone": "{{ professional.phone }}",
+    {% endif %}
+    {% if professional.email %}
+    "email": "{{ professional.email }}",
+    {% endif %}
+    {% if professional.website %}
+    "sameAs": "{{ professional.website }}",
+    {% endif %}
+    "priceRange": "€€",
+    "areaServed": {
+        "@type": "Country",
+        "name": "Croatia"
+    }
+    {% if professional.is_verified %},
+    "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Verified Professional"
+    }
+    {% endif %}
+}
+</script>
+
 <div class="faqHeaderBg bg-theme-overlay">
   <section class="section__breadcrumb">
     <div class="container">
