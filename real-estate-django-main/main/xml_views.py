@@ -228,6 +228,7 @@ def robots_txt(request):
 Allow: /
 
 Sitemap: https://123-kroatien.eu/sitemap.xml
+Llms-txt: https://123-kroatien.eu/llms.txt
 
 Disallow: /admin/
 Disallow: /nik-verwaltung-2026/
@@ -235,3 +236,26 @@ Disallow: /accounts/
 Disallow: /portal/
 """
     return HttpResponse(content, content_type='text/plain')
+
+
+def llms_txt(request):
+    """
+    llms.txt - Documentation for AI crawlers (ChatGPT, Perplexity, Claude, etc.)
+    This helps AI systems understand and index the website content.
+    """
+    import os
+    from django.conf import settings
+    
+    llms_path = os.path.join(settings.BASE_DIR, 'static', 'llms.txt')
+    
+    try:
+        with open(llms_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = """# 123-Kroatien.eu - AI Documentation
+        
+This is a real estate portal for Croatian properties.
+Visit https://123-kroatien.eu for more information.
+"""
+    
+    return HttpResponse(content, content_type='text/plain; charset=utf-8')
