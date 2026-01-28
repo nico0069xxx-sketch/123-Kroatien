@@ -516,109 +516,14 @@ document.addEventListener('DOMContentLoaded', function() {
             lastStatus = el.value;
             updatePriceOptions();
         }
-    }, 300);
+     }, 300);
 });
-</script>
 
 // ==================== KI-IMMOBILIENSUCHE ====================
 document.getElementById('listings-search-btn').addEventListener('click', performListingsSmartSearch);
-document.getElementById('listings-smart-search').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') performListingsSmartSearch();
-});
-
-function performListingsSmartSearch() {
-    const query = document.getElementById('listings-smart-search').value.trim();
-    if (!query) return;
-    
-    const searchBox = document.querySelector('.products__filter__body');
-    const loading = document.getElementById('listings-search-loading');
-    
-    // Filigrane Animation hinzufügen
-    if (!document.getElementById('listings-search-style')) {
-        const style = document.createElement('style');
-        style.id = 'listings-search-style';
-        style.innerHTML = `
-            @keyframes border-light {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-            .search-glow {
-                position: relative;
-            }
-            .search-glow::before {
-                content: '';
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                right: 2px;
-                bottom: 2px;
-                border-radius: 6px;
-                border: 2px solid transparent;
-                background: linear-gradient(90deg, 
-                    rgba(255,255,255,0.1) 0%, 
-                    rgba(255,255,255,0.8) 25%, 
-                    rgba(255,255,255,0.1) 50%,
-                    rgba(255,255,255,0.8) 75%,
-                    rgba(255,255,255,0.1) 100%
-                );
-                background-size: 200% 200%;
-                animation: border-light 2s linear infinite;
-                pointer-events: none;
-                -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-                mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                mask-composite: exclude;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    searchBox.classList.add('search-glow');
-    loading.style.display = 'block';
-    
-    fetch('/{{ language }}/api/suche-v2/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
-        },
-        body: JSON.stringify({ query: query })
-    })
-    .then(response => response.json())
-    .then(data => {
-        loading.style.display = 'none';
-        searchBox.classList.remove('search-glow');
-        
-        if (data.status === 'success' && data.results && data.results.length > 0) {
-            // Redirect zur Listings-Seite mit Ergebnissen
-            const ids = data.results.map(r => r.id).join(',');
-            window.location.href = '/{{ language }}/listings/?ids=' + ids;
-        } else {
-            alert(data.message || 'Keine passenden Immobilien gefunden.');
-        }
-    })
-    .catch(error => {
-        loading.style.display = 'none';
-        searchBox.classList.remove('search-glow');
-        console.error('Smart-Search Error:', error);
-        alert('Verbindungsfehler. Bitte versuche es erneut.');
-    });
-}
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+... (der ganze Code) ...
 // ==================== END KI-SUCHE ====================
 
+</script>
 {% endblock js %}
+
