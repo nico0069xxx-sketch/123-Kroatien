@@ -13,13 +13,21 @@
     "url": "{{ request.build_absolute_uri }}",
     "datePosted": "{{ listing.list_date|date:'Y-m-d' }}",
     {% if listing.photo_main %}
-    "image": "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_main.url }}",
+    "image": [
+        "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_main.url }}"
+        {% if listing.photo_1 %},"{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_1.url }}"{% endif %}
+        {% if listing.photo_2 %},"{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_2.url }}"{% endif %}
+        {% if listing.photo_3 %},"{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_3.url }}"{% endif %}
+        {% if listing.photo_4 %},"{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_4.url }}"{% endif %}
+        {% if listing.photo_5 %},"{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_5.url }}"{% endif %}
+    ],
     {% endif %}
     "offers": {
         "@type": "Offer",
         "price": "{{ listing.property_price }}",
         "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31"
     },
     "address": {
         "@type": "PostalAddress",
@@ -36,6 +44,10 @@
     {% endif %}
     {% if listing.bedrooms %}
     "numberOfRooms": "{{ listing.bedrooms }}",
+    "numberOfBedrooms": "{{ listing.bedrooms }}",
+    {% endif %}
+    {% if listing.bathrooms %}
+    "numberOfBathroomsTotal": "{{ listing.bathrooms }}",
     {% endif %}
     "broker": {
         "@type": "RealEstateAgent",
@@ -44,6 +56,48 @@
     }
 }
 </script>
+
+<!-- ImageGallery Schema für Bilder-Karussell -->
+{% if listing.photo_main %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "{{ listing.property_title }} - Bildergalerie",
+    "description": "Fotos der Immobilie {{ listing.property_title }} in {{ listing.city }}, Kroatien",
+    "url": "{{ request.build_absolute_uri }}",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_main.url }}",
+            "name": "{{ listing.property_title }} - Hauptbild",
+            "description": "Hauptansicht der Immobilie"
+        }
+        {% if listing.photo_1 %},
+        {
+            "@type": "ImageObject",
+            "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_1.url }}",
+            "name": "{{ listing.property_title }} - Bild 2"
+        }
+        {% endif %}
+        {% if listing.photo_2 %},
+        {
+            "@type": "ImageObject",
+            "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_2.url }}",
+            "name": "{{ listing.property_title }} - Bild 3"
+        }
+        {% endif %}
+        {% if listing.photo_3 %},
+        {
+            "@type": "ImageObject",
+            "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_3.url }}",
+            "name": "{{ listing.property_title }} - Bild 4"
+        }
+        {% endif %}
+    ]
+}
+</script>
+{% endif %}
 
     <div class="clearfix"></div>
 
