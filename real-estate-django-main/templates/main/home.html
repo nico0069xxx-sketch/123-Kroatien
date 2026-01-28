@@ -2,6 +2,117 @@
 {% load static %}
 {% load i18n %}
 {% block body %}
+
+<!-- Schema.org Place für Kroatien Regionen (GEO-Optimierung) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "123-Kroatien.eu",
+    "description": "{{ hero_subtitle }}",
+    "url": "https://123-kroatien.eu",
+    "logo": "https://123-kroatien.eu/static/images/logo-full.png",
+    "image": "https://123-kroatien.eu/static/images/1.png",
+    "priceRange": "€€€",
+    "areaServed": [
+        {
+            "@type": "Place",
+            "name": "Istrien",
+            "alternateName": ["Istria", "Istra"],
+            "description": "Halbinsel im Nordwesten Kroatiens mit mittelalterlichen Städten und Weinbergen",
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "45.1",
+                "longitude": "13.9"
+            },
+            "containedInPlace": {
+                "@type": "Country",
+                "name": "Croatia"
+            }
+        },
+        {
+            "@type": "Place",
+            "name": "Dalmatien",
+            "alternateName": ["Dalmatia", "Dalmacija"],
+            "description": "Küstenregion mit Split, Dubrovnik und tausenden Inseln",
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "43.5",
+                "longitude": "16.4"
+            },
+            "containedInPlace": {
+                "@type": "Country",
+                "name": "Croatia"
+            }
+        },
+        {
+            "@type": "Place",
+            "name": "Kvarner",
+            "alternateName": ["Kvarner Bucht", "Kvarner Bay"],
+            "description": "Bucht mit Rijeka, Opatija und den Inseln Krk, Cres, Rab",
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "45.0",
+                "longitude": "14.5"
+            },
+            "containedInPlace": {
+                "@type": "Country",
+                "name": "Croatia"
+            }
+        },
+        {
+            "@type": "Place",
+            "name": "Zagreb",
+            "alternateName": "Agram",
+            "description": "Hauptstadt Kroatiens mit urbanem Immobilienmarkt",
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "45.815",
+                "longitude": "15.982"
+            },
+            "containedInPlace": {
+                "@type": "Country",
+                "name": "Croatia"
+            }
+        }
+    ],
+    "knowsAbout": [
+        "Croatian Real Estate",
+        "Adriatic Coast Properties",
+        "Istria Villas",
+        "Dalmatia Apartments",
+        "Croatia Property Investment",
+        "Sea View Properties Croatia"
+    ],
+    "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Immobilien in Kroatien",
+        "itemListElement": [
+            {
+                "@type": "OfferCatalog",
+                "name": "Villen",
+                "url": "https://123-kroatien.eu/listing/?property_type=Villa"
+            },
+            {
+                "@type": "OfferCatalog",
+                "name": "Apartments",
+                "url": "https://123-kroatien.eu/listing/?property_type=Appartment"
+            },
+            {
+                "@type": "OfferCatalog",
+                "name": "Häuser",
+                "url": "https://123-kroatien.eu/listing/?property_type=House"
+            },
+            {
+                "@type": "OfferCatalog",
+                "name": "Grundstücke",
+                "url": "https://123-kroatien.eu/listing/?property_type=Land"
+            }
+        ]
+    }
+}
+</script>
+
     <!-- HERO SECTION WITH CAROUSEL -->
     <div class="homepage__property">
         <div class="homepage__property-carousel owl-carousel owl-theme">
