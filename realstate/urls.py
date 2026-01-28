@@ -6,6 +6,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from main.views import set_language_from_url, news_page, sitemap as html_sitemap, imprint, agb, cancellation_policy, home
 from main.xml_views import rss_listings, xml_sitemap, robots_txt, llms_txt, humans_txt, security_txt
+from main import expose_views
 from django.contrib.sitemaps.views import sitemap
 from main.glossary_sitemaps import get_glossary_sitemaps
 
@@ -195,6 +196,9 @@ urlpatterns += [
     path("gr/kroatia/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatia"}, name="professional-detail-gr-direct"),
     path("sw/kroatien/<str:category>/", professional_views.professional_list, {"country": "kroatien"}, name="professional-list-sw-direct"),
     path("sw/kroatien/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatien"}, name="professional-detail-sw-direct"),
+    path("no/property-details/<int:id>/", views.single_details, name="property-details-no-direct"),
+    path("no/listings/", views.listings, name="listings-no-direct"),
+    path("no/expose/<int:listing_id>/", expose_views.expose_view, name="expose-no-direct"),
     path("no/kroatia/<str:category>/", professional_views.professional_list, {"country": "kroatia"}, name="professional-list-no-direct"),
     path("no/kroatia/<str:category>/<str:slug>/", professional_views.professional_detail, {"country": "kroatia"}, name="professional-detail-no-direct"),
 ]

@@ -104,10 +104,10 @@
 input,textarea{width:100%;padding:13px 15px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:'Manrope',sans-serif;background:var(--bg);transition:all .3s;box-sizing:border-box}
 input:focus,textarea:focus{outline:none;border-color:var(--primary);background:var(--bg-white);box-shadow:0 0 0 3px rgba(0,49,103,.1)}
 textarea{min-height:80px;resize:vertical}
-.btn{width:100%;padding:15px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;font-family:'Manrope',sans-serif}
-.btn-primary{background:var(--primary);color:#fff}
+.pd .btn{width:100%;padding:15px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;font-family:'Manrope',sans-serif}
+.pd .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:var(--primary-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,49,103,.25)}
-.btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary);margin-top:10px;text-decoration:none}
+.pd .btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary);margin-top:10px;text-decoration:none}
 .btn-secondary:hover{background:var(--bg)}
 .lightbox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center}
 .lightbox.active{display:flex}
@@ -131,9 +131,9 @@ textarea{min-height:80px;resize:vertical}
 {% if listing.photo_6 %}<div class="gallery-slide" onclick="openLightbox(6)"><img src="{{ listing.photo_6.url }}" alt="7"></div>{% endif %}
 </div>
 <div class="gallery-overlay">
-<span class="badge">{{ listing.json_content.property_status }}</span>
+<span class="badge">{% if listing.property_status == "Sale" %}{{ status_translations.Sale }}{% else %}{{ status_translations.Rent }}{% endif %}</span>
 <h1>{{ listing.json_content.property_title }}</h1>
-<p class="gallery-location"><i class="fa fa-map-marker"></i> {{ listing.json_content.city|default:listing.location }}{% if listing.json_content.country %}, {{ listing.json_content.country }}{% endif %}</p>
+<p class="gallery-location"><i class="fa fa-map-marker"></i> {{ listing.json_content.city|default:listing.location }}, {{ country_name_translated }}</p>
 </div>
 <div class="gallery-counter"><span id="currentSlide">1</span> / <span id="totalSlides">1</span></div>
 <div class="gallery-dots" id="galleryDots"></div>
@@ -175,7 +175,7 @@ textarea{min-height:80px;resize:vertical}
 <h2 class="section-title">{{ label_details|default:"Details" }}</h2>
 <div class="details-grid">
 {% if listing.json_content.city %}<div class="detail-row"><span class="detail-lbl">{{ filter_location|default:"Ort" }}</span><span class="detail-val">{{ listing.json_content.city|default:listing.location }}</span></div>{% endif %}
-{% if listing.json_content.country %}<div class="detail-row"><span class="detail-lbl">{{ CountryP|default:"Land" }}</span><span class="detail-val">{{ listing.json_content.country }}</span></div>{% endif %}
+{% if listing.json_content.country %}<div class="detail-row"><span class="detail-lbl">{{ CountryP|default:"Land" }}</span><span class="detail-val">{{ country_name_translated }}</span></div>{% endif %}
 <div class="detail-row"><span class="detail-lbl">{{ label_property_id|default:"ID" }}</span><span class="detail-val">123K-{{ listing.property_id|default:listing.id }}</span></div>
 </div>
 </div>

@@ -816,6 +816,15 @@ def set_language_from_url(request, user_language):
             else:
                 # Index page
                 return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
+
+        # Nicht-Country URLs (property-details, listings, etc.) direkt weiterleiten
+        NON_COUNTRY_ROUTES = ["property-details", "listings", "expose", "about", "contact", "faq", "blog", "login", "register", "profile", "add-property", "edit-property"]
+        if source_country in NON_COUNTRY_ROUTES:
+            new_url = f"/{user_language}/{source_country}/{source_segment}/"
+            if rest:
+                new_url += rest
+            return HttpResponseRedirect(new_url)
+
         
         # Not glossary - just replace language and country
         target_country = COUNTRY_NAMES.get(user_language, source_country)

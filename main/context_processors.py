@@ -1945,3 +1945,159 @@ def get_og_meta_tags(request):
         "og_image": "https://123-kroatien.eu/static/images/og-image.jpg",
         "twitter_card": "summary_large_image",
     }
+
+
+# =============================================================================
+# PROPERTY DETAIL LABELS (12 Sprachen)
+# =============================================================================
+
+PROPERTY_DETAIL_LABELS = {
+    "ge": {
+        "label_floors": "Etagen",
+        "label_garage": "Garage",
+        "label_property_type": "Objektart",
+        "label_property_status": "Status",
+        "label_location": "Lage",
+    },
+    "en": {
+        "label_floors": "Floors",
+        "label_garage": "Garage",
+        "label_property_type": "Property Type",
+        "label_property_status": "Status",
+        "label_location": "Location",
+    },
+    "hr": {
+        "label_floors": "Katovi",
+        "label_garage": "Garaža",
+        "label_property_type": "Vrsta nekretnine",
+        "label_property_status": "Status",
+        "label_location": "Lokacija",
+    },
+    "fr": {
+        "label_floors": "Étages",
+        "label_garage": "Garage",
+        "label_property_type": "Type de bien",
+        "label_property_status": "Statut",
+        "label_location": "Emplacement",
+    },
+    "nl": {
+        "label_floors": "Verdiepingen",
+        "label_garage": "Garage",
+        "label_property_type": "Type woning",
+        "label_property_status": "Status",
+        "label_location": "Locatie",
+    },
+    "pl": {
+        "label_floors": "Piętra",
+        "label_garage": "Garaż",
+        "label_property_type": "Typ nieruchomości",
+        "label_property_status": "Status",
+        "label_location": "Lokalizacja",
+    },
+    "cz": {
+        "label_floors": "Podlaží",
+        "label_garage": "Garáž",
+        "label_property_type": "Typ nemovitosti",
+        "label_property_status": "Stav",
+        "label_location": "Poloha",
+    },
+    "sk": {
+        "label_floors": "Poschodia",
+        "label_garage": "Garáž",
+        "label_property_type": "Typ nehnuteľnosti",
+        "label_property_status": "Stav",
+        "label_location": "Poloha",
+    },
+    "ru": {
+        "label_floors": "Этажи",
+        "label_garage": "Гараж",
+        "label_property_type": "Тип недвижимости",
+        "label_property_status": "Статус",
+        "label_location": "Расположение",
+    },
+    "gr": {
+        "label_floors": "Όροφοι",
+        "label_garage": "Γκαράζ",
+        "label_property_type": "Τύπος ακινήτου",
+        "label_property_status": "Κατάσταση",
+        "label_location": "Τοποθεσία",
+    },
+    "sw": {
+        "label_floors": "Våningar",
+        "label_garage": "Garage",
+        "label_property_type": "Fastighetstyp",
+        "label_property_status": "Status",
+        "label_location": "Plats",
+    },
+    "no": {
+        "label_floors": "Etasjer",
+        "label_garage": "Garasje",
+        "label_property_type": "Eiendomstype",
+        "label_property_status": "Status",
+        "label_location": "Beliggenhet",
+    },
+}
+
+
+def get_property_detail_labels(request):
+    """Labels für Property-Detailseite in 12 Sprachen"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in PROPERTY_DETAIL_LABELS else "ge"
+    user_language = url_lang or request.session.get("site_language", "ge")
+    return PROPERTY_DETAIL_LABELS.get(user_language, PROPERTY_DETAIL_LABELS["ge"])
+
+
+# =============================================================================
+# COUNTRY NAME TRANSLATIONS (für Standort-Anzeige)
+# =============================================================================
+
+COUNTRY_NAME_TRANSLATIONS = {
+    "ge": "Kroatien",
+    "en": "Croatia",
+    "hr": "Hrvatska",
+    "fr": "Croatie",
+    "nl": "Kroatië",
+    "pl": "Chorwacja",
+    "cz": "Chorvatsko",
+    "sk": "Chorvátsko",
+    "ru": "Хорватия",
+    "gr": "Κροατία",
+    "sw": "Kroatien",
+    "no": "Kroatia",
+}
+
+
+def get_country_name_translated(request):
+    """Übersetzter Ländername für die aktuelle Sprache"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in COUNTRY_NAME_TRANSLATIONS else "ge"
+    user_language = url_lang or request.session.get("site_language", "ge")
+    return {"country_name_translated": COUNTRY_NAME_TRANSLATIONS.get(user_language, "Kroatien")}
+
+
+# =============================================================================
+# PROPERTY STATUS TRANSLATIONS (Zu Verkaufen / Zu Vermieten)
+# =============================================================================
+
+PROPERTY_STATUS_TRANSLATIONS = {
+    "ge": {"Sale": "Zu Verkaufen", "Rent": "Zu Vermieten"},
+    "en": {"Sale": "For Sale", "Rent": "For Rent"},
+    "hr": {"Sale": "Na Prodaju", "Rent": "Za Najam"},
+    "fr": {"Sale": "À Vendre", "Rent": "À Louer"},
+    "nl": {"Sale": "Te Koop", "Rent": "Te Huur"},
+    "pl": {"Sale": "Na Sprzedaż", "Rent": "Do Wynajęcia"},
+    "cz": {"Sale": "Na Prodej", "Rent": "K Pronájmu"},
+    "sk": {"Sale": "Na Predaj", "Rent": "Na Prenájom"},
+    "ru": {"Sale": "Продажа", "Rent": "Аренда"},
+    "gr": {"Sale": "Πωλείται", "Rent": "Ενοικιάζεται"},
+    "sw": {"Sale": "Till Salu", "Rent": "Att Hyra"},
+    "no": {"Sale": "Til Salgs", "Rent": "Til Leie"},
+}
+
+
+def get_property_status_translated(request):
+    """Übersetzter Property Status für die aktuelle Sprache"""
+    path_parts = request.path.strip("/").split("/")
+    url_lang = path_parts[0] if path_parts and path_parts[0] in PROPERTY_STATUS_TRANSLATIONS else "ge"
+    user_language = url_lang or request.session.get("site_language", "ge")
+    return {"status_translations": PROPERTY_STATUS_TRANSLATIONS.get(user_language, PROPERTY_STATUS_TRANSLATIONS["ge"])}
