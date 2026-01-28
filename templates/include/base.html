@@ -286,7 +286,47 @@
             // Sprach-URLs für den Sprachumschalter (dynamisch vom Server generiert)
             var languageUrls = {{ language_urls_json|safe|default:'{}' }};
 
-            function changelanguage(value) { var path = window.location.pathname; if (path.indexOf("sitemap") !== -1) { window.location.href = "/set-language/" + value + "/?next=/sitemap"; } else { window.location.href = "/set-language/" + value + "/"; } }
+            function changelanguage(value) {
+                var path = window.location.pathname;
+                
+                // Experten-Finder URL Mapping
+                var expertenFinderUrls = {
+                    'ge': '/ge/kroatien/experten-finder/',
+                    'en': '/en/croatia/expert-finder/',
+                    'hr': '/hr/hrvatska/pronalazac-strucnjaka/',
+                    'fr': '/fr/croatie/recherche-experts/',
+                    'nl': '/nl/kroatie/expert-zoeker/',
+                    'pl': '/pl/chorwacja/wyszukiwarka-ekspertow/',
+                    'cz': '/cz/chorvatsko/vyhledavac-odborniku/',
+                    'sk': '/sk/chorvatsko/vyhladavac-odbornikov/',
+                    'ru': '/ru/horvatiya/poisk-ekspertov/',
+                    'gr': '/gr/kroatia/anazhthsh-eidikwn/',
+                    'sw': '/sw/kroatien/expert-sokare/',
+                    'no': '/no/kroatia/ekspert-soker/'
+                };
+                
+                // Prüfen ob wir auf einer Experten-Finder Seite sind
+                var isExpertenFinder = path.indexOf('experten-finder') !== -1 || 
+                                       path.indexOf('expert-finder') !== -1 ||
+                                       path.indexOf('pronalazac-strucnjaka') !== -1 ||
+                                       path.indexOf('recherche-experts') !== -1 ||
+                                       path.indexOf('expert-zoeker') !== -1 ||
+                                       path.indexOf('wyszukiwarka-ekspertow') !== -1 ||
+                                       path.indexOf('vyhledavac-odborniku') !== -1 ||
+                                       path.indexOf('vyhladavac-odbornikov') !== -1 ||
+                                       path.indexOf('poisk-ekspertov') !== -1 ||
+                                       path.indexOf('anazhthsh-eidikwn') !== -1 ||
+                                       path.indexOf('expert-sokare') !== -1 ||
+                                       path.indexOf('ekspert-soker') !== -1;
+                
+                if (isExpertenFinder && expertenFinderUrls[value]) {
+                    window.location.href = expertenFinderUrls[value];
+                } else if (path.indexOf("sitemap") !== -1) {
+                    window.location.href = "/set-language/" + value + "/?next=/sitemap";
+                } else {
+                    window.location.href = "/set-language/" + value + "/";
+                }
+            }
 
         </script>
         {% block js %}{% endblock js %}
