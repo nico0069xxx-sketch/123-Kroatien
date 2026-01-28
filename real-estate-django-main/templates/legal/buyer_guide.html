@@ -132,6 +132,105 @@
 {% endblock style %}
 
 {% block body %}
+
+<!-- Schema.org HowTo für Buyer Guide (Rich Snippets in Google!) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Immobilie in Kroatien kaufen - Schritt für Schritt Anleitung",
+    "description": "Kompletter Leitfaden für ausländische Immobilienkäufer in Kroatien. Von der Suche bis zur Eigentumsübertragung in 10 einfachen Schritten.",
+    "image": "https://123-kroatien.eu/static/images/logo-full.png",
+    "totalTime": "P30D",
+    "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "EUR",
+        "value": "5000-50000"
+    },
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "OIB Steuernummer beantragen",
+            "text": "Beantragen Sie Ihre kroatische Steueridentifikationsnummer (OIB) beim Finanzamt oder über einen Anwalt.",
+            "url": "https://123-kroatien.eu/ge/kroatien/glossar/oib/"
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Immobilie suchen",
+            "text": "Nutzen Sie 123-Kroatien.eu um passende Immobilien zu finden. Filtern Sie nach Region, Preis und Immobilientyp.",
+            "url": "https://123-kroatien.eu/listing/"
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Besichtigung vor Ort",
+            "text": "Vereinbaren Sie Besichtigungstermine mit den Maklern. Prüfen Sie Lage, Zustand und Umgebung.",
+            "url": "https://123-kroatien.eu/ge/kroatien/immobilienmakler/"
+        },
+        {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Rechtsanwalt beauftragen",
+            "text": "Engagieren Sie einen kroatischen Rechtsanwalt für Due Diligence und Vertragsgestaltung.",
+            "url": "https://123-kroatien.eu/ge/kroatien/rechtsanwaelte/"
+        },
+        {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Grundbuch prüfen",
+            "text": "Ihr Anwalt prüft das Grundbuch (Zemljišna knjiga) auf Eigentumsrechte, Belastungen und Baurecht."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Kaufvertrag aufsetzen",
+            "text": "Der Kaufvertrag (Kupoprodajni ugovor) wird von Ihrem Anwalt geprüft und vorbereitet."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 7,
+            "name": "Notarielle Beglaubigung",
+            "text": "Der Kaufvertrag wird beim Notar (Javni bilježnik) beglaubigt und unterzeichnet."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 8,
+            "name": "Zahlung und Übergabe",
+            "text": "Nach Vertragsunterzeichnung erfolgt die Kaufpreiszahlung und die Schlüsselübergabe."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 9,
+            "name": "Eigentumsübertragung",
+            "text": "Ihr Anwalt beantragt die Eigentumsübertragung im Grundbuch (Uknjižba)."
+        },
+        {
+            "@type": "HowToStep",
+            "position": 10,
+            "name": "Steuern zahlen",
+            "text": "Zahlen Sie die Grunderwerbsteuer (3%) und melden Sie das Eigentum beim Finanzamt an.",
+            "url": "https://123-kroatien.eu/ge/kroatien/steuerberater/"
+        }
+    ],
+    "tool": [
+        {
+            "@type": "HowToTool",
+            "name": "Kroatischer Rechtsanwalt"
+        },
+        {
+            "@type": "HowToTool",
+            "name": "OIB Steuernummer"
+        },
+        {
+            "@type": "HowToTool",
+            "name": "Reisepass"
+        }
+    ]
+}
+</script>
+
 <!-- Hero -->
 <section class="legal-hero">
     <div class="container">
