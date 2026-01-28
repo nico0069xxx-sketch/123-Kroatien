@@ -411,3 +411,60 @@ canvas {
 .hover-text-black:hover {
   color: #000;
 }
+/* ============================================
+   BREADCRUMB NAVIGATION STYLES
+   ============================================ */
+
+.breadcrumb-nav {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.875rem;
+}
+
+.breadcrumb-nav .breadcrumb {
+    background: transparent;
+    margin: 0;
+    padding: 0.75rem 0;
+}
+
+.breadcrumb-nav .breadcrumb-item {
+    color: #6c757d;
+}
+
+.breadcrumb-nav .breadcrumb-item a {
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-nav .breadcrumb-item a:hover {
+    color: #004499;
+    text-decoration: underline;
+}
+
+.breadcrumb-nav .breadcrumb-item.active {
+    color: #343a40;
+    font-weight: 500;
+}
+
+.breadcrumb-nav .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: #adb5bd;
+    font-weight: bold;
+    padding: 0 0.5rem;
+}
+
+/* Responsive - verstecke auf sehr kleinen Bildschirmen mittlere Items */
+@media (max-width: 576px) {
+    .breadcrumb-nav .breadcrumb {
+        font-size: 0.8rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .breadcrumb-nav .breadcrumb-item {
+        white-space: nowrap;
+    }
+}
+
