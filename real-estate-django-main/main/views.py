@@ -216,7 +216,6 @@ def sitemap(request):
 def service(request):
     return render(request, 'main/service.html')
 
-@login_required(login_url='main:login_required')
 def listings(request): 
     listings = Listing.objects.filter(is_published=True)
 
