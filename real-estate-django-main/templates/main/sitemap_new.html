@@ -1,0 +1,240 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<!-- SEO Meta Tags -->
+<meta name="description" content="{{ sm_meta_desc }}">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://123-kroatien.eu/sitemap">
+
+<!-- Hreflang Tags for all 12 languages -->
+<link rel="alternate" hreflang="de" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="en" href="https://123-kroatien.eu/en/sitemap/">
+<link rel="alternate" hreflang="hr" href="https://123-kroatien.eu/hr/sitemap/">
+<link rel="alternate" hreflang="fr" href="https://123-kroatien.eu/fr/sitemap/">
+<link rel="alternate" hreflang="nl" href="https://123-kroatien.eu/nl/sitemap/">
+<link rel="alternate" hreflang="pl" href="https://123-kroatien.eu/pl/sitemap/">
+<link rel="alternate" hreflang="cs" href="https://123-kroatien.eu/cz/sitemap/">
+<link rel="alternate" hreflang="sk" href="https://123-kroatien.eu/sk/sitemap/">
+<link rel="alternate" hreflang="ru" href="https://123-kroatien.eu/ru/sitemap/">
+<link rel="alternate" hreflang="el" href="https://123-kroatien.eu/gr/sitemap/">
+<link rel="alternate" hreflang="sv" href="https://123-kroatien.eu/sw/sitemap/">
+<link rel="alternate" hreflang="no" href="https://123-kroatien.eu/no/sitemap/">
+<link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu/sitemap">
+
+<!-- JSON-LD Structured Data for AI & SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{{ sm_page_title }}",
+  "description": "{{ sm_meta_desc }}",
+  "url": "https://123-kroatien.eu/sitemap",
+  "inLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "123-Kroatien.eu",
+    "url": "https://123-kroatien.eu",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://123-kroatien.eu/listing/?search={search_term}",
+      "query-input": "required name=search_term"
+    }
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "{{ sm_main_pages }}",
+    "itemListElement": [
+      {"@type": "SiteNavigationElement", "position": 1, "name": "{{ sm_home }}", "url": "https://123-kroatien.eu/"},
+      {"@type": "SiteNavigationElement", "position": 2, "name": "{{ sm_all_properties }}", "url": "https://123-kroatien.eu/listing/"},
+      {"@type": "SiteNavigationElement", "position": 3, "name": "{{ sm_glossary }}", "url": "https://123-kroatien.eu/ge/kroatien/glossar/"},
+      {"@type": "SiteNavigationElement", "position": 4, "name": "{{ sm_contact }}", "url": "https://123-kroatien.eu/contact/"}
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "123-Kroatien.eu",
+    "url": "https://123-kroatien.eu",
+    "logo": "https://123-kroatien.eu/static/images/logo-black2.png"
+  }
+}
+</script>
+{% endblock %}
+
+{% block body %}
+<header>
+  <div class="sitemapBg bg-theme-overlay">
+    <section class="section__breadcrumb">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-8 text-center">
+            <h1 class="text-capitalize text-white">{{ sm_page_title }}</h1>
+            <p class="text-white-50">{{ sm_page_subtitle }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      
+      <!-- Hauptseiten / Main Pages -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-home"></i> {{ sm_main_pages }}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/">{{ sm_home }}</a></li>
+              <li><a href="/{{ language }}/listing/">{{ sm_all_properties }}</a></li>
+              <li><a href="/{{ language }}/about/">{{ sm_about }}</a></li>
+              <li><a href="/{{ language }}/contact/">{{ sm_contact }}</a></li>
+              <li><a href="/{{ language }}/faq/">{{ sm_faq }}</a></li>
+              <li><a href="/{{ language }}/blog-single-1">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rechtliches / Legal -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-gavel"></i> {{ sm_legal }}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/imprint/">{{ sm_imprint }}</a></li>
+              <li><a href="/{{ language }}/data-protection/">{{ sm_privacy }}</a></li>
+              <li><a href="/{{ language }}/agb/">{{ sm_terms }}</a></li>
+              <li><a href="/{{ language }}/cancellation-policy/">{{ sm_cancellation }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_glossary }}/disclaimer/">{{ sm_disclaimer }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dienstleister / Service Providers -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-briefcase"></i> {{ sm_providers }}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_realtor }}/">{{ sm_realtor }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_contractor }}/">{{ sm_contractor }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_lawyer }}/">{{ sm_lawyer }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_tax_advisor }}/">{{ sm_tax_advisor }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_architect }}/">{{ sm_architect }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benutzer-Bereich / User Area -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-user"></i> {{ sm_user_area }}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_partner }}/">{{ sm_become_partner }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_registration }}/">{{ sm_register }}</a></li>
+              <li><a href="/accounts/login/">{{ sm_login }}</a></li>
+              <li><a href="/{{ language }}/makler-dashboard/">{{ sm_agent_portal }}</a></li>
+              <li><a href="/accounts/password-reset/">{{ sm_forgot_password }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-cogs"></i> {{ sm_services }}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_glossary }}/">{{ sm_glossary }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_glossary }}/buyer-guide/">{{ sm_buyer_guide }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_market_reports }}/">{{ sm_market_reports }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_addresses }}/">{{ sm_addresses }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_news }}/">{{ sm_news }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- KI / AI -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <i class="fa fa-magic"></i> {{ sm_ai }}
+            </h5>
+            <ul class="list-unstyled">
+              <li><a href="/#ki-suche">{{ sm_ai_search }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_expert_finder }}/">{{ sm_expert_finder }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Technical Links for SEO -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card shadow-sm bg-light">
+          <div class="card-body">
+            <h6 class="card-title text-muted">
+              <i class="fa fa-search"></i> {{ sm_seo_links }}
+            </h6>
+            <div class="d-flex flex-wrap" style="gap: 10px;">
+              <a href="/sitemap.xml" class="btn btn-outline-dark btn-sm">sitemap.xml</a>
+              <a href="/sitemaps/glossary.xml" class="btn btn-outline-dark btn-sm">glossary-sitemap.xml</a>
+              <a href="/robots.txt" class="btn btn-outline-dark btn-sm">robots.txt</a>
+              <a href="/rss/listings/" class="btn btn-outline-dark btn-sm">RSS-Feed</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-primary">
+              <i class="fa fa-globe"></i> {{ sm_languages }}
+            </h6>
+            <div class="d-flex flex-wrap" style="gap: 8px;">
+              <a href="/set-language/ge/" class="btn btn-sm {% if language == 'ge' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇩🇪 Deutsch</a>
+              <a href="/set-language/en/" class="btn btn-sm {% if language == 'en' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇬🇧 English</a>
+              <a href="/set-language/hr/" class="btn btn-sm {% if language == 'hr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇭🇷 Hrvatski</a>
+              <a href="/set-language/fr/" class="btn btn-sm {% if language == 'fr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇫🇷 Français</a>
+              <a href="/set-language/nl/" class="btn btn-sm {% if language == 'nl' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇳🇱 Nederlands</a>
+              <a href="/set-language/pl/" class="btn btn-sm {% if language == 'pl' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇵🇱 Polski</a>
+              <a href="/set-language/cz/" class="btn btn-sm {% if language == 'cz' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇨🇿 Čeština</a>
+              <a href="/set-language/sk/" class="btn btn-sm {% if language == 'sk' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇸🇰 Slovenčina</a>
+              <a href="/set-language/ru/" class="btn btn-sm {% if language == 'ru' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇷🇺 Русский</a>
+              <a href="/set-language/gr/" class="btn btn-sm {% if language == 'gr' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇬🇷 Ελληνικά</a>
+              <a href="/set-language/sw/" class="btn btn-sm {% if language == 'sw' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇸🇪 Svenska</a>
+              <a href="/set-language/no/" class="btn btn-sm {% if language == 'no' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇳🇴 Norsk</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
