@@ -334,6 +334,9 @@
                             <i class="fa fa-spinner fa-spin text-white"></i>
                             <span class="text-white ml-2">Suche läuft...</span>
                         </div>
+                        <div id="listings-search-error" class="text-center mt-3" style="display: none;">
+                            <span style="color: #ff6b6b; font-weight: 500;"></span>
+                        </div>
                     </div>
                 </div>
                 <!-- END KI-SUCHE -->
@@ -519,27 +522,29 @@ document.addEventListener('DOMContentLoaded', function() {
      }, 300);
 });
 
-// ==================== KI-IMMOBILIENSUCHE ====================
+/ ==================== KI-IMMOBILIENSUCHE ====================
 document.getElementById('listings-search-btn').addEventListener('click', performListingsSmartSearch);
 document.getElementById('listings-smart-search').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') performListingsSmartSearch();
 });
 
 function performListingsSmartSearch() {
-    const query = document.getElementById('listings-smart-search').value.trim();
+    var query = document.getElementById('listings-smart-search').value.trim();
     if (!query) return;
     
-    const searchBox = document.querySelector('.products__filter__body');
-    const loading = document.getElementById('listings-search-loading');
+    var searchBox = document.querySelector('.products__filter__body');
+    var loading = document.getElementById('listings-search-loading');
+    var errorDiv = document.getElementById('listings-search-error');
     
     if (!document.getElementById('listings-search-style')) {
-        const style = document.createElement('style');
+        var style = document.createElement('style');
         style.id = 'listings-search-style';
         style.innerHTML = '@keyframes border-light { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } } .search-glow { position: relative; } .search-glow::before { content: \"\"; position: absolute; top: 2px; left: 2px; right: 2px; bottom: 2px; border-radius: 6px; border: 2px solid transparent; background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.8) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.8) 75%, rgba(255,255,255,0.1) 100%); background-size: 200% 200%; animation: border-light 2s linear infinite; pointer-events: none; }';
         document.head.appendChild(style);
     }
     searchBox.classList.add('search-glow');
     loading.style.display = 'block';
+    errorDiv.style.display = 'none';
     
     fetch('/{{ language }}/api/suche-v2/', {
         method: 'POST',
@@ -558,14 +563,17 @@ function performListingsSmartSearch() {
             var ids = data.results.map(function(r) { return r.id; }).join(',');
             window.location.href = '/{{ language }}/listings/?ids=' + ids;
         } else {
-            alert(data.message || 'Keine passenden Immobilien gefunden.');
+            errorDiv.querySelector('span').textContent = data.message || 'Keine passenden Immobilien gefunden.';
+            errorDiv.style.display = 'block';
+            setTimeout(function() { errorDiv.style.display = 'none'; }, 5000);
         }
     })
     .catch(function(error) {
         loading.style.display = 'none';
         searchBox.classList.remove('search-glow');
-        console.error('Smart-Search Error:', error);
-        alert('Verbindungsfehler. Bitte versuche es erneut.');
+        errorDiv.querySelector('span').textContent = 'Verbindungsfehler. Bitte versuche es erneut.';
+        errorDiv.style.display = 'block';
+        setTimeout(function() { errorDiv.style.display = 'none'; }, 5000);
     });
 }
 
@@ -583,7 +591,69 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-// ==================== END KI-SUCHE ====================
-</script>
-{% endblock js %}
 
+// Typewriter Animation für Listings KI-Suche (12 Sprachen)
+(function() {
+    var lang = '{{ language }}' || 'ge';
+    
+    var translations = {
+        ge: { base: "z.B. ", examples: ["Haus am Meer mit Pool unter 500.000€", "Apartment in Split mit Meerblick", "Villa mit Garten in Istrien"] },
+        en: { base: "e.g. ", examples: ["House by the sea with pool under €500,000", "Apartment in Split with sea view", "Villa with garden in Istria"] },
+        hr: { base: "npr. ", examples: ["Kuća uz more s bazenom ispod 500.000 €", "Stan u Splitu s pogledom na more", "Vila s vrtom u Istri"] },
+        fr: { base: "ex. ", examples: ["Maison en bord de mer avec piscine", "Appartement à Split avec vue mer", "Villa avec jardin en Istrie"] },
+        nl: { base: "bijv. ", examples: ["Huis aan zee met zwembad", "Appartement in Split met zeezicht", "Villa met tuin in Istrië"] },
+        pl: { base: "np. ", examples: ["Dom nad morzem z basenem", "Apartament w Splicie z widokiem", "Willa z ogrodem w Istrii"] },
+        cz: { base: "např. ", examples: ["Dům u moře s bazénem", "Byt ve Splitu s výhledem", "Vila se zahradou v Istrii"] },
+        sk: { base: "napr. ", examples: ["Dom pri mori s bazénom", "Byt v Splite s výhľadom", "Vila so záhradou v Istrii"] },
+        ru: { base: "напр. ", examples: ["Дом у моря с бассейном", "Квартира в Сплите с видом", "Вилла с садом в Истрии"] },
+        gr: { base: "π.χ. ", examples: ["Σπίτι στη θάλασσα με πισίνα", "Διαμέρισμα στο Σπλιτ", "Βίλα με κήπο στην Ίστρια"] },
+        sw: { base: "t.ex. ", examples: ["Hus vid havet med pool", "Lägenhet i Split med havsutsikt", "Villa med trädgård i Istrien"] },
+        no: { base: "f.eks. ", examples: ["Hus ved sjøen med basseng", "Leilighet i Split med havutsikt", "Villa med hage i Istria"] }
+    };
+    
+    var t = translations[lang] || translations['ge'];
+    var baseText = t.base;
+    var examples = t.examples;
+    
+    var input = document.getElementById('listings-smart-search');
+    if (!input) return;
+    
+    var exampleIndex = 0;
+    var charIndex = 0;
+    var isDeleting = false;
+    
+    function typeWriter() {
+        var fullText = baseText + examples[exampleIndex];
+        
+        if (!isDeleting) {
+            charIndex++;
+            if (charIndex > fullText.length) {
+                isDeleting = true;
+                setTimeout(typeWriter, 2000);
+                return;
+            }
+        } else {
+            charIndex--;
+            if (charIndex < baseText.length) {
+                isDeleting = false;
+                exampleIndex = (exampleIndex + 1) % examples.length;
+                setTimeout(typeWriter, 500);
+                return;
+            }
+        }
+        
+        input.setAttribute('placeholder', fullText.substring(0, charIndex));
+        setTimeout(typeWriter, isDeleting ? 30 : 50);
+    }
+    
+    input.addEventListener('focus', function() {
+        if (this.value === '') this.setAttribute('placeholder', baseText);
+    });
+    
+    input.addEventListener('blur', function() {
+        if (this.value === '') { charIndex = 0; isDeleting = false; typeWriter(); }
+    });
+    
+    typeWriter();
+})();
+// ==================== END KI-SUCHE ====================
