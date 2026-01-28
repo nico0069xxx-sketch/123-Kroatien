@@ -38,6 +38,9 @@
     <meta name="keywords" content="{% block meta_keywords %}{{ meta_keywords }}{% endblock %}">
     <meta name="author" content="123-Kroatien.eu">
     <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL (wichtig für SEO - verhindert Duplicate Content) -->
+    <link rel="canonical" href="{% block canonical_url %}{{ meta_url }}{% endblock %}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="{{ meta_type }}">
