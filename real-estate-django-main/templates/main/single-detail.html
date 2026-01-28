@@ -297,11 +297,11 @@
                                 <h6 class="text-capitalize detail-heading text-mycolor">description</h6>
                                 {% if listing.property_description|length > 100 %}
                                     <div class="show__more" style="white-space: pre-line;">
-                                        {{listing.json_content.property_description}}
+                                        {{ listing.json_content.property_description|glossary_autolink:language }}
                                         <a href="javascript:void(0)" class="show__more-button ">{{readmore}}</a>
                                     </div>
                                 {% else %}
-                                    {{listing.json_content.property_description}}
+                                    {{ listing.json_content.property_description|glossary_autolink:language }}
                                 {% endif %}
                             </div>
                             <div class="clearfix"></div>
