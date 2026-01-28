@@ -2,6 +2,48 @@
 {% load static %}
 {% block body %}
 
+<!-- Schema.org RealEstateListing für SEO/GEO -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": "{{ listing.property_title }}",
+    "description": "{{ listing.property_description|truncatewords:50 }}",
+    "url": "{{ request.build_absolute_uri }}",
+    "datePosted": "{{ listing.list_date|date:'Y-m-d' }}",
+    {% if listing.photo_main %}
+    "image": "{{ request.scheme }}://{{ request.get_host }}{{ listing.photo_main.url }}",
+    {% endif %}
+    "offers": {
+        "@type": "Offer",
+        "price": "{{ listing.property_price }}",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+    },
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ listing.city }}",
+        "addressRegion": "{{ listing.state }}",
+        "addressCountry": "HR"
+    },
+    {% if listing.sqm %}
+    "floorSize": {
+        "@type": "QuantitativeValue",
+        "value": "{{ listing.sqm }}",
+        "unitCode": "MTK"
+    },
+    {% endif %}
+    {% if listing.bedrooms %}
+    "numberOfRooms": "{{ listing.bedrooms }}",
+    {% endif %}
+    "broker": {
+        "@type": "RealEstateAgent",
+        "name": "{% if listing.realtor %}{{ listing.realtor.name }}{% else %}123-Kroatien.eu{% endif %}",
+        "url": "https://123-kroatien.eu"
+    }
+}
+</script>
+
     <div class="clearfix"></div>
 
     <!-- SINGLE DETAIL -->
