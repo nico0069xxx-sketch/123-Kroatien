@@ -1,4 +1,39 @@
 {% extends 'include/base.html' %} {% load static %} {% block body %}
+
+<!-- Schema.org AboutPage für SEO -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Über 123-Kroatien.eu",
+    "description": "Erfahren Sie mehr über 123-Kroatien.eu - Ihr Partner für Immobilien in Kroatien seit 2000. Gegründet von Immobilienexperte Jörg Allmannsberger.",
+    "url": "{{ request.build_absolute_uri }}",
+    "mainEntity": {
+        "@type": "Organization",
+        "name": "123-Kroatien.eu",
+        "foundingDate": "2000",
+        "founder": {
+            "@type": "Person",
+            "name": "Jörg Allmannsberger",
+            "jobTitle": "Gründer & Immobilienexperte",
+            "description": "Zugelassener Immobilienmakler nach §34C seit 1994, Mitgründer der Rheinland Immobilien GmbH"
+        },
+        "description": "123-Kroatien.eu ist das Ergebnis eines langjährigen kroatischen Netzwerks mit umfassender Expertise im Immobilienmarkt an der Adriaküste.",
+        "url": "https://123-kroatien.eu",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Croatia"
+        },
+        "knowsAbout": [
+            "Croatian Real Estate",
+            "Adriatic Properties",
+            "International Property Investment",
+            "Croatian Property Law"
+        ]
+    }
+}
+</script>
+
 <div class="myHeaderBg bg-theme-overlay">
   <section class="section__breadcrumb">
     <div class="container">
