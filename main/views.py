@@ -817,6 +817,18 @@ def set_language_from_url(request, user_language):
                 # Index page
                 return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
 
+         # Experten-Finder URL Mapping (spezielle Behandlung)
+        EXPERTEN_FINDER_URLS = {
+            'ge': 'experten-finder', 'en': 'expert-finder', 'hr': 'pronalazac-strucnjaka',
+            'fr': 'recherche-experts', 'nl': 'expert-zoeker', 'pl': 'wyszukiwarka-ekspertow',
+            'cz': 'vyhledavac-odborniku', 'sk': 'vyhladavac-odbornikov', 'ru': 'poisk-ekspertov',
+            'gr': 'anazhthsh-eidikwn', 'sw': 'expert-sokare', 'no': 'ekspert-soker'
+        }
+        if source_segment in EXPERTEN_FINDER_URLS.values():
+            target_country = COUNTRY_NAMES.get(user_language, 'kroatien')
+            target_segment = EXPERTEN_FINDER_URLS.get(user_language, 'experten-finder')
+            return HttpResponseRedirect(f'/{user_language}/{target_country}/{target_segment}/')
+
         # Nicht-Country URLs (property-details, listings, etc.) direkt weiterleiten
         NON_COUNTRY_ROUTES = ["property-details", "listings", "expose", "about", "contact", "faq", "blog", "login", "register", "profile", "add-property", "edit-property"]
         if source_country in NON_COUNTRY_ROUTES:
