@@ -31,6 +31,11 @@
     <meta name="twitter:image" content="{% block twitter_image %}{{ meta_image }}{% endblock %}">
     <meta name="twitter:url" content="{{ meta_url }}">
 
+    <!-- Hreflang Tags für internationale SEO (alle 12 Sprachen) -->
+    {% for link in hreflang_links %}
+    <link rel="alternate" hreflang="{{ link.lang }}" href="{{ link.url }}">
+    {% endfor %}
+
     <link rel="manifest" href="site.webmanifest">
     <!-- favicon.ico in the root directory -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
