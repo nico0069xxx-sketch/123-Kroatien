@@ -8,6 +8,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <!-- WebSite Schema + SearchAction für Google Sitelinks Searchbox -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "123-Kroatien.eu",
+        "alternateName": ["123 Kroatien", "Immobilien Kroatien"],
+        "url": "https://123-kroatien.eu",
+        "inLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://123-kroatien.eu/listing/?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
     <!-- SEO Meta Tags -->
     <title>{% block title %}{{ meta_title }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ meta_description }}{% endblock %}">
