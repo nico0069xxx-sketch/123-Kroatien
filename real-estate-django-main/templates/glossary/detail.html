@@ -312,7 +312,7 @@
 <link rel="alternate" hreflang="{{ hreflang.lang }}" href="{{ hreflang.url }}">
 {% endfor %}
 
-<!-- Schema.org Markup -->
+<!-- Schema.org DefinedTerm Markup -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -324,7 +324,15 @@
         "name": "{{ t.glossary_title }}",
         "url": "{{ glossary_base_url }}"
     }
-    {% if term.faqs %},
+}
+</script>
+
+{% if term.faqs %}
+<!-- Schema.org FAQPage Markup (separate für bessere Google-Erkennung) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     "mainEntity": [
         {% for faq in term.faqs %}
         {
@@ -337,9 +345,9 @@
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
     ]
-    {% endif %}
 }
 </script>
+{% endif %}
 
 <!-- Hero Section -->
 <section class="glossary-detail-hero">
