@@ -214,3 +214,80 @@ def get_language_urls_for_path(current_path: str, current_lang: str) -> str:
                 urls[lang] = f'/{lang}{clean_path}'
     
     return json.dumps(urls)
+
+
+# ============================================
+# HERO SECTION TRANSLATIONS (Homepage)
+# ============================================
+
+HERO_TRANSLATIONS = {
+    "ge": {
+        "hero_tagline": "Kroatien · Adria · Mittelmeer",
+        "hero_title": "Exklusive Immobilien<br>an der kroatischen Küste",
+        "hero_subtitle": "Verifizierte Makler und persönliche Beratung für Ihre Traumimmobilie.",
+    },
+    "en": {
+        "hero_tagline": "Croatia · Adriatic · Mediterranean",
+        "hero_title": "Exclusive Properties<br>on the Croatian Coast",
+        "hero_subtitle": "Verified agents and personal consultation for your dream property.",
+    },
+    "hr": {
+        "hero_tagline": "Hrvatska · Jadran · Mediteran",
+        "hero_title": "Ekskluzivne nekretnine<br>na hrvatskoj obali",
+        "hero_subtitle": "Verificirani agenti i osobno savjetovanje za Vašu nekretninu iz snova.",
+    },
+    "fr": {
+        "hero_tagline": "Croatie · Adriatique · Méditerranée",
+        "hero_title": "Propriétés exclusives<br>sur la côte croate",
+        "hero_subtitle": "Agents vérifiés et conseil personnalisé pour votre propriété de rêve.",
+    },
+    "nl": {
+        "hero_tagline": "Kroatië · Adriatische Zee · Middellandse Zee",
+        "hero_title": "Exclusief vastgoed<br>aan de Kroatische kust",
+        "hero_subtitle": "Geverifieerde makelaars en persoonlijk advies voor uw droomwoning.",
+    },
+    "pl": {
+        "hero_tagline": "Chorwacja · Adriatyk · Morze Śródziemne",
+        "hero_title": "Ekskluzywne nieruchomości<br>na chorwackim wybrzeżu",
+        "hero_subtitle": "Zweryfikowani agenci i osobiste doradztwo dla Twojej wymarzonej nieruchomości.",
+    },
+    "cz": {
+        "hero_tagline": "Chorvatsko · Jadran · Středomoří",
+        "hero_title": "Exkluzivní nemovitosti<br>na chorvatském pobřeží",
+        "hero_subtitle": "Ověření makléři a osobní poradenství pro Vaši vysněnou nemovitost.",
+    },
+    "sk": {
+        "hero_tagline": "Chorvátsko · Jadran · Stredomorie",
+        "hero_title": "Exkluzívne nehnuteľnosti<br>na chorvátskom pobreží",
+        "hero_subtitle": "Overení makléri a osobné poradenstvo pre Vašu vysnívanú nehnuteľnosť.",
+    },
+    "ru": {
+        "hero_tagline": "Хорватия · Адриатика · Средиземноморье",
+        "hero_title": "Эксклюзивная недвижимость<br>на хорватском побережье",
+        "hero_subtitle": "Проверенные агенты и персональные консультации для вашей мечты.",
+    },
+    "gr": {
+        "hero_tagline": "Κροατία · Αδριατική · Μεσόγειος",
+        "hero_title": "Αποκλειστικά ακίνητα<br>στην κροατική ακτή",
+        "hero_subtitle": "Πιστοποιημένοι μεσίτες και προσωπική συμβουλευτική για το ακίνητο των ονείρων σας.",
+    },
+    "sw": {
+        "hero_tagline": "Kroatien · Adriatiska havet · Medelhavet",
+        "hero_title": "Exklusiva fastigheter<br>vid den kroatiska kusten",
+        "hero_subtitle": "Verifierade mäklare och personlig rådgivning för din drömbostad.",
+    },
+    "no": {
+        "hero_tagline": "Kroatia · Adriaterhavet · Middelhavet",
+        "hero_title": "Eksklusive eiendommer<br>ved den kroatiske kysten",
+        "hero_subtitle": "Verifiserte meglere og personlig rådgivning for din drømmebolig.",
+    },
+}
+
+
+def hero_translations(request):
+    """
+    Liefert Hero-Übersetzungen für die Homepage.
+    """
+    user_language = request.session.get('site_language', 'ge')
+    translations = HERO_TRANSLATIONS.get(user_language, HERO_TRANSLATIONS['ge'])
+    return translations
