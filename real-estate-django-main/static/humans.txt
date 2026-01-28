@@ -1,0 +1,32 @@
+/* TEAM */
+
+Founder & Real Estate Expert: Jörg Allmannsberger
+Site: https://123-kroatien.eu
+Location: Germany / Croatia
+Licensed: §34C since 1994
+
+/* SITE */
+
+Name: 123-Kroatien.eu
+Launched: 2024
+Languages: German, English, Croatian, French, Dutch, Polish, Czech, Slovak, Russian, Greek, Swedish, Norwegian
+Standards: HTML5, CSS3, Schema.org, WCAG 2.1
+
+/* TECHNOLOGY */
+
+Framework: Django
+Frontend: HTML5, CSS3, JavaScript
+Database: PostgreSQL
+Hosting: Cloud
+SEO: Schema.org structured data, hreflang, Open Graph
+AI: OpenAI GPT for translations and chatbot
+
+/* THANKS */
+
+Thanks to our partners, real estate agents, and the Croatian community
+for helping us create the best real estate portal for Croatia!
+
+/* CONTACT */
+
+Website: https://123-kroatien.eu/contact/
+Languages: 12 languages supported
