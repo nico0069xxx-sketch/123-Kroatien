@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from main.views import set_language_from_url, news_page, sitemap as html_sitemap, imprint, agb, cancellation_policy, home
-from main.xml_views import rss_listings, xml_sitemap, robots_txt, llms_txt
+from main.xml_views import rss_listings, xml_sitemap, robots_txt, llms_txt, humans_txt, security_txt
 from django.contrib.sitemaps.views import sitemap
 from main.glossary_sitemaps import get_glossary_sitemaps
 
@@ -14,6 +14,8 @@ urlpatterns = [
     path("set-language/<str:user_language>/", set_language_from_url, name="set_language_from_url"),
     path('robots.txt', robots_txt, name='robots_txt'),
     path('llms.txt', llms_txt, name='llms_txt'),
+    path('humans.txt', humans_txt, name='humans_txt'),
+    path('.well-known/security.txt', security_txt, name='security_txt'),
     path('sitemap.xml', xml_sitemap, name='xml_sitemap'),
     path('sitemaps/glossary.xml', sitemap, {'sitemaps': get_glossary_sitemaps()}, name='glossary-sitemap'),
     path('sitemap', html_sitemap, name='sitemap-html'),

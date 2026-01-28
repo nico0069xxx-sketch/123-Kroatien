@@ -1,0 +1,7 @@
+# Security Policy for 123-Kroatien.eu
+# https://securitytxt.org/
+
+Contact: mailto:info@123-kroatien.eu
+Preferred-Languages: de, en, hr
+Canonical: https://123-kroatien.eu/.well-known/security.txt
+Expires: 2027-12-31T23:59:59.000Z

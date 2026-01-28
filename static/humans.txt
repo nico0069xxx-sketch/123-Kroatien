@@ -1,0 +1,14 @@
+/* TEAM */
+Name: 123-Kroatien.eu
+Role: Real Estate Marketplace
+Location: Croatia / Germany
+
+/* SITE */
+Platform: Django
+Languages: German, English, Croatian, French, Dutch, Polish, Czech, Slovak, Russian, Greek, Swedish, Norwegian
+Standards: HTML5, CSS3, Schema.org, OpenGraph
+Components: Python, JavaScript, PostgreSQL
+
+/* THANKS */
+Icons: Font Awesome
+Fonts: Google Fonts (Outfit, Playfair Display, Manrope)

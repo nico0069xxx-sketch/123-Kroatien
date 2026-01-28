@@ -176,3 +176,33 @@ def llms_txt(request):
         content = "# 123-kroatien.eu\n\n> Immobilienportal für Kroatien"
     
     return HttpResponse(content, content_type='text/plain; charset=utf-8')
+
+
+def humans_txt(request):
+    """Serve humans.txt for transparency"""
+    from django.http import HttpResponse
+    import os
+    from django.conf import settings
+    
+    file_path = os.path.join(settings.BASE_DIR, 'static', 'humans.txt')
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        return HttpResponse(content, content_type='text/plain; charset=utf-8')
+    except FileNotFoundError:
+        return HttpResponse("/* TEAM */\nName: 123-Kroatien.eu", content_type='text/plain')
+
+
+def security_txt(request):
+    """Serve security.txt for security researchers"""
+    from django.http import HttpResponse
+    import os
+    from django.conf import settings
+    
+    file_path = os.path.join(settings.BASE_DIR, 'static', '.well-known', 'security.txt')
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        return HttpResponse(content, content_type='text/plain; charset=utf-8')
+    except FileNotFoundError:
+        return HttpResponse("Contact: mailto:info@123-kroatien.eu", content_type='text/plain')
