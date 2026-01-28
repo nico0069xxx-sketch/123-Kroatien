@@ -3,23 +3,23 @@
 
 {% block extra_head %}
 <!-- SEO Meta Tags -->
-<meta name="description" content="{% if language == 'hr' %}Kompletna mapa stranica 123-Kroatien.eu - Vaš vodič kroz hrvatske nekretnine{% elif language == 'en' %}Complete sitemap of 123-Kroatien.eu - Your guide to Croatian real estate{% elif language == 'fr' %}Plan du site complet de 123-Kroatien.eu - Votre guide de l'immobilier croate{% elif language == 'nl' %}Volledige sitemap van 123-Kroatien.eu - Uw gids voor Kroatisch vastgoed{% elif language == 'pl' %}Kompletna mapa strony 123-Kroatien.eu - Twój przewodnik po chorwackich nieruchomościach{% elif language == 'cz' %}Kompletní mapa stránek 123-Kroatien.eu - Váš průvodce chorvatskými nemovitostmi{% elif language == 'sk' %}Kompletná mapa stránok 123-Kroatien.eu - Váš sprievodca chorvátskymi nehnuteľnosťami{% elif language == 'ru' %}Полная карта сайта 123-Kroatien.eu - Ваш путеводитель по хорватской недвижимости{% elif language == 'gr' %}Πλήρης χάρτης ιστοτόπου 123-Kroatien.eu - Ο οδηγός σας για κροατικά ακίνητα{% elif language == 'sw' %}Komplett webbplatskarta för 123-Kroatien.eu - Din guide till kroatiska fastigheter{% elif language == 'no' %}Komplett nettstedskart for 123-Kroatien.eu - Din guide til kroatisk eiendom{% else %}Vollständige Sitemap von 123-Kroatien.eu - Ihr Wegweiser zu kroatischen Immobilien{% endif %}">
+<meta name="description" content="{{ sm_meta_desc }}">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://123-kroatien.eu/sitemap">
 
 <!-- Hreflang Tags for all 12 languages -->
 <link rel="alternate" hreflang="de" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="en" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="hr" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="fr" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="nl" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="pl" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="cs" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="sk" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="ru" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="el" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="sv" href="https://123-kroatien.eu/sitemap">
-<link rel="alternate" hreflang="no" href="https://123-kroatien.eu/sitemap">
+<link rel="alternate" hreflang="en" href="https://123-kroatien.eu/en/sitemap/">
+<link rel="alternate" hreflang="hr" href="https://123-kroatien.eu/hr/sitemap/">
+<link rel="alternate" hreflang="fr" href="https://123-kroatien.eu/fr/sitemap/">
+<link rel="alternate" hreflang="nl" href="https://123-kroatien.eu/nl/sitemap/">
+<link rel="alternate" hreflang="pl" href="https://123-kroatien.eu/pl/sitemap/">
+<link rel="alternate" hreflang="cs" href="https://123-kroatien.eu/cz/sitemap/">
+<link rel="alternate" hreflang="sk" href="https://123-kroatien.eu/sk/sitemap/">
+<link rel="alternate" hreflang="ru" href="https://123-kroatien.eu/ru/sitemap/">
+<link rel="alternate" hreflang="el" href="https://123-kroatien.eu/gr/sitemap/">
+<link rel="alternate" hreflang="sv" href="https://123-kroatien.eu/sw/sitemap/">
+<link rel="alternate" hreflang="no" href="https://123-kroatien.eu/no/sitemap/">
 <link rel="alternate" hreflang="x-default" href="https://123-kroatien.eu/sitemap">
 
 <!-- JSON-LD Structured Data for AI & SEO -->
@@ -27,15 +27,14 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "{% if language == 'hr' %}Mapa stranica{% elif language == 'en' %}Sitemap{% elif language == 'fr' %}Plan du site{% elif language == 'nl' %}Sitemap{% elif language == 'pl' %}Mapa strony{% elif language == 'cz' %}Mapa stránek{% elif language == 'sk' %}Mapa stránok{% elif language == 'ru' %}Карта сайта{% elif language == 'gr' %}Χάρτης ιστοτόπου{% elif language == 'sw' %}Webbplatskarta{% elif language == 'no' %}Nettstedkart{% else %}Sitemap{% endif %}",
-  "description": "{% if language == 'hr' %}Kompletna struktura web stranice 123-Kroatien.eu{% elif language == 'en' %}Complete website structure of 123-Kroatien.eu{% elif language == 'fr' %}Structure complète du site 123-Kroatien.eu{% elif language == 'nl' %}Volledige websitestructuur van 123-Kroatien.eu{% elif language == 'pl' %}Kompletna struktura strony 123-Kroatien.eu{% elif language == 'cz' %}Kompletní struktura webu 123-Kroatien.eu{% elif language == 'sk' %}Kompletná štruktúra webu 123-Kroatien.eu{% elif language == 'ru' %}Полная структура сайта 123-Kroatien.eu{% elif language == 'gr' %}Πλήρης δομή ιστοτόπου 123-Kroatien.eu{% elif language == 'sw' %}Komplett webbplatsstruktur för 123-Kroatien.eu{% elif language == 'no' %}Komplett nettstedstruktur for 123-Kroatien.eu{% else %}Vollständige Website-Struktur von 123-Kroatien.eu{% endif %}",
+  "name": "{{ sm_page_title }}",
+  "description": "{{ sm_meta_desc }}",
   "url": "https://123-kroatien.eu/sitemap",
   "inLanguage": ["de", "en", "hr", "fr", "nl", "pl", "cs", "sk", "ru", "el", "sv", "no"],
   "isPartOf": {
     "@type": "WebSite",
     "name": "123-Kroatien.eu",
     "url": "https://123-kroatien.eu",
-    "description": "{% if language == 'hr' %}Vodeći portal za nekretnine u Hrvatskoj{% elif language == 'en' %}Leading real estate portal in Croatia{% elif language == 'fr' %}Portail immobilier leader en Croatie{% elif language == 'nl' %}Toonaangevend vastgoedportaal in Kroatië{% elif language == 'pl' %}Wiodący portal nieruchomości w Chorwacji{% elif language == 'cz' %}Přední realitní portál v Chorvatsku{% elif language == 'sk' %}Popredný realitný portál v Chorvátsku{% elif language == 'ru' %}Ведущий портал недвижимости в Хорватии{% elif language == 'gr' %}Κορυφαία πύλη ακινήτων στην Κροατία{% elif language == 'sw' %}Ledande fastighetsportal i Kroatien{% elif language == 'no' %}Ledende eiendomsportal i Kroatia{% else %}Führendes Immobilienportal in Kroatien{% endif %}",
     "potentialAction": {
       "@type": "SearchAction",
       "target": "https://123-kroatien.eu/listing/?search={search_term}",
@@ -44,32 +43,12 @@
   },
   "mainEntity": {
     "@type": "ItemList",
-    "name": "{% if language == 'hr' %}Kategorije stranica{% elif language == 'en' %}Page Categories{% elif language == 'fr' %}Catégories de pages{% elif language == 'nl' %}Paginacategorieën{% elif language == 'pl' %}Kategorie stron{% elif language == 'cz' %}Kategorie stránek{% elif language == 'sk' %}Kategórie stránok{% elif language == 'ru' %}Категории страниц{% elif language == 'gr' %}Κατηγορίες σελίδων{% elif language == 'sw' %}Sidkategorier{% elif language == 'no' %}Sidekategorier{% else %}Seitenkategorien{% endif %}",
+    "name": "{{ sm_main_pages }}",
     "itemListElement": [
-      {
-        "@type": "SiteNavigationElement",
-        "position": 1,
-        "name": "{% if language == 'hr' %}Početna{% elif language == 'en' %}Home{% elif language == 'fr' %}Accueil{% elif language == 'nl' %}Home{% elif language == 'pl' %}Strona główna{% elif language == 'cz' %}Domů{% elif language == 'sk' %}Domov{% elif language == 'ru' %}Главная{% elif language == 'gr' %}Αρχική{% elif language == 'sw' %}Hem{% elif language == 'no' %}Hjem{% else %}Startseite{% endif %}",
-        "url": "https://123-kroatien.eu/"
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 2,
-        "name": "{% if language == 'hr' %}Nekretnine{% elif language == 'en' %}Properties{% elif language == 'fr' %}Propriétés{% elif language == 'nl' %}Vastgoed{% elif language == 'pl' %}Nieruchomości{% elif language == 'cz' %}Nemovitosti{% elif language == 'sk' %}Nehnuteľnosti{% elif language == 'ru' %}Недвижимость{% elif language == 'gr' %}Ακίνητα{% elif language == 'sw' %}Fastigheter{% elif language == 'no' %}Eiendommer{% else %}Immobilien{% endif %}",
-        "url": "https://123-kroatien.eu/listing/"
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 3,
-        "name": "{% if language == 'hr' %}Pojmovnik{% elif language == 'en' %}Glossary{% elif language == 'fr' %}Glossaire{% elif language == 'nl' %}Woordenlijst{% elif language == 'pl' %}Słownik{% elif language == 'cz' %}Glosář{% elif language == 'sk' %}Slovník{% elif language == 'ru' %}Глоссарий{% elif language == 'gr' %}Γλωσσάριο{% elif language == 'sw' %}Ordlista{% elif language == 'no' %}Ordliste{% else %}Glossar{% endif %}",
-        "url": "https://123-kroatien.eu/ge/kroatien/glossar/"
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 4,
-        "name": "{% if language == 'hr' %}Kontakt{% elif language == 'en' %}Contact{% elif language == 'fr' %}Contact{% elif language == 'nl' %}Contact{% elif language == 'pl' %}Kontakt{% elif language == 'cz' %}Kontakt{% elif language == 'sk' %}Kontakt{% elif language == 'ru' %}Контакт{% elif language == 'gr' %}Επικοινωνία{% elif language == 'sw' %}Kontakt{% elif language == 'no' %}Kontakt{% else %}Kontakt{% endif %}",
-        "url": "https://123-kroatien.eu/contact/"
-      }
+      {"@type": "SiteNavigationElement", "position": 1, "name": "{{ sm_home }}", "url": "https://123-kroatien.eu/"},
+      {"@type": "SiteNavigationElement", "position": 2, "name": "{{ sm_all_properties }}", "url": "https://123-kroatien.eu/listing/"},
+      {"@type": "SiteNavigationElement", "position": 3, "name": "{{ sm_glossary }}", "url": "https://123-kroatien.eu/ge/kroatien/glossar/"},
+      {"@type": "SiteNavigationElement", "position": 4, "name": "{{ sm_contact }}", "url": "https://123-kroatien.eu/contact/"}
     ]
   },
   "publisher": {
@@ -89,36 +68,8 @@
       <div class="container">
         <div class="row d-flex justify-content-center">
           <div class="col-md-8 text-center">
-            <h1 class="text-capitalize text-white">
-              {% if language == 'hr' %}Mapa stranica
-              {% elif language == 'en' %}Sitemap
-              {% elif language == 'fr' %}Plan du site
-              {% elif language == 'nl' %}Sitemap
-              {% elif language == 'pl' %}Mapa strony
-              {% elif language == 'cz' %}Mapa stránek
-              {% elif language == 'sk' %}Mapa stránok
-              {% elif language == 'ru' %}Карта сайта
-              {% elif language == 'gr' %}Χάρτης ιστοτόπου
-              {% elif language == 'sw' %}Webbplatskarta
-              {% elif language == 'no' %}Nettstedkart
-              {% else %}Sitemap
-              {% endif %}
-            </h1>
-            <p class="text-white-50">
-              {% if language == 'hr' %}Kompletan pregled svih stranica
-              {% elif language == 'en' %}Complete overview of all pages
-              {% elif language == 'fr' %}Aperçu complet de toutes les pages
-              {% elif language == 'nl' %}Volledig overzicht van alle pagina's
-              {% elif language == 'pl' %}Pełny przegląd wszystkich stron
-              {% elif language == 'cz' %}Kompletní přehled všech stránek
-              {% elif language == 'sk' %}Kompletný prehľad všetkých stránok
-              {% elif language == 'ru' %}Полный обзор всех страниц
-              {% elif language == 'gr' %}Πλήρης επισκόπηση όλων των σελίδων
-              {% elif language == 'sw' %}Fullständig översikt över alla sidor
-              {% elif language == 'no' %}Fullstendig oversikt over alle sider
-              {% else %}Vollständiger Überblick aller Seiten
-              {% endif %}
-            </p>
+            <h1 class="text-capitalize text-white">{{ sm_page_title }}</h1>
+            <p class="text-white-50">{{ sm_page_subtitle }}</p>
           </div>
         </div>
       </div>
@@ -135,27 +86,14 @@
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
-              <i class="fa fa-home"></i>
-              {% if language == 'hr' %}Glavne stranice
-              {% elif language == 'en' %}Main Pages
-              {% elif language == 'fr' %}Pages principales
-              {% elif language == 'nl' %}Hoofdpagina's
-              {% elif language == 'pl' %}Strony główne
-              {% elif language == 'cz' %}Hlavní stránky
-              {% elif language == 'sk' %}Hlavné stránky
-              {% elif language == 'ru' %}Главные страницы
-              {% elif language == 'gr' %}Κύριες σελίδες
-              {% elif language == 'sw' %}Huvudsidor
-              {% elif language == 'no' %}Hovedsider
-              {% else %}Hauptseiten
-              {% endif %}
+              <i class="fa fa-home"></i> {{ sm_main_pages }}
             </h5>
             <ul class="list-unstyled">
-              <li><a href="/{{ language }}/">{% if language == 'hr' %}Početna{% elif language == 'en' %}Home{% elif language == 'fr' %}Accueil{% elif language == 'nl' %}Home{% elif language == 'pl' %}Strona główna{% elif language == 'cz' %}Domů{% elif language == 'sk' %}Domov{% elif language == 'ru' %}Главная{% elif language == 'gr' %}Αρχική{% elif language == 'sw' %}Hem{% elif language == 'no' %}Hjem{% else %}Startseite{% endif %}</a></li>
-              <li><a href="/{{ language }}/listing/">{% if language == 'hr' %}Sve nekretnine{% elif language == 'en' %}All Properties{% elif language == 'fr' %}Toutes les propriétés{% elif language == 'nl' %}Alle vastgoed{% elif language == 'pl' %}Wszystkie nieruchomości{% elif language == 'cz' %}Všechny nemovitosti{% elif language == 'sk' %}Všetky nehnuteľnosti{% elif language == 'ru' %}Вся недвижимость{% elif language == 'gr' %}Όλα τα ακίνητα{% elif language == 'sw' %}Alla fastigheter{% elif language == 'no' %}Alle eiendommer{% else %}Alle Immobilien{% endif %}</a></li>
-              <li><a href="/{{ language }}/about/">{% if language == 'hr' %}O nama{% elif language == 'en' %}About Us{% elif language == 'fr' %}À propos{% elif language == 'nl' %}Over ons{% elif language == 'pl' %}O nas{% elif language == 'cz' %}O nás{% elif language == 'sk' %}O nás{% elif language == 'ru' %}О нас{% elif language == 'gr' %}Σχετικά με εμάς{% elif language == 'sw' %}Om oss{% elif language == 'no' %}Om oss{% else %}Über uns{% endif %}</a></li>
-              <li><a href="/{{ language }}/contact/">{% if language == 'hr' %}Kontakt{% elif language == 'en' %}Contact{% elif language == 'fr' %}Contact{% elif language == 'nl' %}Contact{% elif language == 'pl' %}Kontakt{% elif language == 'cz' %}Kontakt{% elif language == 'sk' %}Kontakt{% elif language == 'ru' %}Контакт{% elif language == 'gr' %}Επικοινωνία{% elif language == 'sw' %}Kontakt{% elif language == 'no' %}Kontakt{% else %}Kontakt{% endif %}</a></li>
-              <li><a href="/{{ language }}/faq/">{% if language == 'hr' %}Česta pitanja{% elif language == 'en' %}FAQ{% elif language == 'fr' %}FAQ{% elif language == 'nl' %}FAQ{% elif language == 'pl' %}FAQ{% elif language == 'cz' %}FAQ{% elif language == 'sk' %}FAQ{% elif language == 'ru' %}FAQ{% elif language == 'gr' %}FAQ{% elif language == 'sw' %}FAQ{% elif language == 'no' %}FAQ{% else %}FAQ{% endif %}</a></li>
+              <li><a href="/{{ language }}/">{{ sm_home }}</a></li>
+              <li><a href="/{{ language }}/listing/">{{ sm_all_properties }}</a></li>
+              <li><a href="/{{ language }}/about/">{{ sm_about }}</a></li>
+              <li><a href="/{{ language }}/contact/">{{ sm_contact }}</a></li>
+              <li><a href="/{{ language }}/faq/">{{ sm_faq }}</a></li>
               <li><a href="/{{ language }}/blog-single-1">Blog</a></li>
             </ul>
           </div>
@@ -167,27 +105,14 @@
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
-              <i class="fa fa-gavel"></i>
-              {% if language == 'hr' %}Pravne informacije
-              {% elif language == 'en' %}Legal
-              {% elif language == 'fr' %}Mentions légales
-              {% elif language == 'nl' %}Juridisch
-              {% elif language == 'pl' %}Informacje prawne
-              {% elif language == 'cz' %}Právní informace
-              {% elif language == 'sk' %}Právne informácie
-              {% elif language == 'ru' %}Юридическая информация
-              {% elif language == 'gr' %}Νομικές πληροφορίες
-              {% elif language == 'sw' %}Juridisk information
-              {% elif language == 'no' %}Juridisk informasjon
-              {% else %}Rechtliches
-              {% endif %}
+              <i class="fa fa-gavel"></i> {{ sm_legal }}
             </h5>
             <ul class="list-unstyled">
-              <li><a href="/{{ language }}/imprint/">{% if language == 'hr' %}Impressum{% elif language == 'en' %}Imprint{% elif language == 'fr' %}Mentions légales{% elif language == 'nl' %}Colofon{% elif language == 'pl' %}Impressum{% elif language == 'cz' %}Impressum{% elif language == 'sk' %}Impressum{% elif language == 'ru' %}Выходные данные{% elif language == 'gr' %}Impressum{% elif language == 'sw' %}Impressum{% elif language == 'no' %}Impressum{% else %}Impressum{% endif %}</a></li>
-              <li><a href="/{{ language }}/data-protection/">{% if language == 'hr' %}Zaštita podataka{% elif language == 'en' %}Privacy Policy{% elif language == 'fr' %}Politique de confidentialité{% elif language == 'nl' %}Privacybeleid{% elif language == 'pl' %}Polityka prywatności{% elif language == 'cz' %}Ochrana údajů{% elif language == 'sk' %}Ochrana údajov{% elif language == 'ru' %}Политика конфиденциальности{% elif language == 'gr' %}Πολιτική απορρήτου{% elif language == 'sw' %}Integritetspolicy{% elif language == 'no' %}Personvernpolicy{% else %}Datenschutz{% endif %}</a></li>
-              <li><a href="/{{ language }}/agb/">{% if language == 'hr' %}Uvjeti korištenja{% elif language == 'en' %}Terms & Conditions{% elif language == 'fr' %}Conditions générales{% elif language == 'nl' %}Algemene voorwaarden{% elif language == 'pl' %}Regulamin{% elif language == 'cz' %}Obchodní podmínky{% elif language == 'sk' %}Obchodné podmienky{% elif language == 'ru' %}Условия использования{% elif language == 'gr' %}Όροι χρήσης{% elif language == 'sw' %}Allmänna villkor{% elif language == 'no' %}Vilkår og betingelser{% else %}AGB{% endif %}</a></li>
-              <li><a href="/{{ language }}/cancellation-policy/">{% if language == 'hr' %}Pravo na odustanak{% elif language == 'en' %}Cancellation Policy{% elif language == 'fr' %}Droit de rétractation{% elif language == 'nl' %}Herroepingsrecht{% elif language == 'pl' %}Prawo odstąpienia{% elif language == 'cz' %}Právo na odstoupení{% elif language == 'sk' %}Právo na odstúpenie{% elif language == 'ru' %}Право отмены{% elif language == 'gr' %}Πολιτική ακύρωσης{% elif language == 'sw' %}Ångerrätt{% elif language == 'no' %}Angrerett{% else %}Widerrufsrecht{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% elif language == 'fr' %}glossaire{% elif language == 'nl' %}woordenlijst{% elif language == 'pl' %}slownik{% elif language == 'cz' %}glosar{% elif language == 'sk' %}slovnik{% elif language == 'ru' %}glossarij{% elif language == 'gr' %}glossari{% elif language == 'sw' %}ordlista{% elif language == 'no' %}ordliste{% else %}glossar{% endif %}/disclaimer/">{% if language == 'hr' %}Odricanje odgovornosti{% elif language == 'en' %}Disclaimer{% elif language == 'fr' %}Avertissement{% elif language == 'nl' %}Disclaimer{% elif language == 'pl' %}Zastrzeżenia{% elif language == 'cz' %}Prohlášení{% elif language == 'sk' %}Vyhlásenie{% elif language == 'ru' %}Отказ от ответственности{% elif language == 'gr' %}Αποποίηση ευθύνης{% elif language == 'sw' %}Ansvarsfriskrivning{% elif language == 'no' %}Ansvarsfraskrivelse{% else %}Haftungsausschluss{% endif %}</a></li>
+              <li><a href="/{{ language }}/imprint/">{{ sm_imprint }}</a></li>
+              <li><a href="/{{ language }}/data-protection/">{{ sm_privacy }}</a></li>
+              <li><a href="/{{ language }}/agb/">{{ sm_terms }}</a></li>
+              <li><a href="/{{ language }}/cancellation-policy/">{{ sm_cancellation }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_glossary }}/disclaimer/">{{ sm_disclaimer }}</a></li>
             </ul>
           </div>
         </div>
@@ -198,27 +123,14 @@
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
-              <i class="fa fa-briefcase"></i>
-              {% if language == 'hr' %}Pružatelji usluga
-              {% elif language == 'en' %}Service Providers
-              {% elif language == 'fr' %}Prestataires de services
-              {% elif language == 'nl' %}Dienstverleners
-              {% elif language == 'pl' %}Usługodawcy
-              {% elif language == 'cz' %}Poskytovatelé služeb
-              {% elif language == 'sk' %}Poskytovatelia služieb
-              {% elif language == 'ru' %}Поставщики услуг
-              {% elif language == 'gr' %}Πάροχοι υπηρεσιών
-              {% elif language == 'sw' %}Tjänsteleverantörer
-              {% elif language == 'no' %}Tjenesteleverandører
-              {% else %}Dienstleister Kroatien
-              {% endif %}
+              <i class="fa fa-briefcase"></i> {{ sm_providers }}
             </h5>
             <ul class="list-unstyled">
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}agencije-za-nekretnine{% elif language == 'en' %}real-estate-agents{% elif language == 'fr' %}agents-immobiliers{% elif language == 'nl' %}makelaars{% elif language == 'pl' %}agenci-nieruchomosci{% elif language == 'cz' %}realitni-makleri{% elif language == 'sk' %}realitni-makleri{% elif language == 'ru' %}agenty-nedvizhimosti{% elif language == 'gr' %}mesites-akiniton{% elif language == 'sw' %}fastighetsmaklare{% elif language == 'no' %}eiendomsmeglere{% else %}immobilienmakler{% endif %}/">{% if language == 'hr' %}Agent za nekretnine{% elif language == 'en' %}Real Estate Agent{% elif language == 'fr' %}Agent immobilier{% elif language == 'nl' %}Makelaar{% elif language == 'pl' %}Agent nieruchomości{% elif language == 'cz' %}Realitní makléř{% elif language == 'sk' %}Realitný maklér{% elif language == 'ru' %}Риэлтор{% elif language == 'gr' %}Μεσίτης{% elif language == 'sw' %}Fastighetsmäklare{% elif language == 'no' %}Eiendomsmegler{% else %}Immobilienmakler{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}gradevinske-tvrtke{% elif language == 'en' %}construction-companies{% elif language == 'fr' %}entreprises-construction{% elif language == 'nl' %}bouwbedrijven{% elif language == 'pl' %}firmy-budowlane{% elif language == 'cz' %}stavebni-firmy{% elif language == 'sk' %}stavebne-firmy{% elif language == 'ru' %}stroitelnye-kompanii{% elif language == 'gr' %}kataskevestikes-etaireies{% elif language == 'sw' %}byggforetag{% elif language == 'no' %}byggefirmaer{% else %}bauunternehmen{% endif %}/">{% if language == 'hr' %}Građevinar{% elif language == 'en' %}Building Contractor{% elif language == 'fr' %}Entrepreneur{% elif language == 'nl' %}Aannemer{% elif language == 'pl' %}Wykonawca{% elif language == 'cz' %}Stavitel{% elif language == 'sk' %}Staviteľ{% elif language == 'ru' %}Подрядчик{% elif language == 'gr' %}Κατασκευαστής{% elif language == 'sw' %}Byggentreprenör{% elif language == 'no' %}Byggentreprenør{% else %}Bauunternehmer{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}odvjetnici{% elif language == 'en' %}lawyers{% elif language == 'fr' %}avocats{% elif language == 'nl' %}advocaten{% elif language == 'pl' %}prawnicy{% elif language == 'cz' %}pravnici{% elif language == 'sk' %}pravnici{% elif language == 'ru' %}advokaty{% elif language == 'gr' %}dikigoroi{% elif language == 'sw' %}advokater{% elif language == 'no' %}advokater{% else %}rechtsanwaelte{% endif %}/">{% if language == 'hr' %}Odvjetnik{% elif language == 'en' %}Lawyer{% elif language == 'fr' %}Avocat{% elif language == 'nl' %}Advocaat{% elif language == 'pl' %}Prawnik{% elif language == 'cz' %}Právník{% elif language == 'sk' %}Právnik{% elif language == 'ru' %}Адвокат{% elif language == 'gr' %}Δικηγόρος{% elif language == 'sw' %}Advokat{% elif language == 'no' %}Advokat{% else %}Rechtsanwalt{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}porezni-savjetnici{% elif language == 'en' %}tax-advisors{% elif language == 'fr' %}conseillers-fiscaux{% elif language == 'nl' %}belastingadviseurs{% elif language == 'pl' %}doradcy-podatkowi{% elif language == 'cz' %}danovi-poradci{% elif language == 'sk' %}danovi-poradcovia{% elif language == 'ru' %}nalogovye-konsultanty{% elif language == 'gr' %}forologikoi-symvouloi{% elif language == 'sw' %}skatteradgivare{% elif language == 'no' %}skatteradgivere{% else %}steuerberater{% endif %}/">{% if language == 'hr' %}Porezni savjetnik{% elif language == 'en' %}Tax Advisor{% elif language == 'fr' %}Conseiller fiscal{% elif language == 'nl' %}Belastingadviseur{% elif language == 'pl' %}Doradca podatkowy{% elif language == 'cz' %}Daňový poradce{% elif language == 'sk' %}Daňový poradca{% elif language == 'ru' %}Налоговый консультант{% elif language == 'gr' %}Φοροτεχνικός{% elif language == 'sw' %}Skatterådgivare{% elif language == 'no' %}Skatterådgiver{% else %}Steuerberater{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}arhitekti{% elif language == 'en' %}architects{% elif language == 'fr' %}architectes{% elif language == 'nl' %}architecten{% elif language == 'pl' %}architekci{% elif language == 'cz' %}architekti{% elif language == 'sk' %}architekti{% elif language == 'ru' %}arhitektory{% elif language == 'gr' %}architektons{% elif language == 'sw' %}arkitekter{% elif language == 'no' %}arkitekter{% else %}architekten{% endif %}/">{% if language == 'hr' %}Arhitekt{% elif language == 'en' %}Architect{% elif language == 'fr' %}Architecte{% elif language == 'nl' %}Architect{% elif language == 'pl' %}Architekt{% elif language == 'cz' %}Architekt{% elif language == 'sk' %}Architekt{% elif language == 'ru' %}Архитектор{% elif language == 'gr' %}Αρχιτέκτονας{% elif language == 'sw' %}Arkitekt{% elif language == 'no' %}Arkitekt{% else %}Architekt{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_realtor }}/">{{ sm_realtor }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_contractor }}/">{{ sm_contractor }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_lawyer }}/">{{ sm_lawyer }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_tax_advisor }}/">{{ sm_tax_advisor }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_architect }}/">{{ sm_architect }}</a></li>
             </ul>
           </div>
         </div>
@@ -229,27 +141,14 @@
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
-              <i class="fa fa-user"></i>
-              {% if language == 'hr' %}Korisnički prostor
-              {% elif language == 'en' %}User Area
-              {% elif language == 'fr' %}Espace utilisateur
-              {% elif language == 'nl' %}Gebruikersgebied
-              {% elif language == 'pl' %}Strefa użytkownika
-              {% elif language == 'cz' %}Uživatelská zóna
-              {% elif language == 'sk' %}Používateľská zóna
-              {% elif language == 'ru' %}Личный кабинет
-              {% elif language == 'gr' %}Περιοχή χρήστη
-              {% elif language == 'sw' %}Användarområde
-              {% elif language == 'no' %}Brukerområde
-              {% else %}Benutzer-Bereich
-              {% endif %}
+              <i class="fa fa-user"></i> {{ sm_user_area }}
             </h5>
             <ul class="list-unstyled">
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}postanite-partner{% elif language == 'en' %}become-partner{% elif language == 'fr' %}devenir-partenaire{% elif language == 'nl' %}partner-worden{% elif language == 'pl' %}zostan-partnerem{% elif language == 'cz' %}stanat-se-partnerem{% elif language == 'sk' %}stat-sa-partnerom{% elif language == 'ru' %}stat-partnerom{% elif language == 'gr' %}gineite-synergatis{% elif language == 'sw' %}bli-partner{% elif language == 'no' %}bli-partner{% else %}partner-werden{% endif %}/">{% if language == 'hr' %}Postanite partner{% elif language == 'en' %}Become a Partner{% elif language == 'fr' %}Devenir partenaire{% elif language == 'nl' %}Partner worden{% elif language == 'pl' %}Zostań partnerem{% elif language == 'cz' %}Staňte se partnerem{% elif language == 'sk' %}Staňte sa partnerom{% elif language == 'ru' %}Стать партнером{% elif language == 'gr' %}Γίνετε συνεργάτης{% elif language == 'sw' %}Bli partner{% elif language == 'no' %}Bli partner{% else %}Partner werden{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}registracija{% elif language == 'en' %}registration{% elif language == 'fr' %}inscription{% elif language == 'nl' %}registratie{% elif language == 'pl' %}rejestracja{% elif language == 'cz' %}registrace{% elif language == 'sk' %}registracia{% elif language == 'ru' %}registratsiya{% elif language == 'gr' %}eggraphi{% elif language == 'sw' %}registrering{% elif language == 'no' %}registrering{% else %}registrierung{% endif %}/">{% if language == 'hr' %}Registracija{% elif language == 'en' %}Register{% elif language == 'fr' %}S'inscrire{% elif language == 'nl' %}Registreren{% elif language == 'pl' %}Rejestracja{% elif language == 'cz' %}Registrace{% elif language == 'sk' %}Registrácia{% elif language == 'ru' %}Регистрация{% elif language == 'gr' %}Εγγραφή{% elif language == 'sw' %}Registrera{% elif language == 'no' %}Registrer{% else %}Registrieren{% endif %}</a></li>
-              <li><a href="/accounts/login/">{% if language == 'hr' %}Prijava{% elif language == 'en' %}Login{% elif language == 'fr' %}Connexion{% elif language == 'nl' %}Inloggen{% elif language == 'pl' %}Logowanie{% elif language == 'cz' %}Přihlášení{% elif language == 'sk' %}Prihlásenie{% elif language == 'ru' %}Вход{% elif language == 'gr' %}Σύνδεση{% elif language == 'sw' %}Logga in{% elif language == 'no' %}Logg inn{% else %}Anmelden{% endif %}</a></li>
-              <li><a href="/{{ language }}/makler-dashboard/">{% if language == 'hr' %}Portal za agente{% elif language == 'en' %}Agent Portal{% elif language == 'fr' %}Portail agents{% elif language == 'nl' %}Makelaarsportaal{% elif language == 'pl' %}Portal agenta{% elif language == 'cz' %}Portál makléře{% elif language == 'sk' %}Portál makléra{% elif language == 'ru' %}Портал агента{% elif language == 'gr' %}Πύλη μεσίτη{% elif language == 'sw' %}Mäklarportal{% elif language == 'no' %}Meglerportal{% else %}Makler-Portal{% endif %}</a></li>
-              <li><a href="/accounts/password-reset/">{% if language == 'hr' %}Zaboravljena lozinka{% elif language == 'en' %}Forgot Password{% elif language == 'fr' %}Mot de passe oublié{% elif language == 'nl' %}Wachtwoord vergeten{% elif language == 'pl' %}Zapomniałeś hasła{% elif language == 'cz' %}Zapomenuté heslo{% elif language == 'sk' %}Zabudnuté heslo{% elif language == 'ru' %}Забыли пароль{% elif language == 'gr' %}Ξεχάσατε τον κωδικό{% elif language == 'sw' %}Glömt lösenord{% elif language == 'no' %}Glemt passord{% else %}Passwort vergessen{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_partner }}/">{{ sm_become_partner }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_registration }}/">{{ sm_register }}</a></li>
+              <li><a href="/accounts/login/">{{ sm_login }}</a></li>
+              <li><a href="/{{ language }}/makler-dashboard/">{{ sm_agent_portal }}</a></li>
+              <li><a href="/accounts/password-reset/">{{ sm_forgot_password }}</a></li>
             </ul>
           </div>
         </div>
@@ -260,27 +159,14 @@
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
-              <i class="fa fa-cogs"></i>
-              {% if language == 'hr' %}Usluge
-              {% elif language == 'en' %}Services
-              {% elif language == 'fr' %}Services
-              {% elif language == 'nl' %}Diensten
-              {% elif language == 'pl' %}Usługi
-              {% elif language == 'cz' %}Služby
-              {% elif language == 'sk' %}Služby
-              {% elif language == 'ru' %}Услуги
-              {% elif language == 'gr' %}Υπηρεσίες
-              {% elif language == 'sw' %}Tjänster
-              {% elif language == 'no' %}Tjenester
-              {% else %}Service
-              {% endif %}
+              <i class="fa fa-cogs"></i> {{ sm_services }}
             </h5>
             <ul class="list-unstyled">
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% elif language == 'fr' %}glossaire{% elif language == 'nl' %}woordenlijst{% elif language == 'pl' %}slownik{% elif language == 'cz' %}glosar{% elif language == 'sk' %}slovnik{% elif language == 'ru' %}glossarij{% elif language == 'gr' %}glossari{% elif language == 'sw' %}ordlista{% elif language == 'no' %}ordliste{% else %}glossar{% endif %}/">{% if language == 'hr' %}Pojmovnik nekretnina{% elif language == 'en' %}Real Estate Glossary{% elif language == 'fr' %}Glossaire immobilier{% elif language == 'nl' %}Vastgoed woordenlijst{% elif language == 'pl' %}Słownik nieruchomości{% elif language == 'cz' %}Realitní glosář{% elif language == 'sk' %}Realitný slovník{% elif language == 'ru' %}Глоссарий недвижимости{% elif language == 'gr' %}Γλωσσάριο ακινήτων{% elif language == 'sw' %}Fastighetsordlista{% elif language == 'no' %}Eiendomsordliste{% else %}Immobilien-Glossar{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}pojmovnik{% elif language == 'en' %}glossary{% elif language == 'fr' %}glossaire{% elif language == 'nl' %}woordenlijst{% elif language == 'pl' %}slownik{% elif language == 'cz' %}glosar{% elif language == 'sk' %}slovnik{% elif language == 'ru' %}glossarij{% elif language == 'gr' %}glossari{% elif language == 'sw' %}ordlista{% elif language == 'no' %}ordliste{% else %}glossar{% endif %}/buyer-guide/">{% if language == 'hr' %}Vodič za kupce{% elif language == 'en' %}Buyer Guide{% elif language == 'fr' %}Guide de l'acheteur{% elif language == 'nl' %}Koopgids{% elif language == 'pl' %}Przewodnik kupującego{% elif language == 'cz' %}Průvodce kupujícího{% elif language == 'sk' %}Sprievodca kupujúceho{% elif language == 'ru' %}Руководство покупателя{% elif language == 'gr' %}Οδηγός αγοραστή{% elif language == 'sw' %}Köparguide{% elif language == 'no' %}Kjøperguide{% else %}Käufer Kurzleitfaden{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}trzisni-izvjestaji{% elif language == 'en' %}market-reports{% elif language == 'fr' %}rapports-marche{% elif language == 'nl' %}marktverslagen{% elif language == 'pl' %}raporty-rynkowe{% elif language == 'cz' %}trzni-zpravy{% elif language == 'sk' %}trhove-spravy{% elif language == 'ru' %}rynochnye-otchety{% elif language == 'gr' %}anafores-agoras{% elif language == 'sw' %}marknadsrapporter{% elif language == 'no' %}markedsrapporter{% else %}marktberichte{% endif %}/">{% if language == 'hr' %}Tržišni izvještaji{% elif language == 'en' %}Market Reports{% elif language == 'fr' %}Rapports de marché{% elif language == 'nl' %}Marktverslagen{% elif language == 'pl' %}Raporty rynkowe{% elif language == 'cz' %}Tržní zprávy{% elif language == 'sk' %}Trhové správy{% elif language == 'ru' %}Рыночные отчеты{% elif language == 'gr' %}Αναφορές αγοράς{% elif language == 'sw' %}Marknadsrapporter{% elif language == 'no' %}Markedsrapporter{% else %}Marktberichte{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}vazne-adrese{% elif language == 'en' %}important-addresses{% elif language == 'fr' %}adresses-importantes{% elif language == 'nl' %}belangrijke-adressen{% elif language == 'pl' %}wazne-adresy{% elif language == 'cz' %}dulezite-adresy{% elif language == 'sk' %}dolezite-adresy{% elif language == 'ru' %}vazhnye-adresa{% elif language == 'gr' %}simantikes-dieythynseis{% elif language == 'sw' %}viktiga-adresser{% elif language == 'no' %}viktige-adresser{% else %}wichtige-adressen{% endif %}/">{% if language == 'hr' %}Važne adrese{% elif language == 'en' %}Important Addresses{% elif language == 'fr' %}Adresses importantes{% elif language == 'nl' %}Belangrijke adressen{% elif language == 'pl' %}Ważne adresy{% elif language == 'cz' %}Důležité adresy{% elif language == 'sk' %}Dôležité adresy{% elif language == 'ru' %}Важные адреса{% elif language == 'gr' %}Σημαντικές διευθύνσεις{% elif language == 'sw' %}Viktiga adresser{% elif language == 'no' %}Viktige adresser{% else %}Wichtige Adressen{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}vijesti{% elif language == 'en' %}news{% elif language == 'fr' %}actualites{% elif language == 'nl' %}nieuws{% elif language == 'pl' %}wiadomosci{% elif language == 'cz' %}zpravy{% elif language == 'sk' %}spravy{% elif language == 'ru' %}novosti{% elif language == 'gr' %}nea{% elif language == 'sw' %}nyheter{% elif language == 'no' %}nyheter{% else %}nachrichten{% endif %}/">{% if language == 'hr' %}Vijesti{% elif language == 'en' %}News{% elif language == 'fr' %}Actualités{% elif language == 'nl' %}Nieuws{% elif language == 'pl' %}Wiadomości{% elif language == 'cz' %}Zprávy{% elif language == 'sk' %}Správy{% elif language == 'ru' %}Новости{% elif language == 'gr' %}Νέα{% elif language == 'sw' %}Nyheter{% elif language == 'no' %}Nyheter{% else %}Nachrichten{% endif %}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_glossary }}/">{{ sm_glossary }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_glossary }}/buyer-guide/">{{ sm_buyer_guide }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_market_reports }}/">{{ sm_market_reports }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_addresses }}/">{{ sm_addresses }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_news }}/">{{ sm_news }}</a></li>
             </ul>
           </div>
         </div>
@@ -291,24 +177,11 @@
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title text-primary">
-              <i class="fa fa-magic"></i>
-              {% if language == 'hr' %}Umjetna inteligencija
-              {% elif language == 'en' %}Artificial Intelligence
-              {% elif language == 'fr' %}Intelligence artificielle
-              {% elif language == 'nl' %}Kunstmatige intelligentie
-              {% elif language == 'pl' %}Sztuczna inteligencja
-              {% elif language == 'cz' %}Umělá inteligence
-              {% elif language == 'sk' %}Umelá inteligencia
-              {% elif language == 'ru' %}Искусственный интеллект
-              {% elif language == 'gr' %}Τεχνητή νοημοσύνη
-              {% elif language == 'sw' %}Artificiell intelligens
-              {% elif language == 'no' %}Kunstig intelligens
-              {% else %}KI
-              {% endif %}
+              <i class="fa fa-magic"></i> {{ sm_ai }}
             </h5>
             <ul class="list-unstyled">
-              <li><a href="/#ki-suche">{% if language == 'hr' %}AI brza pretraga nekretnina{% elif language == 'en' %}AI Property Quick Search{% elif language == 'fr' %}Recherche rapide IA{% elif language == 'nl' %}AI snel zoeken{% elif language == 'pl' %}Szybkie wyszukiwanie AI{% elif language == 'cz' %}AI rychlé vyhledávání{% elif language == 'sk' %}AI rýchle vyhľadávanie{% elif language == 'ru' %}Быстрый поиск ИИ{% elif language == 'gr' %}AI γρήγορη αναζήτηση{% elif language == 'sw' %}AI snabbsökning{% elif language == 'no' %}AI hurtigsøk{% else %}KI Immobilien Schnellsuche{% endif %}</a></li>
-              <li><a href="/{{ language }}/{% if language == 'hr' %}hrvatska{% elif language == 'en' %}croatia{% elif language == 'fr' %}croatie{% elif language == 'nl' %}kroatie{% elif language == 'pl' %}chorwacja{% elif language == 'cz' %}chorvatsko{% elif language == 'sk' %}chorvatsko{% elif language == 'ru' %}horvatiya{% elif language == 'gr' %}kroatia{% elif language == 'sw' %}kroatien{% elif language == 'no' %}kroatia{% else %}kroatien{% endif %}/{% if language == 'hr' %}pronalazac-strucnjaka{% elif language == 'en' %}expert-finder{% elif language == 'fr' %}recherche-experts{% elif language == 'nl' %}expert-zoeker{% elif language == 'pl' %}wyszukiwarka-ekspertow{% elif language == 'cz' %}vyhledavac-odborniku{% elif language == 'sk' %}vyhladavac-odbornikov{% elif language == 'ru' %}poisk-ekspertov{% elif language == 'gr' %}anazhthsh-eidikwn{% elif language == 'sw' %}expert-sokare{% elif language == 'no' %}ekspert-soker{% else %}experten-finder{% endif %}/">{% if language == 'hr' %}Tražilica stručnjaka{% elif language == 'en' %}Expert Finder{% elif language == 'fr' %}Recherche d'experts{% elif language == 'nl' %}Expertzoeker{% elif language == 'pl' %}Wyszukiwarka ekspertów{% elif language == 'cz' %}Vyhledávač odborníků{% elif language == 'sk' %}Vyhľadávač odborníkov{% elif language == 'ru' %}Поиск экспертов{% elif language == 'gr' %}Εύρεση ειδικών{% elif language == 'sw' %}Expertsökare{% elif language == 'no' %}Ekspertfinner{% else %}Expertenfinder{% endif %}</a></li>
+              <li><a href="/#ki-suche">{{ sm_ai_search }}</a></li>
+              <li><a href="/{{ language }}/{{ url_country }}/{{ url_expert_finder }}/">{{ sm_expert_finder }}</a></li>
             </ul>
           </div>
         </div>
@@ -322,20 +195,7 @@
         <div class="card shadow-sm bg-light">
           <div class="card-body">
             <h6 class="card-title text-muted">
-              <i class="fa fa-search"></i>
-              {% if language == 'hr' %}SEO & Tehničke poveznice
-              {% elif language == 'en' %}SEO & Technical Links
-              {% elif language == 'fr' %}SEO & Liens techniques
-              {% elif language == 'nl' %}SEO & Technische links
-              {% elif language == 'pl' %}SEO & Linki techniczne
-              {% elif language == 'cz' %}SEO & Technické odkazy
-              {% elif language == 'sk' %}SEO & Technické odkazy
-              {% elif language == 'ru' %}SEO & Технические ссылки
-              {% elif language == 'gr' %}SEO & Τεχνικοί σύνδεσμοι
-              {% elif language == 'sw' %}SEO & Tekniska länkar
-              {% elif language == 'no' %}SEO & Tekniske lenker
-              {% else %}SEO & Technische Links
-              {% endif %}
+              <i class="fa fa-search"></i> {{ sm_seo_links }}
             </h6>
             <div class="d-flex flex-wrap" style="gap: 10px;">
               <a href="/sitemap.xml" class="btn btn-outline-dark btn-sm">sitemap.xml</a>
@@ -354,20 +214,7 @@
         <div class="card shadow-sm">
           <div class="card-body">
             <h6 class="card-title text-primary">
-              <i class="fa fa-globe"></i>
-              {% if language == 'hr' %}Dostupni jezici
-              {% elif language == 'en' %}Available Languages
-              {% elif language == 'fr' %}Langues disponibles
-              {% elif language == 'nl' %}Beschikbare talen
-              {% elif language == 'pl' %}Dostępne języki
-              {% elif language == 'cz' %}Dostupné jazyky
-              {% elif language == 'sk' %}Dostupné jazyky
-              {% elif language == 'ru' %}Доступные языки
-              {% elif language == 'gr' %}Διαθέσιμες γλώσσες
-              {% elif language == 'sw' %}Tillgängliga språk
-              {% elif language == 'no' %}Tilgjengelige språk
-              {% else %}Verfügbare Sprachen
-              {% endif %}
+              <i class="fa fa-globe"></i> {{ sm_languages }}
             </h6>
             <div class="d-flex flex-wrap" style="gap: 8px;">
               <a href="/set-language/ge/" class="btn btn-sm {% if language == 'ge' %}btn-primary{% else %}btn-outline-secondary{% endif %}">🇩🇪 Deutsch</a>
